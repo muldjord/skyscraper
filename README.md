@@ -61,9 +61,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/1.8.2.tar.gz
-* $ tar xvzf 1.8.2.tar.gz
-* $ cd skyscraper-1.8.2
+* $ wget https://github.com/muldjord/skyscraper/archive/2.0.0.tar.gz
+* $ tar xvzf 2.0.0.tar.gz
+* $ cd skyscraper-2.0.0
 * $ qmake
 * $ make
 * $ sudo make install
@@ -154,8 +154,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 2.0.0 (unreleased)
+#### Version 2.0.0 (7th September 2017)
 * Back to basics: Removed several web sources. Now only allows the ones I have explicit permission to use.
+* Properly implemented official API for 'arcadedb' module
 * Added scraping module info to output per result but only when using '--verbose'
 * Added check for unreasonably bad scraping runs, making Skyscraper exit if 30 of 30 files miss from the get-go
 
