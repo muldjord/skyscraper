@@ -67,6 +67,11 @@ void Skyscraper::run()
     qDebug("Local db folder : '\033[1;32m%s\033[0m'\n\n", config.dbFolder.toStdString().c_str());
   }
   
+  if(config.scraper == "arcadedb" && config.threads != 1) {
+    qDebug("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
+    config.threads = 1;
+  }
+
   doneThreads = 0;
   notFound = 0;
   found = 0;
