@@ -1,0 +1,9 @@
+<game>
+  <description>###DESCRIPTION###</description>
+  <developer>###DEVELOPER###</developer>
+  <publisher>###PUBLISHER###</publisher>
+  <players>###PLAYERS###</players>
+  <rating>###RATING###</rating>
+  <genre>###TAGS###</genre>
+  <releasedate>###RELEASEDATE###</releasedate>
+</game>

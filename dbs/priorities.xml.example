@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copy this file to any platform db subfolder and customize it to your liking -->
+<priorities>
+  <order type="title">
+    <source>arcadedb</source>
+    <source>screenscraper</source>
+  </order>
+  <order type="platform">
+    <source>thegamesdb</source>
+  </order>
+  <order type="releasedate">
+    <source>import</source>
+    <source>arcadedb</source>
+    <source>screenscraper</source>
+    <source>mobygames</source>
+    <source>openretro</source>
+    <source>thegamesdb</source>
+  </order>
+  <order type="developer">
+    <source>import</source>
+    <source>arcadedb</source>
+    <source>mobygames</source>
+  </order>
+  <order type="publisher">
+    <source>import</source>
+    <source>arcadedb</source>
+    <source>mobygames</source>
+  </order>
+  <order type="players">
+    <source>import</source>
+    <source>arcadedb</source>
+    <source>mobygames</source>
+    <source>openretro</source>
+    <source>screenscraper</source>
+    <source>thegamesdb</source>
+  </order>
+  <order type="tags">
+    <source>import</source>
+    <source>arcadedb</source>
+    <source>mobygames</source>
+    <source>openretro</source>
+    <source>screenscraper</source>
+  </order>
+  <order type="players">
+    <source>import</source>
+  </order>
+  <order type="description">
+    <source>import</source>
+    <source>mobygames</source>
+    <source>thegamesdb</source>
+    <source>screenscraper</source>
+    <source>openretro</source>
+  </order>
+  <order type="cover">
+    <source>import</source>
+    <source>openretro</source>
+    <source>mobygames</source>
+    <source>thegamesdb</source>
+    <source>screenscraper</source>
+  </order>
+  <order type="screenshot">
+    <source>import</source>
+    <source>arcadedb</source>
+    <source>openretro</source>
+    <source>screenscraper</source>
+    <source>mobygames</source>
+  </order>
+  <order type="video">
+    <source>import</source>
+    <source>screenscraper</source>
+  </order>
+</priorities>

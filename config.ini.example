@@ -1,0 +1,72 @@
+# --------------------------------------------------------------------
+# Skyscraper by Lars Muldjord (https://github.com/muldjord/skyscraper)
+# --------------------------------------------------------------------
+
+# This is an example config file for use with Skyscraper. Use it as a template for creating
+#   your own. If you copy this file to 'config.ini' it will be used per default.
+#   You can always copy config.ini.example to a filename of your choice and make Skyscraper
+#   use it using the '-c' command line option.
+
+# You can have several platform sections in one config file. Further down is an example of
+#   an 'amiga' scraper setup. Check '--help' for more info on supported platforms.
+
+# Remember that most of these settings can also be set as command line options. Doing so
+#   will overrule the options seen here.
+# Some options are both available as 'main' options and 'platform' options. 'platform' options
+#   will overrule 'main' options allowing you to customize each platform for certain things.
+
+# Uncomment the sections and lines you wish to use:
+
+#[main]
+#platform=""
+#frontend="emulationstation"
+#emulator=""
+#videos="false"
+#brackets="true"
+#maxLength="10000"
+#threads="2"
+#pretend="false"
+#unattend="false"
+#verbose="false"
+#stats="false"
+#skipped="false"
+
+#[artwork]
+#finalImageWidth="600"
+#finalImageHeight="400"
+#coverEnabled="true"
+#coverWidth="150"
+#coverHeight="200"
+#coverX=""
+#coverY=""
+#coverShadowEnabled="true"
+#coverShadowDistance="10"
+#coverShadowSoftness="10"
+#coverShadowOpacity="75"
+#screenshotEnabled="true"
+#screenshotWidth="520"
+#screenshotHeight="390"
+#screenshotX=""
+#screenshotY=""
+#screenshotShadowEnabled="false"
+#screenshotShadowDistance="10"
+#screenshotShadowSoftness="10"
+#screenshotShadowOpacity="75"
+
+#[amiga]
+#emulator=""
+#videos="false"
+#brackets="true"
+#scraper="screenscraper"
+#userCreds="user:password"
+#inputFolder="/home/pi/RetroPie/roms/amiga"
+#gamelistFolder="/home/pi/RetroPie/roms/amiga"
+#imagesFolder="/home/pi/RetroPie/roms/amiga/images"
+#videosFolder="/home/pi/RetroPie/roms/amiga/videos"
+#minMatch="0"
+#maxLength="10000"
+#threads="2"
+#pretend="false"
+#unattend="false"
+#verbose="false"
+#skipped="false"
