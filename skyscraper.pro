@@ -38,14 +38,8 @@ HEADERS += src/skyscraper.h \
            src/attractmode.h \
            src/openretro.h \
            src/thegamesdb.h \
-           src/lemon64.h \
-           src/lemonamiga.h \
-           src/mobygames.h \
-           src/hol.h \
-           src/mamedb.h \
            src/worldofspectrum.h \
            src/screenscraper.h \
-           src/uvlist.h \
            src/arcadedb.h
            
 SOURCES += src/main.cpp \
@@ -65,12 +59,6 @@ SOURCES += src/main.cpp \
            src/attractmode.cpp \
            src/openretro.cpp \
            src/thegamesdb.cpp \
-           src/lemon64.cpp \
-           src/lemonamiga.cpp \
-           src/mobygames.cpp \
-           src/hol.cpp \
-           src/mamedb.cpp \
            src/worldofspectrum.cpp \
            src/screenscraper.cpp \
-           src/uvlist.cpp \
            src/arcadedb.cpp
