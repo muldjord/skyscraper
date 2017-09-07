@@ -154,9 +154,12 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 1.8.3 (unreleased)
+#### Version 2.0.0 (unreleased)
+* Back to basics: Removed several web sources. Now only allows the ones I have explicit permission to use.
 * Added scraping module info to output per result but only when using '--verbose'
 * Added check for unreasonably bad scraping runs, making Skyscraper exit if 30 of 30 files miss from the get-go
+
+### Older unsupported releases (no longer available and don't ask for them)
 
 #### Version 1.8.2 (27th August 2017)
 * Added support for 'coleco' platform
