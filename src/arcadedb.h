@@ -26,6 +26,9 @@
 #ifndef ARCADEDB_H
 #define ARCADEDB_H
 
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include "abstractscraper.h"
 
 class ArcadeDB : public AbstractScraper
@@ -38,11 +41,20 @@ public:
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,
 			QString searchName, QString platform);
+  void getGameData(GameEntry &game);
+  void getReleaseDate(GameEntry &game);
+  void getPlayers(GameEntry &game);
+  void getTags(GameEntry &game);
+  void getPublisher(GameEntry &game);
+  void getDescription(GameEntry &game);
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
   void getVideo(GameEntry &game);
   QString getSearchName(QString baseName);
 
+  QJsonDocument jsonDoc;
+  QJsonObject jsonObj;
+  
 };
 
 #endif // ARCADEDB_H

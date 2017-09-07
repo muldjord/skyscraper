@@ -23,6 +23,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <QJsonArray>
+
 #include "arcadedb.h"
 #include "strtools.h"
 
@@ -32,32 +34,7 @@ ArcadeDB::ArcadeDB()
 
   baseUrl = "http://adb.arcadeitalia.net";
 
-  searchUrlPre = "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=";
-  //searchUrlPre = "http://adb.arcadeitalia.net/?search=mame&arcade_only=0&ricerca=";
-  //searchUrlPre = "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=";
-  //searchUrlPost = "&arcade_only=0&autosearch=1";
-  
-  titlePre.append("id=\"game_description\"");
-  titlePre.append("\">");
-  titlePost = "</div>";
-  coverPre.append("<meta property=\"og:image\" content=\"");
-  coverPost = "\" />";
-  publisherPre.append("Manufacturer:");
-  publisherPre.append("class=\"dettaglio\">");
-  publisherPost = "</span>";
-  releaseDatePre.append("Year:");
-  releaseDatePre.append("class=\"dettaglio\">");
-  releaseDatePost = "</span>";
-  tagsPre.append("Category:");
-  tagsPre.append("class=\"dettaglio\">");
-  tagsPost = "</span>";
-  playersPre.append("Players:");
-  playersPre.append("class=\"dettaglio\">");
-  playersPre.append("<b>");
-  playersPost = "</b>";
-  descriptionPre.append("<div id=\"history_detail\"");
-  descriptionPre.append("\">");
-  descriptionPost = "TECHNICAL";
+  searchUrlPre = "http://adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&use_parent=1&game_name=";
   
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(RELEASEDATE);
@@ -71,30 +48,163 @@ ArcadeDB::ArcadeDB()
 }
 
 void ArcadeDB::getSearchResults(QList<GameEntry> &gameEntries,
-				 QString searchName, QString platform)
+				QString searchName, QString platform)
 {
   manager.request(searchUrlPre + searchName);
   q.exec();
   data = manager.getData();
   
-  if(data.indexOf("<h2>Error") != -1) {
+  jsonDoc = QJsonDocument::fromJson(data);
+  if(jsonDoc.isEmpty()) {
     return;
   }
+  jsonObj = jsonDoc.object().value("result").toArray().first().toObject();
+
+  foreach(QString key, jsonObj.keys()) {
+    qDebug("KEY: '%s'\n", key.toStdString().c_str());
+  }
+
   GameEntry game;
   
-  foreach(QString nom, titlePre) {
-    nomNom(nom);
-  }
-  game.title = data.left(data.indexOf(titlePost));
-  game.title = game.title.left(game.title.indexOf("(")).simplified();
+  game.title = jsonObj.value("title").toString();
   game.platform = platform;
-  game.url = searchUrlPre + searchName;
   gameEntries.append(game);
+}
+
+void ArcadeDB::getGameData(GameEntry &game)
+{
+  for(int a = 0; a < fetchOrder.length(); ++a) {
+    switch(fetchOrder.at(a)) {
+    case DESCRIPTION:
+      getDescription(game);
+      break;
+    case DEVELOPER:
+      getDeveloper(game);
+      break;
+    case PUBLISHER:
+      getPublisher(game);
+      break;
+    case PLAYERS:
+      getPlayers(game);
+      break;
+    case RATING:
+      getRating(game);
+      break;
+    case TAGS:
+      getTags(game);
+      break;
+    case RELEASEDATE:
+      getReleaseDate(game);
+      break;
+    case COVER:
+      getCover(game);
+      break;
+    case SCREENSHOT:
+      getScreenshot(game);
+      break;
+    case VIDEO:
+      if(config->videos) {
+	getVideo(game);
+      }
+      break;
+    default:
+      ;
+    }
+  }
+}
+
+void ArcadeDB::getReleaseDate(GameEntry &game)
+{
+  QString releaseDate = jsonObj.value("year").toString();
+  if(releaseDate.length() == 4 && releaseDate.toInt() != 0) {
+    game.releaseDate = QDate::fromString(releaseDate, "yyyy").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 7 &&
+	    releaseDate.left(4).toInt() != 0 &&
+	    releaseDate.left(4).toInt() < 3000 &&
+	    releaseDate.mid(5, 2).toInt() != 0 &&
+	    releaseDate.mid(5, 2).toInt() <= 12) {
+    game.releaseDate = QDate::fromString(releaseDate, "yyyy-MM").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 10 &&
+	    releaseDate.left(4).toInt() != 0 &&
+	    releaseDate.left(4).toInt() < 3000 &&
+	    releaseDate.mid(5, 2).toInt() != 0 &&
+	    releaseDate.mid(5, 2).toInt() <= 12 &&
+	    releaseDate.mid(8, 2).toInt() != 0 &&
+	    releaseDate.mid(8, 2).toInt() <= 31) {
+    game.releaseDate = QDate::fromString(releaseDate, "yyyy-MM-dd").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 10 &&
+	    releaseDate.left(2).toInt() != 0 &&
+	    releaseDate.left(2).toInt() <= 12 &&
+	    releaseDate.mid(3, 2).toInt() != 0 &&
+	    releaseDate.mid(3, 2).toInt() <= 31 &&
+	    releaseDate.mid(6, 4).toInt() != 0 &&
+	    releaseDate.mid(6, 4).toInt() < 3000) {
+    game.releaseDate = QDate::fromString(releaseDate, "MM/dd/yyyy").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 9 &&
+	    (releaseDate.left(3) == "Jan" ||
+	     releaseDate.left(3) == "Feb" ||
+	     releaseDate.left(3) == "Mar" ||
+	     releaseDate.left(3) == "Apr" ||
+	     releaseDate.left(3) == "May" ||
+	     releaseDate.left(3) == "Jun" ||
+	     releaseDate.left(3) == "Jul" ||
+	     releaseDate.left(3) == "Aug" ||
+	     releaseDate.left(3) == "Sep" ||
+	     releaseDate.left(3) == "Oct" ||
+	     releaseDate.left(3) == "Nov" ||
+	     releaseDate.left(3) == "Dec") &&
+	    releaseDate.mid(5, 4).toInt() != 0 &&
+	    releaseDate.mid(5, 4).toInt() < 3000) {
+    game.releaseDate = QDate::fromString(releaseDate, "MMM, yyyy").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 12 &&
+	    (releaseDate.left(3) == "Jan" ||
+	     releaseDate.left(3) == "Feb" ||
+	     releaseDate.left(3) == "Mar" ||
+	     releaseDate.left(3) == "Apr" ||
+	     releaseDate.left(3) == "May" ||
+	     releaseDate.left(3) == "Jun" ||
+	     releaseDate.left(3) == "Jul" ||
+	     releaseDate.left(3) == "Aug" ||
+	     releaseDate.left(3) == "Sep" ||
+	     releaseDate.left(3) == "Oct" ||
+	     releaseDate.left(3) == "Nov" ||
+	     releaseDate.left(3) == "Dec") &&
+	    releaseDate.mid(4, 2).toInt() != 0 &&
+	    releaseDate.mid(4, 2).toInt() <= 31 &&
+	    releaseDate.mid(8, 4).toInt() != 0 &&
+	    releaseDate.mid(8, 4).toInt() < 3000) {
+    game.releaseDate = QDate::fromString(releaseDate, "MMM dd, yyyy").toString("yyyyMMdd");
+  } else {
+    game.releaseDate = releaseDate;
+  }
+}
+
+void ArcadeDB::getPlayers(GameEntry &game)
+{
+  game.players = jsonObj.value("players").toString();
+}
+
+void ArcadeDB::getTags(GameEntry &game)
+{
+  game.tags = jsonObj.value("genre").toString();
+}
+
+void ArcadeDB::getPublisher(GameEntry &game)
+{
+  game.publisher = jsonObj.value("manufacturer").toString();
+}
+
+void ArcadeDB::getDescription(GameEntry &game)
+{
+  game.description = jsonObj.value("history").toString();
+  if(game.description.indexOf("- TECHNICAL") != -1) {
+    game.description = game.description.left(game.description.indexOf("- TECHNICAL")).trimmed();
+  }
 }
 
 void ArcadeDB::getCover(GameEntry &game)
 {
-  manager.request("http://adb.arcadeitalia.net/media/mame.current/flyers/" + game.baseName + ".png");
+  manager.request(jsonObj.value("url_image_flyer").toString());
   q.exec();
   {
     QImage image(QImage::fromData(manager.getData()));
@@ -103,7 +213,7 @@ void ArcadeDB::getCover(GameEntry &game)
       return;
     }
   }
-  manager.request("http://adb.arcadeitalia.net/media/mame.current/titles/" + game.baseName + ".png");
+  manager.request(jsonObj.value("url_image_title").toString());
   q.exec();
   {
     QImage image(QImage::fromData(manager.getData()));
@@ -116,7 +226,7 @@ void ArcadeDB::getCover(GameEntry &game)
 
 void ArcadeDB::getScreenshot(GameEntry &game)
 {
-  manager.request("http://adb.arcadeitalia.net/media/mame.current/ingames/" + game.baseName + ".png");
+  manager.request(jsonObj.value("url_image_ingame").toString());
   q.exec();
   QImage image(QImage::fromData(manager.getData()));
   if(!image.isNull()) {
@@ -126,7 +236,7 @@ void ArcadeDB::getScreenshot(GameEntry &game)
 
 void ArcadeDB::getVideo(GameEntry &game)
 {
-  manager.request("http://adb.arcadeitalia.net/download_file.php?tipo=mame_current&codice=" + game.baseName + "&entity=shortplay&oper=streaming&filler=" + game.baseName + ".mp4");
+  manager.request(jsonObj.value("url_video_shortplay").toString());
   q.exec();
   game.videoData = manager.getData();
   if(game.videoData.length() > (1024 * 500)) {
@@ -140,8 +250,3 @@ QString ArcadeDB::getSearchName(QString baseName)
 {
   return baseName;
 }
-
-// http://adb.arcadeitalia.net/media/mame.current/ingames/bomblord.png
-// http://adb.arcadeitalia.net/media/mame.current/titles/bomblord.png
-
-// http://adb.arcadeitalia.net/download_file.php?tipo=mame_current&codice=bublbobl&entity=shortplay&oper=streaming&filler=bublbobl.mp4
