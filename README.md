@@ -39,14 +39,9 @@ Currently supports the following platforms (set with '-p'):
 Currently supports the following scraping sources (set with '-s')
 * WEB: openretro.org
 * WEB: thegamesdb.net
-* WEB: lemon64.com
-* WEB: lemonamiga.com
-* WEB: mobygames.com
 * WEB: worldofspectrum.org
 * WEB: adb.arcadeitalia.net
-* WEB: mamedb.blu-ferret.co.uk
 * WEB: gamesdatabase.org
-* WEB: hol.abime.net
 * WEB: screenscraper.fr
 * LOCAL: localdb (scrapes exclusively from cached resources, read more under "Local database features")
 * LOCAL: import (imports resources located in '[homedir]/.skyscraper/import' into the local database. Read more under "Local data import")
