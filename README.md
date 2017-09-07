@@ -40,7 +40,7 @@ Currently supports the following scraping sources (set with '-s')
 * WEB: openretro.org
 * WEB: thegamesdb.net
 * WEB: worldofspectrum.org
-* WEB: adb.arcadeitalia.net
+* WEB: adb.arcadeitalia.net (Arcade Database by motoschifo, arcadedatabase@gmail.com, https://www.youtube.com/c/ArcadeDatabase)
 * WEB: screenscraper.fr
 * LOCAL: localdb (scrapes exclusively from cached resources, read more under "Local database features")
 * LOCAL: import (imports resources located in '[homedir]/.skyscraper/import' into the local database. Read more under "Local data import")
