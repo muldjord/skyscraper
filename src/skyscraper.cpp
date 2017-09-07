@@ -813,55 +813,55 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     } else if(config.platform == "arcade") {
       config.scraper = "arcadedb";
     } else if(config.platform == "apple2") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "atari2600") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "atari5200") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "atari7800") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "atarijaguar") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "atarist") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "c64") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "coleco") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "gamegear") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "gb") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "gba") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "gbc") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "genesis") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "megadrive") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "mastersystem") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "msx") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "n64") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "nds") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "neogeo") {
       config.scraper = "arcadedb";
     } else if(config.platform == "nes") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "pcengine") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "psp") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "psx") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "segacd") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "snes") {
-      config.scraper = "mobygames";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "zxspectrum") {
       config.scraper = "worldofspectrum";
     }
