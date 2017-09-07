@@ -60,10 +60,6 @@ void ArcadeDB::getSearchResults(QList<GameEntry> &gameEntries,
   }
   jsonObj = jsonDoc.object().value("result").toArray().first().toObject();
 
-  foreach(QString key, jsonObj.keys()) {
-    qDebug("KEY: '%s'\n", key.toStdString().c_str());
-  }
-
   GameEntry game;
   
   game.title = jsonObj.value("title").toString();
