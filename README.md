@@ -74,8 +74,6 @@ If everything went well you are now ready to run Skyscraper!
 ## Usage
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
 
-A video tutorial explaining the basic usage of Skyscraper can be found [here](https://youtu.be/BvhC0GmuA1Y). For the textual version and explanation of advanced features, read on. :)
-
 Now, I recommend taking a look at the command line options first:
 * $ Skyscraper --help
 
