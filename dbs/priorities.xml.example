@@ -12,24 +12,20 @@
     <source>import</source>
     <source>arcadedb</source>
     <source>screenscraper</source>
-    <source>mobygames</source>
     <source>openretro</source>
     <source>thegamesdb</source>
   </order>
   <order type="developer">
     <source>import</source>
     <source>arcadedb</source>
-    <source>mobygames</source>
   </order>
   <order type="publisher">
     <source>import</source>
     <source>arcadedb</source>
-    <source>mobygames</source>
   </order>
   <order type="players">
     <source>import</source>
     <source>arcadedb</source>
-    <source>mobygames</source>
     <source>openretro</source>
     <source>screenscraper</source>
     <source>thegamesdb</source>
@@ -37,7 +33,6 @@
   <order type="tags">
     <source>import</source>
     <source>arcadedb</source>
-    <source>mobygames</source>
     <source>openretro</source>
     <source>screenscraper</source>
   </order>
@@ -46,7 +41,6 @@
   </order>
   <order type="description">
     <source>import</source>
-    <source>mobygames</source>
     <source>thegamesdb</source>
     <source>screenscraper</source>
     <source>openretro</source>
@@ -54,7 +48,6 @@
   <order type="cover">
     <source>import</source>
     <source>openretro</source>
-    <source>mobygames</source>
     <source>thegamesdb</source>
     <source>screenscraper</source>
   </order>
@@ -63,7 +56,6 @@
     <source>arcadedb</source>
     <source>openretro</source>
     <source>screenscraper</source>
-    <source>mobygames</source>
   </order>
   <order type="video">
     <source>import</source>
