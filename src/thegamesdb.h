@@ -26,6 +26,8 @@
 #ifndef THEGAMESDB_H
 #define THEGAMESDB_H
 
+#include <QDomNode>
+
 #include "abstractscraper.h"
 
 class TheGamesDb : public AbstractScraper
@@ -38,10 +40,21 @@ public:
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,
 			QString searchName, QString platform);
+  void getGameData(GameEntry &game);
+  void getRating(GameEntry &game);
+  void getReleaseDate(GameEntry &game);
+  void getDeveloper(GameEntry &game);
+  void getPublisher(GameEntry &game);
+  void getPlayers(GameEntry &game);
+  void getDescription(GameEntry &game);
+  void getTags(GameEntry &game);
+
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
-  void getRating(GameEntry &game);
+
   QString actualPlatform(QString platform);
+
+  QDomNode xmlGame;
   
 };
 
