@@ -155,6 +155,9 @@ Append command line option '-c config_artwork03.ini'
 #### Version 2.0.1 (unreleased)
 * Removed 'mamedb' source files as they were no longer in use
 * Slightly changed help text for scraping modules
+* 'thegamesdb' now properly uses Qt's XML parser
+* 'screenscraper' now properly uses Qt's XML parser
+* Started implementing region and lang support for 'screenscraper', but still not enabled
 
 #### Version 2.0.0 (7th September 2017)
 * Back to basics: Removed several web sources. Now only allows the ones I have explicit permission to use.
