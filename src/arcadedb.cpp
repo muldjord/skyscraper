@@ -58,6 +58,7 @@ void ArcadeDB::getSearchResults(QList<GameEntry> &gameEntries,
   if(jsonDoc.isEmpty()) {
     return;
   }
+  qDebug("DATA:\n%s\n", data.data());
   jsonObj = jsonDoc.object().value("result").toArray().first().toObject();
 
   GameEntry game;
@@ -177,7 +178,7 @@ void ArcadeDB::getReleaseDate(GameEntry &game)
 
 void ArcadeDB::getPlayers(GameEntry &game)
 {
-  game.players = jsonObj.value("players").toString();
+  game.players = QString::number(jsonObj.value("players").toInt());
 }
 
 void ArcadeDB::getTags(GameEntry &game)
