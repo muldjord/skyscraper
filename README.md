@@ -152,6 +152,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
+#### Version 2.0.2 (unreleased)
+* Updated 'arcadedb' result parsing to fit new format
+
 #### Version 2.0.1 (15th September 2017)
 * Removed 'mamedb' source files as they were no longer in use
 * Slightly changed help text for scraping modules
