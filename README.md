@@ -61,9 +61,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.0.0.tar.gz
-* $ tar xvzf 2.0.0.tar.gz
-* $ cd skyscraper-2.0.0
+* $ wget https://github.com/muldjord/skyscraper/archive/2.0.1.tar.gz
+* $ tar xvzf 2.0.1.tar.gz
+* $ cd skyscraper-2.0.1
 * $ qmake
 * $ make
 * $ sudo make install
@@ -152,7 +152,7 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 2.0.1 (unreleased)
+#### Version 2.0.1 (15th September 2017)
 * Removed 'mamedb' source files as they were no longer in use
 * Slightly changed help text for scraping modules
 * 'thegamesdb' now properly uses Qt's XML parser
