@@ -26,6 +26,7 @@
 #include <QFileInfo>
 
 #include "screenscraper.h"
+#include "strtools.h"
 
 ScreenScraper::ScreenScraper()
 {
@@ -33,30 +34,6 @@ ScreenScraper::ScreenScraper()
 
   baseUrl = "http://www.screenscraper.fr";
 
-  descriptionPre.append("<synopsis>");
-  descriptionPre.append("<synopsis_en>");
-  descriptionPost = "</synopsis_en>";
-  publisherPre.append("<editeur>");
-  publisherPost = "</editeur>";
-  developerPre.append("<developpeur>");
-  developerPost = "</developpeur>";
-  playersPre.append("<joueurs>");
-  playersPost = "</joueurs>";
-  releaseDatePre.append("<dates>");
-  releaseDatePre.append("<date_");
-  releaseDatePre.append(">");
-  releaseDatePost = "</date";
-  tagsPre.append("<genre_en>");
-  tagsPost = "</genre_en>";
-  screenshotCounter = "<media_screenshot>";
-  screenshotPre.append("<media_screenshot>");
-  screenshotPost = "</media_screenshot>";
-  coverPre.append("<media_boxstexture>");
-  coverPre.append("<media_boxtexture");
-  coverPre.append(">");
-  coverPost = "</media_boxtexture";
-  
-  fetchOrder.append(VIDEO);
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(DEVELOPER);
   fetchOrder.append(PLAYERS);
@@ -65,6 +42,7 @@ ScreenScraper::ScreenScraper()
   fetchOrder.append(TAGS);
   fetchOrder.append(SCREENSHOT);
   fetchOrder.append(COVER);
+  fetchOrder.append(VIDEO);
 }
 
 void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
@@ -76,8 +54,8 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     exit(1);
   }
   */
-  //QString gameUrl = "https://www.screenscraper.fr/api/jeuInfos.php?devid=" + user + "&devpassword=" + password + "&softname=skyscraper" VERSION "&output=xml&" + searchName;
-  QString gameUrl = "https://www.screenscraper.fr/api/jeuInfos.php?devid=muldjord&devpassword=uWu5VRc9QDVMPpD8&softname=skyscraper" VERSION "&output=xml&" + searchName;
+  QString gameUrl = "https://www.screenscraper.fr/api/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&" + searchName;
+
   manager.request(gameUrl);
   q.exec();
   data = manager.getData();
@@ -86,38 +64,230 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     return;
   }
   
+  region = "wor";
+  lang = "en";
   GameEntry game;
 
-  if(data.indexOf("<nom_wor>") != -1) {
-    nomNom("<nom_wor>");
-    game.title = data.left(data.indexOf("</nom_wor>"));
-  } else if(data.indexOf("<nom_us>") != -1) {
-    nomNom("<nom_us>");
-    game.title = data.left(data.indexOf("</nom_us>"));
-  } else if(data.indexOf("<nom>") != -1) {
-    nomNom("<nom>");
-    game.title = data.left(data.indexOf("</nom>"));
+  xmlDoc.setContent(data);
+
+  QDomNode xmlRegionNoms = xmlDoc.elementsByTagName("noms").at(0);
+
+  if(!xmlRegionNoms.firstChildElement("nom_" + region).isNull()) {
+    game.title = xmlRegionNoms.firstChildElement("nom_" + region).text();
+  } else if(!xmlDoc.elementsByTagName("nom").at(0).toElement().isNull()) {
+    game.title = xmlDoc.elementsByTagName("nom").at(0).toElement().text();
+  } else if(!xmlRegionNoms.firstChildElement("nom_wor").isNull()) {
+    game.title = xmlRegionNoms.firstChildElement("nom_wor").text();
+  } else if(!xmlRegionNoms.firstChildElement("nom_us").isNull()) {
+    game.title = xmlRegionNoms.firstChildElement("nom_us").text();
   }
-  
+
+  // If title still unset, no acceptable rom was found, so return with no results
+  if(game.title.isNull()) {
+    return;
+  }
+
   game.url = gameUrl;
   
-  nomNom("<systemenom>");
-  game.platform = data.left(data.indexOf("</systemenom>"));
+  game.platform = xmlDoc.elementsByTagName("systemenom").at(0).toElement().text();
   
   if(game.platform.toLower() == actualPlatform(platform)) {
     gameEntries.append(game);
   }
 }
 
+void ScreenScraper::getGameData(GameEntry &game)
+{
+  for(int a = 0; a < fetchOrder.length(); ++a) {
+    switch(fetchOrder.at(a)) {
+    case DESCRIPTION:
+      getDescription(game);
+      break;
+    case DEVELOPER:
+      getDeveloper(game);
+      break;
+    case PUBLISHER:
+      getPublisher(game);
+      break;
+    case PLAYERS:
+      getPlayers(game);
+      break;
+    case RATING:
+      getRating(game);
+      break;
+    case TAGS:
+      getTags(game);
+      break;
+    case RELEASEDATE:
+      getReleaseDate(game);
+      break;
+    case COVER:
+      getCover(game);
+      break;
+    case SCREENSHOT:
+      getScreenshot(game);
+      break;
+    case VIDEO:
+      if(config->videos) {
+	getVideo(game);
+      }
+      break;
+    default:
+      ;
+    }
+  }
+}
+
+void ScreenScraper::getReleaseDate(GameEntry &game)
+{
+  QDomNode xmlNode = xmlDoc.elementsByTagName("dates").at(0);
+  QString releaseDate;
+  if(!xmlNode.firstChildElement("date_" + region).isNull()) {
+    releaseDate = xmlNode.firstChildElement("date_" + region).text();
+  } else if(!xmlNode.firstChildElement("date_wor").isNull()) {
+    releaseDate = xmlNode.firstChildElement("date_wor").text();
+  } else if(!xmlNode.firstChildElement("date_us").isNull()) {
+    releaseDate = xmlNode.firstChildElement("date_us").text();
+  }
+
+  if(releaseDate.length() == 4 && releaseDate.toInt() != 0) {
+    game.releaseDate = QDate::fromString(releaseDate, "yyyy").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 7 &&
+	    releaseDate.left(4).toInt() != 0 &&
+	    releaseDate.left(4).toInt() < 3000 &&
+	    releaseDate.mid(5, 2).toInt() != 0 &&
+	    releaseDate.mid(5, 2).toInt() <= 12) {
+    game.releaseDate = QDate::fromString(releaseDate, "yyyy-MM").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 10 &&
+	    releaseDate.left(4).toInt() != 0 &&
+	    releaseDate.left(4).toInt() < 3000 &&
+	    releaseDate.mid(5, 2).toInt() != 0 &&
+	    releaseDate.mid(5, 2).toInt() <= 12 &&
+	    releaseDate.mid(8, 2).toInt() != 0 &&
+	    releaseDate.mid(8, 2).toInt() <= 31) {
+    game.releaseDate = QDate::fromString(releaseDate, "yyyy-MM-dd").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 10 &&
+	    releaseDate.left(2).toInt() != 0 &&
+	    releaseDate.left(2).toInt() <= 12 &&
+	    releaseDate.mid(3, 2).toInt() != 0 &&
+	    releaseDate.mid(3, 2).toInt() <= 31 &&
+	    releaseDate.mid(6, 4).toInt() != 0 &&
+	    releaseDate.mid(6, 4).toInt() < 3000) {
+    game.releaseDate = QDate::fromString(releaseDate, "MM/dd/yyyy").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 9 &&
+	    (releaseDate.left(3) == "Jan" ||
+	     releaseDate.left(3) == "Feb" ||
+	     releaseDate.left(3) == "Mar" ||
+	     releaseDate.left(3) == "Apr" ||
+	     releaseDate.left(3) == "May" ||
+	     releaseDate.left(3) == "Jun" ||
+	     releaseDate.left(3) == "Jul" ||
+	     releaseDate.left(3) == "Aug" ||
+	     releaseDate.left(3) == "Sep" ||
+	     releaseDate.left(3) == "Oct" ||
+	     releaseDate.left(3) == "Nov" ||
+	     releaseDate.left(3) == "Dec") &&
+	    releaseDate.mid(5, 4).toInt() != 0 &&
+	    releaseDate.mid(5, 4).toInt() < 3000) {
+    game.releaseDate = QDate::fromString(releaseDate, "MMM, yyyy").toString("yyyyMMdd");
+  } else if(releaseDate.length() == 12 &&
+	    (releaseDate.left(3) == "Jan" ||
+	     releaseDate.left(3) == "Feb" ||
+	     releaseDate.left(3) == "Mar" ||
+	     releaseDate.left(3) == "Apr" ||
+	     releaseDate.left(3) == "May" ||
+	     releaseDate.left(3) == "Jun" ||
+	     releaseDate.left(3) == "Jul" ||
+	     releaseDate.left(3) == "Aug" ||
+	     releaseDate.left(3) == "Sep" ||
+	     releaseDate.left(3) == "Oct" ||
+	     releaseDate.left(3) == "Nov" ||
+	     releaseDate.left(3) == "Dec") &&
+	    releaseDate.mid(4, 2).toInt() != 0 &&
+	    releaseDate.mid(4, 2).toInt() <= 31 &&
+	    releaseDate.mid(8, 4).toInt() != 0 &&
+	    releaseDate.mid(8, 4).toInt() < 3000) {
+    game.releaseDate = QDate::fromString(releaseDate, "MMM dd, yyyy").toString("yyyyMMdd");
+  } else {
+    game.releaseDate = releaseDate;
+  }
+}
+
+void ScreenScraper::getDeveloper(GameEntry &game)
+{
+  game.developer = xmlDoc.elementsByTagName("developpeur").at(0).toElement().text();
+}
+
+void ScreenScraper::getPublisher(GameEntry &game)
+{
+  game.publisher = xmlDoc.elementsByTagName("editeur").at(0).toElement().text();
+}
+
+void ScreenScraper::getDescription(GameEntry &game)
+{
+  QDomNode xmlNode = xmlDoc.elementsByTagName("synopsis").at(0);
+  if(!xmlNode.firstChildElement("synopsis_" + lang).isNull()) {
+    game.description = xmlNode.firstChildElement("synopsis_" + lang).text();
+  } else if(!xmlNode.firstChildElement("synopsis_en").isNull()) {
+    game.description = xmlNode.firstChildElement("synopsis_en").text();
+  }
+}
+
+void ScreenScraper::getPlayers(GameEntry &game)
+{
+  game.players = xmlDoc.elementsByTagName("joueurs").at(0).toElement().text();
+}
+
+void ScreenScraper::getTags(GameEntry &game)
+{
+  QDomNodeList xmlNodes = xmlDoc.elementsByTagName("genre_" + lang);
+
+  for(int a = 0; a < xmlNodes.count(); ++a) {
+    game.tags.append(xmlNodes.at(a).toElement().text() + ", ");
+  }
+  game.tags = game.tags.left(game.tags.length() - 2);
+}
+
+void ScreenScraper::getCover(GameEntry &game)
+{
+  QDomElement xmlElem;
+  xmlElem = xmlDoc.elementsByTagName("media_box2d_" + region).at(0).toElement();
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_box2d_wor").at(0).toElement();
+  }
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_box2d_eu").at(0).toElement();
+  }
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_box2d_us").at(0).toElement();
+  }
+  if(!xmlElem.isNull()) {
+    manager.request(xmlElem.text());
+    q.exec();
+    QImage image(QImage::fromData(manager.getData()));
+    if(!image.isNull()) {
+      game.coverData = image;
+    }
+  }
+}
+
+void ScreenScraper::getScreenshot(GameEntry &game)
+{
+  QDomElement xmlElem = xmlDoc.elementsByTagName("media_screenshot").at(0).toElement();
+  if(!xmlElem.isNull()) {
+    manager.request(xmlElem.text());
+    q.exec();
+    QImage image(QImage::fromData(manager.getData()));
+    if(!image.isNull()) {
+      game.screenshotData = image;
+    }
+  }
+}
+
 void ScreenScraper::getVideo(GameEntry &game)
 {
-  nomNom("<jeu>");
-  nomNom("<id>");
-  QString gameId = data.left(data.indexOf("</id>"));
-  nomNom("<systemeid>");
-  QString systemId = data.left(data.indexOf("</systemeid>"));
-  QString videoUrl = "https://www.screenscraper.fr/api/mediaVideoJeu.php?devid=muldjord&devpassword=uWu5VRc9QDVMPpD8&softname=skyscraper&systemeid=" + systemId + "&jeuid=" + gameId + "&media=video";
-  manager.request(videoUrl);
+  QDomElement xmlElem = xmlDoc.elementsByTagName("media_video").at(0).toElement();
+  manager.request(xmlElem.text());
   q.exec();
   game.videoData = manager.getData();
   // Make sure recieved data is actually a video file
@@ -190,7 +360,6 @@ void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
   QList<QString> hashList = hashes.split(":");
 
   for(int pass = 1; pass <= 3; ++pass) {
-    // Reset searchName for each pass
     output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
     switch(pass) {
     case 1:
