@@ -33,6 +33,7 @@ class StrTools : public QObject
 public:
   static QString xmlUnescape(QString str);
   static QString xmlEscape(QString str);
+  static QByteArray unMagic(QByteArray str);
   
 };
 

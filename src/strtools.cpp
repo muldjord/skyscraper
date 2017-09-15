@@ -89,3 +89,24 @@ QString StrTools::xmlEscape(QString str)
     replace("\"", "&quot;").
     replace("'", "&apos;");
 }
+
+QByteArray StrTools::unMagic(QByteArray str)
+{
+  QByteArray magicStr("WowMuchEncrypted");
+
+  int strChars[str.length()];
+  int magicChars[str.length()];
+
+  for(int a = 0; a < magicStr.length(); ++a) {
+    strChars[a] = str.split(';').at(a).toInt();
+  }
+  for(int a = 0; a < magicStr.length(); ++a) {
+    magicChars[a] = magicStr.at(a);
+  }
+  QByteArray thingie;
+  for(int a = 0; a < magicStr.length(); ++a) {
+    thingie.append(QChar(strChars[a] -= magicChars[a]));
+  }
+
+  return thingie; 
+}
