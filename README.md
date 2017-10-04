@@ -152,8 +152,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 2.0.2 (unreleased)
+#### Version 2.0.2 (4th October 2017)
 * Updated 'arcadedb' result parsing to fit new format
+* Now scrapes 'msx' platform families correctly with the 'screenscraper' module
 
 #### Version 2.0.1 (15th September 2017)
 * Removed 'mamedb' source files as they were no longer in use
