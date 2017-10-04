@@ -334,9 +334,9 @@ QString ScreenScraper::actualPlatform(const QString platform)
     return "apple ii";
   } else if(platform == "atarijaguar") {
     return "jaguar";
-    else if(platform == "msx") {
+  } else if(platform == "msx") {
     return "msx;msx2;msx2+;msx r turbo";
- } else if(platform == "neogeo") {
+  } else if(platform == "neogeo") {
     return "neo-geo";
   } else if(platform == "n64") {
     return "nintendo 64";
