@@ -61,9 +61,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.0.1.tar.gz
-* $ tar xvzf 2.0.1.tar.gz
-* $ cd skyscraper-2.0.1
+* $ wget https://github.com/muldjord/skyscraper/archive/2.0.2.tar.gz
+* $ tar xvzf 2.0.2.tar.gz
+* $ cd skyscraper-2.0.2
 * $ qmake
 * $ make
 * $ sudo make install
