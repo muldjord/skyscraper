@@ -295,8 +295,8 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
      info.suffix() == "zip") {
     sha1FromData = false;
   }
-  // If file is larger than 50 MBs, use filename for sha1
-  if(info.size() > 52428800) {
+  // If file is larger than 20 MBs, use filename for sha1
+  if(info.size() > 20971520) {
     sha1FromData = false;
   }
 
