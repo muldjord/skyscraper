@@ -62,9 +62,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.0.2.tar.gz
-* $ tar xvzf 2.0.2.tar.gz
-* $ cd skyscraper-2.0.2
+* $ wget https://github.com/muldjord/skyscraper/archive/2.0.3.tar.gz
+* $ tar xvzf 2.0.3.tar.gz
+* $ cd skyscraper-2.0.3
 * $ qmake
 * $ make
 * $ sudo make install
@@ -153,8 +153,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 2.0.3 (unreleased)
-* Added '--lang' and '--region' command line options.
+#### Version 2.0.3 (5th October 2017)
+* Added '--lang' and '--region' command line options. Defaults to 'us' and 'wor' if none is provided.
+* Language and region support now implemented for 'screenscraper' module.
 * Removed 'stats' option as it didn't make much sense anymore.
 
 #### Version 2.0.2 (4th October 2017)
