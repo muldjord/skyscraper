@@ -55,7 +55,6 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   }
   */
   QString gameUrl = "https://www.screenscraper.fr/api/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&" + searchName;
-
   manager.request(gameUrl);
   q.exec();
   data = manager.getData();
@@ -91,7 +90,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   
   game.platform = xmlDoc.elementsByTagName("systemenom").at(0).toElement().text();
   
-  if(game.platform.toLower() == actualPlatform(platform)) {
+  if(platformMatch(game.platform, platform)) {
     gameEntries.append(game);
   }
 }
@@ -358,7 +357,7 @@ QString ScreenScraper::actualPlatform(const QString platform)
 
 void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &)
 {
-  QString hashes = getHashes(info.absoluteFilePath());
+  QString hashes = getHashes(info);
   QList<QString> hashList = hashes.split(":");
 
   for(int pass = 1; pass <= 3; ++pass) {
@@ -382,16 +381,18 @@ void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
   }
 }
 
-QString ScreenScraper::getHashes(const QString fileName)
+QString ScreenScraper::getHashes(const QFileInfo &info)
 {
   QCryptographicHash md5(QCryptographicHash::Md5);
   QCryptographicHash sha1(QCryptographicHash::Sha1);
-  QFile romFile(fileName);
+  QFile romFile(info.absoluteFilePath());
   romFile.open(QIODevice::ReadOnly);
-  QByteArray allData = romFile.readAll();
-  md5.addData(allData);
-  sha1.addData(allData);
+  while(!romFile.atEnd()) {
+    QByteArray dataSeg = romFile.read(1024);
+    md5.addData(dataSeg);
+    sha1.addData(dataSeg);
+  }
   romFile.close();
 
-  return QUrl::toPercentEncoding(romFile.fileName(), "()") + ":" + md5.result().toHex().toUpper() + ":" + sha1.result().toHex().toUpper();
+  return QUrl::toPercentEncoding(info.fileName()) + ":" + md5.result().toHex().toUpper() + ":" + sha1.result().toHex().toUpper();
 }

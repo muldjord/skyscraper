@@ -53,7 +53,7 @@ private:
   void getScreenshot(GameEntry &game);
   void getVideo(GameEntry &game);
   QString actualPlatform(QString platform);
-  QString getHashes(const QString fileName);
+  QString getHashes(const QFileInfo &info);
 
   QString region;
   QString lang;
