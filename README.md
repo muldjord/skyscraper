@@ -47,16 +47,17 @@ Currently supports the following scraping sources (set with '-s')
 
 ... More scraping sources will be added in future releases!
 
-## Note for Amiga users
+#### Note for Amiga users
 For Amiga I STRONGLY recommend you to set up your RetroPie to use WHDLoad. Follow this guide:
 * http://www.ultimateamiga.co.uk/HostedProjects/RetroPieAmiga/guide.html
 
-## Prerequisites
+## How to install Skyscraper
+### Install prerequisites
 Install this package:
 * $ sudo apt-get install qt5-default
 * [enter your 'pi' user password, default is 'raspberry']
 
-## Building and running
+### Download and compile
 Create a folder for the Skyscraper source, download the latest release, compile it and install it:
 * $ cd /home/pi
 * $ mkdir sources
@@ -71,7 +72,7 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 
 If everything went well you are now ready to run Skyscraper!
 
-## Usage
+## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
 
 Now, I recommend taking a look at the command line options first:
