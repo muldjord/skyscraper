@@ -153,6 +153,10 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
+#### Version 2.0.3 (unreleased)
+* Added '--lang' and '--region' command line options.
+* Removed 'stats' option as it didn't make much sense anymore.
+
 #### Version 2.0.2 (4th October 2017)
 * Updated 'arcadedb' result parsing to fit new format
 * Now scrapes 'msx' platform families correctly with the 'screenscraper' module
