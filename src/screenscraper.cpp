@@ -63,16 +63,14 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     return;
   }
   
-  region = "wor";
-  lang = "en";
   GameEntry game;
 
   xmlDoc.setContent(data);
 
   QDomNode xmlRegionNoms = xmlDoc.elementsByTagName("noms").at(0);
 
-  if(!xmlRegionNoms.firstChildElement("nom_" + region).isNull()) {
-    game.title = xmlRegionNoms.firstChildElement("nom_" + region).text();
+  if(!xmlRegionNoms.firstChildElement("nom_" + config->region).isNull()) {
+    game.title = xmlRegionNoms.firstChildElement("nom_" + config->region).text();
   } else if(!xmlDoc.elementsByTagName("nom").at(0).toElement().isNull()) {
     game.title = xmlDoc.elementsByTagName("nom").at(0).toElement().text();
   } else if(!xmlRegionNoms.firstChildElement("nom_wor").isNull()) {
@@ -141,10 +139,12 @@ void ScreenScraper::getReleaseDate(GameEntry &game)
 {
   QDomNode xmlNode = xmlDoc.elementsByTagName("dates").at(0);
   QString releaseDate;
-  if(!xmlNode.firstChildElement("date_" + region).isNull()) {
-    releaseDate = xmlNode.firstChildElement("date_" + region).text();
+  if(!xmlNode.firstChildElement("date_" + config->region).isNull()) {
+    releaseDate = xmlNode.firstChildElement("date_" + config->region).text();
   } else if(!xmlNode.firstChildElement("date_wor").isNull()) {
     releaseDate = xmlNode.firstChildElement("date_wor").text();
+  } else if(!xmlNode.firstChildElement("date_eu").isNull()) {
+    releaseDate = xmlNode.firstChildElement("date_eu").text();
   } else if(!xmlNode.firstChildElement("date_us").isNull()) {
     releaseDate = xmlNode.firstChildElement("date_us").text();
   }
@@ -224,9 +224,10 @@ void ScreenScraper::getPublisher(GameEntry &game)
 
 void ScreenScraper::getDescription(GameEntry &game)
 {
+  
   QDomNode xmlNode = xmlDoc.elementsByTagName("synopsis").at(0);
-  if(!xmlNode.firstChildElement("synopsis_" + lang).isNull()) {
-    game.description = xmlNode.firstChildElement("synopsis_" + lang).text();
+  if(!xmlNode.firstChildElement("synopsis_" + config->lang).isNull()) {
+    game.description = xmlNode.firstChildElement("synopsis_" + config->lang).text();
   } else if(!xmlNode.firstChildElement("synopsis_en").isNull()) {
     game.description = xmlNode.firstChildElement("synopsis_en").text();
   }
@@ -239,8 +240,14 @@ void ScreenScraper::getPlayers(GameEntry &game)
 
 void ScreenScraper::getTags(GameEntry &game)
 {
-  QDomNodeList xmlNodes = xmlDoc.elementsByTagName("genre_" + lang);
-
+  QDomNodeList xmlNodes = xmlDoc.elementsByTagName("genre_" + config->lang);
+  if(xmlNodes.isEmpty()) {
+    xmlNodes = xmlDoc.elementsByTagName("genre_en");
+  }
+  if(xmlNodes.isEmpty()) {
+    return;
+  }
+  
   for(int a = 0; a < xmlNodes.count(); ++a) {
     game.tags.append(xmlNodes.at(a).toElement().text() + ", ");
   }
@@ -250,7 +257,7 @@ void ScreenScraper::getTags(GameEntry &game)
 void ScreenScraper::getCover(GameEntry &game)
 {
   QDomElement xmlElem;
-  xmlElem = xmlDoc.elementsByTagName("media_box2d_" + region).at(0).toElement();
+  xmlElem = xmlDoc.elementsByTagName("media_box2d_" + config->region).at(0).toElement();
   if(xmlElem.isNull()) {
     xmlElem = xmlDoc.elementsByTagName("media_box2d_wor").at(0).toElement();
   }
