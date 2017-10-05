@@ -303,7 +303,9 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
   if(sha1FromData) {
     QFile romFile(info.absoluteFilePath());
     if(romFile.open(QIODevice::ReadOnly)) {
-      sha1.addData(romFile.readAll());
+      while(!romFile.atEnd()) {
+	sha1.addData(romFile.read(1024));
+      }
       romFile.close();
     } else {
       qDebug("Couldn't calculate sha1 hash sum of rom file '%s', please check permissions and try again, now exiting...\n", info.fileName().toStdString().c_str());
