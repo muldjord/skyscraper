@@ -28,8 +28,9 @@
 #pretend="false"
 #unattend="false"
 #verbose="false"
-#stats="false"
 #skipped="false"
+#lang="en"
+#region="wor"
 
 #[artwork]
 #finalImageWidth="600"

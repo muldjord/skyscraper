@@ -397,15 +397,6 @@ bool AbstractScraper::checkNom(const QString nom)
   return false;
 }
 
-void AbstractScraper::setUserCreds(QString userCreds)
-{
-  if(!userCreds.isEmpty()) {
-    QList<QString> snippets = userCreds.split(":");
-    user = snippets.at(0);
-    password = snippets.at(1);
-  }
-}
-
 QString AbstractScraper::getSearchName(QString baseName)
 {
   if(config->scraper != "mamedb" &&

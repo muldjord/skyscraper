@@ -64,7 +64,6 @@ void ScraperWorker::run()
     scraper = new ArcadeDB();
   } else if(config.scraper == "screenscraper") {
     scraper = new ScreenScraper();
-    scraper->setUserCreds(config.userCreds);
   } else if(config.scraper == "worldofspectrum") {
     scraper = new WorldOfSpectrum();
   } else if(config.scraper == "localdb") {
@@ -79,9 +78,6 @@ void ScraperWorker::run()
   scraper->loadMameMap();
   
   platformOrig = config.platform;
-  int screensFound = 0;
-  int coversFound = 0;
-  int gamesFound = 0;
   for(int a = beginIdx; a < filesPerThread + beginIdx; ++a) {
     output = "";
     config.platform = platformOrig;
@@ -196,16 +192,6 @@ void ScraperWorker::run()
     }
     output.append("\nDescription:\n" + game.description + "\n");
 
-    if(config.stats) {
-      gamesFound++;
-      if(!game.screenshotData.isNull()) {
-	screensFound++;
-      }
-      if(!game.coverData.isNull()) {
-	coversFound++;
-      }
-    }
-
     if(!config.pretend) {
       if(config.frontend != "attractmode") {
 	Compositor artCreator;
@@ -230,15 +216,6 @@ void ScraperWorker::run()
 
     emit outputToTerminal(output);
     emit entryReady(game);
-  }
-  if(config.stats) {
-    QFile statsFile("./_stats/" + config.platform + "/" + config.scraper + ".txt");
-    statsFile.open(QIODevice::WriteOnly);
-    statsFile.write("---- " + config.scraper.toUtf8() + " ----\n");
-    statsFile.write("Games found      : " + QString::number(gamesFound).toUtf8() + "\n");
-    statsFile.write("Covers found     : " + QString::number(coversFound).toUtf8() + "\n");
-    statsFile.write("Screenshots found: " + QString::number(screensFound).toUtf8() + "\n");
-    statsFile.close();
   }
 
   delete scraper;

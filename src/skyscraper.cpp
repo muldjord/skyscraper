@@ -77,10 +77,6 @@ void Skyscraper::run()
   found = 0;
   avgCompleteness = 0;
   avgSearchMatch = 0;
-  if(config.stats) {
-    config.threads = 1; // Only scrape with 1 thread when exporting stats to avoid race conditions
-    config.unattend = true; // Enable unattended for stats scraping, to ease script use
-  }
   
   QDir inputDir;
   if(config.platform == "amiga") {
@@ -159,10 +155,6 @@ void Skyscraper::run()
     config.videosFolder = videosDir.absolutePath();
   }
 
-  if(config.stats) {
-    QDir::current().mkpath("./_stats/" + config.platform);
-  }
-  
   if(!config.dbFolder.isEmpty() && config.localDb) {
     localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
     if(localDb->createFolders(config.scraper)) {
@@ -578,14 +570,17 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("platform")) {
     config.platform = settings.value("platform").toString();
   }
+  if(settings.contains("lang")) {
+    config.lang = settings.value("lang").toString();
+  }
+  if(settings.contains("region")) {
+    config.region = settings.value("region").toString();
+  }
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
   }
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
-  }
-  if(settings.contains("stats")) {
-    config.stats = settings.value("stats").toBool();
   }
   if(settings.contains("verbose")) {
     config.verbose = settings.value("verbose").toBool();
@@ -785,11 +780,14 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("unattend")) {
     config.unattend = true;
   }
+  if(parser.isSet("region")) {
+    config.region = parser.value("region");
+  }
+  if(parser.isSet("lang")) {
+    config.lang = parser.value("lang");
+  }
   if(parser.isSet("verbose")) {
     config.verbose = true;
-  }
-  if(parser.isSet("stats")) {
-    config.stats = true;
   }
   if(parser.isSet("l") && parser.value("l").toInt() >= 0 && parser.value("l").toInt() <= 10000) {
     config.maxLength = parser.value("l").toInt();

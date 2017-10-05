@@ -85,6 +85,11 @@ struct Settings {
   int screenshotShadowSoftness = 10;
   int screenshotShadowOpacity = 75;
 
+  QString user = "";
+  QString password = "";
+  QString lang = "us";
+  QString region = "wor";
+
 };
 
 #endif // SETTINGS_H

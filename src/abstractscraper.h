@@ -47,7 +47,6 @@ public:
   virtual QString getCompareName(QString baseName, QString &sqrNotes, QString &parNotes);
   virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking);
 
-  void setUserCreds(QString userCreds);
   void setConfig(Settings *config);
   void loadMameMap();
   
@@ -112,9 +111,6 @@ protected:
   QList<QString> videoPre;
   QString videoPost;
 
-  QString user;
-  QString password;
-  
   NetComm manager;
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
 

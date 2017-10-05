@@ -100,10 +100,10 @@ int main(int argc, char *argv[])
   QCommandLineOption gOption("g", "Gamelist export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption oOption("o", "Game image export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption vOption("v", "Game video export folder.\n(default depends on frontend)", "path", "");
-  QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 50)", "0-100", "");
-  QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 10000)", "0-10000", "");
   QCommandLineOption sOption("s", "Force a certain scraping module instead of the default one for the selected platform.\n(WEB: 'arcadedb', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb')", "scraper", "");
   QCommandLineOption uOption("u", "UserID and Password for use with the selected scraper module.\n(Default is none)", "user:password", "");
+  QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 50)", "0-100", "");
+  QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 10000)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use.\n(default is 4)", "1-8", "");
   QCommandLineOption cOption("c", "Use this config file to set up the scraper.\n(default is '[homedir]/.skyscraper/config.ini')", "filename", "");
   QCommandLineOption dOption("d", "Set local resource database folder.\n(default is '[homedir]/.skyscraper/dbs/[platform]')", "folder", "");
@@ -112,13 +112,13 @@ int main(int argc, char *argv[])
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption nolocaldbOption("nolocaldb", "Disables local db resources. Other local db flags will then be ignored.");
   QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in local db using selected scraper. Set specific db folder with '-d'. Otherwise default db folder is used.");
-  QCommandLineOption checkdbOption("checkdb", "Check integrity of a local database. Set specific db folder with '-d'. Otherwise default db folder is used.");
   QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db. Set specific db folder with '-d'. Otherwise default db folder is used.");
   QCommandLineOption mergedbOption("mergedb", "Merge data from a specific db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d'. Otherwise default destination db folder is used.", "folder", "");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption pretendOption("pretend", "Don't alter any files (except 'skipped.txt'), just print the results on screen.");
   QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
-  QCommandLineOption statsOption("stats", "Exports various statistics to '_stats' folder while scraping.\nNote: This forces the scraper to only use 1 thread and always overwrite without asking!");
+  QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default 'wor')", "code", "wor");
+  QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
   QCommandLineOption verboseOption("verbose", "Print more info while scraping.");
   
   parser.addOption(pOption);
@@ -128,10 +128,10 @@ int main(int argc, char *argv[])
   parser.addOption(gOption);
   parser.addOption(oOption);
   parser.addOption(vOption);
-  parser.addOption(mOption);
-  parser.addOption(lOption);
   parser.addOption(sOption);
   parser.addOption(uOption);
+  parser.addOption(mOption);
+  parser.addOption(lOption);
   parser.addOption(tOption);
   parser.addOption(cOption);
   parser.addOption(dOption);
@@ -146,7 +146,8 @@ int main(int argc, char *argv[])
   parser.addOption(nosubdirsOption);
   parser.addOption(pretendOption);
   parser.addOption(unattendOption);
-  parser.addOption(statsOption);
+  parser.addOption(langOption);
+  parser.addOption(regionOption);
   parser.addOption(verboseOption);
 
   parser.process(app);
