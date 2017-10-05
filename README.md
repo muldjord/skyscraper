@@ -155,7 +155,8 @@ Append command line option '-c config_artwork03.ini'
 #### Version 2.0.2 (4th October 2017)
 * Updated 'arcadedb' result parsing to fit new format
 * Now scrapes 'msx' platform families correctly with the 'screenscraper' module
-* Changed limit for iso checksumming to 20 megs to avoid running out of memory.
+* Optimized file checksumming
+* Fixed a bug in 'screenscraper' module not allowing platforms with multiple platform name to be recognized. (thanks to 'qqplayer' for pointing this out!)
 
 #### Version 2.0.1 (15th September 2017)
 * Removed 'mamedb' source files as they were no longer in use
