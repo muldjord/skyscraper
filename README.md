@@ -95,7 +95,7 @@ This will scrape using the specified scraping module instead of the default one.
 
 Scraping with localdb will combine all of your locally cached resources into the most complete results. Remember to always overwrite your gamelist and NOT skip existing entries, unless you have a specific reason to do so. Read on for a more thorough description of localdb and how to prioritize the results.
 
-### Local database features (1.6.0 and onwards)
+### Local database features
 Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game 'title' or a game 'screenshot'. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the 'localdb' scraping module.
 
 #### LocalDb scraping module
