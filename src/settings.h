@@ -87,7 +87,7 @@ struct Settings {
 
   QString user = "";
   QString password = "";
-  QString lang = "us";
+  QString lang = "en";
   QString region = "wor";
 
 };
