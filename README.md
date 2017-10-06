@@ -153,6 +153,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
+#### Version 2.0.4 (unreleased)
+* Default language is now 'en' instead of 'us'.
+
 #### Version 2.0.3 (5th October 2017)
 * Added '--lang' and '--region' command line options. Defaults to 'us' and 'wor' if none is provided.
 * Language and region support now implemented for 'screenscraper' module.
