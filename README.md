@@ -47,7 +47,7 @@ Currently supports the following scraping sources (set with '-s')
 
 ... More scraping sources will be added in future releases!
 
-#### Note for Amiga users
+#### Note for Amiga scraping
 For Amiga I STRONGLY recommend you to set up your RetroPie to use WHDLoad. Follow this guide:
 * http://www.ultimateamiga.co.uk/HostedProjects/RetroPieAmiga/guide.html
 
