@@ -62,9 +62,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.0.3.tar.gz
-* $ tar xvzf 2.0.3.tar.gz
-* $ cd skyscraper-2.0.3
+* $ wget https://github.com/muldjord/skyscraper/archive/2.0.4.tar.gz
+* $ tar xvzf 2.0.4.tar.gz
+* $ cd skyscraper-2.0.4
 * $ qmake
 * $ make
 * $ sudo make install
@@ -153,8 +153,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 2.0.4 (unreleased)
+#### Version 2.0.4 (5th November 2017)
 * Default language is now 'en' instead of 'us'.
+* Empty video tags no longer added to gamelist.xml for emulationstation.
 
 #### Version 2.0.3 (5th October 2017)
 * Added '--lang' and '--region' command line options. Defaults to 'us' and 'wor' if none is provided.
