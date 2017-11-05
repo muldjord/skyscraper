@@ -72,9 +72,7 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     } else {
       finalOutput.append("    <image>" + StrTools::xmlEscape(entry.imageFile) + "</image>\n");
     }
-    if(entry.videoFormat.isEmpty()) {
-      finalOutput.append("    <video />\n");
-    } else {
+    if(!entry.videoFormat.isEmpty()) {
       finalOutput.append("    <video>" + StrTools::xmlEscape(entry.videoFile) + "</video>\n");
     }
     if(entry.rating.isEmpty()) {
