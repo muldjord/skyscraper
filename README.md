@@ -52,6 +52,8 @@ For Amiga I STRONGLY recommend you to set up your RetroPie to use WHDLoad. Follo
 * http://www.ultimateamiga.co.uk/HostedProjects/RetroPieAmiga/guide.html
 
 ## How to install Skyscraper
+Follow the steps below to install the latest version of Skyscraper. Lines beginning with '$' signifies a command you need run in a terminal on the machine you wish to install it on.
+
 ### Install prerequisites
 Install this package:
 * $ sudo apt-get install qt5-default
