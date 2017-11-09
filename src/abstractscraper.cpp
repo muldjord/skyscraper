@@ -489,7 +489,7 @@ QString AbstractScraper::getCompareName(QString baseName, QString &sqrNotes, QSt
   baseName = baseNameOrig;
   
   // Now create actual compareName
-  baseName = baseName.left(baseName.indexOf("(")).left(baseName.indexOf("[")).simplified();
+  baseName = baseName.replace("_", " ").left(baseName.indexOf("(")).left(baseName.indexOf("[")).simplified();
 
   if(baseName.right(5) == ", The") {
     baseName = baseName.left(baseName.indexOf(",")).prepend("The ");
