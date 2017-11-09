@@ -158,6 +158,8 @@ Append command line option '-c config_artwork03.ini'
 
 #### Version 2.0.5 (unreleased)
 * Added support for 'scummvm' platform in scraping module 'thegamesdb' or 'openretro'.
+* Now only removed 'the' from searchName if longer than 10 chars.
+* Now always converts underscores to spaces in search- and compare names.
 
 #### Version 2.0.4 (5th November 2017)
 * Default language is now 'en' instead of 'us'.
