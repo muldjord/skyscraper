@@ -419,17 +419,19 @@ QString AbstractScraper::getSearchName(QString baseName)
     replace(" - ", "-");
   baseName = baseName.left(baseName.indexOf("("));
   baseName = baseName.left(baseName.indexOf("["));
-  // Always remove 'the' from beginning or end
-  if(baseName.simplified().left(4) == "the ") {
-    baseName = baseName.simplified().remove(0, 4);
-  }
-  if(baseName.simplified().right(5) == ", the") {
-    baseName = baseName.simplified().left(baseName.indexOf(", the"));
+  // Always remove 'the' from beginning or end if equal to or longer than 10 chars.
+  // If it's shorter the 'the' is of more significance and shouldn't be removed.
+  if(baseName.length() >= 10) {
+    if(baseName.simplified().left(4) == "the ") {
+      baseName = baseName.simplified().remove(0, 4);
+    }
+    if(baseName.simplified().right(5) == ", the") {
+      baseName = baseName.simplified().left(baseName.indexOf(", the"));
+    }
   }
   baseName = baseName.replace(",", " ").replace("&", "%26").replace("+", "").
-    replace("s's", "s'").replace("'", "%27");
-  ;
-  baseName = baseName.simplified().replace("_", "+").replace(" ", "+");
+    replace("s's", "s'").replace("'", "%27").replace("_", " ");
+  baseName = baseName.simplified().replace(" ", "+");
   
   // Implement special cases here
   if(baseName == "ik") {
