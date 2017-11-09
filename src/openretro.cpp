@@ -186,6 +186,8 @@ QString OpenRetro::actualPlatform(const QString platform)
     return "turbografx-16";
   } else if(platform == "psx") {
     return "playstation";
+  } else if(platform == "scummvm") {
+    return "dos;amiga;cd32";
   } else if(platform == "snes") {
     return "super nintendo";
   } else if(platform == "zxspectrum") {

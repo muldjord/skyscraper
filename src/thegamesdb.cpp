@@ -312,6 +312,8 @@ QString TheGamesDb::actualPlatform(const QString platform)
     return "atari jaguar";
   } else if(platform == "neogeo") {
     return "neo geo;neo geo cd;arcade";
+  } else if(platform == "scummvm") {
+    return "pc;amiga;amiga cd32";
   } else if(platform == "n64") {
     return "nintendo 64";
   } else if(platform == "nds") {

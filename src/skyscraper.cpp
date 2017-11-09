@@ -129,6 +129,8 @@ void Skyscraper::run()
     inputDir = QDir(config.inputFolder, "*.cso *.iso *.pbp *.zip", QDir::Name, QDir::Files);
   } else if(config.platform == "psx") {
     inputDir = QDir(config.inputFolder, "*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.zip", QDir::Name, QDir::Files);
+  } else if(config.platform == "scummvm") {
+    inputDir = QDir(config.inputFolder, "*.svm", QDir::Name, QDir::Files);
   } else if(config.platform == "snes") {
     inputDir = QDir(config.inputFolder, "*.zip *.smc *.sfc *.fig *.swc", QDir::Name, QDir::Files);
   } else if(config.platform == "segacd") {
@@ -631,6 +633,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 			   parser.value("p") == "pcengine" ||
 			   parser.value("p") == "psp" ||
 			   parser.value("p") == "psx" ||
+			   parser.value("p") == "scummvm" ||
 			   parser.value("p") == "segacd" ||
 			   parser.value("p") == "snes" ||
 			   parser.value("p") == "zxspectrum")) {
@@ -861,6 +864,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.scraper = "thegamesdb";
     } else if(config.platform == "psx") {
       config.scraper = "thegamesdb";
+    } else if(config.platform == "scummvm") {
+      config.scraper = "openretro";
     } else if(config.platform == "segacd") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "snes") {
