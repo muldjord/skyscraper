@@ -429,7 +429,7 @@ QString AbstractScraper::getSearchName(QString baseName)
   baseName = baseName.replace(",", " ").replace("&", "%26").replace("+", "").
     replace("s's", "s'").replace("'", "%27");
   ;
-  baseName = baseName.simplified().replace(" ", "+");
+  baseName = baseName.simplified().replace("_", "+").replace(" ", "+");
   
   // Implement special cases here
   if(baseName == "ik") {
