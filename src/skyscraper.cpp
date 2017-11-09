@@ -865,7 +865,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     } else if(config.platform == "psx") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "scummvm") {
-      config.scraper = "openretro";
+      config.scraper = "thegamesdb";
     } else if(config.platform == "segacd") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "snes") {
