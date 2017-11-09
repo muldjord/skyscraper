@@ -28,6 +28,7 @@ Currently supports the following platforms (set with '-p'):
 * PC-Engine / TurboGrafx-16
 * Playstation
 * Playstation Portable
+* ScummVM (looks for PC or Amiga matches)
 * Sega CD
 * Sega Game Gear
 * Sega Master System
@@ -154,6 +155,9 @@ Append command line option '-c config_artwork03.ini'
 ![Big centered screenshot with drop shadow, no cover](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/North%20%26%20South.png)
 
 ## Release notes
+
+#### Version 2.0.5 (unreleased)
+* Added support for 'scummvm' platform in scraping module 'thegamesdb' or 'openretro'.
 
 #### Version 2.0.4 (5th November 2017)
 * Default language is now 'en' instead of 'us'.
