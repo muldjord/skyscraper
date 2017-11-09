@@ -65,7 +65,7 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
     game.title = xmlGames.at(a).firstChildElement("GameTitle").text();
     // Remove anything at the end with a parentheses. 'thegamesdb' has a habbit of adding
     // for instance '(1993)' to the name.
-    game.title = game.title.left(game.title.indexOf("("));
+    game.title = game.title.left(game.title.indexOf("(")).simplified();
     game.platform = xmlGames.at(a).firstChildElement("Platform").text();
 
     if(platformMatch(game.platform, platform)) {
