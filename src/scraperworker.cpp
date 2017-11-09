@@ -332,9 +332,10 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 	break;
       }
     }
+    // The reason for using .right in the second parameter is to better hit results such as 'maniac mansion II: day of the tentacle' where the filename might be 'day of the tentacle'.
     unsigned int currentDistance =
       editDistance(StrTools::xmlUnescape(compareName).toLower().toStdString(),
-		   StrTools::xmlUnescape(currentTitle).toLower().toStdString());
+		   StrTools::xmlUnescape(currentTitle).right(StrTools::xmlUnescape(compareName).length()).toLower().toStdString());
     if(currentDistance < lowestDistance) {
       lowestDistance = currentDistance;
       mostSimilar = a;
