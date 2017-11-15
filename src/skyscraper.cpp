@@ -80,7 +80,7 @@ void Skyscraper::run()
   
   QDir inputDir;
   if(config.platform == "amiga") {
-    inputDir = QDir(config.inputFolder, "*.uae *.zip *.afd *.dms *.adz *.rp9", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.uae *.zip *.adf *.dms *.adz *.rp9", QDir::Name, QDir::Files);
   } else if(config.platform == "apple2") {
     inputDir = QDir(config.inputFolder, "*.dsk *.zip", QDir::Name, QDir::Files);
   } else if(config.platform == "arcade") {
