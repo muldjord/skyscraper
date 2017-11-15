@@ -65,9 +65,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.0.5.tar.gz
-* $ tar xvzf 2.0.5.tar.gz
-* $ cd skyscraper-2.0.5
+* $ wget https://github.com/muldjord/skyscraper/archive/2.0.5a.tar.gz
+* $ tar xvzf 2.0.5a.tar.gz
+* $ cd skyscraper-2.0.5a
 * $ qmake
 * $ make
 * $ sudo make install
@@ -155,6 +155,9 @@ Append command line option '-c config_artwork03.ini'
 ![Big centered screenshot with drop shadow, no cover](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/North%20%26%20South.png)
 
 ## Release notes
+
+#### Version 2.0.5a (15th November 2017)
+* Fixed Amiga 'adf' files not being scraped because I messed up and typed it as 'afd'. Thank you to James Kerridge for letting me know about this.
 
 #### Version 2.0.5 (14th November 2017)
 * Added support for 'scummvm' platform in scraping module 'thegamesdb' or 'openretro'.
