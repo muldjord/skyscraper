@@ -80,63 +80,63 @@ void Skyscraper::run()
   
   QDir inputDir;
   if(config.platform == "amiga") {
-    inputDir = QDir(config.inputFolder, "*.uae *.zip *.adf *.dms *.adz *.rp9", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.uae *.zip *.7z *.adf *.dms *.adz *.rp9", QDir::Name, QDir::Files);
   } else if(config.platform == "apple2") {
-    inputDir = QDir(config.inputFolder, "*.dsk *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.dsk *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "arcade") {
-    inputDir = QDir(config.inputFolder, "*.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "atari2600") {
-    inputDir = QDir(config.inputFolder, "*.bin *.a26 *.rom *.zip *.gz", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.bin *.a26 *.rom *.zip *.7z *.gz", QDir::Name, QDir::Files);
   } else if(config.platform == "atari5200") {
-    inputDir = QDir(config.inputFolder, "*.a52 *.bas *.bin *.car *.xex *.atr *.xfd *.dcm *.atr.gz *.xfd.gz *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.a52 *.bas *.bin *.car *.xex *.atr *.xfd *.dcm *.atr.gz *.xfd.gz *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "atari7800") {
-    inputDir = QDir(config.inputFolder, "*.a78 *.bin *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.a78 *.bin *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "atarijaguar") {
-    inputDir = QDir(config.inputFolder, "*.j64 *.jag *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.j64 *.jag *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "atarist") {
-    inputDir = QDir(config.inputFolder, "*.st *.stx *.img *.rom *.raw *.ipf *.ctr *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.st *.stx *.img *.rom *.raw *.ipf *.ctr *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "c64") {
-    inputDir = QDir(config.inputFolder, "*.crt *.d64 *.prg *.zip *.tap *.t64 *.g64", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.crt *.d64 *.prg *.zip *.7z *.tap *.t64 *.g64", QDir::Name, QDir::Files);
   } else if(config.platform == "coleco") {
-    inputDir = QDir(config.inputFolder, "*.bin *.col *.rom *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.bin *.col *.rom *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "gb") {
-    inputDir = QDir(config.inputFolder, "*.gb *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.gb *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "gba") {
-    inputDir = QDir(config.inputFolder, "*.gba *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.gba *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "gbc") {
-    inputDir = QDir(config.inputFolder, "*.gbc *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.gbc *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "gamegear") {
-    inputDir = QDir(config.inputFolder, "*.zip *.gg", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.zip *.7z *.gg", QDir::Name, QDir::Files);
   } else if(config.platform == "genesis") {
-    inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "mastersystem") {
-    inputDir = QDir(config.inputFolder, "*.sms *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.sms *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "megadrive") {
-    inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "msx") {
-    inputDir = QDir(config.inputFolder, "*.zip *.rom *.mx1 *.mx2 *.col *.dsk", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.zip *.7z *.rom *.mx1 *.mx2 *.col *.dsk", QDir::Name, QDir::Files);
   } else if(config.platform == "n64") {
-    inputDir = QDir(config.inputFolder, "*.z64 *.n64 *.v64 *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.z64 *.n64 *.v64 *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "nds") {
-    inputDir = QDir(config.inputFolder, "*.zip *.nds", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.zip *.7z *.nds", QDir::Name, QDir::Files);
   } else if(config.platform == "neogeo") {
-    inputDir = QDir(config.inputFolder, "*.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "nes") {
-    inputDir = QDir(config.inputFolder, "*.zip *.nes *.smc *.sfc *.fig *.swc *.mgd", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.zip *.7z *.nes *.smc *.sfc *.fig *.swc *.mgd", QDir::Name, QDir::Files);
   } else if(config.platform == "pcengine") {
-    inputDir = QDir(config.inputFolder, "*.pce *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.pce *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "psp") {
-    inputDir = QDir(config.inputFolder, "*.cso *.iso *.pbp *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.cso *.iso *.pbp *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "psx") {
-    inputDir = QDir(config.inputFolder, "*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "scummvm") {
     inputDir = QDir(config.inputFolder, "*.svm", QDir::Name, QDir::Files);
   } else if(config.platform == "snes") {
-    inputDir = QDir(config.inputFolder, "*.zip *.smc *.sfc *.fig *.swc", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.zip *.7z *.smc *.sfc *.fig *.swc", QDir::Name, QDir::Files);
   } else if(config.platform == "segacd") {
-    inputDir = QDir(config.inputFolder, "*.cue *.iso *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.cue *.iso *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "zxspectrum") {
-    inputDir = QDir(config.inputFolder, "*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk *.zip", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk *.zip *.7z", QDir::Name, QDir::Files);
   }
   if(!inputDir.exists()) {
     qDebug("Input folder '%s' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
