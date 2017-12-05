@@ -156,6 +156,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
+#### Version 2.0.5b (5th December 2017)
+* Added support for *.7z files for all platforms.
+
 #### Version 2.0.5a (15th November 2017)
 * Fixed Amiga 'adf' files not being scraped because I messed up and typed it as 'afd'. Thank you to James Kerridge for letting me know about this.
 
