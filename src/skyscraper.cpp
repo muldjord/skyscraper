@@ -93,6 +93,8 @@ void Skyscraper::run()
     inputDir = QDir(config.inputFolder, "*.a78 *.bin *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "atarijaguar") {
     inputDir = QDir(config.inputFolder, "*.j64 *.jag *.zip *.7z", QDir::Name, QDir::Files);
+  } else if(config.platform == "atarilynx") {
+    inputDir = QDir(config.inputFolder, "*.lnx *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "atarist") {
     inputDir = QDir(config.inputFolder, "*.st *.stx *.img *.rom *.raw *.ipf *.ctr *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "c64") {
@@ -106,7 +108,7 @@ void Skyscraper::run()
   } else if(config.platform == "gbc") {
     inputDir = QDir(config.inputFolder, "*.gbc *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "gamegear") {
-    inputDir = QDir(config.inputFolder, "*.zip *.7z *.gg", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.gg *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "genesis") {
     inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "mastersystem") {
@@ -114,15 +116,17 @@ void Skyscraper::run()
   } else if(config.platform == "megadrive") {
     inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "msx") {
-    inputDir = QDir(config.inputFolder, "*.zip *.7z *.rom *.mx1 *.mx2 *.col *.dsk", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.rom *.mx1 *.mx2 *.col *.dsk *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "n64") {
     inputDir = QDir(config.inputFolder, "*.z64 *.n64 *.v64 *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "nds") {
-    inputDir = QDir(config.inputFolder, "*.zip *.7z *.nds", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.nds *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "neogeo") {
     inputDir = QDir(config.inputFolder, "*.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "nes") {
-    inputDir = QDir(config.inputFolder, "*.zip *.7z *.nes *.smc *.sfc *.fig *.swc *.mgd", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.nes *.smc *.sfc *.fig *.swc *.mgd *.zip *.7z", QDir::Name, QDir::Files);
+  } else if(config.platform == "ngpc") {
+    inputDir = QDir(config.inputFolder, " *.ngc *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "pcengine") {
     inputDir = QDir(config.inputFolder, "*.pce *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "psp") {
@@ -131,10 +135,18 @@ void Skyscraper::run()
     inputDir = QDir(config.inputFolder, "*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "scummvm") {
     inputDir = QDir(config.inputFolder, "*.svm", QDir::Name, QDir::Files);
+  } else if(config.platform == "sega32x") {
+    inputDir = QDir(config.inputFolder, "*.32x *.bin *.md *.smd *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "snes") {
-    inputDir = QDir(config.inputFolder, "*.zip *.7z *.smc *.sfc *.fig *.swc", QDir::Name, QDir::Files);
+    inputDir = QDir(config.inputFolder, "*.smc *.sfc *.fig *.swc *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "segacd") {
     inputDir = QDir(config.inputFolder, "*.cue *.iso *.zip *.7z", QDir::Name, QDir::Files);
+  } else if(config.platform == "vectrex") {
+    inputDir = QDir(config.inputFolder, "*.bin *.gam *.vec *.zip *.7z", QDir::Name, QDir::Files);
+  } else if(config.platform == "videopac") {
+    inputDir = QDir(config.inputFolder, "*.bin *.zip *.7z", QDir::Name, QDir::Files);
+  } else if(config.platform == "virtualboy") {
+    inputDir = QDir(config.inputFolder, "*.vb *.zip *.7z", QDir::Name, QDir::Files);
   } else if(config.platform == "zxspectrum") {
     inputDir = QDir(config.inputFolder, "*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk *.zip *.7z", QDir::Name, QDir::Files);
   }
@@ -615,6 +627,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 			   parser.value("p") == "atari5200" ||
 			   parser.value("p") == "atari7800" ||
 			   parser.value("p") == "atarijaguar" ||
+			   parser.value("p") == "atarilynx" ||
 			   parser.value("p") == "atarist" ||
 			   parser.value("p") == "c64" ||
 			   parser.value("p") == "coleco" ||
@@ -630,12 +643,17 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 			   parser.value("p") == "nds" ||
 			   parser.value("p") == "neogeo" ||
 			   parser.value("p") == "nes" ||
+			   parser.value("p") == "ngpc" ||
 			   parser.value("p") == "pcengine" ||
 			   parser.value("p") == "psp" ||
 			   parser.value("p") == "psx" ||
 			   parser.value("p") == "scummvm" ||
 			   parser.value("p") == "segacd" ||
+			   parser.value("p") == "sega32x" ||
 			   parser.value("p") == "snes" ||
+			   parser.value("p") == "vectrex" ||
+			   parser.value("p") == "videopac" ||
+			   parser.value("p") == "virtualboy" ||
 			   parser.value("p") == "zxspectrum")) {
     config.platform = parser.value("p");
   } else {
@@ -828,6 +846,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.scraper = "thegamesdb";
     } else if(config.platform == "atarijaguar") {
       config.scraper = "thegamesdb";
+    } else if(config.platform == "atarilynx") {
+      config.scraper = "thegamesdb";
     } else if(config.platform == "atarist") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "c64") {
@@ -858,6 +878,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.scraper = "arcadedb";
     } else if(config.platform == "nes") {
       config.scraper = "thegamesdb";
+    } else if(config.platform == "ngpc") {
+      config.scraper = "thegamesdb";
     } else if(config.platform == "pcengine") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "psp") {
@@ -868,7 +890,15 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.scraper = "thegamesdb";
     } else if(config.platform == "segacd") {
       config.scraper = "thegamesdb";
+    } else if(config.platform == "sega32x") {
+      config.scraper = "thegamesdb";
     } else if(config.platform == "snes") {
+      config.scraper = "thegamesdb";
+    } else if(config.platform == "vectrex") {
+      config.scraper = "thegamesdb";
+    } else if(config.platform == "videopac") {
+      config.scraper = "thegamesdb";
+    } else if(config.platform == "virtualboy") {
       config.scraper = "thegamesdb";
     } else if(config.platform == "zxspectrum") {
       config.scraper = "worldofspectrum";
