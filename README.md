@@ -156,6 +156,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
+#### Version 2.0.5c (23rd December 2017)
+* Fixed a bug where the import module wouldn't look for all resource types during the same run. Thank you to dylosaur for discovering this.
+
 #### Version 2.0.5b (5th December 2017)
 * Added support for *.7z files for all platforms.
 
