@@ -110,10 +110,11 @@ void ImportScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
   boxartFile = "";
   videoFile = "";
   GameEntry game;
-  if(checkType(info.completeBaseName(), textual, textualFile) ||
-     checkType(info.completeBaseName(), snaps, snapFile) ||
-     checkType(info.completeBaseName(), boxart, boxartFile) ||
-     checkType(info.completeBaseName(), videos, videoFile)) {
+  bool textualFound = checkType(info.completeBaseName(), textual, textualFile);
+  bool snapFound = checkType(info.completeBaseName(), snaps, snapFile);
+  bool boxartFound = checkType(info.completeBaseName(), boxart, boxartFile);
+  bool videoFound = checkType(info.completeBaseName(), videos, videoFile);
+  if(textualFound || snapFound || boxartFound || videoFound) {
     game.title = info.completeBaseName();
     game.platform = config->platform;
     gameEntries.append(game);
