@@ -13,6 +13,7 @@ Currently supports the following platforms (set with '-p'):
 * Atari5200
 * Atari7800
 * Atari Jaguar
+* Atari Lynx
 * Atari ST
 * ColecoVision
 * Commodore 64
@@ -22,6 +23,7 @@ Currently supports the following platforms (set with '-p'):
 * Megadrive / Genesis
 * MSX (MSX, MSX 2, MSX 2+, MSX Laserdisc)
 * NeoGeo
+* NeoGeo Pocket Color
 * Nintendo 64
 * Nintendo DS
 * Nintendo Entertainment System
@@ -29,10 +31,14 @@ Currently supports the following platforms (set with '-p'):
 * Playstation
 * Playstation Portable
 * ScummVM (looks for PC or Amiga matches)
+* Sega 32x
 * Sega CD
 * Sega Game Gear
 * Sega Master System
 * Super Nintendo
+* Vectrex
+* Videopac (Oddysey 2)
+* Virtual Boy
 * ZX Spectrum
 
 ... More platforms will be added in future releases!
@@ -65,9 +71,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.0.5c.tar.gz
-* $ tar xvzf 2.0.5c.tar.gz
-* $ cd skyscraper-2.0.5c
+* $ wget https://github.com/muldjord/skyscraper/archive/2.0.6.tar.gz
+* $ tar xvzf 2.0.6.tar.gz
+* $ cd skyscraper-2.0.6
 * $ qmake
 * $ make
 * $ sudo make install
@@ -155,6 +161,10 @@ Append command line option '-c config_artwork03.ini'
 ![Big centered screenshot with drop shadow, no cover](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/North%20%26%20South.png)
 
 ## Release notes
+
+#### Version 2.0.6 (23rd december 2017)
+* Added support for atarilynx, vectrex, ngpc (Neo Geo Pocket Color), sega32x, virtualboy and videopac platforms
+* Changed all 'qDebug' call to 'printf' calls
 
 #### Version 2.0.5c (23rd December 2017)
 * Fixed a bug where the import module wouldn't look for all resource types during the same run. Thank you to dylosaur for discovering this.
