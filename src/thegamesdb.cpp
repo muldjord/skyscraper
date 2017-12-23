@@ -313,8 +313,12 @@ QString TheGamesDb::actualPlatform(const QString platform)
     return "apple ii";
   } else if(platform == "atarijaguar") {
     return "atari jaguar";
+  } else if(platform == "atarilynx") {
+    return "atari lynx";
   } else if(platform == "neogeo") {
     return "neo geo;neo geo cd;arcade";
+  } else if(platform == "ngpc") {
+    return "neo geo pocket color";
   } else if(platform == "scummvm") {
     return "pc;amiga;amiga cd32";
   } else if(platform == "n64") {
@@ -327,8 +331,14 @@ QString TheGamesDb::actualPlatform(const QString platform)
     return "nintendo game boy advance";
   } else if(platform == "gbc") {
     return "nintendo game boy color";
+  } else if(platform == "sega32x") {
+    return "sega 32x";
   } else if(platform == "segacd") {
     return "sega cd";
+  } else if(platform == "videopac") {
+    return "magnavox odyssey 2";
+  } else if(platform == "virtualboy") {
+    return "nintendo virtual boy";
   }
   return platform;
 }

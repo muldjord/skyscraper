@@ -334,16 +334,24 @@ QString ScreenScraper::actualPlatform(const QString platform)
     return "playstation";
   } else if(platform == "snes") {
     return "super nintendo";
+  } else if(platform == "virtualboy") {
+    return "virtual boy";
+  } else if(platform == "videopac") {
+    return "videopac g7000;magnavox odyssey²";
   } else if(platform == "zxspectrum") {
     return "zx spectrum";
   } else if(platform == "apple2") {
     return "apple ii";
   } else if(platform == "atarijaguar") {
     return "jaguar";
+  } else if(platform == "atarilynx") {
+    return "lynx";
   } else if(platform == "msx") {
     return "msx;msx2;msx2+;msx r turbo";
   } else if(platform == "neogeo") {
     return "neo-geo";
+  } else if(platform == "ngpc") {
+    return "neo-geo pocket color";
   } else if(platform == "n64") {
     return "nintendo 64";
   } else if(platform == "coleco") {
@@ -356,6 +364,8 @@ QString ScreenScraper::actualPlatform(const QString platform)
     return "game boy advance";
   } else if(platform == "gbc") {
     return "game boy color";
+  } else if(platform == "sega32x") {
+    return "sega 32x;megadrive 32x";
   } else if(platform == "segacd") {
     return "sega cd";
   }
