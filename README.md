@@ -162,6 +162,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
+#### Version 2.1.0 (unreleased)
+* Added 'scripter' mode that allows users a more automated way of running Skyscraper. Invoke it by running Skyscraper with no options by simplt typing 'Skyscraper'
+
 #### Version 2.0.6 (23rd december 2017)
 * Added support for atarilynx, vectrex, ngpc (Neo Geo Pocket Color), sega32x, virtualboy and videopac platforms
 * Changed all 'qDebug' call to 'printf' calls
