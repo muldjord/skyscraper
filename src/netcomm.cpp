@@ -62,13 +62,13 @@ void NetComm::replyFinished(QNetworkReply *reply)
   /*
   QUrl url = reply->url();
   if(reply->error()) {
-    qDebug("Download of %s failed: %s\n",
+    printf("Download of %s failed: %s\n",
 	   url.toEncoded().constData(),
 	   qPrintable(reply->errorString()));
   }
   QList<QNetworkReply::RawHeaderPair> headerList = reply->rawHeaderPairs();
   foreach(QNetworkReply::RawHeaderPair header, headerList) {
-    qDebug("RAW HEADER: '%s', '%s'\n", header.first.data(), header.second.data());
+    printf("RAW HEADER: '%s', '%s'\n", header.first.data(), header.second.data());
   }
   */
   // If we got redirected, we need to know where to proceed from

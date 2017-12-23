@@ -36,7 +36,7 @@ AttractMode::AttractMode()
 void AttractMode::skipExisting(const QString &gameListFileString,
 			       QList<GameEntry> &gameEntries, QList<QFileInfo> &inputFiles)
 {
-  qDebug("Parsing existing romlist entries, please wait...\n");
+  printf("Parsing existing romlist entries, please wait...\n");
   QFile gameListFile(gameListFileString);
   if(gameListFile.open(QIODevice::ReadOnly)) {
     while(!gameListFile.atEnd()) {
@@ -59,16 +59,16 @@ void AttractMode::skipExisting(const QString &gameListFileString,
     }
     gameListFile.close();
   } else {
-    qDebug("Error while trying to load existing gamelist!\n");
-    qDebug("Can't resolve existing entries... :(\n");
+    printf("Error while trying to load existing gamelist!\n");
+    printf("Can't resolve existing entries... :(\n");
     exit(1);
   }
-  qDebug("Resolving missing entries...");
+  printf("Resolving missing entries...");
   int dots = 0;
   for(int a = 0; a < gameEntries.length(); ++a) {
     dots++;
     if(dots % 50 == 0) {
-      qDebug(".");
+      printf(".");
     }
     for(int b = 0; b < inputFiles.length(); ++b) {
       if(gameEntries.at(a).baseName == inputFiles.at(b).completeBaseName()) {
@@ -78,7 +78,7 @@ void AttractMode::skipExisting(const QString &gameListFileString,
       }
     }
   }
-    qDebug(" \033[1;32mDone!\033[0m\n");
+    printf(" \033[1;32mDone!\033[0m\n");
 }
 
 void AttractMode::setNotes(GameEntry &entry, QString baseName)
@@ -145,14 +145,14 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
 void AttractMode::checkReqs()
 {
   if(config->emulator.isEmpty()) {
-    qDebug("Frontend 'attractmode' requires emulator set with '-e'. Check '--help' for more information.\n");
+    printf("Frontend 'attractmode' requires emulator set with '-e'. Check '--help' for more information.\n");
     exit(0);
   }
   if(config->emulator.indexOf(".cfg") == -1) {
     config->emulator.append(".cfg");
   }
   
-  qDebug("Looking for emulator cfg file:\n");
+  printf("Looking for emulator cfg file:\n");
 
   if(checkEmulatorFile(config->emulator)) {
     return;
@@ -166,21 +166,21 @@ void AttractMode::checkReqs()
     return;
   }
 
-  qDebug("Couldn't locate emulator cfg file, exiting...\n");
+  printf("Couldn't locate emulator cfg file, exiting...\n");
   exit(1);
 }
 
 bool AttractMode::checkEmulatorFile(QString fileName)
 {
   QFileInfo info(fileName);
-  qDebug("Trying '%s'... ", info.absoluteFilePath().toStdString().c_str());
+  printf("Trying '%s'... ", info.absoluteFilePath().toStdString().c_str());
 
   if(info.exists() && info.isFile()) {
     config->emulator = info.absoluteFilePath();
-    qDebug("\033[1;32mFound!\033[0m\n\n");
+    printf("\033[1;32mFound!\033[0m\n\n");
     return true;
   } else {
-    qDebug("Not found!\n");
+    printf("Not found!\n");
     return false;
   }
 }

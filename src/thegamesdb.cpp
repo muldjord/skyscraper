@@ -80,7 +80,7 @@ void TheGamesDb::getGameData(GameEntry &game)
   q.exec();
   data = manager.getData();
   if(data.indexOf("503 Service Unavailable") != -1) {
-    qDebug("It would seem that TheGamesDb is currently offline or having difficulties. You could try setting another scraping module using '-s' or wait until TheGamesDb is back in service.\nNow quitting...\n");
+    printf("It would seem that TheGamesDb is currently offline or having difficulties. You could try setting another scraping module using '-s' or wait until TheGamesDb is back in service.\nNow quitting...\n");
     exit(1);
   }
   QDomDocument xmlDoc;

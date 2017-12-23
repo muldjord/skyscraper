@@ -58,7 +58,7 @@ void ArcadeDB::getSearchResults(QList<GameEntry> &gameEntries,
   if(jsonDoc.isEmpty()) {
     return;
   }
-  qDebug("DATA:\n%s\n", data.data());
+  //printf("DATA:\n%s\n", data.data());
   jsonObj = jsonDoc.object().value("result").toArray().first().toObject();
 
   GameEntry game;

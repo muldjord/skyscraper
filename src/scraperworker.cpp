@@ -285,7 +285,7 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
       }
       romFile.close();
     } else {
-      qDebug("Couldn't calculate sha1 hash sum of rom file '%s', please check permissions and try again, now exiting...\n", info.fileName().toStdString().c_str());
+      printf("Couldn't calculate sha1 hash sum of rom file '%s', please check permissions and try again, now exiting...\n", info.fileName().toStdString().c_str());
       exit(1);
     }
   } else {

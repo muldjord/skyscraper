@@ -74,8 +74,8 @@ void AbstractScraper::getGameData(GameEntry &game)
   manager.request(game.url);
   q.exec();
   data = manager.getData();
-  //qDebug("URL IS: '%s'\n", game.url.toStdString().c_str());
-  //qDebug("DATA IS:\n'%s'\n", data.data());
+  //printf("URL IS: '%s'\n", game.url.toStdString().c_str());
+  //printf("DATA IS:\n'%s'\n", data.data());
 
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
@@ -386,7 +386,7 @@ QString AbstractScraper::actualPlatform(QString platform)
 void AbstractScraper::nomNom(const QString nom, bool including)
 {
   data.remove(0, data.indexOf(nom) + (including?nom.length():0));
-  //qDebug("Parser at: '%s'\n", data.left(20).data());
+  //printf("Parser at: '%s'\n", data.left(20).data());
 }
 
 bool AbstractScraper::checkNom(const QString nom)

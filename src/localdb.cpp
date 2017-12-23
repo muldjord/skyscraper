@@ -64,7 +64,7 @@ bool LocalDb::readDb()
 
   QFile dbFile(dbDir.absolutePath() + "/db.xml");
   if(dbFile.open(QIODevice::ReadOnly)) {
-    qDebug("Reading and parsing local database, please wait...\n");
+    printf("Reading and parsing local database, please wait...\n");
     QXmlStreamReader xml(&dbFile);
     while(!xml.atEnd()) {
       if(xml.readNext() != QXmlStreamReader::StartElement) {
@@ -75,7 +75,7 @@ bool LocalDb::readDb()
       }
       QXmlStreamAttributes attribs = xml.attributes();
       if(!attribs.hasAttribute("sha1")) {
-	qDebug("Resource is missing 'sha1' attribute, skipping...\n");
+	printf("Resource is missing 'sha1' attribute, skipping...\n");
 	continue;
       }
 
@@ -85,7 +85,7 @@ bool LocalDb::readDb()
       if(attribs.hasAttribute("type")) {
 	resource.type = attribs.value("type").toString();
       } else {
-	qDebug("Resource with sha1 '%s' is missing 'type' attribute, skipping...\n",
+	printf("Resource with sha1 '%s' is missing 'type' attribute, skipping...\n",
 	       resource.sha1.toStdString().c_str());
 	continue;
       }
@@ -97,14 +97,14 @@ bool LocalDb::readDb()
       if(attribs.hasAttribute("timestamp")) {
 	resource.timestamp = attribs.value("timestamp").toULong();
       } else {
-	qDebug("Resource with sha1 '%s' is missing 'timestamp' attribute, skipping...\n",
+	printf("Resource with sha1 '%s' is missing 'timestamp' attribute, skipping...\n",
 	       resource.sha1.toStdString().c_str());
 	continue;
       }
       resource.value = xml.readElementText();
       if(resource.type == "cover" || resource.type == "screenshot" || resource.type == "video") {
 	if(!QFileInfo::exists(dbDir.absolutePath() + "/" + resource.value)) {
-	  qDebug("Data file is missing for %s resource with sha1 '%s', skipping...\n",
+	  printf("Data file is missing for %s resource with sha1 '%s', skipping...\n",
 		 resource.type.toStdString().c_str(), resource.sha1.toStdString().c_str());
 	  continue;
 	}
@@ -113,7 +113,7 @@ bool LocalDb::readDb()
       resources.append(resource);
     }
     result = true;
-    qDebug("Successfully parsed %d resources!\n\n", resources.length());
+    printf("Successfully parsed %d resources!\n\n", resources.length());
     dbFile.close();
   }
   return result;
@@ -123,15 +123,15 @@ void LocalDb::readPriorities()
 {
   QDomDocument prioDoc;
   QFile prioFile(dbDir.absolutePath() + "/priorities.xml");
-  qDebug("Looking for optional 'priorities.xml' file in local db folder... ");
+  printf("Looking for optional 'priorities.xml' file in local db folder... ");
   if(prioFile.open(QIODevice::ReadOnly)) {
-    qDebug("Found!\n");
+    printf("Found!\n");
     if(!prioDoc.setContent(prioFile.readAll())) {
-      qDebug("Document is not XML compliant, skipping...\n\n");
+      printf("Document is not XML compliant, skipping...\n\n");
       return;
     }
   } else {
-    qDebug("Not found, skipping...\n\n");
+    printf("Not found, skipping...\n\n");
     return;
   }
 
@@ -141,7 +141,7 @@ void LocalDb::readPriorities()
   for(int a = 0; a < orderNodes.length(); ++a) {
     QDomElement orderElem = orderNodes.at(a).toElement();
     if(!orderElem.hasAttribute("type")) {
-      qDebug("Priority 'order' node missing 'type' attribute, skipping...\n");
+      printf("Priority 'order' node missing 'type' attribute, skipping...\n");
       errors++;
       continue;
     }
@@ -149,7 +149,7 @@ void LocalDb::readPriorities()
     QList<QString> sources;
     QDomNodeList sourceNodes = orderNodes.at(a).childNodes();
     if(sourceNodes.isEmpty()) {
-      qDebug("'source' node(s) missing for type '%s' in priorities.xml, skipping...\n",
+      printf("'source' node(s) missing for type '%s' in priorities.xml, skipping...\n",
 	     type.toStdString().c_str());
       errors++;
       continue;
@@ -159,11 +159,11 @@ void LocalDb::readPriorities()
     }
     prioMap[type] = sources;
   }
-  qDebug("Priorities loaded successfully");
+  printf("Priorities loaded successfully");
   if(errors != 0) {
-    qDebug(", but %d errors encountered, please check this", errors);
+    printf(", but %d errors encountered, please check this", errors);
   }
-  qDebug("!\n\n");
+  printf("!\n\n");
 }
 
 bool LocalDb::writeDb()
@@ -172,7 +172,7 @@ bool LocalDb::writeDb()
 
   QFile dbFile(dbDir.absolutePath() + "/db.xml");
   if(dbFile.open(QIODevice::WriteOnly)) {
-    qDebug("Writing %d resources to local database, please wait... ", resources.length());
+    printf("Writing %d resources to local database, please wait... ", resources.length());
     QXmlStreamWriter xml(&dbFile);
     xml.setAutoFormatting(true);
     xml.writeStartDocument();
@@ -188,7 +188,7 @@ bool LocalDb::writeDb()
     }
     xml.writeEndDocument();
     result = true;
-    qDebug("\033[1;32mSuccess!\033[0m\n");
+    printf("\033[1;32mSuccess!\033[0m\n");
     dbFile.close();
   }
   return result;
@@ -199,10 +199,10 @@ void LocalDb::cleanDb()
 {
   // TODO: Add format checks for each resource type, and remove if deemed corrupt
 
-  qDebug("Starting cleaning run on local database, please wait...\n");
+  printf("Starting cleaning run on local database, please wait...\n");
 
   if(!QFileInfo::exists(dbDir.absolutePath() + "/db.xml")) {
-    qDebug("'db.xml' not found, db cleaning cancelled...\n");
+    printf("'db.xml' not found, db cleaning cancelled...\n");
     return;
   }
 
@@ -230,13 +230,13 @@ void LocalDb::cleanDb()
   verifyResources(videosDirIt, deleted, noDelete, "video");
   
   if(deleted == 0 && noDelete == 0) {
-    qDebug("No inconsistencies found in the database. :)\n\n");
+    printf("No inconsistencies found in the database. :)\n\n");
   } else {
-    qDebug("Successfully deleted %d files with no entry.\n", deleted);
+    printf("Successfully deleted %d files with no entry.\n", deleted);
     if(noDelete != 0) {
-      qDebug("%d files couldn't be deleted, please check file permissions.\n", noDelete);
+      printf("%d files couldn't be deleted, please check file permissions.\n", noDelete);
     }
-    qDebug("\n");
+    printf("\n");
   }
 }
 
@@ -255,13 +255,13 @@ void LocalDb::verifyResources(QDirIterator &dirIt, int &deleted, int &noDelete, 
       }
     }
     if(!valid) {
-      qDebug("No resource entry for '%s', deleting... ",
+      printf("No resource entry for '%s', deleting... ",
 	     fileInfo.fileName().toStdString().c_str());
       if(QFile::remove(fileInfo.absoluteFilePath())) {
-	qDebug("OK!\n");
+	printf("OK!\n");
 	deleted++;
       } else {
-	qDebug("ERROR! File couldn't be deleted :/\n");
+	printf("ERROR! File couldn't be deleted :/\n");
 	noDelete++;
       }
     }
@@ -270,7 +270,7 @@ void LocalDb::verifyResources(QDirIterator &dirIt, int &deleted, int &noDelete, 
 
 void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder)
 {
-  qDebug("Merging databases, please wait...\n");
+  printf("Merging databases, please wait...\n");
   QList<Resource> srcResources = srcDb.getResources();
 
   QDir srcDbDir(srcDbFolder);
@@ -305,8 +305,8 @@ void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder
       resources.append(srcResource);
     }
   }
-  qDebug("Successfully updated %d resource(s) in local database!\n", resUpdated);
-  qDebug("Successfully merged %d resource(s) into local database!\n\n", resMerged);
+  printf("Successfully updated %d resource(s) in local database!\n", resUpdated);
+  printf("Successfully merged %d resource(s) into local database!\n\n", resMerged);
 }
 
 QList<Resource> LocalDb::getResources()
@@ -319,7 +319,7 @@ void LocalDb::addResources(GameEntry &entry, const bool &update)
   QString dbAbsolutePath = dbDir.absolutePath();
 
   if(entry.source.isEmpty()) {
-    qDebug("Something is wrong, resource with sha1 '%s' has no source, exiting...\n",
+    printf("Something is wrong, resource with sha1 '%s' has no source, exiting...\n",
 	   entry.sha1.toStdString().c_str());
     exit(1);
   }
@@ -597,6 +597,6 @@ bool LocalDb::fillType(QString &type, QList<Resource> &sha1Resources, QString &r
 void LocalDb::printResources()
 {
   foreach(Resource resource, resources) {
-    qDebug("--- sha1: '%s' ---\ntype: '%s'\nsource: '%s'\ntimestamp: '%s'\nvalue: '%s'\n", resource.sha1.toStdString().c_str(), resource.type.toStdString().c_str(), resource.source.toStdString().c_str(), QString::number(resource.timestamp).toStdString().c_str(), resource.value.toStdString().c_str());
+    printf("--- sha1: '%s' ---\ntype: '%s'\nsource: '%s'\ntimestamp: '%s'\nvalue: '%s'\n", resource.sha1.toStdString().c_str(), resource.type.toStdString().c_str(), resource.source.toStdString().c_str(), QString::number(resource.timestamp).toStdString().c_str(), resource.value.toStdString().c_str());
   }
 }

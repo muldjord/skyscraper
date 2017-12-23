@@ -38,11 +38,11 @@ void EmulationStation::skipExisting(const QString &gameListFileString,
   if(gameListReader.setFile(gameListFileString)) {
     gameEntries = gameListReader.getEntries();
   } else {
-    qDebug("Error while trying to load existing gamelist.xml!\n");
-    qDebug("Can't resolve existing entries... :(\n");
+    printf("Error while trying to load existing gamelist.xml!\n");
+    printf("Can't resolve existing entries... :(\n");
     exit(1);
   }
-  qDebug("Resolving missing entries...\n");
+  printf("Resolving missing entries...\n");
   for(int a = 0; a < gameEntries.length(); ++a) {
     QFileInfo current(gameEntries.at(a).path);
     for(int b = 0; b < inputFiles.length(); ++b) {

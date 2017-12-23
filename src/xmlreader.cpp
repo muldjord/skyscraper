@@ -56,7 +56,7 @@ QList<GameEntry> XmlReader::getEntries()
 
   QDomNodeList gameNodes = elementsByTagName("game");
 
-  qDebug("Parsing existing xml entries...\n");
+  printf("Parsing existing xml entries...\n");
   for(int a = 0; a < gameNodes.length(); ++a) {
     GameEntry entry;
     entry.path = gameNodes.at(a).firstChildElement("path").text();

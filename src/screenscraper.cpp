@@ -50,7 +50,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 {
   /*
   if(user.isEmpty() || password.isEmpty()) {
-    qDebug("'screenscraper' requires a userID and password to function. Please use '-u' to set them. Check '--help' for more information.\n");
+    printf("'screenscraper' requires a userID and password to function. Please use '-u' to set them. Check '--help' for more information.\n");
     exit(1);
   }
   */
