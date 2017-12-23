@@ -1,5 +1,5 @@
 /***************************************************************************
- *            skyscraper.h
+ *            scripter.h
  *
  *  Wed Jun 7 12:00:00 CEST 2017
  *  Copyright 2017 Lars Muldjord
@@ -23,66 +23,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#ifndef SKYSCRAPER_H
-#define SKYSCRAPER_H
+#ifndef SCRIPTER_H
+#define SCRIPTER_H
 
 #include <QObject>
-#include <QFile>
-#include <QTime>
-#include <QMutex>
-#include <QCommandLineParser>
 
-#include "netcomm.h"
-#include "scraperworker.h"
-#include "localdb.h"
-#include "abstractfrontend.h"
-#include "settings.h"
-
-class Skyscraper : public QObject
+class Scripter : public QObject
 {
   Q_OBJECT
 
 public:
-  Skyscraper(const QCommandLineParser &parser);
-  ~Skyscraper();
-
-public slots:
-  void run();
-
-signals:
-  void finished();
-
-private slots:
-  void entryReady(const GameEntry &entry);
-  void outputToTerminal(const QString &output);
-  //void addToSkipped(const QString &gameBaseName, const QString &closestMatch);
-  void checkThreads();
+  Scripter();
+  ~Scripter();
   
-private:
-  Settings config;
-  void loadConfig(const QCommandLineParser &parser);
-  QString secsToString(const int &seconds);
-  void checkForFolder(QDir &folder);
-
-  AbstractFrontend *frontend;
-
-  QSharedPointer<LocalDb> localDb;
-  
-  QList<GameEntry> gameEntries;
-  QMutex entryMutex;
-  //QMutex skippedMutex;
-  QMutex outputMutex;
-  QMutex checkThreadMutex;
-  QTime timer;
-  QString gameListFileString;
-  QString skippedFileString;
-  int doneThreads;
-  int notFound;
-  int found;
-  int avgSearchMatch;
-  int avgCompleteness;
-  int currentFile;
-  int totalFiles;
 };
 
-#endif // SKYSCRAPER_H
+#endif // SCRIPTER_H
