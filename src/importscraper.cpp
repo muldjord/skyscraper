@@ -33,6 +33,7 @@ ImportScraper::ImportScraper()
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
+  fetchOrder.append(VIDEO);
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(TAGS);
   fetchOrder.append(PLAYERS);
