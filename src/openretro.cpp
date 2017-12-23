@@ -168,6 +168,8 @@ QString OpenRetro::actualPlatform(const QString platform)
     return "atari 7800";
   } else if(platform == "atarist") {
     return "atari st";
+  } else if(platform == "atarilynx") {
+    return "lynx";
   } else if(platform == "gb") {
     return "game boy";
   } else if(platform == "gba") {
