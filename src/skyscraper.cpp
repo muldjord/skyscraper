@@ -41,7 +41,7 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser)
 {
   qRegisterMetaType<GameEntry>("GameEntry");
   
-  qDebug("\033[1;34m------------------------------------------\033[0m\n\033[1;33mRunning Skyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m------------------------------------------\033[0m\n");
+  printf("\033[1;34m------------------------------------------\033[0m\n\033[1;33mRunning Skyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m------------------------------------------\033[0m\n");
   loadConfig(parser);
 }
 
@@ -52,23 +52,23 @@ Skyscraper::~Skyscraper()
 
 void Skyscraper::run()
 {
-  qDebug("Platform        : '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
-  qDebug("Scraper module  : '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
+  printf("Platform        : '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
+  printf("Scraper module  : '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
   if(config.emulator != "") {
-    qDebug("Emulator        : '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
+    printf("Emulator        : '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
   }
-  qDebug("Input folder    : '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
-  qDebug("Gamelist folder : '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
-  qDebug("Images folder   : '\033[1;32m%s\033[0m'\n", config.imagesFolder.toStdString().c_str());
+  printf("Input folder    : '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
+  printf("Gamelist folder : '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
+  printf("Images folder   : '\033[1;32m%s\033[0m'\n", config.imagesFolder.toStdString().c_str());
   if(config.videos) {
-    qDebug("Videos folder   : '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
+    printf("Videos folder   : '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
   }
   if(config.localDb) {
-    qDebug("Local db folder : '\033[1;32m%s\033[0m'\n\n", config.dbFolder.toStdString().c_str());
+    printf("Local db folder : '\033[1;32m%s\033[0m'\n\n", config.dbFolder.toStdString().c_str());
   }
   
   if(config.scraper == "arcadedb" && config.threads != 1) {
-    qDebug("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
+    printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
   }
 
@@ -139,7 +139,7 @@ void Skyscraper::run()
     inputDir = QDir(config.inputFolder, "*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk *.zip *.7z", QDir::Name, QDir::Files);
   }
   if(!inputDir.exists()) {
-    qDebug("Input folder '%s' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
+    printf("Input folder '%s' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
     exit(1);
   }
 
@@ -162,7 +162,7 @@ void Skyscraper::run()
     if(localDb->createFolders(config.scraper)) {
       localDb->readDb();
     } else {
-      qDebug("Couldn't create local db folders, disabling localdb...\n");
+      printf("Couldn't create local db folders, disabling localdb...\n");
       config.localDb = false;
     }
   }
@@ -187,25 +187,25 @@ void Skyscraper::run()
 
   if(!config.pretend && !config.unattend && gameListFile.exists()) {
     std::string userInput = "";
-    qDebug("\033[1;34m'%s' already exists, do you want to overwrite it? (y/n):\033[0m ", frontend->getGameListFileName().toStdString().c_str());
+    printf("\033[1;34m'%s' already exists, do you want to overwrite it? (y/n):\033[0m ", frontend->getGameListFileName().toStdString().c_str());
     std::cin >> userInput;
     if(userInput != "y") {
-      qDebug("User chose not to overwrite, now exiting...\n");
+      printf("User chose not to overwrite, now exiting...\n");
       exit(0);
     }
     
-    qDebug("Checking if '%s' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
+    printf("Checking if '%s' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
     
     if(gameListFile.open(QIODevice::Append)) {
-      qDebug("\033[1;32mIt is! :)\033[0m\n");
+      printf("\033[1;32mIt is! :)\033[0m\n");
       gameListFile.close();
     } else {
-      qDebug("\033[1;31mIt isn't! :(\nPlease check path and permissions and try again.\033[0m\n");
+      printf("\033[1;31mIt isn't! :(\nPlease check path and permissions and try again.\033[0m\n");
       exit(1);
     }
   }
   if(config.pretend) {
-    qDebug("Pretend set! Not changing any files except '%s'.\n\n", skippedFileString.toStdString().c_str());
+    printf("Pretend set! Not changing any files except '%s'.\n\n", skippedFileString.toStdString().c_str());
   }
 
   QFile skippedFile(skippedFileString);
@@ -223,7 +223,7 @@ void Skyscraper::run()
       inputDir.setPath(subdir);
       inputFiles.append(inputDir.entryInfoList());
       if(config.verbose) {
-	qDebug("Added files from subdir: '%s'\n", subdir.toStdString().c_str());
+	printf("Added files from subdir: '%s'\n", subdir.toStdString().c_str());
       }
     }
   }
@@ -231,7 +231,7 @@ void Skyscraper::run()
   if(!config.unattend) {
     std::string userInput = "";
     if(gameListFile.exists() && frontend->canSkip()) {
-      qDebug("\033[1;34mDo you wish to skip existing entries? (y/n):\033[0m ");
+      printf("\033[1;34mDo you wish to skip existing entries? (y/n):\033[0m ");
       std::cin >> userInput;
       if(userInput == "y" && frontend->canSkip()) {
 	frontend->skipExisting(gameListFileString, gameEntries, inputFiles);
@@ -242,13 +242,13 @@ void Skyscraper::run()
   totalFiles = inputFiles.length();
   if(totalFiles == 0) {
     // A bit of a hack to let the scraping process take place. We want it to rewrite the gamelist
-    qDebug("No entries to scrape...\n\n");
+    printf("No entries to scrape...\n\n");
     doneThreads = config.threads - 1;
     checkThreads();
     exit(0);
   }
   
-  qDebug("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
+  printf("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
 
   timer.start();
   currentFile = 1;
@@ -259,7 +259,7 @@ void Skyscraper::run()
   }
   
   if(config.verbose) {
-    qDebug("Files per thread: %d\n", filesPerThread);
+    printf("Files per thread: %d\n", filesPerThread);
   }
   QList<QThread*> threadList;
   for(int curThread = 1; curThread <= config.threads; ++curThread) {
@@ -293,11 +293,11 @@ void Skyscraper::run()
 void Skyscraper::checkForFolder(QDir &folder)
 {
   if(!folder.exists()) {
-    qDebug("Folder '%s' doesn't exist, trying to create it... ", folder.absolutePath().toStdString().c_str());
+    printf("Folder '%s' doesn't exist, trying to create it... ", folder.absolutePath().toStdString().c_str());
     if(folder.mkpath(folder.absolutePath())) {
-      qDebug("Success!\n\n");
+      printf("Success!\n\n");
     } else {
-      qDebug("Failed! Please check path and permissions\n");
+      printf("Failed! Please check path and permissions\n");
       exit(1);
     }
   }
@@ -307,12 +307,12 @@ void Skyscraper::outputToTerminal(const QString &output)
 {
   outputMutex.lock();
 
-  qDebug("\033[0;32m#%d/%d\033[0m %s\n", currentFile, totalFiles, output.toStdString().c_str());
+  printf("\033[0;32m#%d/%d\033[0m %s\n", currentFile, totalFiles, output.toStdString().c_str());
   int elapsed = timer.elapsed();
   int estTime = elapsed / currentFile * totalFiles;
 
-  qDebug("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
-  qDebug("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
+  printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
+  printf("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
 
   outputMutex.unlock();
 }
@@ -369,7 +369,7 @@ void Skyscraper::entryReady(const GameEntry &entry)
   
   if(currentFile == 30 && notFound == 30 &&
      config.scraper != "import" && config.scraper != "localdb") {
-    qDebug("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses, which probably means you are using a scraping source that doesn't support this platform. Please be considerate and choose a scraping module that supports the platform you are scraping (check '--help').\n\nNow exiting...\033[0m\n");
+    printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses, which probably means you are using a scraping source that doesn't support this platform. Please be considerate and choose a scraping module that supports the platform you are scraping (check '--help').\n\nNow exiting...\033[0m\n");
     exit(1);
   }
 
@@ -384,7 +384,7 @@ void Skyscraper::checkThreads()
 
   doneThreads++;
   if(doneThreads == config.threads) {
-    qDebug("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
+    printf("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
     if(!config.pretend && !config.dbFolder.isEmpty() && config.localDb) {
       localDb->writeDb();
     }
@@ -396,27 +396,27 @@ void Skyscraper::checkThreads()
     
     if(!config.pretend) {
       QFile gameListFile(gameListFileString);
-      qDebug("Now writing '%s'... ", gameListFileString.toStdString().c_str());
+      printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
       if(gameListFile.open(QIODevice::WriteOnly)) {
 	gameListFile.write(finalOutput.toUtf8());
 	gameListFile.close();
-	qDebug("\033[1;32mSuccess!!!\033[0m\n\n");
+	printf("\033[1;32mSuccess!!!\033[0m\n\n");
       } else {
-	qDebug("\033[1;31mCouldn't open file for writing!!!\nAll that work for nothing... :(\033[0m\n");
+	printf("\033[1;31mCouldn't open file for writing!!!\nAll that work for nothing... :(\033[0m\n");
       }
     }
 
-    qDebug("\033[1;34m---- And here are some neat stats :) ----\033[0m\n");
-    qDebug("Total completion time: \033[1;33m%s\033[0m\n\n", secsToString(timer.elapsed()).toStdString().c_str());
+    printf("\033[1;34m---- And here are some neat stats :) ----\033[0m\n");
+    printf("Total completion time: \033[1;33m%s\033[0m\n\n", secsToString(timer.elapsed()).toStdString().c_str());
     if(found > 0) {
-      qDebug("Average search match: \033[1;33m%d%%\033[0m\n",
+      printf("Average search match: \033[1;33m%d%%\033[0m\n",
 	     (int)((double)avgSearchMatch / (double)found));
-      qDebug("Average entry completeness: \033[1;33m%d%%\033[0m\n\n",
+      printf("Average entry completeness: \033[1;33m%d%%\033[0m\n\n",
 	     (int)((double)avgCompleteness / (double)found));
     }
-    qDebug("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
-    qDebug("\033[1;32mSuccessfully scraped games: %d\033[0m\n", found);
-    qDebug("\033[1;33mSkipped games: %d (Filenames saved to '%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
+    printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
+    printf("\033[1;32mSuccessfully scraped games: %d\033[0m\n", found);
+    printf("\033[1;33mSkipped games: %d (Filenames saved to '%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
 
     // All done, now clean up and exit to terminal
     emit finished();
@@ -639,7 +639,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 			   parser.value("p") == "zxspectrum")) {
     config.platform = parser.value("p");
   } else {
-    qDebug("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms, now exiting...\n");
+    printf("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms, now exiting...\n");
     exit(1);
   }
 
@@ -760,7 +760,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("nolocaldb")) {
     if(config.scraper == "localdb") {
-      qDebug("Selected scraper 'localdb' can't be used with '--nolocaldb' flag, exiting.\n");
+      printf("Selected scraper 'localdb' can't be used with '--nolocaldb' flag, exiting.\n");
       exit(1);
     }
     config.localDb = false;
@@ -896,10 +896,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     //QString baseNamePrev = infoPrev.completeBaseName().toLower();
     if(baseName.left(baseNamePrev.length()) == baseNamePrev &&
        baseName.indexOf("[") != -1) {
-      qDebug("X: %s\n", baseNamePrev.toStdString().c_str());
+      printf("X: %s\n", baseNamePrev.toStdString().c_str());
       QFile::remove(infoPrev.absoluteFilePath());
     } else {
-      qDebug(" : %s\n", baseNamePrev.toStdString().c_str());
+      printf(" : %s\n", baseNamePrev.toStdString().c_str());
     }
     infoPrev = info;
     if(baseName.indexOf("side a") == -1 &&
