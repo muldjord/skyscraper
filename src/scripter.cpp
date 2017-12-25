@@ -335,7 +335,7 @@ Scripter::Scripter()
   
   std::string runScriptStr = "";
   printf("\n");
-  printf("\033[1;34mThe script '\033[0m\033[1;33m~/.skyscraper/skyscript.sh\033[0m\033[1;34m' has been created. Running this script will do multiple scraping runs for the chosen platforms for the most optimal result. Do you wish to run it now?\033[0m (y/n)? ");
+  printf("\033[1;34mThe script '\033[0m\033[1;33m~/.skyscraper/skyscript.sh\033[0m\033[1;34m' has been created. Running this script will do multiple scraping runs for the chosen platform for the most optimal result. Do you wish to run it now?\033[0m (y/n)? ");
   getline(std::cin, runScriptStr);
   if(overwriteStr != "y") {
     printf("\033[1;34mUser chose not to run script, now exiting...\033[0m\n");
