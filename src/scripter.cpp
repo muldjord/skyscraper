@@ -25,17 +25,22 @@
 
 #include <iostream>
 #include <QFile>
+#include <QProcess>
+#include <QDir>
 
 #include "scripter.h"
 
 Scripter::Scripter()
 {
   printf("\033[1;34m------------------------------------------\033[0m\n\033[1;33mRunning Skyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m------------------------------------------\033[0m\n");
+  printf("\033[1;33mIMPORTANT!!!\033[0m \033[1;34mYou are running Skyscraper in 'simple mode'. This mode is meant for first-time scrapings only! For any subsequent scrapings of a platform consider scraping using '\033[0m\033[1;33mSkyscraper -p [platform] -s localdb\033[0m\033[1;34m'. This will not only save you time since it is A LOT faster, but also save bandwidth for the scraping sources since all of the data has already been cached locally and will be used by the 'localdb' scraping module.\n\nFor advanced users be sure be sure to check out all of the available command line options with '\033[0m\033[1;33mSkyscraper --help\033[0m\033[1;34m'. Complete documentation of all features can be found at: \033[0m\033[1;33mhttps://github.com/muldjord/skyscraper\033[0m\033[1;34m\n\nYou will now be asked a bunch of questions. Default for most of these questions will be optimal and can therefore be answered simply by pressing enter. Only change them if you know what you are doing.\033[0m\n");
 
   std::string overwriteStr = "";
-  printf("\033[1;31mWARNING!!!\033[0m You are running Skyscraper in scripting mode. This will overwrite your existing game list file. Any manual changes will be GONE! Do you still wish to continue (y/N)? ");
+  printf("\n");
+  printf("\033[1;31mWARNING!!!\033[0m \033[1;34mContinuing will overwrite your existing game list file. Any manual changes will be GONE! If you wish to keep your existing game list file, please manually create a backup before re-running Skyscraper.\n\nAre you sure you wish to proceed\033[0m (y/N)? ");
   getline(std::cin, overwriteStr);
   if(overwriteStr != "y") {
+    printf("\033[1;34mUser chose not to continue, now exiting...\033[0m\n");
     exit(0);
   }
 
@@ -44,11 +49,13 @@ Scripter::Scripter()
   printf("\033[1;34mAvailable frontends:\033[0m\n");
   printf("* \033[1;33memulationstation\033[0m\n");
   printf("* \033[1;33mattractmode\033[0m\n");
-  printf("Please enter the frontend you wish to scrape for (leave empty for 'emulationstation'): ");
+  printf("\033[1;34mPlease enter the frontend you wish to scrape for\033[0m (enter for 'emulationstation'):\033[0m ");
   getline(std::cin, frontendStr);
 
   if(frontendStr == "")
     frontendStr = "emulationstation";
+
+  printf("User chose: '\033[1;32m%s\033[0m'\n", frontendStr.c_str());
   
   std::string platformStr = "";
   printf("\n");
@@ -89,44 +96,47 @@ Scripter::Scripter()
   printf("* \033[1;33mvirtualboy\033[0m\n");
   printf("* \033[1;33mzxspectrum\033[0m\n");
   while(platformStr == "") {
-    printf("Please enter the platform you wish to scrape: ");
+    printf("\033[1;34mPlease enter the platform you wish to scrape:\033[0m ");
     getline(std::cin, platformStr);
   }
+
+  printf("User chose: '\033[1;32m%s\033[0m'\n", platformStr.c_str());
   
   std::string inputFolderStr = "";
-  printf("Please enter game/rom input folder (enter for default): ");
+  printf("\n");
+  printf("\033[1;34mPlease enter full game/rom input folder\033[0m (enter for default): ");
   getline(std::cin, inputFolderStr);
 
   std::string gamelistFolderStr = "";
-  printf("Please enter 'gamelist.xml' output folder (enter for default): ");
+  printf("\033[1;34mPlease enter full 'gamelist.xml' output folder\033[0m (enter for default): ");
   getline(std::cin, gamelistFolderStr);
 
   std::string emulatorStr = "";
   while(frontendStr == "attractmode" && emulatorStr == "") {
-    printf("Please enter AttractMode emulator: ");
+    printf("\033[1;34mPlease enter AttractMode emulator: ");
     getline(std::cin, emulatorStr);
   }
   
   std::string artworkFolderStr = "";
-  printf("Please enter artwork export folder (enter for default): ");
+  printf("\033[1;34mPlease enter full artwork export folder\033[0m (enter for default): ");
   getline(std::cin, artworkFolderStr);
 
-  std::string videosStr = "n";
-  printf("Do you wish to enable video scraping if the selected platform supports it (y/N)? ");
+  std::string videosStr = "";
+  printf("\033[1;34mDo you wish to enable video scraping if the selected platform supports it\033[0m (y/N)? ");
   getline(std::cin, videosStr);
 
   std::string videosFolderStr = "";
   if(videosStr == "y") {
-    printf("Please enter video export folder (enter for default): ");
+    printf("\033[1;34mPlease enter full video export folder\033[0m (enter for default): ");
     getline(std::cin, videosFolderStr);
   }
 
-  std::string bracketsStr = "y";
-  printf("Do you wish to include bracket notes such as '[AGA]' and '(Psygnosis)' in the final game name (Y/n)? ");
+  std::string bracketsStr = "";
+  printf("\033[1;34mDo you wish to include bracket notes such as '[AGA]' and '(Psygnosis)' in the final game name\033[0m (Y/n)? ");
   getline(std::cin, bracketsStr);
 
   std::string minMatchStr = "";
-  printf("What is the minimum search result percentage match you wish to accept (enter for default)? ");
+  printf("\033[1;34mWhat is the minimum search result percentage match you wish to accept\033[0m (enter for default)? ");
   getline(std::cin, minMatchStr);
 
   QFile scriptFile("skyscript.sh");
@@ -146,19 +156,194 @@ Scripter::Scripter()
     commandStr += " -e " + emulatorStr;
   if(minMatchStr != "")
     commandStr += " -m " + minMatchStr;
-  if(bracketsStr != "n")
+  if(bracketsStr != "")
     commandStr += " --nobrackets";
-  if(videosStr != "y") {
+  if(videosStr == "y") {
     commandStr += " --videos";
     if(videosFolderStr != "")
       commandStr += " -v " + videosFolderStr;
   }
 
-  commandStr += " --updatedb";
+  commandStr += " --unattend";
   
   scriptFile.write("#!/bin/bash\n");
-  scriptFile.write(commandStr.c_str());
+  if(platformStr == "amiga") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "apple2") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "arcade") {
+    scriptFile.write((commandStr + " -s arcadedb\n").c_str());
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "atari2600") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "atari5200") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "atari7800") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "atarijaguar") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "atarilynx") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "atarist") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "c64") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "coleco") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "gamegear") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "gb") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "gba") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "gbc") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "genesis") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "mastersystem") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "megadrive") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "msx") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "n64") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "nds") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "neogeo") {
+    scriptFile.write((commandStr + " -s arcadedb\n").c_str());
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "nes") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "ngpc") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "pcengine") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "psp") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "psx") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "scummvm") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "sega32x") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "segacd") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "snes") {
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "vectrex") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "videopac") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "virtualboy") {
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  } else if(platformStr == "zxspectrum") {
+    scriptFile.write((commandStr + " -s worldofspectrum\n").c_str());
+    scriptFile.write((commandStr + " -s openretro\n").c_str());
+    scriptFile.write((commandStr + " -s thegamesdb\n").c_str());
+    scriptFile.write((commandStr + " -s screenscraper\n").c_str());
+    scriptFile.write((commandStr + " -s localdb\n").c_str());
+  }
   scriptFile.close();
+  
+  std::string runScriptStr = "";
+  printf("\n");
+  printf("\033[1;34mThe script '\033[0m\033[1;33m~/.skyscraper/skyscript.sh\033[0m\033[1;34m' has been created. Running this script will do multiple scraping runs for the chosen platforms for the most optimal result. Do you wish to run it now?\033[0m (y/n)? ");
+  getline(std::cin, runScriptStr);
+  if(overwriteStr != "y") {
+    printf("\033[1;34mUser chose not to run script, now exiting...\033[0m\n");
+    exit(0);
+  }
+  printf("\n");
+  printf("\033[1;34mRunning script...\033[0m\n");
+  QProcess::execute("sh " + QDir::homePath() + "/.skyscraper/skyscript.sh");
 }
 
 Scripter::~Scripter()
