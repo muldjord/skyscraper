@@ -66,7 +66,6 @@ protected:
   virtual void getScreenshot(GameEntry &game);
   virtual void getVideo(GameEntry &game);
 
-  virtual QString actualPlatform(const QString platform);
   virtual void nomNom(const QString nom, bool including = true);
 
   virtual bool platformMatch(QString found, QString platform);

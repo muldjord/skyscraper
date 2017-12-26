@@ -365,84 +365,121 @@ QString Platform::getDefaultScraper(QString platform)
 }
 
 // This contains all known platform aliases as listed on each of the scraping source sites
-QString Platform::getAliases(QString platform)
+QStringList Platform::getAliases(QString platform)
 {
+  QStringList aliases;
+  aliases.append(platform);
   if(platform == "aga") {
-    return platform + ";amiga;amiga (aga)";
+    aliases.append("amiga");
+    aliases.append("amiga (aga)");
   } else if(platform == "cdtv") {
-    return platform + ";amiga cdtv";
+    aliases.append("amiga cdtv");
   } else if(platform == "cd32") {
-    return platform + ";amiga cd32";
+    aliases.append("amiga cd32");
   } else if(platform == "arcade") {
-    return platform + ";neo geo;neo geo cd";
+    aliases.append("neo geo");
+    aliases.append("neo geo cd");
   } else if(platform == "atari2600") {
-    return platform + ";atari 2600";
+    aliases.append("atari 2600");
   } else if(platform == "atari7800") {
-    return platform + ";atari 7800";
+    aliases.append("atari 7800");
   } else if(platform == "atarist") {
-    return platform + ";atari st";
+    aliases.append("atari st");
   } else if(platform == "mastersystem") {
-    return platform + ";sega master system;master system";
+    aliases.append("sega master system");
+    aliases.append("master system");
   } else if(platform == "gamegear") {
-    return platform + ";sega game gear;game gear";
+    aliases.append("sega game gear");
+    aliases.append("game gear");
   } else if(platform == "gba") {
-    return platform + ";nintendo game boy advance;game boy advance";
+    aliases.append("nintendo game boy advance");
+    aliases.append("game boy advance");
   } else if(platform == "megadrive") {
-    return platform + ";sega mega drive;mega drive";
+    aliases.append("sega mega drive");
+    aliases.append("mega drive");
   } else if(platform == "coleco") {
-    return platform + ";colecovision";
+    aliases.append("colecovision");
   } else if(platform == "c64") {
-    return platform + ";commodore 64";
+    aliases.append("commodore 64");
   } else if(platform == "genesis") {
-    return platform + ";sega genesis;mega drive";
+    aliases.append("sega genesis");
+    aliases.append("mega drive");
   } else if(platform == "nes") {
-    return platform + ";nintendo entertainment system (nes);nintendo";
+    aliases.append("nintendo entertainment system (nes)");
+    aliases.append("nintendo");
   } else if(platform == "pcengine") {
-    return platform + ";turbografx 16;turbografx cd;turbografx-16;pc engine;pc engine cd-rom;pc engine supergrafx";
+    aliases.append("turbografx 16");
+    aliases.append("turbografx cd");
+    aliases.append("turbografx-16");
+    aliases.append("pc engine");
+    aliases.append("pc engine cd-rom");
+    aliases.append("pc engine supergrafx");
   } else if(platform == "psx") {
-    return platform + ";sony playstation;playstation";
+    aliases.append("sony playstation");
+    aliases.append("playstation");
   } else if(platform == "psp") {
-    return platform + ";sony playstation portable";
+    aliases.append("sony playstation portable");
   } else if(platform == "snes") {
-    return platform + ";super nintendo (snes);super nintendo";
+    aliases.append("super nintendo (snes)");
+    aliases.append("super nintendo");
   } else if(platform == "zxspectrum") {
-    return platform + ";sinclair zx spectrum;zx spectrum";
+    aliases.append("sinclair zx spectrum");
+    aliases.append("zx spectrum");
   } else if(platform == "atari5200") {
-    return platform + ";atari 5200";
+    aliases.append("atari 5200");
   } else if(platform == "apple2") {
-    return platform + ";apple ii";
+    aliases.append("apple ii");
   } else if(platform == "atarijaguar") {
-    return platform + ";atari jaguar;jaguar";
+    aliases.append("atari jaguar");
+    aliases.append("jaguar");
   } else if(platform == "atarilynx") {
-    return platform + ";atari lynx;lynx";
+    aliases.append("atari lynx");
+    aliases.append("lynx");
   } else if(platform == "neogeo") {
-    return platform + ";neo geo;neo geo cd;arcade;neo-geo";
+    aliases.append("neo geo");
+    aliases.append("neo geo cd");
+    aliases.append("arcade");
+    aliases.append("neo-geo");
   } else if(platform == "ngpc") {
-    return platform + ";neo geo pocket color;neo-geo pocket color";
+    aliases.append("neo geo pocket color");
+    aliases.append("neo-geo pocket color");
   } else if(platform == "scummvm") {
-    return platform + ";pc;amiga;amiga cd32;dos;cd32";
+    aliases.append("pc");
+    aliases.append("amiga");
+    aliases.append("amiga cd32");
+    aliases.append("dos");
+    aliases.append("cd32");
   } else if(platform == "msx") {
-    return platform + ";msx2;msx2+;msx r turbo";
+    aliases.append("msx2");
+    aliases.append("msx2+");
+    aliases.append("msx r turbo");
   } else if(platform == "n64") {
-    return platform + ";nintendo 64";
+    aliases.append("nintendo 64");
   } else if(platform == "nds") {
-    return platform + ";nintendo ds";
+    aliases.append("nintendo ds");
   } else if(platform == "gb") {
-    return platform + ";nintendo game boy;game boy";
+    aliases.append("nintendo game boy");
+    aliases.append("game boy");
   } else if(platform == "gba") {
-    return platform + ";nintendo game boy advance;game boy advance";
+    aliases.append("nintendo game boy advance");
+    aliases.append("game boy advance");
   } else if(platform == "gbc") {
-    return platform + ";nintendo game boy color;game boy color";
+    aliases.append("nintendo game boy color");
+    aliases.append("game boy color");
   } else if(platform == "sega32x") {
-    return platform + ";sega 32x;megadrive 32x";
+    aliases.append("sega 32x");
+    aliases.append("megadrive 32x");
   } else if(platform == "segacd") {
-    return platform + ";sega cd";
+    aliases.append("sega cd");
   } else if(platform == "videopac") {
-    return platform + ";magnavox odyssey 2;videopac g7000;magnavox odyssey²";
+    aliases.append("magnavox odyssey 2");
+    aliases.append("videopac g7000");
+    aliases.append("magnavox odyssey²");
   } else if(platform == "virtualboy") {
-    return platform + ";nintendo virtual boy;virtual boy";
+    aliases.append("nintendo virtual boy");
+    aliases.append("virtual boy");
   }
-  return platform;
+  return aliases;
 }
 
 QStringList Platform::getPlatforms()

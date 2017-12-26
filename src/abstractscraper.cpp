@@ -379,11 +379,6 @@ void AbstractScraper::getVideo(GameEntry &game)
   game.videoFormat = videoUrl.right(3);
 }
 
-QString AbstractScraper::actualPlatform(QString platform)
-{
-  return Platform::getAliases(platform);
-}
-
 void AbstractScraper::nomNom(const QString nom, bool including)
 {
   data.remove(0, data.indexOf(nom) + (including?nom.length():0));
@@ -559,8 +554,7 @@ void AbstractScraper::setConfig(Settings *config)
 }
 
 bool AbstractScraper::platformMatch(QString found, QString platform) {
-  QStringList platforms = actualPlatform(platform).split(";");
-  foreach(QString p, platforms) {
+  foreach(QString p, Platform::getAliases(platform)) {
     if(found.toLower() == p) {
       return true;
     }
