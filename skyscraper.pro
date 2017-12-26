@@ -41,7 +41,8 @@ HEADERS += src/skyscraper.h \
            src/worldofspectrum.h \
            src/screenscraper.h \
            src/arcadedb.h \
-           src/scripter.h
+           src/scripter.h \
+           src/platform.h
            
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
@@ -63,4 +64,5 @@ SOURCES += src/main.cpp \
            src/worldofspectrum.cpp \
            src/screenscraper.cpp \
            src/arcadedb.cpp \
-           src/scripter.cpp
+           src/scripter.cpp \
+           src/platform.cpp
