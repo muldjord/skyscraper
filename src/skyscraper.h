@@ -37,6 +37,7 @@
 #include "localdb.h"
 #include "abstractfrontend.h"
 #include "settings.h"
+#include "platform.h"
 
 class Skyscraper : public QObject
 {
@@ -59,6 +60,7 @@ private slots:
   void checkThreads();
   
 private:
+  Platform *platform;
   Settings config;
   void loadConfig(const QCommandLineParser &parser);
   QString secsToString(const int &seconds);

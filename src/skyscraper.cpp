@@ -48,6 +48,7 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser)
 Skyscraper::~Skyscraper()
 {
   delete frontend;
+  delete platform;
 }
 
 void Skyscraper::run()
@@ -78,80 +79,9 @@ void Skyscraper::run()
   avgCompleteness = 0;
   avgSearchMatch = 0;
   
-  QDir inputDir;
-  if(config.platform == "amiga") {
-    inputDir = QDir(config.inputFolder, "*.uae *.zip *.7z *.adf *.dms *.adz *.rp9", QDir::Name, QDir::Files);
-  } else if(config.platform == "apple2") {
-    inputDir = QDir(config.inputFolder, "*.dsk *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "arcade") {
-    inputDir = QDir(config.inputFolder, "*.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "atari2600") {
-    inputDir = QDir(config.inputFolder, "*.bin *.a26 *.rom *.zip *.7z *.gz", QDir::Name, QDir::Files);
-  } else if(config.platform == "atari5200") {
-    inputDir = QDir(config.inputFolder, "*.a52 *.bas *.bin *.car *.xex *.atr *.xfd *.dcm *.atr.gz *.xfd.gz *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "atari7800") {
-    inputDir = QDir(config.inputFolder, "*.a78 *.bin *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "atarijaguar") {
-    inputDir = QDir(config.inputFolder, "*.j64 *.jag *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "atarilynx") {
-    inputDir = QDir(config.inputFolder, "*.lnx *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "atarist") {
-    inputDir = QDir(config.inputFolder, "*.st *.stx *.img *.rom *.raw *.ipf *.ctr *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "c64") {
-    inputDir = QDir(config.inputFolder, "*.crt *.d64 *.prg *.zip *.7z *.tap *.t64 *.g64", QDir::Name, QDir::Files);
-  } else if(config.platform == "coleco") {
-    inputDir = QDir(config.inputFolder, "*.bin *.col *.rom *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "gb") {
-    inputDir = QDir(config.inputFolder, "*.gb *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "gba") {
-    inputDir = QDir(config.inputFolder, "*.gba *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "gbc") {
-    inputDir = QDir(config.inputFolder, "*.gbc *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "gamegear") {
-    inputDir = QDir(config.inputFolder, "*.gg *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "genesis") {
-    inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "mastersystem") {
-    inputDir = QDir(config.inputFolder, "*.sms *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "megadrive") {
-    inputDir = QDir(config.inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "msx") {
-    inputDir = QDir(config.inputFolder, "*.rom *.mx1 *.mx2 *.col *.dsk *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "n64") {
-    inputDir = QDir(config.inputFolder, "*.z64 *.n64 *.v64 *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "nds") {
-    inputDir = QDir(config.inputFolder, "*.nds *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "neogeo") {
-    inputDir = QDir(config.inputFolder, "*.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "nes") {
-    inputDir = QDir(config.inputFolder, "*.nes *.smc *.sfc *.fig *.swc *.mgd *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "ngpc") {
-    inputDir = QDir(config.inputFolder, " *.ngc *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "pcengine") {
-    inputDir = QDir(config.inputFolder, "*.pce *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "psp") {
-    inputDir = QDir(config.inputFolder, "*.cso *.iso *.pbp *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "psx") {
-    inputDir = QDir(config.inputFolder, "*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "scummvm") {
-    inputDir = QDir(config.inputFolder, "*.svm", QDir::Name, QDir::Files);
-  } else if(config.platform == "sega32x") {
-    inputDir = QDir(config.inputFolder, "*.32x *.bin *.md *.smd *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "snes") {
-    inputDir = QDir(config.inputFolder, "*.smc *.sfc *.fig *.swc *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "segacd") {
-    inputDir = QDir(config.inputFolder, "*.cue *.iso *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "vectrex") {
-    inputDir = QDir(config.inputFolder, "*.bin *.gam *.vec *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "videopac") {
-    inputDir = QDir(config.inputFolder, "*.bin *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "virtualboy") {
-    inputDir = QDir(config.inputFolder, "*.vb *.zip *.7z", QDir::Name, QDir::Files);
-  } else if(config.platform == "zxspectrum") {
-    inputDir = QDir(config.inputFolder, "*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk *.zip *.7z", QDir::Name, QDir::Files);
-  }
+  QDir inputDir(platform->getInputDir(config.inputFolder));
   if(!inputDir.exists()) {
-    printf("Input folder '%s' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
+    printf("Input folder '\033[1;32m%s\033[0m' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
     exit(1);
   }
 
@@ -199,14 +129,14 @@ void Skyscraper::run()
 
   if(!config.pretend && !config.unattend && gameListFile.exists()) {
     std::string userInput = "";
-    printf("\033[1;34m'%s' already exists, do you want to overwrite it? (y/n):\033[0m ", frontend->getGameListFileName().toStdString().c_str());
-    std::cin >> userInput;
+    printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
+    getline(std::cin, userInput);
     if(userInput != "y") {
       printf("User chose not to overwrite, now exiting...\n");
       exit(0);
     }
     
-    printf("Checking if '%s' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
+    printf("Checking if '\033[1;32m%s\033[0m' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
     
     if(gameListFile.open(QIODevice::Append)) {
       printf("\033[1;32mIt is! :)\033[0m\n");
@@ -243,8 +173,8 @@ void Skyscraper::run()
   if(!config.unattend) {
     std::string userInput = "";
     if(gameListFile.exists() && frontend->canSkip()) {
-      printf("\033[1;34mDo you wish to skip existing entries? (y/n):\033[0m ");
-      std::cin >> userInput;
+      printf("\033[1;34mDo you wish to skip existing entries\033[0m (y/N)? ");
+      getline(std::cin, userInput);
       if(userInput == "y" && frontend->canSkip()) {
 	frontend->skipExisting(gameListFileString, gameEntries, inputFiles);
       }
@@ -620,47 +550,15 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   settings.endGroup();
 
   // Check for command line platform here, since we need it for 'platform' config.ini entries
-  if(parser.isSet("p") && (parser.value("p") == "amiga" ||
-			   parser.value("p") == "arcade" ||
-			   parser.value("p") == "apple2" ||
-			   parser.value("p") == "atari2600" ||
-			   parser.value("p") == "atari5200" ||
-			   parser.value("p") == "atari7800" ||
-			   parser.value("p") == "atarijaguar" ||
-			   parser.value("p") == "atarilynx" ||
-			   parser.value("p") == "atarist" ||
-			   parser.value("p") == "c64" ||
-			   parser.value("p") == "coleco" ||
-			   parser.value("p") == "gamegear" ||
-			   parser.value("p") == "gb" ||
-			   parser.value("p") == "gba" ||
-			   parser.value("p") == "gbc" ||
-			   parser.value("p") == "genesis" ||
-			   parser.value("p") == "mastersystem" ||
-			   parser.value("p") == "megadrive" ||
-			   parser.value("p") == "msx" ||
-			   parser.value("p") == "n64" ||
-			   parser.value("p") == "nds" ||
-			   parser.value("p") == "neogeo" ||
-			   parser.value("p") == "nes" ||
-			   parser.value("p") == "ngpc" ||
-			   parser.value("p") == "pcengine" ||
-			   parser.value("p") == "psp" ||
-			   parser.value("p") == "psx" ||
-			   parser.value("p") == "scummvm" ||
-			   parser.value("p") == "segacd" ||
-			   parser.value("p") == "sega32x" ||
-			   parser.value("p") == "snes" ||
-			   parser.value("p") == "vectrex" ||
-			   parser.value("p") == "videopac" ||
-			   parser.value("p") == "virtualboy" ||
-			   parser.value("p") == "zxspectrum")) {
+  if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
     config.platform = parser.value("p");
   } else {
     printf("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms, now exiting...\n");
     exit(1);
   }
 
+  platform = new Platform(config.platform);
+  
   // Platform specific config, overrides main and defaults
   settings.beginGroup(config.platform);
   if(settings.contains("emulator")) {
@@ -832,77 +730,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   // Choose default scraper for chosen platform if none has been set yet
   if(config.scraper.isEmpty()) {
-    if(config.platform == "amiga") {
-      config.scraper = "openretro";
-    } else if(config.platform == "arcade") {
-      config.scraper = "arcadedb";
-    } else if(config.platform == "apple2") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "atari2600") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "atari5200") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "atari7800") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "atarijaguar") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "atarilynx") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "atarist") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "c64") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "coleco") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "gamegear") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "gb") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "gba") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "gbc") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "genesis") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "megadrive") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "mastersystem") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "msx") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "n64") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "nds") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "neogeo") {
-      config.scraper = "arcadedb";
-    } else if(config.platform == "nes") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "ngpc") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "pcengine") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "psp") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "psx") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "scummvm") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "segacd") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "sega32x") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "snes") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "vectrex") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "videopac") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "virtualboy") {
-      config.scraper = "thegamesdb";
-    } else if(config.platform == "zxspectrum") {
-      config.scraper = "worldofspectrum";
-    }
+    config.scraper = platform->getDefaultScraper();
   }
 
   skippedFileString = "skipped-" + config.scraper + ".txt";
