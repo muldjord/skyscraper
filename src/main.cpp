@@ -36,11 +36,12 @@
 
 #include "skyscraper.h"
 #include "scripter.h"
+#include "platform.h"
 
 void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QString &msg)
 {
   // Add timestamp to debug message
-  QString txt = "";
+  QString txt = QDateTime::currentDateTime().toString("ddMMMyyyy hh:mm:ss");
   // Decide which type of debug message it is, and add string to signify it
   // Then append the debug message itself to the same string.
   switch (type) {
@@ -90,11 +91,18 @@ int main(int argc, char *argv[])
   // Install the custom debug message handler used by qDebug()
   qInstallMessageHandler(customMessageHandler);
 
+  QString platforms;
+  foreach(QString platform, Platform::getPlatforms()) {
+    platforms.append("'" + platform + "', ");
+  }
+  // Remove the last ', '
+  platforms = platforms.left(platforms.length() - 2);
+  
   QCommandLineParser parser;
 
   parser.setApplicationDescription("\033[1;34m----------------------------------\033[0m\n\033[1;33mSkyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m----------------------------------\033[0m\nThis scraper looks for compatible game files in the input directory. It fetches boxart, screenshots and other relevant information for the games based on their filenames, then builds a gamelist file for use with the chosen frontend.");
   parser.addHelpOption();
-  QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports 'amiga', 'apple2', 'arcade', 'atari2600', 'atari5200', 'atari7800', 'atarijaguar', 'atarilynx', 'atarist', 'c64', 'coleco', 'gamegear', 'gb', 'gba', 'gbc', 'genesis', 'mastersystem', 'megadrive', 'msx', 'n64', 'nds', 'neogeo', 'nes', 'ngpc', 'pcengine', 'psp', 'psx', 'scummvm', 'sega32x', 'segacd', 'snes', 'vectrex', 'videopac', 'virtualboy', 'zxspectrum'.)", "platform", "");
+  QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "platform", "");
   QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "frontend", "");
   QCommandLineOption eOption("e", "Set emulator. This is only required by the 'attractmode' frontend.\n(Default is none)", "emulator", "");
   QCommandLineOption iOption("i", "Folder which contains the game files.\n(default is '/home/pi/RetroPie/roms/[platform]')", "path", "");
