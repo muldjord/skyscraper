@@ -52,7 +52,6 @@ private:
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
   void getVideo(GameEntry &game);
-  QString actualPlatform(QString platform);
   QString getHashes(const QFileInfo &info);
 
   QString region;

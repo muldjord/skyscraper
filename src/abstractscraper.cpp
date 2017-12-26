@@ -24,6 +24,7 @@
  */
 
 #include "abstractscraper.h"
+#include "platform.h"
 
 AbstractScraper::AbstractScraper()
 {
@@ -380,7 +381,7 @@ void AbstractScraper::getVideo(GameEntry &game)
 
 QString AbstractScraper::actualPlatform(QString platform)
 {
-  return platform;
+  return Platform::getAliases(platform);
 }
 
 void AbstractScraper::nomNom(const QString nom, bool including)

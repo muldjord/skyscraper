@@ -52,8 +52,6 @@ private:
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
 
-  QString actualPlatform(QString platform);
-
   QDomNode xmlGame;
   
 };

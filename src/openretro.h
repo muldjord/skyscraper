@@ -41,7 +41,6 @@ private:
   void getScreenshot(GameEntry &game);
   void getCover(GameEntry &game);
   void getTags(GameEntry &game);
-  QString actualPlatform(QString platform);
 };
 
 #endif // OPENRETRO_H
