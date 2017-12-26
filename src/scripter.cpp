@@ -140,10 +140,8 @@ Scripter::Scripter()
 
   commandStr += " --unattend";
   
-  Platform platform(QString(platformStr.c_str()));
-
   scriptFile.write("#!/bin/bash\n");
-  foreach(QString scraper, platform.getScrapers()) {
+  foreach(QString scraper, Platform::getScrapers(QString(platformStr.c_str()))) {
     scriptFile.write((commandStr + " -s " + scraper.toStdString() + "\n").c_str());
   }
   scriptFile.close();
