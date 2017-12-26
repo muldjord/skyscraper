@@ -60,7 +60,6 @@ private slots:
   void checkThreads();
   
 private:
-  Platform *platform;
   Settings config;
   void loadConfig(const QCommandLineParser &parser);
   QString secsToString(const int &seconds);

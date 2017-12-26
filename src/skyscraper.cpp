@@ -48,7 +48,6 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser)
 Skyscraper::~Skyscraper()
 {
   delete frontend;
-  delete platform;
 }
 
 void Skyscraper::run()
@@ -79,7 +78,7 @@ void Skyscraper::run()
   avgCompleteness = 0;
   avgSearchMatch = 0;
   
-  QDir inputDir(platform->getInputDir(config.inputFolder));
+  QDir inputDir(config.inputFolder, Platform::getFormats(config.platform), QDir::Name, QDir::Files);
   if(!inputDir.exists()) {
     printf("Input folder '\033[1;32m%s\033[0m' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
     exit(1);
@@ -557,8 +556,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     exit(1);
   }
 
-  platform = new Platform(config.platform);
-  
   // Platform specific config, overrides main and defaults
   settings.beginGroup(config.platform);
   if(settings.contains("emulator")) {
@@ -730,7 +727,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   // Choose default scraper for chosen platform if none has been set yet
   if(config.scraper.isEmpty()) {
-    config.scraper = platform->getDefaultScraper();
+    config.scraper = Platform::getDefaultScraper(config.platform);
   }
 
   skippedFileString = "skipped-" + config.scraper + ".txt";
