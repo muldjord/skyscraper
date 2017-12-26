@@ -40,27 +40,26 @@
 
 void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QString &msg)
 {
-  // Add timestamp to debug message
-  QString txt = QDateTime::currentDateTime().toString("ddMMMyyyy hh:mm:ss");
+  QString txt;
   // Decide which type of debug message it is, and add string to signify it
   // Then append the debug message itself to the same string.
   switch (type) {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
   case QtInfoMsg:
-    txt += QString("%1").arg(msg);
+    txt += QString("INFO: '%1'").arg(msg);
     break;
 #endif
   case QtDebugMsg:
-    txt += QString("%1").arg(msg);
+    txt += QString("DEBUG: '%1'").arg(msg);
     break;
   case QtWarningMsg:
     //txt += QString("Warning: %1").arg(msg);
     break;
   case QtCriticalMsg:
-    txt += QString("Critical: %1").arg(msg);
+    txt += QString("CRITICAL: '%1'").arg(msg);
     break;
   case QtFatalMsg:
-    txt += QString("Fatal: %1").arg(msg);
+    txt += QString("FATAL: '%1'").arg(msg);
     abort();
   }
   printf("%s", txt.toStdString().c_str());
