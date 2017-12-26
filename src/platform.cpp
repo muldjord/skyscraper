@@ -366,6 +366,7 @@ QString Platform::getDefaultScraper()
 
 QString Platform::getAliases()
 {
+  // Not yet implemented
   QString aliases;
   return aliases;
 }
