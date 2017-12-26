@@ -30,16 +30,15 @@
 
 #include "platform.h"
 
-Platform::Platform(QString platform)
+Platform::Platform()
 {
-  this->platform = platform;
 }
 
 Platform::~Platform()
 {
 }
 
-QStringList Platform::getScrapers()
+QStringList Platform::getScrapers(QString platform)
 {
   QStringList scrapers;
   if(platform == "amiga") {
@@ -210,84 +209,85 @@ QStringList Platform::getScrapers()
   return scrapers;
 }
 
-QDir Platform::getInputDir(QString &inputFolder)
+QString Platform::getFormats(QString platform)
 {
-  QDir inputDir;
+  QString formats = "*.zip *.7z ";
   if(platform == "amiga") {
-    inputDir = QDir(inputFolder, "*.uae *.zip *.7z *.adf *.dms *.adz *.rp9", QDir::Name, QDir::Files);
+    formats.append("*.uae *.adf *.dms *.adz *.rp9");
   } else if(platform == "apple2") {
-    inputDir = QDir(inputFolder, "*.dsk *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.dsk");
   } else if(platform == "arcade") {
-    inputDir = QDir(inputFolder, "*.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("");
   } else if(platform == "atari2600") {
-    inputDir = QDir(inputFolder, "*.bin *.a26 *.rom *.zip *.7z *.gz", QDir::Name, QDir::Files);
+    formats.append("*.bin *.a26 *.rom *.gz");
   } else if(platform == "atari5200") {
-    inputDir = QDir(inputFolder, "*.a52 *.bas *.bin *.car *.xex *.atr *.xfd *.dcm *.atr.gz *.xfd.gz *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.a52 *.bas *.bin *.car *.xex *.atr *.xfd *.dcm *.atr.gz *.xfd.gz");
   } else if(platform == "atari7800") {
-    inputDir = QDir(inputFolder, "*.a78 *.bin *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.a78 *.bin");
   } else if(platform == "atarijaguar") {
-    inputDir = QDir(inputFolder, "*.j64 *.jag *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.j64 *.jag");
   } else if(platform == "atarilynx") {
-    inputDir = QDir(inputFolder, "*.lnx *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.lnx");
   } else if(platform == "atarist") {
-    inputDir = QDir(inputFolder, "*.st *.stx *.img *.rom *.raw *.ipf *.ctr *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.st *.stx *.img *.rom *.raw *.ipf *.ctr");
   } else if(platform == "c64") {
-    inputDir = QDir(inputFolder, "*.crt *.d64 *.prg *.zip *.7z *.tap *.t64 *.g64", QDir::Name, QDir::Files);
+    formats.append("*.crt *.d64 *.prg *.tap *.t64 *.g64");
   } else if(platform == "coleco") {
-    inputDir = QDir(inputFolder, "*.bin *.col *.rom *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.bin *.col *.rom");
   } else if(platform == "gb") {
-    inputDir = QDir(inputFolder, "*.gb *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.gb");
   } else if(platform == "gba") {
-    inputDir = QDir(inputFolder, "*.gba *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.gba");
   } else if(platform == "gbc") {
-    inputDir = QDir(inputFolder, "*.gbc *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.gbc");
   } else if(platform == "gamegear") {
-    inputDir = QDir(inputFolder, "*.gg *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.gg");
   } else if(platform == "genesis") {
-    inputDir = QDir(inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "mastersystem") {
-    inputDir = QDir(inputFolder, "*.sms *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.sms");
   } else if(platform == "megadrive") {
-    inputDir = QDir(inputFolder, "*.smd *.bin *.gen *.md *.sg *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "msx") {
-    inputDir = QDir(inputFolder, "*.rom *.mx1 *.mx2 *.col *.dsk *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.rom *.mx1 *.mx2 *.col *.dsk");
   } else if(platform == "n64") {
-    inputDir = QDir(inputFolder, "*.z64 *.n64 *.v64 *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.z64 *.n64 *.v64");
   } else if(platform == "nds") {
-    inputDir = QDir(inputFolder, "*.nds *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.nds");
   } else if(platform == "neogeo") {
-    inputDir = QDir(inputFolder, "*.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("");
   } else if(platform == "nes") {
-    inputDir = QDir(inputFolder, "*.nes *.smc *.sfc *.fig *.swc *.mgd *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.nes *.smc *.sfc *.fig *.swc *.mgd");
   } else if(platform == "ngpc") {
-    inputDir = QDir(inputFolder, " *.ngc *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append(" *.ngc");
   } else if(platform == "pcengine") {
-    inputDir = QDir(inputFolder, "*.pce *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.pce");
   } else if(platform == "psp") {
-    inputDir = QDir(inputFolder, "*.cso *.iso *.pbp *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.cso *.iso *.pbp");
   } else if(platform == "psx") {
-    inputDir = QDir(inputFolder, "*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx");
   } else if(platform == "scummvm") {
-    inputDir = QDir(inputFolder, "*.svm", QDir::Name, QDir::Files);
+    formats.append("*.svm");
   } else if(platform == "sega32x") {
-    inputDir = QDir(inputFolder, "*.32x *.bin *.md *.smd *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.32x *.bin *.md *.smd");
   } else if(platform == "snes") {
-    inputDir = QDir(inputFolder, "*.smc *.sfc *.fig *.swc *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.smc *.sfc *.fig *.swc");
   } else if(platform == "segacd") {
-    inputDir = QDir(inputFolder, "*.cue *.iso *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.cue *.iso");
   } else if(platform == "vectrex") {
-    inputDir = QDir(inputFolder, "*.bin *.gam *.vec *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.bin *.gam *.vec");
   } else if(platform == "videopac") {
-    inputDir = QDir(inputFolder, "*.bin *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.bin");
   } else if(platform == "virtualboy") {
-    inputDir = QDir(inputFolder, "*.vb *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.vb");
   } else if(platform == "zxspectrum") {
-    inputDir = QDir(inputFolder, "*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk *.zip *.7z", QDir::Name, QDir::Files);
+    formats.append("*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk");
   }
-  return inputDir;
+  return formats;
 }
 
-QString Platform::getDefaultScraper()
+// If user provides no scraping source with '-s' this sets the default for the platform
+QString Platform::getDefaultScraper(QString platform)
 {
   QString scraper;
   if(platform == "amiga") {
@@ -364,11 +364,85 @@ QString Platform::getDefaultScraper()
   return scraper;
 }
 
-QString Platform::getAliases()
+// This contains all known platform aliases as listed on each of the scraping source sites
+QString Platform::getAliases(QString platform)
 {
-  // Not yet implemented
-  QString aliases;
-  return aliases;
+  if(platform == "aga") {
+    return platform + ";amiga;amiga (aga)";
+  } else if(platform == "cdtv") {
+    return platform + ";amiga cdtv";
+  } else if(platform == "cd32") {
+    return platform + ";amiga cd32";
+  } else if(platform == "arcade") {
+    return platform + ";neo geo;neo geo cd";
+  } else if(platform == "atari2600") {
+    return platform + ";atari 2600";
+  } else if(platform == "atari7800") {
+    return platform + ";atari 7800";
+  } else if(platform == "atarist") {
+    return platform + ";atari st";
+  } else if(platform == "mastersystem") {
+    return platform + ";sega master system;master system";
+  } else if(platform == "gamegear") {
+    return platform + ";sega game gear;game gear";
+  } else if(platform == "gba") {
+    return platform + ";nintendo game boy advance;game boy advance";
+  } else if(platform == "megadrive") {
+    return platform + ";sega mega drive;mega drive";
+  } else if(platform == "coleco") {
+    return platform + ";colecovision";
+  } else if(platform == "c64") {
+    return platform + ";commodore 64";
+  } else if(platform == "genesis") {
+    return platform + ";sega genesis;mega drive";
+  } else if(platform == "nes") {
+    return platform + ";nintendo entertainment system (nes);nintendo";
+  } else if(platform == "pcengine") {
+    return platform + ";turbografx 16;turbografx cd;turbografx-16;pc engine;pc engine cd-rom;pc engine supergrafx";
+  } else if(platform == "psx") {
+    return platform + ";sony playstation;playstation";
+  } else if(platform == "psp") {
+    return platform + ";sony playstation portable";
+  } else if(platform == "snes") {
+    return platform + ";super nintendo (snes);super nintendo";
+  } else if(platform == "zxspectrum") {
+    return platform + ";sinclair zx spectrum;zx spectrum";
+  } else if(platform == "atari5200") {
+    return platform + ";atari 5200";
+  } else if(platform == "apple2") {
+    return platform + ";apple ii";
+  } else if(platform == "atarijaguar") {
+    return platform + ";atari jaguar;jaguar";
+  } else if(platform == "atarilynx") {
+    return platform + ";atari lynx;lynx";
+  } else if(platform == "neogeo") {
+    return platform + ";neo geo;neo geo cd;arcade;neo-geo";
+  } else if(platform == "ngpc") {
+    return platform + ";neo geo pocket color;neo-geo pocket color";
+  } else if(platform == "scummvm") {
+    return platform + ";pc;amiga;amiga cd32;dos;cd32";
+  } else if(platform == "msx") {
+    return platform + ";msx2;msx2+;msx r turbo";
+  } else if(platform == "n64") {
+    return platform + ";nintendo 64";
+  } else if(platform == "nds") {
+    return platform + ";nintendo ds";
+  } else if(platform == "gb") {
+    return platform + ";nintendo game boy;game boy";
+  } else if(platform == "gba") {
+    return platform + ";nintendo game boy advance;game boy advance";
+  } else if(platform == "gbc") {
+    return platform + ";nintendo game boy color;game boy color";
+  } else if(platform == "sega32x") {
+    return platform + ";sega 32x;megadrive 32x";
+  } else if(platform == "segacd") {
+    return platform + ";sega cd";
+  } else if(platform == "videopac") {
+    return platform + ";magnavox odyssey 2;videopac g7000;magnavox odyssey²";
+  } else if(platform == "virtualboy") {
+    return platform + ";nintendo virtual boy;virtual boy";
+  }
+  return platform;
 }
 
 QStringList Platform::getPlatforms()

@@ -34,17 +34,16 @@ class Platform : public QObject
   Q_OBJECT
 
 public:
-  Platform(QString platform = "");
+  Platform();
   ~Platform();
-  QStringList getScrapers();
-  QString getAliases();
-  QDir getInputDir(QString &inputFolder);
-  QString getDefaultScraper();
 
-static QStringList getPlatforms();
+  static QStringList getScrapers(QString platform);
+  static QString getFormats(QString platform);
+  static QString getDefaultScraper(QString platform);
+  static QString getAliases(QString platform);
+  static QStringList getPlatforms();
 
 private:
-  QString platform;
   
 };
 
