@@ -45,6 +45,7 @@ QStringList Platform::getScrapers()
   if(platform == "amiga") {
     scrapers.append("openretro");
     scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "apple2") {
     scrapers.append("thegamesdb");
