@@ -71,9 +71,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.0.6.tar.gz
-* $ tar xvzf 2.0.6.tar.gz
-* $ cd skyscraper-2.0.6
+* $ wget https://github.com/muldjord/skyscraper/archive/2.1.0.tar.gz
+* $ tar xvzf 2.1.0.tar.gz
+* $ cd skyscraper-2.1.0
 * $ qmake
 * $ make
 * $ sudo make install
@@ -171,11 +171,11 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 2.1.0 (unreleased)
+#### Version 2.1.0 (26th December 2017)
 * Added 'simple mode' that allows users a more automated way of running Skyscraper. Invoke it by running Skyscraper with no options by simply typing 'Skyscraper'
 * A bunch of code refactoring to make platform related code easier to maintain and enable better platform checking
 
-#### Version 2.0.6 (23rd december 2017)
+#### Version 2.0.6 (23rd December 2017)
 * Added support for atarilynx, vectrex, ngpc (Neo Geo Pocket Color), sega32x, virtualboy and videopac platforms
 * Changed all 'qDebug' call to 'printf' calls
 
