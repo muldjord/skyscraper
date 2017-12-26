@@ -172,6 +172,7 @@ Append command line option '-c config_artwork03.ini'
 
 #### Version 2.1.0 (unreleased)
 * Added 'simple mode' that allows users a more automated way of running Skyscraper. Invoke it by running Skyscraper with no options by simply typing 'Skyscraper'
+* A bunch of code refactoring to make platform related code easier to maintain and enable better platform checking
 
 #### Version 2.0.6 (23rd december 2017)
 * Added support for atarilynx, vectrex, ngpc (Neo Geo Pocket Color), sega32x, virtualboy and videopac platforms
