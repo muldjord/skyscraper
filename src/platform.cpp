@@ -38,6 +38,48 @@ Platform::~Platform()
 {
 }
 
+QStringList Platform::getPlatforms()
+{
+  QStringList platforms;
+  platforms.append("amiga");
+  platforms.append("apple2");
+  platforms.append("arcade");
+  platforms.append("atari2600");
+  platforms.append("atari5200");
+  platforms.append("atari7800");
+  platforms.append("atarijaguar");
+  platforms.append("atarilynx");
+  platforms.append("atarist");
+  platforms.append("c64");
+  platforms.append("coleco");
+  platforms.append("gamegear");
+  platforms.append("gb");
+  platforms.append("gba");
+  platforms.append("gbc");
+  platforms.append("genesis");
+  platforms.append("mastersystem");
+  platforms.append("megadrive");
+  platforms.append("msx");
+  platforms.append("n64");
+  platforms.append("nds");
+  platforms.append("neogeo");
+  platforms.append("nes");
+  platforms.append("ngpc");
+  platforms.append("pcengine");
+  platforms.append("psp");
+  platforms.append("psx");
+  platforms.append("scummvm");
+  platforms.append("sega32x");
+  platforms.append("segacd");
+  platforms.append("snes");
+  platforms.append("vectrex");
+  platforms.append("videopac");
+  platforms.append("virtualboy");
+  platforms.append("zxspectrum");
+
+  return platforms;
+}
+
 QStringList Platform::getScrapers(QString platform)
 {
   QStringList scrapers;
@@ -480,48 +522,6 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("virtual boy");
   }
   return aliases;
-}
-
-QStringList Platform::getPlatforms()
-{
-  QStringList platforms;
-  platforms.append("amiga");
-  platforms.append("apple2");
-  platforms.append("arcade");
-  platforms.append("atari2600");
-  platforms.append("atari5200");
-  platforms.append("atari7800");
-  platforms.append("atarijaguar");
-  platforms.append("atarilynx");
-  platforms.append("atarist");
-  platforms.append("c64");
-  platforms.append("coleco");
-  platforms.append("gamegear");
-  platforms.append("gb");
-  platforms.append("gba");
-  platforms.append("gbc");
-  platforms.append("genesis");
-  platforms.append("mastersystem");
-  platforms.append("megadrive");
-  platforms.append("msx");
-  platforms.append("n64");
-  platforms.append("nds");
-  platforms.append("neogeo");
-  platforms.append("nes");
-  platforms.append("ngpc");
-  platforms.append("pcengine");
-  platforms.append("psp");
-  platforms.append("psx");
-  platforms.append("scummvm");
-  platforms.append("sega32x");
-  platforms.append("segacd");
-  platforms.append("snes");
-  platforms.append("vectrex");
-  platforms.append("videopac");
-  platforms.append("virtualboy");
-  platforms.append("zxspectrum");
-
-  return platforms;
 }
 
 // --- Console colors ---
