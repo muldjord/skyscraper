@@ -41,7 +41,7 @@ Scripter::Scripter()
   printf("\033[1;31mWARNING!!!\033[0m Continuing will overwrite your existing game list file. Any manual changes will be GONE! If you wish to keep your existing game list file, please manually create a backup before re-running Skyscraper.\n\n\033[1;34mAre you sure you wish to proceed\033[0m (y/N)? ");
   getline(std::cin, overwriteStr);
   if(overwriteStr != "y") {
-    printf("\033[1;34mUser chose not to continue, now exiting...\033[0m\n");
+    printf("User chose not to continue, now exiting...\n");
     exit(0);
   }
 
@@ -56,8 +56,14 @@ Scripter::Scripter()
   if(frontendStr == "")
     frontendStr = "emulationstation";
 
+  std::string emulatorStr = "";
+  while(frontendStr == "attractmode" && emulatorStr == "") {
+    printf("\033[1;34mPlease enter AttractMode emulator:\033[0m ");
+    getline(std::cin, emulatorStr);
+  }
+
   printf("User chose: '\033[1;32m%s\033[0m'\n", frontendStr.c_str());
-  
+
   std::string platformStr = "";
   printf("\n");
   printf("Available platforms:\n");
@@ -85,12 +91,6 @@ Scripter::Scripter()
   printf("\033[1;34mPlease enter full 'gamelist.xml' output folder\033[0m (enter for default): ");
   getline(std::cin, gamelistFolderStr);
 
-  std::string emulatorStr = "";
-  while(frontendStr == "attractmode" && emulatorStr == "") {
-    printf("\033[1;34mPlease enter AttractMode emulator: ");
-    getline(std::cin, emulatorStr);
-  }
-  
   std::string artworkFolderStr = "";
   printf("\033[1;34mPlease enter full artwork export folder\033[0m (enter for default): ");
   getline(std::cin, artworkFolderStr);
