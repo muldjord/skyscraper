@@ -34,6 +34,10 @@
 Scripter::Scripter()
 {
   printf("\033[1;34m------------------------------------------\033[0m\n\033[1;33mRunning Skyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m------------------------------------------\033[0m\n");
+#ifdef Q_OS_WIN
+  printf("\033[1;31mYou are running Skyscraper in 'simple mode' on a Windows machine. Windows is not currently supported in this mode. The generated script WILL NOT WORK!\033[0m\n\n");
+#endif
+
   printf("\033[1;33mIMPORTANT!!!\033[0m You are running Skyscraper in 'simple mode'. This mode is meant for first-time scrapings only! For any subsequent scrapings of a platform consider scraping using '\033[1;32mSkyscraper -p [platform] -s localdb\033[0m'. This will not only save you time since it is A LOT faster, but also saves bandwidth for the scraping sources since all of the data has already been cached locally and will be used by the 'localdb' scraping module.\n\nFor advanced users be sure be sure to check out all of the available command line options with '\033[1;32mSkyscraper --help\033[0m'. Complete documentation of all features can be found at: \033[1;32mhttps://github.com/muldjord/skyscraper\033[0m\n\nYou will now be asked a bunch of questions. Default for most of these questions will be optimal and can therefore be answered simply by pressing enter. Only change them if you know what you are doing.\033[0m\n");
 
   std::string overwriteStr = "";
