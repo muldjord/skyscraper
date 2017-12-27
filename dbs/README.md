@@ -39,8 +39,8 @@ The developer of a game
 How many players are supported by a game
 #### tags
 List of game tags, most often genre related
-#### releasedata
-The release data of a game
+#### releasedate
+The release date of a game
 #### rating
 Game rating, number between 0 and 1
 #### cover
