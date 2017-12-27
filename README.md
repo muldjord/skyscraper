@@ -6,7 +6,9 @@ Currently supports the following frontends (set with '-f'):
 * AttractMode
 
 Currently supports the following platforms (set with '-p'):
+* 3do
 * Amiga (OCS, ECS, AGA, CD32, CDTV)
+* Amstrad CPC
 * Apple 2
 * Arcade
 * Atari2600
@@ -15,19 +17,30 @@ Currently supports the following platforms (set with '-p'):
 * Atari Jaguar
 * Atari Lynx
 * Atari ST
+* Coco (Tandy Colour Computer)
 * ColecoVision
 * Commodore 64
+* Daphne
+* Dragon 32/64
+* Dreamcast
+* Famicom Disk System
 * Game Boy
 * Game Boy Advance
 * Game Boy Color
+* Game & Watch
+* Intellivision
 * Megadrive / Genesis
 * MSX (MSX, MSX 2, MSX 2+, MSX Laserdisc)
 * NeoGeo
+* NeoGeo Pocket
 * NeoGeo Pocket Color
 * Nintendo 64
 * Nintendo DS
 * Nintendo Entertainment System
+* Oric (Oric-1, Oric Atmos)
+* PC-8800
 * PC-Engine / TurboGrafx-16
+* PC-FX
 * Playstation
 * Playstation Portable
 * ScummVM (looks for PC or Amiga matches)
@@ -35,10 +48,14 @@ Currently supports the following platforms (set with '-p'):
 * Sega CD
 * Sega Game Gear
 * Sega Master System
+* Sega Saturn
+* Sega SG-1000
 * Super Nintendo
+* TRS-80
 * Vectrex
 * Videopac (Oddysey 2)
 * Virtual Boy
+* Z-Machine
 * ZX Spectrum
 
 ... More platforms will be added in future releases!
@@ -71,9 +88,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.1.0.tar.gz
-* $ tar xvzf 2.1.0.tar.gz
-* $ cd skyscraper-2.1.0
+* $ wget https://github.com/muldjord/skyscraper/archive/2.1.1.tar.gz
+* $ tar xvzf 2.1.1.tar.gz
+* $ cd skyscraper-2.1.1
 * $ qmake
 * $ make
 * $ sudo make install
@@ -171,8 +188,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
-#### Version 2.1.1 (unreleased)
-* Added 'forcefilename' option which forces the file name to be used as game title instead of the one returned by the scraping module
+#### Version 2.1.1 (27th December 2017)
+* Added support for '3do', 'amstradcpc', 'coco', 'daphne', 'dragon32', 'dreamcast', 'fds' and 'gameandwatch', 'intellivision', 'ngp', 'oric', 'pc88', 'pcfx', 'saturn', 'sg-1000', 'trs-80' and 'zmachine' platforms
+* Added 'forcefilename' option which forces the file name to be used in the frontend instead of the one returned by the scraping module
 * Changed 'gamelist.xml' to 'game list' in 'simple mode' question
 
 #### Version 2.1.0 (26th December 2017)
