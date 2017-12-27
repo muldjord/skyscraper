@@ -5,7 +5,8 @@ To import videos or images into the local Skyscraper resource cache, use the fol
 * Name your image file with the EXACT base name of the rom you wish to connect it to. Example: 'Bubble Bobble.nes' will import images with a filename of 'Bubble Bobble.jpg' or 'Bubble Bobble.png' or other image formats. As long as the base name is an exact match. Same goes for video files. I recommend only making use of wellknown video formats, since Skyscraper imports them directly without conversion, so they need to be supported by the frontend you plan to use.
 * Place all of your images or videos in the '[homedir]/.skyscraper/import/snaps', 'boxart' or 'videos' folder.
 * Now run Skyscraper with 'Skyscraper-p [platform] -s import'. If you named your files correctly, they will now be imported. Look for the green 'YES' in the output at the rom(s) you've placed files for. This will tell you if it succeeded or not.
-* Lastly, but very importantly, finish it all up by scraping the platform with 'Skyscraper -p [platform] -s localdb' which will then make use of all of your locally cached data, including the data you just imported. You can prioritize the newly imported data. Read more on how to do that [here](../dbs/README.md#the-mandatory-exception-to-the-rule).
+* The data is now imported. To now make use of the data, read [here](#how-to-actually-use-the-data).
+
 ### Special note for videos
 If you are importing videos, you also need to add the command line option '--videos' for this to work. Videos aren't imported or scraped per default, since it is considered a huge disk space hog. So keep this in mind if you want to import videos into the cache.
 
