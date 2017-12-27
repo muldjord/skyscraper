@@ -153,6 +153,9 @@ void ScraperWorker::run()
     }
 
     game.title = StrTools::xmlUnescape(game.title);
+    if(config.forceFilename) {
+      game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).replace("_", " ").simplified());
+    }
     game.imageFile = StrTools::xmlUnescape(config.imagesFolder + "/" + info.completeBaseName() + ".png");
     game.videoFile = StrTools::xmlUnescape(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
     game.description = StrTools::xmlUnescape(game.description);
@@ -167,7 +170,7 @@ void ScraperWorker::run()
       output.append("Scraper:\t'" + config.scraper + "'\n");
     }
     output.append("Search match:\t" + QString::number(searchMatch) + " %\n");
-    output.append("Web title:\t'" + game.title + "'\n");
+    output.append("Game title:\t'" + game.title + "'\n");
     output.append("Compare title:\t'" + compareName + "'\n");
     output.append("Platform:\t'" + game.platform + "'\n");
     output.append("Release Date:\t'");

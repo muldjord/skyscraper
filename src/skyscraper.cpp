@@ -525,6 +525,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
   }
+  if(settings.contains("forceFilename")) {
+    config.forceFilename = settings.value("forceFilename").toBool();
+  }
   if(settings.contains("verbose")) {
     config.verbose = settings.value("verbose").toBool();
   }
@@ -607,6 +610,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
+  }
+  if(settings.contains("forceFilename")) {
+    config.forceFilename = settings.value("forceFilename").toBool();
   }
   if(settings.contains("verbose")) {
     config.verbose = settings.value("verbose").toBool();
@@ -695,6 +701,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("unattend")) {
     config.unattend = true;
+  }
+  if(parser.isSet("forcefilename")) {
+    config.forceFilename = true;
   }
   if(parser.isSet("region")) {
     config.region = parser.value("region");

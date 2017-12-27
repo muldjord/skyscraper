@@ -123,6 +123,7 @@ int main(int argc, char *argv[])
   QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db. Set specific db folder with '-d'. Otherwise default db folder is used.");
   QCommandLineOption mergedbOption("mergedb", "Merge data from a specific db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d'. Otherwise default destination db folder is used.", "folder", "");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
+  QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
   QCommandLineOption pretendOption("pretend", "Don't alter any files (except 'skipped.txt'), just print the results on screen.");
   QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default 'wor')", "code", "wor");
@@ -154,6 +155,7 @@ int main(int argc, char *argv[])
   parser.addOption(nosubdirsOption);
   parser.addOption(pretendOption);
   parser.addOption(unattendOption);
+  parser.addOption(forcefilenameOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
   parser.addOption(verboseOption);

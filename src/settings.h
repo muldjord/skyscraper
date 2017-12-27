@@ -58,6 +58,7 @@ struct Settings {
   bool subDirs = true;
   bool pretend = false;
   bool unattend = false;
+  bool forceFilename = false;
   bool stats = false;
   bool verbose = false;
   bool skipped = false;
