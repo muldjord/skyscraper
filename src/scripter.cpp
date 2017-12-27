@@ -88,11 +88,11 @@ Scripter::Scripter()
   getline(std::cin, inputFolderStr);
 
   std::string gamelistFolderStr = "";
-  printf("\033[1;34mPlease enter full 'gamelist.xml' output folder\033[0m (enter for default): ");
+  printf("\033[1;34mPlease enter full game list output folder\033[0m (enter for default): ");
   getline(std::cin, gamelistFolderStr);
 
   std::string artworkFolderStr = "";
-  printf("\033[1;34mPlease enter full artwork export folder\033[0m (enter for default): ");
+  printf("\033[1;34mPlease enter full artwork output folder\033[0m (enter for default): ");
   getline(std::cin, artworkFolderStr);
 
   std::string videosStr = "";
