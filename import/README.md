@@ -66,4 +66,4 @@ For '###RATING###' and '###RELEASEDATE###' a certain format is required. Rating 
 * MMM dd, yyyy (MMM is Jan, Feb and so on...)
 
 ## How to actually USE the data
-When you've imported all of your data into the local Skyscraper cache, you can make use of it by scraping the platform with 'Skyscraper -p [platform] -s localdb'. This will make use of your imported data. Read more about the localdb scraping module [here](dbs/README.md).
+When you've imported all of your data into the local Skyscraper cache, you can make use of it by scraping the platform with 'Skyscraper -p [platform] -s localdb'. This will make use of your imported data. Read more about the localdb scraping module [here](../dbs/README.md).
