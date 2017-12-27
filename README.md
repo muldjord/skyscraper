@@ -171,6 +171,9 @@ Append command line option '-c config_artwork03.ini'
 
 ## Release notes
 
+#### Version 2.1.1 (unreleased)
+* Changed 'gamelist.xml' to 'game list' in 'simple mode' question
+
 #### Version 2.1.0 (26th December 2017)
 * Added 'simple mode' that allows users a more automated way of running Skyscraper. Invoke it by running Skyscraper with no options by simply typing 'Skyscraper'
 * A bunch of code refactoring to make platform related code easier to maintain and enable better platform checking
