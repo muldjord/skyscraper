@@ -172,6 +172,7 @@ Append command line option '-c config_artwork03.ini'
 ## Release notes
 
 #### Version 2.1.1 (unreleased)
+* Added 'forcefilename' option which forces the file name to be used as game title instead of the one returned by the scraping module
 * Changed 'gamelist.xml' to 'game list' in 'simple mode' question
 
 #### Version 2.1.0 (26th December 2017)
