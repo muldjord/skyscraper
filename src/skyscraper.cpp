@@ -396,16 +396,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   QFile::copy("/usr/local/etc/skyscraper/mameMap.csv", "mameMap.csv");
 
-  if(!QFileInfo::exists("config_artwork01.ini")) {
-    QFile::copy("/usr/local/etc/skyscraper/config_artwork01.ini", "config_artwork01.ini");
-  }
-
-  if(!QFileInfo::exists("config_artwork02.ini")) {
-    QFile::copy("/usr/local/etc/skyscraper/config_artwork02.ini", "config_artwork02.ini");
-  }
-
-  if(!QFileInfo::exists("config_artwork03.ini")) {
-    QFile::copy("/usr/local/etc/skyscraper/config_artwork03.ini", "config_artwork03.ini");
+  if(!QFileInfo::exists("artwork.xml")) {
+    QFile::copy("/usr/local/etc/skyscraper/artwork.xml", "artwork.xml");
   }
 
   if(QFileInfo::exists("dbs/README.md")) {
@@ -432,75 +424,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   QFile::copy("/usr/local/etc/skyscraper/import/definitions.dat.example2", "import/definitions.dat.example2");
 
   QSettings settings(parser.isSet("c")?parser.value("c"):"config.ini", QSettings::IniFormat);
-
-  // Artwork config
-  settings.beginGroup("artwork");
-  if(settings.contains("composite")) {
-    config.noComposite = !settings.value("composite").toBool();
-  }
-  if(settings.contains("finalImageWidth")) {
-    config.finalImageWidth = settings.value("finalImageWidth").toInt();
-  }
-  if(settings.contains("finalImageHeight")) {
-    config.finalImageHeight = settings.value("finalImageHeight").toInt();
-  }
-  if(settings.contains("coverEnabled")) {
-    config.coverEnabled = settings.value("coverEnabled").toBool();
-  }
-  if(settings.contains("coverWidth")) {
-    config.coverWidth = settings.value("coverWidth").toInt();
-  }
-  if(settings.contains("coverHeight")) {
-    config.coverHeight = settings.value("coverHeight").toInt();
-  }
-  if(settings.contains("coverX")) {
-    config.coverX = settings.value("coverX").toInt();
-  }
-  if(settings.contains("coverY")) {
-    config.coverY = settings.value("coverY").toInt();
-    config.coverYSet = true;
-  }
-  if(settings.contains("coverShadowEnabled")) {
-    config.coverShadowEnabled = settings.value("coverShadowEnabled").toBool();
-  }
-  if(settings.contains("coverShadowDistance")) {
-    config.coverShadowDistance = settings.value("coverShadowDistance").toInt();
-  }
-  if(settings.contains("coverShadowSoftness")) {
-    config.coverShadowSoftness = settings.value("coverShadowSoftness").toInt();
-  }
-  if(settings.contains("coverShadowOpacity")) {
-    config.coverShadowOpacity = settings.value("coverShadowOpacity").toInt();
-  }
-  if(settings.contains("screenshotEnabled")) {
-    config.screenshotEnabled = settings.value("screenshotEnabled").toBool();
-  }
-  if(settings.contains("screenshotWidth")) {
-    config.screenshotWidth = settings.value("screenshotWidth").toInt();
-  }
-  if(settings.contains("screenshotHeight")) {
-    config.screenshotHeight = settings.value("screenshotHeight").toInt();
-  }
-  if(settings.contains("screenshotX")) {
-    config.screenshotX = settings.value("screenshotX").toInt();
-    config.screenshotXSet = true;
-  }
-  if(settings.contains("screenshotY")) {
-    config.screenshotY = settings.value("screenshotY").toInt();
-  }
-  if(settings.contains("screenshotShadowEnabled")) {
-    config.screenshotShadowEnabled = settings.value("screenshotShadowEnabled").toBool();
-  }
-  if(settings.contains("screenshotShadowDistance")) {
-    config.screenshotShadowDistance = settings.value("screenshotShadowDistance").toInt();
-  }
-  if(settings.contains("screenshotShadowSoftness")) {
-    config.screenshotShadowSoftness = settings.value("screenshotShadowSoftness").toInt();
-  }
-  if(settings.contains("screenshotShadowOpacity")) {
-    config.screenshotShadowOpacity = settings.value("screenshotShadowOpacity").toInt();
-  }
-  settings.endGroup();
 
   // Start by setting frontend, since we need it to set default for gamelist and so on
   settings.beginGroup("main");
@@ -705,9 +628,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("forcefilename")) {
     config.forceFilename = true;
-  }
-  if(parser.isSet("nocomposite")) {
-    config.noComposite = true;
   }
   if(parser.isSet("region")) {
     config.region = parser.value("region");
