@@ -52,7 +52,6 @@ struct Settings {
   int currentFile = 0;
   int totalFiles = 0;
   int maxLength = 10000;
-  bool noComposite = true;
   bool videos = false;
   bool brackets = true;
   bool localDb = true;
@@ -68,6 +67,7 @@ struct Settings {
   bool verbose = false;
   bool skipped = false;
   
+  /*
   int finalImageWidth = 600;
   int finalImageHeight = 400;
   bool coverEnabled = true;
@@ -90,6 +90,7 @@ struct Settings {
   int screenshotShadowDistance = 10;
   int screenshotShadowSoftness = 10;
   int screenshotShadowOpacity = 75;
+  */
 
   QString user = "";
   QString password = "";
