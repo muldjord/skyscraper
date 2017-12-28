@@ -24,6 +24,7 @@ Currently supports the following platforms (set with '-p'):
 * Dragon 32/64
 * Dreamcast
 * Famicom Disk System
+* FB Alpha
 * Game Boy
 * Game Boy Advance
 * Game Boy Color
@@ -187,6 +188,12 @@ Append command line option '-c config_artwork03.ini'
 ![Big centered screenshot with drop shadow, no cover](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/North%20%26%20South.png)
 
 ## Release notes
+
+#### Version 2.2.0 (unreleased)
+* Added 'nocomposite' command line option that disables artwork compositing and instead saves them as is.
+* Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
+* Added 'wheel' and 'marquee' media types to local dabatase.
+* Added support for 'fba' platform
 
 #### Version 2.1.1 (27th December 2017)
 * Added support for '3do', 'amstradcpc', 'coco', 'daphne', 'dragon32', 'dreamcast', 'fds' and 'gameandwatch', 'intellivision', 'ngp', 'oric', 'pc88', 'pcfx', 'saturn', 'sg-1000', 'trs-80' and 'zmachine' platforms
