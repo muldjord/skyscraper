@@ -3,7 +3,7 @@
 ## Images and videos
 To import videos or images into the local Skyscraper resource cache, use the following procedure:
 * Name your image file with the EXACT base name of the rom you wish to connect it to. Example: 'Bubble Bobble.nes' will import images with a filename of 'Bubble Bobble.jpg' or 'Bubble Bobble.png' or other image formats. As long as the base name is an exact match. Same goes for video files. I recommend only making use of wellknown video formats, since Skyscraper imports them directly without conversion, so they need to be supported by the frontend you plan to use.
-* Place all of your images or videos in the '[homedir]/.skyscraper/import/snaps', 'boxart' or 'videos' folder.
+* Place all of your images or videos in the '[homedir]/.skyscraper/import/screenshots', 'covers', 'wheels', 'marquees' or 'videos' folder.
 * Now run Skyscraper with 'Skyscraper-p [platform] -s import'. If you named your files correctly, they will now be imported. Look for the green 'YES' in the output at the rom(s) you've placed files for. This will tell you if it succeeded or not.
 * The data is now imported. To now make use of the data, read [here](#how-to-actually-use-the-data).
 
