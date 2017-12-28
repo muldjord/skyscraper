@@ -34,6 +34,7 @@
 #region="wor"
 
 #[artwork]
+#composite="true"
 #finalImageWidth="600"
 #finalImageHeight="400"
 #coverEnabled="true"
@@ -63,8 +64,7 @@
 #userCreds="user:password"
 #inputFolder="/home/pi/RetroPie/roms/amiga"
 #gamelistFolder="/home/pi/RetroPie/roms/amiga"
-#imagesFolder="/home/pi/RetroPie/roms/amiga/images"
-#videosFolder="/home/pi/RetroPie/roms/amiga/videos"
+#mediaFolder="/home/pi/RetroPie/roms/amiga/media"
 #minMatch="0"
 #maxLength="10000"
 #threads="2"
