@@ -302,6 +302,8 @@ void Skyscraper::entryReady(const GameEntry &entry)
     // At this point data has been saved to disc, so we don't need it anymore.
     tmpEntry.coverData = QImage();
     tmpEntry.screenshotData = QImage();
+    tmpEntry.wheelData = QImage();
+    tmpEntry.marqueeData = QImage();
     tmpEntry.videoData = "";
     gameEntries.append(tmpEntry);
   } else {
