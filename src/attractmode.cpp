@@ -241,7 +241,7 @@ QString AttractMode::getVideosFolder()
 QString AttractMode::getMediaTypeFolder(QString type)
 {
   QFile emulatorFile(config->emulator);
-  QString mediaTypeFolder = config->mediaFolder + "/" + type + "s";
+  QString mediaTypeFolder = config->mediaFolder + "/" + type;
   
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
