@@ -78,6 +78,10 @@ void ScraperWorker::run()
   scraper->loadMameMap();
   
   platformOrig = config.platform;
+
+  Compositor artHandler(config);
+  artHandler.processXml("artwork.xml");
+  
   for(int a = beginIdx; a < filesPerThread + beginIdx; ++a) {
     output = "";
     config.platform = platformOrig;
@@ -197,36 +201,13 @@ void ScraperWorker::run()
     output.append("\nDescription:\n" + game.description + "\n");
 
     if(!config.pretend) {
-      if(config.noComposite) {
-	if(!game.screenshotData.isNull()) {
-	  if(game.screenshotData.save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png"))
-	    game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
+      artHandler.saveAll(game, info.completeBaseName());
+      if(config.videos && game.videoFormat != "") {
+	QFile videoFile(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
+	if(videoFile.open(QIODevice::WriteOnly)) {
+	  videoFile.write(game.videoData);
+	  videoFile.close();
 	}
-	if(!game.coverData.isNull()) {
-	  if(game.coverData.save(config.coversFolder + "/" + info.completeBaseName() + ".png"))
-	    game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" + info.completeBaseName() + ".png");
-	}
-	if(!game.wheelData.isNull()) {
-	  if(game.wheelData.save(config.wheelsFolder + "/" + info.completeBaseName() + ".png"))
-	    game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" + info.completeBaseName() + ".png");
-	}
-	if(!game.marqueeData.isNull()) {
-	  if(game.marqueeData.save(config.marqueesFolder + "/" + info.completeBaseName() + ".png"))
-	    game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" + info.completeBaseName() + ".png");
-	}
-      } else {
-	Compositor artCreator;
-	if(artCreator.composite(game.coverData, game.screenshotData, config).save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png")) {
-	  game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
-	}
-      }
-    }
-
-    if(config.videos && game.videoFormat != "") {
-      QFile videoFile(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
-      if(videoFile.open(QIODevice::WriteOnly)) {
-	videoFile.write(game.videoData);
-	videoFile.close();
       }
     }
 
