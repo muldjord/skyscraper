@@ -213,20 +213,35 @@ QString AttractMode::getGameListFolder()
   return config->inputFolder;
 }
 
-QString AttractMode::getImagesFolder()
+QString AttractMode::getCoversFolder()
 {
-  return getArtworkFolder("snap");
+  return getMediaTypeFolder("flyer");
+}
+
+QString AttractMode::getScreenshotsFolder()
+{
+  return getMediaTypeFolder("snap");
+}
+
+QString AttractMode::getWheelsFolder()
+{
+  return getMediaTypeFolder("wheel");
+}
+
+QString AttractMode::getMarqueesFolder()
+{
+  return getMediaTypeFolder("marquee");
 }
 
 QString AttractMode::getVideosFolder()
 {
-  return getArtworkFolder("video");
+  return getMediaTypeFolder("snap");
 }
 
-QString AttractMode::getArtworkFolder(QString type)
+QString AttractMode::getMediaTypeFolder(QString type)
 {
   QFile emulatorFile(config->emulator);
-  QString artworkFolder = config->inputFolder + "/" + type + "s";
+  QString mediaTypeFolder = config->mediaFolder + "/" + type + "s";
   
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
@@ -234,13 +249,13 @@ QString AttractMode::getArtworkFolder(QString type)
       foreach(QByteArray snippet, snippets) {
       }
       if(snippets.length() == 3 && snippets.at(0) == "artwork" && snippets.at(1) == type) {
-	artworkFolder = snippets.at(2);
+	mediaTypeFolder = snippets.at(2);
       }
     }
     emulatorFile.close();
   }
 
-  return artworkFolder;
+  return mediaTypeFolder;
 }
 
 /*

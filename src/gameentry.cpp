@@ -32,7 +32,7 @@ GameEntry::GameEntry()
 int GameEntry::completeness(bool videoEnabled)
 {
   double completeness = 100.0;
-  int noOfTypes = 11;
+  int noOfTypes = 13;
   if(videoEnabled) {
     noOfTypes += 1;
   }
@@ -47,6 +47,12 @@ int GameEntry::completeness(bool videoEnabled)
     completeness -= valuePerType;
   }
   if(screenshotData.isNull()) {
+    completeness -= valuePerType;
+  }
+  if(wheelData.isNull()) {
+    completeness -= valuePerType;
+  }
+  if(marqueeData.isNull()) {
     completeness -= valuePerType;
   }
   if(description.isEmpty()) {

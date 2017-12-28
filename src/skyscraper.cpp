@@ -52,19 +52,19 @@ Skyscraper::~Skyscraper()
 
 void Skyscraper::run()
 {
-  printf("Platform        : '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
-  printf("Scraper module  : '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
+  printf("Platform           : '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
+  printf("Scraper module     : '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
   if(config.emulator != "") {
-    printf("Emulator        : '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
+    printf("Emulator           : '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
   }
-  printf("Input folder    : '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
-  printf("Gamelist folder : '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
-  printf("Images folder   : '\033[1;32m%s\033[0m'\n", config.imagesFolder.toStdString().c_str());
-  if(config.videos) {
-    printf("Videos folder   : '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
-  }
+  printf("Input folder       : '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
+  printf("Game list folder   : '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
+  printf("Covers folder      : '\033[1;32m%s\033[0m'\n", config.coversFolder.toStdString().c_str());
+  printf("Screenshots folder : '\033[1;32m%s\033[0m'\n", config.screenshotsFolder.toStdString().c_str());
+  printf("Wheels folder      : '\033[1;32m%s\033[0m'\n", config.wheelsFolder.toStdString().c_str());
+  printf("Marquees folder    : '\033[1;32m%s\033[0m'\n", config.marqueesFolder.toStdString().c_str());
   if(config.localDb) {
-    printf("Local db folder : '\033[1;32m%s\033[0m'\n\n", config.dbFolder.toStdString().c_str());
+    printf("Local db folder    : '\033[1;32m%s\033[0m'\n\n", config.dbFolder.toStdString().c_str());
   }
   
   if(config.scraper == "arcadedb" && config.threads != 1) {
@@ -88,9 +88,21 @@ void Skyscraper::run()
   checkForFolder(gameListDir);
   config.gameListFolder = gameListDir.absolutePath();
   
-  QDir imagesDir(config.imagesFolder);
-  checkForFolder(imagesDir);
-  config.imagesFolder = imagesDir.absolutePath();
+  QDir coversDir(config.coversFolder);
+  checkForFolder(coversDir);
+  config.coversFolder = coversDir.absolutePath();
+
+  QDir screenshotsDir(config.screenshotsFolder);
+  checkForFolder(screenshotsDir);
+  config.screenshotsFolder = screenshotsDir.absolutePath();
+
+  QDir wheelsDir(config.wheelsFolder);
+  checkForFolder(wheelsDir);
+  config.wheelsFolder = wheelsDir.absolutePath();
+
+  QDir marqueesDir(config.marqueesFolder);
+  checkForFolder(marqueesDir);
+  config.marqueesFolder = marqueesDir.absolutePath();
 
   if(config.videos) {
     QDir videosDir(config.videosFolder);
@@ -236,9 +248,9 @@ void Skyscraper::checkForFolder(QDir &folder)
   if(!folder.exists()) {
     printf("Folder '%s' doesn't exist, trying to create it... ", folder.absolutePath().toStdString().c_str());
     if(folder.mkpath(folder.absolutePath())) {
-      printf("Success!\n\n");
+      printf("\033[1;32mSuccess!\033[0m\n\n");
     } else {
-      printf("Failed! Please check path and permissions\n");
+      printf("\033[1;32mFailed!\033[0m Please check path and permissions, now exiting...\n");
       exit(1);
     }
   }
@@ -421,6 +433,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   // Artwork config
   settings.beginGroup("artwork");
+  if(settings.contains("composite")) {
+    config.noComposite = !settings.value("composite").toBool();
+  }
   if(settings.contains("finalImageWidth")) {
     config.finalImageWidth = settings.value("finalImageWidth").toInt();
   }
@@ -505,8 +520,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   
   bool inputFolderSet = false;
   bool gameListFolderSet = false;
-  bool imagesFolderSet = false;
-  bool videosFolderSet = false;
+  bool mediaFolderSet = false;
   
   // Main config, overrides defaults
   settings.beginGroup("main");
@@ -572,23 +586,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.gameListFolder = settings.value("gamelistFolder").toString();
     gameListFolderSet = true;
   }
-  if(settings.contains("imagesFolder")) {
-    config.imagesFolder = settings.value("imagesFolder").toString();;
-    imagesFolderSet = true;
-  }
-  if(settings.contains("videos")) {
-    config.videos = settings.value("videos").toBool();
+  if(settings.contains("mediaFolder")) {
+    config.mediaFolder = settings.value("mediaFolder").toString();;
+    mediaFolderSet = true;
   }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();
-  }
-  if(settings.contains("videosFolder")) {
-    config.videosFolder = settings.value("videosFolder").toString();;
-    videosFolderSet = true;
-  }
-  if(settings.contains("videosFolder")) {
-    config.videosFolder = settings.value("videosFolder").toString();;
-    videosFolderSet = true;
   }
   if(settings.contains("brackets")) {
     config.brackets = !settings.value("brackets").toBool();
@@ -641,12 +644,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     gameListFolderSet = true;
   }
   if(parser.isSet("o")) {
-    config.imagesFolder = parser.value("o");
-    imagesFolderSet = true;
-  }
-  if(parser.isSet("v")) {
-    config.videosFolder = parser.value("v");
-    videosFolderSet = true;
+    config.mediaFolder = parser.value("o");
+    mediaFolderSet = true;
   }
   if(parser.isSet("m") && parser.value("m").toInt() >= 0 && parser.value("m").toInt() <= 100) {
     config.minMatch = parser.value("m").toInt();
@@ -705,6 +704,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("forcefilename")) {
     config.forceFilename = true;
   }
+  if(parser.isSet("nocomposite")) {
+    config.noComposite = true;
+  }
   if(parser.isSet("region")) {
     config.region = parser.value("region");
   }
@@ -727,13 +729,15 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(!gameListFolderSet) {
     config.gameListFolder = frontend->getGameListFolder();
   }
-  if(!imagesFolderSet) {
-    config.imagesFolder = frontend->getImagesFolder();
+  if(!mediaFolderSet) {
+    config.mediaFolder = config.gameListFolder + "/media";
   }
-  if(!videosFolderSet) {
-    config.videosFolder = frontend->getVideosFolder();
-  }
-
+  config.coversFolder = frontend->getCoversFolder();
+  config.screenshotsFolder = frontend->getScreenshotsFolder();
+  config.wheelsFolder = frontend->getWheelsFolder();
+  config.marqueesFolder = frontend->getMarqueesFolder();
+  config.videosFolder = frontend->getVideosFolder();
+  
   // Choose default scraper for chosen platform if none has been set yet
   if(config.scraper.isEmpty()) {
     config.scraper = Platform::getDefaultScraper(config.platform);

@@ -156,7 +156,6 @@ void ScraperWorker::run()
     if(config.forceFilename) {
       game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).replace("_", " ").simplified());
     }
-    game.imageFile = StrTools::xmlUnescape(config.imagesFolder + "/" + info.completeBaseName() + ".png");
     game.videoFile = StrTools::xmlUnescape(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
     game.description = StrTools::xmlUnescape(game.description);
     game.releaseDate = StrTools::xmlUnescape(game.releaseDate);
@@ -190,17 +189,36 @@ void ScraperWorker::run()
     output.append("Rating (0-1):\t'" + game.rating + "'\n");
     output.append("Cover:\t\t" + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
     output.append("Screenshot:\t" + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
+    output.append("Wheel:\t\t" + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
+    output.append("Marquee:\t" + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
     if(config.videos) {
       output.append("Video:\t\t" + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
     }
     output.append("\nDescription:\n" + game.description + "\n");
 
     if(!config.pretend) {
-      if(config.frontend != "attractmode") {
-	Compositor artCreator;
-	artCreator.composite(game.coverData, game.screenshotData, config).save(config.imagesFolder + "/" + info.completeBaseName() + ".png");
+      if(config.noComposite) {
+	if(!game.screenshotData.isNull()) {
+	  if(game.screenshotData.save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png"))
+	    game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
+	}
+	if(!game.coverData.isNull()) {
+	  if(game.coverData.save(config.coversFolder + "/" + info.completeBaseName() + ".png"))
+	    game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" + info.completeBaseName() + ".png");
+	}
+	if(!game.wheelData.isNull()) {
+	  if(game.wheelData.save(config.wheelsFolder + "/" + info.completeBaseName() + ".png"))
+	    game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" + info.completeBaseName() + ".png");
+	}
+	if(!game.marqueeData.isNull()) {
+	  if(game.marqueeData.save(config.marqueesFolder + "/" + info.completeBaseName() + ".png"))
+	    game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" + info.completeBaseName() + ".png");
+	}
       } else {
-	game.screenshotData.save(config.imagesFolder + "/" + info.completeBaseName() + ".png");
+	Compositor artCreator;
+	if(artCreator.composite(game.coverData, game.screenshotData, config).save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png")) {
+	  game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
+	}
       }
     }
 

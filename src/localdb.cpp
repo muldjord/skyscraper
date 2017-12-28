@@ -45,6 +45,12 @@ bool LocalDb::createFolders(const QString &scraper)
   if(!dbDir.mkpath(dbDir.absolutePath() + "/screenshots/" + scraper)) {
     return false;
   }
+  if(!dbDir.mkpath(dbDir.absolutePath() + "/wheels/" + scraper)) {
+    return false;
+  }
+  if(!dbDir.mkpath(dbDir.absolutePath() + "/marquees/" + scraper)) {
+    return false;
+  }
   if(!dbDir.mkpath(dbDir.absolutePath() + "/videos/" + scraper)) {
     return false;
   }
@@ -102,7 +108,9 @@ bool LocalDb::readDb()
 	continue;
       }
       resource.value = xml.readElementText();
-      if(resource.type == "cover" || resource.type == "screenshot" || resource.type == "video") {
+      if(resource.type == "cover" || resource.type == "screenshot" ||
+	 resource.type == "wheel" || resource.type == "marquee" ||
+	 resource.type == "video") {
 	if(!QFileInfo::exists(dbDir.absolutePath() + "/" + resource.value)) {
 	  printf("Data file is missing for %s resource with sha1 '%s', skipping...\n",
 		 resource.type.toStdString().c_str(), resource.sha1.toStdString().c_str());
@@ -208,6 +216,8 @@ void LocalDb::cleanDb()
 
   QDir coversDir(dbDir.absolutePath() + "/covers", "*.*", QDir::Name, QDir::Files);
   QDir screenshotsDir(dbDir.absolutePath() + "/screenshots", "*.*", QDir::Name, QDir::Files);
+  QDir wheelsDir(dbDir.absolutePath() + "/wheels", "*.*", QDir::Name, QDir::Files);
+  QDir marqueesDir(dbDir.absolutePath() + "/marquees", "*.*", QDir::Name, QDir::Files);
   QDir videosDir(dbDir.absolutePath() + "/videos", "*.*", QDir::Name, QDir::Files);
 
   QDirIterator coversDirIt(coversDir.absolutePath(),
@@ -218,6 +228,14 @@ void LocalDb::cleanDb()
 				QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
 				QDirIterator::Subdirectories);
 
+  QDirIterator wheelsDirIt(wheelsDir.absolutePath(),
+			   QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			   QDirIterator::Subdirectories);
+
+  QDirIterator marqueesDirIt(marqueesDir.absolutePath(),
+			     QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			     QDirIterator::Subdirectories);
+  
   QDirIterator videosDirIt(videosDir.absolutePath(),
 			   QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
 			   QDirIterator::Subdirectories);
@@ -227,6 +245,8 @@ void LocalDb::cleanDb()
 
   verifyResources(coversDirIt, deleted, noDelete, "cover");
   verifyResources(screenshotsDirIt, deleted, noDelete, "screenshot");
+  verifyResources(wheelsDirIt, deleted, noDelete, "wheel");
+  verifyResources(marqueesDirIt, deleted, noDelete, "marquee");
   verifyResources(videosDirIt, deleted, noDelete, "video");
   
   if(deleted == 0 && noDelete == 0) {
@@ -291,6 +311,7 @@ void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder
     }
     if(!resExists) {
       if(srcResource.type == "cover" || srcResource.type == "screenshot" ||
+	 srcResource.type == "wheel" || srcResource.type == "marquee" ||
 	 srcResource.type == "video") {
 	if(!QFile::copy(srcDbDir.absolutePath() + "/" + srcResource.value,
 			dbDir.absolutePath() + "/" + srcResource.value)) {
@@ -389,6 +410,16 @@ void LocalDb::addResources(GameEntry &entry, const bool &update)
       resource.value = "screenshots/" + entry.source + "/"  + entry.sha1 + ".png";
       addResource(resource, entry, dbAbsolutePath, update);
     }
+    if(!entry.wheelData.isNull()) {
+      resource.type = "wheel";
+      resource.value = "wheels/" + entry.source + "/"  + entry.sha1 + ".png";
+      addResource(resource, entry, dbAbsolutePath, update);
+    }
+    if(!entry.marqueeData.isNull()) {
+      resource.type = "marquee";
+      resource.value = "marquees/" + entry.source + "/"  + entry.sha1 + ".png";
+      addResource(resource, entry, dbAbsolutePath, update);
+    }
   }
 }
 
@@ -426,6 +457,22 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 	entry.screenshotData = entry.screenshotData.scaledToWidth(640, Qt::SmoothTransformation);
       }
       if(!entry.screenshotData.save(dbAbsolutePath + "/" + resource.value)) {
+	okToAppend = false;
+      }
+    } else if(resource.type == "wheel") {
+      // Restrict size of wheel to save space
+      if(entry.wheelData.width() >= 640) {
+	entry.wheelData = entry.wheelData.scaledToWidth(640, Qt::SmoothTransformation);
+      }
+      if(!entry.wheelData.save(dbAbsolutePath + "/" + resource.value)) {
+	okToAppend = false;
+      }
+    } else if(resource.type == "marquee") {
+      // Restrict size of marquee to save space
+      if(entry.marqueeData.width() >= 640) {
+	entry.marqueeData = entry.marqueeData.scaledToWidth(640, Qt::SmoothTransformation);
+      }
+      if(!entry.marqueeData.save(dbAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "video") {
@@ -544,6 +591,20 @@ void LocalDb::fillBlanks(GameEntry &entry)
     QString result = "";
     if(fillType(type, sha1Resources, result)) {
       entry.screenshotData = QImage(dbDir.absolutePath() + "/" + result);
+    }
+  }
+  {
+    QString type = "wheel";
+    QString result = "";
+    if(fillType(type, sha1Resources, result)) {
+      entry.wheelData = QImage(dbDir.absolutePath() + "/" + result);
+    }
+  }
+  {
+    QString type = "marquee";
+    QString result = "";
+    if(fillType(type, sha1Resources, result)) {
+      entry.marqueeData = QImage(dbDir.absolutePath() + "/" + result);
     }
   }
   {

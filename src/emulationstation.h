@@ -41,7 +41,10 @@ public:
   QString getGameListFileName();
   QString getInputFolder();
   QString getGameListFolder();
-  QString getImagesFolder();
+  QString getCoversFolder();
+  QString getScreenshotsFolder();
+  QString getWheelsFolder();
+  QString getMarqueesFolder();
   QString getVideosFolder();
 
 };

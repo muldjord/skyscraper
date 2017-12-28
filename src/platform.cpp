@@ -58,6 +58,7 @@ QStringList Platform::getPlatforms()
   platforms.append("daphne");
   platforms.append("dragon32");
   platforms.append("dreamcast");
+  platforms.append("fba");
   platforms.append("fds");
   platforms.append("gameandwatch");
   platforms.append("gamegear");
@@ -175,6 +176,12 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "dreamcast") {
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "fba") {
+    scrapers.append("arcadedb");
+    scrapers.append("openretro");
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -371,6 +378,8 @@ QString Platform::getFormats(QString platform)
     formats.append("*.cas *.wav *.bas *.asc *.dmk *.jvc *.os9 *.dsk *.vdk *.rom *.ccc *.sna");
   } else if(platform == "dreamcast") {
     formats.append("*.cdi *.gdi");
+  } else if(platform == "fba") {
+    formats.append("");
   } else if(platform == "fds") {
     formats.append("*.fds *.nes");
   } else if(platform == "gameandwatch") {
@@ -483,6 +492,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "screenscraper";
   } else if(platform == "dreamcast") {
     scraper = "screenscraper";
+  } else if(platform == "fba") {
+    scraper = "arcadedb";
   } else if(platform == "fds") {
     scraper = "screenscraper";
   } else if(platform == "gameandwatch") {
@@ -608,6 +619,9 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("dragon 32/64");
   } else if(platform == "dreamcast") {
     aliases.append("sega dreamcast");
+  } else if(platform == "fba") {
+    aliases.append("neo geo");
+    aliases.append("neo geo cd");
   } else if(platform == "fds") {
     aliases.append("famicom disk system");
     aliases.append("family computer disk system");

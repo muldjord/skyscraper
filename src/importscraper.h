@@ -39,6 +39,8 @@ public:
   QString getCompareName(QString baseName, QString &, QString &);
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
+  void getWheel(GameEntry &game);
+  void getMarquee(GameEntry &game);
   void getVideo(GameEntry &game);
 
 private:
@@ -57,11 +59,15 @@ private:
   
   QList<QFileInfo> snaps;
   QList<QFileInfo> boxart;
+  QList<QFileInfo> wheels;
+  QList<QFileInfo> marquees;
   QList<QFileInfo> videos;
   QList<QFileInfo> textual;
   QString textualFile = "";
   QString snapFile = "";
   QString boxartFile = "";
+  QString wheelFile = "";
+  QString marqueeFile = "";
   QString videoFile = "";
 };
 

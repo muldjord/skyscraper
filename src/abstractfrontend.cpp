@@ -70,7 +70,22 @@ QString AbstractFrontend::getGameListFolder()
   return QString();
 }
 
-QString AbstractFrontend::getImagesFolder()
+QString AbstractFrontend::getCoversFolder()
+{
+  return QString();
+}
+
+QString AbstractFrontend::getScreenshotsFolder()
+{
+  return QString();
+}
+
+QString AbstractFrontend::getWheelsFolder()
+{
+  return QString();
+}
+
+QString AbstractFrontend::getMarqueesFolder()
 {
   return QString();
 }

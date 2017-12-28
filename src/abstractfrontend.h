@@ -49,7 +49,10 @@ public:
   virtual QString getGameListFileName();
   virtual QString getInputFolder();
   virtual QString getGameListFolder();
-  virtual QString getImagesFolder();
+  virtual QString getCoversFolder();
+  virtual QString getScreenshotsFolder();
+  virtual QString getWheelsFolder();
+  virtual QString getMarqueesFolder();
   virtual QString getVideosFolder();
   virtual void sortEntries(QList<GameEntry> &gameEntries);
 

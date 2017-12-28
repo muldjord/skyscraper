@@ -36,6 +36,8 @@
 #define SCREENSHOT 7
 #define VIDEO 8
 #define RATING 9
+#define WHEEL 10
+#define MARQUEE 11
 
 #include <QImage>
 
@@ -48,7 +50,10 @@ public:
   // Used in gamelists
   QString path = "";
   QString title = "";
-  QString imageFile = "";
+  QString coverFile = "";
+  QString screenshotFile = "";
+  QString wheelFile = "";
+  QString marqueeFile = "";
   QString videoFile = "";
   QString description = "";
   QString releaseDate = "";
@@ -68,6 +73,8 @@ public:
   QString parNotes = "";
   QImage coverData = QImage();
   QImage screenshotData = QImage();
+  QImage wheelData = QImage();
+  QImage marqueeData = QImage();
   QByteArray videoData = "";
   QString videoFormat = "";
   QString baseName = "";

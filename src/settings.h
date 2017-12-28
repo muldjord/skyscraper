@@ -38,7 +38,11 @@ struct Settings {
   QString userCreds = "";
   QString inputFolder = "";
   QString gameListFolder = "";
-  QString imagesFolder = "";
+  QString mediaFolder = "";
+  QString screenshotsFolder = "";
+  QString coversFolder = "";
+  QString wheelsFolder = "";
+  QString marqueesFolder = "";
   QString videosFolder = "";
   int doneThreads = 0;
   int threads = 4;
@@ -48,6 +52,7 @@ struct Settings {
   int currentFile = 0;
   int totalFiles = 0;
   int maxLength = 10000;
+  bool noComposite = true;
   bool videos = false;
   bool brackets = true;
   bool localDb = true;

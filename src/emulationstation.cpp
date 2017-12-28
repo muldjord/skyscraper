@@ -67,10 +67,25 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     } else {
       finalOutput.append("    <name>" + StrTools::xmlEscape(entry.title) + "</name>\n");
     }
-    if(entry.imageFile.isEmpty()) {
+    if(entry.coverFile.isEmpty()) {
+      finalOutput.append("    <cover />\n");
+    } else {
+      finalOutput.append("    <cover>" + StrTools::xmlEscape(entry.coverFile) + "</cover>\n");
+    }
+    if(entry.screenshotFile.isEmpty()) {
       finalOutput.append("    <image />\n");
     } else {
-      finalOutput.append("    <image>" + StrTools::xmlEscape(entry.imageFile) + "</image>\n");
+      finalOutput.append("    <image>" + StrTools::xmlEscape(entry.screenshotFile) + "</image>\n");
+    }
+    if(entry.wheelFile.isEmpty()) {
+      finalOutput.append("    <wheel />\n");
+    } else {
+      finalOutput.append("    <wheel>" + StrTools::xmlEscape(entry.wheelFile) + "</wheel>\n");
+    }
+    if(entry.marqueeFile.isEmpty()) {
+      finalOutput.append("    <marquee />\n");
+    } else {
+      finalOutput.append("    <marquee>" + StrTools::xmlEscape(entry.marqueeFile) + "</marquee>\n");
     }
     if(!entry.videoFormat.isEmpty()) {
       finalOutput.append("    <video>" + StrTools::xmlEscape(entry.videoFile) + "</video>\n");
@@ -135,12 +150,27 @@ QString EmulationStation::getGameListFolder()
   return config->inputFolder;
 }
 
-QString EmulationStation::getImagesFolder()
+QString EmulationStation::getCoversFolder()
 {
-  return config->gameListFolder + "/images";
+  return config->mediaFolder + "/covers";
+}
+
+QString EmulationStation::getScreenshotsFolder()
+{
+  return config->mediaFolder + "/screenshots";
+}
+
+QString EmulationStation::getWheelsFolder()
+{
+  return config->mediaFolder + "/wheels";
+}
+
+QString EmulationStation::getMarqueesFolder()
+{
+  return config->mediaFolder + "/marquees";
 }
 
 QString EmulationStation::getVideosFolder()
 {
-  return config->gameListFolder + "/videos";
+  return config->mediaFolder + "/videos";
 }

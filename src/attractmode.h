@@ -42,11 +42,15 @@ public:
   QString getGameListFileName();
   QString getInputFolder();
   QString getGameListFolder();
-  QString getImagesFolder();
+  QString getMediaFolder();
+  QString getCoversFolder();
+  QString getScreenshotsFolder();
+  QString getWheelsFolder();
+  QString getMarqueesFolder();
   QString getVideosFolder();
 
 private:
-  QString getArtworkFolder(QString type);
+  QString getMediaTypeFolder(QString type);
   bool checkEmulatorFile(QString fileName);
   void setNotes(GameEntry &entry, QString baseName);
 

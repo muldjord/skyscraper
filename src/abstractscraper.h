@@ -64,6 +64,8 @@ protected:
   virtual void getReleaseDate(GameEntry &game);
   virtual void getCover(GameEntry &game);
   virtual void getScreenshot(GameEntry &game);
+  virtual void getWheel(GameEntry &game);
+  virtual void getMarquee(GameEntry &game);
   virtual void getVideo(GameEntry &game);
 
   virtual void nomNom(const QString nom, bool including = true);
@@ -107,6 +109,10 @@ protected:
   QList<QString> screenshotPre;
   QString screenshotPost;
   QString screenshotCounter;
+  QList<QString> wheelPre;
+  QString wheelPost;
+  QList<QString> marqueePre;
+  QString marqueePost;
   QList<QString> videoPre;
   QString videoPost;
 

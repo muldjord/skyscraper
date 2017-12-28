@@ -64,7 +64,10 @@ QList<GameEntry> XmlReader::getEntries()
     setNotes(entry, baseName);
     QString title = gameNodes.at(a).firstChildElement("name").text();
     entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
-    entry.imageFile = gameNodes.at(a).firstChildElement("image").text();
+    entry.coverFile = gameNodes.at(a).firstChildElement("cover").text();
+    entry.screenshotFile = gameNodes.at(a).firstChildElement("image").text();
+    entry.wheelFile = gameNodes.at(a).firstChildElement("wheel").text();
+    entry.marqueeFile = gameNodes.at(a).firstChildElement("marquee").text();
     entry.videoFile = gameNodes.at(a).firstChildElement("video").text();
     entry.description = gameNodes.at(a).firstChildElement("desc").text();
     entry.releaseDate = gameNodes.at(a).firstChildElement("releasedate").text();

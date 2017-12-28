@@ -33,6 +33,8 @@ ImportScraper::ImportScraper()
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
+  fetchOrder.append(WHEEL);
+  fetchOrder.append(MARQUEE);
   fetchOrder.append(VIDEO);
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(TAGS);
@@ -40,10 +42,14 @@ ImportScraper::ImportScraper()
   fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
   
-  snaps = QDir("import/snaps", "*.*",
-	       QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
   boxart = QDir("import/boxart", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
+  snaps = QDir("import/snaps", "*.*",
+	       QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
+  wheels = QDir("import/wheels", "*.*",
+		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
+  marquees = QDir("import/marquees", "*.*",
+		  QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
   videos = QDir("import/videos", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
   textual = QDir("import/textual", "*.*",
@@ -92,6 +98,12 @@ void ImportScraper::getGameData(GameEntry &game)
     case SCREENSHOT:
       getScreenshot(game);
       break;
+    case WHEEL:
+      getWheel(game);
+      break;
+    case MARQUEE:
+      getMarquee(game);
+      break;
     case VIDEO:
       if(config->videos) {
 	getVideo(game);
@@ -109,13 +121,17 @@ void ImportScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
   textualFile = "";
   snapFile = "";
   boxartFile = "";
+  wheelFile = "";
+  marqueeFile = "";
   videoFile = "";
   GameEntry game;
   bool textualFound = checkType(info.completeBaseName(), textual, textualFile);
   bool snapFound = checkType(info.completeBaseName(), snaps, snapFile);
   bool boxartFound = checkType(info.completeBaseName(), boxart, boxartFile);
+  bool wheelFound = checkType(info.completeBaseName(), wheels, wheelFile);
+  bool marqueeFound = checkType(info.completeBaseName(), marquees, marqueeFile);
   bool videoFound = checkType(info.completeBaseName(), videos, videoFile);
-  if(textualFound || snapFound || boxartFound || videoFound) {
+  if(textualFound || snapFound || boxartFound || wheelFound || marqueeFound || videoFound) {
     game.title = info.completeBaseName();
     game.platform = config->platform;
     gameEntries.append(game);
@@ -143,6 +159,26 @@ void ImportScraper::getScreenshot(GameEntry &game)
     QImage image(snapFile);
     if(!image.isNull()) {
       game.screenshotData = image;
+    }
+  }
+}
+
+void ImportScraper::getWheel(GameEntry &game)
+{
+  if(!wheelFile.isEmpty()) {
+    QImage image(wheelFile);
+    if(!image.isNull()) {
+      game.wheelData = image;
+    }
+  }
+}
+
+void ImportScraper::getMarquee(GameEntry &game)
+{
+  if(!marqueeFile.isEmpty()) {
+    QImage image(marqueeFile);
+    if(!image.isNull()) {
+      game.marqueeData = image;
     }
   }
 }

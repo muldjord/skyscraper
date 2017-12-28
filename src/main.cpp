@@ -82,8 +82,9 @@ int main(int argc, char *argv[])
   skyDir.mkpath("import/textual");
   skyDir.mkpath("import/snaps");
   skyDir.mkpath("import/boxart");
+  skyDir.mkpath("import/wheels");
+  skyDir.mkpath("import/marquees");
   skyDir.mkpath("import/videos");
-  //skyDir.mkpath("import/marquees");
   skyDir.mkpath("dbs");
   QDir::setCurrent(skyDir.absolutePath());
 
@@ -104,10 +105,9 @@ int main(int argc, char *argv[])
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "platform", "");
   QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "frontend", "");
   QCommandLineOption eOption("e", "Set emulator. This is only required by the 'attractmode' frontend.\n(Default is none)", "emulator", "");
-  QCommandLineOption iOption("i", "Folder which contains the game files.\n(default is '/home/pi/RetroPie/roms/[platform]')", "path", "");
-  QCommandLineOption gOption("g", "Gamelist export folder.\n(default depends on frontend)", "path", "");
-  QCommandLineOption oOption("o", "Game image export folder.\n(default depends on frontend)", "path", "");
-  QCommandLineOption vOption("v", "Game video export folder.\n(default depends on frontend)", "path", "");
+  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '/home/pi/RetroPie/roms/[platform]')", "path", "");
+  QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "path", "");
+  QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption sOption("s", "Force a certain scraping module instead of the default one for the selected platform.\n(WEB: 'arcadedb', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb')", "scraper", "");
   QCommandLineOption uOption("u", "UserID and Password for use with the selected scraper module.\n(Default is none)", "user:password", "");
   QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 50)", "0-100", "");
@@ -124,6 +124,7 @@ int main(int argc, char *argv[])
   QCommandLineOption mergedbOption("mergedb", "Merge data from a specific db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d'. Otherwise default destination db folder is used.", "folder", "");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
+  QCommandLineOption noCompositeOption("nocomposite", "Never composite artwork, just use all media as is.");
   QCommandLineOption pretendOption("pretend", "Don't alter any files (except 'skipped.txt'), just print the results on screen.");
   QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default 'wor')", "code", "wor");
@@ -136,7 +137,6 @@ int main(int argc, char *argv[])
   parser.addOption(eOption);
   parser.addOption(gOption);
   parser.addOption(oOption);
-  parser.addOption(vOption);
   parser.addOption(sOption);
   parser.addOption(uOption);
   parser.addOption(mOption);
@@ -156,6 +156,7 @@ int main(int argc, char *argv[])
   parser.addOption(pretendOption);
   parser.addOption(unattendOption);
   parser.addOption(forcefilenameOption);
+  parser.addOption(noCompositeOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
   parser.addOption(verboseOption);
