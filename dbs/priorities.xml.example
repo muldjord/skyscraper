@@ -57,6 +57,16 @@
     <source>openretro</source>
     <source>screenscraper</source>
   </order>
+  <order type="wheel">
+    <source>import</source>
+    <source>screenscraper</source>
+    <source>thegamesdb</source>
+  </order>
+  <order type="marquee">
+    <source>import</source>
+    <source>screenscraper</source>
+    <source>thegamesdb</source>
+  </order>
   <order type="video">
     <source>import</source>
     <source>screenscraper</source>
