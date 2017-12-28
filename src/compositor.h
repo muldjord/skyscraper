@@ -29,17 +29,42 @@
 #include <QImage>
 
 #include "settings.h"
+#include "gameentry.h"
+
+struct Image {
+  QString resource = "";
+  QString align = "";
+  QString valign = "";
+  int x = -1;
+  int y = -1;
+  int width = -1;
+  int height = -1;
+  bool shadow = false;
+  int shadowDistance = -1;
+  int shadowSoftness = -1;
+  int shadowOpacity = -1;  
+};
+
+struct Output {
+  QString type = "";
+  int width = -1;
+  int height = -1;
+  QList<Image> images;
+};
 
 class Compositor : public QObject
 {
   Q_OBJECT
 
 public:
-  Compositor();
-  QImage composite(QImage cover, QImage screenshot, Settings config);
+  Compositor(Settings &config);
+  bool processXml(QString filename);
+  void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
   void applyShadow(QImage &image, int distance, int softness, int opacity);
+  Settings config;
+  QList<Output> outputs;
   
 };
 

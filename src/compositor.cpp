@@ -25,14 +25,102 @@
 
 #include <QSettings>
 #include <QPainter>
+#include <QFile>
+#include <QXmlStreamReader>
 
 #include "compositor.h"
+#include "strtools.h"
 
-Compositor::Compositor()
+Compositor::Compositor(Settings &config)
 {
+  this->config = config;
 }
 
-QImage Compositor::composite(QImage cover, QImage screenshot, Settings config)
+bool Compositor::processXml(QString filename)
+{
+  outputs.clear();
+  
+  QFile xmlFile(filename);
+  if(!xmlFile.open(QIODevice::ReadOnly)) {
+    return false;
+  }
+  QXmlStreamReader xml(&xmlFile);
+  
+  while(xml.readNext() && !xml.atEnd()) {
+    if(xml.name() == "output" && xml.isStartElement()) {
+      Output output;
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("type"))
+	output.type = attribs.value("", "type").toString();
+      if(attribs.hasAttribute("width"))
+	output.width = attribs.value("", "width").toInt();
+      if(attribs.hasAttribute("height"))
+	output.height = attribs.value("", "height").toInt();
+      printf("Added artwork of type '%s'\n", output.type.toStdString().c_str());
+      outputs.append(output);
+    }
+    if(xml.name() == "image" && xml.isStartElement()) {
+      Image image;
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("resource"))
+	image.resource = attribs.value("", "resource").toString();
+      if(attribs.hasAttribute("width"))
+	image.width = attribs.value("", "width").toInt();
+      if(attribs.hasAttribute("height"))
+	image.height = attribs.value("", "height").toInt();
+      if(attribs.hasAttribute("align"))
+	image.align = attribs.value("", "align").toString();
+      if(attribs.hasAttribute("valign"))
+	image.valign = attribs.value("", "valign").toString();
+      if(attribs.hasAttribute("x"))
+	image.x = attribs.value("", "x").toInt();
+      if(attribs.hasAttribute("y"))
+	image.y = attribs.value("", "y").toInt();
+      outputs.last().images.append(image);
+    }
+    if(xml.name() == "shadow" && xml.isStartElement()) {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("distance"))
+	outputs.last().images.last().shadowDistance = attribs.value("", "distance").toInt();
+      if(attribs.hasAttribute("softness"))
+	outputs.last().images.last().shadowSoftness = attribs.value("", "softness").toInt();
+      if(attribs.hasAttribute("opacity"))
+	outputs.last().images.last().shadowOpacity = attribs.value("", "opacity").toInt();
+    }
+  }
+  xmlFile.close();
+
+  return true;
+}
+
+void Compositor::saveAll(GameEntry &game, QString completeBaseName)
+{
+  foreach(Output output, outputs) {
+    if(output.width == -1 && output.height == -1 && output.images.isEmpty()) {
+      if(output.type == "cover") {
+	if(game.coverData.save(config.coversFolder + "/" + completeBaseName + ".png"))
+	  game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" +
+						 completeBaseName + ".png");
+      } else if(output.type == "screenshot") {
+	if(game.screenshotData.save(config.screenshotsFolder + "/" + completeBaseName + ".png"))
+	  game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" +
+						      completeBaseName + ".png");
+      } else if(output.type == "wheel") {
+	if(game.wheelData.save(config.wheelsFolder + "/" + completeBaseName + ".png"))
+	  game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" +
+						 completeBaseName + ".png");
+      } else if(output.type == "marquee") {
+	if(game.marqueeData.save(config.marqueesFolder + "/" + completeBaseName + ".png"))
+	  game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" +
+						   completeBaseName + ".png");
+      }
+    }
+    
+  }
+}
+
+/*
+QImage Compositor::composite()
 {
   if(config.coverYSet == false) {
     config.coverY = config.finalImageHeight - config.coverHeight -
@@ -91,6 +179,10 @@ QImage Compositor::composite(QImage cover, QImage screenshot, Settings config)
   return finalImage;
 }
 
+bool Compositor::parseXml(QString xmlFile)
+{
+}
+*/
 void Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
 {
   QPainter painter;
@@ -122,3 +214,29 @@ void Compositor::applyShadow(QImage &image, int distance, int softness, int opac
   
   image = shadowImage;
 }
+
+/*
+      if(config.noComposite) {
+	if(!game.screenshotData.isNull()) {
+	  if(game.screenshotData.save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png"))
+	    game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
+	}
+	if(!game.coverData.isNull()) {
+	  if(game.coverData.save(config.coversFolder + "/" + info.completeBaseName() + ".png"))
+	    game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" + info.completeBaseName() + ".png");
+	}
+	if(!game.wheelData.isNull()) {
+	  if(game.wheelData.save(config.wheelsFolder + "/" + info.completeBaseName() + ".png"))
+	    game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" + info.completeBaseName() + ".png");
+	}
+	if(!game.marqueeData.isNull()) {
+	  if(game.marqueeData.save(config.marqueesFolder + "/" + info.completeBaseName() + ".png"))
+	    game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" + info.completeBaseName() + ".png");
+	}
+      } else {
+	Compositor artCreator;
+	if(artCreator.composite(game.coverData, game.screenshotData, config).save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png")) {
+	  game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
+	}
+      }
+*/
