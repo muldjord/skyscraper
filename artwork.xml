@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- leave out 'width' and 'height' to use dimensions of first image resource -->
+<canvas width="640" height="480">
+  <!-- leave out 'width' or 'height' to keep aspect ratio. Leave out both to use original size -->
+  <image type="cover" x="0" y="0" width="640" height="480">
+    <shadow distance="5" softness="5" opacity="75"/>
+  </image>
+</canvas>
+<canvas width="640" height="480">
+  <!-- leave out 'width' or 'height' to keep aspect ratio. Leave out both to use original size -->
+  <image type="cover" x="0" y="0" width="640" height="480">
+    <shadow distance="5" softness="5" opacity="75"/>
+  </image>
+</canvas>
