@@ -57,15 +57,15 @@ private:
   QString tagsTag = "###TAGS###";
   QString releaseDateTag = "###RELEASEDATE###";
   
-  QList<QFileInfo> snaps;
-  QList<QFileInfo> boxart;
+  QList<QFileInfo> textual;
+  QList<QFileInfo> covers;
+  QList<QFileInfo> screenshots;
   QList<QFileInfo> wheels;
   QList<QFileInfo> marquees;
   QList<QFileInfo> videos;
-  QList<QFileInfo> textual;
   QString textualFile = "";
-  QString snapFile = "";
-  QString boxartFile = "";
+  QString coverFile = "";
+  QString screenshotFile = "";
   QString wheelFile = "";
   QString marqueeFile = "";
   QString videoFile = "";

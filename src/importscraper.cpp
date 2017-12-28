@@ -42,9 +42,9 @@ ImportScraper::ImportScraper()
   fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
   
-  boxart = QDir("import/boxart", "*.*",
+  covers = QDir("import/covers", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
-  snaps = QDir("import/snaps", "*.*",
+  screenshots = QDir("import/screenshots", "*.*",
 	       QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
   wheels = QDir("import/wheels", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
@@ -119,19 +119,19 @@ void ImportScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
 {
   data = "";
   textualFile = "";
-  snapFile = "";
-  boxartFile = "";
+  screenshotFile = "";
+  coverFile = "";
   wheelFile = "";
   marqueeFile = "";
   videoFile = "";
   GameEntry game;
   bool textualFound = checkType(info.completeBaseName(), textual, textualFile);
-  bool snapFound = checkType(info.completeBaseName(), snaps, snapFile);
-  bool boxartFound = checkType(info.completeBaseName(), boxart, boxartFile);
+  bool screenshotFound = checkType(info.completeBaseName(), screenshots, screenshotFile);
+  bool coverFound = checkType(info.completeBaseName(), covers, coverFile);
   bool wheelFound = checkType(info.completeBaseName(), wheels, wheelFile);
   bool marqueeFound = checkType(info.completeBaseName(), marquees, marqueeFile);
   bool videoFound = checkType(info.completeBaseName(), videos, videoFile);
-  if(textualFound || snapFound || boxartFound || wheelFound || marqueeFound || videoFound) {
+  if(textualFound || screenshotFound || coverFound || wheelFound || marqueeFound || videoFound) {
     game.title = info.completeBaseName();
     game.platform = config->platform;
     gameEntries.append(game);
@@ -145,8 +145,8 @@ QString ImportScraper::getCompareName(QString baseName, QString &, QString &)
 
 void ImportScraper::getCover(GameEntry &game)
 {
-  if(!boxartFile.isEmpty()) {
-    QImage image(boxartFile);
+  if(!coverFile.isEmpty()) {
+    QImage image(coverFile);
     if(!image.isNull()) {
       game.coverData = image;
     }
@@ -155,8 +155,8 @@ void ImportScraper::getCover(GameEntry &game)
 
 void ImportScraper::getScreenshot(GameEntry &game)
 {
-  if(!snapFile.isEmpty()) {
-    QImage image(snapFile);
+  if(!screenshotFile.isEmpty()) {
+    QImage image(screenshotFile);
     if(!image.isNull()) {
       game.screenshotData = image;
     }
