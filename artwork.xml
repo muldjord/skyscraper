@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- leave out 'width' and 'height' to use dimensions of first image resource -->
-<canvas width="640" height="480">
-  <!-- leave out 'width' or 'height' to keep aspect ratio. Leave out both to use original size -->
-  <image type="cover" x="0" y="0" width="640" height="480">
-    <shadow distance="5" softness="5" opacity="75"/>
-  </image>
-</canvas>
-<canvas width="640" height="480">
-  <!-- leave out 'width' or 'height' to keep aspect ratio. Leave out both to use original size -->
-  <image type="cover" x="0" y="0" width="640" height="480">
-    <shadow distance="5" softness="5" opacity="75"/>
-  </image>
-</canvas>
+<artwork>
+  <!--
+      <output>
+      - Leave out 'width' and 'height' to use dimensions of first image resource
+  -->
+  <output type="screenshot" width="640" height="400">
+    <!-- <image>
+	 - Leave out 'width' or 'height' to keep aspect ratio.
+	 - Leave out both 'width' and 'height' to use original size.
+	 - x and y provide the top-left coordinate for placement. Leave out to use 0,0
+	 - Image node order is important. Last will be drawn first.
+    -->
+    <image resource="cover" x="0" y="0" width="520" height="390">
+      <shadow distance="5" softness="5" opacity="75"/>
+    </image>
+    <image resource="screenshot" align="right" valign="top" width="520" height="390"/>
+  </output>
+  <!-- If an output node contains no image nodes, it will save it exactly as it was delivered by the scraping source. -->
+  <output type="cover"/>
+  <output type="wheel"/>
+  <output type="marquee"/>
+</artwork>
