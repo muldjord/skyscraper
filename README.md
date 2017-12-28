@@ -155,12 +155,12 @@ Basically what I'm trying to say is that it is entirely your own fault if you've
 I addition to allowing scraping from local resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the '-s localdb' scraping module.
 
 #### How it works
-Skyscraper allows you to import various rom resources from the local '[homedir]/.skyscraper/import' folders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called 'Bubble Bobble.nes' you would place your snap for this rom inside '[homedir]/.skyscraper/import/snaps' called 'Bubble Bobble.png'. Other image file formats are also supported.
+Skyscraper allows you to import various rom resources from the local '[homedir]/.skyscraper/import' folders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called 'Bubble Bobble.nes' you would place your screenshot for this rom inside '[homedir]/.skyscraper/import/screenshots' called 'Bubble Bobble.png'. Other image file formats are also supported.
 
 Now run the scraper with the '-s import' option:
 * $ Skyscraper -p [platform] -s import
 
-If you've named the files correctly, the game will show with a green 'YES' for cover/boxart, screenshot/snap and video. If you've imported textual data, it will show the data at the relevant output line.
+If you've named the files correctly, the game will show with a green 'YES' for cover, screenshot, wheel, marquee and video. If you've imported textual data, it will show the data at the relevant output line.
 Now, to make use of the imported data, scrape with the '-s localdb' scraper and your resources will be prioritized above all others, as defined in '[homedir]/.skyscraper/dbs/[platform]/priorities.xml'.
 * $ Skyscraper -p [platform] -s localdb
 
