@@ -190,9 +190,9 @@ Append command line option '-c config_artwork03.ini'
 ## Release notes
 
 #### Version 2.2.0 (unreleased)
+* Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
-* Added 'wheel' and 'marquee' media types to local dabatase.
-* Completely rewrote how artwork is handled. Now uses artwork.xml for everything.
+* Added 'wheel' and 'marquee' media types to local dabatase
 * Added support for 'fba' platform
 
 #### Version 2.1.1 (27th December 2017)
