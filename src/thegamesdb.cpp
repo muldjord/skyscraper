@@ -121,6 +121,9 @@ void TheGamesDb::getGameData(GameEntry &game)
     case WHEEL:
       getWheel(game);
       break;
+    case MARQUEE:
+      getMarquee(game);
+      break;
     case VIDEO:
       if(config->videos) {
 	getVideo(game);
