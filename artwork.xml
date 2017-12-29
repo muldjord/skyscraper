@@ -11,10 +11,12 @@
 	 - x and y provide the top-left coordinate for placement. Leave out to use 0,0
 	 - Image node order is important. Last will be drawn first.
     -->
-    <image resource="cover" x="0" y="0" width="520" height="390">
-      <shadow distance="5" softness="5" opacity="75"/>
+    <image resource="screenshot" align="center" valign="middle" width="520" height="390">
+      <shadow distance="20" softness="5" opacity="75"/>
     </image>
-    <image resource="screenshot" align="right" valign="top" width="520" height="390"/>
+    <image resource="cover" align="center" x="-20" y="0" width="150">
+      <shadow distance="20" softness="5" opacity="75"/>
+    </image>
   </output>
   <!-- If an output node contains no image nodes, it will save it exactly as it was delivered by the scraping source. -->
   <output type="cover"/>
