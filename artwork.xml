@@ -5,18 +5,19 @@
       - Leave out 'width' and 'height' to use dimensions of first image resource
   -->
   <output type="screenshot" width="640" height="400">
-    <!-- <image>
-	 - Leave out 'width' or 'height' to keep aspect ratio.
-	 - Leave out both 'width' and 'height' to use original size.
-	 - x and y provide the top-left coordinate for placement. Leave out to use 0,0
-	 - Image node order is important. Last will be drawn first.
+    <!--
+	<image>
+	- Leave out 'width' or 'height' to keep aspect ratio.
+	- Leave out both 'width' and 'height' to use original size.
+	- 'align' can be 'left', 'center' or 'right'
+	- 'valign' can be 'top', 'middle' or 'bottom'
+	- 'x' and 'y' defines top-left coordinate. It is relative to 'align' and 'valign' if used.
+	- Image nodes are rendered from bottom to top.
     -->
-    <image resource="screenshot" align="center" valign="middle" width="520" height="390">
-      <shadow distance="20" softness="5" opacity="75"/>
+    <image resource="cover" valign="bottom" y="-15" height="200">
+      <shadow distance="10" softness="10" opacity="75"/>
     </image>
-    <image resource="cover" align="center" x="-20" y="0" width="150">
-      <shadow distance="20" softness="5" opacity="75"/>
-    </image>
+    <image resource="screenshot" align="right" valign="top" width="520" height="390"/>
   </output>
   <!-- If an output node contains no image nodes, it will save it exactly as it was delivered by the scraping source. -->
   <output type="cover"/>
