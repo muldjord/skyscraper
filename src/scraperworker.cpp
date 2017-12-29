@@ -198,7 +198,7 @@ void ScraperWorker::run()
     if(config.videos) {
       output.append("Video:\t\t" + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
     }
-    output.append("\nDescription:\n" + game.description + "\n");
+    output.append("\nDescription:\n" + game.description.left(config.maxLength) + "\n");
 
     if(!config.pretend) {
       artHandler.saveAll(game, info.completeBaseName());
