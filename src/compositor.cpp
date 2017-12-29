@@ -159,7 +159,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 	int y = 0;
 	if(image.valign == "middle") {
 	  y = (canvas.height() / 2) - (image.height / 2);
-	} else if(image.align == "bottom") {
+	} else if(image.valign == "bottom") {
 	  y = canvas.height() - image.height;
 	}
 	if(image.y != -1) {
