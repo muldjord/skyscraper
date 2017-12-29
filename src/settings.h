@@ -51,7 +51,7 @@ struct Settings {
   int found = 0;
   int currentFile = 0;
   int totalFiles = 0;
-  int maxLength = 10000;
+  int maxLength = 2500;
   bool videos = false;
   bool brackets = true;
   bool localDb = true;

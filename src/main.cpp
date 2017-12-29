@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
   QCommandLineOption sOption("s", "Force a certain scraping module instead of the default one for the selected platform.\n(WEB: 'arcadedb', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb')", "scraper", "");
   QCommandLineOption uOption("u", "UserID and Password for use with the selected scraper module.\n(Default is none)", "user:password", "");
   QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 50)", "0-100", "");
-  QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 10000)", "0-10000", "");
+  QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 2500)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use.\n(default is 4)", "1-8", "");
   QCommandLineOption cOption("c", "Use this config file to set up the scraper.\n(default is '[homedir]/.skyscraper/config.ini')", "filename", "");
   QCommandLineOption dOption("d", "Set local resource database folder.\n(default is '[homedir]/.skyscraper/dbs/[platform]')", "folder", "");
