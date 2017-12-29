@@ -45,6 +45,7 @@ TheGamesDb::TheGamesDb()
   fetchOrder.append(RATING);
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
+  fetchOrder.append(WHEEL);
 }
 
 void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
@@ -116,6 +117,9 @@ void TheGamesDb::getGameData(GameEntry &game)
       break;
     case SCREENSHOT:
       getScreenshot(game);
+      break;
+    case WHEEL:
+      getWheel(game);
       break;
     case VIDEO:
       if(config->videos) {
@@ -264,5 +268,21 @@ void TheGamesDb::getScreenshot(GameEntry &game)
     if(!image.isNull()) {
       game.screenshotData = image;
     }
+  }
+}
+
+void TheGamesDb::getWheel(GameEntry &game)
+{
+  QDomNodeList xmlImages = xmlGame.firstChildElement("Images").elementsByTagName("banner");
+  if(xmlImages.isEmpty()) {
+    // No wheel/banner, just return
+    return;
+  }
+  QString wheelUrl = baseUrl + "/banners/" + xmlImages.at(0).toElement().text();
+  manager.request(wheelUrl);
+  q.exec();
+  QImage image(QImage::fromData(manager.getData()));
+  if(!image.isNull()) {
+    game.wheelData = image;
   }
 }

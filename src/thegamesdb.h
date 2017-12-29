@@ -51,6 +51,7 @@ private:
 
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
+  void getWheel(GameEntry &game);
 
   QDomNode xmlGame;
   
