@@ -34,16 +34,16 @@ ArcadeDB::ArcadeDB()
 
   baseUrl = "http://adb.arcadeitalia.net";
 
-  searchUrlPre = "http://adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&use_parent=1&game_name=";
+  searchUrlPre = "http://adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&lang=en&use_parent=1&game_name=";
   
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(TAGS);
   fetchOrder.append(PLAYERS);
-  //fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(SCREENSHOT);
   fetchOrder.append(COVER);
+  fetchOrder.append(MARQUEE);
   fetchOrder.append(VIDEO);
 }
 
@@ -98,6 +98,12 @@ void ArcadeDB::getGameData(GameEntry &game)
       break;
     case SCREENSHOT:
       getScreenshot(game);
+      break;
+    case WHEEL:
+      getWheel(game);
+      break;
+    case MARQUEE:
+      getMarquee(game);
       break;
     case VIDEO:
       if(config->videos) {
@@ -228,6 +234,16 @@ void ArcadeDB::getScreenshot(GameEntry &game)
   QImage image(QImage::fromData(manager.getData()));
   if(!image.isNull()) {
     game.screenshotData = image;
+  }
+}
+
+void ArcadeDB::getMarquee(GameEntry &game)
+{
+  manager.request(jsonObj.value("url_image_marquee").toString());
+  q.exec();
+  QImage image(QImage::fromData(manager.getData()));
+  if(!image.isNull()) {
+    game.marqueeData = image;
   }
 }
 

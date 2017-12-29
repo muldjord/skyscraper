@@ -49,6 +49,7 @@ private:
   void getDescription(GameEntry &game);
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
+  void getMarquee(GameEntry &game);
   void getVideo(GameEntry &game);
   QString getSearchName(QString baseName);
 
