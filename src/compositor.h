@@ -39,7 +39,6 @@ struct Image {
   int y = -1;
   int width = -1;
   int height = -1;
-  bool shadow = false;
   int shadowDistance = -1;
   int shadowSoftness = -1;
   int shadowOpacity = -1;  
@@ -62,7 +61,7 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
-  void applyShadow(QImage &image, int distance, int softness, int opacity);
+  QImage applyShadow(QImage &image, int distance, int softness, int opacity);
   Settings config;
   QList<Output> outputs;
   

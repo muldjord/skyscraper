@@ -76,6 +76,7 @@ bool Compositor::processXml(QString filename)
 	image.x = attribs.value("", "x").toInt();
       if(attribs.hasAttribute("y"))
 	image.y = attribs.value("", "y").toInt();
+      printf("Added image resource of type '%s'\n", image.resource.toStdString().c_str());
       outputs.last().images.append(image);
     }
     if(xml.name() == "shadow" && xml.isStartElement()) {
@@ -96,95 +97,108 @@ bool Compositor::processXml(QString filename)
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
   foreach(Output output, outputs) {
-    if(output.width == -1 && output.height == -1 && output.images.isEmpty()) {
-      if(output.type == "cover") {
-	if(game.coverData.save(config.coversFolder + "/" + completeBaseName + ".png"))
-	  game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" +
-						 completeBaseName + ".png");
-      } else if(output.type == "screenshot") {
-	if(game.screenshotData.save(config.screenshotsFolder + "/" + completeBaseName + ".png"))
-	  game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" +
-						      completeBaseName + ".png");
-      } else if(output.type == "wheel") {
-	if(game.wheelData.save(config.wheelsFolder + "/" + completeBaseName + ".png"))
-	  game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" +
-						 completeBaseName + ".png");
-      } else if(output.type == "marquee") {
-	if(game.marqueeData.save(config.marqueesFolder + "/" + completeBaseName + ".png"))
-	  game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" +
-						   completeBaseName + ".png");
+    QImage canvas;
+    if(output.type == "cover") {
+      canvas = game.coverData;
+    } else if(output.type == "screenshot") {
+      canvas = game.screenshotData;
+    } else if(output.type == "wheel") {
+      canvas = game.wheelData;
+    } else if(output.type == "marquee") {
+      canvas = game.marqueeData;
+    }
+
+    canvas = canvas.convertToFormat(QImage::Format_ARGB32);
+    
+    if(output.width == -1 && output.height != -1) {
+      canvas = canvas.scaledToHeight(output.height, Qt::SmoothTransformation);
+    } else if(output.width != -1 && output.height == -1) {
+      canvas = canvas.scaledToWidth(output.width, Qt::SmoothTransformation);
+    } else if(output.width != -1 && output.height != -1) {
+      canvas = canvas.scaled(output.width, output.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }
+
+    if(!output.images.isEmpty()) {
+      // Reset canvas since composite images exist
+      canvas.fill(Qt::transparent);
+      foreach(Image image, output.images) {
+	QImage element;
+	if(image.resource == "cover") {
+	  element = game.coverData;
+	} else if(image.resource == "screenshot") {
+	  element = game.screenshotData;
+	} else if(image.resource == "wheel") {
+	  element = game.wheelData;
+	} else if(image.resource == "marquee") {
+	  element = game.marqueeData;
+	}
+	if(image.width == -1 && image.height != -1) {
+	  element = element.scaledToHeight(image.height, Qt::SmoothTransformation);
+	} else if(image.width != -1 && image.height == -1) {
+	  element = element.scaledToWidth(image.width, Qt::SmoothTransformation);
+	} else if(image.width != -1 && image.height != -1) {
+	  element = element.scaled(image.width, image.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+	}
+	// Update width + height as we will need them for easier placement and alignment
+	image.width = element.width();
+	image.height = element.height();
+	if(image.shadowDistance != -1 || image.shadowSoftness != -1 || image.shadowOpacity != -1) {
+	  element = applyShadow(element, image.shadowDistance, image.shadowSoftness, image.shadowOpacity);
+	}
+	QPainter painter;
+	painter.begin(&canvas);
+	int x = 0;
+	if(image.align == "center") {
+	  x = (canvas.width() / 2) - (image.width / 2);
+	} else if(image.align == "right") {
+	  x = canvas.width() - image.width;
+	}
+	if(image.x != -1) {
+	  x += image.x;
+	}
+	int y = 0;
+	if(image.valign == "middle") {
+	  y = (canvas.height() / 2) - (image.height / 2);
+	} else if(image.align == "bottom") {
+	  y = canvas.height() - image.height;
+	}
+	if(image.y != -1) {
+	  y += image.y;
+	}
+	painter.drawImage(x, y, element);
+	painter.end();
       }
     }
     
+    if(output.type == "cover") {
+      if(canvas.save(config.coversFolder + "/" + completeBaseName + ".png"))
+	game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" +
+					       completeBaseName + ".png");
+    } else if(output.type == "screenshot") {
+      if(canvas.save(config.screenshotsFolder + "/" + completeBaseName + ".png"))
+	game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" +
+						    completeBaseName + ".png");
+    } else if(output.type == "wheel") {
+      if(canvas.save(config.wheelsFolder + "/" + completeBaseName + ".png"))
+	game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" +
+					       completeBaseName + ".png");
+    } else if(output.type == "marquee") {
+      if(canvas.save(config.marqueesFolder + "/" + completeBaseName + ".png"))
+	game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" +
+						 completeBaseName + ".png");
+    }
   }
 }
 
-/*
-QImage Compositor::composite()
+QImage Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
 {
-  if(config.coverYSet == false) {
-    config.coverY = config.finalImageHeight - config.coverHeight -
-      (config.coverShadowEnabled?config.coverShadowDistance:0);
-  }
-  if(config.screenshotXSet == false) {
-    config.screenshotX = config.finalImageWidth - config.screenshotWidth -
-      (config.screenshotShadowEnabled?config.screenshotShadowDistance:0);
-  }
+  if(distance == -1)
+    distance = 0;
+  if(softness == -1)
+    softness = 5;
+  if(opacity == -1)
+    opacity = 50;
 
-  if(cover.isNull()) {
-    config.coverEnabled = false;
-    cover = QImage(config.coverWidth, config.coverHeight, QImage::Format_ARGB32);
-    cover.fill(Qt::transparent);
-  }
-  if(cover.width() > cover.height()) {
-    cover = cover.scaled(config.coverWidth, config.coverHeight,
-			 Qt::KeepAspectRatioByExpanding,
-			 Qt::SmoothTransformation);
-  } else {
-    cover = cover.scaled(config.coverWidth, config.coverHeight,
-			 Qt::IgnoreAspectRatio,
-			 Qt::SmoothTransformation);
-  }
-  if(config.coverShadowEnabled) {
-    applyShadow(cover, config.coverShadowDistance, config.coverShadowSoftness,
-		config.coverShadowOpacity);
-  }
-
-  if(screenshot.isNull()) {
-    config.screenshotEnabled = false;
-    screenshot = QImage(config.screenshotWidth, config.screenshotHeight, QImage::Format_ARGB32);
-    screenshot.fill(Qt::transparent);
-  }
-  screenshot = screenshot.scaled(config.screenshotWidth, config.screenshotHeight,
-				 Qt::IgnoreAspectRatio,
-				 Qt::SmoothTransformation);
-
-  if(config.screenshotShadowEnabled) {
-    applyShadow(screenshot, config.screenshotShadowDistance,
-		config.screenshotShadowSoftness, config.screenshotShadowOpacity);
-  }
-
-  QImage finalImage(config.finalImageWidth, config.finalImageHeight, QImage::Format_ARGB32);
-  finalImage.fill(Qt::transparent);
-
-  QPainter painter(&finalImage);
-
-  if(config.screenshotEnabled) {
-    painter.drawImage(config.screenshotX, config.screenshotY, screenshot);
-  }
-  if(config.coverEnabled) {
-    painter.drawImage(config.coverX, config.coverY, cover);
-  }
-  
-  return finalImage;
-}
-
-bool Compositor::parseXml(QString xmlFile)
-{
-}
-*/
-void Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
-{
   QPainter painter;
   
   QImage shadow(image.width(), image.height(), QImage::Format_ARGB32);
@@ -212,7 +226,7 @@ void Compositor::applyShadow(QImage &image, int distance, int softness, int opac
   painter.drawImage(0, 0, image);
   painter.end();
   
-  image = shadowImage;
+  return shadowImage;
 }
 
 /*
