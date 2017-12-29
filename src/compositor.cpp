@@ -56,7 +56,7 @@ bool Compositor::processXml(QString filename)
 	output.width = attribs.value("", "width").toInt();
       if(attribs.hasAttribute("height"))
 	output.height = attribs.value("", "height").toInt();
-      printf("Added artwork of type '%s'\n", output.type.toStdString().c_str());
+      //printf("Added artwork of type '%s'\n", output.type.toStdString().c_str());
       outputs.append(output);
     }
     if(xml.name() == "image" && xml.isStartElement()) {
@@ -76,7 +76,7 @@ bool Compositor::processXml(QString filename)
 	image.x = attribs.value("", "x").toInt();
       if(attribs.hasAttribute("y"))
 	image.y = attribs.value("", "y").toInt();
-      printf("Added image resource of type '%s'\n", image.resource.toStdString().c_str());
+      //printf("Added image resource of type '%s'\n", image.resource.toStdString().c_str());
       outputs.last().images.append(image);
     }
     if(xml.name() == "shadow" && xml.isStartElement()) {
@@ -121,50 +121,52 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     if(!output.images.isEmpty()) {
       // Reset canvas since composite images exist
       canvas.fill(Qt::transparent);
-      foreach(Image image, output.images) {
+      for(QList<Image>::reverse_iterator image = output.images.rbegin();
+	  image != output.images.rend();
+	  image++) {
+	//foreach(Image image, output.images) {
 	QImage element;
-	if(image.resource == "cover") {
+	if(image->resource == "cover") {
 	  element = game.coverData;
-	} else if(image.resource == "screenshot") {
+	} else if(image->resource == "screenshot") {
 	  element = game.screenshotData;
-	} else if(image.resource == "wheel") {
+	} else if(image->resource == "wheel") {
 	  element = game.wheelData;
-	} else if(image.resource == "marquee") {
+	} else if(image->resource == "marquee") {
 	  element = game.marqueeData;
 	}
-	if(image.width == -1 && image.height != -1) {
-	  element = element.scaledToHeight(image.height, Qt::SmoothTransformation);
-	} else if(image.width != -1 && image.height == -1) {
-	  element = element.scaledToWidth(image.width, Qt::SmoothTransformation);
-	} else if(image.width != -1 && image.height != -1) {
-	  element = element.scaled(image.width, image.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+	if(image->width == -1 && image->height != -1) {
+	  element = element.scaledToHeight(image->height, Qt::SmoothTransformation);
+	} else if(image->width != -1 && image->height == -1) {
+	  element = element.scaledToWidth(image->width, Qt::SmoothTransformation);
+	} else if(image->width != -1 && image->height != -1) {
+	  element = element.scaled(image->width, image->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 	}
 	// Update width + height as we will need them for easier placement and alignment
-	image.width = element.width();
-	image.height = element.height();
-	if(image.shadowDistance != -1 || image.shadowSoftness != -1 || image.shadowOpacity != -1) {
-	  element = applyShadow(element, image.shadowDistance, image.shadowSoftness, image.shadowOpacity);
+	image->width = element.width();
+	image->height = element.height();
+	if(image->shadowDistance != -1 || image->shadowSoftness != -1 || image->shadowOpacity != -1) {
+	  element = applyShadow(element, image->shadowDistance, image->shadowSoftness, image->shadowOpacity);
 	}
 	QPainter painter;
 	painter.begin(&canvas);
+
 	int x = 0;
-	if(image.align == "center") {
-	  x = (canvas.width() / 2) - (image.width / 2);
-	} else if(image.align == "right") {
-	  x = canvas.width() - image.width;
+	if(image->align == "center") {
+	  x = (canvas.width() / 2) - (image->width / 2);
+	} else if(image->align == "right") {
+	  x = canvas.width() - image->width;
 	}
-	if(image.x != -1) {
-	  x += image.x;
-	}
+	x += image->x;
+
 	int y = 0;
-	if(image.valign == "middle") {
-	  y = (canvas.height() / 2) - (image.height / 2);
-	} else if(image.valign == "bottom") {
-	  y = canvas.height() - image.height;
+	if(image->valign == "middle") {
+	  y = (canvas.height() / 2) - (image->height / 2);
+	} else if(image->valign == "bottom") {
+	  y = canvas.height() - image->height;
 	}
-	if(image.y != -1) {
-	  y += image.y;
-	}
+	y += image->y;
+
 	painter.drawImage(x, y, element);
 	painter.end();
       }

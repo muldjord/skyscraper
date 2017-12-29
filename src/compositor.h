@@ -35,8 +35,8 @@ struct Image {
   QString resource = "";
   QString align = "";
   QString valign = "";
-  int x = -1;
-  int y = -1;
+  int x = 0;
+  int y = 0;
   int width = -1;
   int height = -1;
   int shadowDistance = -1;
