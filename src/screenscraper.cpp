@@ -42,6 +42,8 @@ ScreenScraper::ScreenScraper()
   fetchOrder.append(TAGS);
   fetchOrder.append(SCREENSHOT);
   fetchOrder.append(COVER);
+  fetchOrder.append(WHEEL);
+  fetchOrder.append(MARQUEE);
   fetchOrder.append(VIDEO);
 }
 
@@ -123,6 +125,12 @@ void ScreenScraper::getGameData(GameEntry &game)
       break;
     case SCREENSHOT:
       getScreenshot(game);
+      break;
+    case WHEEL:
+      getWheel(game);
+      break;
+    case MARQUEE:
+      getMarquee(game);
       break;
     case VIDEO:
       if(config->videos) {
@@ -286,6 +294,52 @@ void ScreenScraper::getScreenshot(GameEntry &game)
     QImage image(QImage::fromData(manager.getData()));
     if(!image.isNull()) {
       game.screenshotData = image;
+    }
+  }
+}
+
+void ScreenScraper::getWheel(GameEntry &game)
+{
+  QDomElement xmlElem;
+  xmlElem = xmlDoc.elementsByTagName("media_wheel_" + config->region).at(0).toElement();
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_wheel_wor").at(0).toElement();
+  }
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_wheel_eu").at(0).toElement();
+  }
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_wheel_us").at(0).toElement();
+  }
+  if(!xmlElem.isNull()) {
+    manager.request(xmlElem.text());
+    q.exec();
+    QImage image(QImage::fromData(manager.getData()));
+    if(!image.isNull()) {
+      game.wheelData = image;
+    }
+  }
+}
+
+void ScreenScraper::getMarquee(GameEntry &game)
+{
+  QDomElement xmlElem;
+  xmlElem = xmlDoc.elementsByTagName("media_screenmarquee_" + config->region).at(0).toElement();
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_screenmarquee_wor").at(0).toElement();
+  }
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_screenmarquee_eu").at(0).toElement();
+  }
+  if(xmlElem.isNull()) {
+    xmlElem = xmlDoc.elementsByTagName("media_screenmarquee_us").at(0).toElement();
+  }
+  if(!xmlElem.isNull()) {
+    manager.request(xmlElem.text());
+    q.exec();
+    QImage image(QImage::fromData(manager.getData()));
+    if(!image.isNull()) {
+      game.marqueeData = image;
     }
   }
 }

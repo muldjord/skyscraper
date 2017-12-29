@@ -51,6 +51,8 @@ private:
 
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
+  void getWheel(GameEntry &game);
+  void getMarquee(GameEntry &game);
   void getVideo(GameEntry &game);
   QString getHashes(const QFileInfo &info);
 
