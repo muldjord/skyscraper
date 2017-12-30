@@ -36,9 +36,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.1.1.tar.gz
-* $ tar xvzf 2.1.1.tar.gz
-* $ cd skyscraper-2.1.1
+* $ wget https://github.com/muldjord/skyscraper/archive/2.2.0.tar.gz
+* $ tar xvzf 2.2.0.tar.gz
+* $ cd skyscraper-2.2.0
 * $ qmake
 * $ make
 * $ sudo make install
@@ -121,7 +121,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 ## Release notes
 
-#### Version 2.2.0 (unreleased)
+#### Version 2.2.0 (31st of December 2017)
 * Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything.
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
 * Added 'wheel' and 'marquee' media types to local dabatase
