@@ -78,6 +78,30 @@ void Skyscraper::run()
   avgCompleteness = 0;
   avgSearchMatch = 0;
   
+  if(!config.dbFolder.isEmpty() && config.localDb) {
+    localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
+    if(localDb->createFolders(config.scraper)) {
+      localDb->readDb();
+    } else {
+      printf("Couldn't create local db folders, disabling localdb...\n");
+      config.localDb = false;
+    }
+  }
+  if(config.localDb && config.cleanDb) {
+    localDb->cleanDb();
+    exit(0);
+  }
+  if(config.localDb && !config.mergeDb.isEmpty() && QDir(config.mergeDb).exists()) {
+    LocalDb srcDb(config.mergeDb);
+    srcDb.readDb();
+    localDb->mergeDb(srcDb, config.updateDb, config.mergeDb);
+    localDb->writeDb();
+    exit(0);
+  }
+  if(config.localDb) {
+    localDb->readPriorities();
+  }
+
   QDir inputDir(config.inputFolder, Platform::getFormats(config.platform), QDir::Name, QDir::Files);
   if(!inputDir.exists()) {
     printf("Input folder '\033[1;32m%s\033[0m' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
@@ -110,30 +134,6 @@ void Skyscraper::run()
     config.videosFolder = videosDir.absolutePath();
   }
 
-  if(!config.dbFolder.isEmpty() && config.localDb) {
-    localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
-    if(localDb->createFolders(config.scraper)) {
-      localDb->readDb();
-    } else {
-      printf("Couldn't create local db folders, disabling localdb...\n");
-      config.localDb = false;
-    }
-  }
-  if(config.localDb && config.cleanDb) {
-    localDb->cleanDb();
-    exit(0);
-  }
-  if(config.localDb && !config.mergeDb.isEmpty() && QDir(config.mergeDb).exists()) {
-    LocalDb srcDb(config.mergeDb);
-    srcDb.readDb();
-    localDb->mergeDb(srcDb, config.updateDb, config.mergeDb);
-    localDb->writeDb();
-    exit(0);
-  }
-  if(config.localDb) {
-    localDb->readPriorities();
-  }
-  
   gameListFileString = gameListDir.absolutePath() + "/" + frontend->getGameListFileName();
 
   QFile gameListFile(gameListFileString);
@@ -616,6 +616,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("updatedb")) {
     config.updateDb = true;
+  }
+  if(parser.isSet("noresize")) {
+    config.noResize = true;
   }
   if(parser.isSet("nosubdirs")) {
     config.subDirs = false;

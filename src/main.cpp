@@ -127,6 +127,7 @@ int main(int argc, char *argv[])
   QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in local db using selected scraper. Set specific db folder with '-d'. Otherwise default db folder is used.");
   QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db. Set specific db folder with '-d'. Otherwise default db folder is used.");
   QCommandLineOption mergedbOption("mergedb", "Merge data from a specific db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d'. Otherwise default destination db folder is used.", "folder", "");
+  QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the local db cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
   QCommandLineOption pretendOption("pretend", "Don't alter any files (except 'skipped.txt'), just print the results on screen.");
@@ -156,6 +157,7 @@ int main(int argc, char *argv[])
   //parser.addOption(checkdbOption);
   parser.addOption(cleandbOption);
   parser.addOption(mergedbOption);
+  parser.addOption(noresizeOption);
   parser.addOption(nosubdirsOption);
   parser.addOption(pretendOption);
   parser.addOption(unattendOption);

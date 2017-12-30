@@ -53,7 +53,7 @@ public:
   void readPriorities();
   bool writeDb();
   void cleanDb();
-  void addResources(GameEntry &entry, const bool &update);
+  void addResources(GameEntry &entry, const bool &update, const bool &noResize);
   void fillBlanks(GameEntry &entry);
   void printResources();
   bool hasSha1(const QString &sha1);
@@ -67,7 +67,7 @@ public:
   QMap<QString, QList<QString> > prioMap;
   
   QList<Resource> resources;
-  void addResource(const Resource &resource, GameEntry &entry, const QString &dbAbsolutePath, const bool &update);
+  void addResource(const Resource &resource, GameEntry &entry, const QString &dbAbsolutePath, const bool &update, const bool &noResize);
   void verifyResources(QDirIterator &dirIt, int &deleted, int &noDelete, QString resType);
   bool fillType(QString &type, QList<Resource> &sha1Resources, QString &result);
   

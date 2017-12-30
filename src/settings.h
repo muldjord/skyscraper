@@ -58,6 +58,7 @@ struct Settings {
   bool updateDb = false;
   bool checkDb = false;
   bool cleanDb = false;
+  bool noResize = false;
   QString mergeDb = "";
   bool subDirs = true;
   bool pretend = false;

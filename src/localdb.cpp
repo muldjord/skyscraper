@@ -112,7 +112,7 @@ bool LocalDb::readDb()
 	 resource.type == "wheel" || resource.type == "marquee" ||
 	 resource.type == "video") {
 	if(!QFileInfo::exists(dbDir.absolutePath() + "/" + resource.value)) {
-	  printf("Data file is missing for %s resource with sha1 '%s', skipping...\n",
+	  printf("Data file missing for '%s' with sha1 '%s', skipping...\n",
 		 resource.type.toStdString().c_str(), resource.sha1.toStdString().c_str());
 	  continue;
 	}
@@ -335,7 +335,7 @@ QList<Resource> LocalDb::getResources()
   return resources;
 }
     
-void LocalDb::addResources(GameEntry &entry, const bool &update)
+void LocalDb::addResources(GameEntry &entry, const bool &update, const bool &noResize)
 {
   QString dbAbsolutePath = dbDir.absolutePath();
 
@@ -353,78 +353,78 @@ void LocalDb::addResources(GameEntry &entry, const bool &update)
     if(entry.title != "") {
       resource.type = "title";
       resource.value = entry.title;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.platform != "") {
       resource.type = "platform";
       resource.value = entry.platform;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.description != "") {
       resource.type = "description";
       resource.value = entry.description;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.publisher != "") {
       resource.type = "publisher";
       resource.value = entry.publisher;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.developer != "") {
       resource.type = "developer";
       resource.value = entry.developer;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.players != "") {
       resource.type = "players";
       resource.value = entry.players;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.tags != "") {
       resource.type = "tags";
       resource.value = entry.tags;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.rating != "") {
       resource.type = "rating";
       resource.value = entry.rating;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.releaseDate != "") {
       resource.type = "releasedate";
       resource.value = entry.releaseDate;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(entry.videoData != "" && entry.videoFormat != "") {
       resource.type = "video";
       resource.value = "videos/" + entry.source + "/"  + entry.sha1 + "." + entry.videoFormat;
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(!entry.coverData.isNull()) {
       resource.type = "cover";
       resource.value = "covers/" + entry.source + "/" + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(!entry.screenshotData.isNull()) {
       resource.type = "screenshot";
       resource.value = "screenshots/" + entry.source + "/"  + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(!entry.wheelData.isNull()) {
       resource.type = "wheel";
       resource.value = "wheels/" + entry.source + "/"  + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
     if(!entry.marqueeData.isNull()) {
       resource.type = "marquee";
       resource.value = "marquees/" + entry.source + "/"  + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, update);
+      addResource(resource, entry, dbAbsolutePath, update, noResize);
     }
   }
 }
 
 void LocalDb::addResource(const Resource &resource, GameEntry &entry,
-			  const QString &dbAbsolutePath, const bool &update)
+			  const QString &dbAbsolutePath, const bool &update, const bool &noResize)
 {
   QMutexLocker locker(&dbMutex);
 
@@ -445,7 +445,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
     bool okToAppend = true;
     if(resource.type == "cover") {
       // Restrict size of cover to save space
-      if(entry.coverData.height() >= 512) {
+      if(entry.coverData.height() >= 512 && !noResize) {
 	entry.coverData = entry.coverData.scaledToHeight(512, Qt::SmoothTransformation);
       }
       if(!entry.coverData.save(dbAbsolutePath + "/" + resource.value)) {
@@ -453,7 +453,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       }
     } else if(resource.type == "screenshot") {
       // Restrict size of screenshot to save space
-      if(entry.screenshotData.width() >= 640) {
+      if(entry.screenshotData.width() >= 640 && !noResize) {
 	entry.screenshotData = entry.screenshotData.scaledToWidth(640, Qt::SmoothTransformation);
       }
       if(!entry.screenshotData.save(dbAbsolutePath + "/" + resource.value)) {
@@ -461,7 +461,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       }
     } else if(resource.type == "wheel") {
       // Restrict size of wheel to save space
-      if(entry.wheelData.width() >= 640) {
+      if(entry.wheelData.width() >= 640 && !noResize) {
 	entry.wheelData = entry.wheelData.scaledToWidth(640, Qt::SmoothTransformation);
       }
       if(!entry.wheelData.save(dbAbsolutePath + "/" + resource.value)) {
@@ -469,7 +469,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       }
     } else if(resource.type == "marquee") {
       // Restrict size of marquee to save space
-      if(entry.marqueeData.width() >= 640) {
+      if(entry.marqueeData.width() >= 640 && !noResize) {
 	entry.marqueeData = entry.marqueeData.scaledToWidth(640, Qt::SmoothTransformation);
       }
       if(!entry.marqueeData.save(dbAbsolutePath + "/" + resource.value)) {
