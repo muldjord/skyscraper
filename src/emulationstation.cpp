@@ -77,15 +77,19 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     } else {
       finalOutput.append("    <image>" + StrTools::xmlEscape(entry.screenshotFile) + "</image>\n");
     }
+    // <wheel> isn't supported and probably won't be, since wheel and marquee are basically the same thing
+    /*
     if(entry.wheelFile.isEmpty()) {
       finalOutput.append("    <wheel />\n");
     } else {
       finalOutput.append("    <wheel>" + StrTools::xmlEscape(entry.wheelFile) + "</wheel>\n");
     }
-    if(entry.marqueeFile.isEmpty()) {
+    */
+    // Having 'wheel' here is NOT an error. Marquee and wheel are basically the same thing, but since EmulationStation only supports the marquee node, I've decided to use the wheel graphics, as it is most often the prettiest and what users would expect.
+    if(entry.wheelFile.isEmpty()) {
       finalOutput.append("    <marquee />\n");
     } else {
-      finalOutput.append("    <marquee>" + StrTools::xmlEscape(entry.marqueeFile) + "</marquee>\n");
+      finalOutput.append("    <marquee>" + StrTools::xmlEscape(entry.wheelFile) + "</marquee>\n");
     }
     if(!entry.videoFormat.isEmpty()) {
       finalOutput.append("    <video>" + StrTools::xmlEscape(entry.videoFile) + "</video>\n");
