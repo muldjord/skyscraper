@@ -59,34 +59,34 @@ bool Compositor::processXml(QString filename)
       //printf("Added artwork of type '%s'\n", output.type.toStdString().c_str());
       outputs.append(output);
     }
-    if(xml.name() == "image" && xml.isStartElement()) {
-      Image image;
+    if(xml.name() == "layer" && xml.isStartElement()) {
+      Layer layer;
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("resource"))
-	image.resource = attribs.value("", "resource").toString();
+	layer.resource = attribs.value("", "resource").toString();
       if(attribs.hasAttribute("width"))
-	image.width = attribs.value("", "width").toInt();
+	layer.width = attribs.value("", "width").toInt();
       if(attribs.hasAttribute("height"))
-	image.height = attribs.value("", "height").toInt();
+	layer.height = attribs.value("", "height").toInt();
       if(attribs.hasAttribute("align"))
-	image.align = attribs.value("", "align").toString();
+	layer.align = attribs.value("", "align").toString();
       if(attribs.hasAttribute("valign"))
-	image.valign = attribs.value("", "valign").toString();
+	layer.valign = attribs.value("", "valign").toString();
       if(attribs.hasAttribute("x"))
-	image.x = attribs.value("", "x").toInt();
+	layer.x = attribs.value("", "x").toInt();
       if(attribs.hasAttribute("y"))
-	image.y = attribs.value("", "y").toInt();
-      //printf("Added image resource of type '%s'\n", image.resource.toStdString().c_str());
-      outputs.last().images.append(image);
+	layer.y = attribs.value("", "y").toInt();
+      //printf("Added layer resource of type '%s'\n", layer.resource.toStdString().c_str());
+      outputs.last().layers.append(layer);
     }
     if(xml.name() == "shadow" && xml.isStartElement()) {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("distance"))
-	outputs.last().images.last().shadowDistance = attribs.value("", "distance").toInt();
+	outputs.last().layers.last().shadowDistance = attribs.value("", "distance").toInt();
       if(attribs.hasAttribute("softness"))
-	outputs.last().images.last().shadowSoftness = attribs.value("", "softness").toInt();
+	outputs.last().layers.last().shadowSoftness = attribs.value("", "softness").toInt();
       if(attribs.hasAttribute("opacity"))
-	outputs.last().images.last().shadowOpacity = attribs.value("", "opacity").toInt();
+	outputs.last().layers.last().shadowOpacity = attribs.value("", "opacity").toInt();
     }
   }
   xmlFile.close();
@@ -118,54 +118,54 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       canvas = canvas.scaled(output.width, output.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
 
-    if(!output.images.isEmpty()) {
-      // Reset canvas since composite images exist
+    if(!output.layers.isEmpty()) {
+      // Reset canvas since composite layers exist
       canvas.fill(Qt::transparent);
-      for(QList<Image>::reverse_iterator image = output.images.rbegin();
-	  image != output.images.rend();
-	  image++) {
-	//foreach(Image image, output.images) {
+      for(QList<Layer>::reverse_iterator layer = output.layers.rbegin();
+	  layer != output.layers.rend();
+	  layer++) {
+	//foreach(Layer layer, output.layers) {
 	QImage element;
-	if(image->resource == "cover") {
+	if(layer->resource == "cover") {
 	  element = game.coverData;
-	} else if(image->resource == "screenshot") {
+	} else if(layer->resource == "screenshot") {
 	  element = game.screenshotData;
-	} else if(image->resource == "wheel") {
+	} else if(layer->resource == "wheel") {
 	  element = game.wheelData;
-	} else if(image->resource == "marquee") {
+	} else if(layer->resource == "marquee") {
 	  element = game.marqueeData;
 	}
-	if(image->width == -1 && image->height != -1) {
-	  element = element.scaledToHeight(image->height, Qt::SmoothTransformation);
-	} else if(image->width != -1 && image->height == -1) {
-	  element = element.scaledToWidth(image->width, Qt::SmoothTransformation);
-	} else if(image->width != -1 && image->height != -1) {
-	  element = element.scaled(image->width, image->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+	if(layer->width == -1 && layer->height != -1) {
+	  element = element.scaledToHeight(layer->height, Qt::SmoothTransformation);
+	} else if(layer->width != -1 && layer->height == -1) {
+	  element = element.scaledToWidth(layer->width, Qt::SmoothTransformation);
+	} else if(layer->width != -1 && layer->height != -1) {
+	  element = element.scaled(layer->width, layer->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 	}
 	// Update width + height as we will need them for easier placement and alignment
-	image->width = element.width();
-	image->height = element.height();
-	if(image->shadowDistance != -1 || image->shadowSoftness != -1 || image->shadowOpacity != -1) {
-	  element = applyShadow(element, image->shadowDistance, image->shadowSoftness, image->shadowOpacity);
+	layer->width = element.width();
+	layer->height = element.height();
+	if(layer->shadowDistance != -1 || layer->shadowSoftness != -1 || layer->shadowOpacity != -1) {
+	  element = applyShadow(element, layer->shadowDistance, layer->shadowSoftness, layer->shadowOpacity);
 	}
 	QPainter painter;
 	painter.begin(&canvas);
 
 	int x = 0;
-	if(image->align == "center") {
-	  x = (canvas.width() / 2) - (image->width / 2);
-	} else if(image->align == "right") {
-	  x = canvas.width() - image->width;
+	if(layer->align == "center") {
+	  x = (canvas.width() / 2) - (layer->width / 2);
+	} else if(layer->align == "right") {
+	  x = canvas.width() - layer->width;
 	}
-	x += image->x;
+	x += layer->x;
 
 	int y = 0;
-	if(image->valign == "middle") {
-	  y = (canvas.height() / 2) - (image->height / 2);
-	} else if(image->valign == "bottom") {
-	  y = canvas.height() - image->height;
+	if(layer->valign == "middle") {
+	  y = (canvas.height() / 2) - (layer->height / 2);
+	} else if(layer->valign == "bottom") {
+	  y = canvas.height() - layer->height;
 	}
-	y += image->y;
+	y += layer->y;
 
 	painter.drawImage(x, y, element);
 	painter.end();

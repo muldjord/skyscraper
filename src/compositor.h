@@ -31,7 +31,7 @@
 #include "settings.h"
 #include "gameentry.h"
 
-struct Image {
+struct Layer {
   QString resource = "";
   QString align = "";
   QString valign = "";
@@ -48,7 +48,7 @@ struct Output {
   QString type = "";
   int width = -1;
   int height = -1;
-  QList<Image> images;
+  QList<Layer> layers;
 };
 
 class Compositor : public QObject
