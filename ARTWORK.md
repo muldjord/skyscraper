@@ -25,7 +25,7 @@ All artwork rendering is handled by the xml file located at '`~/.skyscraper/artw
 ```
 This is a special node used to describe the xml language used in the document.
 
-### artwork node
+### 'artwork' node
 ```
 <artwork>
 ...
@@ -33,7 +33,7 @@ This is a special node used to describe the xml language used in the document.
 ```
 This node is the document base node. It contains all other nodes.
 
-### output node(s) (Optional)
+### 'output' node(s) (Optional)
 ```
 <output type="screenshot" width="640" height="400">
 ...
@@ -53,7 +53,7 @@ The type to be exported. Can be:
 #### 'width' and 'height' attributes
 Sets the width and height of the artwork export. If both are left out it will use the original size of the scraped artwork. If one is left out, it will keep the aspect ratio relative to that.
 
-### layer node(s) (Optional)
+### 'layer' node(s) (Optional)
 ```
 <layer resource="cover" x="5" y="5" width="10" height="10" align="center" valign="middle"/>
 ...
@@ -86,7 +86,7 @@ The vertical alignment of the layer. Can be:
 * middle
 * bottom
 
-### shadow node (Optional)
+### 'shadow' node (Optional)
 ```
 <layer>
   <shadow distance="10" softness="10" opacity="75"/>
