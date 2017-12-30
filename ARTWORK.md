@@ -37,6 +37,9 @@ All artwork rendering is currently handled by the xml file located at '`~/.skysc
 ```
 
 ### <?xml?> node
+```
+<?xml version="1.0" encoding="UTF-8"?>
+```
 This is a special node used to describe the xml language used in the document.
 
 ### <artwork> node
