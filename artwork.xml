@@ -7,5 +7,6 @@
     </layer>
     <layer resource="screenshot" align="right" valign="top" width="520" height="390"/>
   </output>
-  <output type="wheel" width="350">
+  <output type="wheel" width="350"/>
+  <output type="cover" width="150"/>
 </artwork>
