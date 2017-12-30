@@ -96,18 +96,14 @@ Scripter::Scripter()
   getline(std::cin, gamelistFolderStr);
 
   std::string artworkFolderStr = "";
-  printf("\033[1;34mPlease enter full artwork output folder\033[0m (enter for default): ");
-  getline(std::cin, artworkFolderStr);
+  if(frontendStr != "attractmode") {
+    printf("\033[1;34mPlease enter full artwork output folder\033[0m (enter for default): ");
+    getline(std::cin, artworkFolderStr);
+  }
 
   std::string videosStr = "";
-  printf("\033[1;34mDo you wish to enable video scraping if the selected platform supports it\033[0m (y/N)? ");
+  printf("\033[1;34mDo you wish to enable video scraping where supported\033[0m (y/N)? ");
   getline(std::cin, videosStr);
-
-  std::string videosFolderStr = "";
-  if(videosStr == "y") {
-    printf("\033[1;34mPlease enter full video export folder\033[0m (enter for default): ");
-    getline(std::cin, videosFolderStr);
-  }
 
   std::string bracketsStr = "";
   printf("\033[1;34mDo you wish to include bracket notes such as '[AGA]' and '(Psygnosis)' in the final game name\033[0m (Y/n)? ");
@@ -138,8 +134,6 @@ Scripter::Scripter()
     commandStr += " --nobrackets";
   if(videosStr == "y") {
     commandStr += " --videos";
-    if(videosFolderStr != "")
-      commandStr += " -v " + videosFolderStr;
   }
 
   commandStr += " --unattend";
