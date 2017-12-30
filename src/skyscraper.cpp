@@ -494,6 +494,21 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   settings.endGroup();
 
+  settings.beginGroup("localDb");
+  if(settings.contains("covers")) {
+    config.cacheCovers = settings.value("covers").toBool();
+  }
+  if(settings.contains("screenshots")) {
+    config.cacheScreenshots = settings.value("screenshots").toBool();
+  }
+  if(settings.contains("wheels")) {
+    config.cacheWheels = settings.value("wheels").toBool();
+  }
+  if(settings.contains("marquees")) {
+    config.cacheMarquees = settings.value("marquees").toBool();
+  }
+  settings.endGroup();
+  
   // Check for command line platform here, since we need it for 'platform' config.ini entries
   if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
     config.platform = parser.value("p");
@@ -598,6 +613,18 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("videos")) {
     config.videos = true;
+  }
+  if(parser.isSet("nocovers")) {
+    config.cacheCovers = false;
+  }
+  if(parser.isSet("noscreenshots")) {
+    config.cacheScreenshots = false;
+  }
+  if(parser.isSet("nowheels")) {
+    config.cacheWheels = false;
+  }
+  if(parser.isSet("nomarquees")) {
+    config.cacheMarquees = false;
   }
   if(parser.isSet("skipped")) {
     config.skipped = true;

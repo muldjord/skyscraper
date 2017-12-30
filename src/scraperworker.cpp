@@ -213,7 +213,7 @@ void ScraperWorker::run()
 
     if(config.localDb && config.scraper != "localdb" && !config.pretend && game.found) {
       game.source = config.scraper;
-      localDb->addResources(game, config.updateDb, config.noResize);
+      localDb->addResources(game, config);
     }
 
     emit outputToTerminal(output);

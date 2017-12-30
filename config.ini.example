@@ -33,6 +33,12 @@
 #lang="en"
 #region="wor"
 
+#[localDb]
+#covers="true"
+#screenshots="true"
+#wheels="true"
+#marquees="true"
+
 #[amiga]
 #emulator=""
 #videos="false"

@@ -121,6 +121,10 @@ int main(int argc, char *argv[])
   QCommandLineOption cOption("c", "Use this config file to set up the scraper.\n(default is '[homedir]/.skyscraper/config.ini')", "filename", "");
   QCommandLineOption dOption("d", "Set local resource database folder.\n(default is '[homedir]/.skyscraper/dbs/[platform]')", "folder", "");
   QCommandLineOption videosOption("videos", "Enables video scraping for any scraping module. Also enables caching of video resources in the local databases. Beware, this takes up a lot of disk space!");
+  QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this is you do not plan to use the cover artwork in 'artwork.xml'");
+  QCommandLineOption noscreenshotsOption("noscreenshots", "Disable screenshots/snaps from being cached locally. Only do this is you do not plan to use the screenshot artwork in 'artwork.xml'");
+  QCommandLineOption nowheelsOption("nowheels", "Disable wheels from being cached locally. Only do this is you do not plan to use the wheel artwork in 'artwork.xml'");
+  QCommandLineOption nomarqueesOption("nomarquees", "Disable marquees from being cached locally. Only do this is you do not plan to use the marquee artwork in 'artwork.xml'");
   QCommandLineOption skippedOption("skipped", "Include skipped entries when writing final gamelist.");
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption nolocaldbOption("nolocaldb", "Disables local db resources. Other local db flags will then be ignored.");
@@ -150,6 +154,10 @@ int main(int argc, char *argv[])
   parser.addOption(cOption);
   parser.addOption(dOption);
   parser.addOption(videosOption);
+  parser.addOption(nocoversOption);
+  parser.addOption(noscreenshotsOption);
+  parser.addOption(nowheelsOption);
+  parser.addOption(nomarqueesOption);
   parser.addOption(nobracketsOption);
   parser.addOption(skippedOption);
   parser.addOption(nolocaldbOption);

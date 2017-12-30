@@ -68,6 +68,11 @@ struct Settings {
   bool verbose = false;
   bool skipped = false;
   
+  bool cacheCovers = true;
+  bool cacheScreenshots = true;
+  bool cacheWheels = true;
+  bool cacheMarquees = true;
+
   /*
   int finalImageWidth = 600;
   int finalImageHeight = 400;
