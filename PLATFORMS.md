@@ -1,4 +1,4 @@
-Skyscraper currently supports the following platforms (set with '-p'):
+### Skyscraper currently supports the following platforms (set with '-p'):
 * 3do
 * Amiga (OCS, ECS, AGA, CD32, CDTV)
 * Amstrad CPC
