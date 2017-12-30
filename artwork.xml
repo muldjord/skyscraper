@@ -7,5 +7,10 @@
     </layer>
     <layer resource="screenshot" align="right" valign="top" width="520" height="390"/>
   </output>
+  <!-- delete the next line to disable 'wheel entirely -->
   <output type="wheel" width="350"/>
+  <!-- delete the next line to disable 'cover' entirely -->
+  <output type="cover" height="390"/>
+  <!-- delete the next line to disable 'marquee' entirely -->
+  <output type="marquee" width="350"/>
 </artwork>
