@@ -1,7 +1,7 @@
 # Artwork look and effects
 Skyscraper allows you to fully customize how you want the final frontend artwork to appear. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply effects to them. Read on for a full description on how to do this.
 
-The default artwork output from Skyscraper is a single screenshot composited of the cover and screenshot like this example:
+The default screenshot artwork output from Skyscraper is composited of the cover and screenshot like this example:
 ![Small cover with drop shadow, larger screenshot](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Bubble%20Bobble.png)
 
 ## Where all the magic happens
