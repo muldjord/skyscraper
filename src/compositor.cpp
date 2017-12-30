@@ -121,51 +121,49 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     if(!output.layers.isEmpty()) {
       // Reset canvas since composite layers exist
       canvas.fill(Qt::transparent);
-      for(QList<Layer>::reverse_iterator layer = output.layers.rbegin();
-	  layer != output.layers.rend();
-	  layer++) {
-	//foreach(Layer layer, output.layers) {
+      for(int a = output.layers.size() - 1; a >= 0; a--) {
+	Layer layer = output.layers.at(a);
 	QImage element;
-	if(layer->resource == "cover") {
+	if(layer.resource == "cover") {
 	  element = game.coverData;
-	} else if(layer->resource == "screenshot") {
+	} else if(layer.resource == "screenshot") {
 	  element = game.screenshotData;
-	} else if(layer->resource == "wheel") {
+	} else if(layer.resource == "wheel") {
 	  element = game.wheelData;
-	} else if(layer->resource == "marquee") {
+	} else if(layer.resource == "marquee") {
 	  element = game.marqueeData;
 	}
-	if(layer->width == -1 && layer->height != -1) {
-	  element = element.scaledToHeight(layer->height, Qt::SmoothTransformation);
-	} else if(layer->width != -1 && layer->height == -1) {
-	  element = element.scaledToWidth(layer->width, Qt::SmoothTransformation);
-	} else if(layer->width != -1 && layer->height != -1) {
-	  element = element.scaled(layer->width, layer->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+	if(layer.width == -1 && layer.height != -1) {
+	  element = element.scaledToHeight(layer.height, Qt::SmoothTransformation);
+	} else if(layer.width != -1 && layer.height == -1) {
+	  element = element.scaledToWidth(layer.width, Qt::SmoothTransformation);
+	} else if(layer.width != -1 && layer.height != -1) {
+	  element = element.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 	}
 	// Update width + height as we will need them for easier placement and alignment
-	layer->width = element.width();
-	layer->height = element.height();
-	if(layer->shadowDistance != -1 || layer->shadowSoftness != -1 || layer->shadowOpacity != -1) {
-	  element = applyShadow(element, layer->shadowDistance, layer->shadowSoftness, layer->shadowOpacity);
+	layer.width = element.width();
+	layer.height = element.height();
+	if(layer.shadowDistance != -1 || layer.shadowSoftness != -1 || layer.shadowOpacity != -1) {
+	  element = applyShadow(element, layer.shadowDistance, layer.shadowSoftness, layer.shadowOpacity);
 	}
 	QPainter painter;
 	painter.begin(&canvas);
 
 	int x = 0;
-	if(layer->align == "center") {
-	  x = (canvas.width() / 2) - (layer->width / 2);
-	} else if(layer->align == "right") {
-	  x = canvas.width() - layer->width;
+	if(layer.align == "center") {
+	  x = (canvas.width() / 2) - (layer.width / 2);
+	} else if(layer.align == "right") {
+	  x = canvas.width() - layer.width;
 	}
-	x += layer->x;
+	x += layer.x;
 
 	int y = 0;
-	if(layer->valign == "middle") {
-	  y = (canvas.height() / 2) - (layer->height / 2);
-	} else if(layer->valign == "bottom") {
-	  y = canvas.height() - layer->height;
+	if(layer.valign == "middle") {
+	  y = (canvas.height() / 2) - (layer.height / 2);
+	} else if(layer.valign == "bottom") {
+	  y = canvas.height() - layer.height;
 	}
-	y += layer->y;
+	y += layer.y;
 
 	painter.drawImage(x, y, element);
 	painter.end();
