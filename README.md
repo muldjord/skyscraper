@@ -1,67 +1,14 @@
 # Skyscraper by Lars Muldjord
 A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a RetroPie system. It scrapes various game resources from various web sources, including media such as screenshot, cover and video.
 
-Currently supports the following frontends (set with '-f'):
+#### Currently supports the following frontends (set with '-f'):
 * EmulationStation
 * AttractMode
 
-Currently supports the following platforms (set with '-p'):
-* 3do
-* Amiga (OCS, ECS, AGA, CD32, CDTV)
-* Amstrad CPC
-* Apple 2
-* Arcade
-* Atari2600
-* Atari5200
-* Atari7800
-* Atari Jaguar
-* Atari Lynx
-* Atari ST
-* Coco (Tandy Colour Computer)
-* ColecoVision
-* Commodore 64
-* Daphne
-* Dragon 32/64
-* Dreamcast
-* Famicom Disk System
-* FB Alpha
-* Game Boy
-* Game Boy Advance
-* Game Boy Color
-* Game & Watch
-* Intellivision
-* Megadrive / Genesis
-* MSX (MSX, MSX 2, MSX 2+, MSX Laserdisc)
-* NeoGeo
-* NeoGeo Pocket
-* NeoGeo Pocket Color
-* Nintendo 64
-* Nintendo DS
-* Nintendo Entertainment System
-* Oric (Oric-1, Oric Atmos)
-* PC-8800
-* PC-Engine / TurboGrafx-16
-* PC-FX
-* Playstation
-* Playstation Portable
-* ScummVM (looks for PC or Amiga matches)
-* Sega 32x
-* Sega CD
-* Sega Game Gear
-* Sega Master System
-* Sega Saturn
-* Sega SG-1000
-* Super Nintendo
-* TRS-80
-* Vectrex
-* Videopac (Oddysey 2)
-* Virtual Boy
-* Z-Machine
-* ZX Spectrum
+#### Currently supports the following platforms (set with '-p'):
+Check the full list of platforms [here](PLATFORMS.md).
 
-... More platforms will be added in future releases!
-
-Currently supports the following scraping sources (set with '-s')
+#### Currently supports the following scraping sources (set with '-s')
 * WEB: openretro.org
 * WEB: thegamesdb.net
 * WEB: worldofspectrum.org
@@ -169,23 +116,8 @@ Then start your frontend and enjoy your newly imported rom data. :)
 #### Textual data import
 For textual data, you need to first create a file called '[homedir]/.skyscraper/import/definitions.dat'. In this file, you must define the file content format you are providing for each rom. For instance, if your data comes in the form of 1 xml file per rom, and you wish to scrape 'publisher' for this rom, perhaps your input file has a node like '```<publisher>This is the publisher</publisher>```'. In the 'definitions.dat' file you'd then add a line looking like '```<publisher>###PUBLISHER###</publisher```'. The '```###PUBLISHER###```' tag is recognized by Skyscraper. Read a more detailed description with examples [here](import/README.md).
 
-### Artwork look and effects for EmulationStation
-Skyscraper allows you to fully customize how you want the final artwork to appear and what effects should be applied. Check the 'artwork' section in 'config.ini.example' for a full list of available options. I've also created some artwork examples to get you started. Try appending one of the following lines to your Skyscraper command line options.
-
-#### Default: Small cover with drop shadow, larger screenshot
-![Small cover with drop shadow, larger screenshot](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Bubble%20Bobble.png)
-
-#### Big cover with drop shadow, small screenshot
-Append command line option '-c config_artwork01.ini'
-![Big cover with drop shadow, small screenshot](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/P.P.%20Hammer.png)
-
-#### Big centered cover with drop shadow, no screenshot
-Append command line option '-c config_artwork02.ini'
-![Big centered cover with drop shadow, no screenshot](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Alfred%20Chicken.png)
-
-#### Big centered screenshot with drop shadow, no cover
-Append command line option '-c config_artwork03.ini'
-![Big centered screenshot with drop shadow, no cover](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/North%20%26%20South.png)
+### Artwork look and effects
+Check the full artwork documentation [here](ARTWORK.md)
 
 ## Release notes
 
@@ -193,6 +125,7 @@ Append command line option '-c config_artwork03.ini'
 * Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
 * Added 'wheel' and 'marquee' media types to local dabatase
+* Added 'noresize' option to disable resizing artwork resources when saving them to localdb. NOTE! This it NOT directly related to how artwork is rendered. Check the new 'Artwork' documentation for this.
 * Added support for 'fba' platform
 
 #### Version 2.1.1 (27th December 2017)
