@@ -400,6 +400,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     QFile::copy("/usr/local/etc/skyscraper/artwork.xml", "artwork.xml");
   }
 
+  if(!QFileInfo::exists("artwork.xml.example")) {
+    QFile::copy("/usr/local/etc/skyscraper/artwork.xml.example", "artwork.xml.example");
+  }
+
   if(QFileInfo::exists("dbs/README.md")) {
     QFile::remove("dbs/README.md");
   }
