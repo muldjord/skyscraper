@@ -1,8 +1,8 @@
 # Artwork look and effects
-Skyscraper allows you to fully customize how you want the final frontend artwork to appear. Each piece of artwork can be composited of one or more of the other artwork resources. And you can even apply effects to them. Read on for a full description on how to do this.
+Skyscraper allows you to fully customize how you want the final frontend artwork to appear. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply effects to them. Read on for a full description on how to do this.
 
 ## Where all the magic happens
-All artwork rendering is currently handled by the xml file located at '~/.skyscraper/artwork.xml'. An example could look something like this:
+All artwork rendering is currently handled by the xml file located at '`~/.skyscraper/artwork.xml`'. An example could look something like this:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <artwork>
