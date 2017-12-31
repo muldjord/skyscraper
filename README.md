@@ -121,6 +121,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 ## Release notes
 
+#### Version 2.2.1 (unreleased)
+* Added '(uncached)' to terminal output for media types that user has disabled for caching
+* Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
+* Improved 'shadow' effect A LOT. Now renders correctly on artwork with transparency
+* Improved error handling when loading 'artwork.xml'
+
 #### Version 2.2.0 (31st of December 2017)
 * Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything.
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
