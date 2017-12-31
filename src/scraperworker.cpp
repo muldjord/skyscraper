@@ -191,10 +191,10 @@ void ScraperWorker::run()
     output.append("Players:\t'" + game.players + "'\n");
     output.append("Tags:\t\t'" + game.tags + "'\n");
     output.append("Rating (0-1):\t'" + game.rating + "'\n");
-    output.append("Cover:\t\t" + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
-    output.append("Screenshot:\t" + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
-    output.append("Wheel:\t\t" + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
-    output.append("Marquee:\t" + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
+    output.append("Cover:\t\t" + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers?"":" (uncached)")) + "\n");
+    output.append("Screenshot:\t" + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheScreenshots?"":" (uncached)")) + "\n");
+    output.append("Wheel:\t\t" + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheWheels?"":" (uncached)")) + "\n");
+    output.append("Marquee:\t" + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheMarquees?"":" (uncached)")) + "\n");
     if(config.videos) {
       output.append("Video:\t\t" + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
     }
