@@ -124,7 +124,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.2.0 (31st of December 2017)
 * Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything.
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
-* Added 'wheel' and 'marquee' media types to local dabatase
+* Added 'wheel' and 'marquee' media types to local database
 * Added 'nocovers', 'noscreenshots', 'nowheels' and 'nomarquees' options to allow user to disable caching of those resources locally.
 * Added 'noresize' option to disable resizing artwork resources when saving them to localdb. NOTE! This it NOT directly related to how artwork is rendered. Check the [artwork](ARTWORK.md) documentation if you want to disable them when exporting the frontend artwork.
 * Added support for 'fba' platform
