@@ -32,6 +32,7 @@
 * Nintendo DS
 * Nintendo Entertainment System
 * Oric (Oric-1, Oric Atmos)
+* PC
 * PC-8800
 * PC-Engine / TurboGrafx-16
 * PC-FX

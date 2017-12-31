@@ -77,6 +77,7 @@ QStringList Platform::getPlatforms()
   platforms.append("ngp");
   platforms.append("ngpc");
   platforms.append("oric");
+  platforms.append("pc");
   platforms.append("pc88");
   platforms.append("pcfx");
   platforms.append("pcengine");
@@ -267,6 +268,9 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "oric") {
     scrapers.append("screenscraper");
     scrapers.append("localdb");
+  } else if(platform == "pc") {
+    scrapers.append("thegamesdb");
+    scrapers.append("localdb");
   } else if(platform == "pc88") {
     scrapers.append("thegamesdb");
     scrapers.append("localdb");
@@ -416,6 +420,8 @@ QString Platform::getFormats(QString platform)
     formats.append(" *.ngc");
   } else if(platform == "oric") {
     formats.append(" *.dsk *.tap");
+  } else if(platform == "pc") {
+    formats.append("*.com *.sh *.bat *.exe");
   } else if(platform == "pc88") {
     formats.append("*.d88 *.88d *.cmt *.t88");
   } else if(platform == "pcfx") {
@@ -530,6 +536,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "thegamesdb";
   } else if(platform == "oric") {
     scraper = "screenscraper";
+  } else if(platform == "pc") {
+    scraper = "thegamesdb";
   } else if(platform == "pc88") {
     scraper = "thegamesdb";
   } else if(platform == "pcfx") {
