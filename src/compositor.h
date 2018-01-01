@@ -41,7 +41,7 @@ struct Layer {
   int height = -1;
   int shadowDistance = -1;
   int shadowSoftness = -1;
-  int shadowOpacity = -1;  
+  int shadowOpacity = -1;
 };
 
 struct Output {

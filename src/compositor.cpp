@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <QMatrix3x3>
 
 #include "compositor.h"
 #include "strtools.h"
@@ -46,6 +47,8 @@ bool Compositor::processXml(QString filename)
   }
   QXmlStreamReader xml(&xmlFile);
   
+  bool inLayer = false;
+  bool inOutput = false;
   while(xml.readNext() && !xml.atEnd()) {
     if(xml.name() == "output" && xml.isStartElement()) {
       Output output;
@@ -56,10 +59,11 @@ bool Compositor::processXml(QString filename)
 	output.width = attribs.value("", "width").toInt();
       if(attribs.hasAttribute("height"))
 	output.height = attribs.value("", "height").toInt();
-      //printf("Added artwork of type '%s'\n", output.type.toStdString().c_str());
       outputs.append(output);
+      inLayer = false;
+      inOutput = true;
     }
-    if(xml.name() == "layer" && xml.isStartElement()) {
+    if(xml.name() == "layer" && xml.isStartElement() && inOutput) {
       Layer layer;
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("resource"))
@@ -76,17 +80,17 @@ bool Compositor::processXml(QString filename)
 	layer.x = attribs.value("", "x").toInt();
       if(attribs.hasAttribute("y"))
 	layer.y = attribs.value("", "y").toInt();
-      //printf("Added layer resource of type '%s'\n", layer.resource.toStdString().c_str());
       outputs.last().layers.append(layer);
+      inLayer = true;
     }
-    if(xml.name() == "shadow" && xml.isStartElement()) {
+    if(xml.name() == "shadow" && xml.isStartElement() && inOutput && inLayer) {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("distance"))
-	outputs.last().layers.last().shadowDistance = attribs.value("", "distance").toInt();
+	outputs.last().layers.last().shadowDistance = attribs.value("distance").toInt();
       if(attribs.hasAttribute("softness"))
-	outputs.last().layers.last().shadowSoftness = attribs.value("", "softness").toInt();
+	outputs.last().layers.last().shadowSoftness = attribs.value("softness").toInt();
       if(attribs.hasAttribute("opacity"))
-	outputs.last().layers.last().shadowOpacity = attribs.value("", "opacity").toInt();
+	outputs.last().layers.last().shadowOpacity = attribs.value("opacity").toInt();
     }
   }
   xmlFile.close();
@@ -108,7 +112,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       canvas = game.marqueeData;
     }
 
-    canvas = canvas.convertToFormat(QImage::Format_ARGB32);
+    canvas = canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
     
     if(output.width == -1 && output.height != -1) {
       canvas = canvas.scaledToHeight(output.height, Qt::SmoothTransformation);
@@ -198,6 +202,72 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
     softness = 5;
   if(opacity == -1)
     opacity = 50;
+  
+  
+  QImage shadow(image.width() + softness, image.height() + softness,
+		QImage::Format_ARGB32_Premultiplied);
+  
+  shadow.fill(Qt::transparent);
+
+  QImage matrix(softness, softness, QImage::Format_Grayscale8);
+  QPainter painter;
+  painter.begin(&matrix);
+  
+  for(int y = 1; y <= image.height() - 1; ++y) {
+    for(int x = 1; x <= image.width() - 1; ++x) {
+  
+  
+  
+  QMatrix3x3 kernel;
+  kernel(0, 0) = 1; kernel(0, 1) = 2; kernel(0, 2) = 1;
+  kernel(1, 0) = 2; kernel(1, 1) = 4; kernel(1, 2) = 2;
+  kernel(2, 0) = 1; kernel(2, 1) = 2; kernel(2, 2) = 1;
+  float kernel_sum = 16.0;
+  
+  for(int y = 1; y <= image.height() - 1; ++y) {
+    for(int x = 1; x <= image.width() - 1; ++x) {
+      float alpha = 0;
+      
+      alpha =
+	kernel(0, 0) * qAlpha(image.pixel(x+1, y+1)) +
+	kernel(0, 1) * qAlpha(image.pixel(x, y+1)) +
+	kernel(0, 2) * qAlpha(image.pixel(x-1, y+1)) +
+	
+	kernel(1, 0) * qAlpha(image.pixel(x+1, y)) +
+	kernel(1, 1) * qAlpha(image.pixel(x, y)) +
+	kernel(1, 2) * qAlpha(image.pixel(x-1, y)) +
+	
+	kernel(2, 0) * qAlpha(image.pixel(x+1, y-1)) +
+	kernel(2, 1) * qAlpha(image.pixel(x, y-1)) +
+	kernel(2, 2) * qAlpha(image.pixel(x-1, y-1));
+      shadow.setPixelColor(x, y, QColor(0, 0, 0, alpha / kernel_sum));
+      
+    }
+  }
+    
+  QImage shadowImage(image.width() + distance,
+		     image.height() + distance,
+		     QImage::Format_ARGB32_Premultiplied);
+  shadowImage.fill(Qt::transparent);
+  QPainter painter;
+  painter.begin(&shadowImage);
+  painter.setOpacity(opacity * 0.01);
+  painter.drawImage(distance, distance, shadow);
+  painter.setOpacity(1.0);
+  painter.drawImage(0, 0, image);
+  painter.end();
+  
+  return shadowImage;
+}
+/*
+QImage Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
+{
+  if(distance == -1)
+    distance = 0;
+  if(softness == -1)
+    softness = 5;
+  if(opacity == -1)
+    opacity = 50;
 
   QPainter painter;
   
@@ -228,29 +298,4 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   
   return shadowImage;
 }
-
-/*
-      if(config.noComposite) {
-	if(!game.screenshotData.isNull()) {
-	  if(game.screenshotData.save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png"))
-	    game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
-	}
-	if(!game.coverData.isNull()) {
-	  if(game.coverData.save(config.coversFolder + "/" + info.completeBaseName() + ".png"))
-	    game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" + info.completeBaseName() + ".png");
-	}
-	if(!game.wheelData.isNull()) {
-	  if(game.wheelData.save(config.wheelsFolder + "/" + info.completeBaseName() + ".png"))
-	    game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" + info.completeBaseName() + ".png");
-	}
-	if(!game.marqueeData.isNull()) {
-	  if(game.marqueeData.save(config.marqueesFolder + "/" + info.completeBaseName() + ".png"))
-	    game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" + info.completeBaseName() + ".png");
-	}
-      } else {
-	Compositor artCreator;
-	if(artCreator.composite(game.coverData, game.screenshotData, config).save(config.screenshotsFolder + "/" + info.completeBaseName() + ".png")) {
-	  game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" + info.completeBaseName() + ".png");
-	}
-      }
 */
