@@ -492,125 +492,137 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
   }
 }
 
-bool LocalDb::hasSha1(const QString &sha1)
+bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
 {
   // Copy data before iterating to make thread safe
   QList<Resource> tmpResources = resources;
   foreach(Resource res, tmpResources) {
-    if(res.sha1 == sha1) {
-      return true;
+    if(scraper.isEmpty()) {
+      if(res.sha1 == sha1) {
+	return true;
+      }
+    } else {
+      if(res.sha1 == sha1 && res.source == scraper) {
+	return true;
+      }
     }
   }
   return false;
 }
 
-void LocalDb::fillBlanks(GameEntry &entry)
+void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
 {
   // Copy data before iterating to make thread safe
   QList<Resource> tmpResources = resources;
-  QList<Resource> sha1Resources;
+  QList<Resource> matchingResources;
   // Find all resources related to this particular rom
   foreach(Resource resource, tmpResources) {
-    if(entry.sha1 == resource.sha1) {
-      sha1Resources.append(resource);
+    if(scraper.isEmpty()) {
+      if(entry.sha1 == resource.sha1) {
+	matchingResources.append(resource);
+      }
+    } else {
+      if(entry.sha1 == resource.sha1 && resource.source == scraper) {
+	matchingResources.append(resource);
+      }
     }
   }
 
   {
     QString type = "title";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.title = result;
     }
   }
   {
     QString type = "platform";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.platform = result;
     }
   }
   {
     QString type = "description";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.description = result;
     }
   }
   {
     QString type = "publisher";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.publisher = result;
     }
   }
   {
     QString type = "developer";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.developer = result;
     }
   }
   {
     QString type = "players";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.players = result;
     }
   }
   {
     QString type = "tags";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.tags = result;
     }
   }
   {
     QString type = "rating";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.rating = result;
     }
   }
   {
     QString type = "releasedate";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.releaseDate = result;
     }
   }
   {
     QString type = "cover";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.coverData = QImage(dbDir.absolutePath() + "/" + result);
     }
   }
   {
     QString type = "screenshot";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.screenshotData = QImage(dbDir.absolutePath() + "/" + result);
     }
   }
   {
     QString type = "wheel";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.wheelData = QImage(dbDir.absolutePath() + "/" + result);
     }
   }
   {
     QString type = "marquee";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       entry.marqueeData = QImage(dbDir.absolutePath() + "/" + result);
     }
   }
   {
     QString type = "video";
     QString result = "";
-    if(fillType(type, sha1Resources, result)) {
+    if(fillType(type, matchingResources, result)) {
       QFileInfo info(dbDir.absolutePath() + "/" + result);
       QFile videoFile(info.absoluteFilePath());
       if(videoFile.open(QIODevice::ReadOnly)) {
@@ -622,10 +634,10 @@ void LocalDb::fillBlanks(GameEntry &entry)
   }
 }
 
-bool LocalDb::fillType(QString &type, QList<Resource> &sha1Resources, QString &result)
+bool LocalDb::fillType(QString &type, QList<Resource> &matchingResources, QString &result)
 {
   QList<Resource> typeResources;
-  foreach(Resource resource, sha1Resources) {
+  foreach(Resource resource, matchingResources) {
     if(resource.type == type) {
       typeResources.append(resource);
     }
@@ -650,7 +662,6 @@ bool LocalDb::fillType(QString &type, QList<Resource> &sha1Resources, QString &r
       result = resource.value;
     }
   }  
-  
   return true;
 }
 

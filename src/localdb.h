@@ -55,9 +55,9 @@ public:
   bool writeDb();
   void cleanDb();
   void addResources(GameEntry &entry, const Settings &config);
-  void fillBlanks(GameEntry &entry);
+  void fillBlanks(GameEntry &entry, const QString scraper = "");
   void printResources();
-  bool hasSha1(const QString &sha1);
+  bool hasEntries(const QString &sha1, const QString scraper = "");
   void mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder);
   QList<Resource> getResources();
 
@@ -71,7 +71,7 @@ public:
   void addResource(const Resource &resource, GameEntry &entry, const QString &dbAbsolutePath,
 		   const Settings &config);
   void verifyResources(QDirIterator &dirIt, int &deleted, int &noDelete, QString resType);
-  bool fillType(QString &type, QList<Resource> &sha1Resources, QString &result);
+  bool fillType(QString &type, QList<Resource> &matchingResources, QString &result);
   
 };
 
