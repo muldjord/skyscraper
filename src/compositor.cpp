@@ -202,51 +202,48 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
     softness = 5;
   if(opacity == -1)
     opacity = 50;
-  
-  
+
   QImage shadow(image.width() + softness, image.height() + softness,
 		QImage::Format_ARGB32_Premultiplied);
   
   shadow.fill(Qt::transparent);
 
-  QImage matrix(softness, softness, QImage::Format_Grayscale8);
-  QPainter painter;
-  painter.begin(&matrix);
+  QVector<float> matrix;
+
+  for(int y = 0; y <= softness; ++y) {
+    for(int x = 0; x <= softness; ++x) {
+      matrix.append(x + 1 + y + 1);
+    }
+  }
+
+  /*
+  matrix.append(1); matrix.append(2); matrix.append(3); matrix.append(2); matrix.append(1);
+  matrix.append(2); matrix.append(3); matrix.append(4); matrix.append(3); matrix.append(2);
+  matrix.append(3); matrix.append(4); matrix.append(4); matrix.append(4); matrix.append(3);
+  matrix.append(2); matrix.append(3); matrix.append(4); matrix.append(3); matrix.append(2);
+  matrix.append(1); matrix.append(2); matrix.append(3); matrix.append(2); matrix.append(1);
+  */
+
+  float kernelSum = 0.0;
+  for(int a = 0; a < matrix.length(); ++a) {
+    kernelSum += matrix[a];
+  }
   
   for(int y = 1; y <= image.height() - 1; ++y) {
     for(int x = 1; x <= image.width() - 1; ++x) {
-  
-  
-  
-  QMatrix3x3 kernel;
-  kernel(0, 0) = 1; kernel(0, 1) = 2; kernel(0, 2) = 1;
-  kernel(1, 0) = 2; kernel(1, 1) = 4; kernel(1, 2) = 2;
-  kernel(2, 0) = 1; kernel(2, 1) = 2; kernel(2, 2) = 1;
-  float kernel_sum = 16.0;
-  
-  for(int y = 1; y <= image.height() - 1; ++y) {
-    for(int x = 1; x <= image.width() - 1; ++x) {
-      float alpha = 0;
-      
-      alpha =
-	kernel(0, 0) * qAlpha(image.pixel(x+1, y+1)) +
-	kernel(0, 1) * qAlpha(image.pixel(x, y+1)) +
-	kernel(0, 2) * qAlpha(image.pixel(x-1, y+1)) +
-	
-	kernel(1, 0) * qAlpha(image.pixel(x+1, y)) +
-	kernel(1, 1) * qAlpha(image.pixel(x, y)) +
-	kernel(1, 2) * qAlpha(image.pixel(x-1, y)) +
-	
-	kernel(2, 0) * qAlpha(image.pixel(x+1, y-1)) +
-	kernel(2, 1) * qAlpha(image.pixel(x, y-1)) +
-	kernel(2, 2) * qAlpha(image.pixel(x-1, y-1));
-      shadow.setPixelColor(x, y, QColor(0, 0, 0, alpha / kernel_sum));
-      
+      float alpha = 0.0;
+      for(int a = 0; a <= softness - 1; ++a) {
+	for(int b = 0; b <= softness - 1; ++b) {
+	  alpha += matrix[(a * softness) + b] * qAlpha(image.pixel(x + b - (softness / 2),
+								   y + a - (softness / 2)));
+	}
+      }
+      shadow.setPixelColor(x, y, QColor(0, 0, 0, alpha / kernelSum));
     }
   }
     
-  QImage shadowImage(image.width() + distance,
-		     image.height() + distance,
+  QImage shadowImage(image.width() + distance + softness,
+		     image.height() + distance + softness,
 		     QImage::Format_ARGB32_Premultiplied);
   shadowImage.fill(Qt::transparent);
   QPainter painter;
