@@ -107,7 +107,39 @@ void ScraperWorker::run()
     }
     
     QList<GameEntry> gameEntries;
-
+    
+    bool prefilledFromCache = false;
+    if(config.localDb && config.scraper == "localdb" && localDb->hasEntries(sha1)) {
+      prefilledFromCache = true;
+      GameEntry localGame;
+      localGame.sha1 = sha1;
+      localDb->fillBlanks(localGame);
+      if(localGame.title.isEmpty()) {
+	localGame.title = compareName;
+      }
+      if(localGame.platform.isEmpty()) {
+	localGame.platform = config.platform;
+      }
+      gameEntries.append(localGame);
+    } else {
+      if(config.localDb && config.scraper != "localdb" &&
+	 localDb->hasEntries(sha1, config.scraper) && !config.updateDb) {
+	prefilledFromCache = true;
+	GameEntry localGame;
+	localGame.sha1 = sha1;
+	localDb->fillBlanks(localGame, config.scraper);
+	if(localGame.title.isEmpty()) {
+	  localGame.title = compareName;
+	}
+	if(localGame.platform.isEmpty()) {
+	  localGame.platform = config.platform;
+	}
+	gameEntries.append(localGame);
+      } else {
+	scraper->runPasses(gameEntries, info, output, marking);
+      }
+    }
+    /*
     if(config.localDb && config.scraper == "localdb") {
       if(localDb->hasSha1(sha1)) {
 	GameEntry localGame;
@@ -124,7 +156,7 @@ void ScraperWorker::run()
     } else {
       scraper->runPasses(gameEntries, info, output, marking);
     }
-
+    */
     unsigned int lowestDistance = 666;
     GameEntry game = getBestEntry(gameEntries, compareName, lowestDistance);
     game.path = info.absoluteFilePath();
@@ -150,11 +182,16 @@ void ScraperWorker::run()
     }
     output.append("\033[1;34m---- Game '" + info.completeBaseName() + "' found! :) ----\033[0m\n");
     
-    scraper->getGameData(game);
+    if(!prefilledFromCache) {
+      scraper->getGameData(game);
+    }
 
+    // Don't do this here!!! It messes with later localdb search matches
+    /*
     if(game.title.toLower().left(4) == "the ") {
       game.title = game.title.remove(0, 4).simplified().append(", The");
     }
+    */
 
     game.title = StrTools::xmlUnescape(game.title);
     if(config.forceFilename) {
