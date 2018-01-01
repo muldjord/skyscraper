@@ -126,6 +126,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 * Improved 'shadow' effect A LOT. Now renders correctly on artwork with transparency
 * Improved error handling when loading 'artwork.xml'
+* Now always uses cached resources if they exist, unless '--updatedb' has been set.
 * Added 'pc' platform
 
 #### Version 2.2.0 (31st of December 2017)
