@@ -72,7 +72,7 @@ The artwork resource to be composited. Can be:
 * marquee
 
 #### 'x' and 'y' attributes (Optional)
-X and Y coordinates for placement. Relative to 'align' and 'valign'. Either can be left out in which case it will be se to 0.
+X and Y coordinates for placement. Relative to 'align' and 'valign'. Either can be left out in which case it will be set to 0.
 
 #### 'width' and 'height' attributes (Optional)
 Sets the width and height of the layer. If either is left out it will keep the aspect ratio relative to the other. If both are left out it will use the original dimensions of the scraped resource.
