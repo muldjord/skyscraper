@@ -139,24 +139,7 @@ void ScraperWorker::run()
 	scraper->runPasses(gameEntries, info, output, marking);
       }
     }
-    /*
-    if(config.localDb && config.scraper == "localdb") {
-      if(localDb->hasSha1(sha1)) {
-	GameEntry localGame;
-	localGame.sha1 = sha1;
-	localDb->fillBlanks(localGame);
-	if(localGame.title.isEmpty()) {
-	  localGame.title = compareName;
-	}
-	if(localGame.platform.isEmpty()) {
-	  localGame.platform = config.platform;
-	}
-	gameEntries.append(localGame);
-      }
-    } else {
-      scraper->runPasses(gameEntries, info, output, marking);
-    }
-    */
+
     unsigned int lowestDistance = 666;
     GameEntry game = getBestEntry(gameEntries, compareName, lowestDistance);
     game.path = info.absoluteFilePath();
@@ -186,12 +169,27 @@ void ScraperWorker::run()
       scraper->getGameData(game);
     }
 
-    // Don't do this here!!! It messes with later localdb search matches
-    /*
+    if(!config.pretend) {
+      artHandler.saveAll(game, info.completeBaseName());
+      if(config.videos && game.videoFormat != "") {
+	QFile videoFile(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
+	if(videoFile.open(QIODevice::WriteOnly)) {
+	  videoFile.write(game.videoData);
+	  videoFile.close();
+	}
+      }
+    }
+
+    if(config.localDb && config.scraper != "localdb" && !config.pretend && game.found) {
+      game.source = config.scraper;
+      localDb->addResources(game, config);
+    }
+
+    // We're done saving the raw data at this point, so feel free to manipulate game resources to better suit game list creation from here on out.
+
     if(game.title.toLower().left(4) == "the ") {
       game.title = game.title.remove(0, 4).simplified().append(", The");
     }
-    */
 
     game.title = StrTools::xmlUnescape(game.title);
     if(config.forceFilename) {
@@ -236,22 +234,6 @@ void ScraperWorker::run()
       output.append("Video:\t\t" + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m\n");
     }
     output.append("\nDescription:\n" + game.description.left(config.maxLength) + "\n");
-
-    if(!config.pretend) {
-      artHandler.saveAll(game, info.completeBaseName());
-      if(config.videos && game.videoFormat != "") {
-	QFile videoFile(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
-	if(videoFile.open(QIODevice::WriteOnly)) {
-	  videoFile.write(game.videoData);
-	  videoFile.close();
-	}
-      }
-    }
-
-    if(config.localDb && config.scraper != "localdb" && !config.pretend && game.found) {
-      game.source = config.scraper;
-      localDb->addResources(game, config);
-    }
 
     emit outputToTerminal(output);
     emit entryReady(game);
