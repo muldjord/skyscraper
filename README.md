@@ -121,7 +121,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 ## Release notes
 
-### Version x.x.x (unimplemented)
+### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 * Improved 'shadow' effect A LOT. Now renders correctly on artwork with transparency
 
