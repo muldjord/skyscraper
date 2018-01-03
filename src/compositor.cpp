@@ -236,7 +236,7 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   
   // ----- Kernel creation end -----
   
-  QRgb *imageBits = (QRgb *)shadow.bits();
+  QRgb *imageBits = (QRgb *)shadow.constBits();
   
   for(int y = 0; y < shadow.height(); ++y) {
     for(int x = 0; x < shadow.width(); ++x) {
