@@ -124,9 +124,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 ### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 
-#### Version 2.2.6 (unreleased)
-* Now always converts images to 16bit externally. Still uses 32bit internally
-
 #### Version 2.2.5 (3rd January 2018)
 * Improved artwork 'shadow' effect. Now renders correctly on artwork with transparency
 * Added '(uncached)' to terminal output for media types that user has disabled for caching
@@ -134,7 +131,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved 'artwork.xml' parser to better handle xml syntax problems
 * Improved '--cleandb' so it always resaves the db after a cleaning run
 * Updated 'simple mode' to also include questions about '--forcefilename' and '--updatedb'
-* Added 'pc' platform
+* Now always converts images to 16bit externally. Still uses 32bit internally
+* Added 'pc' and 'ports' platform
 
 #### Version 2.2.0 (31st of December 2017)
 * Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything.
