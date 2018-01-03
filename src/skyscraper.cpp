@@ -89,6 +89,7 @@ void Skyscraper::run()
   }
   if(config.localDb && config.cleanDb) {
     localDb->cleanDb();
+    localDb->writeDb();
     exit(0);
   }
   if(config.localDb && !config.mergeDb.isEmpty() && QDir(config.mergeDb).exists()) {
