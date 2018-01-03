@@ -236,13 +236,6 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   
   // ----- Kernel creation end -----
   
-  for(int i = 0; i < kernelWidth; ++i) {
-    for(int j = 0; j < kernelWidth; ++j) {
-      printf("'%f', ", kernel[i][j]);
-    }
-    printf("\n");
-  }
-
   for(int y = 0; y < shadow.height(); ++y) {
     for(int x = 0; x < shadow.width(); ++x) {
       double alpha = 0.0;
@@ -252,7 +245,6 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
 						     y - softness + j - kernelWidth / 2));
 	}
       }
-      //printf("VALUE: '%f'\n", alpha / kernelSum);
       alpha /= kernelSum;
       shadow.setPixelColor(x, y, QColor(0, 0, 0, alpha));
     }
