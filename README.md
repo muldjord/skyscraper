@@ -124,11 +124,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 ### Version x.x.x (unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 * Improved 'shadow' effect A LOT. Now renders correctly on artwork with transparency
-* Improved error handling when loading 'artwork.xml'
 
 #### Version 2.2.1 (unreleased)
 * Added '(uncached)' to terminal output for media types that user has disabled for caching
-* Now always uses cached resources if they exist, unless '--updatedb' has been set.
+* Now always uses existing cached resources when scraping with any scraping module. Use '--updatedb' to force a refresh
+* Improved 'artwork.xml' parser to better handle xml syntax problems
+* Improved '--cleandb' so it always resaves the db after a cleaning run
 * Added 'pc' platform
 
 #### Version 2.2.0 (31st of December 2017)
