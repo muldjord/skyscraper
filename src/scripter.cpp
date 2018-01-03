@@ -105,6 +105,10 @@ Scripter::Scripter()
   printf("\033[1;34mDo you wish to enable video scraping where supported\033[0m (y/N)? ");
   getline(std::cin, videosStr);
 
+  std::string forceFilenameStr = "";
+  printf("\033[1;34mDo you wish to use filenames for game name instead of the one provided by the scraping module? \033[0m (y/N)? ");
+  getline(std::cin, forceFilenameStr);
+
   std::string bracketsStr = "";
   printf("\033[1;34mDo you wish to include bracket notes such as '[AGA]' and '(Psygnosis)' in the final game name\033[0m (Y/n)? ");
   getline(std::cin, bracketsStr);
@@ -112,6 +116,10 @@ Scripter::Scripter()
   std::string minMatchStr = "";
   printf("\033[1;34mWhat is the minimum search result percentage match you wish to accept\033[0m (enter for default)? ");
   getline(std::cin, minMatchStr);
+
+  std::string updateDbStr = "";
+  printf("\033[1;34mDo you wish to disable locally cached data for all scraping modules\033[0m (y/N)? ");
+  getline(std::cin, updateDbStr);
 
   QFile scriptFile("skyscript.sh");
   if(!scriptFile.open(QIODevice::WriteOnly)) {
@@ -130,6 +138,10 @@ Scripter::Scripter()
     commandStr += " -e " + emulatorStr;
   if(minMatchStr != "")
     commandStr += " -m " + minMatchStr;
+  if(forceFilenameStr == "y")
+    commandStr += " --forcefilename";
+  if(updateDbStr == "y")
+    commandStr += " --updatedb";
   if(bracketsStr != "")
     commandStr += " --nobrackets";
   if(videosStr == "y") {
