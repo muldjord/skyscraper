@@ -28,7 +28,6 @@
 #include <QPainter>
 #include <QFile>
 #include <QXmlStreamReader>
-#include <QMatrix3x3>
 
 #include "compositor.h"
 #include "strtools.h"
@@ -176,19 +175,19 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     }
     
     if(output.type == "cover") {
-      if(canvas.save(config.coversFolder + "/" + completeBaseName + ".png"))
+      if(canvas.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(config.coversFolder + "/" + completeBaseName + ".png"))
 	game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" +
 					       completeBaseName + ".png");
     } else if(output.type == "screenshot") {
-      if(canvas.save(config.screenshotsFolder + "/" + completeBaseName + ".png"))
+      if(canvas.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(config.screenshotsFolder + "/" + completeBaseName + ".png"))
 	game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" +
 						    completeBaseName + ".png");
     } else if(output.type == "wheel") {
-      if(canvas.save(config.wheelsFolder + "/" + completeBaseName + ".png"))
+      if(canvas.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(config.wheelsFolder + "/" + completeBaseName + ".png"))
 	game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" +
 					       completeBaseName + ".png");
     } else if(output.type == "marquee") {
-      if(canvas.save(config.marqueesFolder + "/" + completeBaseName + ".png"))
+      if(canvas.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(config.marqueesFolder + "/" + completeBaseName + ".png"))
 	game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" +
 						 completeBaseName + ".png");
     }
@@ -267,43 +266,3 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   
   return shadowImage;
 }
-/*
-QImage Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
-{
-  if(distance == -1)
-    distance = 0;
-  if(softness == -1)
-    softness = 5;
-  if(opacity == -1)
-    opacity = 50;
-
-  QPainter painter;
-  
-  QImage shadow(image.width(), image.height(), QImage::Format_ARGB32);
-  
-  shadow.fill(Qt::transparent);
-  painter.begin(&shadow);
-  painter.setBrush(QColor(0, 0, 0, 255 / softness));
-  painter.setPen(QColor(0, 0, 0, 0));
-  for(qreal a = softness; a >= 0.0; --a) {
-    painter.drawRoundedRect(softness - a, softness - a,
-			    shadow.width() + ((a - softness) * 2),
-			    image.height() + ((a - softness) * 2),
-			    a, a);
-  }
-  painter.end();
-  
-  QImage shadowImage(image.width() + distance,
-		     image.height() + distance,
-		     QImage::Format_ARGB32);
-  shadowImage.fill(Qt::transparent);
-  painter.begin(&shadowImage);
-  painter.setOpacity(opacity * 0.01);
-  painter.drawImage(distance, distance, shadow);
-  painter.setOpacity(1.0);
-  painter.drawImage(0, 0, image);
-  painter.end();
-  
-  return shadowImage;
-}
-*/
