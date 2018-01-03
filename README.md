@@ -36,9 +36,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.2.0.tar.gz
-* $ tar xvzf 2.2.0.tar.gz
-* $ cd skyscraper-2.2.0
+* $ wget https://github.com/muldjord/skyscraper/archive/2.2.5.tar.gz
+* $ tar xvzf 2.2.5.tar.gz
+* $ cd skyscraper-2.2.5
 * $ qmake
 * $ make
 * $ sudo make install
@@ -124,8 +124,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 ### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 
-#### Version 2.2.5 (unreleased)
-* Improved 'shadow' effect A LOT. Now renders correctly on artwork with transparency
+#### Version 2.2.5 (3rd January 2018)
+* Improved artwork 'shadow' effect. Now renders correctly on artwork with transparency
 * Added '(uncached)' to terminal output for media types that user has disabled for caching
 * Now always uses existing cached resources when scraping with any scraping module. Use '--updatedb' to force a refresh
 * Improved 'artwork.xml' parser to better handle xml syntax problems
