@@ -209,7 +209,7 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   QImage shadow(image.width() + softness * 2, image.height() + softness * 2,
 		QImage::Format_ARGB32_Premultiplied);
   
-  shadow.fill(Qt::transparent);
+  shadow.fill(Qt::black);
 
   double kernel[kernelWidth][kernelWidth];
 
@@ -236,6 +236,8 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   
   // ----- Kernel creation end -----
   
+  QRgb *imageBits = (QRgb *)shadow.bits();
+  
   for(int y = 0; y < shadow.height(); ++y) {
     for(int x = 0; x < shadow.width(); ++x) {
       double alpha = 0.0;
@@ -246,7 +248,8 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
 	}
       }
       alpha /= kernelSum;
-      shadow.setPixelColor(x, y, QColor(0, 0, 0, alpha));
+      *imageBits = QColor(0, 0, 0, alpha).rgba();
+      imageBits++; // Advance to next pixel
     }
   }
 
