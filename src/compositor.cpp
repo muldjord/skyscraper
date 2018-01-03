@@ -23,6 +23,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <cmath>
 #include <QSettings>
 #include <QPainter>
 #include <QFile>
@@ -203,45 +204,60 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   if(opacity == -1)
     opacity = 50;
 
-  QImage shadow(image.width() + softness, image.height() + softness,
+  int kernelWidth = softness * 2 + 1;
+
+  QImage shadow(image.width() + softness * 2, image.height() + softness * 2,
 		QImage::Format_ARGB32_Premultiplied);
   
   shadow.fill(Qt::transparent);
 
-  QVector<float> matrix;
+  double kernel[kernelWidth][kernelWidth];
 
-  for(int y = 0; y <= softness; ++y) {
-    for(int x = 0; x <= softness; ++x) {
-      matrix.append(x + 1 + y + 1);
+  // ----- Kernel matrix creation begin -----
+
+  double r, s = (double)softness;
+  
+  // sum is for normalization
+  double kernelSum = 0.0;
+  
+  if(softness != 0) {
+    // generate kernel
+    for (int x = -softness; x <= softness; x++) {
+      for(int y = -softness; y <= softness; y++) {
+	r = sqrt(x * x + y * y);
+	kernel[x + softness][y + softness] = (exp(-(r * r) / s)) / (3.1415927 * s);
+	kernelSum += kernel[x + softness][y + softness];
+      }
     }
-  }
-
-  /*
-  matrix.append(1); matrix.append(2); matrix.append(3); matrix.append(2); matrix.append(1);
-  matrix.append(2); matrix.append(3); matrix.append(4); matrix.append(3); matrix.append(2);
-  matrix.append(3); matrix.append(4); matrix.append(4); matrix.append(4); matrix.append(3);
-  matrix.append(2); matrix.append(3); matrix.append(4); matrix.append(3); matrix.append(2);
-  matrix.append(1); matrix.append(2); matrix.append(3); matrix.append(2); matrix.append(1);
-  */
-
-  float kernelSum = 0.0;
-  for(int a = 0; a < matrix.length(); ++a) {
-    kernelSum += matrix[a];
+  } else {
+    kernel[0][0] = 1.0;
+    kernelSum = 1.0;
   }
   
-  for(int y = 1; y <= image.height() - 1; ++y) {
-    for(int x = 1; x <= image.width() - 1; ++x) {
-      float alpha = 0.0;
-      for(int a = 0; a <= softness - 1; ++a) {
-	for(int b = 0; b <= softness - 1; ++b) {
-	  alpha += matrix[(a * softness) + b] * qAlpha(image.pixel(x + b - (softness / 2),
-								   y + a - (softness / 2)));
+  // ----- Kernel creation end -----
+  
+  for(int i = 0; i < kernelWidth; ++i) {
+    for(int j = 0; j < kernelWidth; ++j) {
+      printf("'%f', ", kernel[i][j]);
+    }
+    printf("\n");
+  }
+
+  for(int y = 0; y < shadow.height(); ++y) {
+    for(int x = 0; x < shadow.width(); ++x) {
+      double alpha = 0.0;
+      for(int i = 0; i < kernelWidth; ++i) {
+	for(int j = 0; j < kernelWidth; ++j) {
+	  alpha += kernel[i][j] * qAlpha(image.pixel(x - softness + i - kernelWidth / 2,
+						     y - softness + j - kernelWidth / 2));
 	}
       }
-      shadow.setPixelColor(x, y, QColor(0, 0, 0, alpha / kernelSum));
+      //printf("VALUE: '%f'\n", alpha / kernelSum);
+      alpha /= kernelSum;
+      shadow.setPixelColor(x, y, QColor(0, 0, 0, alpha));
     }
   }
-    
+
   QImage shadowImage(image.width() + distance + softness,
 		     image.height() + distance + softness,
 		     QImage::Format_ARGB32_Premultiplied);
@@ -249,7 +265,7 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   QPainter painter;
   painter.begin(&shadowImage);
   painter.setOpacity(opacity * 0.01);
-  painter.drawImage(distance, distance, shadow);
+  painter.drawImage(distance - softness, distance - softness, shadow);
   painter.setOpacity(1.0);
   painter.drawImage(0, 0, image);
   painter.end();
