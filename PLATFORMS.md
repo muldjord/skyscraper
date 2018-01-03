@@ -38,6 +38,7 @@
 * PC-FX
 * Playstation
 * Playstation Portable
+* Ports (For games ported to RaspBerry Pi)
 * ScummVM (looks for PC or Amiga matches)
 * Sega 32x
 * Sega CD

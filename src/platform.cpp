@@ -81,6 +81,7 @@ QStringList Platform::getPlatforms()
   platforms.append("pc88");
   platforms.append("pcfx");
   platforms.append("pcengine");
+  platforms.append("ports");
   platforms.append("psp");
   platforms.append("psx");
   platforms.append("saturn");
@@ -269,6 +270,7 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "pc") {
+    scrapers.append("openretro");
     scrapers.append("thegamesdb");
     scrapers.append("localdb");
   } else if(platform == "pc88") {
@@ -282,6 +284,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("openretro");
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "ports") {
+    scrapers.append("openretro");
+    scrapers.append("thegamesdb");
     scrapers.append("localdb");
   } else if(platform == "psp") {
     scrapers.append("thegamesdb");
@@ -428,6 +434,8 @@ QString Platform::getFormats(QString platform)
     formats.append("*.img *.iso *.ccd *.cue");
   } else if(platform == "pcengine") {
     formats.append("*.pce");
+  } else if(platform == "ports") {
+    formats.append("*.sh");
   } else if(platform == "psp") {
     formats.append("*.cso *.iso *.pbp");
   } else if(platform == "psx") {
@@ -543,6 +551,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "pcfx") {
     scraper = "screenscraper";
   } else if(platform == "pcengine") {
+    scraper = "thegamesdb";
+  } else if(platform == "ports") {
     scraper = "thegamesdb";
   } else if(platform == "psp") {
     scraper = "thegamesdb";
@@ -683,6 +693,8 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("neo-geo pocket color");
   } else if(platform == "oric") {
     aliases.append("oric 1 / atmos");
+  } else if(platform == "pc") {
+    aliases.append("dos");
   } else if(platform == "pc88") {
     aliases.append("pc-88");
   } else if(platform == "pcfx") {
@@ -694,6 +706,8 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc engine");
     aliases.append("pc engine cd-rom");
     aliases.append("pc engine supergrafx");
+  } else if(platform == "ports") {
+    aliases.append("dos");
   } else if(platform == "psx") {
     aliases.append("sony playstation");
     aliases.append("playstation");
