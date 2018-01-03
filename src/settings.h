@@ -73,31 +73,6 @@ struct Settings {
   bool cacheWheels = true;
   bool cacheMarquees = true;
 
-  /*
-  int finalImageWidth = 600;
-  int finalImageHeight = 400;
-  bool coverEnabled = true;
-  int coverWidth = 150;
-  int coverHeight = 200;
-  int coverX = 0;
-  bool coverYSet = false;
-  int coverY = 0;
-  bool coverShadowEnabled = true;
-  int coverShadowDistance = 10;
-  int coverShadowSoftness = 10;
-  int coverShadowOpacity = 75;
-  bool screenshotEnabled = true;
-  int screenshotWidth = 520;
-  int screenshotHeight = 390;
-  bool screenshotXSet = false;
-  int screenshotX = 0;
-  int screenshotY = 0;
-  bool screenshotShadowEnabled = false;
-  int screenshotShadowDistance = 10;
-  int screenshotShadowSoftness = 10;
-  int screenshotShadowOpacity = 75;
-  */
-
   QString user = "";
   QString password = "";
   QString lang = "en";
