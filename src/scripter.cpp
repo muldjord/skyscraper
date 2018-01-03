@@ -97,7 +97,7 @@ Scripter::Scripter()
 
   std::string artworkFolderStr = "";
   if(frontendStr != "attractmode") {
-    printf("\033[1;34mPlease enter full artwork output folder\033[0m (enter for default): ");
+    printf("\033[1;34mPlease enter full game media output folder\033[0m (enter for default): ");
     getline(std::cin, artworkFolderStr);
   }
 
@@ -106,7 +106,7 @@ Scripter::Scripter()
   getline(std::cin, videosStr);
 
   std::string forceFilenameStr = "";
-  printf("\033[1;34mDo you wish to use filenames for game name instead of the one provided by the scraping module? \033[0m (y/N)? ");
+  printf("\033[1;34mDo you wish to use filenames for game name instead of the one provided by the scraping module\033[0m (y/N)? ");
   getline(std::cin, forceFilenameStr);
 
   std::string bracketsStr = "";
