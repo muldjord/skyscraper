@@ -70,7 +70,8 @@ public:
   QList<Resource> resources;
   void addResource(const Resource &resource, GameEntry &entry, const QString &dbAbsolutePath,
 		   const Settings &config);
-  void verifyResources(QDirIterator &dirIt, int &deleted, int &noDelete, QString resType);
+  void verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &noDelete, QString resType);
+  void verifyResources(int &resourcesDeleted);
   bool fillType(QString &type, QList<Resource> &matchingResources, QString &result);
   
 };

@@ -112,8 +112,8 @@ bool LocalDb::readDb()
 	 resource.type == "wheel" || resource.type == "marquee" ||
 	 resource.type == "video") {
 	if(!QFileInfo::exists(dbDir.absolutePath() + "/" + resource.value)) {
-	  printf("Data file missing for '%s' with sha1 '%s', skipping...\n",
-		 resource.type.toStdString().c_str(), resource.sha1.toStdString().c_str());
+	  printf("Source file '%s' missing, skipping entry...\n",
+		 resource.value.toStdString().c_str());
 	  continue;
 	}
       }
@@ -240,27 +240,27 @@ void LocalDb::cleanDb()
 			   QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
 			   QDirIterator::Subdirectories);
 
-  int deleted = 0;
-  int noDelete = 0;
+  int filesDeleted = 0;
+  int filesNoDelete = 0;
 
-  verifyResources(coversDirIt, deleted, noDelete, "cover");
-  verifyResources(screenshotsDirIt, deleted, noDelete, "screenshot");
-  verifyResources(wheelsDirIt, deleted, noDelete, "wheel");
-  verifyResources(marqueesDirIt, deleted, noDelete, "marquee");
-  verifyResources(videosDirIt, deleted, noDelete, "video");
-  
-  if(deleted == 0 && noDelete == 0) {
+  verifyFiles(coversDirIt, filesDeleted, filesNoDelete, "cover");
+  verifyFiles(screenshotsDirIt, filesDeleted, filesNoDelete, "screenshot");
+  verifyFiles(wheelsDirIt, filesDeleted, filesNoDelete, "wheel");
+  verifyFiles(marqueesDirIt, filesDeleted, filesNoDelete, "marquee");
+  verifyFiles(videosDirIt, filesDeleted, filesNoDelete, "video");
+
+  if(filesDeleted == 0 && filesNoDelete == 0) {
     printf("No inconsistencies found in the database. :)\n\n");
   } else {
-    printf("Successfully deleted %d files with no entry.\n", deleted);
-    if(noDelete != 0) {
-      printf("%d files couldn't be deleted, please check file permissions.\n", noDelete);
+    printf("Successfully deleted %d files with no resource entry.\n", filesDeleted);
+    if(filesNoDelete != 0) {
+      printf("%d files couldn't be deleted, please check file permissions and re-run with '--cleandb'.\n", filesNoDelete);
     }
     printf("\n");
   }
 }
 
-void LocalDb::verifyResources(QDirIterator &dirIt, int &deleted, int &noDelete, QString resType)
+void LocalDb::verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &filesNoDelete, QString resType)
 {
   while(dirIt.hasNext()) {
     QFileInfo fileInfo(dirIt.next());
@@ -275,14 +275,14 @@ void LocalDb::verifyResources(QDirIterator &dirIt, int &deleted, int &noDelete, 
       }
     }
     if(!valid) {
-      printf("No resource entry for '%s', deleting... ",
+      printf("No resource entry for file '%s', deleting... ",
 	     fileInfo.fileName().toStdString().c_str());
       if(QFile::remove(fileInfo.absoluteFilePath())) {
 	printf("OK!\n");
-	deleted++;
+	filesDeleted++;
       } else {
 	printf("ERROR! File couldn't be deleted :/\n");
-	noDelete++;
+	filesNoDelete++;
       }
     }
   }
