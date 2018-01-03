@@ -130,6 +130,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Now always uses existing cached resources when scraping with any scraping module. Use '--updatedb' to force a refresh
 * Improved 'artwork.xml' parser to better handle xml syntax problems
 * Improved '--cleandb' so it always resaves the db after a cleaning run
+* Updated 'simple mode' to also include questions about '--forcefilename' and '--updatedb'
 * Added 'pc' platform
 
 #### Version 2.2.0 (31st of December 2017)
