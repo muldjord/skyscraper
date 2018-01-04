@@ -159,7 +159,7 @@ void Skyscraper::run()
     }
   }
   if(config.pretend) {
-    printf("Pretend set! Not changing any files except '%s'.\n\n", skippedFileString.toStdString().c_str());
+    printf("Pretend set! Not changing any game list and media files, but still caching resources in local database.\n\n");
   }
 
   QFile skippedFile(skippedFileString);
@@ -341,7 +341,7 @@ void Skyscraper::checkThreads()
   doneThreads++;
   if(doneThreads == config.threads) {
     printf("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
-    if(!config.pretend && !config.dbFolder.isEmpty() && config.localDb) {
+    if(!config.dbFolder.isEmpty() && config.localDb) {
       localDb->writeDb();
     }
 
