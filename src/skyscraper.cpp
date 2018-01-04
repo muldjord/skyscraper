@@ -325,7 +325,7 @@ void Skyscraper::entryReady(const GameEntry &entry)
   
   if(currentFile == 30 && notFound == 30 &&
      config.scraper != "import" && config.scraper != "localdb") {
-    printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses, which probably means you are using a scraping source that doesn't support this platform. Please be considerate and choose a scraping module that supports the platform you are scraping (check '--help').\n\nNow exiting...\033[0m\n");
+    printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n");
     exit(1);
   }
 
