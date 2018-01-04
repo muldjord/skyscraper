@@ -124,6 +124,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 ### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 
+#### Version 2.2.6 (unreleased)
+* Now always caches resources locally, even if pretend is set
+* Optimized 'simple mode' generated script. Now has '--pretend' set for all non-local modules to avoid artwork processing on those runs. This is a lot faster and provides the same result
+
 #### Version 2.2.5 (3rd January 2018)
 * Improved artwork 'shadow' effect. Now renders correctly on artwork with transparency
 * Added '(uncached)' to terminal output for media types that user has disabled for caching
