@@ -180,7 +180,8 @@ void ScraperWorker::run()
       }
     }
 
-    if(config.localDb && config.scraper != "localdb" && !config.pretend && game.found) {
+    // Always cache resources, even if pretend is set
+    if(config.localDb && config.scraper != "localdb" && game.found) {
       game.source = config.scraper;
       localDb->addResources(game, config);
     }
