@@ -70,6 +70,7 @@ private:
   QSharedPointer<LocalDb> localDb;
   
   QList<GameEntry> gameEntries;
+  QList<QString> cliFiles;
   QMutex entryMutex;
   //QMutex skippedMutex;
   QMutex outputMutex;

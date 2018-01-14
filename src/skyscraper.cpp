@@ -182,6 +182,13 @@ void Skyscraper::run()
     }
   }
 
+  if(!cliFiles.isEmpty()) {
+    inputFiles.clear();
+    foreach(QString cliFile, cliFiles) {
+      inputFiles.append(QFileInfo(cliFile));
+    }
+  } 
+
   if(!config.unattend) {
     std::string userInput = "";
     if(gameListFile.exists() && frontend->canSkip()) {
@@ -701,6 +708,17 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
 
   skippedFileString = "skipped-" + config.scraper + ".txt";
+
+  // If user has set specific files to scrape on command line set them internally
+  foreach(QString cliArgument, parser.positionalArguments()) {
+    if(QFile::exists(cliArgument)) {
+      cliFiles.append(cliArgument);
+      // Always set pretend and updateDb true if user has supplied filenames on command line.
+      // That way they are cached, but game list is not changed.
+      config.pretend = true;
+      config.updateDb = true;
+    }
+  }
 }
 
 // --- Console colors ---
@@ -712,32 +730,3 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 // Purple       0;35     Light Purple  1;35
 // Cyan         0;36     Light Cyan    1;36
 // Light Gray   0;37     White         1;37
-
-  /*
-  QDir dir("/mnt/data/roms/c64_d64", "*.d64", QDir::Name | QDir::IgnoreCase, QDir::Files | QDir::NoDotAndDotDot);
-  QFileInfo infoPrev;
-  foreach(QFileInfo info, dir.entryInfoList()) {
-    QString baseName = info.completeBaseName().toLower();
-    //QString baseNamePrev = infoPrev.completeBaseName().toLower();
-    if(baseName.left(baseNamePrev.length()) == baseNamePrev &&
-       baseName.indexOf("[") != -1) {
-      printf("X: %s\n", baseNamePrev.toStdString().c_str());
-      QFile::remove(infoPrev.absoluteFilePath());
-    } else {
-      printf(" : %s\n", baseNamePrev.toStdString().c_str());
-    }
-    infoPrev = info;
-    if(baseName.indexOf("side a") == -1 &&
-       baseName.indexOf("side b") == -1 &&
-       baseName.indexOf("(disk") == -1) {
-      QFile::rename(info.absoluteFilePath(), info.absolutePath() + "/scrape/" + info.fileName());
-      continue;
-    }
-
-    if(baseName.indexOf("(side a)") != -1 ||
-       (baseName.indexOf("(disk 1") != -1 && baseName.indexOf("side a") != -1)) {
-      QFile::rename(info.absoluteFilePath(), info.absolutePath() + "/scrape/" + info.fileName());
-    }
-  }
-  exit(0);
-  */
