@@ -127,6 +127,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.2.6 (unreleased)
 * Now always caches resources locally, even if pretend is set
 * Optimized 'simple mode' generated script. Now has '--pretend' set for all non-local modules to avoid artwork processing on those runs. This is a lot faster and provides the same result
+* Added the possibility to supply one or more filenames on the command line - it will then ONLY scrape those particular files. Platform still has to be set with '-p' for this to work
 
 #### Version 2.2.5 (3rd January 2018)
 * Improved artwork 'shadow' effect. Now renders correctly on artwork with transparency
