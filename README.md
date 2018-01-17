@@ -36,9 +36,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.2.5.tar.gz
-* $ tar xvzf 2.2.5.tar.gz
-* $ cd skyscraper-2.2.5
+* $ wget https://github.com/muldjord/skyscraper/archive/2.2.6.tar.gz
+* $ tar xvzf 2.2.6.tar.gz
+* $ cd skyscraper-2.2.6
 * $ qmake
 * $ make
 * $ sudo make install
@@ -124,7 +124,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 ### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 
-#### Version 2.2.6 (unreleased)
+#### Version 2.2.6 (17th January 2018)
 * Now always caches resources locally, even if pretend is set
 * Optimized 'simple mode' generated script. Now has '--pretend' set for all non-local modules to avoid artwork processing on those runs. This is a lot faster and provides the same result
 * Added the possibility to supply one or more filenames on the command line - it will then ONLY scrape those particular files. Platform still has to be set with '-p' for this to work
