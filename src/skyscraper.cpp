@@ -719,6 +719,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.updateDb = true;
     }
   }
+
+  if(config.scraper == "import") {
+    // Always force local db to be updated when using import scraper
+    config.updateDb = true;
+  }
 }
 
 // --- Console colors ---
