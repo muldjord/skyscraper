@@ -36,9 +36,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.2.6.tar.gz
-* $ tar xvzf 2.2.6.tar.gz
-* $ cd skyscraper-2.2.6
+* $ wget https://github.com/muldjord/skyscraper/archive/2.2.6a.tar.gz
+* $ tar xvzf 2.2.6a.tar.gz
+* $ cd skyscraper-2.2.6a
 * $ qmake
 * $ make
 * $ sudo make install
@@ -123,6 +123,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 ### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
+
+#### Version 2.2.6a (18th January 2018)
+* Now always sets '--updatedb' when using the import scraper
 
 #### Version 2.2.6 (17th January 2018)
 * Now always caches resources locally, even if pretend is set
