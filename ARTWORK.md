@@ -94,7 +94,7 @@ The vertical alignment of the layer. Can be:
 ### 'shadow' node (Optional)
 ```
 <layer>
-  <shadow distance="10" softness="10" opacity="75"/>
+  <shadow distance="10" softness="5" opacity="50"/>
 </layer>
 ```
 If a shadow node exists, it will render a dropshadow on the parent layer using the attributes provided. If either of the attributes are left out, the shadow won't be drawn.
