@@ -121,8 +121,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 ## Release notes
 
-### Version x.x.x (still unimplemented)
+#### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
+
+#### Version 2.2.7 (unreleased)
+* 'simple mode' 'Do you want to run the script' answer now defaults to Y.
 
 #### Version 2.2.6a (18th January 2018)
 * Now always sets '--updatedb' when using the import scraper
