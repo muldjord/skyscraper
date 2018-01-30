@@ -194,6 +194,162 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
   }
 }
 
+QVector<double> Compositor::boxesForGauss(double sigma, double n)
+{
+  double wIdeal = sqrt((12.0 * sigma * sigma / n) + 1.0);
+  double wl = floor(wIdeal);
+  if((int)wl % 2 == 0) {
+    wl--;
+  }
+  double wu = wl + 2;
+  double mIdeal = (12.0 * sigma * sigma - n * wl * wl - 4.0 * n * wl - 3.0 * n) / (-4.0 * wl - 4.0);
+  int m = round(mIdeal);
+  // var sigmaActual = Math.sqrt( (m*wl*wl + (n-m)*wu*wu - n)/12 );
+  
+  QVector<double> sizes;
+  for(int i = 0; i < n; i++) {
+    sizes.append(i < m?wl:wu);
+    printf("BOX: '%f'\n", sizes.last());
+  }
+  return sizes;
+}
+
+void Compositor::boxBlur(QRgb *src, QRgb *dst, int w, int h, int r)
+{
+  for(int i = 0; i < w * h; i++) {
+    dst[i] = src[i];
+  }
+  printf("RADIUS: '%d'\n", r);
+  boxBlurHorizontal(dst, src, w, h, r);
+  //boxBlurTotal(src, dst, w, h, r);
+}
+
+/*
+  bool doneI = false;
+  for(int a = 0; a < w * h; ++a) {
+    if(!doneI) {
+      printf("I: '%d'\n", i);
+      doneI = true;
+    }
+    if(qAlpha(tcl[a]) != 0) {
+      printf("ALPHA: '%d'\n", qAlpha(tcl[a]));
+    }
+  }
+*/
+void Compositor::boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, int radius)
+{
+  int span = radius + radius + 1;
+  for(int y = 0; y < height; y++) {
+    int currentIdx = y * width, frontIdx = currentIdx, backIdx = currentIdx + radius;
+    int firstVal = qAlpha(src[currentIdx]), lastVal = qAlpha(src[currentIdx + width - 1]);
+
+    // Initial 'value' fill at leftmost edge of line
+    int value = (radius + 1) * firstVal;
+    for(int x = 0; x < radius; x++) {
+      value += qAlpha(src[currentIdx + x]);
+    }
+    
+    for(int x = 0; x <= radius ; x++) {
+      value += qAlpha(src[backIdx++]) - firstVal;
+      dst[currentIdx++] = QColor(0, 0, 0, value / span).rgba();
+    }
+    for(int x = radius + 1; x < width - radius; x++) {
+      value += qAlpha(src[backIdx++]) - qAlpha(src[frontIdx++]);
+      dst[currentIdx++] = QColor(0, 0, 0, value / span).rgba();
+    }
+    for(int x = width- radius; x < width; x++) {
+      value += lastVal - qAlpha(src[frontIdx++]);
+      dst[currentIdx++] = QColor(0, 0, 0, value / span).rgba();
+    }
+  }
+}
+
+void Compositor::boxBlurTotal(QRgb *src, QRgb *dst, int w, int h, double r)
+{
+  double iarr = 1.0 / (r + r + 1);
+  for(int i = 0; i < w; i++) {
+    int ti = i;
+    int li = ti;
+    int ri = ti + r * w;
+    int fv = qAlpha(src[ti]);
+    int lv = qAlpha(src[ti + w * (h - 1)]);
+    int val = (r + 1) * fv;
+    for(int j = 0; j < r; j++) {
+      val += qAlpha(src[ti + j * w]);
+    }
+    for(int j = 0; j <= r ; j++) {
+      val += qAlpha(src[ri] - fv);
+      dst[ti] = QColor(0, 0, 0, round(val * iarr)).rgba();
+      ri += w;
+      ti += w;
+    }
+    for(int j = r + 1; j < h - r; j++) {
+      val += qAlpha(src[ri]) - qAlpha(src[li]);
+      dst[ti] = QColor(0, 0, 0, round(val * iarr)).rgba();
+      li += w;
+      ri += w;
+      ti += w;
+    }
+    for(int j = h - r; j < h; j++) {
+      val += lv - qAlpha(src[li]);
+      dst[ti] = QColor(0, 0, 0, round(val * iarr)).rgba();
+      li += w;
+      ti += w;
+    }
+  }
+}
+
+QImage Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
+{
+  if(distance == -1)
+    distance = 0;
+  if(softness == -1)
+    softness = 5;
+  if(opacity == -1)
+    opacity = 50;
+
+  QImage buffer1(image.width() + softness * 2, image.height() + softness * 2,
+		      QImage::Format_ARGB32_Premultiplied);
+  buffer1.fill(Qt::transparent);
+  
+  QPainter painter;
+  painter.begin(&buffer1);
+  painter.drawImage(softness, softness, image);
+  painter.end();
+  
+  QRgb *buffer1Bits = (QRgb *)buffer1.constBits();
+  for(int a = 0; a < buffer1.width() * buffer1.height(); ++a) {
+    buffer1Bits[a] = QColor(0, 0, 0, qAlpha(buffer1Bits[a])).rgba();
+  }
+  QImage buffer2 = buffer1;
+  QRgb *buffer2Bits = (QRgb *)buffer2.constBits();
+  
+  int w = buffer1.width();
+  int h = buffer1.height();
+  
+  QVector<double> boxes = boxesForGauss((double)softness, 3.0);
+
+  boxBlur(buffer1Bits, buffer2Bits, w, h, (boxes[0] - 1) / 2);
+  buffer1.save("buffer1.png");
+  buffer2.save("buffer2.png");
+  //boxBlur(buffer2Bits, buffer1Bits, w, h, (boxes[1] - 1) / 2);
+  //boxBlur(buffer1Bits, buffer2Bits, w, h, (boxes[2] - 1) / 2);
+
+  QImage resultImage(image.width() + distance + softness,
+		     image.height() + distance + softness,
+		     QImage::Format_ARGB32_Premultiplied);
+  resultImage.fill(Qt::transparent);
+  painter.begin(&resultImage);
+  painter.setOpacity(opacity * 0.01);
+  painter.drawImage(distance - softness, distance - softness, buffer2);
+  painter.setOpacity(1.0);
+  painter.drawImage(0, 0, image);
+  painter.end();
+  
+  return resultImage;
+}
+
+/*
 QImage Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
 {
   if(distance == -1)
@@ -266,3 +422,4 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   
   return shadowImage;
 }
+*/
