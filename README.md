@@ -125,7 +125,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 
 #### Version 2.2.7 (unreleased)
-* 'simple mode' 'Do you want to run the script' answer now defaults to Y.
+* 'simple mode' 'Do you want to run the script' answer now defaults to Y
+* Fixed bug in 'simple mode' where answering 'y' to adding brackets would actually remove them
+* Optimized shadow rendering. It is now literally thousands of times faster than 2.2.6a
 
 #### Version 2.2.6a (18th January 2018)
 * Now always sets '--updatedb' when using the import scraper
