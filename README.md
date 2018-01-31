@@ -122,7 +122,13 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
+* Implemented 'blur' and 'colorize' artwork effects.
+* Implemented 'stroke' effect to outline layers
+
+#### Version 2.3.0 (unreleased)
+The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
+* Implemented 'mask' effect that allows you to mask out certain parts of a layer
+* Implemented 'frame' effect that allows you to add a graphical frame to a layer
 
 #### Version 2.2.7 (31st January 2018)
 * Optimized shadow rendering A LOT! WROOOOOOOOOM!!!
