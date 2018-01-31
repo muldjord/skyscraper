@@ -84,13 +84,35 @@ bool Compositor::processXml(QString filename)
       inLayer = true;
     }
     if(xml.name() == "shadow" && xml.isStartElement() && inOutput && inLayer) {
+      Effect effect;
+      effect.type = "shadow";
       QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("distance"))
-	outputs.last().layers.last().shadowDistance = attribs.value("distance").toInt();
-      if(attribs.hasAttribute("softness"))
-	outputs.last().layers.last().shadowSoftness = attribs.value("softness").toInt();
-      if(attribs.hasAttribute("opacity"))
-	outputs.last().layers.last().shadowOpacity = attribs.value("opacity").toInt();
+      if(attribs.hasAttribute("distance") &&
+	 attribs.hasAttribute("softness") &&
+	 attribs.hasAttribute("opacity")) {
+	effect.shadowDistance = attribs.value("distance").toInt();
+	effect.shadowSoftness = attribs.value("softness").toInt();
+	effect.shadowOpacity = attribs.value("opacity").toInt();
+	outputs.last().layers.last().effects.append(effect);
+      }
+    }
+    if(xml.name() == "mask" && xml.isStartElement() && inOutput && inLayer) {
+      Effect effect;
+      effect.type = "mask";
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("file")) {
+	effect.maskFile = attribs.value("file").toString();
+	outputs.last().layers.last().effects.append(effect);
+      }
+    }
+    if(xml.name() == "frame" && xml.isStartElement() && inOutput && inLayer) {
+      Effect effect;
+      effect.type = "frame";
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("file")) {
+	effect.frameFile = attribs.value("file").toString();
+	outputs.last().layers.last().effects.append(effect);
+      }
     }
   }
   xmlFile.close();
@@ -136,6 +158,8 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 	  element = game.wheelData;
 	} else if(layer.resource == "marquee") {
 	  element = game.marqueeData;
+	} else {
+	  element = QImage("frames/" + layer.resource);
 	}
 	if(layer.width == -1 && layer.height != -1) {
 	  element = element.scaledToHeight(layer.height, Qt::SmoothTransformation);
@@ -147,8 +171,21 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 	// Update width + height as we will need them for easier placement and alignment
 	layer.width = element.width();
 	layer.height = element.height();
-	if(layer.shadowDistance != -1 || layer.shadowSoftness != -1 || layer.shadowOpacity != -1) {
-	  element = applyShadow(element, layer.shadowDistance, layer.shadowSoftness, layer.shadowOpacity);
+
+	// Aplly all layer effect in order from bottom to top
+	if(!layer.effects.isEmpty()) {
+	  for(int a = layer.effects.size() - 1; a >= 0; --a) {
+	    if(layer.effects.at(a).type == "shadow") {
+	      element = applyShadow(element,
+				    layer.effects.at(a).shadowDistance,
+				    layer.effects.at(a).shadowSoftness,
+				    layer.effects.at(a).shadowOpacity);
+	    } else if(layer.effects.at(a).type == "mask") {
+	      element = applyMask(element, layer.effects.at(a).maskFile);
+	    } else if(layer.effects.at(a).type == "frame") {
+	      element = applyFrame(element, layer.effects.at(a).frameFile);
+	    }
+	  }
 	}
 	QPainter painter;
 	painter.begin(&canvas);
@@ -192,6 +229,35 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 						 completeBaseName + ".png");
     }
   }
+}
+
+QImage Compositor::applyMask(QImage &image, QString file)
+{
+  QImage mask("masks/" + file);
+  mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+  mask = mask.scaled(image.width(), image.height());
+  
+  QPainter painter;
+  painter.begin(&image);
+  painter.setCompositionMode(QPainter::CompositionMode_DestinationAtop);
+  painter.drawImage(0, 0, mask);
+  painter.end();
+
+  return image;
+}
+
+QImage Compositor::applyFrame(QImage &image, QString file)
+{
+  QImage mask("frames/" + file);
+  mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+  mask = mask.scaled(image.width(), image.height());
+  
+  QPainter painter;
+  painter.begin(&image);
+  painter.drawImage(0, 0, mask);
+  painter.end();
+
+  return image;
 }
 
 QVector<double> Compositor::getGaussBoxes(double sigma, double n)

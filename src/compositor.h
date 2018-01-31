@@ -31,6 +31,15 @@
 #include "settings.h"
 #include "gameentry.h"
 
+struct Effect {
+  QString type = "";
+  int shadowDistance = -1;
+  int shadowSoftness = -1;
+  int shadowOpacity = -1;
+  QString maskFile = "";
+  QString frameFile = "";
+};
+
 struct Layer {
   QString resource = "";
   QString align = "";
@@ -39,9 +48,7 @@ struct Layer {
   int y = 0;
   int width = -1;
   int height = -1;
-  int shadowDistance = -1;
-  int shadowSoftness = -1;
-  int shadowOpacity = -1;
+  QList<Effect> effects;
 };
 
 struct Output {
@@ -61,6 +68,8 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
+  QImage applyMask(QImage &image, QString file);
+  QImage applyFrame(QImage &image, QString file);
   QVector<double> getGaussBoxes(double sigma, double n);
   void boxBlur(QRgb *src, QRgb *dst, int width, int height, int radius);
   void boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, int radius);
