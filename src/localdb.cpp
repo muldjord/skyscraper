@@ -448,7 +448,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.coverData.height() >= 512 && !config.noResize) {
 	entry.coverData = entry.coverData.scaledToHeight(512, Qt::SmoothTransformation);
       }
-      if(!entry.coverData.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.coverData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "screenshot") {
@@ -456,7 +456,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.screenshotData.width() >= 640 && !config.noResize) {
 	entry.screenshotData = entry.screenshotData.scaledToWidth(640, Qt::SmoothTransformation);
       }
-      if(!entry.screenshotData.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.screenshotData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "wheel") {
@@ -464,7 +464,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.wheelData.width() >= 640 && !config.noResize) {
 	entry.wheelData = entry.wheelData.scaledToWidth(640, Qt::SmoothTransformation);
       }
-      if(!entry.wheelData.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.wheelData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "marquee") {
@@ -472,7 +472,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.marqueeData.width() >= 640 && !config.noResize) {
 	entry.marqueeData = entry.marqueeData.scaledToWidth(640, Qt::SmoothTransformation);
       }
-      if(!entry.marqueeData.convertToFormat(QImage::Format_ARGB4444_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.marqueeData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "video") {
