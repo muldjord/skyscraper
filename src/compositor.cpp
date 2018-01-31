@@ -323,7 +323,6 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   boxBlur(buffer2Bits, buffer1Bits, width, height, (boxes[1] - 1) / 4);
   // Pass 3, after this pass, we have a true gauss shadow
   boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[2] - 1) / 4);
-  buffer2.save("buffer2.png");
   
   QImage resultImage(image.width() + distance + softness,
 		     image.height() + distance + softness,
