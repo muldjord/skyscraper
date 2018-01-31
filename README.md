@@ -36,9 +36,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.2.6a.tar.gz
-* $ tar xvzf 2.2.6a.tar.gz
-* $ cd skyscraper-2.2.6a
+* $ wget https://github.com/muldjord/skyscraper/archive/2.2.7.tar.gz
+* $ tar xvzf 2.2.7.tar.gz
+* $ cd skyscraper-2.2.7
 * $ qmake
 * $ make
 * $ sudo make install
@@ -124,10 +124,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Implemented 'blur' and 'colorize' artwork effects. Check artwork documentation [here](ARTWORK.md)
 
-#### Version 2.2.7 (unreleased)
+#### Version 2.2.7 (31st January 2018)
+* Optimized shadow rendering A LOT! WROOOOOOOOOM!!!
 * 'simple mode' 'Do you want to run the script' answer now defaults to Y
 * Fixed bug in 'simple mode' where answering 'y' to adding brackets would actually remove them
-* Optimized shadow rendering. It is now literally thousands of times faster than 2.2.6a
 
 #### Version 2.2.6a (18th January 2018)
 * Now always sets '--updatedb' when using the import scraper
