@@ -3,7 +3,7 @@
 <artwork>
   <output type="screenshot" width="640" height="400">
     <layer resource="cover" valign="bottom" y="-15" height="200">
-      <shadow distance="10" softness="5" opacity="75"/>
+      <shadow distance="10" softness="2" opacity="65"/>
     </layer>
     <layer resource="screenshot" align="right" valign="top" width="520" height="390"/>
   </output>
