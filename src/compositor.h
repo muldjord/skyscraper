@@ -61,10 +61,10 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
-  QVector<double> boxesForGauss(double sigma, double n);
-  void boxBlur(QRgb *src, QRgb *dst, int w, int h, int r);
-  void boxBlurHorizontal(QRgb *src, QRgb *dst, int w, int h, int radius);
-  void boxBlurTotal(QRgb *src, QRgb *dst, int w, int h, double r);
+  QVector<double> getGaussBoxes(double sigma, double n);
+  void boxBlur(QRgb *src, QRgb *dst, int width, int height, int radius);
+  void boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, int radius);
+  void boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, double radius);
   QImage applyShadow(QImage &image, int distance, int softness, int opacity);
   Settings config;
   QList<Output> outputs;
