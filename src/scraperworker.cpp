@@ -208,6 +208,7 @@ void ScraperWorker::run()
     if(config.verbose) {
       output.append("Scraper:\t'" + config.scraper + "'\n");
     }
+    output.append("From cache:\t" + QString((prefilledFromCache?"YES (refresh from source with '--updatedb')":"NO")) + "\n");
     output.append("Search match:\t" + QString::number(searchMatch) + " %\n");
     output.append("Game title:\t'" + game.title + "'\n");
     output.append("Compare title:\t'" + compareName + "'\n");
