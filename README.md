@@ -64,7 +64,7 @@ This will give you a description of everything Skyscraper can do if you feel adv
 NOTE: If you have already scraped a platform using 'Simple mode', any subsequent scrapings of said platform should be done with:
 * $ Skyscraper -p [platform] -s localdb
 
-This ensures that you make use of all the data cached by 'Simple mode', and will give you the most complete results for subsequent scrapings. A full description of the 'localdb' scraping module can be found [here](README.md#local-database-features). You can of course add further command line options if needed.
+This ensures that you make use of all the data cached by 'Simple mode', and will give you the most complete results for subsequent scrapings. A full description of the 'localdb' scraping module can be found [here](#local-database-features). You can of course add further command line options if needed.
 
 Skyscraper was designed to work with default options. If you're using the EmulationStation frontend, basically all you need to do is type:
 * $ Skyscraper -p [platform]
