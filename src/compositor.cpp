@@ -318,12 +318,13 @@ QImage Compositor::applyShadow(QImage &image, int distance, int softness, int op
   QVector<double> boxes = getGaussBoxes((double)softness, 3.0);
 
   // Pass 1
-  boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[0] - 1) / 2);
+  boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[0] - 1) / 4);
   // Pass 2
-  boxBlur(buffer2Bits, buffer1Bits, width, height, (boxes[1] - 1) / 2);
+  boxBlur(buffer2Bits, buffer1Bits, width, height, (boxes[1] - 1) / 4);
   // Pass 3, after this pass, we have a true gauss shadow
-  boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[2] - 1) / 2);
-
+  boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[2] - 1) / 4);
+  buffer2.save("buffer2.png");
+  
   QImage resultImage(image.width() + distance + softness,
 		     image.height() + distance + softness,
 		     QImage::Format_ARGB32_Premultiplied);
