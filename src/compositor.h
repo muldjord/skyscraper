@@ -27,20 +27,24 @@
 #define COMPOSITOR_H
 
 #include <QImage>
+#include <QXmlStreamReader>
 
 #include "settings.h"
 #include "gameentry.h"
 
-struct Effect {
-  QString type = "";
-  int shadowDistance = -1;
-  int shadowSoftness = -1;
-  int shadowOpacity = -1;
-  QString maskFile = "";
-  QString frameFile = "";
-};
+#define T_NONE 0
+#define T_LAYER 1
+#define T_SHADOW 2
+#define T_MASK 3
+#define T_STROKE 4
+
+#define R_COVER 40
+#define R_SCREENSHOT 41
+#define R_WHEEL 42
+#define R_MARQUEE 43
 
 struct Layer {
+  int type = T_NONE;
   QString resource = "";
   QString align = "";
   QString valign = "";
@@ -48,13 +52,11 @@ struct Layer {
   int y = 0;
   int width = -1;
   int height = -1;
-  QList<Effect> effects;
-};
-
-struct Output {
-  QString type = "";
-  int width = -1;
-  int height = -1;
+  int shadowDistance = 0;
+  int shadowSoftness = 0;
+  int shadowOpacity = 0;
+  QString maskFile = "";
+  int strokeWidth = 0;
   QList<Layer> layers;
 };
 
@@ -68,6 +70,9 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
+  void addLayer(Layer *layer, QXmlStreamReader &xml);
+  void addShadow(Layer *layer, QXmlStreamReader &xml);
+  void addMask(Layer *layer, QXmlStreamReader &xml);
   QImage applyMask(QImage &image, QString file);
   QImage applyFrame(QImage &image, QString file);
   QVector<double> getGaussBoxes(double sigma, double n);
@@ -76,7 +81,7 @@ private:
   void boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, double radius);
   QImage applyShadow(QImage &image, int distance, int softness, int opacity);
   Settings config;
-  QList<Output> outputs;
+  QList<Layer> outputs;
   
 };
 

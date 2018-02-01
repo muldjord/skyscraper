@@ -27,7 +27,6 @@
 #include <QSettings>
 #include <QPainter>
 #include <QFile>
-#include <QXmlStreamReader>
 
 #include "compositor.h"
 #include "strtools.h"
@@ -47,72 +46,46 @@ bool Compositor::processXml(QString filename)
   }
   QXmlStreamReader xml(&xmlFile);
   
-  bool inLayer = false;
-  bool inOutput = false;
+  Layer *currentLayer;
+
   while(xml.readNext() && !xml.atEnd()) {
     if(xml.name() == "output" && xml.isStartElement()) {
-      Output output;
+      Layer output;
       QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("type"))
-	output.type = attribs.value("", "type").toString();
+      if(attribs.hasAttribute("type")) {
+	QString type = attribs.value("", "type").toString();
+	if(type == "cover") {
+	  output.type = R_COVER;
+	} else if(type == "screenshot") {
+	  output.type = R_SCREENSHOT;
+	} else if(type == "wheel") {
+	  output.type = R_WHEEL;
+	} else if(type == "marquee") {
+	  output.type = R_MARQUEE;
+	}
+      }
       if(attribs.hasAttribute("width"))
 	output.width = attribs.value("", "width").toInt();
       if(attribs.hasAttribute("height"))
 	output.height = attribs.value("", "height").toInt();
-      outputs.append(output);
-      inLayer = false;
-      inOutput = true;
-    }
-    if(xml.name() == "layer" && xml.isStartElement() && inOutput) {
-      Layer layer;
-      QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("resource"))
-	layer.resource = attribs.value("", "resource").toString();
-      if(attribs.hasAttribute("width"))
-	layer.width = attribs.value("", "width").toInt();
-      if(attribs.hasAttribute("height"))
-	layer.height = attribs.value("", "height").toInt();
-      if(attribs.hasAttribute("align"))
-	layer.align = attribs.value("", "align").toString();
-      if(attribs.hasAttribute("valign"))
-	layer.valign = attribs.value("", "valign").toString();
-      if(attribs.hasAttribute("x"))
-	layer.x = attribs.value("", "x").toInt();
-      if(attribs.hasAttribute("y"))
-	layer.y = attribs.value("", "y").toInt();
-      outputs.last().layers.append(layer);
-      inLayer = true;
-    }
-    if(xml.name() == "shadow" && xml.isStartElement() && inOutput && inLayer) {
-      Effect effect;
-      effect.type = "shadow";
-      QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("distance") &&
-	 attribs.hasAttribute("softness") &&
-	 attribs.hasAttribute("opacity")) {
-	effect.shadowDistance = attribs.value("distance").toInt();
-	effect.shadowSoftness = attribs.value("softness").toInt();
-	effect.shadowOpacity = attribs.value("opacity").toInt();
-	outputs.last().layers.last().effects.append(effect);
+      if(output.type != T_NONE) {
+	outputs.append(output);
+	printf("Added output\n");
       }
     }
-    if(xml.name() == "mask" && xml.isStartElement() && inOutput && inLayer) {
-      Effect effect;
-      effect.type = "mask";
-      QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("file")) {
-	effect.maskFile = attribs.value("file").toString();
-	outputs.last().layers.last().effects.append(effect);
-      }
+    if(xml.name() == "layer" && xml.isStartElement()) {
+      // FIXME! Needs to create a new layer, and point to it, not just .last, since that can be a shadow... !!!
+      currentLayer = &outputs.last();
+      addLayer(currentLayer, xml);
+      printf("Added layer\n");
     }
-    if(xml.name() == "frame" && xml.isStartElement() && inOutput && inLayer) {
-      Effect effect;
-      effect.type = "frame";
-      QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("file")) {
-	effect.frameFile = attribs.value("file").toString();
-	outputs.last().layers.last().effects.append(effect);
-      }
+    if(xml.name() == "shadow" && xml.isStartElement()) {
+      addShadow(currentLayer, xml);
+      printf("Added shadow\n");
+    }
+    if(xml.name() == "mask" && xml.isStartElement()) {
+      addMask(currentLayer, xml);
+      printf("Added mask\n");
     }
   }
   xmlFile.close();
@@ -120,17 +93,71 @@ bool Compositor::processXml(QString filename)
   return true;
 }
 
+void Compositor::addLayer(Layer *layer, QXmlStreamReader &xml)
+{
+  Layer l;
+  l.type = T_LAYER;
+  
+  QXmlStreamAttributes attribs = xml.attributes();
+  
+  if(attribs.hasAttribute("resource"))
+    l.resource = attribs.value("", "resource").toString();
+  if(attribs.hasAttribute("width"))
+    l.width = attribs.value("", "width").toInt();
+  if(attribs.hasAttribute("height"))
+    l.height = attribs.value("", "height").toInt();
+  if(attribs.hasAttribute("align"))
+    l.align = attribs.value("", "align").toString();
+  if(attribs.hasAttribute("valign"))
+    l.valign = attribs.value("", "valign").toString();
+  if(attribs.hasAttribute("x"))
+    l.x = attribs.value("", "x").toInt();
+  if(attribs.hasAttribute("y"))
+    l.y = attribs.value("", "y").toInt();
+
+  if(l.resource != "") {
+    layer->layers.append(l);
+  }
+}
+
+void Compositor::addShadow(Layer *layer, QXmlStreamReader &xml)
+{
+  QXmlStreamAttributes attribs = xml.attributes();
+  if(attribs.hasAttribute("distance") &&
+     attribs.hasAttribute("softness") &&
+     attribs.hasAttribute("opacity")) {
+    Layer l;
+    l.type = T_SHADOW;
+    l.shadowDistance = attribs.value("distance").toInt();
+    l.shadowSoftness = attribs.value("softness").toInt();
+    l.shadowOpacity = attribs.value("opacity").toInt();
+    layer->layers.append(l);
+  }
+}
+  
+void Compositor::addMask(Layer *layer, QXmlStreamReader &xml)
+{
+  QXmlStreamAttributes attribs = xml.attributes();
+  if(attribs.hasAttribute("file")) {
+    Layer l;
+    l.type = T_MASK;
+    l.maskFile = attribs.value("file").toString();
+    layer->layers.append(l);
+  }
+
+}
+
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
-  foreach(Output output, outputs) {
+  foreach(Layer output, outputs) {
     QImage canvas;
-    if(output.type == "cover") {
+    if(output.type == R_COVER) {
       canvas = game.coverData;
-    } else if(output.type == "screenshot") {
+    } else if(output.type == R_SCREENSHOT) {
       canvas = game.screenshotData;
-    } else if(output.type == "wheel") {
+    } else if(output.type == R_WHEEL) {
       canvas = game.wheelData;
-    } else if(output.type == "marquee") {
+    } else if(output.type == R_MARQUEE) {
       canvas = game.marqueeData;
     }
 
@@ -173,17 +200,15 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 	layer.height = element.height();
 
 	// Aplly all layer effect in order from bottom to top
-	if(!layer.effects.isEmpty()) {
-	  for(int a = layer.effects.size() - 1; a >= 0; --a) {
-	    if(layer.effects.at(a).type == "shadow") {
+	if(!layer.layers.isEmpty()) {
+	  for(int a = layer.layers.size() - 1; a >= 0; --a) {
+	    if(layer.layers.at(a).type == T_SHADOW) {
 	      element = applyShadow(element,
-				    layer.effects.at(a).shadowDistance,
-				    layer.effects.at(a).shadowSoftness,
-				    layer.effects.at(a).shadowOpacity);
-	    } else if(layer.effects.at(a).type == "mask") {
-	      element = applyMask(element, layer.effects.at(a).maskFile);
-	    } else if(layer.effects.at(a).type == "frame") {
-	      element = applyFrame(element, layer.effects.at(a).frameFile);
+				    layer.layers.at(a).shadowDistance,
+				    layer.layers.at(a).shadowSoftness,
+				    layer.layers.at(a).shadowOpacity);
+	    } else if(layer.layers.at(a).type == T_MASK) {
+	      element = applyMask(element, layer.layers.at(a).maskFile);
 	    }
 	  }
 	}
@@ -211,19 +236,19 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       }
     }
     
-    if(output.type == "cover") {
+    if(output.type == R_COVER) {
       if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.coversFolder + "/" + completeBaseName + ".png"))
 	game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" +
 					       completeBaseName + ".png");
-    } else if(output.type == "screenshot") {
+    } else if(output.type == R_SCREENSHOT) {
       if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.screenshotsFolder + "/" + completeBaseName + ".png"))
 	game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" +
 						    completeBaseName + ".png");
-    } else if(output.type == "wheel") {
+    } else if(output.type == R_WHEEL) {
       if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.wheelsFolder + "/" + completeBaseName + ".png"))
 	game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" +
 					       completeBaseName + ".png");
-    } else if(output.type == "marquee") {
+    } else if(output.type == R_MARQUEE) {
       if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.marqueesFolder + "/" + completeBaseName + ".png"))
 	game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" +
 						 completeBaseName + ".png");
