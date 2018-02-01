@@ -4,10 +4,21 @@
   <output type="screenshot" width="640" height="400">
     <layer resource="cover" valign="bottom" y="-15" height="200">
       <shadow distance="10" softness="5" opacity="65"/>
+      <!-- The following layer will be anchored to the topleft corner of the parent.
+	   If width and height are left out, it will be resized to fit the dimensions
+	   of the parent. -->
+      <layer resource="cover" valign="bottom" y="-15" height="200">
+	<shadow distance="10" softness="5" opacity="65"/>
+      </layer>
     </layer>
     <layer resource="screenshot" align="right" valign="top" width="520" height="390">
-      <frame file="frame1.png"/>
-      <mask file="mask1.png"/>
+      <!-- The following layer will render a png from the "~/.skyscraper/resources" folder
+	   on the parent. It will be anchored to the topleft corner of the parent -->
+      <layer resource="frame1.png" valign="bottom" y="-15" height="200"/>
+      <!-- This will apply a mask to the parent layer using the mask alpha channel.
+	   Masks must be placed in "~/.skyscraper/resources". -->
+      <mask file="mask1.png" x="10" y="20" width="250" height="200"/>
+      <stroke width="4"/>
     </layer>
   </output>
   <!-- delete the next line to disable 'wheel entirely -->
