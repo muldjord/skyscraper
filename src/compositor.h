@@ -70,9 +70,8 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
-  void addLayer(Layer *layer, QXmlStreamReader &xml);
-  void addShadow(Layer *layer, QXmlStreamReader &xml);
-  void addMask(Layer *layer, QXmlStreamReader &xml);
+  QString indentation = "";
+  void addLayer(Layer &layer, QXmlStreamReader &xml);
   QImage applyMask(QImage &image, QString file);
   QImage applyFrame(QImage &image, QString file);
   QVector<double> getGaussBoxes(double sigma, double n);
@@ -81,7 +80,7 @@ private:
   void boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, double radius);
   QImage applyShadow(QImage &image, int distance, int softness, int opacity);
   Settings config;
-  QList<Layer> outputs;
+  Layer outputs;
   
 };
 

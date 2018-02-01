@@ -38,7 +38,7 @@ Compositor::Compositor(Settings &config)
 
 bool Compositor::processXml(QString filename)
 {
-  outputs.clear();
+  Layer newOutputs;
   
   QFile xmlFile(filename);
   if(!xmlFile.open(QIODevice::ReadOnly)) {
@@ -46,110 +46,106 @@ bool Compositor::processXml(QString filename)
   }
   QXmlStreamReader xml(&xmlFile);
   
-  Layer *currentLayer;
+  // Init recursive parsing
+  addLayer(newOutputs, xml);
 
+  xmlFile.close();
+
+  // Assign global outputs to these new outputs
+  outputs = newOutputs;
+  return true;
+}
+
+void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
+{
   while(xml.readNext() && !xml.atEnd()) {
-    if(xml.name() == "output" && xml.isStartElement()) {
-      Layer output;
+    Layer newLayer;
+    if(xml.isStartElement() && xml.name() == "output") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("type")) {
 	QString type = attribs.value("", "type").toString();
 	if(type == "cover") {
-	  output.type = R_COVER;
+	  newLayer.type = R_COVER;
 	} else if(type == "screenshot") {
-	  output.type = R_SCREENSHOT;
+	  newLayer.type = R_SCREENSHOT;
 	} else if(type == "wheel") {
-	  output.type = R_WHEEL;
+	  newLayer.type = R_WHEEL;
 	} else if(type == "marquee") {
-	  output.type = R_MARQUEE;
+	  newLayer.type = R_MARQUEE;
 	}
       }
       if(attribs.hasAttribute("width"))
-	output.width = attribs.value("", "width").toInt();
+	newLayer.width = attribs.value("", "width").toInt();
       if(attribs.hasAttribute("height"))
-	output.height = attribs.value("", "height").toInt();
-      if(output.type != T_NONE) {
-	outputs.append(output);
-	printf("Added output\n");
+	newLayer.height = attribs.value("", "height").toInt();
+
+      if(newLayer.type != T_NONE) {
+	printf("%sAdded output\n", indentation.toStdString().c_str());
+	indentation += "  ";
+	addLayer(newLayer, xml);
+	layer.layers.append(newLayer);
       }
-    }
-    if(xml.name() == "layer" && xml.isStartElement()) {
-      // FIXME! Needs to create a new layer, and point to it, not just .last, since that can be a shadow... !!!
-      currentLayer = &outputs.last();
-      addLayer(currentLayer, xml);
-      printf("Added layer\n");
-    }
-    if(xml.name() == "shadow" && xml.isStartElement()) {
-      addShadow(currentLayer, xml);
-      printf("Added shadow\n");
-    }
-    if(xml.name() == "mask" && xml.isStartElement()) {
-      addMask(currentLayer, xml);
-      printf("Added mask\n");
+    } else if(xml.isStartElement() && xml.name() == "layer") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      
+      if(attribs.hasAttribute("resource")) {
+	newLayer.resource = attribs.value("", "resource").toString();
+	newLayer.type = T_LAYER;
+      }
+      if(attribs.hasAttribute("width"))
+	newLayer.width = attribs.value("", "width").toInt();
+      if(attribs.hasAttribute("height"))
+	newLayer.height = attribs.value("", "height").toInt();
+      if(attribs.hasAttribute("align"))
+	newLayer.align = attribs.value("", "align").toString();
+      if(attribs.hasAttribute("valign"))
+	newLayer.valign = attribs.value("", "valign").toString();
+      if(attribs.hasAttribute("x"))
+	newLayer.x = attribs.value("", "x").toInt();
+      if(attribs.hasAttribute("y"))
+	newLayer.y = attribs.value("", "y").toInt();
+
+      if(newLayer.type != T_NONE) {
+	printf("%sAdded layer\n", indentation.toStdString().c_str());
+	indentation += "  ";
+	addLayer(newLayer, xml);
+	layer.layers.append(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "shadow") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("distance") &&
+	 attribs.hasAttribute("softness") &&
+	 attribs.hasAttribute("opacity")) {
+	newLayer.type = T_SHADOW;
+	newLayer.shadowDistance = attribs.value("distance").toInt();
+	newLayer.shadowSoftness = attribs.value("softness").toInt();
+	newLayer.shadowOpacity = attribs.value("opacity").toInt();
+	layer.layers.append(newLayer);
+	printf("%sAdded shadow\n", indentation.toStdString().c_str());
+      }
+    } else if(xml.isStartElement() && xml.name() == "mask") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("file")) {
+	newLayer.type = T_MASK;
+	newLayer.maskFile = attribs.value("file").toString();
+	layer.layers.append(newLayer);
+	printf("%sAdded mask\n", indentation.toStdString().c_str());
+      }
+    } else if(xml.isEndElement() && xml.name() == "layer") {
+      indentation = indentation.left(indentation.length() - 2);
+      printf("%sEnding layer\n", indentation.toStdString().c_str());
+      return;
+    } else if(xml.isEndElement() && xml.name() == "output") {
+      indentation = indentation.left(indentation.length() - 2);
+      printf("%sEnding output\n", indentation.toStdString().c_str());
+      return;
     }
   }
-  xmlFile.close();
-
-  return true;
-}
-
-void Compositor::addLayer(Layer *layer, QXmlStreamReader &xml)
-{
-  Layer l;
-  l.type = T_LAYER;
-  
-  QXmlStreamAttributes attribs = xml.attributes();
-  
-  if(attribs.hasAttribute("resource"))
-    l.resource = attribs.value("", "resource").toString();
-  if(attribs.hasAttribute("width"))
-    l.width = attribs.value("", "width").toInt();
-  if(attribs.hasAttribute("height"))
-    l.height = attribs.value("", "height").toInt();
-  if(attribs.hasAttribute("align"))
-    l.align = attribs.value("", "align").toString();
-  if(attribs.hasAttribute("valign"))
-    l.valign = attribs.value("", "valign").toString();
-  if(attribs.hasAttribute("x"))
-    l.x = attribs.value("", "x").toInt();
-  if(attribs.hasAttribute("y"))
-    l.y = attribs.value("", "y").toInt();
-
-  if(l.resource != "") {
-    layer->layers.append(l);
-  }
-}
-
-void Compositor::addShadow(Layer *layer, QXmlStreamReader &xml)
-{
-  QXmlStreamAttributes attribs = xml.attributes();
-  if(attribs.hasAttribute("distance") &&
-     attribs.hasAttribute("softness") &&
-     attribs.hasAttribute("opacity")) {
-    Layer l;
-    l.type = T_SHADOW;
-    l.shadowDistance = attribs.value("distance").toInt();
-    l.shadowSoftness = attribs.value("softness").toInt();
-    l.shadowOpacity = attribs.value("opacity").toInt();
-    layer->layers.append(l);
-  }
-}
-  
-void Compositor::addMask(Layer *layer, QXmlStreamReader &xml)
-{
-  QXmlStreamAttributes attribs = xml.attributes();
-  if(attribs.hasAttribute("file")) {
-    Layer l;
-    l.type = T_MASK;
-    l.maskFile = attribs.value("file").toString();
-    layer->layers.append(l);
-  }
-
 }
 
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
-  foreach(Layer output, outputs) {
+  foreach(Layer output, outputs.layers) {
     QImage canvas;
     if(output.type == R_COVER) {
       canvas = game.coverData;
@@ -177,16 +173,16 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       for(int a = output.layers.size() - 1; a >= 0; a--) {
 	Layer layer = output.layers.at(a);
 	QImage element;
-	if(layer.resource == "cover") {
+	if(layer.type == R_COVER) {
 	  element = game.coverData;
-	} else if(layer.resource == "screenshot") {
+	} else if(layer.type == R_SCREENSHOT) {
 	  element = game.screenshotData;
-	} else if(layer.resource == "wheel") {
+	} else if(layer.type == R_WHEEL) {
 	  element = game.wheelData;
-	} else if(layer.resource == "marquee") {
+	} else if(layer.type == R_MARQUEE) {
 	  element = game.marqueeData;
 	} else {
-	  element = QImage("frames/" + layer.resource);
+	  element = QImage("resources/" + layer.resource);
 	}
 	if(layer.width == -1 && layer.height != -1) {
 	  element = element.scaledToHeight(layer.height, Qt::SmoothTransformation);
