@@ -188,78 +188,79 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 {
   for(int a = layer.layers.length() - 1; a >= 0; --a) {
-    Layer nextLayer = layer.layers.at(a);
-    QImage nextCanvas;
-    switch(nextLayer.type) {
+    QImage thisCanvas;
+    Layer thisLayer = layer.layers.at(a);
+
+    switch(thisLayer.type) {
     case T_LAYER:
-      if(nextLayer.resource == "cover") {
+      if(thisLayer.resource == "cover") {
 	printf("Res: cover\n");
-	nextCanvas = game.coverData;
-      } else if(nextLayer.resource == "screenshot") {
+	thisCanvas = game.coverData;
+      } else if(thisLayer.resource == "screenshot") {
 	printf("Res: screenshot\n");
-	nextCanvas = game.screenshotData;
-      } else if(nextLayer.resource == "wheel") {
+	thisCanvas = game.screenshotData;
+      } else if(thisLayer.resource == "wheel") {
 	printf("Res: wheel\n");
-	nextCanvas = game.wheelData;
-      } else if(nextLayer.resource == "marquee") {
+	thisCanvas = game.wheelData;
+      } else if(thisLayer.resource == "marquee") {
 	printf("Resource: marquee\n");
-	nextCanvas = game.marqueeData;
+	thisCanvas = game.marqueeData;
       } else {
 	printf("Res: file\n");
-	nextCanvas = QImage("resources/" + nextLayer.resource);
+	thisCanvas = QImage("resources/" + thisLayer.resource);
       }
-      if(nextLayer.width == -1 && nextLayer.height != -1) {
-	nextCanvas = nextCanvas.scaledToHeight(nextLayer.height, Qt::SmoothTransformation);
-      } else if(nextLayer.width != -1 && nextLayer.height == -1) {
-	nextCanvas = nextCanvas.scaledToWidth(nextLayer.width, Qt::SmoothTransformation);
-      } else if(nextLayer.width != -1 && nextLayer.height != -1) {
-	nextCanvas = nextCanvas.scaled(nextLayer.width, nextLayer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+      if(thisLayer.width == -1 && thisLayer.height != -1) {
+	thisCanvas = thisCanvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
+      } else if(thisLayer.width != -1 && thisLayer.height == -1) {
+	thisCanvas = thisCanvas.scaledToWidth(thisLayer.width, Qt::SmoothTransformation);
+      } else if(thisLayer.width != -1 && thisLayer.height != -1) {
+	thisCanvas = thisCanvas.scaled(thisLayer.width, thisLayer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
       }
       // Update width + height as we will need them for easier placement and alignment
-      nextLayer.width = nextCanvas.width();
-      nextLayer.height = nextCanvas.height();
+      thisLayer.width = thisCanvas.width();
+      thisLayer.height = thisCanvas.height();
       
-      if(!nextLayer.layers.isEmpty()) {
-	compositeLayer(game, nextCanvas, nextLayer);
+      if(!thisLayer.layers.isEmpty()) {
+	compositeLayer(game, thisCanvas, thisLayer);
       }
+      break;
     case T_SHADOW:
       canvas = applyShadow(canvas,
-			   nextLayer.shadowDistance,
-			   nextLayer.shadowSoftness,
-			   nextLayer.shadowOpacity);
+			   thisLayer.shadowDistance,
+			   thisLayer.shadowSoftness,
+			   thisLayer.shadowOpacity);
       break;
     case T_MASK:
-      canvas = applyMask(canvas, nextLayer.maskFile);
+      canvas = applyMask(canvas, thisLayer.maskFile);
       break;
     }
-    
     QPainter painter;
     painter.begin(&canvas);
-
+    
     int x = 0;
-    if(nextLayer.align == "center") {
-      x = (canvas.width() / 2) - (nextLayer.width / 2);
-    } else if(nextLayer.align == "right") {
-      x = canvas.width() - nextLayer.width;
+    if(thisLayer.align == "center") {
+      x = (layer.width / 2) - (thisLayer.width / 2);
+    } else if(thisLayer.align == "right") {
+      x = layer.width - thisLayer.width;
     }
-    x += nextLayer.x;
-
+    x += thisLayer.x;
+    
     int y = 0;
-    if(nextLayer.valign == "middle") {
-      y = (canvas.height() / 2) - (nextLayer.height / 2);
-    } else if(nextLayer.valign == "bottom") {
-      y = canvas.height() - nextLayer.height;
+    if(thisLayer.valign == "middle") {
+      y = (layer.height / 2) - (thisLayer.height / 2);
+    } else if(thisLayer.valign == "bottom") {
+      y = layer.height - thisLayer.height;
     }
-    y += nextLayer.y;
-
-    painter.drawImage(x, y, nextCanvas);
+    y += thisLayer.y;
+    
+    painter.drawImage(x, y, thisCanvas);
     painter.end();
   }
 }
 
 QImage Compositor::applyMask(QImage &image, QString file)
 {
-  QImage mask("masks/" + file);
+  QImage mask("resources/" + file);
   mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
   mask = mask.scaled(image.width(), image.height());
   
@@ -274,7 +275,7 @@ QImage Compositor::applyMask(QImage &image, QString file)
 
 QImage Compositor::applyFrame(QImage &image, QString file)
 {
-  QImage mask("frames/" + file);
+  QImage mask("resources/" + file);
   mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
   mask = mask.scaled(image.width(), image.height());
   
