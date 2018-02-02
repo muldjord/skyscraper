@@ -33,15 +33,11 @@
 #include "gameentry.h"
 
 #define T_NONE 0
-#define T_LAYER 1
-#define T_SHADOW 2
-#define T_MASK 3
-#define T_STROKE 4
-
-#define R_COVER 40
-#define R_SCREENSHOT 41
-#define R_WHEEL 42
-#define R_MARQUEE 43
+#define T_OUTPUT 1
+#define T_LAYER 2
+#define T_SHADOW 3
+#define T_MASK 4
+#define T_STROKE 5
 
 struct Layer {
   int type = T_NONE;
