@@ -69,13 +69,12 @@ private:
   QString indentation = "";
   void addLayer(Layer &layer, QXmlStreamReader &xml);
   void compositeLayer(GameEntry &game, QImage &canvas, Layer &layer);
-  QImage applyMask(QImage &image, QString file);
-  QImage applyFrame(QImage &image, QString file);
+  QImage applyMask(QImage &image, Layer &layer);
   QVector<double> getGaussBoxes(double sigma, double n);
   void boxBlur(QRgb *src, QRgb *dst, int width, int height, int radius);
   void boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, int radius);
   void boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, double radius);
-  QImage applyShadow(QImage &image, int distance, int softness, int opacity);
+  QImage applyShadow(QImage &image, Layer &layer);
   Settings config;
   Layer outputs;
   

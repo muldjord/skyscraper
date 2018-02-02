@@ -82,21 +82,18 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("resource")) {
 	newLayer.resource = attribs.value("", "resource").toString();
 	newLayer.type = T_LAYER;
-      }
-      if(attribs.hasAttribute("width"))
-	newLayer.width = attribs.value("", "width").toInt();
-      if(attribs.hasAttribute("height"))
-	newLayer.height = attribs.value("", "height").toInt();
-      if(attribs.hasAttribute("align"))
-	newLayer.align = attribs.value("", "align").toString();
-      if(attribs.hasAttribute("valign"))
-	newLayer.valign = attribs.value("", "valign").toString();
-      if(attribs.hasAttribute("x"))
-	newLayer.x = attribs.value("", "x").toInt();
-      if(attribs.hasAttribute("y"))
-	newLayer.y = attribs.value("", "y").toInt();
-
-      if(newLayer.type != T_NONE) {
+	if(attribs.hasAttribute("width"))
+	  newLayer.width = attribs.value("", "width").toInt();
+	if(attribs.hasAttribute("height"))
+	  newLayer.height = attribs.value("", "height").toInt();
+	if(attribs.hasAttribute("align"))
+	  newLayer.align = attribs.value("", "align").toString();
+	if(attribs.hasAttribute("valign"))
+	  newLayer.valign = attribs.value("", "valign").toString();
+	if(attribs.hasAttribute("x"))
+	  newLayer.x = attribs.value("", "x").toInt();
+	if(attribs.hasAttribute("y"))
+	  newLayer.y = attribs.value("", "y").toInt();
 	printf("%sAdded layer\n", indentation.toStdString().c_str());
 	indentation += "  ";
 	addLayer(newLayer, xml);
@@ -119,6 +116,10 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("file")) {
 	newLayer.type = T_MASK;
 	newLayer.maskFile = attribs.value("file").toString();
+	if(attribs.hasAttribute("width"))
+	  newLayer.width = attribs.value("", "width").toInt();
+	if(attribs.hasAttribute("height"))
+	  newLayer.height = attribs.value("", "height").toInt();
 	layer.layers.append(newLayer);
 	printf("%sAdded mask\n", indentation.toStdString().c_str());
       }
@@ -187,7 +188,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 
 void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 {
-  for(int a = layer.layers.length() - 1; a >= 0; --a) {
+  for(int a = 0; a < layer.layers.length(); ++a) {
     QImage thisCanvas;
     Layer thisLayer = layer.layers.at(a);
 
@@ -209,6 +210,7 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 	printf("Res: file\n");
 	thisCanvas = QImage("resources/" + thisLayer.resource);
       }
+
       if(thisLayer.width == -1 && thisLayer.height != -1) {
 	thisCanvas = thisCanvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
       } else if(thisLayer.width != -1 && thisLayer.height == -1) {
@@ -225,13 +227,10 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       }
       break;
     case T_SHADOW:
-      canvas = applyShadow(canvas,
-			   thisLayer.shadowDistance,
-			   thisLayer.shadowSoftness,
-			   thisLayer.shadowOpacity);
+      canvas = applyShadow(canvas, thisLayer);
       break;
     case T_MASK:
-      canvas = applyMask(canvas, thisLayer.maskFile);
+      canvas = applyMask(canvas, thisLayer);
       break;
     }
     QPainter painter;
@@ -258,29 +257,24 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
   }
 }
 
-QImage Compositor::applyMask(QImage &image, QString file)
+QImage Compositor::applyMask(QImage &image, Layer &layer)
 {
+  QString file = layer.maskFile;
+
   QImage mask("resources/" + file);
   mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-  mask = mask.scaled(image.width(), image.height());
+
+  if(layer.width == -1 && layer.height != -1) {
+    mask = mask.scaledToHeight(layer.height, Qt::SmoothTransformation);
+  } else if(layer.width != -1 && layer.height == -1) {
+    mask = mask.scaledToWidth(layer.width, Qt::SmoothTransformation);
+  } else if(layer.width != -1 && layer.height != -1) {
+    mask = mask.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  }
   
   QPainter painter;
   painter.begin(&image);
   painter.setCompositionMode(QPainter::CompositionMode_DestinationAtop);
-  painter.drawImage(0, 0, mask);
-  painter.end();
-
-  return image;
-}
-
-QImage Compositor::applyFrame(QImage &image, QString file)
-{
-  QImage mask("resources/" + file);
-  mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-  mask = mask.scaled(image.width(), image.height());
-  
-  QPainter painter;
-  painter.begin(&image);
   painter.drawImage(0, 0, mask);
   painter.end();
 
@@ -378,8 +372,12 @@ void Compositor::boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, doubl
   }
 }
 
-QImage Compositor::applyShadow(QImage &image, int distance, int softness, int opacity)
+QImage Compositor::applyShadow(QImage &image, Layer &layer)
 {
+  int distance = layer.shadowDistance;
+  int softness = layer.shadowSoftness;
+  int opacity = layer.shadowOpacity;
+
   if(distance == -1)
     distance = 0;
   if(softness == -1)
