@@ -604,6 +604,7 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "apple2") {
     aliases.append("apple ii");
   } else if(platform == "arcade") {
+    aliases.append("neo-geo");
     aliases.append("neo geo");
     aliases.append("neo geo cd");
   } else if(platform == "atari2600") {
@@ -638,6 +639,7 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "dreamcast") {
     aliases.append("sega dreamcast");
   } else if(platform == "fba") {
+    aliases.append("neo-geo");
     aliases.append("neo geo");
     aliases.append("neo geo cd");
   } else if(platform == "fds") {
@@ -678,10 +680,10 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "nds") {
     aliases.append("nintendo ds");
   } else if(platform == "neogeo") {
+    aliases.append("neo-geo");
     aliases.append("neo geo");
     aliases.append("neo geo cd");
     aliases.append("arcade");
-    aliases.append("neo-geo");
   } else if(platform == "nes") {
     aliases.append("nintendo entertainment system (nes)");
     aliases.append("nintendo");
