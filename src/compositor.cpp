@@ -72,8 +72,6 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	newLayer.height = attribs.value("", "height").toInt();
 
       if(newLayer.type != T_NONE) {
-	printf("%sAdded output\n", indentation.toStdString().c_str());
-	indentation += "  ";
 	addLayer(newLayer, xml);
 	layer.layers.append(newLayer);
       }
@@ -94,8 +92,6 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	  newLayer.x = attribs.value("", "x").toInt();
 	if(attribs.hasAttribute("y"))
 	  newLayer.y = attribs.value("", "y").toInt();
-	printf("%sAdded layer\n", indentation.toStdString().c_str());
-	indentation += "  ";
 	addLayer(newLayer, xml);
 	layer.layers.append(newLayer);
       }
@@ -109,7 +105,6 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	newLayer.shadowSoftness = attribs.value("softness").toInt();
 	newLayer.shadowOpacity = attribs.value("opacity").toInt();
 	layer.layers.append(newLayer);
-	printf("%sAdded shadow\n", indentation.toStdString().c_str());
       }
     } else if(xml.isStartElement() && xml.name() == "mask") {
       QXmlStreamAttributes attribs = xml.attributes();
@@ -121,7 +116,6 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	if(attribs.hasAttribute("height"))
 	  newLayer.height = attribs.value("", "height").toInt();
 	layer.layers.append(newLayer);
-	printf("%sAdded mask\n", indentation.toStdString().c_str());
       }
     } else if(xml.isStartElement() && xml.name() == "frame") {
       QXmlStreamAttributes attribs = xml.attributes();
@@ -133,15 +127,10 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	if(attribs.hasAttribute("height"))
 	  newLayer.height = attribs.value("", "height").toInt();
 	layer.layers.append(newLayer);
-	printf("%sAdded frame\n", indentation.toStdString().c_str());
       }
     } else if(xml.isEndElement() && xml.name() == "layer") {
-      indentation = indentation.left(indentation.length() - 2);
-      printf("%sEnding layer\n", indentation.toStdString().c_str());
       return;
     } else if(xml.isEndElement() && xml.name() == "output") {
-      indentation = indentation.left(indentation.length() - 2);
-      printf("%sEnding output\n", indentation.toStdString().c_str());
       return;
     }
   }
@@ -200,26 +189,21 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 
 void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 {
-  for(int a = 0; a < layer.layers.length(); ++a) {
+  for(int a = layer.layers.length() - 1; a >= 0 ; --a) {
     QImage thisCanvas;
     Layer thisLayer = layer.layers.at(a);
 
     switch(thisLayer.type) {
     case T_LAYER:
       if(thisLayer.resource == "cover") {
-	printf("Res: cover\n");
 	thisCanvas = game.coverData;
       } else if(thisLayer.resource == "screenshot") {
-	printf("Res: screenshot\n");
 	thisCanvas = game.screenshotData;
       } else if(thisLayer.resource == "wheel") {
-	printf("Res: wheel\n");
 	thisCanvas = game.wheelData;
       } else if(thisLayer.resource == "marquee") {
-	printf("Resource: marquee\n");
 	thisCanvas = game.marqueeData;
       } else {
-	printf("Res: file\n");
 	thisCanvas = QImage("resources/" + thisLayer.resource);
       }
 

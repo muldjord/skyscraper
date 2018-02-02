@@ -66,7 +66,6 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
-  QString indentation = "";
   void addLayer(Layer &layer, QXmlStreamReader &xml);
   void compositeLayer(GameEntry &game, QImage &canvas, Layer &layer);
   QImage applyMask(QImage &image, Layer &layer);
