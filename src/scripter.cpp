@@ -138,13 +138,13 @@ Scripter::Scripter()
     commandStr += " -e " + emulatorStr;
   if(minMatchStr != "")
     commandStr += " -m " + minMatchStr;
-  if(forceFilenameStr == "y")
+  if(forceFilenameStr == "y" || forceFilenameStr == "Y")
     commandStr += " --forcefilename";
-  if(updateDbStr == "y")
+  if(updateDbStr == "y" || updateDbStr == "Y")
     commandStr += " --updatedb";
   if(bracketsStr == "n")
     commandStr += " --nobrackets";
-  if(videosStr == "y") {
+  if(videosStr == "y" || videosStr == "Y") {
     commandStr += " --videos";
   }
 
@@ -164,7 +164,7 @@ Scripter::Scripter()
   printf("\n");
   printf("The script '\033[1;32m~/.skyscraper/skyscript.sh\033[0m' has been created. Running this script will do multiple scraping runs for the chosen platform for the most optimal result. \033[1;34mDo you wish to run it now?\033[0m (Y/n)? ");
   getline(std::cin, runScriptStr);
-  if(runScriptStr == "y" || runScriptStr == "") {
+  if(runScriptStr == "y" || runScriptStr == "Y" || runScriptStr == "") {
     printf("\nRunning script...\n");
     QProcess::execute("sh " + QDir::homePath() + "/.skyscraper/skyscript.sh");
   } else {
