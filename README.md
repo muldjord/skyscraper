@@ -28,8 +28,11 @@ Follow the steps below to install the latest version of Skyscraper. Lines beginn
 
 ### Install prerequisites
 Skyscraper needs the Qt5 framework to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install it using the following command:
+* $ sudo apt-get update
 * $ sudo apt-get install qt5-default
 * [enter your 'pi' user password, default is 'raspberry']
+
+For other distros, please refer to their documentation for installing the Qt5 framework.
 
 ### Download and compile
 Create a folder for the Skyscraper source, download the latest release, compile it and install it:
