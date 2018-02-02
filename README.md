@@ -133,6 +133,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Implemented 'mask' effect that allows you to mask out certain parts of a layer
 * Implemented 'frame' effect that allows you to add a graphical frame to a layer
 * Addded 'From cache' boolean to output + note about '--updatedb'
+* 'simple mode' now also accepts "Y" as a yes answer instead of just "y"
 
 #### Version 2.2.7 (31st January 2018)
 * Optimized shadow rendering A LOT! WROOOOOOOOOM!!!
