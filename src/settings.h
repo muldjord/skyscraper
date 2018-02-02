@@ -47,6 +47,7 @@ struct Settings {
   int doneThreads = 0;
   int threads = 4;
   int minMatch = 50;
+  bool minMatchSet = false;
   int notFound = 0;
   int found = 0;
   int currentFile = 0;

@@ -550,6 +550,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("minMatch")) {
     config.minMatch = settings.value("minMatch").toInt();
+    config.minMatchSet = true;
   }
   if(settings.contains("scraper")) {
     config.scraper = settings.value("scraper").toString();
@@ -601,6 +602,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("m") && parser.value("m").toInt() >= 0 && parser.value("m").toInt() <= 100) {
     config.minMatch = parser.value("m").toInt();
+    config.minMatchSet = true;
   }
   if(parser.isSet("s") && (parser.value("s") == "openretro" ||
 			   parser.value("s") == "thegamesdb" ||
@@ -705,6 +707,14 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   // Choose default scraper for chosen platform if none has been set yet
   if(config.scraper.isEmpty()) {
     config.scraper = Platform::getDefaultScraper(config.platform);
+  }
+
+  // Set minMatch to 0 for localdb, arcadedb and screenscraper
+  // We know these results are always accurate
+  if(config.minMatchSet == false && (config.scraper == "localdb" ||
+				     config.scraper == "screenscraper" ||
+				     config.scraper == "arcadedb")) {
+    config.minMatch = 0;
   }
 
   skippedFileString = "skipped-" + config.scraper + ".txt";
