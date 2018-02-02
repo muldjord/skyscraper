@@ -170,67 +170,10 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     if(!output.layers.isEmpty()) {
       // Reset canvas since composite layers exist
       canvas.fill(Qt::transparent);
-      for(int a = output.layers.size() - 1; a >= 0; a--) {
-	Layer layer = output.layers.at(a);
-	QImage element;
-	if(layer.type == R_COVER) {
-	  element = game.coverData;
-	} else if(layer.type == R_SCREENSHOT) {
-	  element = game.screenshotData;
-	} else if(layer.type == R_WHEEL) {
-	  element = game.wheelData;
-	} else if(layer.type == R_MARQUEE) {
-	  element = game.marqueeData;
-	} else {
-	  element = QImage("resources/" + layer.resource);
-	}
-	if(layer.width == -1 && layer.height != -1) {
-	  element = element.scaledToHeight(layer.height, Qt::SmoothTransformation);
-	} else if(layer.width != -1 && layer.height == -1) {
-	  element = element.scaledToWidth(layer.width, Qt::SmoothTransformation);
-	} else if(layer.width != -1 && layer.height != -1) {
-	  element = element.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-	}
-	// Update width + height as we will need them for easier placement and alignment
-	layer.width = element.width();
-	layer.height = element.height();
-
-	// Aplly all layer effect in order from bottom to top
-	if(!layer.layers.isEmpty()) {
-	  for(int a = layer.layers.size() - 1; a >= 0; --a) {
-	    if(layer.layers.at(a).type == T_SHADOW) {
-	      element = applyShadow(element,
-				    layer.layers.at(a).shadowDistance,
-				    layer.layers.at(a).shadowSoftness,
-				    layer.layers.at(a).shadowOpacity);
-	    } else if(layer.layers.at(a).type == T_MASK) {
-	      element = applyMask(element, layer.layers.at(a).maskFile);
-	    }
-	  }
-	}
-	QPainter painter;
-	painter.begin(&canvas);
-
-	int x = 0;
-	if(layer.align == "center") {
-	  x = (canvas.width() / 2) - (layer.width / 2);
-	} else if(layer.align == "right") {
-	  x = canvas.width() - layer.width;
-	}
-	x += layer.x;
-
-	int y = 0;
-	if(layer.valign == "middle") {
-	  y = (canvas.height() / 2) - (layer.height / 2);
-	} else if(layer.valign == "bottom") {
-	  y = canvas.height() - layer.height;
-	}
-	y += layer.y;
-
-	painter.drawImage(x, y, element);
-	painter.end();
-      }
+      // Initiate recursive compositing
+      compositeLayer(game, canvas, output);
     }
+      
     
     if(output.type == R_COVER) {
       if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.coversFolder + "/" + completeBaseName + ".png"))
@@ -249,6 +192,73 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 	game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" +
 						 completeBaseName + ".png");
     }
+  }
+}
+
+void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
+{
+  for(int a = layer.layers.length() - 1; a > 0; --a) {
+    if(!layer.layers.at(a).layers.isEmpty()) {
+      Layer nextLayer = layer.layers.at(a);
+      compositeLayer(game, canvas, nextLayer);
+    }
+    QImage element;
+    if(layer.type == R_COVER) {
+      element = game.coverData;
+    } else if(layer.type == R_SCREENSHOT) {
+      element = game.screenshotData;
+    } else if(layer.type == R_WHEEL) {
+      element = game.wheelData;
+    } else if(layer.type == R_MARQUEE) {
+      element = game.marqueeData;
+    } else {
+      element = QImage("resources/" + layer.resource);
+    }
+    if(layer.width == -1 && layer.height != -1) {
+      element = element.scaledToHeight(layer.height, Qt::SmoothTransformation);
+    } else if(layer.width != -1 && layer.height == -1) {
+      element = element.scaledToWidth(layer.width, Qt::SmoothTransformation);
+    } else if(layer.width != -1 && layer.height != -1) {
+      element = element.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }
+    // Update width + height as we will need them for easier placement and alignment
+    layer.width = element.width();
+    layer.height = element.height();
+
+    // Aplly all layer effect in order from bottom to top
+    if(!layer.layers.isEmpty()) {
+      for(int a = layer.layers.size() - 1; a >= 0; --a) {
+	if(layer.layers.at(a).type == T_SHADOW) {
+	  element = applyShadow(element,
+				layer.layers.at(a).shadowDistance,
+				layer.layers.at(a).shadowSoftness,
+				layer.layers.at(a).shadowOpacity);
+	} else if(layer.layers.at(a).type == T_MASK) {
+	  element = applyMask(element, layer.layers.at(a).maskFile);
+	}
+      }
+    }
+    QPainter painter;
+    painter.begin(&canvas);
+
+    int x = 0;
+    if(layer.align == "center") {
+      x = (canvas.width() / 2) - (layer.width / 2);
+    } else if(layer.align == "right") {
+      x = canvas.width() - layer.width;
+    }
+    x += layer.x;
+
+    int y = 0;
+    if(layer.valign == "middle") {
+      y = (canvas.height() / 2) - (layer.height / 2);
+    } else if(layer.valign == "bottom") {
+      y = canvas.height() - layer.height;
+    }
+    y += layer.y;
+
+    painter.drawImage(x, y, element);
+    painter.end();
   }
 }
 

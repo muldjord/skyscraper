@@ -72,6 +72,7 @@ public:
 private:
   QString indentation = "";
   void addLayer(Layer &layer, QXmlStreamReader &xml);
+  void compositeLayer(GameEntry &game, QImage &canvas, Layer &layer);
   QImage applyMask(QImage &image, QString file);
   QImage applyFrame(QImage &image, QString file);
   QVector<double> getGaussBoxes(double sigma, double n);
