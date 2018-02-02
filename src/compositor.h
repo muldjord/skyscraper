@@ -37,7 +37,8 @@
 #define T_LAYER 2
 #define T_SHADOW 3
 #define T_MASK 4
-#define T_STROKE 5
+#define T_FRAME 5
+#define T_STROKE 6
 
 struct Layer {
   int type = T_NONE;
@@ -51,7 +52,6 @@ struct Layer {
   int shadowDistance = 0;
   int shadowSoftness = 0;
   int shadowOpacity = 0;
-  QString maskFile = "";
   int strokeWidth = 0;
   QList<Layer> layers;
 };
@@ -70,6 +70,7 @@ private:
   void addLayer(Layer &layer, QXmlStreamReader &xml);
   void compositeLayer(GameEntry &game, QImage &canvas, Layer &layer);
   QImage applyMask(QImage &image, Layer &layer);
+  QImage applyFrame(QImage &image, Layer &layer);
   QVector<double> getGaussBoxes(double sigma, double n);
   void boxBlur(QRgb *src, QRgb *dst, int width, int height, int radius);
   void boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, int radius);
