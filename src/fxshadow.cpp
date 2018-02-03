@@ -59,7 +59,7 @@ QImage FxShadow::applyEffect(QImage &image, Layer &layer)
   
   QRgb *buffer1Bits = (QRgb *)buffer1.bits();
   for(int a = 0; a < buffer1.width() * buffer1.height(); ++a) {
-    buffer1Bits[a] = QColor(0, 0, 0, qAlpha(buffer1Bits[a])).rgba();
+    buffer1Bits[a] = qPremultiply(qRgba(0, 0, 0, qAlpha(buffer1Bits[a])));
   }
   QImage buffer2 = buffer1;
   QRgb *buffer2Bits = (QRgb *)buffer2.bits();
@@ -131,15 +131,15 @@ void FxShadow::boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, in
     
     for(int x = 0; x <= radius ; x++) {
       value += qAlpha(src[backIdx++]) - firstVal;
-      dst[currentIdx++] = QColor(0, 0, 0, value / span).rgba();
+      dst[currentIdx++] = qPremultiply(qRgba(0, 0, 0, value / span));
     }
     for(int x = radius + 1; x < width - radius; x++) {
       value += qAlpha(src[backIdx++]) - qAlpha(src[frontIdx++]);
-      dst[currentIdx++] = QColor(0, 0, 0, value / span).rgba();
+      dst[currentIdx++] = qPremultiply(qRgba(0, 0, 0, value / span));
     }
     for(int x = width- radius; x < width; x++) {
       value += lastVal - qAlpha(src[frontIdx++]);
-      dst[currentIdx++] = QColor(0, 0, 0, value / span).rgba();
+      dst[currentIdx++] = qPremultiply(qRgba(0, 0, 0, value / span));
     }
   }
 }
@@ -160,20 +160,20 @@ void FxShadow::boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, double 
     
     for(int j = 0; j <= radius ; j++) {
       value += qAlpha(src[backIdx] - firstVal);
-      dst[currentIdx] = QColor(0, 0, 0, value / span).rgba();
+      dst[currentIdx] = qPremultiply(qRgba(0, 0, 0, value / span));
       backIdx += width;
       currentIdx += width;
     }
     for(int j = radius + 1; j < height - radius; j++) {
       value += qAlpha(src[backIdx]) - qAlpha(src[frontIdx]);
-      dst[currentIdx] = QColor(0, 0, 0, value / span).rgba();
+      dst[currentIdx] = qPremultiply(qRgba(0, 0, 0, value / span));
       frontIdx += width;
       backIdx += width;
       currentIdx += width;
     }
     for(int j = height - radius; j < height; j++) {
       value += lastVal - qAlpha(src[frontIdx]);
-      dst[currentIdx] = QColor(0, 0, 0, value / span).rgba();
+      dst[currentIdx] = qPremultiply(qRgba(0, 0, 0, value / span));
       frontIdx += width;
       currentIdx += width;
     }
