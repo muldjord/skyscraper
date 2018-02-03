@@ -9,7 +9,7 @@
     <layer resource="wheel" width="200" align="right">
       <shadow distance="5" softness="3" opacity="65"/>
     </layer>
-    <layer resource="cover" width="200" height="200" valign="bottom">
+    <layer resource="cover" width="200" height="200" y="-5" valign="bottom">
       <mask file="mask1.png"/>
       <frame file="frame1.png"/>
       <shadow distance="5" softness="3" opacity="65"/>
