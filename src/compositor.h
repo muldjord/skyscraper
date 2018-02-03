@@ -31,30 +31,7 @@
 
 #include "settings.h"
 #include "gameentry.h"
-
-#define T_NONE 0
-#define T_OUTPUT 1
-#define T_LAYER 2
-#define T_SHADOW 3
-#define T_MASK 4
-#define T_FRAME 5
-#define T_STROKE 6
-
-struct Layer {
-  int type = T_NONE;
-  QString resource = "";
-  QString align = "";
-  QString valign = "";
-  int x = 0;
-  int y = 0;
-  int width = -1;
-  int height = -1;
-  int shadowDistance = 0;
-  int shadowSoftness = 0;
-  int shadowOpacity = 0;
-  int strokeWidth = 0;
-  QList<Layer> layers;
-};
+#include "layer.h"
 
 class Compositor : public QObject
 {
@@ -62,7 +39,7 @@ class Compositor : public QObject
 
 public:
   Compositor(Settings &config);
-  bool processXml(QString filename);
+  bool processXml();
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
