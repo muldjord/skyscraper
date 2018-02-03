@@ -35,6 +35,10 @@
 #include "fxframe.h"
 #include "fxrounded.h"
 #include "fxstroke.h"
+#include "fxbrightness.h"
+#include "fxcontrast.h"
+#include "fxbalance.h"
+#include "fxopacity.h"
 
 Compositor::Compositor(Settings &config)
 {
@@ -100,9 +104,9 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	 attribs.hasAttribute("softness") &&
 	 attribs.hasAttribute("opacity")) {
 	newLayer.type = T_SHADOW;
-	newLayer.shadowDistance = attribs.value("distance").toInt();
-	newLayer.shadowSoftness = attribs.value("softness").toInt();
-	newLayer.shadowOpacity = attribs.value("opacity").toInt();
+	newLayer.distance = attribs.value("distance").toInt();
+	newLayer.softness = attribs.value("softness").toInt();
+	newLayer.opacity = attribs.value("opacity").toInt();
 	layer.layers.append(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "mask") {
@@ -151,6 +155,37 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	newLayer.width = attribs.value("radius").toInt();
 	layer.layers.append(newLayer);
       }
+    } else if(xml.isStartElement() && xml.name() == "brightness") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("value")) {
+	newLayer.type = T_BRIGHTNESS;
+	newLayer.delta = attribs.value("value").toInt();
+	layer.layers.append(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "opacity") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("value")) {
+	newLayer.type = T_OPACITY;
+	newLayer.opacity = attribs.value("value").toInt();
+	layer.layers.append(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "contrast") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("value")) {
+	newLayer.type = T_CONTRAST;
+	newLayer.delta = attribs.value("value").toInt();
+	layer.layers.append(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "balance") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      newLayer.type = T_BALANCE;
+      if(attribs.hasAttribute("red"))
+	newLayer.red = attribs.value("", "red").toInt();
+      if(attribs.hasAttribute("green"))
+	newLayer.green = attribs.value("", "green").toInt();
+      if(attribs.hasAttribute("blue"))
+	newLayer.blue = attribs.value("", "blue").toInt();
+      layer.layers.append(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
     } else if(xml.isEndElement() && xml.name() == "output") {
@@ -261,6 +296,18 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       layer.height = canvas.height();
     } else if(thisLayer.type == T_ROUNDED) {
       FxRounded effect;
+      canvas = effect.applyEffect(canvas, thisLayer);
+    } else if(thisLayer.type == T_BRIGHTNESS) {
+      FxBrightness effect;
+      canvas = effect.applyEffect(canvas, thisLayer);
+    } else if(thisLayer.type == T_CONTRAST) {
+      FxContrast effect;
+      canvas = effect.applyEffect(canvas, thisLayer);
+    } else if(thisLayer.type == T_BALANCE) {
+      FxBalance effect;
+      canvas = effect.applyEffect(canvas, thisLayer);
+    } else if(thisLayer.type == T_OPACITY) {
+      FxOpacity effect;
       canvas = effect.applyEffect(canvas, thisLayer);
     }
 
