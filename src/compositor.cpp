@@ -257,16 +257,13 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
     } else if(thisLayer.type == T_STROKE) {
       FxStroke effect;
       canvas = effect.applyEffect(canvas, thisLayer);
+      layer.width = canvas.width();
+      layer.height = canvas.height();
     } else if(thisLayer.type == T_ROUNDED) {
       FxRounded effect;
       canvas = effect.applyEffect(canvas, thisLayer);
     }
 
-    // Update layer width and height since we might have changed the canvas size
-    // during effect rendering
-    layer.width = canvas.width();
-    layer.height = canvas.height();
-    
     // Only draw this layer if it's actually defined
     if(thisLayer.type != T_NONE) {
       QPainter painter;
