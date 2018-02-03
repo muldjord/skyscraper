@@ -229,6 +229,8 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 	thisCanvas = QImage("resources/" + thisLayer.resource);
       }
 
+      thisCanvas = thisCanvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
       if(thisLayer.width == -1 && thisLayer.height != -1) {
 	thisCanvas = thisCanvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
       } else if(thisLayer.width != -1 && thisLayer.height == -1) {
@@ -260,7 +262,8 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       canvas = effect.applyEffect(canvas, thisLayer);
     }
 
-    // Update layer width and height since we might have changed the canvas size during effect rendering
+    // Update layer width and height since we might have changed the canvas size
+    // during effect rendering
     layer.width = canvas.width();
     layer.height = canvas.height();
     
