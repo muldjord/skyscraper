@@ -51,7 +51,9 @@ HEADERS += src/skyscraper.h \
            src/layer.h \
            src/fxshadow.h \
            src/fxmask.h \
-           src/fxframe.h
+           src/fxframe.h \
+           src/fxrounded.h \
+           src/fxstroke.h
            
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
@@ -77,4 +79,6 @@ SOURCES += src/main.cpp \
            src/platform.cpp \
            src/fxshadow.cpp \
            src/fxmask.cpp \
-           src/fxframe.cpp
+           src/fxframe.cpp \
+           src/fxrounded.cpp \
+           src/fxstroke.cpp
