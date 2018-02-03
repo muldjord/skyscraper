@@ -31,6 +31,8 @@
 #include "strtools.h"
 
 #include "fxshadow.h"
+#include "fxmask.h"
+#include "fxframe.h"
 
 Compositor::Compositor(Settings &config)
 {
@@ -216,12 +218,14 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 	compositeLayer(game, thisCanvas, thisLayer);
       }
     } else if(thisLayer.type == T_SHADOW) {
-      FxShadow shadowFx;
-      canvas = shadowFx.applyShadow(canvas, thisLayer);
+      FxShadow effect;
+      canvas = effect.applyShadow(canvas, thisLayer);
     } else if(thisLayer.type == T_MASK) {
-      canvas = applyMask(canvas, thisLayer);
+      FxMask effect;
+      canvas = effect.applyMask(canvas, thisLayer);
     } else if(thisLayer.type == T_FRAME) {
-      canvas = applyFrame(canvas, thisLayer);
+      FxFrame effect;
+      canvas = effect.applyFrame(canvas, thisLayer);
     }
     QPainter painter;
     painter.begin(&canvas);
@@ -245,55 +249,4 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
     painter.drawImage(x, y, thisCanvas);
     painter.end();
   }
-}
-
-QImage Compositor::applyMask(QImage &image, Layer &layer)
-{
-  QString file = layer.resource;
-
-  QImage mask("resources/" + file);
-  mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-
-  if(layer.width == -1 && layer.height == -1) {
-    mask = mask.scaled(image.width(), image.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  } else if(layer.width == -1 && layer.height != -1) {
-    mask = mask.scaledToHeight(layer.height, Qt::SmoothTransformation);
-  } else if(layer.width != -1 && layer.height == -1) {
-    mask = mask.scaledToWidth(layer.width, Qt::SmoothTransformation);
-  } else if(layer.width != -1 && layer.height != -1) {
-    mask = mask.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  }
-  
-  QPainter painter;
-  painter.begin(&image);
-  painter.setCompositionMode(QPainter::CompositionMode_DestinationAtop);
-  painter.drawImage(0, 0, mask);
-  painter.end();
-
-  return image;
-}
-
-QImage Compositor::applyFrame(QImage &image, Layer &layer)
-{
-  QString file = layer.resource;
-
-  QImage frame("resources/" + file);
-  frame = frame.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-
-  if(layer.width == -1 && layer.height == -1) {
-    frame = frame.scaled(image.width(), image.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  } else if(layer.width == -1 && layer.height != -1) {
-    frame = frame.scaledToHeight(layer.height, Qt::SmoothTransformation);
-  } else if(layer.width != -1 && layer.height == -1) {
-    frame = frame.scaledToWidth(layer.width, Qt::SmoothTransformation);
-  } else if(layer.width != -1 && layer.height != -1) {
-    frame = frame.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  }
-  
-  QPainter painter;
-  painter.begin(&image);
-  painter.drawImage(0, 0, frame);
-  painter.end();
-
-  return image;
 }
