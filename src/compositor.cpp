@@ -212,7 +212,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 
 void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 {
-  for(int a = layer.layers.length() - 1; a >= 0 ; --a) {
+  for(int a = 0; a < layer.layers.length(); ++a) {
     QImage thisCanvas;
     Layer thisLayer = layer.layers.at(a);
 
