@@ -34,6 +34,10 @@
 #define T_FRAME 5
 #define T_STROKE 6
 #define T_ROUNDED 7
+#define T_BRIGHTNESS 8
+#define T_CONTRAST 9
+#define T_BALANCE 10
+#define T_OPACITY 11
 
 struct Layer {
   int type = T_NONE;
@@ -44,13 +48,13 @@ struct Layer {
   int y = 0;
   int width = -1;
   int height = -1;
+  int delta = 0;
   int red = 0;
   int green = 0;
   int blue = 0;
-  int shadowDistance = 0;
-  int shadowSoftness = 0;
-  int shadowOpacity = 0;
-  int strokeWidth = 0;
+  int distance = 0;
+  int softness = 0;
+  int opacity = 0;
   QList<Layer> layers;
 };
 
