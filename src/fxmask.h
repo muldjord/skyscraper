@@ -36,7 +36,7 @@ class FxMask : public QObject
 
 public:
   FxMask();
-  QImage applyMask(QImage &image, Layer &layer);
+  QImage applyEffect(QImage &image, Layer &layer);
 
 };
 

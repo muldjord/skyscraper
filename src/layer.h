@@ -33,6 +33,7 @@
 #define T_MASK 4
 #define T_FRAME 5
 #define T_STROKE 6
+#define T_ROUNDED 7
 
 struct Layer {
   int type = T_NONE;
@@ -43,6 +44,9 @@ struct Layer {
   int y = 0;
   int width = -1;
   int height = -1;
+  int red = 0;
+  int green = 0;
+  int blue = 0;
   int shadowDistance = 0;
   int shadowSoftness = 0;
   int shadowOpacity = 0;

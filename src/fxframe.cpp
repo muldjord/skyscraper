@@ -32,7 +32,7 @@ FxFrame::FxFrame()
 {
 }
 
-QImage FxFrame::applyFrame(QImage &image, Layer &layer)
+QImage FxFrame::applyEffect(QImage &image, Layer &layer)
 {
   QString file = layer.resource;
 

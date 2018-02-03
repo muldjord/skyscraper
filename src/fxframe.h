@@ -36,7 +36,7 @@ class FxFrame : public QObject
 
 public:
   FxFrame();
-  QImage applyFrame(QImage &image, Layer &layer);
+  QImage applyEffect(QImage &image, Layer &layer);
   
 };
 

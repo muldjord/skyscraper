@@ -32,7 +32,7 @@ FxMask::FxMask()
 {
 }
 
-QImage FxMask::applyMask(QImage &image, Layer &layer)
+QImage FxMask::applyEffect(QImage &image, Layer &layer)
 {
   QString file = layer.resource;
 
@@ -51,8 +51,15 @@ QImage FxMask::applyMask(QImage &image, Layer &layer)
   
   QPainter painter;
   painter.begin(&image);
-  painter.setCompositionMode(QPainter::CompositionMode_DestinationAtop);
-  painter.drawImage(0, 0, mask);
+  painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
+  painter.drawImage(layer.x, layer.y, mask);
+  painter.setCompositionMode(QPainter::CompositionMode_DestinationOut);
+  painter.fillRect(0, 0, layer.x, image.height(), QColor(0, 0, 0));
+  painter.fillRect(0, 0, image.width(), layer.y, QColor(0, 0, 0));
+  painter.fillRect(layer.x + mask.width(), 0,
+		   image.width() - layer.x - mask.width(), image.height(), QColor(0, 0, 0));
+  painter.fillRect(0, layer.y + mask.height(),
+		   image.width(), image.height() - layer.y - mask.height(), QColor(0, 0, 0));
   painter.end();
 
   return image;

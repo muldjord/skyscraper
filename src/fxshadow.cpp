@@ -32,7 +32,7 @@ FxShadow::FxShadow()
 {
 }
 
-QImage FxShadow::applyShadow(QImage &image, Layer &layer)
+QImage FxShadow::applyEffect(QImage &image, Layer &layer)
 {
   int distance = layer.shadowDistance;
   int softness = layer.shadowSoftness;

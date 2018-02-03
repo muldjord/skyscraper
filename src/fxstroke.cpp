@@ -49,8 +49,8 @@ QImage FxStroke::applyEffect(QImage &image, Layer &layer)
   
   // Now dilate each pixel layer.width number of times
   for(int a = 0; a < layer.width; ++a) {
-    for(int y = 0; y < image.height(); ++y) {
-      for(int x = 0; x < image.width(); ++x) {
+    for(int y = 0; y < buffer1.height(); ++y) {
+      for(int x = 0; x < buffer1.width(); ++x) {
 	int alpha = qAlpha(buffer1Bits[y * buffer1.width() + x]);
 	if(alpha != 0) {
 	  for(int i = -1; i <= 1; ++i) {
@@ -64,8 +64,8 @@ QImage FxStroke::applyEffect(QImage &image, Layer &layer)
 	}
       }
     }
-    for(int y = 0; y < image.height(); ++y) {
-      for(int x = 0; x < image.width(); ++x) {
+    for(int y = 0; y < buffer1.height(); ++y) {
+      for(int x = 0; x < buffer1.width(); ++x) {
 	buffer1Bits[y * buffer1.width() + x] =
 	  QColor(layer.red, layer.green, layer.blue, qAlpha(buffer2Bits[y * buffer1.width() + x])).rgba();
       }

@@ -33,6 +33,8 @@
 #include "fxshadow.h"
 #include "fxmask.h"
 #include "fxframe.h"
+#include "fxrounded.h"
+#include "fxstroke.h"
 
 Compositor::Compositor(Settings &config)
 {
@@ -112,6 +114,10 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	  newLayer.width = attribs.value("", "width").toInt();
 	if(attribs.hasAttribute("height"))
 	  newLayer.height = attribs.value("", "height").toInt();
+	if(attribs.hasAttribute("x"))
+	  newLayer.x = attribs.value("", "x").toInt();
+	if(attribs.hasAttribute("y"))
+	  newLayer.y = attribs.value("", "y").toInt();
 	layer.layers.append(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "frame") {
@@ -123,6 +129,26 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	  newLayer.width = attribs.value("", "width").toInt();
 	if(attribs.hasAttribute("height"))
 	  newLayer.height = attribs.value("", "height").toInt();
+	layer.layers.append(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "stroke") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("width")) {
+	newLayer.type = T_STROKE;
+	newLayer.width = attribs.value("width").toInt();
+	if(attribs.hasAttribute("red"))
+	  newLayer.red = attribs.value("", "red").toInt();
+	if(attribs.hasAttribute("green"))
+	  newLayer.green = attribs.value("", "green").toInt();
+	if(attribs.hasAttribute("blue"))
+	  newLayer.blue = attribs.value("", "blue").toInt();
+	layer.layers.append(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "rounded") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("radius")) {
+	newLayer.type = T_ROUNDED;
+	newLayer.width = attribs.value("radius").toInt();
 	layer.layers.append(newLayer);
       }
     } else if(xml.isEndElement() && xml.name() == "layer") {
@@ -219,34 +245,48 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       }
     } else if(thisLayer.type == T_SHADOW) {
       FxShadow effect;
-      canvas = effect.applyShadow(canvas, thisLayer);
+      canvas = effect.applyEffect(canvas, thisLayer);
     } else if(thisLayer.type == T_MASK) {
       FxMask effect;
-      canvas = effect.applyMask(canvas, thisLayer);
+      canvas = effect.applyEffect(canvas, thisLayer);
     } else if(thisLayer.type == T_FRAME) {
       FxFrame effect;
-      canvas = effect.applyFrame(canvas, thisLayer);
+      canvas = effect.applyEffect(canvas, thisLayer);
+    } else if(thisLayer.type == T_STROKE) {
+      FxStroke effect;
+      canvas = effect.applyEffect(canvas, thisLayer);
+    } else if(thisLayer.type == T_ROUNDED) {
+      FxRounded effect;
+      canvas = effect.applyEffect(canvas, thisLayer);
     }
-    QPainter painter;
-    painter.begin(&canvas);
+
+    // Update layer width and height since we might have changed the canvas size during effect rendering
+    layer.width = canvas.width();
+    layer.height = canvas.height();
     
-    int x = 0;
-    if(thisLayer.align == "center") {
-      x = (layer.width / 2) - (thisLayer.width / 2);
-    } else if(thisLayer.align == "right") {
-      x = layer.width - thisLayer.width;
+    // Only draw this layer if it's actually defined
+    if(thisLayer.type != T_NONE) {
+      QPainter painter;
+      painter.begin(&canvas);
+      
+      int x = 0;
+      if(thisLayer.align == "center") {
+	x = (layer.width / 2) - (thisLayer.width / 2);
+      } else if(thisLayer.align == "right") {
+	x = layer.width - thisLayer.width;
+      }
+      x += thisLayer.x;
+      
+      int y = 0;
+      if(thisLayer.valign == "middle") {
+	y = (layer.height / 2) - (thisLayer.height / 2);
+      } else if(thisLayer.valign == "bottom") {
+	y = layer.height - thisLayer.height;
+      }
+      y += thisLayer.y;
+      
+      painter.drawImage(x, y, thisCanvas);
+      painter.end();
     }
-    x += thisLayer.x;
-    
-    int y = 0;
-    if(thisLayer.valign == "middle") {
-      y = (layer.height / 2) - (thisLayer.height / 2);
-    } else if(thisLayer.valign == "bottom") {
-      y = layer.height - thisLayer.height;
-    }
-    y += thisLayer.y;
-    
-    painter.drawImage(x, y, thisCanvas);
-    painter.end();
   }
 }
