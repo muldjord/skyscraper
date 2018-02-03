@@ -53,7 +53,11 @@ HEADERS += src/skyscraper.h \
            src/fxmask.h \
            src/fxframe.h \
            src/fxrounded.h \
-           src/fxstroke.h
+           src/fxstroke.h \
+           src/fxbrightness.h \
+           src/fxcontrast.h \
+           src/fxbalance.h \
+           src/fxopacity.h
            
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
@@ -81,4 +85,8 @@ SOURCES += src/main.cpp \
            src/fxmask.cpp \
            src/fxframe.cpp \
            src/fxrounded.cpp \
-           src/fxstroke.cpp
+           src/fxstroke.cpp \
+           src/fxbrightness.cpp \
+           src/fxcontrast.cpp \
+           src/fxbalance.cpp \
+           src/fxopacity.cpp
