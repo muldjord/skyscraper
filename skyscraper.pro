@@ -11,12 +11,17 @@ unix:target.files=Skyscraper
 
 unix:examples.path=/usr/local/etc/skyscraper
 unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example mameMap.csv
+
 unix:dbexamples.path=/usr/local/etc/skyscraper/dbs
 unix:dbexamples.files=dbs/priorities.xml.example dbs/README.md
+
 unix:impexamples.path=/usr/local/etc/skyscraper/import
 unix:impexamples.files=import/README.md import/definitions.dat.example1 import/definitions.dat.example2
 
-INSTALLS += target examples dbexamples impexamples
+unix:resexamples.path=/usr/local/etc/skyscraper/resources
+unix:resexamples.files=resources/mask1.png resources/frame1.png
+
+INSTALLS += target examples dbexamples impexamples resexamples
 
 include(./VERSION)
 DEFINES+=VERSION=\\\"$$VERSION\\\"

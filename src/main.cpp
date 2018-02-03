@@ -90,6 +90,11 @@ int main(int argc, char *argv[])
   skyDir.mkpath("import/wheels");
   skyDir.mkpath("import/marquees");
   skyDir.mkpath("import/videos");
+
+  // Create resources folder
+  skyDir.mkpath("resources");
+
+  // Create localdb folder
   skyDir.mkpath("dbs");
   QDir::setCurrent(skyDir.absolutePath());
 

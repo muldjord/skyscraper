@@ -408,6 +408,14 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     QFile::copy("/usr/local/etc/skyscraper/artwork.xml", "artwork.xml");
   }
 
+  if(!QFileInfo::exists("resources/mask1.png")) {
+    QFile::copy("/usr/local/etc/skyscraper/resources/mask1.png", "resources/mask1.png");
+  }
+
+  if(!QFileInfo::exists("resources/frame1.png")) {
+    QFile::copy("/usr/local/etc/skyscraper/resources/frame1.png", "resources/frame1.png");
+  }
+
   if(!QFileInfo::exists("artwork.xml.example")) {
     QFile::copy("/usr/local/etc/skyscraper/artwork.xml.example", "artwork.xml.example");
   }
