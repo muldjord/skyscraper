@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
   QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 2500)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use.\n(default is 4)", "1-8", "");
   QCommandLineOption cOption("c", "Use this config file to set up the scraper.\n(default is '[homedir]/.skyscraper/config.ini')", "filename", "");
+  QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '[homedir]/.skyscraper/artwork.xml')", "filename", "");
   QCommandLineOption dOption("d", "Set local resource database folder.\n(default is '[homedir]/.skyscraper/dbs/[platform]')", "folder", "");
   QCommandLineOption videosOption("videos", "Enables video scraping for any scraping module. Also enables caching of video resources in the local databases. Beware, this takes up a lot of disk space!");
   QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");
@@ -152,6 +153,7 @@ int main(int argc, char *argv[])
   parser.addOption(lOption);
   parser.addOption(tOption);
   parser.addOption(cOption);
+  parser.addOption(aOption);
   parser.addOption(dOption);
   parser.addOption(videosOption);
   parser.addOption(nocoversOption);

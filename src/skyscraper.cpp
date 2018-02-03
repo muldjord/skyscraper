@@ -500,6 +500,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("brackets")) {
     config.brackets = !settings.value("brackets").toBool();
   }
+  if(settings.contains("artworkXml")) {
+    config.artworkConfig = settings.value("artworkXml").toString();
+  }
   settings.endGroup();
 
   settings.beginGroup("localDb");
@@ -576,6 +579,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
   }
+  if(settings.contains("artworkXml")) {
+    config.artworkConfig = settings.value("artworkXml").toString();
+  }
   settings.endGroup();
   
   // Command line configs, overrides platform, main and defaults
@@ -599,6 +605,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("o")) {
     config.mediaFolder = parser.value("o");
     mediaFolderSet = true;
+  }
+  if(parser.isSet("a")) {
+    config.artworkConfig = parser.value("a");
   }
   if(parser.isSet("m") && parser.value("m").toInt() >= 0 && parser.value("m").toInt() <= 100) {
     config.minMatch = parser.value("m").toInt();
@@ -733,6 +742,15 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(config.scraper == "import") {
     // Always force local db to be updated when using import scraper
     config.updateDb = true;
+  }
+
+  QFile artworkFile(config.artworkConfig);
+  if(artworkFile.open(QIODevice::ReadOnly)) {
+    config.artworkXml = artworkFile.readAll();
+    artworkFile.close();
+  } else {
+    printf("Couldn't read artwork xml file '\033[1;32m%s\033[0m'. Please check file and permissions. Now exiting...\n", config.artworkConfig.toStdString().c_str());
+    exit(1);
   }
 }
 

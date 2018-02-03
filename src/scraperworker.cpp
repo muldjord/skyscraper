@@ -80,7 +80,7 @@ void ScraperWorker::run()
   platformOrig = config.platform;
 
   Compositor artHandler(config);
-  artHandler.processXml("artwork.xml");
+  artHandler.processXml();
   
   for(int a = beginIdx; a < filesPerThread + beginIdx; ++a) {
     output = "";

@@ -47,7 +47,6 @@ public:
 signals:
   void allDone();
   void entryReady(const GameEntry &entry);
-  //void addToSkipped(const QString &gameBaseName, const QString &closestMatch);
   void outputToTerminal(const QString &text);
 
 private:

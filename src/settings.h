@@ -68,6 +68,8 @@ struct Settings {
   bool stats = false;
   bool verbose = false;
   bool skipped = false;
+  QString artworkConfig = "artwork.xml";
+  QByteArray artworkXml = "";
   
   bool cacheCovers = true;
   bool cacheScreenshots = true;

@@ -42,7 +42,9 @@ HEADERS += src/skyscraper.h \
            src/screenscraper.h \
            src/arcadedb.h \
            src/scripter.h \
-           src/platform.h
+           src/platform.h \
+           src/layer.h \
+           src/fxshadow.h
            
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
@@ -65,4 +67,5 @@ SOURCES += src/main.cpp \
            src/screenscraper.cpp \
            src/arcadedb.cpp \
            src/scripter.cpp \
-           src/platform.cpp
+           src/platform.cpp \
+           src/fxshadow.cpp

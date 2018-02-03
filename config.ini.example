@@ -32,6 +32,7 @@
 #skipped="false"
 #lang="en"
 #region="wor"
+#artworkXml="artwork.xml"
 
 #[localDb]
 #covers="true"
@@ -56,3 +57,4 @@
 #forceFilename="false"
 #verbose="false"
 #skipped="false"
+#artworkXml="artwork.xml"
