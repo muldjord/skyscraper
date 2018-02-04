@@ -390,58 +390,85 @@ void Skyscraper::checkThreads()
 
 void Skyscraper::loadConfig(const QCommandLineParser &parser)
 {
-  if(!QFileInfo::exists("config.ini")) {
-    QFile::copy("/usr/local/etc/skyscraper/config.ini.example", "config.ini");
-  }
+  QString current;
+  QString distro;
 
-  if(QFileInfo::exists("README.md")) {
-    QFile::remove("README.md");
-  }
-  QFile::copy("/usr/local/etc/skyscraper/README.md", "README.md");
+  /* -----
+     Files that should ALWAYS be updated from distributed default files
+     ----- */
 
-  if(QFileInfo::exists("mameMap.csv")) {
-    QFile::remove("mameMap.csv");
-  }
-  QFile::copy("/usr/local/etc/skyscraper/mameMap.csv", "mameMap.csv");
+  current = "config.ini.example";
+  distro = "/usr/local/etc/skyscraper/config.ini.example";
+  copyFile(distro, current);
 
-  if(!QFileInfo::exists("artwork.xml")) {
-    QFile::copy("/usr/local/etc/skyscraper/artwork.xml", "artwork.xml");
-  }
+  current = "README.md";
+  distro = "/usr/local/etc/skyscraper/README.md";
+  copyFile(distro, current);
 
-  if(!QFileInfo::exists("resources/mask1.png")) {
-    QFile::copy("/usr/local/etc/skyscraper/resources/mask1.png", "resources/mask1.png");
-  }
+  current = "ARTWORK.md";
+  distro = "/usr/local/etc/skyscraper/ARTWORK.md";
+  copyFile(distro, current);
 
-  if(!QFileInfo::exists("resources/frame1.png")) {
-    QFile::copy("/usr/local/etc/skyscraper/resources/frame1.png", "resources/frame1.png");
-  }
+  current = "artwork.xml.example";
+  distro = "/usr/local/etc/skyscraper/artwork.xml.example";
+  copyFile(distro, current);
 
-  if(!QFileInfo::exists("artwork.xml.example")) {
-    QFile::copy("/usr/local/etc/skyscraper/artwork.xml.example", "artwork.xml.example");
-  }
+  current = "mameMap.csv";
+  distro = "/usr/local/etc/skyscraper/mameMap.csv";
+  copyFile(distro, current);
+  
+  current = "resources/maskexample.png";
+  distro = "/usr/local/etc/skyscraper/resources/maskexample.png";
+  copyFile(distro, current);
 
-  if(QFileInfo::exists("dbs/README.md")) {
-    QFile::remove("dbs/README.md");
-  }
-  QFile::copy("/usr/local/etc/skyscraper/dbs/README.md", "dbs/README.md");
+  current = "resources/frameexample.png";
+  distro = "/usr/local/etc/skyscraper/resources/frameexample.png";
+  copyFile(distro, current);
+  
+  current = "resources/boxfront.png";
+  distro = "/usr/local/etc/skyscraper/resources/boxfront.png";
+  copyFile(distro, current);
 
-  if(QFileInfo::exists("dbs/priorities.xml.example")) {
-    QFile::remove("dbs/priorities.xml.example");
-  }
-  QFile::copy("/usr/local/etc/skyscraper/dbs/priorities.xml.example", "dbs/priorities.xml.example");
+  current = "resources/boxside.png";
+  distro = "/usr/local/etc/skyscraper/resources/boxside.png";
+  copyFile(distro, current);
 
-  if(QFileInfo::exists("import/README.md")) {
-    QFile::remove("import/README.md");
-  }
-  QFile::copy("/usr/local/etc/skyscraper/import/README.md", "import/README.md");
-  if(QFileInfo::exists("import/definitions.dat.example1")) {
-    QFile::remove("import/definitions.dat.example1");
-  }
-  QFile::copy("/usr/local/etc/skyscraper/import/definitions.dat.example1", "import/definitions.dat.example1");
-  if(QFileInfo::exists("import/definitions.dat.example2")) {
-    QFile::remove("import/definitions.dat.example2");
-  }
-  QFile::copy("/usr/local/etc/skyscraper/import/definitions.dat.example2", "import/definitions.dat.example2");
+  current = "dbs/README.md";
+  distro = "/usr/local/etc/skyscraper/dbs/README.md";
+  copyFile(distro, current);
+
+  current = "dbs/priorities.xml.example";
+  distro = "/usr/local/etc/skyscraper/dbs/priorities.xml.example";
+  copyFile(distro, current);
+
+  current = "import/README.md";
+  distro = "/usr/local/etc/skyscraper/import/README.md";
+  copyFile(distro, current);
+
+  current = "import/definitions.dat.example1";
+  distro = "/usr/local/etc/skyscraper/import/definitions.dat.example1";
+  copyFile(distro, current);
+
+  current = "import/definitions.dat.example2";
+  distro = "/usr/local/etc/skyscraper/import/definitions.dat.example2";
+  copyFile(distro, current);
+
+  /* -----
+    Files that will only be overwritte if they don't already exist
+    ----- */
+
+  current = "artwork.xml";
+  distro = "/usr/local/etc/skyscraper/artwork.xml";
+  copyFile(distro, current, false); // False means it won't overwrite if it exists
+
+  // Copy one of the example definitions.dat files if none exists
+  current = "import/definitions.dat";
+  distro = "/usr/local/etc/skyscraper/import/definitions.dat.example2";
+  copyFile(distro, current, false);
+
+  /* -----
+     END updating files from distribution files
+    ----- */
 
   QSettings settings(parser.isSet("c")?parser.value("c"):"config.ini", QSettings::IniFormat);
 
@@ -759,6 +786,30 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   } else {
     printf("Couldn't read artwork xml file '\033[1;32m%s\033[0m'. Please check file and permissions. Now exiting...\n", config.artworkConfig.toStdString().c_str());
     exit(1);
+  }
+  
+  QDir resDir("./resources");
+  QDirIterator resDirIt(resDir.absolutePath(),
+			QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			QDirIterator::Subdirectories);
+  while(resDirIt.hasNext()) {
+    QString resFile = resDirIt.next();
+    resFile = resFile.remove(0, resFile.indexOf("resources/") + 10); // Also cut off 'resources/'
+    config.resources[resFile] = QImage("resources/" + resFile);
+  }
+}
+
+void Skyscraper::copyFile(QString &distro, QString &current, bool overwrite)
+{
+  if(QFileInfo::exists(distro)) {
+    if(QFileInfo::exists(current)) {
+      if(overwrite) {
+	QFile::remove(current);
+	QFile::copy(distro, current);
+      }
+    } else {
+      QFile::copy(distro, current);
+    }
   }
 }
 

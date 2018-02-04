@@ -62,6 +62,7 @@ private slots:
 private:
   Settings config;
   void loadConfig(const QCommandLineParser &parser);
+  void copyFile(QString &distro, QString &current, bool overwrite = true);
   QString secsToString(const int &seconds);
   void checkForFolder(QDir &folder);
 
@@ -85,6 +86,7 @@ private:
   int avgCompleteness;
   int currentFile;
   int totalFiles;
+
 };
 
 #endif // SKYSCRAPER_H
