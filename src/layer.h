@@ -39,10 +39,12 @@
 #define T_BALANCE 10
 #define T_OPACITY 11
 #define T_BLUR 12
+#define T_GAMEBOX 13
 
 struct Layer {
   int type = T_NONE;
   QString resource = "";
+  QString resource2 = "";
   QString align = "";
   QString valign = "";
   int x = 0;
