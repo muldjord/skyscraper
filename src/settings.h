@@ -26,6 +26,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <QMap>
+
 struct Settings {
   QString dbFolder = "";
   QString gameListFileString = "";
@@ -81,6 +83,8 @@ struct Settings {
   QString lang = "en";
   QString region = "wor";
 
+  QMap<QString, QImage> resources;
+  
 };
 
 #endif // SETTINGS_H
