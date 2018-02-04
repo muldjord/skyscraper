@@ -56,15 +56,19 @@ QImage FxGamebox::applyEffect(QImage &image, Layer &layer, GameEntry &game, Sett
   double avgRed = 0;
   double avgGreen = 0;
   double avgBlue = 0;
-  for(int y = 0; y < image.height(); ++y) {
+  double fromTop = 20;
+  if(image.height() < 20) {
+    fromTop = image.height();
+  }
+  for(int y = 0; y < fromTop; ++y) {
     QRgb *scanline = (QRgb *)image.scanLine(y);
     avgRed += qRed(scanline[3]);
     avgGreen += qGreen(scanline[3]);
     avgBlue += qBlue(scanline[3]);
   }
-  avgRed /= image.height();
-  avgGreen /= image.height();
-  avgBlue /= image.height();
+  avgRed /= fromTop;
+  avgGreen /= fromTop;
+  avgBlue /= fromTop;
   
   side.fill(QColor(avgRed, avgGreen, avgBlue));
 
