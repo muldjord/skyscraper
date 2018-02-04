@@ -34,10 +34,7 @@ FxMask::FxMask()
 
 QImage FxMask::applyEffect(QImage &image, Layer &layer, Settings *config)
 {
-  QString file = layer.resource;
-  printf("RES: '%s'\n", file.toStdString().c_str());
-
-  QImage mask(config->resources[file]);
+  QImage mask(config->resources[layer.resource]);
   mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
   if(layer.width == -1 && layer.height == -1) {
