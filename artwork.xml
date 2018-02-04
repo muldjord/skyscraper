@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This is the default 'artwork.xml'. Be sure to check the full artwork documentation at https://github.com/muldjord/skyscraper/blob/master/ARTWORK.md -->
 <artwork>
   <output type="screenshot" width="640" height="480">
-    <layer resource="screenshot" width="520" height="390" align="right" valign="middle">
-      <rounded radius="5"/>
-      <stroke width="5"/>
+    <layer resource="screenshot" width="520" height="390" x="20" align="center" valign="middle">
+      <rounded radius="10"/>
     </layer>
-    <layer resource="wheel" width="200" align="right">
-      <shadow distance="5" softness="3" opacity="65"/>
+    <layer resource="cover" height="250" x="0" y="-10" valign="bottom">
+      <gamebox side="wheel" rotate="90"/>
+      <shadow distance="5" softness="5" opacity="70"/>
     </layer>
-    <layer resource="cover" width="200" height="200" y="-5" valign="bottom">
-      <mask file="mask1.png"/>
-      <frame file="frame1.png"/>
-      <shadow distance="5" softness="3" opacity="65"/>
+    <layer resource="wheel" width="250" x="-10" align="right">
+      <shadow distance="5" softness="5" opacity="70"/>
     </layer>
   </output>
-  <output type="wheel" width="350"/>
-  <output type="cover" height="350"/>
-  <output type="marquee" width="350"/>
 </artwork>
