@@ -10,7 +10,7 @@ unix:target.path=/usr/local/bin
 unix:target.files=Skyscraper
 
 unix:examples.path=/usr/local/etc/skyscraper
-unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example mameMap.csv
+unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example mameMap.csv ARTWORK.md
 
 unix:dbexamples.path=/usr/local/etc/skyscraper/dbs
 unix:dbexamples.files=dbs/priorities.xml.example dbs/README.md
@@ -19,7 +19,7 @@ unix:impexamples.path=/usr/local/etc/skyscraper/import
 unix:impexamples.files=import/README.md import/definitions.dat.example1 import/definitions.dat.example2
 
 unix:resexamples.path=/usr/local/etc/skyscraper/resources
-unix:resexamples.files=resources/mask1.png resources/frame1.png
+unix:resexamples.files=resources/maskexample.png resources/frameexample.png resources/boxfront.png resources/boxside.png
 
 INSTALLS += target examples dbexamples impexamples resexamples
 
@@ -57,7 +57,8 @@ HEADERS += src/skyscraper.h \
            src/fxbrightness.h \
            src/fxcontrast.h \
            src/fxbalance.h \
-           src/fxopacity.h
+           src/fxopacity.h \
+           src/fxgamebox.h
            
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
@@ -89,4 +90,5 @@ SOURCES += src/main.cpp \
            src/fxbrightness.cpp \
            src/fxcontrast.cpp \
            src/fxbalance.cpp \
-           src/fxopacity.cpp
+           src/fxopacity.cpp \
+           src/fxgamebox.cpp
