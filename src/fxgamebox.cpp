@@ -68,22 +68,22 @@ QImage FxGamebox::applyEffect(QImage &image, Layer &layer, GameEntry &game, Sett
   
   side.fill(QColor(avgRed, avgGreen, avgBlue));
 
-  if(layer.resource2 == "cover") {
+  if(layer.resource == "cover") {
     sideImage = game.coverData;
-  } else if(layer.resource2 == "screenshot") {
+  } else if(layer.resource == "screenshot") {
     sideImage = game.screenshotData;
-  } else if(layer.resource2 == "wheel") {
+  } else if(layer.resource == "wheel") {
     sideImage = game.wheelData;
-  } else if(layer.resource2 == "marquee") {
+  } else if(layer.resource == "marquee") {
     sideImage = game.marqueeData;
   } else {
-    sideImage = QImage(config->resources[layer.resource2]);
+    sideImage = QImage(config->resources[layer.resource]);
   }
   sideImage = sideImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
   
   trans.reset();
-  trans.rotate(90, Qt::ZAxis);
-  sideImage = sideImage.transformed(trans); // No need for smooth when rotating 90 degrees
+  trans.rotate(layer.delta, Qt::ZAxis);
+  sideImage = sideImage.transformed(trans, Qt::SmoothTransformation);
   sideImage = sideImage.scaledToWidth(side.width(), Qt::SmoothTransformation);
   
   painter.begin(&side);
@@ -101,11 +101,12 @@ QImage FxGamebox::applyEffect(QImage &image, Layer &layer, GameEntry &game, Sett
   trans.rotate(70, Qt::YAxis);
   trans.translate(0, - side.height() / 2.0);
   side = side.transformed(trans, Qt::SmoothTransformation);
+  side = side.scaledToHeight(front.height(), Qt::SmoothTransformation);
 
   image.fill(Qt::transparent);
   painter.begin(&image);
   painter.drawImage(0, 0, side);
-  painter.drawImage(side.width(), 0, front);
+  painter.drawImage(side.width() - 1, 0, front);
   
   return image;
 }
