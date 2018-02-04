@@ -443,7 +443,7 @@ QString Platform::getFormats(QString platform)
   } else if(platform == "saturn") {
     formats.append("*.cue *.bin *.iso *.mdf");
   } else if(platform == "scummvm") {
-    formats.append("*.svm");
+    formats.append("*.svm *.scummvm");
   } else if(platform == "sega32x") {
     formats.append("*.32x *.bin *.md *.smd");
   } else if(platform == "segacd") {
