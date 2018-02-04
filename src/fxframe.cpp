@@ -32,11 +32,9 @@ FxFrame::FxFrame()
 {
 }
 
-QImage FxFrame::applyEffect(QImage &image, Layer &layer)
+QImage FxFrame::applyEffect(QImage &image, Layer &layer, Settings *config)
 {
-  QString file = layer.resource;
-
-  QImage frame("resources/" + file);
+  QImage frame(config->resources[layer.resource]);
   frame = frame.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
   if(layer.width == -1 && layer.height == -1) {

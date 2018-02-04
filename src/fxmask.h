@@ -29,6 +29,7 @@
 #include <QImage>
 
 #include "layer.h"
+#include "settings.h"
 
 class FxMask : public QObject
 {
@@ -36,7 +37,7 @@ class FxMask : public QObject
 
 public:
   FxMask();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(QImage &image, Layer &layer, Settings *config);
 
 };
 

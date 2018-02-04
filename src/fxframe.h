@@ -29,6 +29,7 @@
 #include <QImage>
 
 #include "layer.h"
+#include "settings.h"
 
 class FxFrame : public QObject
 {
@@ -36,7 +37,7 @@ class FxFrame : public QObject
 
 public:
   FxFrame();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(QImage &image, Layer &layer, Settings *config);
   
 };
 
