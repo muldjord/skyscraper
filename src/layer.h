@@ -44,7 +44,6 @@
 struct Layer {
   int type = T_NONE;
   QString resource = "";
-  QString resource2 = "";
   QString align = "";
   QString valign = "";
   int x = 0;
