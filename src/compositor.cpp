@@ -188,10 +188,10 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
     } else if(xml.isStartElement() && xml.name() == "gamebox") {
       QXmlStreamAttributes attribs = xml.attributes();
       newLayer.type = T_GAMEBOX;
-      if(attribs.hasAttribute("front"))
-	newLayer.resource = attribs.value("front").toString();
       if(attribs.hasAttribute("side"))
-	newLayer.resource2 = attribs.value("side").toString();
+	newLayer.resource = attribs.value("side").toString();
+      if(attribs.hasAttribute("rotate"))
+	newLayer.delta = attribs.value("rotate").toInt();
       layer.layers.append(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
