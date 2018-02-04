@@ -39,17 +39,18 @@
 #include "fxcontrast.h"
 #include "fxbalance.h"
 #include "fxopacity.h"
+#include "fxgamebox.h"
 
 Compositor::Compositor(Settings &config)
 {
-  this->config = config;
+  this->config = &config;
 }
 
 bool Compositor::processXml()
 {
   Layer newOutputs;
   
-  QXmlStreamReader xml(config.artworkXml);
+  QXmlStreamReader xml(config->artworkXml);
   
   // Init recursive parsing
   addLayer(newOutputs, xml);
@@ -80,24 +81,22 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
       }
     } else if(xml.isStartElement() && xml.name() == "layer") {
       QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("resource")) {
-	newLayer.resource = attribs.value("", "resource").toString();
-	newLayer.type = T_LAYER;
-	if(attribs.hasAttribute("width"))
-	  newLayer.width = attribs.value("", "width").toInt();
-	if(attribs.hasAttribute("height"))
-	  newLayer.height = attribs.value("", "height").toInt();
-	if(attribs.hasAttribute("align"))
-	  newLayer.align = attribs.value("", "align").toString();
-	if(attribs.hasAttribute("valign"))
-	  newLayer.valign = attribs.value("", "valign").toString();
-	if(attribs.hasAttribute("x"))
-	  newLayer.x = attribs.value("", "x").toInt();
-	if(attribs.hasAttribute("y"))
-	  newLayer.y = attribs.value("", "y").toInt();
-	addLayer(newLayer, xml);
-	layer.layers.append(newLayer);
-      }
+      newLayer.resource = attribs.value("", "resource").toString();
+      newLayer.type = T_LAYER;
+      if(attribs.hasAttribute("width"))
+	newLayer.width = attribs.value("", "width").toInt();
+      if(attribs.hasAttribute("height"))
+	newLayer.height = attribs.value("", "height").toInt();
+      if(attribs.hasAttribute("align"))
+	newLayer.align = attribs.value("", "align").toString();
+      if(attribs.hasAttribute("valign"))
+	newLayer.valign = attribs.value("", "valign").toString();
+      if(attribs.hasAttribute("x"))
+	newLayer.x = attribs.value("", "x").toInt();
+      if(attribs.hasAttribute("y"))
+	newLayer.y = attribs.value("", "y").toInt();
+      addLayer(newLayer, xml);
+      layer.layers.append(newLayer);
     } else if(xml.isStartElement() && xml.name() == "shadow") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("distance") &&
@@ -186,6 +185,14 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("blue"))
 	newLayer.blue = attribs.value("", "blue").toInt();
       layer.layers.append(newLayer);
+    } else if(xml.isStartElement() && xml.name() == "gamebox") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      newLayer.type = T_GAMEBOX;
+      if(attribs.hasAttribute("front"))
+	newLayer.resource = attribs.value("front").toString();
+      if(attribs.hasAttribute("side"))
+	newLayer.resource2 = attribs.value("side").toString();
+      layer.layers.append(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
     } else if(xml.isEndElement() && xml.name() == "output") {
@@ -226,20 +233,20 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     }
 
     if(output.resource == "cover") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.coversFolder + "/" + completeBaseName + ".png"))
-	game.coverFile = StrTools::xmlUnescape(config.coversFolder + "/" +
+      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->coversFolder + "/" + completeBaseName + ".png"))
+	game.coverFile = StrTools::xmlUnescape(config->coversFolder + "/" +
 					       completeBaseName + ".png");
     } else if(output.resource == "screenshot") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.screenshotsFolder + "/" + completeBaseName + ".png"))
-	game.screenshotFile = StrTools::xmlUnescape(config.screenshotsFolder + "/" +
+      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->screenshotsFolder + "/" + completeBaseName + ".png"))
+	game.screenshotFile = StrTools::xmlUnescape(config->screenshotsFolder + "/" +
 						    completeBaseName + ".png");
     } else if(output.resource == "wheel") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.wheelsFolder + "/" + completeBaseName + ".png"))
-	game.wheelFile = StrTools::xmlUnescape(config.wheelsFolder + "/" +
+      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->wheelsFolder + "/" + completeBaseName + ".png"))
+	game.wheelFile = StrTools::xmlUnescape(config->wheelsFolder + "/" +
 					       completeBaseName + ".png");
     } else if(output.resource == "marquee") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config.marqueesFolder + "/" + completeBaseName + ".png"))
-	game.marqueeFile = StrTools::xmlUnescape(config.marqueesFolder + "/" +
+      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->marqueesFolder + "/" + completeBaseName + ".png"))
+	game.marqueeFile = StrTools::xmlUnescape(config->marqueesFolder + "/" +
 						 completeBaseName + ".png");
     }
   }
@@ -252,7 +259,11 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
     Layer thisLayer = layer.layers.at(a);
 
     if(thisLayer.type == T_LAYER) {
-      if(thisLayer.resource == "cover") {
+      if(thisLayer.resource == "") {
+	QImage emptyCanvas(1, 1, QImage::Format_ARGB32_Premultiplied);
+	emptyCanvas.fill(Qt::transparent);
+	thisCanvas = emptyCanvas;
+      } else if(thisLayer.resource == "cover") {
 	thisCanvas = game.coverData;
       } else if(thisLayer.resource == "screenshot") {
 	thisCanvas = game.screenshotData;
@@ -261,7 +272,7 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       } else if(thisLayer.resource == "marquee") {
 	thisCanvas = game.marqueeData;
       } else {
-	thisCanvas = QImage("resources/" + thisLayer.resource);
+	thisCanvas = QImage(config->resources[thisLayer.resource]);
       }
 
       thisCanvas = thisCanvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
@@ -285,10 +296,10 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       canvas = effect.applyEffect(canvas, thisLayer);
     } else if(thisLayer.type == T_MASK) {
       FxMask effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
+      canvas = effect.applyEffect(canvas, thisLayer, config);
     } else if(thisLayer.type == T_FRAME) {
       FxFrame effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
+      canvas = effect.applyEffect(canvas, thisLayer, config);
     } else if(thisLayer.type == T_STROKE) {
       FxStroke effect;
       canvas = effect.applyEffect(canvas, thisLayer);
@@ -309,6 +320,9 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
     } else if(thisLayer.type == T_OPACITY) {
       FxOpacity effect;
       canvas = effect.applyEffect(canvas, thisLayer);
+    } else if(thisLayer.type == T_GAMEBOX) {
+      FxGamebox effect;
+      canvas = effect.applyEffect(canvas, thisLayer, game, config);
     }
 
     // Only draw this layer if it's actually defined

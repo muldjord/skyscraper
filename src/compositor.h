@@ -52,7 +52,7 @@ private:
   void boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, int radius);
   void boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, double radius);
   QImage applyShadow(QImage &image, Layer &layer);
-  Settings config;
+  Settings *config;
   Layer outputs;
   
 };
