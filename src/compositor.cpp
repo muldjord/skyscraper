@@ -203,6 +203,16 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
+  // Crop all media resources to remove empty space around them
+  if(!game.coverData.isNull())
+    game.coverData = cropToFit(game.coverData);
+  if(!game.screenshotData.isNull())
+    game.screenshotData = cropToFit(game.screenshotData);
+  if(!game.wheelData.isNull())
+    game.wheelData = cropToFit(game.wheelData);
+  if(!game.marqueeData.isNull())
+    game.marqueeData = cropToFit(game.marqueeData);
+  
   foreach(Layer output, outputs.layers) {
     QImage canvas;
     if(output.resource == "cover") {
@@ -216,7 +226,6 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     }
 
     canvas = canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-    canvas = cropToFit(canvas);
     
     if(output.width == -1 && output.height != -1) {
       canvas = canvas.scaledToHeight(output.height, Qt::SmoothTransformation);
@@ -255,16 +264,6 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 
 void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 {
-  // Crop all media resources to remove empty space around them
-  if(!game.coverData.isNull())
-    game.coverData = cropToFit(game.coverData);
-  if(!game.screenshotData.isNull())
-    game.screenshotData = cropToFit(game.screenshotData);
-  if(!game.wheelData.isNull())
-    game.wheelData = cropToFit(game.wheelData);
-  if(!game.marqueeData.isNull())
-    game.marqueeData = cropToFit(game.marqueeData);
-  
   for(int a = 0; a < layer.layers.length(); ++a) {
     QImage thisCanvas;
     Layer thisLayer = layer.layers.at(a);
