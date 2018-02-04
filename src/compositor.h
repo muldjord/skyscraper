@@ -47,7 +47,7 @@ private:
   void compositeLayer(GameEntry &game, QImage &canvas, Layer &layer);
   Settings *config;
   Layer outputs;
-  QImage cropToFit(QImage &image);
+  void cropToFit(QImage &image);
   
 };
 

@@ -205,13 +205,13 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
   // Crop all media resources to remove empty space around them
   if(!game.coverData.isNull())
-    game.coverData = cropToFit(game.coverData);
+    cropToFit(game.coverData);
   if(!game.screenshotData.isNull())
-    game.screenshotData = cropToFit(game.screenshotData);
+    cropToFit(game.screenshotData);
   if(!game.wheelData.isNull())
-    game.wheelData = cropToFit(game.wheelData);
+    cropToFit(game.wheelData);
   if(!game.marqueeData.isNull())
-    game.marqueeData = cropToFit(game.marqueeData);
+    cropToFit(game.marqueeData);
   
   foreach(Layer output, outputs.layers) {
     QImage canvas;
@@ -362,7 +362,7 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
   }
 }
 
-QImage Compositor::cropToFit(QImage &image)
+void Compositor::cropToFit(QImage &image)
 {
   int left = image.width();
   int right = 0;
@@ -387,7 +387,6 @@ QImage Compositor::cropToFit(QImage &image)
       }
     }
   }
-  QImage cropped = image.copy(left, top, right - left, bottom - top);
-  
-  return cropped;
+
+  image = image.copy(left, top, right - left, bottom - top);
 }
