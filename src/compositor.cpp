@@ -255,6 +255,16 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 
 void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 {
+  // Crop all media resources to remove empty space around them
+  if(!game.coverData.isNull())
+    game.coverData = cropToFit(game.coverData);
+  if(!game.screenshotData.isNull())
+    game.screenshotData = cropToFit(game.screenshotData);
+  if(!game.wheelData.isNull())
+    game.wheelData = cropToFit(game.wheelData);
+  if(!game.marqueeData.isNull())
+    game.marqueeData = cropToFit(game.marqueeData);
+  
   for(int a = 0; a < layer.layers.length(); ++a) {
     QImage thisCanvas;
     Layer thisLayer = layer.layers.at(a);
@@ -277,7 +287,6 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       }
 
       thisCanvas = thisCanvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-      thisCanvas = cropToFit(thisCanvas);
 
       if(thisLayer.width == -1 && thisLayer.height != -1) {
 	thisCanvas = thisCanvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
