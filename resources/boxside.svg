@@ -31,7 +31,7 @@
          id="stop885" />
       <stop
          id="stop887"
-         offset="0.08288464"
+         offset="0.4125925"
          style="stop-color:#ffffff;stop-opacity:0.05291005" />
       <stop
          style="stop-color:#ffffff;stop-opacity:1;"
@@ -42,21 +42,21 @@
        inkscape:collect="always"
        xlink:href="#linearGradient891"
        id="radialGradient831-5"
-       cx="31.959385"
-       cy="241.59251"
-       fx="31.959385"
-       fy="241.59251"
+       cx="31.959381"
+       cy="241.5925"
+       fx="31.959381"
+       fy="241.5925"
        r="61.515625"
-       gradientTransform="matrix(0.66530327,-4.1673417e-8,1.1352343e-8,4.838012,-45.075184,-1283.2649)"
+       gradientTransform="matrix(0.546851,-8.4410891e-8,5.0702783e-7,4.838012,-41.289642,-1283.2649)"
        gradientUnits="userSpaceOnUse" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient944"
        id="radialGradient831-2"
-       cx="50.297279"
-       cy="226.08556"
-       fx="50.297279"
-       fy="226.08556"
+       cx="62.373596"
+       cy="231.26276"
+       fx="62.373596"
+       fy="231.26276"
        r="61.515625"
        gradientTransform="matrix(0.43818538,0,0,6.4977036,-27.678059,-1362.1116)"
        gradientUnits="userSpaceOnUse" />
@@ -69,7 +69,7 @@
          id="stop938" />
       <stop
          id="stop940"
-         offset="0.61084431"
+         offset="0.79815602"
          style="stop-color:#ffffff;stop-opacity:0.05291005" />
       <stop
          style="stop-color:#ffffff;stop-opacity:1;"
@@ -86,7 +86,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
      inkscape:cx="152.43134"
-     inkscape:cy="396.72539"
+     inkscape:cy="422.97474"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -115,7 +115,7 @@
      transform="translate(0,-114.4375)"
      style="display:inline;opacity:1">
     <rect
-       style="opacity:0.114;fill:url(#radialGradient831-5);fill-opacity:1;stroke:none;stroke-width:1.39893532;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:0.11400003;fill:url(#radialGradient831-5);fill-opacity:1;stroke:none;stroke-width:1.39893532;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect815-1"
        width="23.8125"
        height="182.5625"
@@ -128,8 +128,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <rect
        style="opacity:1;fill:url(#radialGradient831-2);fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect815-3"
