@@ -68,16 +68,16 @@ QImage FxGamebox::applyEffect(QImage &image, Layer &layer, GameEntry &game, Sett
   
   side.fill(QColor(avgRed, avgGreen, avgBlue));
 
-  if(layer.resource == "cover") {
+  if(layer.resource2 == "cover") {
     sideImage = game.coverData;
-  } else if(layer.resource == "screenshot") {
+  } else if(layer.resource2 == "screenshot") {
     sideImage = game.screenshotData;
-  } else if(layer.resource == "wheel") {
+  } else if(layer.resource2 == "wheel") {
     sideImage = game.wheelData;
-  } else if(layer.resource == "marquee") {
+  } else if(layer.resource2 == "marquee") {
     sideImage = game.marqueeData;
   } else {
-    sideImage = QImage("resources/" + layer.resource2);
+    sideImage = QImage(config->resources[layer.resource2]);
   }
   sideImage = sideImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
   
