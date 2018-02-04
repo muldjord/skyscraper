@@ -216,6 +216,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     }
 
     canvas = canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    canvas = cropToFit(canvas);
     
     if(output.width == -1 && output.height != -1) {
       canvas = canvas.scaledToHeight(output.height, Qt::SmoothTransformation);
@@ -276,6 +277,7 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       }
 
       thisCanvas = thisCanvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+      thisCanvas = cropToFit(thisCanvas);
 
       if(thisLayer.width == -1 && thisLayer.height != -1) {
 	thisCanvas = thisCanvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
@@ -350,4 +352,34 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
       painter.end();
     }
   }
+}
+
+QImage Compositor::cropToFit(QImage &image)
+{
+  int left = image.width();
+  int right = 0;
+  int top = 0;
+  int bottom = image.height();
+
+  // Find lefmost edge
+  for(int y = 0; y < image.height(); ++y) {
+    QRgb *scanline = (QRgb *)image.scanLine(y);
+    for(int x = 0; x < image.width(); ++x) {
+      if(qAlpha(scanline[x]) > 0) {
+	if(left > x) {
+	  left = x;
+	}
+	if(right < x) {
+	  right = x + 1;
+	}
+	if(top == 0) {
+	  top = y;
+	}
+	bottom = y + 1;
+      }
+    }
+  }
+  QImage cropped = image.copy(left, top, right - left, bottom - top);
+  
+  return cropped;
 }

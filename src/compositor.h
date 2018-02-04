@@ -45,15 +45,9 @@ public:
 private:
   void addLayer(Layer &layer, QXmlStreamReader &xml);
   void compositeLayer(GameEntry &game, QImage &canvas, Layer &layer);
-  QImage applyMask(QImage &image, Layer &layer);
-  QImage applyFrame(QImage &image, Layer &layer);
-  QVector<double> getGaussBoxes(double sigma, double n);
-  void boxBlur(QRgb *src, QRgb *dst, int width, int height, int radius);
-  void boxBlurHorizontal(QRgb *src, QRgb *dst, int width, int height, int radius);
-  void boxBlurTotal(QRgb *src, QRgb *dst, int width, int height, double radius);
-  QImage applyShadow(QImage &image, Layer &layer);
   Settings *config;
   Layer outputs;
+  QImage cropToFit(QImage &image);
   
 };
 
