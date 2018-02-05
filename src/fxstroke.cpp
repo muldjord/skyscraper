@@ -34,6 +34,35 @@ FxStroke::FxStroke()
 
 QImage FxStroke::applyEffect(QImage &image, Layer &layer)
 {
+  int red = layer.red;
+  int green = layer.green;
+  int blue = layer.blue;
+
+  printf("red=%d, green=%d, blue=%d\n", red, green, blue);
+  
+  if(red == -1 || green == -1 || blue == -1) {
+    int samples = 20;
+    int averageDivider = 0;
+    for(int y = samples / 2; y < image.height(); y += samples) {
+      QRgb *scanline = (QRgb *)image.scanLine(y);
+      for(int x = samples / 2; x < image.width(); x += samples) {
+	red += qRed(scanline[x]);
+	green += qGreen(scanline[x]);
+	blue += qBlue(scanline[x]);
+	averageDivider++;
+      }
+    }
+    if(averageDivider != 0) {
+      red /= averageDivider;
+      green /= averageDivider;
+      blue /= averageDivider;
+    } else {
+      red = 0;
+      green = 0;
+      blue = 0;
+    }
+  }
+
   QImage buffer1(image.width() + layer.width * 2, image.height() + layer.width * 2,
 		 QImage::Format_ARGB32_Premultiplied);
   buffer1.fill(Qt::transparent);
@@ -52,7 +81,7 @@ QImage FxStroke::applyEffect(QImage &image, Layer &layer)
   int width = buffer1.width();
   int height = buffer1.height();
   
-  // Now dilate each pixel layer.width number of times
+  // Now dilate each pixel 'layer.width' number of times
   for(int a = 0; a < layer.width; ++a) {
     for(int y = 0; y < height; ++y) {
       for(int x = 0; x < width; ++x) {
@@ -62,7 +91,7 @@ QImage FxStroke::applyEffect(QImage &image, Layer &layer)
 	    for(int j = -1; j <= 1; ++j) {
 	      if(qAlpha(buffer2Bits[(y + i) * width + x + j]) < alpha) {
 		buffer2Bits[(y + i) * width + x + j] =
-		  qPremultiply(qRgba(layer.red, layer.green, layer.blue, alpha));
+		  qPremultiply(qRgba(red, green, blue, alpha));
 	      }
 	    }
 	  }
