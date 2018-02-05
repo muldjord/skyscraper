@@ -31,6 +31,7 @@
 #include "strtools.h"
 
 #include "fxshadow.h"
+#include "fxblur.h"
 #include "fxmask.h"
 #include "fxframe.h"
 #include "fxrounded.h"
@@ -106,6 +107,13 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 	newLayer.distance = attribs.value("distance").toInt();
 	newLayer.softness = attribs.value("softness").toInt();
 	newLayer.opacity = attribs.value("opacity").toInt();
+	layer.layers.append(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "blur") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("softness")) {
+	newLayer.type = T_BLUR;
+	newLayer.softness = attribs.value("softness").toInt();
 	layer.layers.append(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "mask") {
@@ -323,6 +331,9 @@ void Compositor::compositeLayer(GameEntry &game, Layer &layer)
       
     } else if(thisLayer.type == T_SHADOW) {
       FxShadow effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_BLUR) {
+      FxBlur effect;
       layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
     } else if(thisLayer.type == T_MASK) {
       FxMask effect;
