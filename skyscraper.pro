@@ -50,6 +50,7 @@ HEADERS += src/skyscraper.h \
            src/platform.h \
            src/layer.h \
            src/fxshadow.h \
+           src/fxblur.h \
            src/fxmask.h \
            src/fxframe.h \
            src/fxrounded.h \
@@ -83,6 +84,7 @@ SOURCES += src/main.cpp \
            src/scripter.cpp \
            src/platform.cpp \
            src/fxshadow.cpp \
+           src/fxblur.cpp \
            src/fxmask.cpp \
            src/fxframe.cpp \
            src/fxrounded.cpp \
