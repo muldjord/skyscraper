@@ -47,15 +47,15 @@
   </order>
   <order type="cover">
     <source>import</source>
+    <source>screenscraper</source>
     <source>openretro</source>
     <source>thegamesdb</source>
-    <source>screenscraper</source>
   </order>
   <order type="screenshot">
     <source>import</source>
+    <source>screenscraper</source>
     <source>arcadedb</source>
     <source>openretro</source>
-    <source>screenscraper</source>
   </order>
   <order type="wheel">
     <source>import</source>
