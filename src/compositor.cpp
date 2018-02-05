@@ -356,8 +356,11 @@ void Compositor::compositeLayer(GameEntry &game, Layer &layer)
       FxGamebox effect;
       layer.canvas = effect.applyEffect(layer.canvas, thisLayer, game, config);
     }
-    layer.width = layer.canvas.width();
-    layer.height = layer.canvas.height();
+    // Update width and height unless it's a T_SHADOW
+    if(thisLayer.type != T_SHADOW) {
+      layer.width = layer.canvas.width();
+      layer.height = layer.canvas.height();
+    }
   }
 }
 
