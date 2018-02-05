@@ -51,9 +51,9 @@ struct Layer {
   int width = -1;
   int height = -1;
   int delta = 0;
-  int red = 0;
-  int green = 0;
-  int blue = 0;
+  int red = -1;
+  int green = -1;
+  int blue = -1;
   int distance = 0;
   int softness = 0;
   int opacity = 0;
