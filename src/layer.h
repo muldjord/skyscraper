@@ -43,6 +43,7 @@
 
 struct Layer {
   int type = T_NONE;
+  QImage canvas = QImage();
   QString resource = "";
   QString align = "";
   QString valign = "";
