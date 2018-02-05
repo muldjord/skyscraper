@@ -54,22 +54,17 @@ QImage FxShadow::applyEffect(const QImage &src, const Layer &layer)
   painter.end();
   
   QRgb *buffer1Bits = (QRgb *)buffer1.bits();
+  // Paint everything black but preserve alpha
   for(int a = 0; a < buffer1.width() * buffer1.height(); ++a) {
     buffer1Bits[a] = qPremultiply(qRgba(0, 0, 0, qAlpha(buffer1Bits[a])));
   }
-  QImage buffer2 = buffer1;
+
+  QImage buffer2(buffer1.width(), buffer1.height(), QImage::Format_ARGB32_Premultiplied);
   QRgb *buffer2Bits = (QRgb *)buffer2.bits();
   
   int width = buffer1.width(), height = buffer1.height();
   
-  QVector<double> boxes = getGaussBoxes((double)softness, 3.0);
-
-  // Pass 1
-  boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[0] - 1) / 4);
-  // Pass 2
-  boxBlur(buffer2Bits, buffer1Bits, width, height, (boxes[1] - 1) / 4);
-  // Pass 3, after this pass, we have a true gauss shadow
-  boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[2] - 1) / 4);
+  boxBlur(buffer1Bits, buffer2Bits, width, height, softness);
   
   QImage resultImage(src.width() + distance + softness,
 		     src.height() + distance + softness,
@@ -143,31 +138,31 @@ void FxShadow::boxBlurHorizontal(QRgb *buffer1, QRgb *buffer2, int width, int he
 void FxShadow::boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, double radius)
 {
   int span = radius + radius + 1;
-  for(int i = 0; i < width; i++) {
-    int currentIdx = i, frontIdx = currentIdx, backIdx = currentIdx + radius * width;
+  for(int x = 0; x < width; x++) {
+    int currentIdx = x, frontIdx = currentIdx, backIdx = currentIdx + radius * width;
     int firstVal = qAlpha(buffer1[currentIdx]),
       lastVal = qAlpha(buffer1[currentIdx + width * (height - 1)]);
 
     // Initial 'value' fill at topmost edge
     int value = (radius + 1) * firstVal;
-    for(int j = 0; j < radius; j++) {
-      value += qAlpha(buffer1[currentIdx + j * width]);
+    for(int y = 0; y < radius; y++) {
+      value += qAlpha(buffer1[currentIdx + y * width]);
     }
     
-    for(int j = 0; j <= radius ; j++) {
+    for(int y = 0; y <= radius ; y++) {
       value += qAlpha(buffer1[backIdx] - firstVal);
       buffer2[currentIdx] = qPremultiply(qRgba(0, 0, 0, value / span));
       backIdx += width;
       currentIdx += width;
     }
-    for(int j = radius + 1; j < height - radius; j++) {
+    for(int y = radius + 1; y < height - radius; y++) {
       value += qAlpha(buffer1[backIdx]) - qAlpha(buffer1[frontIdx]);
       buffer2[currentIdx] = qPremultiply(qRgba(0, 0, 0, value / span));
       frontIdx += width;
       backIdx += width;
       currentIdx += width;
     }
-    for(int j = height - radius; j < height; j++) {
+    for(int y = height - radius; y < height; y++) {
       value += lastVal - qAlpha(buffer1[frontIdx]);
       buffer2[currentIdx] = qPremultiply(qRgba(0, 0, 0, value / span));
       frontIdx += width;
