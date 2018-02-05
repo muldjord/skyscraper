@@ -44,10 +44,10 @@ public:
 
 private:
   void addLayer(Layer &layer, QXmlStreamReader &xml);
-  void compositeLayer(GameEntry &game, QImage &canvas, Layer &layer);
+  void compositeLayer(GameEntry &game, Layer &layer);
   Settings *config;
   Layer outputs;
-  void cropToFit(QImage &image);
+  QImage cropToFit(const QImage &image);
   
 };
 

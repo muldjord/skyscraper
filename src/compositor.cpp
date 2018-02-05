@@ -204,133 +204,108 @@ void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
   foreach(Layer output, outputs.layers) {
-    QImage canvas;
     if(output.resource == "cover") {
-      canvas = game.coverData;
+      output.canvas = game.coverData;
     } else if(output.resource == "screenshot") {
-      canvas = game.screenshotData;
+      output.canvas = game.screenshotData;
     } else if(output.resource == "wheel") {
-      canvas = game.wheelData;
+      output.canvas = game.wheelData;
     } else if(output.resource == "marquee") {
-      canvas = game.marqueeData;
+      output.canvas = game.marqueeData;
     }
 
-    canvas = canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    output.canvas = output.canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
     
     if(output.width == -1 && output.height != -1) {
-      canvas = canvas.scaledToHeight(output.height, Qt::SmoothTransformation);
+      output.canvas = output.canvas.scaledToHeight(output.height, Qt::SmoothTransformation);
     } else if(output.width != -1 && output.height == -1) {
-      canvas = canvas.scaledToWidth(output.width, Qt::SmoothTransformation);
+      output.canvas = output.canvas.scaledToWidth(output.width, Qt::SmoothTransformation);
     } else if(output.width != -1 && output.height != -1) {
-      canvas = canvas.scaled(output.width, output.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+      output.canvas = output.canvas.scaled(output.width, output.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
 
     if(!output.layers.isEmpty()) {
-      // Reset canvas since composite layers exist
-      canvas.fill(Qt::transparent);
+      // Reset output.canvas since composite layers exist
+      output.canvas.fill(Qt::transparent);
       // Initiate recursive compositing
-      compositeLayer(game, canvas, output);
+      compositeLayer(game, output);
     }
 
     if(output.resource == "cover") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->coversFolder + "/" + completeBaseName + ".png"))
+      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->coversFolder + "/" + completeBaseName + ".png"))
 	game.coverFile = StrTools::xmlUnescape(config->coversFolder + "/" +
 					       completeBaseName + ".png");
     } else if(output.resource == "screenshot") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->screenshotsFolder + "/" + completeBaseName + ".png"))
+      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->screenshotsFolder + "/" + completeBaseName + ".png"))
 	game.screenshotFile = StrTools::xmlUnescape(config->screenshotsFolder + "/" +
 						    completeBaseName + ".png");
     } else if(output.resource == "wheel") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->wheelsFolder + "/" + completeBaseName + ".png"))
+      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->wheelsFolder + "/" + completeBaseName + ".png"))
 	game.wheelFile = StrTools::xmlUnescape(config->wheelsFolder + "/" +
 					       completeBaseName + ".png");
     } else if(output.resource == "marquee") {
-      if(canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->marqueesFolder + "/" + completeBaseName + ".png"))
+      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->marqueesFolder + "/" + completeBaseName + ".png"))
 	game.marqueeFile = StrTools::xmlUnescape(config->marqueesFolder + "/" +
 						 completeBaseName + ".png");
     }
   }
 }
 
-void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
+void Compositor::compositeLayer(GameEntry &game, Layer &layer)
 {
   for(int a = 0; a < layer.layers.length(); ++a) {
-    QImage thisCanvas;
+    // Create new layer and set canvas to relevant resource (or empty if left out in xml)
     Layer thisLayer = layer.layers.at(a);
-
     if(thisLayer.type == T_LAYER) {
       if(thisLayer.resource == "") {
 	QImage emptyCanvas(1, 1, QImage::Format_ARGB32_Premultiplied);
 	emptyCanvas.fill(Qt::transparent);
-	thisCanvas = emptyCanvas;
+	thisLayer.canvas = emptyCanvas;
       } else if(thisLayer.resource == "cover") {
-	thisCanvas = game.coverData;
+	thisLayer.canvas = game.coverData;
       } else if(thisLayer.resource == "screenshot") {
-	thisCanvas = game.screenshotData;
+	thisLayer.canvas = game.screenshotData;
       } else if(thisLayer.resource == "wheel") {
-	thisCanvas = game.wheelData;
+	thisLayer.canvas = game.wheelData;
       } else if(thisLayer.resource == "marquee") {
-	thisCanvas = game.marqueeData;
+	thisLayer.canvas = game.marqueeData;
       } else {
-	thisCanvas = QImage(config->resources[thisLayer.resource]);
+	thisLayer.canvas = QImage(config->resources[thisLayer.resource]);
       }
 
-      thisCanvas = thisCanvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-      cropToFit(thisCanvas);
+      // If no meaningful canvas could be created, stop processing this layer branch entirely
+      if(thisLayer.canvas.isNull()) {
+	continue;
+      }
+      
+      thisLayer.canvas = thisLayer.canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+      thisLayer.canvas = cropToFit(thisLayer.canvas);
       
       if(thisLayer.width == -1 && thisLayer.height != -1) {
-	thisCanvas = thisCanvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
+	thisLayer.canvas = thisLayer.canvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
       } else if(thisLayer.width != -1 && thisLayer.height == -1) {
-	thisCanvas = thisCanvas.scaledToWidth(thisLayer.width, Qt::SmoothTransformation);
+	thisLayer.canvas = thisLayer.canvas.scaledToWidth(thisLayer.width, Qt::SmoothTransformation);
       } else if(thisLayer.width != -1 && thisLayer.height != -1) {
-	thisCanvas = thisCanvas.scaled(thisLayer.width, thisLayer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+	thisLayer.canvas = thisLayer.canvas.scaled(thisLayer.width, thisLayer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
       }
-      // Update width + height as we will need them for easier placement and alignment
-      thisLayer.width = thisCanvas.width();
-      thisLayer.height = thisCanvas.height();
-      
-      if(!thisLayer.layers.isEmpty()) {
-	compositeLayer(game, thisCanvas, thisLayer);
-      }
-    } else if(thisLayer.type == T_SHADOW) {
-      FxShadow effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
-    } else if(thisLayer.type == T_MASK) {
-      FxMask effect;
-      canvas = effect.applyEffect(canvas, thisLayer, config);
-    } else if(thisLayer.type == T_FRAME) {
-      FxFrame effect;
-      canvas = effect.applyEffect(canvas, thisLayer, config);
-    } else if(thisLayer.type == T_STROKE) {
-      FxStroke effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
-      layer.width = canvas.width();
-      layer.height = canvas.height();
-    } else if(thisLayer.type == T_ROUNDED) {
-      FxRounded effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
-    } else if(thisLayer.type == T_BRIGHTNESS) {
-      FxBrightness effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
-    } else if(thisLayer.type == T_CONTRAST) {
-      FxContrast effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
-    } else if(thisLayer.type == T_BALANCE) {
-      FxBalance effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
-    } else if(thisLayer.type == T_OPACITY) {
-      FxOpacity effect;
-      canvas = effect.applyEffect(canvas, thisLayer);
-    } else if(thisLayer.type == T_GAMEBOX) {
-      FxGamebox effect;
-      canvas = effect.applyEffect(canvas, thisLayer, game, config);
-    }
 
-    // Only draw this layer if it's actually defined
-    if(thisLayer.type != T_NONE) {
+      // Update width + height as we will need them for easier placement and alignment
+      thisLayer.width = thisLayer.canvas.width();
+      thisLayer.height = thisLayer.canvas.height();
+
+      // Continue concurrency if this layer has children
+      if(!thisLayer.layers.isEmpty()) {
+	compositeLayer(game, thisLayer);
+      }
+
+      // Update width + height as we will need them for easier placement and alignment
+      thisLayer.width = thisLayer.canvas.width();
+      thisLayer.height = thisLayer.canvas.height();
+
+      // Composite image on canvas (which is the parent canvas at this point)
       QPainter painter;
-      painter.begin(&canvas);
-      
+      painter.begin(&layer.canvas);
+
       int x = 0;
       if(thisLayer.align == "center") {
 	x = (layer.width / 2) - (thisLayer.width / 2);
@@ -338,7 +313,7 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 	x = layer.width - thisLayer.width;
       }
       x += thisLayer.x;
-      
+
       int y = 0;
       if(thisLayer.valign == "middle") {
 	y = (layer.height / 2) - (thisLayer.height / 2);
@@ -346,14 +321,47 @@ void Compositor::compositeLayer(GameEntry &game, QImage &canvas, Layer &layer)
 	y = layer.height - thisLayer.height;
       }
       y += thisLayer.y;
-      
-      painter.drawImage(x, y, thisCanvas);
+
+      painter.drawImage(x, y, thisLayer.canvas);
       painter.end();
+      
+    } else if(thisLayer.type == T_SHADOW) {
+      FxShadow effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_MASK) {
+      FxMask effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer, config);
+    } else if(thisLayer.type == T_FRAME) {
+      FxFrame effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer, config);
+    } else if(thisLayer.type == T_STROKE) {
+      FxStroke effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_ROUNDED) {
+      FxRounded effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_BRIGHTNESS) {
+      FxBrightness effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_CONTRAST) {
+      FxContrast effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_BALANCE) {
+      FxBalance effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_OPACITY) {
+      FxOpacity effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+    } else if(thisLayer.type == T_GAMEBOX) {
+      FxGamebox effect;
+      layer.canvas = effect.applyEffect(layer.canvas, thisLayer, game, config);
     }
+    layer.width = layer.canvas.width();
+    layer.height = layer.canvas.height();
   }
 }
 
-void Compositor::cropToFit(QImage &image)
+QImage Compositor::cropToFit(const QImage &image)
 {
   int left = image.width();
   int right = 0;
@@ -378,6 +386,7 @@ void Compositor::cropToFit(QImage &image)
       }
     }
   }
+  QImage cropped = image.copy(left, top, right - left, bottom - top);
 
-  image = image.copy(left, top, right - left, bottom - top);
+  return cropped;
 }
