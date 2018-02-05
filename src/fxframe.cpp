@@ -32,13 +32,15 @@ FxFrame::FxFrame()
 {
 }
 
-QImage FxFrame::applyEffect(QImage &image, Layer &layer, Settings *config)
+QImage FxFrame::applyEffect(const QImage &src, const Layer &layer, Settings *config)
 {
+  QImage canvas = src;
+
   QImage frame(config->resources[layer.resource]);
   frame = frame.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
   if(layer.width == -1 && layer.height == -1) {
-    frame = frame.scaled(image.width(), image.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    frame = frame.scaled(src.width(), src.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   } else if(layer.width == -1 && layer.height != -1) {
     frame = frame.scaledToHeight(layer.height, Qt::SmoothTransformation);
   } else if(layer.width != -1 && layer.height == -1) {
@@ -48,9 +50,9 @@ QImage FxFrame::applyEffect(QImage &image, Layer &layer, Settings *config)
   }
   
   QPainter painter;
-  painter.begin(&image);
+  painter.begin(&canvas);
   painter.drawImage(0, 0, frame);
   painter.end();
 
-  return image;
+  return canvas;
 }

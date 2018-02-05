@@ -36,7 +36,7 @@ class FxRounded : public QObject
 
 public:
   FxRounded();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(const QImage &src, const Layer &layer);
 
 };
 

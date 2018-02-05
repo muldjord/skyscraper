@@ -36,7 +36,7 @@ class FxBalance : public QObject
 
 public:
   FxBalance();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(const QImage &src, const Layer &layer);
 
 private:
   int truncate(int value);

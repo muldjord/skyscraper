@@ -32,17 +32,19 @@ FxBrightness::FxBrightness()
 {
 }
 
-QImage FxBrightness::applyEffect(QImage &image, Layer &layer)
+QImage FxBrightness::applyEffect(const QImage &src, const Layer &layer)
 {
+  QImage canvas = src;
+
   int brightness = layer.delta;
   int index[256];
   for(int a = 0; a < 256; ++a) {
     index[a] = truncate(a + brightness);
   }
   
-  for(int y = 0; y < image.height(); ++y) {
-    QRgb* line = (QRgb *)image.scanLine(y);
-    for(int x = 0; x < image.width(); ++x) {
+  for(int y = 0; y < canvas.height(); ++y) {
+    QRgb* line = (QRgb *)canvas.scanLine(y);
+    for(int x = 0; x < canvas.width(); ++x) {
       
       line[x] = qPremultiply(qRgba(index[qRed(line[x])],
 				   index[qGreen(line[x])],
@@ -51,7 +53,7 @@ QImage FxBrightness::applyEffect(QImage &image, Layer &layer)
     }
   }
   
-  return image;
+  return canvas;
 }
 
 int FxBrightness::truncate(int value)

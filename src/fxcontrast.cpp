@@ -32,8 +32,10 @@ FxContrast::FxContrast()
 {
 }
 
-QImage FxContrast::applyEffect(QImage &image, Layer &layer)
+QImage FxContrast::applyEffect(const QImage &src, const Layer &layer)
 {
+  QImage canvas = src;
+
   int contrast = layer.delta;
 
   double factor = (259.0 * ((double)contrast + 255.0)) / (255.0 * (259.0 - (double)contrast));
@@ -43,9 +45,9 @@ QImage FxContrast::applyEffect(QImage &image, Layer &layer)
     index[a] = truncate(round(factor * a));
   }
   
-  for(int y = 0; y < image.height(); ++y) {
-    QRgb* line = (QRgb *)image.scanLine(y);
-    for(int x = 0; x < image.width(); ++x) {
+  for(int y = 0; y < canvas.height(); ++y) {
+    QRgb* line = (QRgb *)canvas.scanLine(y);
+    for(int x = 0; x < canvas.width(); ++x) {
       
       line[x] = qPremultiply(qRgba(index[qRed(line[x])],
 				   index[qGreen(line[x])],
@@ -54,7 +56,7 @@ QImage FxContrast::applyEffect(QImage &image, Layer &layer)
     }
   }
 
-  return image;
+  return canvas;
 }
 
 int FxContrast::truncate(int value)

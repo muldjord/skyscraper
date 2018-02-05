@@ -32,8 +32,10 @@ FxBalance::FxBalance()
 {
 }
 
-QImage FxBalance::applyEffect(QImage &image, Layer &layer)
+QImage FxBalance::applyEffect(const QImage &src, const Layer &layer)
 {
+  QImage canvas = src;
+
   int redValue = layer.red;
   int greenValue = layer.green;
   int blueValue = layer.blue;
@@ -47,9 +49,9 @@ QImage FxBalance::applyEffect(QImage &image, Layer &layer)
     indexBlue[a] = truncate(a + blueValue);
   }
 
-  for(int y = 0; y < image.height(); ++y) {
-    QRgb* line =(QRgb *)image.scanLine(y);
-    for(int x = 0; x < image.width(); ++x) {
+  for(int y = 0; y < canvas.height(); ++y) {
+    QRgb* line =(QRgb *)canvas.scanLine(y);
+    for(int x = 0; x < canvas.width(); ++x) {
       
       line[x] = qPremultiply(qRgba(indexRed[qRed(line[x])],
 				   indexGreen[qGreen(line[x])],
@@ -58,7 +60,7 @@ QImage FxBalance::applyEffect(QImage &image, Layer &layer)
     }
   }
 
-  return image;
+  return canvas;
 }
 
 int FxBalance::truncate(int value)

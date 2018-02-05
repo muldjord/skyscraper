@@ -33,12 +33,13 @@ FxGamebox::FxGamebox()
 {
 }
 
-QImage FxGamebox::applyEffect(QImage &image, Layer &layer, GameEntry &game, Settings *config)
+QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
+			      const GameEntry &game, Settings *config)
 {
   QPainter painter;
   QTransform trans;
 
-  QImage front = image;
+  QImage front = src;
   QImage overlayFront(config->resources["boxfront.png"]);
   overlayFront = overlayFront.scaled(front.width(), front.height(),
 				     Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -57,11 +58,11 @@ QImage FxGamebox::applyEffect(QImage &image, Layer &layer, GameEntry &game, Sett
   double avgGreen = 0;
   double avgBlue = 0;
   double fromTop = 20;
-  if(image.height() < 20) {
-    fromTop = image.height();
+  if(layer.canvas.height() < 20) {
+    fromTop = layer.canvas.height();
   }
   for(int y = 0; y < fromTop; ++y) {
-    QRgb *scanline = (QRgb *)image.scanLine(y);
+    QRgb *scanline = (QRgb *)layer.canvas.scanLine(y);
     avgRed += qRed(scanline[3]);
     avgGreen += qGreen(scanline[3]);
     avgBlue += qBlue(scanline[3]);
@@ -102,15 +103,17 @@ QImage FxGamebox::applyEffect(QImage &image, Layer &layer, GameEntry &game, Sett
   front = front.transformed(trans, Qt::SmoothTransformation);
 
   trans.reset();
-  trans.rotate(70, Qt::YAxis);
+  trans.rotate(60, Qt::YAxis);
   trans.translate(0, - side.height() / 2.0);
   side = side.transformed(trans, Qt::SmoothTransformation);
   side = side.scaledToHeight(front.height(), Qt::SmoothTransformation);
 
-  image.fill(Qt::transparent);
-  painter.begin(&image);
+  QImage gamebox(side.width() + front.width(), front.height(),
+		 QImage::Format_ARGB32_Premultiplied);
+  gamebox.fill(Qt::transparent);
+  painter.begin(&gamebox);
   painter.drawImage(0, 0, side);
   painter.drawImage(side.width() - 1, 0, front);
   
-  return image;
+  return gamebox;
 }

@@ -36,7 +36,7 @@ class FxStroke : public QObject
 
 public:
   FxStroke();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(const QImage &src, const Layer &layer);
 
 };
 

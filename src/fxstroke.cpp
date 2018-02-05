@@ -32,20 +32,18 @@ FxStroke::FxStroke()
 {
 }
 
-QImage FxStroke::applyEffect(QImage &image, Layer &layer)
+QImage FxStroke::applyEffect(const QImage &src, const Layer &layer)
 {
   int red = layer.red;
   int green = layer.green;
   int blue = layer.blue;
 
-  printf("red=%d, green=%d, blue=%d\n", red, green, blue);
-  
   if(red == -1 || green == -1 || blue == -1) {
     int samples = 20;
     int averageDivider = 0;
-    for(int y = samples / 2; y < image.height(); y += samples) {
-      QRgb *scanline = (QRgb *)image.scanLine(y);
-      for(int x = samples / 2; x < image.width(); x += samples) {
+    for(int y = samples / 2; y < src.height(); y += samples) {
+      QRgb *scanline = (QRgb *)src.scanLine(y);
+      for(int x = samples / 2; x < src.width(); x += samples) {
 	red += qRed(scanline[x]);
 	green += qGreen(scanline[x]);
 	blue += qBlue(scanline[x]);
@@ -63,15 +61,15 @@ QImage FxStroke::applyEffect(QImage &image, Layer &layer)
     }
   }
 
-  QImage buffer1(image.width() + layer.width * 2, image.height() + layer.width * 2,
+  QImage buffer1(src.width() + layer.width * 2, src.height() + layer.width * 2,
 		 QImage::Format_ARGB32_Premultiplied);
   buffer1.fill(Qt::transparent);
   QPainter painter;
   painter.begin(&buffer1);
-  painter.drawImage(layer.width, layer.width, image);
+  painter.drawImage(layer.width, layer.width, src);
   painter.end();
   
-  QImage buffer2(image.width() + layer.width * 2, image.height() + layer.width * 2,
+  QImage buffer2(src.width() + layer.width * 2, src.height() + layer.width * 2,
 		 QImage::Format_ARGB32_Premultiplied);
   buffer2.fill(Qt::transparent);
 
@@ -106,7 +104,7 @@ QImage FxStroke::applyEffect(QImage &image, Layer &layer)
   }
 
   painter.begin(&buffer2);
-  painter.drawImage(layer.width, layer.width, image);
+  painter.drawImage(layer.width, layer.width, src);
   painter.end();
 
   return buffer2;

@@ -38,7 +38,7 @@ class FxGamebox : public QObject
 
 public:
   FxGamebox();
-  QImage applyEffect(QImage &image, Layer &layer, GameEntry &game, Settings *config);
+  QImage applyEffect(const QImage &src, const Layer &layer, const GameEntry &game, Settings *config);
 
 };
 

@@ -39,7 +39,7 @@ class FxShadow : public QObject
 
 public:
   FxShadow();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(const QImage &src, const Layer &layer);
 
 private:
   QVector<double> getGaussBoxes(double sigma, double n);

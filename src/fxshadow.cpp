@@ -32,7 +32,7 @@ FxShadow::FxShadow()
 {
 }
 
-QImage FxShadow::applyEffect(QImage &image, Layer &layer)
+QImage FxShadow::applyEffect(const QImage &src, const Layer &layer)
 {
   int distance = layer.distance;
   int softness = layer.softness;
@@ -45,16 +45,16 @@ QImage FxShadow::applyEffect(QImage &image, Layer &layer)
   if(opacity == -1)
     opacity = 50;
 
-  if(image.isNull() || image.width() == 0 || image.height() == 0) {
-    return image;
+  if(src.isNull() || src.width() == 0 || src.height() == 0) {
+    return src;
   }
   
-  QImage buffer1(image.width() + softness * 2, image.height() + softness * 2,
+  QImage buffer1(src.width() + softness * 2, src.height() + softness * 2,
 		 QImage::Format_ARGB32_Premultiplied);
   buffer1.fill(Qt::transparent);
   QPainter painter;
   painter.begin(&buffer1);
-  painter.drawImage(softness, softness, image);
+  painter.drawImage(softness, softness, src);
   painter.end();
   
   QRgb *buffer1Bits = (QRgb *)buffer1.bits();
@@ -75,15 +75,15 @@ QImage FxShadow::applyEffect(QImage &image, Layer &layer)
   // Pass 3, after this pass, we have a true gauss shadow
   boxBlur(buffer1Bits, buffer2Bits, width, height, (boxes[2] - 1) / 4);
   
-  QImage resultImage(image.width() + distance + softness,
-		     image.height() + distance + softness,
+  QImage resultImage(src.width() + distance + softness,
+		     src.height() + distance + softness,
 		     QImage::Format_ARGB32_Premultiplied);
   resultImage.fill(Qt::transparent);
   painter.begin(&resultImage);
   painter.setOpacity(opacity * 0.01);
   painter.drawImage(distance - softness, distance - softness, buffer2);
   painter.setOpacity(1.0);
-  painter.drawImage(0, 0, image);
+  painter.drawImage(0, 0, src);
   painter.end();
   
   return resultImage;

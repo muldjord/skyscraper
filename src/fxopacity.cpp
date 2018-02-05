@@ -32,17 +32,17 @@ FxOpacity::FxOpacity()
 {
 }
 
-QImage FxOpacity::applyEffect(QImage &image, Layer &layer)
+QImage FxOpacity::applyEffect(const QImage &src, const Layer &layer)
 {
   double opacity = layer.opacity;
 
-  QImage newImage(image.width(), image.height(), QImage::Format_ARGB32_Premultiplied);
-  newImage.fill(Qt::transparent);
+  QImage canvas(src.width(), src.height(), QImage::Format_ARGB32_Premultiplied);
+  canvas.fill(Qt::transparent);
   QPainter painter;
-  painter.begin(&newImage);
+  painter.begin(&canvas);
   painter.setOpacity(opacity / 100.0);
-  painter.drawImage(0, 0, image);
+  painter.drawImage(0, 0, src);
   painter.end();
   
-  return newImage;
+  return canvas;
 }

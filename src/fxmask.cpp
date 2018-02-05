@@ -32,13 +32,15 @@ FxMask::FxMask()
 {
 }
 
-QImage FxMask::applyEffect(QImage &image, Layer &layer, Settings *config)
+QImage FxMask::applyEffect(const QImage &src, const Layer &layer, Settings *config)
 {
+  QImage canvas = src;
+
   QImage mask(config->resources[layer.resource]);
   mask = mask.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
   if(layer.width == -1 && layer.height == -1) {
-    mask = mask.scaled(image.width(), image.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    mask = mask.scaled(src.width(), src.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   } else if(layer.width == -1 && layer.height != -1) {
     mask = mask.scaledToHeight(layer.height, Qt::SmoothTransformation);
   } else if(layer.width != -1 && layer.height == -1) {
@@ -48,17 +50,17 @@ QImage FxMask::applyEffect(QImage &image, Layer &layer, Settings *config)
   }
   
   QPainter painter;
-  painter.begin(&image);
+  painter.begin(&canvas);
   painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
   painter.drawImage(layer.x, layer.y, mask);
   painter.setCompositionMode(QPainter::CompositionMode_DestinationOut);
-  painter.fillRect(0, 0, layer.x, image.height(), QColor(0, 0, 0));
-  painter.fillRect(0, 0, image.width(), layer.y, QColor(0, 0, 0));
+  painter.fillRect(0, 0, layer.x, src.height(), QColor(0, 0, 0));
+  painter.fillRect(0, 0, src.width(), layer.y, QColor(0, 0, 0));
   painter.fillRect(layer.x + mask.width(), 0,
-		   image.width() - layer.x - mask.width(), image.height(), QColor(0, 0, 0));
+		   src.width() - layer.x - mask.width(), src.height(), QColor(0, 0, 0));
   painter.fillRect(0, layer.y + mask.height(),
-		   image.width(), image.height() - layer.y - mask.height(), QColor(0, 0, 0));
+		   src.width(), src.height() - layer.y - mask.height(), QColor(0, 0, 0));
   painter.end();
 
-  return image;
+  return canvas;
 }

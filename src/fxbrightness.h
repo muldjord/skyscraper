@@ -36,7 +36,7 @@ class FxBrightness : public QObject
 
 public:
   FxBrightness();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(const QImage &src, const Layer &layer);
 
 private:
   int truncate(int value);

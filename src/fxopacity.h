@@ -36,7 +36,7 @@ class FxOpacity : public QObject
 
 public:
   FxOpacity();
-  QImage applyEffect(QImage &image, Layer &layer);
+  QImage applyEffect(const QImage &src, const Layer &layer);
 
 };
 
