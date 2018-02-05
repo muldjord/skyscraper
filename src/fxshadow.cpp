@@ -45,10 +45,6 @@ QImage FxShadow::applyEffect(const QImage &src, const Layer &layer)
   if(opacity == -1)
     opacity = 50;
 
-  if(src.isNull() || src.width() == 0 || src.height() == 0) {
-    return src;
-  }
-  
   QImage buffer1(src.width() + softness * 2, src.height() + softness * 2,
 		 QImage::Format_ARGB32_Premultiplied);
   buffer1.fill(Qt::transparent);
