@@ -298,10 +298,6 @@ void Compositor::compositeLayer(GameEntry &game, Layer &layer)
 	compositeLayer(game, thisLayer);
       }
 
-      // Update width + height as we will need them for easier placement and alignment
-      thisLayer.width = thisLayer.canvas.width();
-      thisLayer.height = thisLayer.canvas.height();
-
       // Composite image on canvas (which is the parent canvas at this point)
       QPainter painter;
       painter.begin(&layer.canvas);
