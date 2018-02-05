@@ -143,7 +143,8 @@ void Skyscraper::run()
     std::string userInput = "";
     printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
     getline(std::cin, userInput);
-    if(userInput != "y") {
+    if(userInput == "y" || userInput == "Y") {
+    } else {
       printf("User chose not to overwrite, now exiting...\n");
       exit(0);
     }
@@ -194,7 +195,7 @@ void Skyscraper::run()
     if(gameListFile.exists() && frontend->canSkip()) {
       printf("\033[1;34mDo you wish to skip existing entries\033[0m (y/N)? ");
       getline(std::cin, userInput);
-      if(userInput == "y" && frontend->canSkip()) {
+      if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
 	frontend->skipExisting(gameListFileString, gameEntries, inputFiles);
       }
     }
