@@ -113,7 +113,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   gamebox.fill(Qt::transparent);
   painter.begin(&gamebox);
   painter.drawImage(0, 0, side);
-  painter.drawImage(side.width() - 1, 0, front);
+  painter.drawImage(side.width(), 0, front);
   
   return gamebox;
 }
