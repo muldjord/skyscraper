@@ -67,7 +67,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   
   GameEntry game;
 
-  xmlDoc.setContent(data);
+  if(!xmlDoc.setContent(data)) {
+    printf("Couldn't parse xml data from source, skipping...\n");
+    return;
+  }
 
   QDomNode xmlRegionNoms = xmlDoc.elementsByTagName("noms").at(0);
 
