@@ -85,6 +85,7 @@ SOURCES += src/main.cpp \
            src/arcadedb.cpp \
            src/scripter.cpp \
            src/platform.cpp \
+           src/layer.cpp \
            src/fxshadow.cpp \
            src/fxblur.cpp \
            src/fxmask.cpp \
