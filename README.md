@@ -1,5 +1,5 @@
 # Skyscraper by Lars Muldjord
-A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a RetroPie system. It scrapes various game resources from various web sources, including media such as screenshot, cover and video.
+A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a RetroPie system. It scrapes and caches various game resources from various web sources, including media such as screenshot, cover and video. It then gives you the option to combine all of these resources into the most complete results by scraping with the 'localdb' scraping module (set with '-s localdb').
 
 #### Currently supports the following frontends (set with '-f'):
 * EmulationStation
