@@ -118,24 +118,20 @@ void FxBlur::boxBlurHorizontal(QRgb *buffer1, QRgb *buffer2, int width, int heig
   }
 }
 
-void FxBlur::boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, double radius)
+void FxBlur::boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius)
 {
   int span = radius + radius + 1;
   for(int x = 0; x < width; x++) {
     int currentIdx = x, frontIdx = currentIdx, backIdx = currentIdx + radius * width;
-    int firstValR = qRed(buffer1[currentIdx]),
-      lastValR = qRed(buffer1[currentIdx + width * (height - 1)]);
-    int firstValG = qGreen(buffer1[currentIdx]),
-      lastValG= qGreen(buffer1[currentIdx + width * (height - 1)]);
-    int firstValB = qBlue(buffer1[currentIdx]),
-      lastValB = qBlue(buffer1[currentIdx + width * (height - 1)]);
-    int firstValA = qAlpha(buffer1[currentIdx]),
-      lastValA = qAlpha(buffer1[currentIdx + width * (height - 1)]);
+    int firstValR = qRed(buffer1[currentIdx]), lastValR = qRed(buffer1[currentIdx + width * (height - 1)]);
+    int firstValG = qGreen(buffer1[currentIdx]), lastValG = qGreen(buffer1[currentIdx + width * (height - 1)]);
+    int firstValB = qBlue(buffer1[currentIdx]), lastValB = qBlue(buffer1[currentIdx + width * (height - 1)]);
+    int firstValA = qAlpha(buffer1[currentIdx]), lastValA = qAlpha(buffer1[currentIdx + width * (height - 1)]);
 
     // Initial 'value' fill at topmost edge
     int valueR = (radius + 1) * firstValR;
-    int valueG = (radius + 1) * firstValB;
-    int valueB = (radius + 1) * firstValG;
+    int valueG = (radius + 1) * firstValG;
+    int valueB = (radius + 1) * firstValB;
     int valueA = (radius + 1) * firstValA;
     for(int y = 0; y < radius; y++) {
       valueR += qRed(buffer1[currentIdx + y * width]);
