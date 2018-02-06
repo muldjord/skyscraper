@@ -110,89 +110,57 @@ void Layer::setOpacity(const int &opacity)
   this->opacity = opacity;
 }
 
-// Getters
-int Layer::getType()
-{
-  return type;
-}
-
-QImage Layer::getCanvas()
-{
-  return canvas;
-}
-
-QString Layer::getResource()
-{
-  return resource;
-}
-
-QString Layer::getAlign()
-{
-  return align;
-}
-
-QString Layer::getVAlign()
-{
-  return valign;
-}
-
-int Layer::getX()
-{
-  return x;
-}
-
-int Layer::getY()
-{
-  return y;
-}
-
-int Layer::getWidth()
-{
-  return width;
-}
-
-int Layer::getHeight()
-{
-  return height;
-}
-
-int Layer::getDelta()
-{
-  return delta;
-}
-
-int Layer::getRed()
-{
-  return red;
-}
-
-int Layer::getGreen()
-{
-  return green;
-}
-
-int Layer::getBlue()
-{
-  return blue;
-}
-
-int Layer::getDistance()
-{
-  return distance;
-}
-
-int Layer::getSoftness()
-{
-  return softness;
-}
-
-int Layer::getOpacity()
-{
-  return opacity;
-}
-
 // Add new layer
 void Layer::addLayer(const Layer &layer)
 {
   this->layers.append(layer);
+}
+
+QList<Layer> Layer::getLayers()
+{
+  return layers;
+}
+
+void Layer::makeTransparent()
+{
+  canvas.fill(Qt::transparent);
+}
+
+void Layer::scale()
+{
+  if(width == -1 && height != -1) {
+    canvas = canvas.scaledToHeight(height, Qt::SmoothTransformation);
+  } else if(width != -1 && height == -1) {
+    canvas = canvas.scaledToWidth(width, Qt::SmoothTransformation);
+  } else if(width != -1 && height != -1) {
+    canvas = canvas.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  }
+}
+
+void Layer::premultiply()
+{
+  canvas = canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+}
+
+void Layer::updateSize()
+{
+  width = canvas.width();
+  height = canvas.height();
+}
+
+bool Layer::hasLayers()
+{
+  if(layers.isEmpty()) {
+    return false;
+  }
+  return true;
+}
+
+bool Layer::save(QString filename)
+{
+  canvas = canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied);
+  if(canvas.save(filename)) {
+    return true;
+  }
+  return false;
 }

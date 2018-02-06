@@ -61,14 +61,14 @@ bool Compositor::processXml()
   QXmlStreamReader xml(config->artworkXml);
   
   // Init recursive parsing
-  recurseAddLayer(newOutputs, xml);
+  addChildLayers(newOutputs, xml);
 
   // Assign global outputs to these new outputs
   outputs = newOutputs;
   return true;
 }
 
-void Compositor::recurseAddLayer(Layer &layer, QXmlStreamReader &xml)
+void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 {
   while(xml.readNext() && !xml.atEnd()) {
     Layer newLayer;
@@ -83,8 +83,8 @@ void Compositor::recurseAddLayer(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("height"))
 	newLayer.setHeight(attribs.value("", "height").toInt());
 
-      if(newLayer.getType() != T_NONE) {
-	recurseAddLayer(newLayer, xml);
+      if(newLayer.type != T_NONE) {
+	addChildLayers(newLayer, xml);
 	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "layer") {
@@ -103,7 +103,7 @@ void Compositor::recurseAddLayer(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setX(attribs.value("", "x").toInt());
       if(attribs.hasAttribute("y"))
 	newLayer.setY(attribs.value("", "y").toInt());
-      recurseAddLayer(newLayer, xml);
+      addChildLayers(newLayer, xml);
       layer.addLayer(newLayer);
     } else if(xml.isStartElement() && xml.name() == "shadow") {
       QXmlStreamAttributes attribs = xml.attributes();
@@ -218,99 +218,89 @@ void Compositor::recurseAddLayer(Layer &layer, QXmlStreamReader &xml)
 
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
-  foreach(Layer output, outputs.layers) {
+  foreach(Layer output, outputs.getLayers()) {
     if(output.resource == "cover") {
-      output.canvas = game.coverData;
+      output.setCanvas(game.coverData);
     } else if(output.resource == "screenshot") {
-      output.canvas = game.screenshotData;
+      output.setCanvas(game.screenshotData);
     } else if(output.resource == "wheel") {
-      output.canvas = game.wheelData;
+      output.setCanvas(game.wheelData);
     } else if(output.resource == "marquee") {
-      output.canvas = game.marqueeData;
+      output.setCanvas(game.marqueeData);
     }
 
-    output.canvas = output.canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    output.premultiply();
+    output.scale();
     
-    if(output.width == -1 && output.height != -1) {
-      output.canvas = output.canvas.scaledToHeight(output.height, Qt::SmoothTransformation);
-    } else if(output.width != -1 && output.height == -1) {
-      output.canvas = output.canvas.scaledToWidth(output.width, Qt::SmoothTransformation);
-    } else if(output.width != -1 && output.height != -1) {
-      output.canvas = output.canvas.scaled(output.width, output.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    }
-
-    if(!output.layers.isEmpty()) {
+    if(output.hasLayers()) {
       // Reset output.canvas since composite layers exist
-      output.canvas.fill(Qt::transparent);
+      output.makeTransparent();
       // Initiate recursive compositing
-      compositeLayer(game, output);
+      processChildLayers(game, output);
     }
 
     if(output.resource == "cover") {
-      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->coversFolder + "/" + completeBaseName + ".png"))
-	game.coverFile = StrTools::xmlUnescape(config->coversFolder + "/" +
-					       completeBaseName + ".png");
+      QString filename = config->coversFolder + "/" + completeBaseName + ".png";
+      if(output.save(filename)) {
+	game.coverFile = StrTools::xmlUnescape(filename);
+      }
     } else if(output.resource == "screenshot") {
-      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->screenshotsFolder + "/" + completeBaseName + ".png"))
-	game.screenshotFile = StrTools::xmlUnescape(config->screenshotsFolder + "/" +
-						    completeBaseName + ".png");
+      QString filename = config->screenshotsFolder + "/" + completeBaseName + ".png";
+      if(output.save(filename)) {
+	game.screenshotFile = filename;
+      }
     } else if(output.resource == "wheel") {
-      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->wheelsFolder + "/" + completeBaseName + ".png"))
-	game.wheelFile = StrTools::xmlUnescape(config->wheelsFolder + "/" +
-					       completeBaseName + ".png");
+      QString filename = config->wheelsFolder + "/" + completeBaseName + ".png";
+      if(output.save(filename)) {
+	game.wheelFile = filename;
+      }
     } else if(output.resource == "marquee") {
-      if(output.canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(config->marqueesFolder + "/" + completeBaseName + ".png"))
-	game.marqueeFile = StrTools::xmlUnescape(config->marqueesFolder + "/" +
-						 completeBaseName + ".png");
+      QString filename = config->marqueesFolder + "/" + completeBaseName + ".png";
+      if(output.save(filename)) {
+	game.marqueeFile = filename;
+      }
     }
   }
 }
 
-void Compositor::compositeLayer(GameEntry &game, Layer &layer)
+void Compositor::processChildLayers(GameEntry &game, Layer &layer)
 {
-  for(int a = 0; a < layer.layers.length(); ++a) {
+  for(int a = 0; a < layer.getLayers().length(); ++a) {
     // Create new layer and set canvas to relevant resource (or empty if left out in xml)
-    Layer thisLayer = layer.layers.at(a);
+    Layer thisLayer = layer.getLayers().at(a);
     if(thisLayer.type == T_LAYER) {
       if(thisLayer.resource == "") {
 	QImage emptyCanvas(1, 1, QImage::Format_ARGB32_Premultiplied);
 	emptyCanvas.fill(Qt::transparent);
-	thisLayer.canvas = emptyCanvas;
+	thisLayer.setCanvas(emptyCanvas);
       } else if(thisLayer.resource == "cover") {
-	thisLayer.canvas = game.coverData;
+	thisLayer.setCanvas(game.coverData);
       } else if(thisLayer.resource == "screenshot") {
-	thisLayer.canvas = game.screenshotData;
+	thisLayer.setCanvas(game.screenshotData);
       } else if(thisLayer.resource == "wheel") {
-	thisLayer.canvas = game.wheelData;
+	thisLayer.setCanvas(game.wheelData);
       } else if(thisLayer.resource == "marquee") {
-	thisLayer.canvas = game.marqueeData;
+	thisLayer.setCanvas(game.marqueeData);
       } else {
-	thisLayer.canvas = QImage(config->resources[thisLayer.resource]);
+	thisLayer.setCanvas(config->resources[thisLayer.resource]);
       }
-
+	  
       // If no meaningful canvas could be created, stop processing this layer branch entirely
       if(thisLayer.canvas.isNull()) {
 	continue;
       }
       
-      thisLayer.canvas = thisLayer.canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-      thisLayer.canvas = ImgTools::cropToFit(thisLayer.canvas);
-      
-      if(thisLayer.width == -1 && thisLayer.height != -1) {
-	thisLayer.canvas = thisLayer.canvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
-      } else if(thisLayer.width != -1 && thisLayer.height == -1) {
-	thisLayer.canvas = thisLayer.canvas.scaledToWidth(thisLayer.width, Qt::SmoothTransformation);
-      } else if(thisLayer.width != -1 && thisLayer.height != -1) {
-	thisLayer.canvas = thisLayer.canvas.scaled(thisLayer.width, thisLayer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-      }
+      thisLayer.premultiply();
+      // Remove transparent areas around image);
+      thisLayer.setCanvas(ImgTools::cropToFit(thisLayer.canvas));
+      thisLayer.scale();
 
       // Update width + height as we will need them for easier placement and alignment
-      thisLayer.width = thisLayer.canvas.width();
-      thisLayer.height = thisLayer.canvas.height();
+      thisLayer.updateSize();
 
       // Continue concurrency if this layer has children
-      if(!thisLayer.layers.isEmpty()) {
-	compositeLayer(game, thisLayer);
+      if(thisLayer.hasLayers()) {
+	processChildLayers(game, thisLayer);
       }
 
       // Composite image on canvas (which is the parent canvas at this point)
@@ -338,42 +328,41 @@ void Compositor::compositeLayer(GameEntry &game, Layer &layer)
       
     } else if(thisLayer.type == T_SHADOW) {
       FxShadow effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_BLUR) {
       FxBlur effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_MASK) {
       FxMask effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer, config);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer, config));
     } else if(thisLayer.type == T_FRAME) {
       FxFrame effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer, config);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer, config));
     } else if(thisLayer.type == T_STROKE) {
       FxStroke effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_ROUNDED) {
       FxRounded effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_BRIGHTNESS) {
       FxBrightness effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_CONTRAST) {
       FxContrast effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_BALANCE) {
       FxBalance effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_OPACITY) {
       FxOpacity effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     } else if(thisLayer.type == T_GAMEBOX) {
       FxGamebox effect;
-      layer.canvas = effect.applyEffect(layer.canvas, thisLayer, game, config);
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer, game, config));
     }
     // Update width and height unless it's a T_SHADOW
     if(thisLayer.type != T_SHADOW) {
-      layer.width = layer.canvas.width();
-      layer.height = layer.canvas.height();
+      layer.updateSize();
     }
   }
 }

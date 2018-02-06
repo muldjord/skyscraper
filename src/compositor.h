@@ -43,8 +43,8 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
-  void recurseAddLayer(Layer &layer, QXmlStreamReader &xml);
-  void compositeLayer(GameEntry &game, Layer &layer);
+  void addChildLayers(Layer &layer, QXmlStreamReader &xml);
+  void processChildLayers(GameEntry &game, Layer &layer);
   Settings *config;
   Layer outputs;
   QImage cropToFit(const QImage &image);

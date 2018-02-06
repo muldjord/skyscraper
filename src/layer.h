@@ -41,10 +41,30 @@
 #define T_BLUR 12
 #define T_GAMEBOX 13
 
+#include <QImage>
+
 class Layer
 {
 public:
   Layer();
+
+  int type = T_NONE;
+  QImage canvas = QImage();
+  QString resource = "";
+  QString align = "";
+  QString valign = "";
+  int x = 0;
+  int y = 0;
+  int width = -1;
+  int height = -1;
+  int delta = 0;
+  int red = -1;
+  int green = -1;
+  int blue = -1;
+  int distance = 0;
+  int softness = 0;
+  int opacity = 0;
+
   // Setters
   void setType(const int &type);
   void setCanvas(const QImage &canvas);
@@ -63,44 +83,17 @@ public:
   void setSoftness(const int &softness);
   void setOpacity(const int &opacity);
 
-  // Getters
-  int getType();
-  QImage getCanvas();
-  QString getResource();
-  QString getAlign();
-  int getVAlign();
-  int getX();
-  int getY();
-  int getWidth();
-  int getHeight();
-  int getDelta();
-  int getRed();
-  int getGreen();
-  int getBlue();
-  int getDistance();
-  int getSoftness();
-  int getOpacity();
-
   void addLayer(const Layer &layer);
-  
-private:
-  int type = T_NONE;
-  QImage canvas = QImage();
-  QString resource = "";
-  QString align = "";
-  QString valign = "";
-  int x = 0;
-  int y = 0;
-  int width = -1;
-  int height = -1;
-  int delta = 0;
-  int red = -1;
-  int green = -1;
-  int blue = -1;
-  int distance = 0;
-  int softness = 0;
-  int opacity = 0;
+  QList<Layer> getLayers();
 
+  void makeTransparent();
+  void scale();
+  void premultiply();
+  void updateSize();
+  bool hasLayers();
+  bool save(QString filename);
+
+private:
   // Contains all nested layers and effects
   QList<Layer> layers;
 };
