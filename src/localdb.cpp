@@ -494,9 +494,8 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 
 bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
 {
-  // Copy data before iterating to make thread safe
-  QList<Resource> tmpResources = resources;
-  foreach(Resource res, tmpResources) {
+  QMutexLocker locker(&dbMutex);
+  foreach(Resource res, resources) {
     if(scraper.isEmpty()) {
       if(res.sha1 == sha1) {
 	return true;
@@ -512,11 +511,10 @@ bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
 
 void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
 {
-  // Copy data before iterating to make thread safe
-  QList<Resource> tmpResources = resources;
+  QMutexLocker locker(&dbMutex);
   QList<Resource> matchingResources;
   // Find all resources related to this particular rom
-  foreach(Resource resource, tmpResources) {
+  foreach(Resource resource, resources) {
     if(scraper.isEmpty()) {
       if(entry.sha1 == resource.sha1) {
 	matchingResources.append(resource);
@@ -668,6 +666,7 @@ bool LocalDb::fillType(QString &type, QList<Resource> &matchingResources, QStrin
 
 void LocalDb::printResources()
 {
+  QMutexLocker locker(&dbMutex);
   foreach(Resource resource, resources) {
     printf("--- sha1: '%s' ---\ntype: '%s'\nsource: '%s'\ntimestamp: '%s'\nvalue: '%s'\n", resource.sha1.toStdString().c_str(), resource.type.toStdString().c_str(), resource.source.toStdString().c_str(), QString::number(resource.timestamp).toStdString().c_str(), resource.value.toStdString().c_str());
   }
