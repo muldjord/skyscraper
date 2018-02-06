@@ -26,9 +26,11 @@
 #include <cmath>
 #include <QSettings>
 #include <QPainter>
+#include <QDomDocument>
 
 #include "compositor.h"
 #include "strtools.h"
+#include "imgtools.h"
 
 #include "fxshadow.h"
 #include "fxblur.h"
@@ -42,15 +44,20 @@
 #include "fxopacity.h"
 #include "fxgamebox.h"
 
-Compositor::Compositor(Settings &config)
+Compositor::Compositor(Settings *config)
 {
-  this->config = &config;
+  this->config = config;
 }
 
 bool Compositor::processXml()
 {
   Layer newOutputs;
   
+  // Check document for errors before running through it
+  QDomDocument doc;
+  if(!doc.setContent(config->artworkXml))
+     return false;
+
   QXmlStreamReader xml(config->artworkXml);
   
   // Init recursive parsing
@@ -287,7 +294,7 @@ void Compositor::compositeLayer(GameEntry &game, Layer &layer)
       }
       
       thisLayer.canvas = thisLayer.canvas.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-      thisLayer.canvas = cropToFit(thisLayer.canvas);
+      thisLayer.canvas = ImgTools::cropToFit(thisLayer.canvas);
       
       if(thisLayer.width == -1 && thisLayer.height != -1) {
 	thisLayer.canvas = thisLayer.canvas.scaledToHeight(thisLayer.height, Qt::SmoothTransformation);
@@ -369,34 +376,4 @@ void Compositor::compositeLayer(GameEntry &game, Layer &layer)
       layer.height = layer.canvas.height();
     }
   }
-}
-
-QImage Compositor::cropToFit(const QImage &image)
-{
-  int left = image.width();
-  int right = 0;
-  int top = 0;
-  int bottom = image.height();
-
-  // Find lefmost edge
-  for(int y = 0; y < image.height(); ++y) {
-    QRgb *scanline = (QRgb *)image.scanLine(y);
-    for(int x = 0; x < image.width(); ++x) {
-      if(qAlpha(scanline[x]) > 0) {
-	if(left > x) {
-	  left = x;
-	}
-	if(right < x) {
-	  right = x + 1;
-	}
-	if(top == 0) {
-	  top = y;
-	}
-	bottom = y + 1;
-      }
-    }
-  }
-  QImage cropped = image.copy(left, top, right - left, bottom - top);
-
-  return cropped;
 }

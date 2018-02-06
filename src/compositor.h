@@ -38,7 +38,7 @@ class Compositor : public QObject
   Q_OBJECT
 
 public:
-  Compositor(Settings &config);
+  Compositor(Settings *config);
   bool processXml();
   void saveAll(GameEntry &game, QString completeBaseName);
 

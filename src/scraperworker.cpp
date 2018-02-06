@@ -79,8 +79,11 @@ void ScraperWorker::run()
   
   platformOrig = config.platform;
 
-  Compositor artHandler(config);
-  artHandler.processXml();
+  Compositor compositor(&config);
+  if(!compositor.processXml()) {
+    printf("Something went wrong when parsing artwork xml from '%s', please check the file for errors. Now exiting...\n", config.artworkConfig.toStdString().c_str());
+    exit(1);
+  }
   
   for(int a = beginIdx; a < filesPerThread + beginIdx; ++a) {
     output = "";
@@ -170,7 +173,8 @@ void ScraperWorker::run()
     }
 
     if(!config.pretend) {
-      artHandler.saveAll(game, info.completeBaseName());
+      // Process all artwork
+      compositor.saveAll(game, info.completeBaseName());
       if(config.videos && game.videoFormat != "") {
 	QFile videoFile(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
 	if(videoFile.open(QIODevice::WriteOnly)) {
