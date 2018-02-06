@@ -135,7 +135,7 @@ void FxShadow::boxBlurHorizontal(QRgb *buffer1, QRgb *buffer2, int width, int he
   }
 }
 
-void FxShadow::boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, double radius)
+void FxShadow::boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius)
 {
   int span = radius + radius + 1;
   for(int x = 0; x < width; x++) {

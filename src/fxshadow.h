@@ -45,7 +45,7 @@ private:
   QVector<double> getGaussBoxes(double sigma, double n);
   void boxBlur(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius);
   void boxBlurHorizontal(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius);
-  void boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, double radius);
+  void boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius);
   
 };
 
