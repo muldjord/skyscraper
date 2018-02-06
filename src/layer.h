@@ -64,22 +64,22 @@ public:
   void setOpacity(const int &opacity);
 
   // Getters
-  void getType(const int &type);
-  void getCanvas(const QImage &canvas);
-  void getResource(const QString &resource);
-  void getAlign(const QString &align);
-  void getVAlign(const QString &valign);
-  void getX(const int &x);
-  void getY(const int &y);
-  void getWidth(const int &width);
-  void getHeight(const int &height);
-  void getDelta(const int &delta);
-  void getRed(const int &red);
-  void getGreen(const int &green);
-  void getBlue(const int &blue);
-  void getDistance(const int &distance);
-  void getSoftness(const int &softness);
-  void getOpacity(const int &opacity);
+  int getType();
+  QImage getCanvas();
+  QString getResource();
+  QString getAlign();
+  int getVAlign();
+  int getX();
+  int getY();
+  int getWidth();
+  int getHeight();
+  int getDelta();
+  int getRed();
+  int getGreen();
+  int getBlue();
+  int getDistance();
+  int getSoftness();
+  int getOpacity();
 
   void addLayer(const Layer &layer);
   
