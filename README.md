@@ -143,6 +143,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Now always accepts 'screenscraper' results no matter if platform matches or not
 * Now sets 'minMatch' to 0 by default for 'localdb' , 'arcadedb' and 'screenscraper' scraping modules. Can be overruled on command line and in config file
 * Added 'artworkXml' config file options and '-a' cli option for setting custom artwork xml config file
+* Made localdb more thread safe, might've fixed rare issues of resources being mixed up internally
 
 #### Version 2.2.7 (31st January 2018)
 * Optimized shadow rendering A LOT! WROOOOOOOOOM!!!
