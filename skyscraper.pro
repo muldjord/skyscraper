@@ -32,6 +32,7 @@ HEADERS += src/skyscraper.h \
            src/settings.h \
            src/compositor.h \
            src/strtools.h \
+           src/imgtools.h \
            src/scraperworker.h \
            src/localdb.h \
            src/localscraper.h \
@@ -67,6 +68,7 @@ SOURCES += src/main.cpp \
            src/xmlreader.cpp \
            src/compositor.cpp \
            src/strtools.cpp \
+           src/imgtools.cpp \
            src/scraperworker.cpp \
            src/localdb.cpp \
            src/localscraper.cpp \
