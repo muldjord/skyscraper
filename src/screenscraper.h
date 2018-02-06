@@ -36,11 +36,11 @@ class ScreenScraper : public AbstractScraper
 
 public:
   ScreenScraper();
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking);
+  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info,
+		 QString &output, QString &marking);
 
 private:
-  void getSearchResults(QList<GameEntry> &gameEntries,
-			QString searchName, QString platform);
+  void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform);
   void getGameData(GameEntry &game);
   void getReleaseDate(GameEntry &game);
   void getDeveloper(GameEntry &game);
