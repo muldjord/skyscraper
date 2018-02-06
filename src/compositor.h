@@ -43,7 +43,7 @@ public:
   void saveAll(GameEntry &game, QString completeBaseName);
 
 private:
-  void addLayer(Layer &layer, QXmlStreamReader &xml);
+  void recurseAddLayer(Layer &layer, QXmlStreamReader &xml);
   void compositeLayer(GameEntry &game, Layer &layer);
   Settings *config;
   Layer outputs;

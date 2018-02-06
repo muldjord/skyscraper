@@ -61,153 +61,153 @@ bool Compositor::processXml()
   QXmlStreamReader xml(config->artworkXml);
   
   // Init recursive parsing
-  addLayer(newOutputs, xml);
+  recurseAddLayer(newOutputs, xml);
 
   // Assign global outputs to these new outputs
   outputs = newOutputs;
   return true;
 }
 
-void Compositor::addLayer(Layer &layer, QXmlStreamReader &xml)
+void Compositor::recurseAddLayer(Layer &layer, QXmlStreamReader &xml)
 {
   while(xml.readNext() && !xml.atEnd()) {
     Layer newLayer;
     if(xml.isStartElement() && xml.name() == "output") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("type")) {
-	newLayer.resource = attribs.value("", "type").toString();
-	newLayer.type = T_OUTPUT;
+	newLayer.setResource(attribs.value("", "type").toString());
+	newLayer.setType(T_OUTPUT);
       }
       if(attribs.hasAttribute("width"))
-	newLayer.width = attribs.value("", "width").toInt();
+	newLayer.setWidth(attribs.value("", "width").toInt());
       if(attribs.hasAttribute("height"))
-	newLayer.height = attribs.value("", "height").toInt();
+	newLayer.setHeight(attribs.value("", "height").toInt());
 
-      if(newLayer.type != T_NONE) {
-	addLayer(newLayer, xml);
-	layer.layers.append(newLayer);
+      if(newLayer.getType() != T_NONE) {
+	recurseAddLayer(newLayer, xml);
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "layer") {
       QXmlStreamAttributes attribs = xml.attributes();
-      newLayer.resource = attribs.value("", "resource").toString();
-      newLayer.type = T_LAYER;
+      newLayer.setResource(attribs.value("", "resource").toString());
+      newLayer.setType(T_LAYER);
       if(attribs.hasAttribute("width"))
-	newLayer.width = attribs.value("", "width").toInt();
+	newLayer.setWidth(attribs.value("", "width").toInt());
       if(attribs.hasAttribute("height"))
-	newLayer.height = attribs.value("", "height").toInt();
+	newLayer.setHeight(attribs.value("", "height").toInt());
       if(attribs.hasAttribute("align"))
-	newLayer.align = attribs.value("", "align").toString();
+	newLayer.setAlign(attribs.value("", "align").toString());
       if(attribs.hasAttribute("valign"))
-	newLayer.valign = attribs.value("", "valign").toString();
+	newLayer.setVAlign(attribs.value("", "valign").toString());
       if(attribs.hasAttribute("x"))
-	newLayer.x = attribs.value("", "x").toInt();
+	newLayer.setX(attribs.value("", "x").toInt());
       if(attribs.hasAttribute("y"))
-	newLayer.y = attribs.value("", "y").toInt();
-      addLayer(newLayer, xml);
-      layer.layers.append(newLayer);
+	newLayer.setY(attribs.value("", "y").toInt());
+      recurseAddLayer(newLayer, xml);
+      layer.addLayer(newLayer);
     } else if(xml.isStartElement() && xml.name() == "shadow") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("distance") &&
 	 attribs.hasAttribute("softness") &&
 	 attribs.hasAttribute("opacity")) {
-	newLayer.type = T_SHADOW;
-	newLayer.distance = attribs.value("distance").toInt();
-	newLayer.softness = attribs.value("softness").toInt();
-	newLayer.opacity = attribs.value("opacity").toInt();
-	layer.layers.append(newLayer);
+	newLayer.setType(T_SHADOW);
+	newLayer.setDistance(attribs.value("distance").toInt());
+	newLayer.setSoftness(attribs.value("softness").toInt());
+	newLayer.setOpacity(attribs.value("opacity").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "blur") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("softness")) {
-	newLayer.type = T_BLUR;
-	newLayer.softness = attribs.value("softness").toInt();
-	layer.layers.append(newLayer);
+	newLayer.setType(T_BLUR);
+	newLayer.setSoftness(attribs.value("softness").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "mask") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("file")) {
-	newLayer.type = T_MASK;
-	newLayer.resource = attribs.value("file").toString();
+	newLayer.setType(T_MASK);
+	newLayer.setResource(attribs.value("file").toString());
 	if(attribs.hasAttribute("width"))
-	  newLayer.width = attribs.value("", "width").toInt();
+	  newLayer.setWidth(attribs.value("", "width").toInt());
 	if(attribs.hasAttribute("height"))
-	  newLayer.height = attribs.value("", "height").toInt();
+	  newLayer.setHeight(attribs.value("", "height").toInt());
 	if(attribs.hasAttribute("x"))
-	  newLayer.x = attribs.value("", "x").toInt();
+	  newLayer.setX(attribs.value("", "x").toInt());
 	if(attribs.hasAttribute("y"))
-	  newLayer.y = attribs.value("", "y").toInt();
-	layer.layers.append(newLayer);
+	  newLayer.setY(attribs.value("", "y").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "frame") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("file")) {
-	newLayer.type = T_FRAME;
-	newLayer.resource = attribs.value("file").toString();
+	newLayer.setType(T_FRAME);
+	newLayer.setResource(attribs.value("file").toString());
 	if(attribs.hasAttribute("width"))
-	  newLayer.width = attribs.value("", "width").toInt();
+	  newLayer.setWidth(attribs.value("", "width").toInt());
 	if(attribs.hasAttribute("height"))
-	  newLayer.height = attribs.value("", "height").toInt();
-	layer.layers.append(newLayer);
+	  newLayer.setHeight(attribs.value("", "height").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "stroke") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("width")) {
-	newLayer.type = T_STROKE;
-	newLayer.width = attribs.value("width").toInt();
+	newLayer.setType(T_STROKE);
+	newLayer.setWidth(attribs.value("width").toInt());
 	if(attribs.hasAttribute("red"))
-	  newLayer.red = attribs.value("", "red").toInt();
+	  newLayer.setRed(attribs.value("", "red").toInt());
 	if(attribs.hasAttribute("green"))
-	  newLayer.green = attribs.value("", "green").toInt();
+	  newLayer.setGreen(attribs.value("", "green").toInt());
 	if(attribs.hasAttribute("blue"))
-	  newLayer.blue = attribs.value("", "blue").toInt();
-	layer.layers.append(newLayer);
+	  newLayer.setBlue(attribs.value("", "blue").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "rounded") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("radius")) {
-	newLayer.type = T_ROUNDED;
-	newLayer.width = attribs.value("radius").toInt();
-	layer.layers.append(newLayer);
+	newLayer.setType(T_ROUNDED);
+	newLayer.setWidth(attribs.value("radius").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "brightness") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("value")) {
-	newLayer.type = T_BRIGHTNESS;
-	newLayer.delta = attribs.value("value").toInt();
-	layer.layers.append(newLayer);
+	newLayer.setType(T_BRIGHTNESS);
+	newLayer.setDelta(attribs.value("value").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "opacity") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("value")) {
-	newLayer.type = T_OPACITY;
-	newLayer.opacity = attribs.value("value").toInt();
-	layer.layers.append(newLayer);
+	newLayer.setType(T_OPACITY);
+	newLayer.setOpacity(attribs.value("value").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "contrast") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("value")) {
-	newLayer.type = T_CONTRAST;
-	newLayer.delta = attribs.value("value").toInt();
-	layer.layers.append(newLayer);
+	newLayer.setType(T_CONTRAST);
+	newLayer.setDelta(attribs.value("value").toInt());
+	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "balance") {
       QXmlStreamAttributes attribs = xml.attributes();
-      newLayer.type = T_BALANCE;
+      newLayer.setType(T_BALANCE);
       if(attribs.hasAttribute("red"))
-	newLayer.red = attribs.value("", "red").toInt();
+	newLayer.setRed(attribs.value("", "red").toInt());
       if(attribs.hasAttribute("green"))
-	newLayer.green = attribs.value("", "green").toInt();
+	newLayer.setGreen(attribs.value("", "green").toInt());
       if(attribs.hasAttribute("blue"))
-	newLayer.blue = attribs.value("", "blue").toInt();
-      layer.layers.append(newLayer);
+	newLayer.setBlue(attribs.value("", "blue").toInt());
+      layer.addLayer(newLayer);
     } else if(xml.isStartElement() && xml.name() == "gamebox") {
       QXmlStreamAttributes attribs = xml.attributes();
-      newLayer.type = T_GAMEBOX;
+      newLayer.setType(T_GAMEBOX);
       if(attribs.hasAttribute("side"))
-	newLayer.resource = attribs.value("side").toString();
+	newLayer.setResource(attribs.value("side").toString());
       if(attribs.hasAttribute("rotate"))
-	newLayer.delta = attribs.value("rotate").toInt();
-      layer.layers.append(newLayer);
+	newLayer.setDelta(attribs.value("rotate").toInt());
+      layer.addLayer(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
     } else if(xml.isEndElement() && xml.name() == "output") {
