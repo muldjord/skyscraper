@@ -41,7 +41,49 @@
 #define T_BLUR 12
 #define T_GAMEBOX 13
 
-struct Layer {
+class Layer
+{
+public:
+  Layer();
+  // Setters
+  void setType(const int &type);
+  void setCanvas(const QImage &canvas);
+  void setResource(const QString &resource);
+  void setAlign(const QString &align);
+  void setVAlign(const QString &valign);
+  void setX(const int &x);
+  void setY(const int &y);
+  void setWidth(const int &width);
+  void setHeight(const int &height);
+  void setDelta(const int &delta);
+  void setRed(const int &red);
+  void setGreen(const int &green);
+  void setBlue(const int &blue);
+  void setDistance(const int &distance);
+  void setSoftness(const int &softness);
+  void setOpacity(const int &opacity);
+
+  // Getters
+  void getType(const int &type);
+  void getCanvas(const QImage &canvas);
+  void getResource(const QString &resource);
+  void getAlign(const QString &align);
+  void getVAlign(const QString &valign);
+  void getX(const int &x);
+  void getY(const int &y);
+  void getWidth(const int &width);
+  void getHeight(const int &height);
+  void getDelta(const int &delta);
+  void getRed(const int &red);
+  void getGreen(const int &green);
+  void getBlue(const int &blue);
+  void getDistance(const int &distance);
+  void getSoftness(const int &softness);
+  void getOpacity(const int &opacity);
+
+  void addLayer(const Layer &layer);
+  
+private:
   int type = T_NONE;
   QImage canvas = QImage();
   QString resource = "";
@@ -58,6 +100,8 @@ struct Layer {
   int distance = 0;
   int softness = 0;
   int opacity = 0;
+
+  // Contains all nested layers and effects
   QList<Layer> layers;
 };
 
