@@ -1,5 +1,5 @@
 # Artwork look and effects
-Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file '[homedir]/.skyscraper/artwork.xml'. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
+Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file '`[homedir]/.skyscraper/artwork.xml`'. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
 
 NOTE!!! The following only applies to Skyscraper version 2.3.0 and later. Get it by following the instructions [here](README.md).
 
@@ -274,14 +274,14 @@ The green color adjustment. Can be -255-255. If left out it is set to -1.
 The blue color adjustment. Can be -255-255. If left out it is set to -1.
 
 ## Custom image resources
-From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '[homedir]/.skyscraper/resources' folder and use it by adding the filename to the attribute.
+From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '`[homedir]/.skyscraper/resources`' folder and use it by adding the filename to the attribute.
 
 Example:
 ```
 <gamebox side="megadrive_logo.png" rotate="90"/>
 ```
-The file megadrive_logo.png will then be loaded from the '[homedir]/.skyscraper/resources/megadrive_logo.png' file. Feel free to create subfolders inside the resources folder. If you do, remember to add the partial path to the filename like so:
+The file megadrive_logo.png will then be loaded from the '`[homedir]/.skyscraper/resources/megadrive_logo.png`' file. Feel free to create subfolders inside the resources folder. If you do, remember to add the partial path to the filename like so:
 ```
 <gamebox side="platform_logos/megadrive_logo.png" rotate="90"/>
 ```
-This will look for the file at '[homedir]/.skyscraper/resources/platform_logos/megadrive_logo.png'.
+This will look for the file at '`[homedir]/.skyscraper/resources/platform_logos/megadrive_logo.png`'.
