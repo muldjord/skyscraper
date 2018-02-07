@@ -178,6 +178,8 @@ Sets the y coordinate of the mask relative to the parent layer. If left out it w
 ```
 Must be nested inside a layer node. This applies a frame to the parent layer.
 
+NOTE: You can get some cool results by first applying a mask, then applying a frame. This is useful for frames that aren't square.
+
 #### 'file' attribute (Not optional)
 The filename of the [custom image resource](#custom-image-resources) to be used as frame.
 #### 'width' attribute (Optional)
