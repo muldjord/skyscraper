@@ -156,6 +156,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Made localdb more thread safe, might've fixed rare issues of resources being mixed up internally
 * Now works with filenames provided on command line even if they don't include full path
 * Added resource sources to output
+* Added 'wonderswan' and 'wonderswancolor' platforms
 
 #### Version 2.2.7 (31st January 2018)
 * Optimized shadow rendering A LOT! WROOOOOOOOOM!!!
