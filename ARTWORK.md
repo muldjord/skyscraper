@@ -92,6 +92,7 @@ The horizontal alignment of the layer. It can be:
 * left
 * center
 * right
+
 The alignment is relative to the parent layer.
 
 #### 'valign' attribute (Optional)
@@ -99,6 +100,7 @@ The vertical alignment of the layer. It can be:
 * top
 * middle
 * bottom
+
 The alignment is relative to the parent layer.
 
 ### 'shadow' effect node (Optional)
