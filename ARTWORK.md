@@ -50,7 +50,7 @@ This node is the document base node. It contains all other nodes. Don't change o
 ...
 <output>
 ```
-The output node describes a single piece of artwork to be exported when scraping. You can have as many (or little) output nodes as you like.
+The output node describes a single piece of artwork to be exported when scraping. You can have as many (or few) output nodes as you like.
 
 An output node with no nested 'layer' nodes will export the type with no compositing.
 
