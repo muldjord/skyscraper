@@ -3,6 +3,8 @@ Skyscraper allows you to fully customize how you want the final frontend artwork
 
 NOTE!!! The following only applies to Skyscraper version 2.3.0 and later. Get it by following the instructions [here](README.md).
 
+Watch a video demonstrating [the new features here](https://youtu.be/TIDD8EFSz50)
+
 ## Example artwork.xml
 An example could look something like this:
 ```
