@@ -83,6 +83,8 @@ The artwork resource to be used by the layer. It can be:
 * wheel
 * marquee
 
+If the resource attribute is left out the layer will simply be transparent. This is useful when aligning nested layers that differ in size across games.
+
 #### 'x' and 'y' attributes (Optional)
 X and Y coordinates for placement. Relative to 'align' and 'valign' and the parent layer. Either can be left out in which case it will be set to 0.
 
