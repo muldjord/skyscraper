@@ -51,7 +51,7 @@ QImage FxFrame::applyEffect(const QImage &src, const Layer &layer, Settings *con
   
   QPainter painter;
   painter.begin(&canvas);
-  painter.drawImage(0, 0, frame);
+  painter.drawImage(layer.x, layer.y, frame);
   painter.end();
 
   return canvas;

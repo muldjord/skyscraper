@@ -147,6 +147,10 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	  newLayer.setWidth(attribs.value("", "width").toInt());
 	if(attribs.hasAttribute("height"))
 	  newLayer.setHeight(attribs.value("", "height").toInt());
+	if(attribs.hasAttribute("x"))
+	  newLayer.setX(attribs.value("", "x").toInt());
+	if(attribs.hasAttribute("y"))
+	  newLayer.setY(attribs.value("", "y").toInt());
 	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "stroke") {
