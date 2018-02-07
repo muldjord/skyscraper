@@ -142,9 +142,9 @@ Must be nested inside a layer node. This applies a mask to the parent layer.
 #### 'file' attribute (Not optional)
 The filename of the [custom image resource](#custom-image-resources) to be used as mask. The alpha channel of the mask will blind out the underlying parts of the parent layer.
 #### 'width' attribute (Optional)
-Set the width of the mask in pixels. If left out it will be set to the width of the parent layer.
+Sets the width of the mask in pixels. If left out it will be set to the width of the parent layer.
 #### 'height' attribute (Optional)
-Set the height of the mask in pixels. If left out it will be set to the height of the parent layer.
+Sets the height of the mask in pixels. If left out it will be set to the height of the parent layer.
 #### 'x' attribute (Optional)
 Sets the x coordinate of the mask relative to the parent layer. If left out it will be set to 0.
 #### 'y' attribute (Optional)
@@ -161,9 +161,9 @@ Must be nested inside a layer node. This applies a frame to the parent layer.
 #### 'file' attribute (Not optional)
 The filename of the [custom image resource](#custom-image-resources) to be used as frame.
 #### 'width' attribute (Optional)
-Set the width of the frame in pixels. If left out it will be set to the width of the parent layer.
+Sets the width of the frame in pixels. If left out it will be set to the width of the parent layer.
 #### 'height' attribute (Optional)
-Set the height of the frame in pixels. If left out it will be set to the height of the parent layer.
+Sets the height of the frame in pixels. If left out it will be set to the height of the parent layer.
 #### 'x' attribute (Optional)
 Sets the x coordinate of the frame relative to the parent layer. If left out it will be set to 0.
 #### 'y' attribute (Optional)
