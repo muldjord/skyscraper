@@ -39,9 +39,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.2.7.tar.gz
-* $ tar xvzf 2.2.7.tar.gz
-* $ cd skyscraper-2.2.7
+* $ wget https://github.com/muldjord/skyscraper/archive/2.3.0.tar.gz
+* $ tar xvzf 2.3.0.tar.gz
+* $ cd skyscraper-2.3.0
 * $ qmake
 * $ make
 * $ sudo make install
@@ -132,7 +132,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Nothing currently
 
-#### Version 2.3.0 (in progress, unreleased)
+#### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * MAJOR: Completely rewrote the artwork compositing engine
     * Now supports nested layers which anchors to the parent layer for easy placement
