@@ -128,22 +128,30 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Implemented 'blur' and 'colorize' artwork effects.
-* Implemented 'stroke' effect to outline layers
 
 #### Version 2.3.0 (unreleased)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * MAJOR: Completely rewrote the compositing engine
-* Now supports nested child layers which anchors to the parent layer
-* Implemented 'mask' effect that allows you to mask out certain parts of a layer
-* Implemented 'frame' effect that allows you to add a graphical frame to a layer
-* Addded 'From cache' boolean to output + note about '--updatedb'
+    * Now supports nested child layers which anchors to the parent layer for easy placement
+    * Implemented 'balance' effect that adjusts the colors of the parent layer
+    * Implemented 'blur' effect that blurs the parent layer
+    * Implemented 'brightness' effect that adjusts the brightness of the parent layer
+    * Implemented 'contrast' effect that adjusts the contrast of the parent layer
+    * Implemented 'frame' effect that allows you to add a graphical frame to the parent layer
+    * Implemented 'gamebox' effect that turns the parent layer into a nice looking 3D game box
+    * Implemented 'mask' effect that allows you to mask out certain parts of the parent layer
+    * Implemented 'opacity' effect that adjusts the opacity of the parent layer
+    * Implemented 'rounded' effect that rounds the corners of the parent layer
+    * Implemented 'stroke' effect to outline layers
+    * Improved 'shadow' effect to adhere perfectly to softness as radius
+* Added 'artworkXml' config file options and '-a' cli option for setting custom artwork xml config file
+* Added 'From cache' boolean to output + note about '--updatedb'
 * 'simple mode' now also accepts "Y" as a yes answer instead of just "y"
 * Now also looks for 'jp' region if no english region media is found for 'screenscraper' module
 * Now always accepts 'screenscraper' results no matter if platform matches or not
 * Now sets 'minMatch' to 0 by default for 'localdb' , 'arcadedb' and 'screenscraper' scraping modules. Can be overruled on command line and in config file
-* Added 'artworkXml' config file options and '-a' cli option for setting custom artwork xml config file
 * Made localdb more thread safe, might've fixed rare issues of resources being mixed up internally
+* Now works with filenames provided on command line even if they don't include full path
 
 #### Version 2.2.7 (31st January 2018)
 * Optimized shadow rendering A LOT! WROOOOOOOOOM!!!
