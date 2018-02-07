@@ -104,6 +104,7 @@ The vertical alignment of the layer. It can be:
 The alignment is relative to the parent layer.
 
 ### 'shadow' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
 ```
 <layer>
   <shadow distance="10" softness="5" opacity="50"/>
@@ -121,6 +122,7 @@ Defines how soft (radius) the shadow will appear. A value of 0 is sharpest.
 Defines the opacity of the shadow. 100 is completely visible. 0 is completely transparent.
 
 ### 'blur' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/blur.png)
 ```
 <layer>
   <blur softness="5"/>
@@ -132,6 +134,7 @@ Must be nested inside a layer node. Blurs the parent layer.
 Defines the radius of the blur. Higher means blurrier.
 
 ### 'mask' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/mask.png)
 ```
 <layer>
   <mask file="[custom image resource]" x="0" y="0" width="100" height="100"/>
@@ -151,6 +154,7 @@ Sets the x coordinate of the mask relative to the parent layer. If left out it w
 Sets the y coordinate of the mask relative to the parent layer. If left out it will be set to 0.
 
 ### 'frame' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/frame.png)
 ```
 <layer>
   <frame file="[custom image resource]" x="0" y="0" width="100" height="100"/>
@@ -170,6 +174,7 @@ Sets the x coordinate of the frame relative to the parent layer. If left out it 
 Sets the y coordinate of the frame relative to the parent layer. If left out it will be set to 0.
 
 ### 'stroke' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/stroke.png)
 ```
 <layer>
   <stroke width="5" red="10" green="20" blue="30"/>
@@ -187,6 +192,7 @@ The green color value for the outline. Can be 0-255. If left out it averages a s
 The blue color value for the outline. Can be 0-255. If left out it averages a suitable color from the parent layer.
 
 ### 'rounded' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/rounded.png)
 ```
 <layer>
   <rounded radius="10"/>
@@ -198,6 +204,7 @@ Must be nested inside a layer node. Rounds the corners of the parent layer.
 Defines the radius of the corners in pixels.
 
 ### 'brightness' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/brightness.png)
 ```
 <layer>
   <brightness value="10"/>
@@ -209,6 +216,7 @@ Must be nested inside a layer node. Adjusts the brightness of the parent layer.
 The difference value for the adjustment. Can be -255 to 255.
 
 ### 'contrast' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/contrast.png)
 ```
 <layer>
   <contrast value="10"/>
@@ -220,6 +228,7 @@ Must be nested inside a layer node. Adjusts the contrast of the parent layer.
 The difference value for the adjustment. Can be -255 to 255.
 
 ### 'opacity' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/opacity.png)
 ```
 <layer>
   <opacity value="50"/>
@@ -231,6 +240,7 @@ Must be nested inside a layer node. Adjusts the opacity of the parent layer.
 The opacity of the layer. Can be 0-100 where 0 is completely transparent and 100 is opaque.
 
 ### 'balance' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/balance.png)
 ```
 <layer>
   <balance red="10" green="20" blue="30"/>
@@ -246,6 +256,7 @@ The green color adjustment. Can be -255-255. If left out it is set to -1.
 The blue color adjustment. Can be -255-255. If left out it is set to -1.
 
 ### 'gamebox' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
 ```
 <layer>
   <gamebox side="[custom image resource]" rotate="90"/>
