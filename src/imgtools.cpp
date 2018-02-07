@@ -32,11 +32,14 @@ QImage ImgTools::cropToFit(const QImage &image)
   int top = 0;
   int bottom = image.height();
 
+  bool pixelsFound = false;
+  
   // Find lefmost edge
   for(int y = 0; y < image.height(); ++y) {
     QRgb *scanline = (QRgb *)image.scanLine(y);
     for(int x = 0; x < image.width(); ++x) {
       if(qAlpha(scanline[x]) > 0) {
+	pixelsFound = true;
 	if(left > x) {
 	  left = x;
 	}
@@ -50,7 +53,10 @@ QImage ImgTools::cropToFit(const QImage &image)
       }
     }
   }
-  QImage cropped = image.copy(left, top, right - left, bottom - top);
-
-  return cropped;
+  // Only crop if non-alpha pixels are found. Otherwise return the original
+  if(pixelsFound) {
+    QImage cropped = image.copy(left, top, right - left, bottom - top);
+    return cropped;
+  }
+  return image;
 }
