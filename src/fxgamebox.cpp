@@ -54,15 +54,15 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   QImage side(overlaySide.width(), overlaySide.height(), QImage::Format_ARGB32_Premultiplied);
   QImage sideImage;
 
-  double avgRed = 0;
-  double avgGreen = 0;
-  double avgBlue = 0;
-  double fromTop = 20;
-  if(layer.canvas.height() < 20) {
-    fromTop = layer.canvas.height();
+  int avgRed = 0;
+  int avgGreen = 0;
+  int avgBlue = 0;
+  int fromTop = 20;
+  if(src.height() < 20) {
+    fromTop = src.height();
   }
   for(int y = 0; y < fromTop; ++y) {
-    QRgb *scanline = (QRgb *)layer.canvas.scanLine(y);
+    QRgb *scanline = (QRgb *)src.constScanLine(y);
     avgRed += qRed(scanline[3]);
     avgGreen += qGreen(scanline[3]);
     avgBlue += qBlue(scanline[3]);
@@ -70,6 +70,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   avgRed /= fromTop;
   avgGreen /= fromTop;
   avgBlue /= fromTop;
+
   
   side.fill(QColor(avgRed, avgGreen, avgBlue));
 
