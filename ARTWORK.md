@@ -134,6 +134,7 @@ Must be nested inside a layer node. Blurs the parent layer.
 Defines the radius of the blur. Higher means blurrier.
 
 ### 'mask' effect node (Optional)
+Left image shows the result. Right image shows the mask used. The white parts of the mask is transparent.
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/mask.png)
 ```
 <layer>
@@ -256,6 +257,7 @@ The green color adjustment. Can be -255-255. If left out it is set to -1.
 The blue color adjustment. Can be -255-255. If left out it is set to -1.
 
 ### 'gamebox' effect node (Optional)
+Left image shows the result with the wheel artwork applied to the side. Right image shows the original cover layer.
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
 ```
 <layer>
