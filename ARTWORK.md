@@ -103,6 +103,21 @@ The vertical alignment of the layer. It can be:
 
 The alignment is relative to the parent layer.
 
+### 'gamebox' effect node (Optional)
+Left image shows the result with the wheel artwork applied to the side. Right image shows the original cover layer.
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
+```
+<layer>
+  <gamebox side="[custom image resource]" rotate="90"/>
+</layer>
+```
+Must be nested inside a layer node. Renders a nifty looking 3D game box. It uses the parent layer image on the front of the box.
+
+#### 'side' attribute (Optional)
+The filename of the [custom image resource](#custom-image-resources) to be used on the side of the box.
+#### 'rotate' attribute (Optional)
+Defines the rotation of the side image in degrees.
+
 ### 'shadow' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
 ```
@@ -255,21 +270,6 @@ The red color adjustment. Can be -255-255. If left out it is set to -1.
 The green color adjustment. Can be -255-255. If left out it is set to -1.
 #### 'blue' attribute (Optional)
 The blue color adjustment. Can be -255-255. If left out it is set to -1.
-
-### 'gamebox' effect node (Optional)
-Left image shows the result with the wheel artwork applied to the side. Right image shows the original cover layer.
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
-```
-<layer>
-  <gamebox side="[custom image resource]" rotate="90"/>
-</layer>
-```
-Must be nested inside a layer node. Renders a nifty looking 3D game box. It uses the parent layer image on the front of the box.
-
-#### 'side' attribute (Optional)
-The filename of the [custom image resource](#custom-image-resources) to be used on the side of the box.
-#### 'rotate' attribute (Optional)
-Defines the rotation of the side image in degrees.
 
 ## Custom image resources
 From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '[homedir]/.skyscraper/resources' folder and use it by adding the filename to the attribute.
