@@ -1,7 +1,7 @@
 # Artwork look and effects
 Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file '[homedir]/.skyscraper/artwork.xml'. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
 
-NOTE!!! The documentation is currently being updated with the new features in the yet unreleased version 2.3.0. Some of the effects below will not work until release (which is very soon).
+NOTE!!! This following only applies to Skyscraper version 2.3.0 and later. Get the latest version by following the instructions [here](README.md).
 
 ## Example artwork.xml
 An example could look something like this:
