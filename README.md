@@ -52,6 +52,8 @@ If everything went well you are now ready to run Skyscraper!
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
 
+Remember, you can completely customize the artwork Skyscraper exports. Check out the documentation [here](ARTWORK.md). If you just want to use the default (pretty cool looking) artwork Skyscraper provides, read on.
+
 ### Simple mode
 When you have completed the installation you can start Skyscraper in 'simple mode' by running Skyscraper with no command line options by typing:
 * $ Skyscraper
