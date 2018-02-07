@@ -37,11 +37,13 @@
 #include "emulationstation.h"
 #include "attractmode.h"
 
-Skyscraper::Skyscraper(const QCommandLineParser &parser)
+Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentDir)
 {
   qRegisterMetaType<GameEntry>("GameEntry");
   
   printf("\033[1;34m------------------------------------------\033[0m\n\033[1;33mRunning Skyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m------------------------------------------\033[0m\n");
+
+  config.currentDir = currentDir;
   loadConfig(parser);
 }
 
@@ -766,12 +768,20 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   // If user has set specific files to scrape on command line set them internally
   foreach(QString cliArgument, parser.positionalArguments()) {
+    bool exists = false;
     if(QFile::exists(cliArgument)) {
+      exists = true;
+    } else if(QFile::exists(cliArgument.prepend(config.currentDir + "/"))) {
+      exists = true;
+    }
+    if(exists) {
       cliFiles.append(cliArgument);
-      // Always set pretend and updateDb true if user has supplied filenames on command line.
-      // That way they are cached, but game list is not changed.
+      // Always set pretend, updateDb and unattend true if user has supplied filenames on
+      // command line. That way they are cached, but game list is not changed and user isn't
+      // asked about skipping and overwriting.
       config.pretend = true;
       config.updateDb = true;
+      config.unattend = true;
     }
   }
 

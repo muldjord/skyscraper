@@ -29,6 +29,8 @@
 #include <QMap>
 
 struct Settings {
+  QString currentDir = "";
+
   QString dbFolder = "";
   QString gameListFileString = "";
   QString skippedFileString = "";

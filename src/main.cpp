@@ -70,6 +70,9 @@ int main(int argc, char *argv[])
 {
   QCoreApplication app(argc, argv);
 
+  // Get current dir. If user has specified file(s) on command line we need this.
+  QString currentDir = QDir::currentPath();
+
   // Set the working directory to the applications own path
   QDir skyDir(QDir::homePath() + "/.skyscraper");
   if(!skyDir.exists()) {
@@ -186,7 +189,7 @@ int main(int argc, char *argv[])
     if(parser.isSet("help") || parser.isSet("h")) {
       parser.showHelp();
     } else {
-      Skyscraper *x = new Skyscraper(parser);
+      Skyscraper *x = new Skyscraper(parser, currentDir);
       QObject::connect(x, &Skyscraper::finished, &app, &QCoreApplication::quit);
       QTimer::singleShot(0, x, SLOT(run()));
     }

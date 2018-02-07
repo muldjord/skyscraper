@@ -44,7 +44,7 @@ class Skyscraper : public QObject
   Q_OBJECT
 
 public:
-  Skyscraper(const QCommandLineParser &parser);
+  Skyscraper(const QCommandLineParser &parser, const QString &currentDir);
   ~Skyscraper();
 
 public slots:
