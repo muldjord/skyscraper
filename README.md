@@ -128,8 +128,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
+* Nothing currently
 
-#### Version 2.3.0 (unreleased)
+#### Version 2.3.0 (in progress, unreleased)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * MAJOR: Completely rewrote the artwork compositing engine
     * Now supports nested layers which anchors to the parent layer for easy placement
