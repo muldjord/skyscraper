@@ -3,7 +3,7 @@ Skyscraper allows you to fully customize how you want the final frontend artwork
 
 NOTE!!! The documentation is currently being updated with the new features in the yet unreleased version 2.3.0. Some of the effects below will not work until release (which is very soon).
 
-## Xml example artwork.xml
+## Example artwork.xml
 An example could look something like this:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
