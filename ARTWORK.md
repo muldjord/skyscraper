@@ -107,7 +107,7 @@ The alignment is relative to the parent layer.
 Left image shows the result with the wheel artwork applied to the side. Right image shows the original cover layer.
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
 ```
-<layer>
+<layer resource="cover" height="200">
   <gamebox side="[custom image resource]" rotate="90"/>
 </layer>
 ```
