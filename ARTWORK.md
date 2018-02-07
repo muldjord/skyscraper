@@ -1,19 +1,25 @@
 # Artwork look and effects
 Skyscraper allows you to fully customize how you want the final frontend artwork to appear. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply effects to them. Read on for a full description on how to do this.
 
+NOTE!!! The documentation is currently being updated with the new features in the yet unreleased version 2.3.0. Some of the effects below will not work until release (which is very soon).
+
 ## Where all the magic happens
 All artwork rendering is handled by the xml file located at '`~/.skyscraper/artwork.xml`'. An example could look something like this:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <artwork>
-  <output type="screenshot" width="640" height="400">
-    <layer resource="wheel" align="right" x="-15" width="250">
-      <shadow distance="10" softness="5" opacity="75"/>
+  <output type="screenshot" width="640" height="480">
+    <layer resource="screenshot" x="20" width="520" height="390" align="center" valign="middle">
+      <rounded radius="10"/>
+      <stroke width="5"/>
     </layer>
-    <layer resource="cover" valign="bottom" y="-15" height="200">
-      <shadow distance="10" softness="5" opacity="75"/>
+    <layer resource="cover" height="250" x="0" y="-10" valign="bottom">
+      <gamebox side="wheel" rotate="90"/>
+      <shadow distance="5" softness="5" opacity="70"/>
     </layer>
-    <layer resource="screenshot" align="center" valign="middle" width="520" height="390"/>
+    <layer resource="wheel" width="250" x="-10" align="right">
+      <shadow distance="5" softness="5" opacity="70"/>
+    </layer>
   </output>
 </artwork>
 ```
