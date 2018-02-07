@@ -412,8 +412,20 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/ARTWORK.md";
   copyFile(distro, current);
 
-  current = "artwork.xml.example";
-  distro = "/usr/local/etc/skyscraper/artwork.xml.example";
+  current = "artwork.xml.example1";
+  distro = "/usr/local/etc/skyscraper/artwork.xml.example1";
+  copyFile(distro, current);
+
+  current = "artwork.xml.example2";
+  distro = "/usr/local/etc/skyscraper/artwork.xml.example2";
+  copyFile(distro, current);
+
+  current = "artwork.xml.example3";
+  distro = "/usr/local/etc/skyscraper/artwork.xml.example3";
+  copyFile(distro, current);
+
+  current = "artwork.xml.example4";
+  distro = "/usr/local/etc/skyscraper/artwork.xml.example4";
   copyFile(distro, current);
 
   current = "mameMap.csv";
