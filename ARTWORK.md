@@ -74,12 +74,14 @@ Like layers in Gimp or almost any other respectable photo manipulation software,
 
 NOTE!!! Layer and effect nodes are rendered from top to bottom.
 
-#### 'resource' attribute (Not optional)
+#### 'resource' attribute (Optional)
 The artwork resource to be used by the layer. It can be:
 * screenshot
 * cover
 * wheel
 * marquee
+
+If the resource attribute is left out the layer will simply be transparent. This is useful when nesting other layers where you want to center align them across games even if the layers vary in size.
 
 #### 'x' and 'y' attributes (Optional)
 X and Y coordinates for placement. Relative to 'align' and 'valign' and the parent layer. Either can be left out in which case it will be set to 0.
