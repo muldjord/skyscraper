@@ -130,7 +130,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Nothing currently
+* Fixed 'players' tag to always convert to a 1-digit format
 
 #### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
