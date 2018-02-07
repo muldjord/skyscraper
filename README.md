@@ -145,7 +145,8 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
     * Implemented 'rounded' effect that rounds the corners of the parent layer
     * Implemented 'stroke' effect that outlines the parent layer
     * Improved 'shadow' effect to adhere perfectly to softness as radius
-* Added 'artworkXml' config file options and '-a' cli option for setting custom artwork xml config file
+* Added '-a' command line option for setting custom artwork xml config file
+* Added 'artworkXml' config file options for setting custom artwork xml config file
 * Implemented resource system that allows user to place files in '[homedir]/.skyscraper/resources' and use them in the '[homedir]/.skyscraper/artwork.xml' layers and effects
 * Added 'From cache' boolean to output plus note about '--updatedb'
 * 'simple mode' now also accepts "Y" as a yes answer instead of just "y"
