@@ -197,9 +197,6 @@ void ScraperWorker::run()
     }
 
     game.title = StrTools::xmlUnescape(game.title);
-    if(config.forceFilename) {
-      game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).left(info.completeBaseName().indexOf("[")).replace("_", " ").simplified());
-    }
     game.videoFile = StrTools::xmlUnescape(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
     game.description = StrTools::xmlUnescape(game.description);
     game.releaseDate = StrTools::xmlUnescape(game.releaseDate);
@@ -218,6 +215,9 @@ void ScraperWorker::run()
     output.append("Search match:\t" + QString::number(searchMatch) + " %\n");
     output.append("Game title:\t'\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
     output.append("Compare title:\t'\033[1;32m" + compareName + "\033[0m'\n");
+    if(config.forceFilename) {
+      game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).left(info.completeBaseName().indexOf("[")).replace("_", " ").simplified());
+    }
     output.append("Platform:\t'\033[1;32m" + game.platform + "\033[0m' (" + game.platformSrc + ")\n");
     output.append("Release Date:\t'\033[1;32m");
     if(game.releaseDate.isEmpty()) {
