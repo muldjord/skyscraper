@@ -1,10 +1,10 @@
 # Artwork look and effects
-Skyscraper allows you to fully customize how you want the final frontend artwork to appear. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply effects to them. Read on for a full description on how to do this.
+Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file '[homedir]/.skyscraper/artwork.xml'. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
 
 NOTE!!! The documentation is currently being updated with the new features in the yet unreleased version 2.3.0. Some of the effects below will not work until release (which is very soon).
 
-## Where all the magic happens
-All artwork rendering is handled by the xml file located at '`~/.skyscraper/artwork.xml`'. An example could look something like this:
+## Xml example artwork.xml
+An example could look something like this:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <artwork>
@@ -23,9 +23,9 @@ All artwork rendering is handled by the xml file located at '`~/.skyscraper/artw
   </output>
 </artwork>
 ```
-Which results in this:
+Which results in a screenshot being exported to look like this:
 
-![Small cover with drop shadow, larger screenshot](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Sonic%20The%20Hedgehog%202.png)
+![Artwork example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Sonic%20The%20Hedgehog%202.png)
 
 ## Xml definitions
 Read on for a full description of the xml format used in 'artwork.xml'
@@ -34,7 +34,7 @@ Read on for a full description of the xml format used in 'artwork.xml'
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 ```
-This is a special node used to describe the xml language used in the document.
+This is a special node used to describe the xml language used in the document. Keep it like this.
 
 ### 'artwork' node
 ```
@@ -42,7 +42,7 @@ This is a special node used to describe the xml language used in the document.
 ...
 </artwork>
 ```
-This node is the document base node. It contains all other nodes.
+This node is the document base node. It contains all other nodes. Keep it like this.
 
 ### 'output' node(s) (Optional)
 ```
@@ -70,46 +70,206 @@ Sets the width and height of the artwork export. If both are left out it will us
 ...
 </layer>
 ```
-Like layers in Gimp or almost any other respectable photo manipulation software, you can add as many of these nodes as you like. They will be rendered from bottom to top.
+Like layers in Gimp or almost any other respectable photo manipulation software, you can add as many of these nodes as you like. You can even nest them inside of each other, in which case the child layer will be anchored to the topleft corner of the parent layer, making it easier to align.
+
+NOTE!!! Layer nodes are rendered from top to bottom.
 
 #### 'resource' attribute (Not optional)
-The artwork resource to be composited. Can be:
+The artwork resource to be used by the layer. It can be:
 * screenshot
 * cover
 * wheel
 * marquee
 
 #### 'x' and 'y' attributes (Optional)
-X and Y coordinates for placement. Relative to 'align' and 'valign'. Either can be left out in which case it will be set to 0.
+X and Y coordinates for placement. Relative to 'align' and 'valign' and the parent layer. Either can be left out in which case it will be set to 0.
 
 #### 'width' and 'height' attributes (Optional)
 Sets the width and height of the layer. If either is left out it will keep the aspect ratio relative to the other. If both are left out it will use the original dimensions of the scraped resource.
 
 #### 'align' attribute (Optional)
-The horizontal alignment of the layer. Can be:
+The horizontal alignment of the layer. It can be:
 * left
 * center
 * right
+The alignment is relative to the parent layer.
 
 #### 'valign' attribute (Optional)
-The vertical alignment of the layer. Can be:
+The vertical alignment of the layer. It can be:
 * top
 * middle
 * bottom
+The alignment is relative to the parent layer.
 
-### 'shadow' node (Optional)
+### 'shadow' effect node (Optional)
 ```
 <layer>
   <shadow distance="10" softness="5" opacity="50"/>
 </layer>
 ```
-If a shadow node exists, it will render a dropshadow on the parent layer using the attributes provided. If either of the attributes are left out, the shadow won't be drawn.
+Must be nested inside a layer node. Renders a dropshadow on the parent layer using the attributes provided. If either of the attributes are left out, the shadow won't be drawn.
 
 #### 'distance' attribute (Not optional)
 Distance in pixels from the layer. The distance is always down to the right.
 
 #### 'softness' attribute (Not optional)
-Defines how soft the shadow will appear. A value of 0 is sharpest.
+Defines how soft (radius) the shadow will appear. A value of 0 is sharpest.
 
 #### 'opacity' attribute (Not optional)
 Defines the opacity of the shadow. 100 is completely visible. 0 is completely transparent.
+
+### 'blur' effect node (Optional)
+```
+<layer>
+  <blur softness="5"/>
+</layer>
+```
+Must be nested inside a layer node. Blurs the parent layer.
+
+#### 'softness' attribute (Not optional)
+Defines the radius of the blur. The higher value the softer it will appear.
+
+### 'mask' node (Optional)
+```
+<layer>
+  <mask />
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+### '' node (Optional)
+```
+<layer>
+  </>
+</layer>
+```
+Must be nested inside a layer node. Renders ...
+
+#### '' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
+
+## Custom image resources
+From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '[homedir]/.skyscraper/resources' folder and use it by adding the filename to the attribute.
+
+Example:
+```
+<gamebox side="megadrive_logo.png" rotate="90"/>
+```
+The file megadrive_logo.png will then be loaded from the '[homedir]/.skyscraper/resources/megadrive_logo.png' file. Feel free to create subfolders inside the resources folder. If you do, remember to add the partial path to the filename like so:
+```
+<gamebox side="platform_logos/megadrive_logo.png" rotate="90"/>
+```
+This will look for the file at '[homedir]/.skyscraper/resources/platform_logos/megadrive_logo.png'.
