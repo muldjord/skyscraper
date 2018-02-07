@@ -67,8 +67,8 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   
   GameEntry game;
 
+  // Check if xml is valid. If not, skip
   if(!xmlDoc.setContent(data)) {
-    printf("Couldn't parse xml data from source, skipping...\n");
     return;
   }
 
