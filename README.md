@@ -56,7 +56,7 @@ IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit y
 When you have completed the installation you can start Skyscraper in 'simple mode' by running Skyscraper with no command line options by typing:
 * $ Skyscraper
 
-Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script. It's located in '~/.skyscraper/skyscript.sh'.
+Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script. It's located in '[homedir]/.skyscraper/skyscript.sh'.
 
 ### Manual mode (for advanced users)
 I recommend taking a look at the command line options first:
@@ -131,8 +131,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.3.0 (unreleased)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
-* MAJOR: Completely rewrote the compositing engine
-    * Now supports nested child layers which anchors to the parent layer for easy placement
+* MAJOR: Completely rewrote the artwork compositing engine
+    * Now supports nested layers which anchors to the parent layer for easy placement
     * Implemented 'balance' effect that adjusts the colors of the parent layer
     * Implemented 'blur' effect that blurs the parent layer
     * Implemented 'brightness' effect that adjusts the brightness of the parent layer
@@ -145,13 +145,15 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
     * Implemented 'stroke' effect to outline layers
     * Improved 'shadow' effect to adhere perfectly to softness as radius
 * Added 'artworkXml' config file options and '-a' cli option for setting custom artwork xml config file
-* Added 'From cache' boolean to output + note about '--updatedb'
+* Implemented resource system that allows user to place files in '[homedir]/.skyscraper/resources' and use them in the '[homedir]/.skyscraper/artwork.xml' layers and effects
+* Added 'From cache' boolean to output plus note about '--updatedb'
 * 'simple mode' now also accepts "Y" as a yes answer instead of just "y"
 * Now also looks for 'jp' region if no english region media is found for 'screenscraper' module
 * Now always accepts 'screenscraper' results no matter if platform matches or not
 * Now sets 'minMatch' to 0 by default for 'localdb' , 'arcadedb' and 'screenscraper' scraping modules. Can be overruled on command line and in config file
 * Made localdb more thread safe, might've fixed rare issues of resources being mixed up internally
 * Now works with filenames provided on command line even if they don't include full path
+* Added resource sources to output
 
 #### Version 2.2.7 (31st January 2018)
 * Optimized shadow rendering A LOT! WROOOOOOOOOM!!!
@@ -178,7 +180,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Added 'pc' and 'ports' platform
 
 #### Version 2.2.0 (31st of December 2017)
-* Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything.
+* Completely rewrote how artwork is handled. Now uses '[homedir]/.skyscraper/artwork.xml' for everything.
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
 * Added 'wheel' and 'marquee' media types to local database
 * Added 'nocovers', 'noscreenshots', 'nowheels' and 'nomarquees' options to allow user to disable caching of those resources locally.
