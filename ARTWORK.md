@@ -34,7 +34,7 @@ Read on for a full description of the xml format used in 'artwork.xml'
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 ```
-This is a special node used to describe the xml language used in the document. Keep it like this.
+This is a special node used to describe the xml language used in the document. Don't change it.
 
 ### 'artwork' node
 ```
@@ -42,7 +42,7 @@ This is a special node used to describe the xml language used in the document. K
 ...
 </artwork>
 ```
-This node is the document base node. It contains all other nodes. Keep it like this.
+This node is the document base node. It contains all other nodes. Don't change or delete it.
 
 ### 'output' node(s) (Optional)
 ```
@@ -127,7 +127,7 @@ Defines the opacity of the shadow. 100 is completely visible. 0 is completely tr
 Must be nested inside a layer node. Blurs the parent layer.
 
 #### 'softness' attribute (Not optional)
-Defines the radius of the blur. The higher value the softer it will appear.
+Defines the radius of the blur. Higher means blurrier.
 
 ### 'mask' node (Optional)
 ```
@@ -135,10 +135,18 @@ Defines the radius of the blur. The higher value the softer it will appear.
   <mask />
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. This applies a mask to the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'file' attribute (Not optional)
+The mask filename of the [custom image resource](#custom-image-resources). The alpha channel of the mask will blind out the underlying parts of the parent layer.
+#### 'width' attribute (Optional)
+Set the width of the mask in pixels. If left out it will be set to the width of the parent layer.
+#### 'height' attribute (Optional)
+Set the height of the mask in pixels. If left out it will be set to the height of the parent layer.
+#### 'x' attribute (Optional)
+Sets the x coordinate of the mask relative to the parent layer. If left out it will be set to 0.
+#### 'y' attribute (Optional)
+Sets the y coordinate of the mask relative to the parent layer. If left out it will be set to 0.
 
 ### '' node (Optional)
 ```
