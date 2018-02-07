@@ -94,6 +94,8 @@ QStringList Platform::getPlatforms()
   platforms.append("vectrex");
   platforms.append("videopac");
   platforms.append("virtualboy");
+  platforms.append("wonderswan");
+  platforms.append("wonderswancolor");
   platforms.append("zmachine");
   platforms.append("zxspectrum");
 
@@ -338,6 +340,14 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
+  } else if(platform == "wonderswan") {
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "wonderswancolor") {
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
   } else if(platform  == "zmachine") {
     scrapers.append("thegamesdb");
     scrapers.append("localdb");
@@ -460,8 +470,12 @@ QString Platform::getFormats(QString platform)
     formats.append("*.bin");
   } else if(platform == "virtualboy") {
     formats.append("*.vb");
+  } else if(platform == "wonderswan") {
+    formats.append("*.ws");
+  } else if(platform == "wonderswancolor") {
+    formats.append("*.wsc");
   } else if(platform == "zmachine") {
-    formats.append("*.dat *.zip *.z1 *.z2 *.z3 *.z4 *.z5 *.z6 *.z7 *.z8");
+    formats.append("*.dat *.z1 *.z2 *.z3 *.z4 *.z5 *.z6 *.z7 *.z8");
   } else if(platform == "zxspectrum") {
     formats.append("*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk");
   }
@@ -483,17 +497,17 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "apple2") {
     scraper = "thegamesdb";
   } else if(platform == "atari2600") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "atari5200") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "atari7800") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "atarijaguar") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "atarilynx") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "atarist") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "c64") {
     scraper = "thegamesdb";
   } else if(platform == "coco") {
@@ -515,33 +529,33 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "gamegear") {
     scraper = "thegamesdb";
   } else if(platform == "gb") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "gba") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "gbc") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "genesis") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "intellivision") {
     scraper = "screenscraper";
   } else if(platform == "megadrive") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "mastersystem") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "msx") {
     scraper = "thegamesdb";
   } else if(platform == "n64") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "nds") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "neogeo") {
     scraper = "arcadedb";
   } else if(platform == "nes") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "ngp") {
     scraper = "screenscraper";
   } else if(platform == "ngpc") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "oric") {
     scraper = "screenscraper";
   } else if(platform == "pc") {
@@ -563,13 +577,13 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "scummvm") {
     scraper = "thegamesdb";
   } else if(platform == "sega32x") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "segacd") {
     scraper = "thegamesdb";
   } else if(platform == "sg-1000") {
     scraper = "screenscraper";
   } else if(platform == "snes") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
   } else if(platform == "trs-80") {
     scraper = "screenscraper";
   } else if(platform == "vectrex") {
@@ -577,7 +591,11 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "videopac") {
     scraper = "thegamesdb";
   } else if(platform == "virtualboy") {
-    scraper = "thegamesdb";
+    scraper = "screenscraper";
+  } else if(platform == "wonderswan") {
+    scraper = "screenscraper";
+  } else if(platform == "wonderswancolor") {
+    scraper = "screenscraper";
   } else if(platform == "zmachine") {
     scraper = "thegamesdb";
   } else if(platform == "zxspectrum") {
@@ -742,6 +760,8 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "virtualboy") {
     aliases.append("nintendo virtual boy");
     aliases.append("virtual boy");
+  } else if(platform == "wonderswancolor") {
+    aliases.append("wonderswan color");
   } else if(platform == "zmachine") {
     aliases.append("commodore 64"); // Because this is the only platform that seems to have them
   } else if(platform == "zxspectrum") {
