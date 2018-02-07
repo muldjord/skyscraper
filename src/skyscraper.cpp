@@ -420,14 +420,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/mameMap.csv";
   copyFile(distro, current);
   
-  current = "resources/maskexample.png";
-  distro = "/usr/local/etc/skyscraper/resources/maskexample.png";
-  copyFile(distro, current);
-
-  current = "resources/frameexample.png";
-  distro = "/usr/local/etc/skyscraper/resources/frameexample.png";
-  copyFile(distro, current);
-  
   current = "resources/boxfront.png";
   distro = "/usr/local/etc/skyscraper/resources/boxfront.png";
   copyFile(distro, current);
@@ -457,12 +449,20 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   copyFile(distro, current);
 
   /* -----
-    Files that will only be overwritte if they don't already exist
+    Files that will only be overwritten if they don't already exist
     ----- */
 
   current = "artwork.xml";
   distro = "/usr/local/etc/skyscraper/artwork.xml";
   copyFile(distro, current, false); // False means it won't overwrite if it exists
+
+  current = "resources/maskexample.png";
+  distro = "/usr/local/etc/skyscraper/resources/maskexample.png";
+  copyFile(distro, current, false);
+
+  current = "resources/frameexample.png";
+  distro = "/usr/local/etc/skyscraper/resources/frameexample.png";
+  copyFile(distro, current, false);
 
   // Copy one of the example definitions.dat files if none exists
   current = "import/definitions.dat";
