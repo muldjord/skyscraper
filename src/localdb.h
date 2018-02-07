@@ -72,7 +72,8 @@ public:
 		   const Settings &config);
   void verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &noDelete, QString resType);
   void verifyResources(int &resourcesDeleted);
-  bool fillType(QString &type, QList<Resource> &matchingResources, QString &result);
+  bool fillType(QString &type, QList<Resource> &matchingResources,
+		QString &result, QString &source);
   
 };
 

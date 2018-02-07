@@ -47,35 +47,48 @@ public:
   GameEntry();
   int completeness(bool videoEnabled = false);
   
-  // Used in gamelists
   QString path = "";
   QString title = "";
-  QString coverFile = "";
-  QString screenshotFile = "";
-  QString wheelFile = "";
-  QString marqueeFile = "";
-  QString videoFile = "";
+  QString titleSrc = "";
+  QString platform = "";
+  QString platformSrc = "";
   QString description = "";
+  QString descriptionSrc = "";
   QString releaseDate = "";
+  QString releaseDateSrc = "";
   QString developer = "";
+  QString developerSrc = "";
   QString publisher = "";
+  QString publisherSrc = "";
   QString tags = "";
+  QString tagsSrc = "";
   QString players = "";
+  QString playersSrc = "";
   QString rating = "";
+  QString ratingSrc = "";
 
-  // Extras needed internally
+  QImage coverData = QImage();
+  QString coverFile = "";
+  QString coverSrc = "";
+  QImage screenshotData = QImage();
+  QString screenshotFile = "";
+  QString screenshotSrc = "";
+  QImage wheelData = QImage();
+  QString wheelFile = "";
+  QString wheelSrc = "";
+  QImage marqueeData = QImage();
+  QString marqueeFile = "";
+  QString marqueeSrc = "";
+  QByteArray videoData = "";
+  QString videoFile = "";
+  QString videoSrc = "";
+
   int searchMatch = 0;
   QString sha1 = "";
   QString source = "";
-  QString platform = "";
   QString url = "";
   QString sqrNotes = "";
   QString parNotes = "";
-  QImage coverData = QImage();
-  QImage screenshotData = QImage();
-  QImage wheelData = QImage();
-  QImage marqueeData = QImage();
-  QByteArray videoData = "";
   QString videoFormat = "";
   QString baseName = "";
   bool found = true;
