@@ -134,7 +134,7 @@ Must be nested inside a layer node. Blurs the parent layer.
 Defines the radius of the blur. Higher means blurrier.
 
 ### 'mask' effect node (Optional)
-Left image shows the result. Right image shows the mask used. The white parts of the mask is transparent.
+Left image shows the result. Right image shows the mask used. The white part of the mask is transparent.
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/mask.png)
 ```
 <layer>
