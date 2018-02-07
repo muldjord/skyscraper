@@ -129,16 +129,16 @@ Must be nested inside a layer node. Blurs the parent layer.
 #### 'softness' attribute (Not optional)
 Defines the radius of the blur. Higher means blurrier.
 
-### 'mask' node (Optional)
+### 'mask' effect node (Optional)
 ```
 <layer>
-  <mask />
+  <mask file="[custom image resource]" x="0" y="0" width="100" height="100"/>
 </layer>
 ```
 Must be nested inside a layer node. This applies a mask to the parent layer.
 
 #### 'file' attribute (Not optional)
-The mask filename of the [custom image resource](#custom-image-resources). The alpha channel of the mask will blind out the underlying parts of the parent layer.
+The filename of the [custom image resource](#custom-image-resources) to be used as mask. The alpha channel of the mask will blind out the underlying parts of the parent layer.
 #### 'width' attribute (Optional)
 Set the width of the mask in pixels. If left out it will be set to the width of the parent layer.
 #### 'height' attribute (Optional)
@@ -148,126 +148,113 @@ Sets the x coordinate of the mask relative to the parent layer. If left out it w
 #### 'y' attribute (Optional)
 Sets the y coordinate of the mask relative to the parent layer. If left out it will be set to 0.
 
-### '' node (Optional)
+### 'frame' effect node (Optional)
 ```
 <layer>
-  </>
+  <frame file="[custom image resource]" x="0" y="0" width="100" height="100"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. This applies a frame to the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'file' attribute (Not optional)
+The filename of the [custom image resource](#custom-image-resources) to be used as frame.
+#### 'width' attribute (Optional)
+Set the width of the frame in pixels. If left out it will be set to the width of the parent layer.
+#### 'height' attribute (Optional)
+Set the height of the frame in pixels. If left out it will be set to the height of the parent layer.
+#### 'x' attribute (Optional)
+Sets the x coordinate of the frame relative to the parent layer. If left out it will be set to 0.
+#### 'y' attribute (Optional)
+Sets the y coordinate of the frame relative to the parent layer. If left out it will be set to 0.
 
-### '' node (Optional)
+### 'stroke' effect node (Optional)
 ```
 <layer>
-  </>
+  <stroke width="5" red="10" green="20" blue="30"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. Renders a colored outline on the parent layer. If any of the color channels are left out, it averages a suitable color from the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'width' attribute (Not optional)
+The width of the outline in pixels.
+#### 'red' attribute (Optional)
+The red color value for the outline. Can be 0-255. If left out it averages a suitable color from the parent layer.
+#### 'green' attribute (Optional)
+The green color value for the outline. Can be 0-255. If left out it averages a suitable color from the parent layer.
+#### 'blue' attribute (Optional)
+The blue color value for the outline. Can be 0-255. If left out it averages a suitable color from the parent layer.
 
-### '' node (Optional)
+### 'rounded' effect node (Optional)
 ```
 <layer>
-  </>
+  <rounded radius="10"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. Rounds the corners of the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'radius' attribute (Not optional)
+Defines the radius of the corners in pixels.
 
-### '' node (Optional)
+### 'brightness' effect node (Optional)
 ```
 <layer>
-  </>
+  <brightness value="10"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. Adjusts the brightness of the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'value' attribute (Not optional)
+The difference value for the adjustment. Can be -255 to 255.
 
-### '' node (Optional)
+### 'contrast' effect node (Optional)
 ```
 <layer>
-  </>
+  <contrast value="10"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. Adjusts the contrast of the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'value' attribute (Not optional)
+The difference value for the adjustment. Can be -255 to 255.
 
-### '' node (Optional)
+### 'opacity' effect node (Optional)
 ```
 <layer>
-  </>
+  <opacity value="50"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. Adjusts the opacity of the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'value' attribute (Not optional)
+The opacity of the layer. Can be 0-100 where 0 is completely transparent and 100 is opaque.
 
-### '' node (Optional)
+### 'balance' effect node (Optional)
 ```
 <layer>
-  </>
+  <balance red="10" green="20" blue="30"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. Adjusts the color balance of the parent layer.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'red' attribute (Optional)
+The red color adjustment. Can be -255-255. If left out it is set to -1.
+#### 'green' attribute (Optional)
+The green color adjustment. Can be -255-255. If left out it is set to -1.
+#### 'blue' attribute (Optional)
+The blue color adjustment. Can be -255-255. If left out it is set to -1.
 
-### '' node (Optional)
+### 'gamebox' effect node (Optional)
 ```
 <layer>
-  </>
+  <gamebox side="[custom image resource]" rotate="90"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders ...
+Must be nested inside a layer node. Renders a nifty looking 3D game box. It uses the parent layer image on the front of the box.
 
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
-
-### '' node (Optional)
-```
-<layer>
-  </>
-</layer>
-```
-Must be nested inside a layer node. Renders ...
-
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
-
-### '' node (Optional)
-```
-<layer>
-  </>
-</layer>
-```
-Must be nested inside a layer node. Renders ...
-
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
-
-### '' node (Optional)
-```
-<layer>
-  </>
-</layer>
-```
-Must be nested inside a layer node. Renders ...
-
-#### '' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
+#### 'side' attribute (Optional)
+The filename of the [custom image resource](#custom-image-resources) to be used on the side of the box.
+#### 'rotate' attribute (Optional)
+Defines the rotation of the side image in degrees.
 
 ## Custom image resources
 From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '[homedir]/.skyscraper/resources' folder and use it by adding the filename to the attribute.
