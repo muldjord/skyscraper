@@ -72,7 +72,7 @@ Sets the width and height of the artwork export. If both are left out it will us
 ```
 Like layers in Gimp or almost any other respectable photo manipulation software, you can add as many of these nodes as you like. You can even nest them inside of each other, in which case the child layer will be anchored to the topleft corner of the parent layer, making it easier to align.
 
-NOTE!!! Layer nodes are rendered from top to bottom.
+NOTE!!! Layer and effect nodes are rendered from top to bottom.
 
 #### 'resource' attribute (Not optional)
 The artwork resource to be used by the layer. It can be:
