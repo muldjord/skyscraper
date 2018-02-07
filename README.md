@@ -142,7 +142,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
     * Implemented 'mask' effect that allows you to mask out certain parts of the parent layer
     * Implemented 'opacity' effect that adjusts the opacity of the parent layer
     * Implemented 'rounded' effect that rounds the corners of the parent layer
-    * Implemented 'stroke' effect to outline layers
+    * Implemented 'stroke' effect that outlines the parent layer
     * Improved 'shadow' effect to adhere perfectly to softness as radius
 * Added 'artworkXml' config file options and '-a' cli option for setting custom artwork xml config file
 * Implemented resource system that allows user to place files in '[homedir]/.skyscraper/resources' and use them in the '[homedir]/.skyscraper/artwork.xml' layers and effects
