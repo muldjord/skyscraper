@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This is the default artwork.xml provided by Skyscraper. More examples can be found in '[homedir]/.skyscraper'. Be sure to check the full artwork documentation here: https://github.com/muldjord/skyscraper/blob/master/ARTWORK.md -->
+<!-- This is the screenshot masked with a round mask and frame. Centered on top of it sits the wheel artwork. A nice drop shadow has been applied to the wheel. This is to demonstrate the combination of mask and frame. -->
 <artwork>
-  <!-- Create a screenshot output for the frontend and set its width and height. If no layers are nested inside the output node, it will export the screenshot raw and just resize it according to width and height. If layers are nested inside, it will create an empty canvas of the defined size and composite the layers on top of it. -->
   <output type="screenshot" width="640" height="480">
-    <!-- Add a layer to the canvas using the scraped screenshot. Resize and place it according to the attributes. -->
-    <layer resource="screenshot" x="20" width="520" height="390" align="center" valign="middle">
-      <!-- Round the edges of the screenshot layer by the given radius -->
-      <rounded radius="10"/>
-      <!-- Add an outline to the screenshot layer. If no red, green and blue attributes are defined, it will guess the color by averaging the color of the parent screenshot layer -->
-      <stroke width="5"/>
+    <layer resource="screenshot" width="640" height="480" align="center" valign="middle">
+      <mask file="maskexample.png"/>
+      <frame file="frameexample.png"/>
     </layer>
-    <!-- Add another layer to the canvas. This time it will use the scraped cover. This layer will be rendered on top of the previous screenshot layer. -->
-    <layer resource="cover" height="250" x="0" y="-10" valign="bottom">
-      <!-- Convert the cover layer to a 3D gamebox layer. Eye candy ahoy! Define what you would like on the side of the box with the 'side' attribute. You can also type in a filename of an image that resides in the '[homedir]/.skyscraper/resources' folder. In this example we place the scraped wheel resource on the side and rotate it 90 degrees -->
-      <gamebox side="wheel" rotate="90"/>
-      <!-- Render a shadow on the cover layer for that extra finish -->
-      <shadow distance="5" softness="5" opacity="70"/>
+    <layer resource="wheel" width="400" align="center" valign="middle">
+      <shadow distance="20" softness="5" opacity="70"/>
     </layer>
-    <!-- Add one last layer, this time using the scraped wheel artwork. -->
-    <layer resource="wheel" width="250" x="-10" align="right">
-      <!-- Render a shadow on the wheel layer -->
-      <shadow distance="5" softness="5" opacity="70"/>
-    </layer>
-    <!-- Conclude the screenshot output and add it to the game entry to be used by the frontend -->
   </output>
-  <!-- You can add more output nodes here. In the above example we output a screenshot composited of several of the scraped resources. This can be done the same way for both 'cover', 'wheel' and 'marquee' aswell -->
 </artwork>
