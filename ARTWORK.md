@@ -202,16 +202,18 @@ Sets the y coordinate of the frame relative to the parent layer. If left out it 
   <stroke width="5" red="10" green="20" blue="30"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders a colored outline on the parent layer. If any of the color channels are left out, it averages a suitable color from the parent layer.
+Must be nested inside a layer node. Renders a colored outline on the parent layer. If all color attributes are left out, it averages a suitable color from the parent layer.
 
 #### 'width' attribute (Not optional)
 The width of the outline in pixels.
 #### 'red' attribute (Optional)
-The red color value for the outline. Can be 0-255. If left out it averages a suitable color from the parent layer.
+The red color value for the outline. Can be 0-255. If left out it is set to 0.
 #### 'green' attribute (Optional)
-The green color value for the outline. Can be 0-255. If left out it averages a suitable color from the parent layer.
+The green color value for the outline. Can be 0-255. If left out it is set to 0.
 #### 'blue' attribute (Optional)
-The blue color value for the outline. Can be 0-255. If left out it averages a suitable color from the parent layer.
+The blue color value for the outline. Can be 0-255. If left out it is set to 0.
+#### 'color' attribute (Optional)
+Provides the color to use hex-style. This can be used instead of the 'red', 'green' and 'blue' attributes described above. An example could be 'color="#ff0099"'.
 
 ### 'rounded' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/rounded.png)
