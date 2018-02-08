@@ -93,6 +93,8 @@ public:
   bool hasLayers();
   bool save(QString filename);
 
+  void colorFromHex(QString color);
+
 private:
   // Contains all nested layers and effects
   QList<Layer> layers;

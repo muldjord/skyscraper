@@ -164,3 +164,15 @@ bool Layer::save(QString filename)
   }
   return false;
 }
+
+void Layer::colorFromHex(QString color)
+{
+  color = color.replace("#", "");
+  
+  if(color.length() != 6)
+    return;
+
+  red = color.left(2).toInt(Q_NULLPTR, 16);
+  green = color.mid(2, 2).toInt(Q_NULLPTR, 16);
+  blue = color.right(2).toInt(Q_NULLPTR, 16);
+}
