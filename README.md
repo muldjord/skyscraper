@@ -131,6 +131,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version x.x.x (still unimplemented)
 * Fixed 'players' tag to always convert to a 1-digit format
+* Added 'color="#fffff"' option to certain effects for the geeky people (including me of course)
+
+#### Version 2.3.1 (in progress, unreleased)
+* Now filters out ".hack-Link" results from 'screenscraper' to avoid bad localdb data
 
 #### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
