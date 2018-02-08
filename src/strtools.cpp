@@ -23,6 +23,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <QDate>
+#include <QRegularExpression>
+
 #include "strtools.h"
 
 QString StrTools::xmlUnescape(QString str)
@@ -109,4 +112,85 @@ QByteArray StrTools::unMagic(QByteArray str)
   }
 
   return thingie; 
+}
+
+QString StrTools::conformPlayers(QString str)
+{
+  // This currently doesn't handle games with more players than 9
+  
+  QRegularExpression regexp;
+  regexp.setPattern("^\\d-\\d");
+  if(regexp.match(str).hasMatch()) {
+    str = str.mid(2, 1);
+  }
+
+  regexp.setPattern("^\\d - \\d");
+  if(regexp.match(str).hasMatch()) {
+    str = str.mid(4, 1);
+  }
+  return str;
+}
+
+QString StrTools::conformReleaseDate(QString str)
+{
+  if(str.length() == 4 && str.toInt() != 0) {
+    str = QDate::fromString(str, "yyyy").toString("yyyyMMdd");
+  } else if(str.length() == 7 &&
+	    str.left(4).toInt() != 0 &&
+	    str.left(4).toInt() < 3000 &&
+	    str.mid(5, 2).toInt() != 0 &&
+	    str.mid(5, 2).toInt() <= 12) {
+    str = QDate::fromString(str, "yyyy-MM").toString("yyyyMMdd");
+  } else if(str.length() == 10 &&
+	    str.left(4).toInt() != 0 &&
+	    str.left(4).toInt() < 3000 &&
+	    str.mid(5, 2).toInt() != 0 &&
+	    str.mid(5, 2).toInt() <= 12 &&
+	    str.mid(8, 2).toInt() != 0 &&
+	    str.mid(8, 2).toInt() <= 31) {
+    str = QDate::fromString(str, "yyyy-MM-dd").toString("yyyyMMdd");
+  } else if(str.length() == 10 &&
+	    str.left(2).toInt() != 0 &&
+	    str.left(2).toInt() <= 12 &&
+	    str.mid(3, 2).toInt() != 0 &&
+	    str.mid(3, 2).toInt() <= 31 &&
+	    str.mid(6, 4).toInt() != 0 &&
+	    str.mid(6, 4).toInt() < 3000) {
+    str = QDate::fromString(str, "MM/dd/yyyy").toString("yyyyMMdd");
+  } else if(str.length() == 9 &&
+	    (str.left(3) == "Jan" ||
+	     str.left(3) == "Feb" ||
+	     str.left(3) == "Mar" ||
+	     str.left(3) == "Apr" ||
+	     str.left(3) == "May" ||
+	     str.left(3) == "Jun" ||
+	     str.left(3) == "Jul" ||
+	     str.left(3) == "Aug" ||
+	     str.left(3) == "Sep" ||
+	     str.left(3) == "Oct" ||
+	     str.left(3) == "Nov" ||
+	     str.left(3) == "Dec") &&
+	    str.mid(5, 4).toInt() != 0 &&
+	    str.mid(5, 4).toInt() < 3000) {
+    str = QDate::fromString(str, "MMM, yyyy").toString("yyyyMMdd");
+  } else if(str.length() == 12 &&
+	    (str.left(3) == "Jan" ||
+	     str.left(3) == "Feb" ||
+	     str.left(3) == "Mar" ||
+	     str.left(3) == "Apr" ||
+	     str.left(3) == "May" ||
+	     str.left(3) == "Jun" ||
+	     str.left(3) == "Jul" ||
+	     str.left(3) == "Aug" ||
+	     str.left(3) == "Sep" ||
+	     str.left(3) == "Oct" ||
+	     str.left(3) == "Nov" ||
+	     str.left(3) == "Dec") &&
+	    str.mid(4, 2).toInt() != 0 &&
+	    str.mid(4, 2).toInt() <= 31 &&
+	    str.mid(8, 4).toInt() != 0 &&
+	    str.mid(8, 4).toInt() < 3000) {
+    str = QDate::fromString(str, "MMM dd, yyyy").toString("yyyyMMdd");
+  }
+  return str;
 }

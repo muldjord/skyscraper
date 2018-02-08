@@ -200,11 +200,15 @@ void ScraperWorker::run()
     game.videoFile = StrTools::xmlUnescape(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
     game.description = StrTools::xmlUnescape(game.description);
     game.releaseDate = StrTools::xmlUnescape(game.releaseDate);
+    // Make sure we have the correct 'yyyymmdd' format of 'releaseDate'
+    game.releaseDate = StrTools::conformReleaseDate(game.releaseDate);
     game.developer = StrTools::xmlUnescape(game.developer);
     game.publisher = StrTools::xmlUnescape(game.publisher);
     game.tags = StrTools::xmlUnescape(game.tags);
     game.rating = StrTools::xmlUnescape(game.rating);
     game.players = StrTools::xmlUnescape(game.players);
+    // Make sure we have the correct single digit format of 'players'
+    game.players = StrTools::conformPlayers(game.players);
 
     if(config.verbose) {
       output.append("Scraper:\t\033[1;32m'" + config.scraper + "'\n");

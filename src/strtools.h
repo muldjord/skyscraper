@@ -34,6 +34,8 @@ public:
   static QString xmlUnescape(QString str);
   static QString xmlEscape(QString str);
   static QByteArray unMagic(QByteArray str);
+  static QString conformPlayers(QString str);
+  static QString conformReleaseDate(QString str);
   
 };
 

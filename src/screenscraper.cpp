@@ -157,7 +157,7 @@ void ScreenScraper::getGameData(GameEntry &game)
 void ScreenScraper::getReleaseDate(GameEntry &game)
 {
   QDomNode xmlNode = xmlDoc.elementsByTagName("dates").at(0);
-  QString releaseDate;
+  QString releaseDate = "";
   if(!xmlNode.firstChildElement("date_" + config->region).isNull()) {
     releaseDate = xmlNode.firstChildElement("date_" + config->region).text();
   } else if(!xmlNode.firstChildElement("date_wor").isNull()) {
@@ -168,67 +168,7 @@ void ScreenScraper::getReleaseDate(GameEntry &game)
     releaseDate = xmlNode.firstChildElement("date_us").text();
   }
 
-  if(releaseDate.length() == 4 && releaseDate.toInt() != 0) {
-    game.releaseDate = QDate::fromString(releaseDate, "yyyy").toString("yyyyMMdd");
-  } else if(releaseDate.length() == 7 &&
-	    releaseDate.left(4).toInt() != 0 &&
-	    releaseDate.left(4).toInt() < 3000 &&
-	    releaseDate.mid(5, 2).toInt() != 0 &&
-	    releaseDate.mid(5, 2).toInt() <= 12) {
-    game.releaseDate = QDate::fromString(releaseDate, "yyyy-MM").toString("yyyyMMdd");
-  } else if(releaseDate.length() == 10 &&
-	    releaseDate.left(4).toInt() != 0 &&
-	    releaseDate.left(4).toInt() < 3000 &&
-	    releaseDate.mid(5, 2).toInt() != 0 &&
-	    releaseDate.mid(5, 2).toInt() <= 12 &&
-	    releaseDate.mid(8, 2).toInt() != 0 &&
-	    releaseDate.mid(8, 2).toInt() <= 31) {
-    game.releaseDate = QDate::fromString(releaseDate, "yyyy-MM-dd").toString("yyyyMMdd");
-  } else if(releaseDate.length() == 10 &&
-	    releaseDate.left(2).toInt() != 0 &&
-	    releaseDate.left(2).toInt() <= 12 &&
-	    releaseDate.mid(3, 2).toInt() != 0 &&
-	    releaseDate.mid(3, 2).toInt() <= 31 &&
-	    releaseDate.mid(6, 4).toInt() != 0 &&
-	    releaseDate.mid(6, 4).toInt() < 3000) {
-    game.releaseDate = QDate::fromString(releaseDate, "MM/dd/yyyy").toString("yyyyMMdd");
-  } else if(releaseDate.length() == 9 &&
-	    (releaseDate.left(3) == "Jan" ||
-	     releaseDate.left(3) == "Feb" ||
-	     releaseDate.left(3) == "Mar" ||
-	     releaseDate.left(3) == "Apr" ||
-	     releaseDate.left(3) == "May" ||
-	     releaseDate.left(3) == "Jun" ||
-	     releaseDate.left(3) == "Jul" ||
-	     releaseDate.left(3) == "Aug" ||
-	     releaseDate.left(3) == "Sep" ||
-	     releaseDate.left(3) == "Oct" ||
-	     releaseDate.left(3) == "Nov" ||
-	     releaseDate.left(3) == "Dec") &&
-	    releaseDate.mid(5, 4).toInt() != 0 &&
-	    releaseDate.mid(5, 4).toInt() < 3000) {
-    game.releaseDate = QDate::fromString(releaseDate, "MMM, yyyy").toString("yyyyMMdd");
-  } else if(releaseDate.length() == 12 &&
-	    (releaseDate.left(3) == "Jan" ||
-	     releaseDate.left(3) == "Feb" ||
-	     releaseDate.left(3) == "Mar" ||
-	     releaseDate.left(3) == "Apr" ||
-	     releaseDate.left(3) == "May" ||
-	     releaseDate.left(3) == "Jun" ||
-	     releaseDate.left(3) == "Jul" ||
-	     releaseDate.left(3) == "Aug" ||
-	     releaseDate.left(3) == "Sep" ||
-	     releaseDate.left(3) == "Oct" ||
-	     releaseDate.left(3) == "Nov" ||
-	     releaseDate.left(3) == "Dec") &&
-	    releaseDate.mid(4, 2).toInt() != 0 &&
-	    releaseDate.mid(4, 2).toInt() <= 31 &&
-	    releaseDate.mid(8, 4).toInt() != 0 &&
-	    releaseDate.mid(8, 4).toInt() < 3000) {
-    game.releaseDate = QDate::fromString(releaseDate, "MMM dd, yyyy").toString("yyyyMMdd");
-  } else {
-    game.releaseDate = releaseDate;
-  }
+  game.releaseDate = releaseDate;
 }
 
 void ScreenScraper::getDeveloper(GameEntry &game)
