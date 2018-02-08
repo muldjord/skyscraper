@@ -38,7 +38,7 @@ QImage FxStroke::applyEffect(const QImage &src, const Layer &layer)
   int green = layer.green;
   int blue = layer.blue;
 
-  if(red == -1 || green == -1 || blue == -1) {
+  if(red == -1 && green == -1 && blue == -1) {
     int samples = 20;
     int averageDivider = 0;
     for(int y = samples / 2; y < src.height(); y += samples) {
@@ -59,6 +59,13 @@ QImage FxStroke::applyEffect(const QImage &src, const Layer &layer)
       green = 0;
       blue = 0;
     }
+  } else {
+    if(red == -1)
+      red = 0;
+    if(green == -1)
+      green = 0;
+    if(blue == -1)
+      blue = 0;
   }
 
   QImage buffer1(src.width() + layer.width * 2, src.height() + layer.width * 2,
