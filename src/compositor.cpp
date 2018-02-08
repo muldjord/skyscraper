@@ -158,6 +158,8 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("width")) {
 	newLayer.setType(T_STROKE);
 	newLayer.setWidth(attribs.value("width").toInt());
+	if(attribs.hasAttribute("color"))
+	  newLayer.colorFromHex(attribs.value("", "color").toString());
 	if(attribs.hasAttribute("red"))
 	  newLayer.setRed(attribs.value("", "red").toInt());
 	if(attribs.hasAttribute("green"))

@@ -47,7 +47,6 @@ private:
   void processChildLayers(GameEntry &game, Layer &layer);
   Settings *config;
   Layer outputs;
-  QImage cropToFit(const QImage &image);
   
 };
 
