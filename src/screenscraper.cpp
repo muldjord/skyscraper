@@ -84,6 +84,12 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     game.title = xmlRegionNoms.firstChildElement("nom_us").text();
   }
 
+  // 'screenscraper' sometimes returns a faulty result with the following name. If we get this
+  // result, DON'T use it. It will provide faulty data for localdb
+  if(game.title = ".hack-Link") {
+    return;
+  }
+
   // If title still unset, no acceptable rom was found, so return with no results
   if(game.title.isNull()) {
     return;
