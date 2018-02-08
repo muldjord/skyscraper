@@ -132,6 +132,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'colorize' effect which renders the image using one color
 * Added 'color="#fffff"' option to certain effects for the geeky people (including me of course)
+* Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
 
 #### Version 2.3.1 (in progress, unreleased)
 * Fixed 'players' tag to always conform to a 1-digit format
