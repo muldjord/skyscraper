@@ -130,10 +130,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Fixed 'players' tag to always convert to a 1-digit format
+* Added 'colorize' effect which renders the image using one color
 * Added 'color="#fffff"' option to certain effects for the geeky people (including me of course)
 
 #### Version 2.3.1 (in progress, unreleased)
+* Fixed 'players' tag to always conform to a 1-digit format
 * Now filters out ".hack-Link" results from 'screenscraper' to avoid bad localdb data
 * Added note to output about how many new resources have been added during scraping run
 
