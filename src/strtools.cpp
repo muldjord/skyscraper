@@ -116,24 +116,24 @@ QByteArray StrTools::unMagic(QByteArray str)
 
 QString StrTools::conformPlayers(QString str)
 {
-  // This currently doesn't handle games with more players than 9
-  
-  QRegularExpression regexp;
-  regexp.setPattern("^\\d-\\d");
-  if(regexp.match(str).hasMatch()) {
-    str = str.mid(2, 1);
-  }
+  if(QRegularExpression("^\\d-\\d\\d").match(str).hasMatch())
+    return str.mid(2, 2);
 
-  regexp.setPattern("^\\d - \\d");
-  if(regexp.match(str).hasMatch()) {
-    str = str.mid(4, 1);
-  }
+  if(QRegularExpression("^\\d-\\d").match(str).hasMatch())
+    return str.mid(2, 1);
+
+  if(QRegularExpression("^\\d - \\d\\d").match(str).hasMatch())
+    return str.mid(4, 2);
+
+  if(QRegularExpression("^\\d - \\d").match(str).hasMatch())
+    return str.mid(4, 1);
+
   return str;
 }
 
 QString StrTools::conformReleaseDate(QString str)
 {
-  if(str.length() == 4 && str.toInt() != 0) {
+  if(QRegularExpression("^\\d{4}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "yyyy").toString("yyyyMMdd");
   } else if(str.length() == 7 &&
 	    str.left(4).toInt() != 0 &&
