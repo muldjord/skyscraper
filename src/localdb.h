@@ -74,7 +74,8 @@ public:
   void verifyResources(int &resourcesDeleted);
   bool fillType(QString &type, QList<Resource> &matchingResources,
 		QString &result, QString &source);
-  
+
+  int resAtLoad = 0;
 };
 
 #endif // LOCALDB_H

@@ -122,6 +122,7 @@ bool LocalDb::readDb()
     }
     result = true;
     printf("Successfully parsed %d resources!\n\n", resources.length());
+    resAtLoad = resources.length();
     dbFile.close();
   }
   return result;
@@ -180,7 +181,8 @@ bool LocalDb::writeDb()
 
   QFile dbFile(dbDir.absolutePath() + "/db.xml");
   if(dbFile.open(QIODevice::WriteOnly)) {
-    printf("Writing %d resources to local database, please wait... ", resources.length());
+    printf("Writing %d (%d new) resources to local database, please wait... ",
+	   resources.length(), resources.length() - resAtLoad);
     QXmlStreamWriter xml(&dbFile);
     xml.setAutoFormatting(true);
     xml.writeStartDocument();
