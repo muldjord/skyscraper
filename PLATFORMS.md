@@ -51,6 +51,8 @@
 * Vectrex
 * Videopac (Oddysey 2)
 * Virtual Boy
+* WonderSwan
+* WonderSwan Color
 * Z-Machine
 * ZX Spectrum
 
