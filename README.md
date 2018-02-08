@@ -135,6 +135,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.3.1 (in progress, unreleased)
 * Now filters out ".hack-Link" results from 'screenscraper' to avoid bad localdb data
+* Added note to output about how many new resources have been added during scraping run
 
 #### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
