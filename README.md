@@ -132,6 +132,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'colorize' effect which renders the image using one color
 * Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
+* Fixed so 'localdb' folder isn't created inside dbs folder
+* Conformed 'game tags' to 'Platform, Action' format
+* Implemented conform function for game ratings
 
 #### Version 2.3.1 (in progress, unreleased)
 * Fixed 'players' tag to always conform to a 1-digit format
