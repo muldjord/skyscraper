@@ -132,7 +132,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'colorize' effect which renders the image using one color
 * Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
-* Fixed so 'localdb' folder isn't created inside dbs folder
 * Implemented conform function for game ratings
 * Rewrote the searchMatch system to provide more accurate results for filename based searches
 
@@ -142,6 +141,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added note to output about how many new resources have been added during scraping run
 * Added 'color="#fffff"' option to stroke effect for the geeky people (including me of course)
 * Conformed 'game tags' to 'Platform, Action' format
+* Fixed so 'localdb' folder isn't created inside dbs media folders
 
 #### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
