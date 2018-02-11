@@ -142,6 +142,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'color="#fffff"' option to stroke effect for the geeky people (including me of course)
 * Conformed 'game tags' to 'Platform, Action' format
 * Fixed so 'localdb' folder isn't created inside dbs media folders
+* Optimized the mameMap a bit
 
 #### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
