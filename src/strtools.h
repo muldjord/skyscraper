@@ -36,6 +36,7 @@ public:
   static QByteArray unMagic(QByteArray str);
   static QString conformPlayers(QString str);
   static QString conformReleaseDate(QString str);
+  static QString conformTags(QString str);
   
 };
 
