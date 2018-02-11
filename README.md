@@ -131,6 +131,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version x.x.x (still unimplemented)
 * Added 'colorize' effect which renders the image using one color
+* Added 'saturation' effect which changes the color saturation of the image
+* Added 'hue' effect which changes the hue of the image
+* Added 'sharpen' effect which sharpens the image
 * Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
 * Implemented conform function for game ratings
 * Rewrote the searchMatch system to provide more accurate results for filename based searches
