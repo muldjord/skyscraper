@@ -135,12 +135,13 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Fixed so 'localdb' folder isn't created inside dbs folder
 * Conformed 'game tags' to 'Platform, Action' format
 * Implemented conform function for game ratings
+* Rewrote the searchMatch system to provide more accurate results for filename based searches
 
 #### Version 2.3.1 (in progress, unreleased)
 * Fixed 'players' tag to always conform to a 1-digit format
 * Now filters out ".hack-Link" results from 'screenscraper' to avoid bad localdb data
 * Added note to output about how many new resources have been added during scraping run
-* Added 'color="#fffff"' option to certain effects for the geeky people (including me of course)
+* Added 'color="#fffff"' option to stroke effect for the geeky people (including me of course)
 
 #### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
