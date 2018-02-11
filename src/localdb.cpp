@@ -39,20 +39,22 @@ LocalDb::LocalDb(const QString &dbFolder)
 
 bool LocalDb::createFolders(const QString &scraper)
 {
-  if(!dbDir.mkpath(dbDir.absolutePath() + "/covers/" + scraper)) {
-    return false;
-  }
-  if(!dbDir.mkpath(dbDir.absolutePath() + "/screenshots/" + scraper)) {
-    return false;
-  }
-  if(!dbDir.mkpath(dbDir.absolutePath() + "/wheels/" + scraper)) {
-    return false;
-  }
-  if(!dbDir.mkpath(dbDir.absolutePath() + "/marquees/" + scraper)) {
-    return false;
-  }
-  if(!dbDir.mkpath(dbDir.absolutePath() + "/videos/" + scraper)) {
-    return false;
+  if(scraper != "localdb") {
+    if(!dbDir.mkpath(dbDir.absolutePath() + "/covers/" + scraper)) {
+      return false;
+    }
+    if(!dbDir.mkpath(dbDir.absolutePath() + "/screenshots/" + scraper)) {
+      return false;
+    }
+    if(!dbDir.mkpath(dbDir.absolutePath() + "/wheels/" + scraper)) {
+      return false;
+    }
+    if(!dbDir.mkpath(dbDir.absolutePath() + "/marquees/" + scraper)) {
+      return false;
+    }
+    if(!dbDir.mkpath(dbDir.absolutePath() + "/videos/" + scraper)) {
+      return false;
+    }
   }
 
   // Copy priorities.xml example file to db folder if it doesn't already exist
