@@ -134,6 +134,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
 * Implemented conform function for game ratings
 * Rewrote the searchMatch system to provide more accurate results for filename based searches
+* Improved front and side textures for the 'gamebox' effect
+* Improved 'blur' and 'shadow' effect to be true gaussian
 
 #### Version 2.3.1 (in progress, unreleased)
 * Fixed 'players' tag to always conform to a 1-digit format
