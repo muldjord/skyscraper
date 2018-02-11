@@ -205,6 +205,7 @@ void ScraperWorker::run()
     game.developer = StrTools::xmlUnescape(game.developer);
     game.publisher = StrTools::xmlUnescape(game.publisher);
     game.tags = StrTools::xmlUnescape(game.tags);
+    game.tags = StrTools::conformTags(game.tags);
     game.rating = StrTools::xmlUnescape(game.rating);
     game.players = StrTools::xmlUnescape(game.players);
     // Make sure we have the correct single digit format of 'players'
@@ -227,11 +228,7 @@ void ScraperWorker::run()
     if(game.releaseDate.isEmpty()) {
       output.append("\033[0m'\n");
     } else {
-      if(game.releaseDate.toInt() == 0) {
-	output.append("Unknown format (" + game.releaseDate + ")\033[0m' (" + game.releaseDateSrc + ")\n");
-      } else {
-	output.append(QDate::fromString(game.releaseDate, "yyyyMMdd").toString("yyyy-MM-dd") + "\033[0m' (" + game.releaseDateSrc + ")\n");
-      }
+      output.append(QDate::fromString(game.releaseDate, "yyyyMMdd").toString("yyyy-MM-dd") + "\033[0m' (" + game.releaseDateSrc + ")\n");
     }
     output.append("Developer:\t'\033[1;32m" + game.developer + "\033[0m' (" + game.developerSrc + ")\n");
     output.append("Publisher:\t'\033[1;32m" + game.publisher + "\033[0m' (" + game.publisherSrc + ")\n");
