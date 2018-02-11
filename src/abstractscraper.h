@@ -120,7 +120,7 @@ protected:
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
 
 private:
-  QList<QPair<QString, QString> > mameMap;
+  QMap<QString, QString> mameMap;
   
 };
 

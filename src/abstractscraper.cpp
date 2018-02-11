@@ -395,11 +395,8 @@ QString AbstractScraper::getSearchName(QString baseName)
   if(config->scraper != "mamedb" &&
      config->scraper != "import" &&
      (config->platform == "neogeo" || config->platform == "arcade")) {
-    for(int a = 0; a < mameMap.length(); ++a) {
-      if(baseName == mameMap.at(a).first) {
-	baseName = mameMap.at(a).second;
-	break;
-      }
+    if(!mameMap[baseName].isEmpty()) {
+      baseName = mameMap[baseName];
     }
   }
 
@@ -446,11 +443,8 @@ QString AbstractScraper::getCompareName(QString baseName, QString &sqrNotes, QSt
   if(config->scraper != "mamedb" &&
      config->scraper != "import" &&
      (config->platform == "neogeo" || config->platform == "arcade")) {
-    for(int a = 0; a < mameMap.length(); ++a) {
-      if(baseName == mameMap.at(a).first) {
-	baseName = mameMap.at(a).second;
-	break;
-      }
+    if(!mameMap[baseName].isEmpty()) {
+      baseName = mameMap[baseName];
     }
   }
 
@@ -567,8 +561,12 @@ void AbstractScraper::loadMameMap()
     QFile mameMapFile("mameMap.csv");
     if(mameMapFile.open(QIODevice::ReadOnly)) {
       while(!mameMapFile.atEnd()) {
-	QList<QByteArray> pairs = mameMapFile.readLine().split(';');
-	mameMap.append(QPair<QString, QString> (QString::fromUtf8(pairs.at(0)).replace("\"", "").simplified(), QString::fromUtf8(pairs.at(1)).replace("\"", "").simplified()));
+	QList<QByteArray> pair = mameMapFile.readLine().split(';');
+	QString mameName = pair.at(0);
+	QString realName = pair.at(1);
+	mameName = mameName.replace("\"", "").simplified();
+	realName = realName.replace("\"", "").simplified();
+	mameMap[mameName] = realName;
       }
       mameMapFile.close();
     }
