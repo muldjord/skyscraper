@@ -144,19 +144,21 @@ void ScraperWorker::run()
     }
 
     int lowestDistance = 666;
-    GameEntry game = getBestEntry(gameEntries, compareName, lowestDistance);
+    GameEntry game;
+    if(!hasAcceptableEntry(gameEntries, game, compareName, lowestDistance)) {
+      game.found = false;
+      output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
+      emit outputToTerminal(output);
+      emit entryReady(game);
+      continue;
+    }
+
     game.path = info.absoluteFilePath();
     game.baseName = info.completeBaseName();
     game.sha1 = sha1;
     game.parNotes = parNotes;
     game.sqrNotes = sqrNotes;
 
-    if(!game.found) {
-      output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
-      emit outputToTerminal(output);
-      emit entryReady(game);
-      continue;
-    }
     int searchMatch = getSearchMatch(game.title, compareName, lowestDistance);
     game.searchMatch = searchMatch;
     if(searchMatch < config.minMatch) {
@@ -218,15 +220,15 @@ void ScraperWorker::run()
       output.append("From cache:\t" + QString((prefilledFromCache?"YES (refresh from source with '--updatedb')":"NO")) + "\n");
     }
     output.append("Search match:\t" + QString::number(searchMatch) + " %\n");
-    output.append("Game title:\t'\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
+    output.append("Compare title:\t'\033[1;32m" + compareName + "\033[0m'\n");
+    output.append("Result title:\t'\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
     if(config.forceFilename) {
       game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).left(info.completeBaseName().indexOf("[")).replace("_", " ").simplified());
     }
-    output.append("Compare title:\t'\033[1;32m" + compareName + "\033[0m'\n");
     output.append("Platform:\t'\033[1;32m" + game.platform + "\033[0m' (" + game.platformSrc + ")\n");
     output.append("Release Date:\t'\033[1;32m");
     if(game.releaseDate.isEmpty()) {
-      output.append("\033[0m'\n");
+      output.append("\033[0m' ()\n");
     } else {
       output.append(QDate::fromString(game.releaseDate, "yyyyMMdd").toString("yyyy-MM-dd") + "\033[0m' (" + game.releaseDateSrc + ")\n");
     }
@@ -325,28 +327,27 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
   return sha1.result().toHex();
 }
 
-GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
-				      const QString &compareName,
-				      int &lowestDistance)
+bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
+				       GameEntry &game,
+				       const QString &compareName,
+				       int &lowestDistance)
 {
   int compareNumeral = StrTools::getNumeral(compareName);
 
-  GameEntry game;
   if(gameEntries.isEmpty()) {
-    game.found = false;
     game.title = compareName;
-    return game;
+    return false;
   }
 
-  int mostSimilar = 0;
+  int mostSimilar = -1;
   for(int a = 0; a < gameEntries.length(); ++a) {
     QString currentTitle = gameEntries.at(a).title;
 
     // If we have a perfect hit, always use this result
     if(compareName == currentTitle) {
       lowestDistance = 0;
-      mostSimilar = a;
-      break;
+      game = gameEntries.at(a);
+      return true;
     }
 
     int currentNumeral = StrTools::getNumeral(currentTitle);
@@ -355,12 +356,15 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
       continue;
     }
     
+    // Remove everything after a ':' in web result title, as it often isn't part of the filename
+    // But only do so if length of strings vary more than 4, otherwise filename might have
+    // subname included, but perhaps with ' - ' or similar instead of ':'
+    if(currentTitle.indexOf(":") != -1 && abs(currentTitle.length() - compareName.length()) > 4) {
+      currentTitle = currentTitle.left(currentTitle.indexOf(":")).simplified();
+    }
+
     // Check if game is a sequel
     if(compareNumeral != -1) {
-      // Remove everything after a ':' in web result title, as it often isn't part of the filename, giving bad compare results. But only do so if length of strings vary more than 4, otherwise filename might have subname included, but perhaps with ' - ' or similar instead of ':'
-      if(currentTitle.indexOf(":") != -1 && abs(currentTitle.length() - compareName.length()) > 4) {
-	currentTitle = currentTitle.left(currentTitle.indexOf(":"));
-      }
       // Check if web title is similar to compareName without ' I'
       // eg 'Tomb Raider' is equal to 'Tomb Raider I'
       if(compareName.right(2) == " I" &&
@@ -370,6 +374,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 	break;
       }
     }
+
     // The reason for using .right in the second parameter is to better hit results such as 'maniac mansion II: day of the tentacle' where the filename might be 'day of the tentacle'.
     int currentDistance =
       editDistance(StrTools::xmlUnescape(compareName).toLower().toStdString(),
@@ -379,8 +384,11 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
       mostSimilar = a;
     }
   }
-  game = gameEntries.at(mostSimilar);
-  return game;
+  if(mostSimilar != -1) {
+    game = gameEntries.at(mostSimilar);
+    return true;
+  }
+  return false;
 }
 
 // --- Console colors ---
