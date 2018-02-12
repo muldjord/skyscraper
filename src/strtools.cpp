@@ -214,9 +214,9 @@ int StrTools::getNumeral(const QString &name)
   int numeral = -1;
   
   // Check for roman numerals
-  match = QRegularExpression(" [IVX]+[IVX]?[IVX]?[IVX]?[IVX]?[: ]+").match(name);
+  match = QRegularExpression(" [IVX]{1,5}([: ]+|$)").match(name);
   if(match.hasMatch()) {
-    QString roman = match.captured(0).simplified();
+    QString roman = match.captured(0).replace(":", "").replace(" ", "").simplified();
     if(roman == "I") {
       numeral = 1;
     } else if(roman == "II") {
@@ -261,9 +261,12 @@ int StrTools::getNumeral(const QString &name)
   }
 
   // Check for digit numerals
-  match = QRegularExpression(" \\d+[: ]+").match(name);
-  if(match.hasMatch() && match.captured(0).simplified().toInt() != 0) {
-    numeral = match.captured(0).toInt();
+  match = QRegularExpression(" \\d+([: ]+|$)").match(name);
+  if(match.hasMatch()) {
+    QString intStr = match.captured(0).replace(":", "").simplified();
+    if(intStr.toInt() != 0) {
+      numeral = intStr.toInt();
+    }
   }
 
   return numeral;
