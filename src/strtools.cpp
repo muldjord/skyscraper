@@ -211,7 +211,7 @@ QString StrTools::conformTags(QString str)
 int StrTools::getNumeral(const QString &name)
 {
   QRegularExpressionMatch match;
-  int numeral = -1;
+  int numeral = 1;
   
   // Check for roman numerals
   match = QRegularExpression(" [IVX]{1,5}([: ]+|$)").match(name);
