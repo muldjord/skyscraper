@@ -93,7 +93,7 @@ void ScraperWorker::run()
     QString sqrNotes = "";
     QString sha1 = getSha1(info);
 
-    QString compareName = scraper->getCompareName(info.completeBaseName(), sqrNotes, parNotes);
+    QString compareTitle = scraper->getCompareTitle(info.completeBaseName(), sqrNotes, parNotes);
 
     // Special markings for the platform, for instance 'AGA'
     QString marking = ""; // No marking is default
@@ -118,7 +118,7 @@ void ScraperWorker::run()
       localGame.sha1 = sha1;
       localDb->fillBlanks(localGame);
       if(localGame.title.isEmpty()) {
-	localGame.title = compareName;
+	localGame.title = compareTitle;
       }
       if(localGame.platform.isEmpty()) {
 	localGame.platform = config.platform;
@@ -132,7 +132,7 @@ void ScraperWorker::run()
 	localGame.sha1 = sha1;
 	localDb->fillBlanks(localGame, config.scraper);
 	if(localGame.title.isEmpty()) {
-	  localGame.title = compareName;
+	  localGame.title = compareTitle;
 	}
 	if(localGame.platform.isEmpty()) {
 	  localGame.platform = config.platform;
@@ -145,7 +145,7 @@ void ScraperWorker::run()
 
     int lowestDistance = 666;
     GameEntry game;
-    if(!hasAcceptableEntry(gameEntries, game, compareName, lowestDistance)) {
+    if(!hasAcceptableEntry(gameEntries, game, compareTitle, lowestDistance)) {
       game.found = false;
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
       emit outputToTerminal(output);
@@ -159,7 +159,7 @@ void ScraperWorker::run()
     game.parNotes = parNotes;
     game.sqrNotes = sqrNotes;
 
-    int searchMatch = getSearchMatch(game.title, compareName, lowestDistance);
+    int searchMatch = getSearchMatch(game.title, compareTitle, lowestDistance);
     game.searchMatch = searchMatch;
     if(searchMatch < config.minMatch) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' match too low :| ----\033[0m\n\n");
@@ -220,7 +220,7 @@ void ScraperWorker::run()
       output.append("From cache:\t" + QString((prefilledFromCache?"YES (refresh from source with '--updatedb')":"NO")) + "\n");
     }
     output.append("Search match:\t" + QString::number(searchMatch) + " %\n");
-    output.append("Compare title:\t'\033[1;32m" + compareName + "\033[0m'\n");
+    output.append("Compare title:\t'\033[1;32m" + compareTitle + "\033[0m'\n");
     output.append("Result title:\t'\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
     if(config.forceFilename) {
       game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).left(info.completeBaseName().indexOf("[")).replace("_", " ").simplified());
@@ -254,20 +254,20 @@ void ScraperWorker::run()
   emit allDone();
 }
 
-int ScraperWorker::getSearchMatch(const QString &title, const QString &compareName,
+int ScraperWorker::getSearchMatch(const QString &title, const QString &compareTitle,
 				  const int &lowestDistance)
 {
   int searchMatch = 0;
-  if(title.length() > compareName.length()) {
+  if(title.length() > compareTitle.length()) {
     searchMatch = (int)(100.0 / (double)title.length() *
 			((double)title.length() - (double)lowestDistance));
   } else {
-    searchMatch = (int)(100.0 / (double)compareName.length() *
-			((double)compareName.length() - (double)lowestDistance));
+    searchMatch = (int)(100.0 / (double)compareTitle.length() *
+			((double)compareTitle.length() - (double)lowestDistance));
   }
   // Special case where result is actually correct, but gets low match because of the prepending of, for instance, "Disney's [title]" where the fileName is just "[title]". Accept these if searchMatch is 'similar enough' (above 50)
   if(searchMatch < config.minMatch) {
-    if(title.toLower().indexOf(compareName.toLower()) != -1 && searchMatch >= 50) {
+    if(title.toLower().indexOf(compareTitle.toLower()) != -1 && searchMatch >= 50) {
       searchMatch = 100;
     }
   }
@@ -329,66 +329,74 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
 
 bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
 				       GameEntry &game,
-				       const QString &compareName,
+				       const QString &compareTitle,
 				       int &lowestDistance)
 {
-  int compareNumeral = StrTools::getNumeral(compareName);
-
   if(gameEntries.isEmpty()) {
-    game.title = compareName;
+    game.title = compareTitle;
     return false;
   }
 
-  int mostSimilar = -1;
+  QList<GameEntry> potentials;
+
+  int compareNumeral = StrTools::getNumeral(compareTitle);
+  // Start by applying rules we are certain are needed. Add the ones that pass to potentials
   for(int a = 0; a < gameEntries.length(); ++a) {
-    QString currentTitle = gameEntries.at(a).title;
+    QString entryTitle = gameEntries.at(a).title;
+    int entryNumeral = StrTools::getNumeral(entryTitle);
+    // If numerals don't match, skip. Numeral defaults to 1, even for games without a numeral
+    if(compareNumeral != entryNumeral) {
+      continue;
+    }
+    potentials.append(gameEntries.at(a));
+  }
+
+  // If we have no potentials at all, return false
+  if(potentials.isEmpty()) {
+    return false;
+  }
+  
+  int mostSimilar = 0;
+  // Run through the potentials and find the best match
+  for(int a = 0; a < potentials.length(); ++a) {
+    QString currentTitle = potentials.at(a).title;
 
     // If we have a perfect hit, always use this result
-    if(compareName == currentTitle) {
+    if(compareTitle == currentTitle) {
       lowestDistance = 0;
-      game = gameEntries.at(a);
+      game = potentials.at(a);
       return true;
     }
 
-    int currentNumeral = StrTools::getNumeral(currentTitle);
-    // Check if game is a sequel and whether their numerals match. If not, skip.
-    if(compareNumeral != -1 && currentNumeral != -1 && compareNumeral != currentNumeral) {
-      continue;
-    }
-    
     // Remove everything after a ':' in web result title, as it often isn't part of the filename
     // But only do so if length of strings vary more than 4, otherwise filename might have
     // subname included, but perhaps with ' - ' or similar instead of ':'
-    if(currentTitle.indexOf(":") != -1 && abs(currentTitle.length() - compareName.length()) > 4) {
+    if(currentTitle.indexOf(":") != -1 && abs(currentTitle.length() - compareTitle.length()) > 4) {
       currentTitle = currentTitle.left(currentTitle.indexOf(":")).simplified();
     }
 
-    // Check if game is a sequel
     if(compareNumeral != -1) {
-      // Check if web title is similar to compareName without ' I'
+      // Check if web title is similar to compareTitle without ' I'
       // eg 'Tomb Raider' is equal to 'Tomb Raider I'
-      if(compareName.right(2) == " I" &&
-	 currentTitle == compareName.left(compareName.length() - 2)) {
+      if(compareTitle.right(2) == " I" &&
+	 currentTitle == compareTitle.left(compareTitle.length() - 2)) {
 	lowestDistance = 0;
-	mostSimilar = a;
-	break;
+	game = potentials.at(a);
+	return true;
       }
     }
-
+    
     // The reason for using .right in the second parameter is to better hit results such as 'maniac mansion II: day of the tentacle' where the filename might be 'day of the tentacle'.
     int currentDistance =
-      editDistance(StrTools::xmlUnescape(compareName).toLower().toStdString(),
-		   StrTools::xmlUnescape(currentTitle).right(StrTools::xmlUnescape(compareName).length()).toLower().toStdString());
+      editDistance(StrTools::xmlUnescape(compareTitle).toLower().toStdString(),
+		   StrTools::xmlUnescape(currentTitle).right(StrTools::xmlUnescape(compareTitle).length()).toLower().toStdString());
     if(currentDistance < lowestDistance) {
       lowestDistance = currentDistance;
       mostSimilar = a;
     }
   }
-  if(mostSimilar != -1) {
-    game = gameEntries.at(mostSimilar);
-    return true;
-  }
-  return false;
+  game = potentials.at(mostSimilar);
+  return true;
 }
 
 // --- Console colors ---

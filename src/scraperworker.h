@@ -67,9 +67,9 @@ private:
   QString assembleTags(QByteArray &data);
   QString getSha1(const QFileInfo &info);
   bool hasAcceptableEntry(const QList<GameEntry> &gameEntries,
-			  GameEntry &game, const QString &compareName,
+			  GameEntry &game, const QString &compareTitle,
 			  int &lowestDistance);
-  int getSearchMatch(const QString &title, const QString &compareName, const int &lowestDistance);
+  int getSearchMatch(const QString &title, const QString &compareTitle, const int &lowestDistance);
 };
 
 #endif // SCRAPERWORKER_H
