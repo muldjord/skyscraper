@@ -393,6 +393,17 @@ bool AbstractScraper::checkNom(const QString nom)
 QString AbstractScraper::getSearchName(QString baseName)
 {
   if(config->scraper != "import" &&
+     config->platform == "scummvm" &&
+     QFileInfo::exists("/opt/retropie/configs/scummvm/scummvm.ini")) {
+    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini");
+    scummIni.beginGroup(baseName);
+    if(scummIni.contains("description")) {
+      baseName = scummIni.value("description").toString();
+    }
+    scummIni.endGroup();
+  }
+
+  if(config->scraper != "import" &&
      (config->platform == "neogeo" || config->platform == "arcade")) {
     if(!mameMap[baseName].isEmpty()) {
       baseName = mameMap[baseName];
@@ -449,6 +460,17 @@ QString AbstractScraper::getSearchName(QString baseName)
 
 QString AbstractScraper::getCompareTitle(QString baseName, QString &sqrNotes, QString &parNotes)
 {
+  if(config->scraper != "import" &&
+     config->platform == "scummvm" &&
+     QFileInfo::exists("/opt/retropie/configs/scummvm/scummvm.ini")) {
+    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini");
+    scummIni.beginGroup(baseName);
+    if(scummIni.contains("description")) {
+      baseName = scummIni.value("description").toString();
+    }
+    scummIni.endGroup();
+  }
+
   if(config->scraper != "import" &&
      (config->platform == "neogeo" || config->platform == "arcade")) {
     if(!mameMap[baseName].isEmpty()) {
