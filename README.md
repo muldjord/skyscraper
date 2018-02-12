@@ -107,22 +107,23 @@ If you start copying your local databases to and from friends, or you accumulate
 Basically what I'm trying to say is that it is entirely your own fault if you've spent 6 months creating a bunch of local db's and suddenly you overwrite them unintentionally or Skyscraper corrupts the data for some i-have-no-idea-how reason. It could happen. So... PLAN YOUR BACKUPS! And don't come crying to me. :D
 
 ### Local data import
-I addition to allowing scraping from local resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the '-s localdb' scraping module.
+I addition to allowing scraping from local resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the '-s localdb' scraping module. For a quick overview read on below. For a more detailed description with examples go [here](import/README.md).
 
-#### How it works
-Skyscraper allows you to import various rom resources from the local '[homedir]/.skyscraper/import' folders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called 'Bubble Bobble.nes' you would place your screenshot for this rom inside '[homedir]/.skyscraper/import/screenshots' called 'Bubble Bobble.png'. Other image file formats are also supported.
+#### Artwork import
+Skyscraper allows you to import various artwork resources from the local '[homedir]/.skyscraper/import' folders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called 'Bubble Bobble.nes' you would place your screenshot for this rom inside '[homedir]/.skyscraper/import/screenshots' called 'Bubble Bobble.png'. Other image file formats are also supported.
+
+#### Textual data import
+For textual data, you need to first create a file called '[homedir]/.skyscraper/import/definitions.dat'. In this file, you must define the file content format you are providing for each rom. For instance, if your data comes in the form of 1 xml file per rom, and you wish to scrape 'publisher' for this rom, perhaps your input file has a node like '```<publisher>This is the publisher</publisher>```'. In the 'definitions.dat' file you'd then add a line looking like '```<publisher>###PUBLISHER###</publisher```'. The '```###PUBLISHER###```' tag is recognized by Skyscraper.
 
 Now run the scraper with the '-s import' option:
 * $ Skyscraper -p [platform] -s import
 
-If you've named the files correctly, the game will show with a green 'YES' for cover, screenshot, wheel, marquee and video. If you've imported textual data, it will show the data at the relevant output line.
-Now, to make use of the imported data, scrape with the '-s localdb' scraper and your resources will be prioritized above all others, as defined in '[homedir]/.skyscraper/dbs/[platform]/priorities.xml'.
+If you've named the files correctly, the game will show with a green 'YES' for cover, screenshot, wheel, marquee and/or video (if you've enabled them with the '--videos' option). If you've imported textual data, it will show the data at the relevant output line.
+
+Now, to make use of the imported data, scrape with the '-s localdb' scraping module and your resources will be prioritized above all others as defined in '[homedir]/.skyscraper/dbs/[platform]/priorities.xml'.
 * $ Skyscraper -p [platform] -s localdb
 
-Then start your frontend and enjoy your newly imported rom data. :)
-
-#### Textual data import
-For textual data, you need to first create a file called '[homedir]/.skyscraper/import/definitions.dat'. In this file, you must define the file content format you are providing for each rom. For instance, if your data comes in the form of 1 xml file per rom, and you wish to scrape 'publisher' for this rom, perhaps your input file has a node like '```<publisher>This is the publisher</publisher>```'. In the 'definitions.dat' file you'd then add a line looking like '```<publisher>###PUBLISHER###</publisher```'. The '```###PUBLISHER###```' tag is recognized by Skyscraper. Read a more detailed description with examples [here](import/README.md).
+Then start your frontend and enjoy your newly imported data. :)
 
 ### Artwork look and effects
 Check the full artwork documentation [here](ARTWORK.md)
@@ -135,10 +136,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'hue' effect which changes the hue of the image
 * Added 'sharpen' effect which sharpens the image
 * Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
-* Implemented conform function for game ratings
 * Rewrote the searchMatch system to provide more accurate results for filename based searches
 * Improved front and side textures for the 'gamebox' effect
 * Improved 'blur' and 'shadow' effect to be true gaussian
+* Improved network issue handling (if user experiences unstable wifi)
 
 #### Version 2.3.1 (in progress, unreleased)
 * Fixed 'players' tag to always conform to a 1-digit format
