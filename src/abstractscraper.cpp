@@ -447,7 +447,7 @@ QString AbstractScraper::getSearchName(QString baseName)
   return baseName;
 }
 
-QString AbstractScraper::getCompareName(QString baseName, QString &sqrNotes, QString &parNotes)
+QString AbstractScraper::getCompareTitle(QString baseName, QString &sqrNotes, QString &parNotes)
 {
   if(config->scraper != "import" &&
      (config->platform == "neogeo" || config->platform == "arcade")) {
@@ -485,7 +485,7 @@ QString AbstractScraper::getCompareName(QString baseName, QString &sqrNotes, QSt
   // Reset
   baseName = baseNameOrig;
   
-  // Now create actual compareName
+  // Now create actual compareTitle
   baseName = baseName.replace("_", " ").left(baseName.indexOf("(")).left(baseName.indexOf("[")).simplified();
 
   // Always move The to the beginning of the name if found at the end

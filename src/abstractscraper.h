@@ -44,7 +44,7 @@ public:
   virtual ~AbstractScraper();
   virtual void getGameData(GameEntry &game);
   virtual QString getSearchName(QString baseName);
-  virtual QString getCompareName(QString baseName, QString &sqrNotes, QString &parNotes);
+  virtual QString getCompareTitle(QString baseName, QString &sqrNotes, QString &parNotes);
   virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking);
 
   void setConfig(Settings *config);

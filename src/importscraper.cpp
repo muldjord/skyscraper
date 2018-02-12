@@ -138,7 +138,7 @@ void ImportScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
   }
 }
 
-QString ImportScraper::getCompareName(QString baseName, QString &, QString &)
+QString ImportScraper::getCompareTitle(QString baseName, QString &, QString &)
 {
   return baseName;
 }
