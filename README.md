@@ -135,8 +135,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'saturation' effect which changes the color saturation of the image
 * Added 'hue' effect which changes the hue of the image
 * Added 'sharpen' effect which sharpens the image
-* Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
-* Rewrote the searchMatch system to provide more accurate results for filename based searches
 * Improved front and side textures for the 'gamebox' effect
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
@@ -149,6 +147,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Conformed 'game tags' to 'Platform, Action' format
 * Fixed so 'localdb' folder isn't created inside dbs media folders
 * Optimized the mameMap a bit
+* Improved the searchMatch system to also consider numerals
+* Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
 
 #### Version 2.3.0 (7th February 2018)
 The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
