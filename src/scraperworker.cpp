@@ -344,7 +344,8 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
   for(int a = 0; a < gameEntries.length(); ++a) {
     QString entryTitle = gameEntries.at(a).title;
     int entryNumeral = StrTools::getNumeral(entryTitle);
-    // If numerals don't match, skip. Numeral defaults to 1, even for games without a numeral
+    // If numerals don't match, skip.
+    // Numeral defaults to 1, even for games without a numeral.
     if(compareNumeral != entryNumeral) {
       continue;
     }
@@ -368,11 +369,13 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
       return true;
     }
 
-    // Remove everything after a ':' in web result title, as it often isn't part of the filename
+    // Remove everything after a ':' or " - " in web result title, as it often isn't part of the filename
     // But only do so if length of strings vary more than 4, otherwise filename might have
     // subname included, but perhaps with ' - ' or similar instead of ':'
-    if(currentTitle.indexOf(":") != -1 && abs(currentTitle.length() - compareTitle.length()) > 4) {
-      currentTitle = currentTitle.left(currentTitle.indexOf(":")).simplified();
+    if((currentTitle.indexOf(":") != -1 || currentTitle.indexOf(" - ") != -1) &&
+       abs(currentTitle.length() - compareTitle.length()) > 4) {
+      currentTitle = currentTitle.left(currentTitle.indexOf(":")).
+	left(currentTitle.indexOf(" - ")).simplified();
     }
 
     if(compareNumeral != -1) {
