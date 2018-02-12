@@ -395,12 +395,10 @@ QString AbstractScraper::getSearchName(QString baseName)
   if(config->scraper != "import" &&
      config->platform == "scummvm" &&
      QFileInfo::exists("/opt/retropie/configs/scummvm/scummvm.ini")) {
-    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini");
-    scummIni.beginGroup(baseName);
-    if(scummIni.contains("description")) {
-      baseName = scummIni.value("description").toString();
+    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini", QSettings::IniFormat);
+    if(scummIni.contains(baseName + "/description")) {
+      baseName = scummIni.value(baseName + "/description").toString();
     }
-    scummIni.endGroup();
   }
 
   if(config->scraper != "import" &&
@@ -463,12 +461,10 @@ QString AbstractScraper::getCompareTitle(QString baseName, QString &sqrNotes, QS
   if(config->scraper != "import" &&
      config->platform == "scummvm" &&
      QFileInfo::exists("/opt/retropie/configs/scummvm/scummvm.ini")) {
-    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini");
-    scummIni.beginGroup(baseName);
-    if(scummIni.contains("description")) {
-      baseName = scummIni.value("description").toString();
+    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini", QSettings::IniFormat);
+    if(scummIni.contains(baseName + "/description")) {
+      baseName = scummIni.value(baseName + "/description").toString();
     }
-    scummIni.endGroup();
   }
 
   if(config->scraper != "import" &&
