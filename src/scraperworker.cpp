@@ -347,7 +347,11 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
     // If numerals don't match, skip.
     // Numeral defaults to 1, even for games without a numeral.
     if(compareNumeral != entryNumeral) {
-      continue;
+      // Special cases
+      if(compareTitle.toLower().indexOf("day of the tentacle") == -1 &&
+	 compareTitle.toLower().indexOf("curse of monkey island") == -1) {
+	continue;
+      }
     }
     potentials.append(gameEntries.at(a));
   }
@@ -360,29 +364,30 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
   int mostSimilar = 0;
   // Run through the potentials and find the best match
   for(int a = 0; a < potentials.length(); ++a) {
-    QString currentTitle = potentials.at(a).title;
+    QString entryTitle = potentials.at(a).title;
 
     // If we have a perfect hit, always use this result
-    if(compareTitle == currentTitle) {
+    if(compareTitle == entryTitle) {
       lowestDistance = 0;
       game = potentials.at(a);
       return true;
     }
 
-    // Remove everything after a ':' or " - " in web result title, as it often isn't part of the filename
-    // But only do so if length of strings vary more than 4, otherwise filename might have
-    // subname included, but perhaps with ' - ' or similar instead of ':'
-    if((currentTitle.indexOf(":") != -1 || currentTitle.indexOf(" - ") != -1) &&
-       abs(currentTitle.length() - compareTitle.length()) > 4) {
-      currentTitle = currentTitle.left(currentTitle.indexOf(":")).
-	left(currentTitle.indexOf(" - ")).simplified();
+    // Remove subtitle from entryTitle, as it often isn't part of the filename but only do so if length of strings vary more than 4
+    if((entryTitle.indexOf(":") != -1 ||
+	entryTitle.indexOf(" - ") != -1 ||
+	entryTitle.indexOf("~") != -1) &&
+       abs(entryTitle.length() - compareTitle.length()) > 4) {
+      entryTitle = entryTitle.left(entryTitle.indexOf(":")).simplified();;
+      entryTitle = entryTitle.left(entryTitle.indexOf(" - ")).simplified();
+      entryTitle = entryTitle.left(entryTitle.indexOf("~")).simplified();
     }
-
+    
     if(compareNumeral != -1) {
       // Check if web title is similar to compareTitle without ' I'
       // eg 'Tomb Raider' is equal to 'Tomb Raider I'
       if(compareTitle.right(2) == " I" &&
-	 currentTitle == compareTitle.left(compareTitle.length() - 2)) {
+	 entryTitle == compareTitle.left(compareTitle.length() - 2)) {
 	lowestDistance = 0;
 	game = potentials.at(a);
 	return true;
@@ -392,7 +397,7 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
     // The reason for using .right in the second parameter is to better hit results such as 'maniac mansion II: day of the tentacle' where the filename might be 'day of the tentacle'.
     int currentDistance =
       editDistance(StrTools::xmlUnescape(compareTitle).toLower().toStdString(),
-		   StrTools::xmlUnescape(currentTitle).right(StrTools::xmlUnescape(compareTitle).length()).toLower().toStdString());
+		   StrTools::xmlUnescape(entryTitle).right(StrTools::xmlUnescape(compareTitle).length()).toLower().toStdString());
     if(currentDistance < lowestDistance) {
       lowestDistance = currentDistance;
       mostSimilar = a;
