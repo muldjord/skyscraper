@@ -207,3 +207,64 @@ QString StrTools::conformTags(QString str)
   tags = tags.left(tags.length() - 2);
   return tags;
 }
+
+int StrTools::getNumeral(const QString &name)
+{
+  QRegularExpressionMatch match;
+  int numeral = -1;
+  
+  // Check for roman numerals
+  match = QRegularExpression(" [IVX]+[IVX]?[IVX]?[IVX]?[IVX]?[: ]+").match(name);
+  if(match.hasMatch()) {
+    QString roman = match.captured(0).simplified();
+    if(roman == "I") {
+      numeral = 1;
+    } else if(roman == "II") {
+      numeral = 2;
+    } else if(roman == "III") {
+      numeral = 3;
+    } else if(roman == "IV") {
+      numeral = 4;
+    } else if(roman == "V") {
+      numeral = 5;
+    } else if(roman == "VI") {
+      numeral = 6;
+    } else if(roman == "VII") {
+      numeral = 7;
+    } else if(roman == "VIII") {
+      numeral = 8;
+    } else if(roman == "IX") {
+      numeral = 9;
+    } else if(roman == "X") {
+      numeral = 10;
+    } else if(roman == "XI") {
+      numeral = 11;
+    } else if(roman == "XII") {
+      numeral = 12;
+    } else if(roman == "XIII") {
+      numeral = 13;
+    } else if(roman == "XIV") {
+      numeral = 14;
+    } else if(roman == "XV") {
+      numeral = 15;
+    } else if(roman == "XVI") {
+      numeral = 16;
+    } else if(roman == "XVII") {
+      numeral = 17;
+    } else if(roman == "XVIII") {
+      numeral = 18;
+    } else if(roman == "XIX") {
+      numeral = 19;
+    } else if(roman == "XX") {
+      numeral = 20;
+    }
+  }
+
+  // Check for digit numerals
+  match = QRegularExpression(" \\d+[: ]+").match(name);
+  if(match.hasMatch() && match.captured(0).simplified().toInt() != 0) {
+    numeral = match.captured(0).toInt();
+  }
+
+  return numeral;
+}

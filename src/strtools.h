@@ -37,6 +37,7 @@ public:
   static QString conformPlayers(QString str);
   static QString conformReleaseDate(QString str);
   static QString conformTags(QString str);
+  static int getNumeral(const QString &name);
   
 };
 

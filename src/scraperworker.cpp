@@ -143,7 +143,7 @@ void ScraperWorker::run()
       }
     }
 
-    unsigned int lowestDistance = 666;
+    int lowestDistance = 666;
     GameEntry game = getBestEntry(gameEntries, compareName, lowestDistance);
     game.path = info.absoluteFilePath();
     game.baseName = info.completeBaseName();
@@ -326,8 +326,11 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
 }
 
 GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
-				      const QString &compareName, unsigned int &lowestDistance)
+				      const QString &compareName,
+				      int &lowestDistance)
 {
+  int compareNumeral = StrTools::getNumeral(compareName);
+
   GameEntry game;
   if(gameEntries.isEmpty()) {
     game.found = false;
@@ -338,17 +341,22 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   int mostSimilar = 0;
   for(int a = 0; a < gameEntries.length(); ++a) {
     QString currentTitle = gameEntries.at(a).title;
+
     // If we have a perfect hit, always use this result
     if(compareName == currentTitle) {
       lowestDistance = 0;
       mostSimilar = a;
       break;
     }
+
+    int currentNumeral = StrTools::getNumeral(currentTitle);
+    // Check if game is a sequel and whether their numerals match. If not, skip.
+    if(compareNumeral != -1 && currentNumeral != -1 && compareNumeral != currentNumeral) {
+      continue;
+    }
+    
     // Check if game is a sequel
-    if(compareName.right(1) == "I" ||
-       compareName.right(1) == "V" ||
-       compareName.right(1) == "X" ||
-       compareName.right(1).toInt() != 0) {
+    if(compareNumeral != -1) {
       // Remove everything after a ':' in web result title, as it often isn't part of the filename, giving bad compare results. But only do so if length of strings vary more than 4, otherwise filename might have subname included, but perhaps with ' - ' or similar instead of ':'
       if(currentTitle.indexOf(":") != -1 && abs(currentTitle.length() - compareName.length()) > 4) {
 	currentTitle = currentTitle.left(currentTitle.indexOf(":"));
@@ -363,7 +371,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
       }
     }
     // The reason for using .right in the second parameter is to better hit results such as 'maniac mansion II: day of the tentacle' where the filename might be 'day of the tentacle'.
-    unsigned int currentDistance =
+    int currentDistance =
       editDistance(StrTools::xmlUnescape(compareName).toLower().toStdString(),
 		   StrTools::xmlUnescape(currentTitle).right(StrTools::xmlUnescape(compareName).length()).toLower().toStdString());
     if(currentDistance < lowestDistance) {
