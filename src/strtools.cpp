@@ -261,7 +261,7 @@ int StrTools::getNumeral(const QString &name)
   }
 
   // Check for digit numerals
-  match = QRegularExpression(" \\d+([: ]+|$)").match(name);
+  match = QRegularExpression("\\d+([: ]+|$)").match(name);
   if(match.hasMatch()) {
     QString intStr = match.captured(0).replace(":", "").simplified();
     if(intStr.toInt() != 0) {
