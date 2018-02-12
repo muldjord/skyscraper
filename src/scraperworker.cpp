@@ -365,6 +365,7 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
   // Run through the potentials and find the best match
   for(int a = 0; a < potentials.length(); ++a) {
     QString entryTitle = potentials.at(a).title;
+    int entryNumeral = StrTools::getNumeral(entryTitle);
 
     // If we have a perfect hit, always use this result
     if(compareTitle == entryTitle) {
@@ -373,17 +374,19 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
       return true;
     }
 
-    // Remove subtitle from entryTitle, as it often isn't part of the filename but only do so if length of strings vary more than 4
-    if((entryTitle.indexOf(":") != -1 ||
-	entryTitle.indexOf(" - ") != -1 ||
-	entryTitle.indexOf("~") != -1) &&
-       abs(entryTitle.length() - compareTitle.length()) > 4) {
-      entryTitle = entryTitle.left(entryTitle.indexOf(":")).simplified();;
-      entryTitle = entryTitle.left(entryTitle.indexOf(" - ")).simplified();
-      entryTitle = entryTitle.left(entryTitle.indexOf("~")).simplified();
+    // Remove subtitle from entryTitle, as it often isn't part of the filename but only do so if length of strings vary more than 4 and both contain numerals. If they don't both contain numerals it might be because the compareTitle is ONLY the subtitle (eg "Day of the tentacle"). In that case we DON'T want to remove the subtitle from entryTitle since we match with it a bit further down using "right".
+    if(compareNumeral != 1 && entryNumeral != 1) {
+      if((entryTitle.indexOf(":") != -1 ||
+	  entryTitle.indexOf(" - ") != -1 ||
+	  entryTitle.indexOf("~") != -1) &&
+	 abs(entryTitle.length() - compareTitle.length()) > 4) {
+	entryTitle = entryTitle.left(entryTitle.indexOf(":")).simplified();;
+	entryTitle = entryTitle.left(entryTitle.indexOf(" - ")).simplified();
+	entryTitle = entryTitle.left(entryTitle.indexOf("~")).simplified();
+      }
     }
     
-    if(compareNumeral != -1) {
+    if(compareNumeral == 1) {
       // Check if web title is similar to compareTitle without ' I'
       // eg 'Tomb Raider' is equal to 'Tomb Raider I'
       if(compareTitle.right(2) == " I" &&
