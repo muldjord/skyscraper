@@ -392,23 +392,25 @@ bool AbstractScraper::checkNom(const QString nom)
 
 QString AbstractScraper::getSearchName(QString baseName)
 {
-  if(config->scraper != "mamedb" &&
-     config->scraper != "import" &&
+  if(config->scraper != "import" &&
      (config->platform == "neogeo" || config->platform == "arcade")) {
     if(!mameMap[baseName].isEmpty()) {
       baseName = mameMap[baseName];
     }
   }
 
+  baseName = baseName.toLower();
+  // Remove everything in brackets
+  baseName = baseName.left(baseName.indexOf("(")).simplified();
+  baseName = baseName.left(baseName.indexOf("[")).simplified();
+  // Always remove everything after a ':' since it's always a subtitle
+  baseName = baseName.left(baseName.indexOf(":")).simplified();
+
   // If we have the first game in a series, remove the ' I' for more search results
   if(baseName.right(2) == " I") {
     baseName = baseName.left(baseName.length() - 2);
   }
-  baseName = baseName.
-    toLower().
-    replace(" - ", "-");
-  baseName = baseName.left(baseName.indexOf("("));
-  baseName = baseName.left(baseName.indexOf("["));
+
   // Always remove 'the' from beginning or end if equal to or longer than 10 chars.
   // If it's shorter the 'the' is of more significance and shouldn't be removed.
   if(baseName.length() >= 10) {
@@ -419,10 +421,18 @@ QString AbstractScraper::getSearchName(QString baseName)
       baseName = baseName.simplified().left(baseName.indexOf(", the"));
     }
   }
-  baseName = baseName.replace(",", " ").replace("&", "%26").replace("+", "").
-    replace("s's", "s'").replace("'", "%27").replace("_", " ");
+
+  baseName = baseName.replace(" - ", " ");
+  baseName = baseName.replace(",", " ");
+  baseName = baseName.replace("&", "%26");
+  baseName = baseName.replace("+", "");
+  // A few game names have faulty "s's". Fix them to "s'"
+  baseName = baseName.replace("s's", "s'");
+  baseName = baseName.replace("'", "%27");
+  baseName = baseName.replace("_", " ");
+  // Finally change all spaces to plusses since that's what most search engines understand
   baseName = baseName.simplified().replace(" ", "+");
-  
+
   // Implement special cases here
   if(baseName == "ik") {
     baseName = "international+karate";
@@ -434,14 +444,12 @@ QString AbstractScraper::getSearchName(QString baseName)
     baseName = "all+new+world+of+lemmings";
   }
 
-
   return baseName;
 }
 
 QString AbstractScraper::getCompareName(QString baseName, QString &sqrNotes, QString &parNotes)
 {
-  if(config->scraper != "mamedb" &&
-     config->scraper != "import" &&
+  if(config->scraper != "import" &&
      (config->platform == "neogeo" || config->platform == "arcade")) {
     if(!mameMap[baseName].isEmpty()) {
       baseName = mameMap[baseName];
@@ -480,6 +488,7 @@ QString AbstractScraper::getCompareName(QString baseName, QString &sqrNotes, QSt
   // Now create actual compareName
   baseName = baseName.replace("_", " ").left(baseName.indexOf("(")).left(baseName.indexOf("[")).simplified();
 
+  // Always move The to the beginning of the name if found at the end
   if(baseName.right(5) == ", The") {
     baseName = baseName.left(baseName.indexOf(",")).prepend("The ");
   }
