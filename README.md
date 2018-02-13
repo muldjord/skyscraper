@@ -39,9 +39,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.3.0.tar.gz
-* $ tar xvzf 2.3.0.tar.gz
-* $ cd skyscraper-2.3.0
+* $ wget https://github.com/muldjord/skyscraper/archive/2.3.1.tar.gz
+* $ tar xvzf 2.3.1.tar.gz
+* $ cd skyscraper-2.3.1
 * $ qmake
 * $ make
 * $ sudo make install
@@ -139,7 +139,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
 
-#### Version 2.3.1 (in progress, unreleased)
+#### Version 2.3.1 (13th February 2018)
 * Fixed 'players' tag to always conform to a 1-digit format
 * Now filters out ".hack-Link" results from 'screenscraper' to avoid bad localdb data
 * Added note to output about how many new resources have been added during scraping run
