@@ -139,6 +139,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
 
+#### Version 2.3.2 (in progress, unreleased)
+* Added support for 'wii' and 'gc' platforms
+* Added '.chd' format to a bunch of platforms
+
 #### Version 2.3.1 (13th February 2018)
 * Fixed 'players' tag to always conform to a 1-digit format
 * Now filters out ".hack-Link" results from 'screenscraper' to avoid bad localdb data
