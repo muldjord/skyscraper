@@ -39,9 +39,9 @@ Create a folder for the Skyscraper source, download the latest release, compile 
 * $ cd /home/pi
 * $ mkdir sources
 * $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.3.1.tar.gz
-* $ tar xvzf 2.3.1.tar.gz
-* $ cd skyscraper-2.3.1
+* $ wget https://github.com/muldjord/skyscraper/archive/2.3.2.tar.gz
+* $ tar xvzf 2.3.2.tar.gz
+* $ cd skyscraper-2.3.2
 * $ qmake
 * $ make
 * $ sudo make install
@@ -139,7 +139,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
 
-#### Version 2.3.2 (in progress, unreleased)
+#### Version 2.3.2 (13th February 2018)
 * Added support for 'wii' and 'gc' platforms
 * Added '.chd' format to a bunch of platforms
 * Added more robust filtering of the faulty screenscraper 'hack-Link' results
