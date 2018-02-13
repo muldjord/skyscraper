@@ -142,28 +142,23 @@ void ScraperWorker::run()
 	scraper->runPasses(gameEntries, info, output, marking);
       }
     }
-
-    GameEntry game;
     
     int lowestDistance = 666;
-    if(!hasAcceptableEntry(gameEntries, game, compareTitle, lowestDistance)) {
-      game.path = info.absoluteFilePath();
-      game.baseName = info.completeBaseName();
-      game.sha1 = sha1;
-      game.parNotes = parNotes;
-      game.sqrNotes = sqrNotes;
-      game.found = false;
-      output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
-      emit outputToTerminal(output);
-      emit entryReady(game);
-      continue;
-    }
-
+    // Create the game entry we use for the rest of the process
+    GameEntry game = getBestEntry(gameEntries, compareTitle, lowestDistance);
+    // Fill it with additional needed data
     game.path = info.absoluteFilePath();
     game.baseName = info.completeBaseName();
     game.sha1 = sha1;
     game.parNotes = parNotes;
     game.sqrNotes = sqrNotes;
+
+    if(game.found == false) {
+      output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
+      emit outputToTerminal(output);
+      emit entryReady(game);
+      continue;
+    }
 
     int searchMatch = getSearchMatch(game.title, compareTitle, lowestDistance);
     game.searchMatch = searchMatch;
@@ -334,23 +329,24 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
   return sha1.result().toHex();
 }
 
-bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
-				       GameEntry &game,
-				       const QString &compareTitle,
-				       int &lowestDistance)
+GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
+					    const QString &compareTitle,
+					    int &lowestDistance)
 {
+  GameEntry game;
+
   if(gameEntries.isEmpty()) {
     game.title = compareTitle;
-    return false;
+    game.found = false;
+    return game;
   }
 
   QList<GameEntry> potentials;
 
   int compareNumeral = StrTools::getNumeral(compareTitle);
   // Start by applying rules we are certain are needed. Add the ones that pass to potentials
-  for(int a = 0; a < gameEntries.length(); ++a) {
-    QString entryTitle = gameEntries.at(a).title;
-    int entryNumeral = StrTools::getNumeral(entryTitle);
+  foreach(GameEntry entry, gameEntries) {
+    int entryNumeral = StrTools::getNumeral(entry.title);
     // If numerals don't match, skip.
     // Numeral defaults to 1, even for games without a numeral.
     if(compareNumeral != entryNumeral) {
@@ -360,12 +356,13 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
 	continue;
       }
     }
-    potentials.append(gameEntries.at(a));
+    potentials.append(entry);
   }
 
   // If we have no potentials at all, return false
   if(potentials.isEmpty()) {
-    return false;
+    game.found = false;
+    return game;
   }
   
   int mostSimilar = 0;
@@ -378,7 +375,7 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
     if(compareTitle == entryTitle) {
       lowestDistance = 0;
       game = potentials.at(a);
-      return true;
+      return game;
     }
 
     // Remove subtitle from entryTitle, as it often isn't part of the filename but only do so if length of strings vary more than 4 and both contain numerals. If they don't both contain numerals it might be because the compareTitle is ONLY the subtitle (eg "Day of the tentacle"). In that case we DON'T want to remove the subtitle from entryTitle since we match with it a bit further down using "right".
@@ -400,7 +397,7 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
 	 entryTitle == compareTitle.left(compareTitle.length() - 2)) {
 	lowestDistance = 0;
 	game = potentials.at(a);
-	return true;
+	return game;
       }
     }
     
@@ -414,7 +411,7 @@ bool ScraperWorker::hasAcceptableEntry(const QList<GameEntry> &gameEntries,
     }
   }
   game = potentials.at(mostSimilar);
-  return true;
+  return game;
 }
 
 // --- Console colors ---

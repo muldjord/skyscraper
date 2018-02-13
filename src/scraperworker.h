@@ -66,9 +66,9 @@ private:
   void getGameData(GameEntry &game);
   QString assembleTags(QByteArray &data);
   QString getSha1(const QFileInfo &info);
-  bool hasAcceptableEntry(const QList<GameEntry> &gameEntries,
-			  GameEntry &game, const QString &compareTitle,
-			  int &lowestDistance);
+  GameEntry getBestEntry(const QList<GameEntry> &gameEntries,
+			       const QString &compareTitle,
+			       int &lowestDistance);
   int getSearchMatch(const QString &title, const QString &compareTitle, const int &lowestDistance);
 };
 
