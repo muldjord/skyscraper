@@ -21,6 +21,7 @@
 * Game Boy
 * Game Boy Advance
 * Game Boy Color
+* GameCube
 * Game & Watch
 * Intellivision
 * Megadrive / Genesis
@@ -51,6 +52,7 @@
 * Vectrex
 * Videopac (Oddysey 2)
 * Virtual Boy
+* Wii
 * WonderSwan
 * WonderSwan Color
 * Z-Machine
