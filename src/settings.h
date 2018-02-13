@@ -50,7 +50,7 @@ struct Settings {
   QString videosFolder = "";
   int doneThreads = 0;
   int threads = 4;
-  int minMatch = 50;
+  int minMatch = 65;
   bool minMatchSet = false;
   int notFound = 0;
   int found = 0;
