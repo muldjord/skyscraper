@@ -86,7 +86,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
   // 'screenscraper' sometimes returns a faulty result with the following name. If we get this
   // result, DON'T use it. It will provide faulty data for localdb
-  if(game.title == ".hack-Link") {
+  if(game.title.indexOf("hack") != -1 && game.title.indexOf("Link") != -1) {
     return;
   }
 
