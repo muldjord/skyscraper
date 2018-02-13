@@ -143,9 +143,15 @@ void ScraperWorker::run()
       }
     }
 
-    int lowestDistance = 666;
     GameEntry game;
+    
+    int lowestDistance = 666;
     if(!hasAcceptableEntry(gameEntries, game, compareTitle, lowestDistance)) {
+      game.path = info.absoluteFilePath();
+      game.baseName = info.completeBaseName();
+      game.sha1 = sha1;
+      game.parNotes = parNotes;
+      game.sqrNotes = sqrNotes;
       game.found = false;
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
       emit outputToTerminal(output);
@@ -168,6 +174,7 @@ void ScraperWorker::run()
       emit entryReady(game);
       continue;
     }
+
     output.append("\033[1;34m---- Game '" + info.completeBaseName() + "' found! :) ----\033[0m\n");
     
     if(!prefilledFromCache) {

@@ -414,6 +414,8 @@ QString AbstractScraper::getSearchName(QString baseName)
   baseName = baseName.left(baseName.indexOf("[")).simplified();
   // Always remove everything after a ':' since it's always a subtitle
   baseName = baseName.left(baseName.indexOf(":")).simplified();
+  // Always remove everything after a ' - ' since it's always a subtitle
+  baseName = baseName.left(baseName.indexOf(" - ")).simplified();
 
   // If we have the first game in a series, remove the ' I' for more search results
   if(baseName.right(2) == " I") {
@@ -432,6 +434,7 @@ QString AbstractScraper::getSearchName(QString baseName)
   }
 
   baseName = baseName.replace(" - ", " ");
+  baseName = baseName.replace(":", " ");
   baseName = baseName.replace(",", " ");
   baseName = baseName.replace("&", "%26");
   baseName = baseName.replace("+", "");

@@ -325,7 +325,7 @@ void Skyscraper::entryReady(const GameEntry &entry)
     if(tmpEntry.searchMatch == 0) {
       skippedFile.write(", No returned matches\n");
     } else {
-      skippedFile.write(", Closest match was '" + tmpEntry.title.toUtf8() + "'\n");
+      skippedFile.write(", Closest match was '" + tmpEntry.title.toUtf8() + "' at " + QByteArray::number(tmpEntry.searchMatch) + "%\n");
     }
     skippedFile.close();
     if(config.skipped) {
