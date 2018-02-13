@@ -142,6 +142,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.3.2 (in progress, unreleased)
 * Added support for 'wii' and 'gc' platforms
 * Added '.chd' format to a bunch of platforms
+* Added more robust filtering of the faulty screenscraper 'hack-Link' results
 
 #### Version 2.3.1 (13th February 2018)
 * Fixed 'players' tag to always conform to a 1-digit format
