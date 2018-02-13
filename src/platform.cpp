@@ -65,6 +65,7 @@ QStringList Platform::getPlatforms()
   platforms.append("gb");
   platforms.append("gba");
   platforms.append("gbc");
+  platforms.append("gc");
   platforms.append("genesis");
   platforms.append("intellivision");
   platforms.append("mastersystem");
@@ -94,6 +95,7 @@ QStringList Platform::getPlatforms()
   platforms.append("vectrex");
   platforms.append("videopac");
   platforms.append("virtualboy");
+  platforms.append("wii");
   platforms.append("wonderswan");
   platforms.append("wonderswancolor");
   platforms.append("zmachine");
@@ -216,6 +218,11 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
+  } else if(platform == "gc") {
+    scrapers.append("openretro");
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
   } else if(platform == "genesis") {
     scrapers.append("openretro");
     scrapers.append("thegamesdb");
@@ -340,6 +347,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
+  } else if(platform == "wii") {
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
   } else if(platform == "wonderswan") {
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
@@ -397,7 +408,7 @@ QString Platform::getFormats(QString platform)
   } else if(platform == "dragon32") {
     formats.append("*.cas *.wav *.bas *.asc *.dmk *.jvc *.os9 *.dsk *.vdk *.rom *.ccc *.sna");
   } else if(platform == "dreamcast") {
-    formats.append("*.cdi *.gdi");
+    formats.append("*.cdi *.gdi *.iso *.chd *.cue");
   } else if(platform == "fba") {
     formats.append("");
   } else if(platform == "fds") {
@@ -412,6 +423,8 @@ QString Platform::getFormats(QString platform)
     formats.append("*.gba");
   } else if(platform == "gbc") {
     formats.append("*.gbc");
+  } else if(platform == "gc") {
+    formats.append("*.iso *.cso *.gcz");
   } else if(platform == "genesis") {
     formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "intellivision") {
@@ -443,13 +456,13 @@ QString Platform::getFormats(QString platform)
   } else if(platform == "pcfx") {
     formats.append("*.img *.iso *.ccd *.cue");
   } else if(platform == "pcengine") {
-    formats.append("*.pce");
+    formats.append("*.pce *.chd *.cue");
   } else if(platform == "ports") {
     formats.append("*.sh");
   } else if(platform == "psp") {
     formats.append("*.cso *.iso *.pbp");
   } else if(platform == "psx") {
-    formats.append("*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx");
+    formats.append("*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.chd");
   } else if(platform == "saturn") {
     formats.append("*.cue *.bin *.iso *.mdf");
   } else if(platform == "scummvm") {
@@ -457,7 +470,7 @@ QString Platform::getFormats(QString platform)
   } else if(platform == "sega32x") {
     formats.append("*.32x *.bin *.md *.smd");
   } else if(platform == "segacd") {
-    formats.append("*.cue *.iso");
+    formats.append("*.cue *.iso *.chd");
   } else if(platform == "sg-1000") {
     formats.append("*.bin *.sg");
   } else if(platform == "snes") {
@@ -470,6 +483,8 @@ QString Platform::getFormats(QString platform)
     formats.append("*.bin");
   } else if(platform == "virtualboy") {
     formats.append("*.vb");
+  } else if(platform == "wii") {
+    formats.append("*.iso *.cso *.gcz *.wbfs");
   } else if(platform == "wonderswan") {
     formats.append("*.ws");
   } else if(platform == "wonderswancolor") {
@@ -534,6 +549,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "screenscraper";
   } else if(platform == "gbc") {
     scraper = "screenscraper";
+  } else if(platform == "gc") {
+    scraper = "thegamesdb";
   } else if(platform == "genesis") {
     scraper = "screenscraper";
   } else if(platform == "intellivision") {
@@ -592,6 +609,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "thegamesdb";
   } else if(platform == "virtualboy") {
     scraper = "screenscraper";
+  } else if(platform == "wii") {
+    scraper = "thegamesdb";
   } else if(platform == "wonderswan") {
     scraper = "screenscraper";
   } else if(platform == "wonderswancolor") {
@@ -680,6 +699,9 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "gbc") {
     aliases.append("nintendo game boy color");
     aliases.append("game boy color");
+  } else if(platform == "gc") {
+    aliases.append("gamecube");
+    aliases.append("nintendo gamecube");
   } else if(platform == "genesis") {
     aliases.append("sega genesis");
     aliases.append("mega drive");
@@ -760,6 +782,8 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "virtualboy") {
     aliases.append("nintendo virtual boy");
     aliases.append("virtual boy");
+  } else if(platform == "wii") {
+    aliases.append("nintendo wii");
   } else if(platform == "wonderswancolor") {
     aliases.append("wonderswan color");
   } else if(platform == "zmachine") {
