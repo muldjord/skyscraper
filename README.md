@@ -30,9 +30,8 @@ Follow the steps below to install the latest version of Skyscraper. Lines beginn
 Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install it using the following command:
 * $ sudo apt-get update
 * $ sudo apt-get install qt5-default
-* [enter your 'pi' user password, default is 'raspberry']
 
-For other distros, please refer to their documentation for installing the Qt5 framework.
+You might be asked for your sudo password. On RetroPie the default password is 'raspberry'. To install Qt5 on other Linux distributions, please refer to their documentation.
 
 ### Download, compile and install
 When you've installed the prerequisites as described above, you can install Skyscraper by typing in the following commands:
