@@ -20,7 +20,7 @@ then
     echo "--- Building Skyscraper v.${LATEST} ---"
     make
     echo "--- Installing Skyscraper v.${LATEST} ---"
-    make install
+    sudo make install
     echo "--- Skyscraper has been updated to v.${LATEST} ---"
 else
     echo "--- Skyscraper is already the latest release, exiting ---"
