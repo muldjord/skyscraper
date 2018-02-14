@@ -116,6 +116,15 @@ QByteArray StrTools::unMagic(QByteArray str)
 
 QString StrTools::conformPlayers(QString str)
 {
+  if(QRegularExpression("^1 Only").match(str).hasMatch())
+    return "1";
+
+  if(QRegularExpression("^single player").match(str).hasMatch())
+    return "1";
+  
+  if(QRegularExpression("^1 or 2").match(str).hasMatch())
+    return "2";
+
   if(QRegularExpression("^\\d-\\d\\d").match(str).hasMatch())
     return str.mid(2, 2);
 
@@ -128,6 +137,12 @@ QString StrTools::conformPlayers(QString str)
   if(QRegularExpression("^\\d - \\d").match(str).hasMatch())
     return str.mid(4, 1);
 
+  if(QRegularExpression("^\\d to \\d\\d").match(str).hasMatch())
+    return str.mid(5, 2);
+
+  if(QRegularExpression("^\\d to \\d").match(str).hasMatch())
+    return str.mid(5, 1);
+  
   return str;
 }
 
