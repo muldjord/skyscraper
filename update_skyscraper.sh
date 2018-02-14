@@ -22,7 +22,7 @@ then
     then
 	exit
     fi
-    echo "--- Cleaning out old build ---"
+    echo "--- Cleaning out old build if one exists ---"
     make clean
     qmake
     if [ $? != 0 ]
