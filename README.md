@@ -132,12 +132,14 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version x.x.x (still unimplemented)
 * Added 'colorize' effect which renders the image using one color
-* Added 'saturation' effect which changes the color saturation of the image
-* Added 'hue' effect which changes the hue of the image
 * Added 'sharpen' effect which sharpens the image
 * Improved front and side textures for the 'gamebox' effect
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
+
+#### Version 2.3.3 (in progress, unreleased)
+* Added 'hue' effect which changes the hue of the image
+* Added 'saturation' effect which changes the color saturation of the image
 
 #### Version 2.3.2 (13th February 2018)
 * Added support for 'wii' and 'gc' platforms
