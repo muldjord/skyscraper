@@ -43,6 +43,8 @@
 #include "fxbalance.h"
 #include "fxopacity.h"
 #include "fxgamebox.h"
+#include "fxhue.h"
+#include "fxsaturation.h"
 
 Compositor::Compositor(Settings *config)
 {
@@ -214,6 +216,20 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("rotate"))
 	newLayer.setDelta(attribs.value("rotate").toInt());
       layer.addLayer(newLayer);
+    } else if(xml.isStartElement() && xml.name() == "hue") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("value")) {
+	newLayer.setType(T_HUE);
+	newLayer.setDelta(attribs.value("value").toInt());
+	layer.addLayer(newLayer);
+      }
+    } else if(xml.isStartElement() && xml.name() == "saturation") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("value")) {
+	newLayer.setType(T_SATURATION);
+	newLayer.setDelta(attribs.value("value").toInt());
+	layer.addLayer(newLayer);
+      }
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
     } else if(xml.isEndElement() && xml.name() == "output") {
@@ -365,6 +381,12 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
     } else if(thisLayer.type == T_GAMEBOX) {
       FxGamebox effect;
       layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer, game, config));
+    } else if(thisLayer.type == T_HUE) {
+      FxHue effect;
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
+    } else if(thisLayer.type == T_SATURATION) {
+      FxSaturation effect;
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     }
     // Update width and height unless it's a T_SHADOW
     if(thisLayer.type != T_SHADOW) {
