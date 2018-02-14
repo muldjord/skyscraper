@@ -41,7 +41,7 @@ When you've installed the prerequisites as described above, you can install Skys
 * $ cd skyscraper
 * $ curl https://raw.githubusercontent.com/muldjord/skyscraper/master/update_skyscraper.sh | bash
 
-The last command will download and run the latest update script from Github. During the installation you will be asked for your sudo password. On RetroPie the default password is 'raspberry'.
+The last command will download and run the latest update script from Github. During the installation you might be asked for your sudo password. On RetroPie the default password is 'raspberry'.
 
 When the script has completed you are ready to run Skyscraper!
 
@@ -51,7 +51,7 @@ To update Skyscraper simply cd into the skyscraper folder and run the update scr
 * $ cd skyscraper
 * $ sh update_skyscraper.sh
 
-You will be asked for your sudo password during the update. On RetroPie the default password is 'raspberry'.
+You might be asked for your sudo password during the update. On RetroPie the default password is 'raspberry'.
 
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
