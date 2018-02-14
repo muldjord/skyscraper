@@ -48,7 +48,7 @@ When the script has completed you are ready to run Skyscraper!
 To update Skyscraper simply cd into the skyscraper folder and run the update script
 * $ cd
 * $ cd skyscraper
-* $ sh update_skyscraper.sh
+* $ ./update_skyscraper.sh
 
 You might be asked for your sudo password during the update. On RetroPie the default password is 'raspberry'.
 
