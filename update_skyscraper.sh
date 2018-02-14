@@ -17,7 +17,7 @@ then
 	exit
     fi
     echo "--- Unpacking ---"
-    tar xvzf ${LATEST}.tar.gz --strip-components 1
+    tar xvzf ${LATEST}.tar.gz --strip-components 1 --overwrite
     if [ $? != 0 ]
     then
 	exit
