@@ -44,5 +44,5 @@ then
     fi
     echo "--- Skyscraper has been updated to v.${LATEST} ---"
 else
-    echo "--- Skyscraper is already the latest release, exiting ---"
+    echo "--- Skyscraper is already the latest version, exiting ---"
 fi
