@@ -40,6 +40,8 @@
 #define T_OPACITY 11
 #define T_BLUR 12
 #define T_GAMEBOX 13
+#define T_HUE 14
+#define T_SATURATION 15
 
 #include <QImage>
 
