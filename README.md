@@ -34,20 +34,24 @@ Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debi
 
 For other distros, please refer to their documentation for installing the Qt5 framework.
 
-### Download and compile
-Create a folder for the Skyscraper source, download the latest release, compile it and install it:
-* $ cd /home/pi
-* $ mkdir sources
-* $ cd sources
-* $ wget https://github.com/muldjord/skyscraper/archive/2.3.2.tar.gz
-* $ tar xvzf 2.3.2.tar.gz
-* $ cd skyscraper-2.3.2
-* $ qmake
-* $ make
-* $ sudo make install
-* [enter your 'pi' user password, default is 'raspberry']
+### Download, compile and install
+When you've installed the prerequisites as described above, you can install Skyscraper by typing in the following commands:
+* $ cd
+* $ mkdir skyscraper
+* $ cd skyscraper
+* $ curl https://raw.githubusercontent.com/muldjord/skyscraper/master/update_skyscraper.sh | bash
 
-If everything went well you are now ready to run Skyscraper!
+The last command will download and run the latest update script from Github. During the installation you will be asked for your sudo password. On RetroPie the default password is 'raspberry'.
+
+When the script has completed you are ready to run Skyscraper!
+
+### Updating Skyscraper
+To update Skyscraper simply cd into the skyscraper folder and run the update script
+* $ cd
+* $ cd skyscraper
+* $ sh update_skyscraper.sh
+
+You will be asked for your sudo password during the update. On RetroPie the default password is 'raspberry'.
 
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
