@@ -4,8 +4,7 @@ LATEST=`curl --silent "https://api.github.com/repos/muldjord/skyscraper/releases
 
 if [ ! -f VERSION ]
 then
-    echo "VERSION file not found, something is wrong with your directory structure. Can't update."
-    exit
+    echo "VERSION=0.0.0" > VERSION
 fi
 source VERSION
 
