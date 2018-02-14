@@ -11,7 +11,7 @@ source VERSION
 if [ "$LATEST" != "$VERSION" ]
 then
     echo "--- Fetching Skyscraper v.${LATEST} ---"
-    wget https://github.com/muldjord/skyscraper/archive/${LATEST}.tar.gz
+    wget -N https://github.com/muldjord/skyscraper/archive/${LATEST}.tar.gz
     if [ $? != 0 ]
     then
 	exit
@@ -22,6 +22,7 @@ then
     then
 	exit
     fi
+    rm ${LATEST}.tar.gz
     echo "--- Cleaning out old build if one exists ---"
     make clean
     qmake
