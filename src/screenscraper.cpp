@@ -96,14 +96,11 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   }
 
   game.url = gameUrl;
-  
   game.platform = xmlDoc.elementsByTagName("systemenom").at(0).toElement().text();
 
-  // Always add, since we found the result with sha1 we KNOW it's correct
-  gameEntries.append(game);
-  
-  // Just do something with 'platform' to avoid compiler warning
-  if(platform != "") { }
+  if(platformMatch(game.platform, platform)) {
+    gameEntries.append(game);
+  }
 }
 
 void ScreenScraper::getGameData(GameEntry &game)
