@@ -143,11 +143,14 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.3.3 (in progress, unreleased)
 * Added 'hue' effect which changes the hue of the image
 * Added 'saturation' effect which changes the color saturation of the image
+* Optimized search passes a bit
+* Re-added platform checking on 'screenscraper' and added all arcade platforms as aliases
 
 #### Version 2.3.2 (13th February 2018)
 * Added support for 'wii' and 'gc' platforms
 * Added '.chd' format to a bunch of platforms
 * Added more robust filtering of the faulty screenscraper 'hack-Link' results
+* Added 'update_skyscraper.sh' script which enables auto-updating to latest version
 
 #### Version 2.3.1 (13th February 2018)
 * Fixed 'players' tag to always conform to a 1-digit format
