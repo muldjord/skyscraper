@@ -522,7 +522,7 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
   QString searchName = getSearchName(info.completeBaseName());
   QString searchNameOrig = searchName;
   
-  for(int pass = 1; pass <= 6; ++pass) {
+  for(int pass = 1; pass <= 4; ++pass) {
     // Reset searchName for each pass
     searchName = searchNameOrig;
     output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
@@ -542,20 +542,23 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
       }
       break;
     case 4:
+      // Remove everything after a dash or a colon for more results
+      searchName = searchName.left(searchName.indexOf(":")).simplified();
+      searchName = searchName.left(searchName.indexOf("-")).simplified();
+      getSearchResults(gameEntries, searchName, config->platform);
+      break;
+      /*
+    case 5:
       // Try removing dots
       searchName = searchName.replace(".", "");
       getSearchResults(gameEntries, searchName, config->platform);
       break;
-    case 5:
+    case 6:
       // Try replacing apostrophes with spaces
       searchName = searchName.replace("%27", " ");
       getSearchResults(gameEntries, searchName, config->platform);
       break;
-    case 6:
-      // Remove everything after a dash
-      searchName = searchName.left(searchName.indexOf("-"));
-      getSearchResults(gameEntries, searchName, config->platform);
-      break;
+      */
     default:
       ;
     }
