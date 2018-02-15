@@ -43,7 +43,7 @@ QImage FxHue::applyEffect(const QImage &src, const Layer &layer)
     for(int x = 0; x < canvas.width(); ++x) {
       QColor color = QColor(line[x]);
       color.setHsv(truncate(color.hue() + hue), color.saturation(), color.value(),
-		 color.alpha());
+		   qAlpha(line[x]));
       line[x] = qPremultiply(color.rgba());
     }
   }
