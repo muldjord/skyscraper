@@ -39,11 +39,11 @@ QImage FxShadow::applyEffect(const QImage &src, const Layer &layer)
   int opacity = layer.opacity;
 
   if(distance == -1)
-    distance = 0;
+    distance = 5;
   if(softness == -1)
     softness = 5;
   if(opacity == -1)
-    opacity = 50;
+    opacity = 70;
 
   QImage buffer1(src.width() + softness * 2, src.height() + softness * 2,
 		 QImage::Format_ARGB32_Premultiplied);
