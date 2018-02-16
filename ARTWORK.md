@@ -30,15 +30,34 @@ Which results in a screenshot being exported to look like this:
 ![Artwork example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Sonic%20The%20Hedgehog%202.png)
 
 ## Xml definitions
-Read on for a full description of the xml format used in 'artwork.xml'
+Read on for a full description of the xml format used in '[homedir]/.skyscraper/artwork.xml'. Click the following links to quickly go to a desired section:
 
-### xml node
+[Xml node](#xml-node-not-optional)
+[Artwork node](#artwork-node-not-optional)
+[Output node](#output-nodes-optional)
+[Layer node](#layer-nodes-optional)
+[Gamebox effect](#gamebox-effect-node-optional)
+[Shadow effect](#shadow-effect-node-optional)
+[Blur effect](#blur-effect-node-optional)
+[Mask effect](#mask-effect-node-optional)
+[Frame effect](#frame-effect-node-optional)
+[Stroke effect](#stroke-effect-node-optional)
+[Rounded effect](#rounded-effect-node-optional)
+[Saturation effect](#saturation-effect-node-from-v233-optional)
+[Hue effect](#hue-effect-node-from-v233-optional)
+[Brightness effect](#brightness-effect-node-optional)
+[Contrast effect](#contrast-effect-node-optional)
+[Opacity effect](#opacity-effect-node-optional)
+[Color balance effect](#-effect-node-optional)
+[Custom image resource](#custom-image-resources)
+
+### xml node (Not optional)
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 ```
 This is a special node used to describe the xml language used in the document. Don't change it.
 
-### 'artwork' node
+### 'artwork' node (Not optional)
 ```
 <artwork>
 ...
