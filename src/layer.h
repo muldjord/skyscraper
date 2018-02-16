@@ -44,6 +44,7 @@
 #define T_SATURATION 15
 
 #include <QImage>
+#include <QPainter>
 
 class Layer
 {
@@ -63,11 +64,13 @@ public:
   int red = -1;
   int green = -1;
   int blue = -1;
-  int distance = 0;
-  int softness = 0;
-  int opacity = 0;
+  int distance = -1;
+  int softness = -1;
+  int opacity = -1;
+  QPainter::CompositionMode mode = QPainter::CompositionMode_SourceOver;
 
   // Setters
+  void setMode(const QString &mode);
   void setType(const int &type);
   void setCanvas(const QImage &canvas);
   void setResource(const QString &resource);
@@ -83,7 +86,7 @@ public:
   void setBlue(const int &blue);
   void setDistance(const int &distance);
   void setSoftness(const int &softness);
-  void setOpacity(const int &opacity);
+  void setOpacity(int opacity);
 
   void addLayer(const Layer &layer);
   QList<Layer> getLayers();

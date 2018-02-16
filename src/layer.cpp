@@ -30,6 +30,47 @@ Layer::Layer()
 }
 
 // Setters
+void Layer::setMode(const QString &mode)
+{
+  if(mode == "multiply") {
+    this->mode = QPainter::CompositionMode_Multiply;
+  } else if(mode == "screen") {
+    this->mode = QPainter::CompositionMode_Screen;
+  } else if(mode == "overlay") {
+    this->mode = QPainter::CompositionMode_Overlay;
+  } else if(mode == "darken") {
+    this->mode = QPainter::CompositionMode_Darken;
+  } else if(mode == "lighten") {
+    this->mode = QPainter::CompositionMode_Lighten;
+  } else if(mode == "colordodge") {
+    this->mode = QPainter::CompositionMode_ColorDodge;
+  } else if(mode == "colorburn") {
+    this->mode = QPainter::CompositionMode_ColorBurn;
+  } else if(mode == "hardlight") {
+    this->mode = QPainter::CompositionMode_HardLight;
+  } else if(mode == "softlight") {
+    this->mode = QPainter::CompositionMode_SoftLight;
+  } else if(mode == "difference") {
+    this->mode = QPainter::CompositionMode_Difference;
+  } else if(mode == "exclusion") {
+    this->mode = QPainter::CompositionMode_Exclusion;
+  } else if(mode == "sourcein") {
+    this->mode = QPainter::CompositionMode_SourceIn;
+  } else if(mode == "destinationin") {
+    this->mode = QPainter::CompositionMode_DestinationIn;
+  } else if(mode == "sourceout") {
+    this->mode = QPainter::CompositionMode_SourceOut;
+  } else if(mode == "destinationout") {
+    this->mode = QPainter::CompositionMode_DestinationOut;
+  } else if(mode == "sourceatop") {
+    this->mode = QPainter::CompositionMode_SourceAtop;
+  } else if(mode == "destinationatop") {
+    this->mode = QPainter::CompositionMode_DestinationAtop;
+  } else if(mode == "xor") {
+    this->mode = QPainter::CompositionMode_Xor;
+  }
+}
+
 void Layer::setType(const int &type)
 {
   this->type = type;
@@ -105,8 +146,12 @@ void Layer::setSoftness(const int &softness)
   this->softness = softness;
 }
 
-void Layer::setOpacity(const int &opacity)
+void Layer::setOpacity(int opacity)
 {
+  if(opacity > 100)
+    opacity = 100;
+  if(opacity < 0)
+    opacity = 0;
   this->opacity = opacity;
 }
 
