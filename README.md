@@ -139,6 +139,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved front and side textures for the 'gamebox' effect
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
+* Implemented 'rotate' effect that rotates the parent layer
 
 #### Version 2.3.3 (in progress, unreleased)
 * Added 'hue' effect which changes the hue of the image
