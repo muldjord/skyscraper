@@ -108,6 +108,8 @@ Sets the layer render mode. It can be:
 
 If left out the layer is simply rendered as is on top of the parent layer.
 
+![Mode examples](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/layer_modes.png)
+
 #### 'opacity' attribute (Optional)
 Defines the opacity of the layer. 100 is completely visible. 0 is completely transparent.
 
