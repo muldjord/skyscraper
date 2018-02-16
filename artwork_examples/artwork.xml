@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artwork>
+  <output type="screenshot" width="250" height="100">
+    <layer resource="screenshot" x="10" y="10" width="520" height="390"/>
+    <hue value="100"/>
+  </output>
+</artwork>
