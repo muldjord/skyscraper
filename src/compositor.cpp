@@ -91,8 +91,13 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       }
     } else if(xml.isStartElement() && xml.name() == "layer") {
       QXmlStreamAttributes attribs = xml.attributes();
-      newLayer.setResource(attribs.value("", "resource").toString());
       newLayer.setType(T_LAYER);
+      if(attribs.hasAttribute("resource"))
+	newLayer.setResource(attribs.value("", "resource").toString());
+      if(attribs.hasAttribute("mode"))
+	newLayer.setMode(attribs.value("", "mode").toString());
+      if(attribs.hasAttribute("opacity"))
+	newLayer.setOpacity(attribs.value("", "opacity").toInt());
       if(attribs.hasAttribute("width"))
 	newLayer.setWidth(attribs.value("", "width").toInt());
       if(attribs.hasAttribute("height"))
@@ -328,6 +333,9 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
       // Composite image on canvas (which is the parent canvas at this point)
       QPainter painter;
       painter.begin(&layer.canvas);
+      painter.setCompositionMode(thisLayer.mode);
+      if(thisLayer.opacity != -1)
+	painter.setOpacity(thisLayer.opacity * 0.01);
 
       int x = 0;
       if(thisLayer.align == "center") {
