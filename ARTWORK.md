@@ -85,7 +85,7 @@ The artwork resource to be used by the layer. It can be:
 
 If the resource attribute is left out the layer will simply be transparent. This is useful when aligning nested layers that differ in size across games.
 
-#### 'mode' attribute (Optional)
+#### 'mode' attribute [from v2.3.3] (Optional)
 Sets the layer render mode. It can be:
 * multiply
 * screen
@@ -110,7 +110,7 @@ If left out the layer is simply rendered as is on top of the parent layer.
 
 ![Mode examples](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/layer_modes.png)
 
-#### 'opacity' attribute (Optional)
+#### 'opacity' attribute [from v2.3.3] (Optional)
 Defines the opacity of the layer. 100 is completely visible. 0 is completely transparent.
 
 #### 'x' and 'y' attributes (Optional)
