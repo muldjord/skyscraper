@@ -240,7 +240,7 @@ The red color value for the outline. Can be 0-255. If left out it is set to 0.
 The green color value for the outline. Can be 0-255. If left out it is set to 0.
 #### 'blue' attribute (Optional)
 The blue color value for the outline. Can be 0-255. If left out it is set to 0.
-#### 'color' attribute (Optional)
+#### 'color' attribute [from v2.3.1] (Optional)
 Provides the color to use hex-style. This can be used instead of the 'red', 'green' and 'blue' attributes described above. An example could be 'color="#ff0099"'.
 
 ### 'rounded' effect node (Optional)
