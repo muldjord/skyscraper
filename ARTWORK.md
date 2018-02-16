@@ -255,6 +255,30 @@ Must be nested inside a layer node. Rounds the corners of the parent layer.
 #### 'radius' attribute (Not optional)
 Defines the radius of the corners in pixels.
 
+### 'saturation' effect node [from v2.3.3] (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/saturation.png)
+```
+<layer>
+  <saturation value="-100"/>
+</layer>
+```
+Must be nested inside a layer node. Adjusts the color saturation of the parent layer.
+
+#### 'value' attribute (Not optional)
+The difference value for the adjustment. Can be -255 to 255.
+
+### 'hue' effect node [from v2.3.3] (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/hue.png)
+```
+<layer>
+  <hue value="100"/>
+</layer>
+```
+Must be nested inside a layer node. Rotates the hue of the parent layer.
+
+#### 'value' attribute (Not optional)
+The difference value for the adjustment. Can be 0 to 359.
+
 ### 'brightness' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/brightness.png)
 ```
