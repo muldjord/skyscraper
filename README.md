@@ -145,6 +145,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'saturation' effect which changes the color saturation of the image
 * Optimized search passes a bit
 * Re-added platform checking on 'screenscraper' and added all arcade platforms as aliases
+* Added layer render 'mode' attribute ('overlay', 'colordodge', 'hardlight' and so on)
+* Added layer 'opacity' attribute (0-100)
 
 #### Version 2.3.2 (13th February 2018)
 * Added support for 'wii' and 'gc' platforms
