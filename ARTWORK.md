@@ -68,7 +68,7 @@ Sets the width and height of the artwork export. If both are left out it will us
 
 ### 'layer' node(s) (Optional)
 ```
-<layer resource="cover" x="5" y="5" width="10" height="10" align="center" valign="middle"/>
+<layer resource="cover" mode="overlay" opacity="50" x="5" y="5" width="10" height="10" align="center" valign="middle"/>
 ...
 </layer>
 ```
@@ -84,6 +84,32 @@ The artwork resource to be used by the layer. It can be:
 * marquee
 
 If the resource attribute is left out the layer will simply be transparent. This is useful when aligning nested layers that differ in size across games.
+
+#### 'mode' attribute (Optional)
+Sets the layer render mode. It can be:
+* multiply
+* screen
+* overlay
+* darken
+* lighten
+* colordodge
+* colorburn
+* hardlight
+* softlight
+* difference
+* exclusion
+* sourcein
+* destinationin
+* sourceout
+* destinationout
+* sourceatop
+* destinationatop
+* xor
+
+If left out the layer is simply rendered as is on top of the parent layer.
+
+#### 'opacity' attribute (Optional)
+Defines the opacity of the layer. 100 is completely visible. 0 is completely transparent.
 
 #### 'x' and 'y' attributes (Optional)
 X and Y coordinates for placement. Relative to 'align' and 'valign' and the parent layer. Either can be left out in which case it will be set to 0.
