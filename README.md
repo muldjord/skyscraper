@@ -27,7 +27,7 @@ For Amiga I STRONGLY recommend you to set up your RetroPie to use WHDLoad. Follo
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with '$' signifies a command you need run in a terminal on the machine you wish to install it on.
 
 ### Install prerequisites
-Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install it using the following command:
+Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install it using the following commands:
 * $ sudo apt-get update
 * $ sudo apt-get install qt5-default
 
