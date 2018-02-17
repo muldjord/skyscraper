@@ -36,20 +36,21 @@ QImage FxColorize::applyEffect(const QImage &src, const Layer &layer)
 {
   QImage canvas = src;
 
-  if(layer.red == -1 || layer.green == -1 || layer.blue == -1) {
+  int hue = layer.delta;
+
+  if(hue > 359 || hue < 0) {
     return canvas;
   }
-
-  QColor rgb(layer.red, layer.green, layer.blue);
-  
-  int saturation = rgb.toHsl().saturation();
-  int hue = rgb.toHsl().hue();
 
   for(int y = 0; y < canvas.height(); ++y) {
     QRgb* line = (QRgb *)canvas.scanLine(y);
     for(int x = 0; x < canvas.width(); ++x) {
-      QColor color = QColor(line[x]).toHsl();
-      color.setHsl(hue, saturation, color.lightness(), qAlpha(line[x]));
+        QColor color(line[x]);
+	color.setHsl(hue, 127,
+		     qRed(line[x]) * 0.2126 +
+		     qGreen(line[x]) * 0.7152 +
+		     qRed(line[x]) * 0.0722,
+		     qAlpha(line[x]));
       line[x] = qPremultiply(color.rgba());
     }
   }
