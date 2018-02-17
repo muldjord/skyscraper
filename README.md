@@ -135,7 +135,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version x.x.x (still unimplemented)
 * Added 'sharpen' effect which sharpens the image
-* Improved front and side textures for the 'gamebox' effect
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
 
@@ -146,6 +145,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'rotate' effect that rotates the parent layer around the x, y or z axis
 * Added layer render 'mode' attribute ('overlay', 'colordodge', 'hardlight' and so on)
 * Added layer 'opacity' attribute (0-100)
+* Improved front and side textures for the 'gamebox' effect
 * Optimized search passes a bit
 * Re-added platform checking on 'screenscraper' and added all arcade platforms as aliases
 
