@@ -138,7 +138,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
 
-#### Version 2.3.3 (in progress, unreleased)
+#### Version 2.3.3 (17th February 2018)
 * Added 'hue' effect which changes the hue of the image
 * Added 'saturation' effect which changes the color saturation of the image
 * Added 'colorize' effect which renders the image using a single hue
