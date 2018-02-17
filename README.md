@@ -138,12 +138,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved front and side textures for the 'gamebox' effect
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
-* Implemented 'rotate' effect that rotates the parent layer
 
 #### Version 2.3.3 (in progress, unreleased)
 * Added 'hue' effect which changes the hue of the image
 * Added 'saturation' effect which changes the color saturation of the image
 * Added 'colorize' effect which renders the image using a single hue
+* Added 'rotate' effect that rotates the parent layer around the x, y or z axis
 * Optimized search passes a bit
 * Re-added platform checking on 'screenscraper' and added all arcade platforms as aliases
 * Added layer render 'mode' attribute ('overlay', 'colordodge', 'hardlight' and so on)
