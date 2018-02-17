@@ -239,14 +239,8 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
     } else if(xml.isStartElement() && xml.name() == "colorize") {
       QXmlStreamAttributes attribs = xml.attributes();
       newLayer.setType(T_COLORIZE);
-      if(attribs.hasAttribute("color"))
-	newLayer.colorFromHex(attribs.value("", "color").toString());
-      if(attribs.hasAttribute("red"))
-	newLayer.setRed(attribs.value("", "red").toInt());
-      if(attribs.hasAttribute("green"))
-	newLayer.setGreen(attribs.value("", "green").toInt());
-      if(attribs.hasAttribute("blue"))
-	newLayer.setBlue(attribs.value("", "blue").toInt());
+      if(attribs.hasAttribute("hue"))
+	newLayer.setDelta(attribs.value("", "hue").toInt());
       layer.addLayer(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
