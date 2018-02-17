@@ -34,7 +34,9 @@ Read on for a full description of the xml format used in '[homedir]/.skyscraper/
 
 Nodes: [Xml node](#xml-node-not-optional), [Artwork node](#artwork-node-not-optional), [Output node](#output-nodes-optional), [Layer node](#layer-nodes-optional)
 
-Effects: [Gamebox effect](#gamebox-effect-node-optional), [Shadow effect](#shadow-effect-node-optional), [Blur effect](#blur-effect-node-optional), [Mask effect](#mask-effect-node-optional), [Frame effect](#frame-effect-node-optional), [Stroke effect](#stroke-effect-node-optional), [Rounded effect](#rounded-effect-node-optional), [Saturation effect](#saturation-effect-node-from-v233-optional), [Hue effect](#hue-effect-node-from-v233-optional), [Brightness effect](#brightness-effect-node-optional), [Contrast effect](#contrast-effect-node-optional), [Opacity effect](#opacity-effect-node-optional), [Color balance effect](#balance-effect-node-optional), [Custom image resource](#custom-image-resources).
+Effects: [Color balance effect](#balance-effect-node-optional), [Blur effect](#blur-effect-node-optional), [Brightness effect](#brightness-effect-node-optional), [Colorize effect](#colorize-effect-node-optional), [Contrast effect](#contrast-effect-node-optional), [Frame effect](#frame-effect-node-optional), [Gamebox effect](#gamebox-effect-node-optional), [Hue effect](#hue-effect-node-from-v233-optional), [Mask effect](#mask-effect-node-optional), [Opacity effect](#opacity-effect-node-optional), [Rotate effect](#rotate-effect-node-from-v233-optional), [Rounded effect](#rounded-effect-node-optional), [Saturation effect](#saturation-effect-node-from-v233-optional), [Shadow effect](#shadow-effect-node-optional), [Stroke effect](#stroke-effect-node-optional).
+
+Other: [Custom image resources](#custom-image-resources).
 
 ### xml node (Not optional)
 ```
@@ -139,38 +141,21 @@ The vertical alignment of the layer. It can be:
 
 The alignment is relative to the parent layer.
 
-### 'gamebox' effect node (Optional)
-Left image shows the result with the wheel artwork applied to the side. Right image shows the original cover layer.
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
-```
-<layer resource="cover" height="200">
-  <gamebox side="[custom image resource]" rotate="90"/>
-</layer>
-```
-Must be nested inside a layer node. Renders a nifty looking 3D game box. It uses the parent layer image on the front of the box.
-
-#### 'side' attribute (Optional)
-The filename of the [custom image resource](#custom-image-resources) to be used on the side of the box.
-#### 'rotate' attribute (Optional)
-Defines the rotation of the side image in degrees.
-
-### 'shadow' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
+### 'balance' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/balance.png)
 ```
 <layer>
-  <shadow distance="10" softness="5" opacity="50"/>
+  <balance red="10" green="20" blue="30"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders a dropshadow on the parent layer using the attributes provided. If either of the attributes are left out, the shadow won't be drawn.
+Must be nested inside a layer node. Adjusts the color balance of the parent layer.
 
-#### 'distance' attribute (Not optional)
-Distance in pixels from the layer. The distance is always down to the right.
-
-#### 'softness' attribute (Not optional)
-Defines how soft (radius) the shadow will appear. A value of 0 is sharpest.
-
-#### 'opacity' attribute (Not optional)
-Defines the opacity of the shadow. 100 is completely visible. 0 is completely transparent.
+#### 'red' attribute (Optional)
+The red color adjustment. Can be -255 to 255.
+#### 'green' attribute (Optional)
+The green color adjustment. Can be -255 to 255.
+#### 'blue' attribute (Optional)
+The blue color adjustment. Can be -255 to 255.
 
 ### 'blur' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/blur.png)
@@ -184,26 +169,44 @@ Must be nested inside a layer node. Blurs the parent layer.
 #### 'softness' attribute (Not optional)
 Defines the radius of the blur. Higher means blurrier.
 
-### 'mask' effect node (Optional)
-Left image shows the result. Right image shows the mask used. The white part of the mask is transparent.
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/mask.png)
+### 'brightness' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/brightness.png)
 ```
 <layer>
-  <mask file="[custom image resource]" x="0" y="0" width="100" height="100"/>
+  <brightness value="10"/>
 </layer>
 ```
-Must be nested inside a layer node. This applies a mask to the parent layer.
+Must be nested inside a layer node. Adjusts the brightness of the parent layer.
 
-#### 'file' attribute (Not optional)
-The filename of the [custom image resource](#custom-image-resources) to be used as mask. The alpha channel of the mask will blind out the underlying parts of the parent layer.
-#### 'width' attribute (Optional)
-Sets the width of the mask in pixels. If left out it will be set to the width of the parent layer.
-#### 'height' attribute (Optional)
-Sets the height of the mask in pixels. If left out it will be set to the height of the parent layer.
-#### 'x' attribute (Optional)
-Sets the x coordinate of the mask relative to the parent layer. If left out it will be set to 0.
-#### 'y' attribute (Optional)
-Sets the y coordinate of the mask relative to the parent layer. If left out it will be set to 0.
+#### 'value' attribute (Not optional)
+The difference value for the adjustment. Can be -255 to 255.
+
+### 'colorize' effect node [from v2.3.3] (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/colorize.png)
+```
+<layer>
+  <colorize hue="180" saturation="-50"/>
+</layer>
+```
+Must be nested inside a layer node. Colorizes the parent layer with a single hue.
+
+#### 'hue' attribute (Not optional)
+Sets the hue in degrees. Can be 0 to 360.
+
+#### 'saturation' attribute (Optional)
+Sets the saturation delta value of the colorize effect. Can be -127 to 127.
+
+### 'contrast' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/contrast.png)
+```
+<layer>
+  <contrast value="10"/>
+</layer>
+```
+Must be nested inside a layer node. Adjusts the contrast of the parent layer.
+
+#### 'value' attribute (Not optional)
+The difference value for the adjustment. Can be -255 to 255.
 
 ### 'frame' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/frame.png)
@@ -227,25 +230,80 @@ Sets the x coordinate of the frame relative to the parent layer. If left out it 
 #### 'y' attribute (Optional)
 Sets the y coordinate of the frame relative to the parent layer. If left out it will be set to 0.
 
-### 'stroke' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/stroke.png)
+### 'gamebox' effect node (Optional)
+Left image shows the result with the wheel artwork applied to the side. Right image shows the original cover layer.
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
 ```
-<layer>
-  <stroke width="5" red="10" green="20" blue="30"/>
+<layer resource="cover" height="200">
+  <gamebox side="[custom image resource]" rotate="90"/>
 </layer>
 ```
-Must be nested inside a layer node. Renders a colored outline on the parent layer. If all color attributes are left out, it averages a suitable color from the parent layer.
+Must be nested inside a layer node. Renders a nifty looking 3D game box. It uses the parent layer image on the front of the box.
 
-#### 'width' attribute (Not optional)
-The width of the outline in pixels.
-#### 'red' attribute (Optional)
-The red color value for the outline. Can be 0-255. If left out it is set to 0.
-#### 'green' attribute (Optional)
-The green color value for the outline. Can be 0-255. If left out it is set to 0.
-#### 'blue' attribute (Optional)
-The blue color value for the outline. Can be 0-255. If left out it is set to 0.
-#### 'color' attribute [from v2.3.1] (Optional)
-Provides the color to use hex-style. This can be used instead of the 'red', 'green' and 'blue' attributes described above. An example could be 'color="#ff0099"'.
+#### 'side' attribute (Optional)
+The filename of the [custom image resource](#custom-image-resources) to be used on the side of the box.
+#### 'rotate' attribute (Optional)
+Defines the rotation of the side image in degrees.
+
+### 'hue' effect node [from v2.3.3] (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/hue.png)
+```
+<layer>
+  <hue value="100"/>
+</layer>
+```
+Must be nested inside a layer node. Rotates the hue of the parent layer.
+
+#### 'value' attribute (Not optional)
+The difference value for the adjustment. Can be 0 to 359.
+
+### 'mask' effect node (Optional)
+Left image shows the result. Right image shows the mask used. The white part of the mask is transparent.
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/mask.png)
+```
+<layer>
+  <mask file="[custom image resource]" x="0" y="0" width="100" height="100"/>
+</layer>
+```
+Must be nested inside a layer node. This applies a mask to the parent layer.
+
+#### 'file' attribute (Not optional)
+The filename of the [custom image resource](#custom-image-resources) to be used as mask. The alpha channel of the mask will blind out the underlying parts of the parent layer.
+#### 'width' attribute (Optional)
+Sets the width of the mask in pixels. If left out it will be set to the width of the parent layer.
+#### 'height' attribute (Optional)
+Sets the height of the mask in pixels. If left out it will be set to the height of the parent layer.
+#### 'x' attribute (Optional)
+Sets the x coordinate of the mask relative to the parent layer. If left out it will be set to 0.
+#### 'y' attribute (Optional)
+Sets the y coordinate of the mask relative to the parent layer. If left out it will be set to 0.
+
+### 'opacity' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/opacity.png)
+```
+<layer>
+  <opacity value="50"/>
+</layer>
+```
+Must be nested inside a layer node. Adjusts the opacity of the parent layer.
+
+#### 'value' attribute (Not optional)
+The opacity of the layer. Can be 0-100 where 0 is completely transparent and 100 is opaque.
+
+### 'rotate' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/rotate.png)
+```
+<layer>
+  <rotate degrees="45" axis="y"/>
+</layer>
+```
+Must be nested inside a layer node. Rotates the parent layer around the x, y or z axis.
+
+#### 'degrees' attribute (Not optional)
+Sets how many degrees the parent layer will be rotated. Can be -360 to 360.
+
+#### 'axis' attribute (Optional)
+Sets which axis the parent layer should be rotated around. Can be 'x', 'y' or 'z'. If left out it will be set to 'z'.
 
 ### 'rounded' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/rounded.png)
@@ -271,69 +329,43 @@ Must be nested inside a layer node. Adjusts the color saturation of the parent l
 #### 'value' attribute (Not optional)
 The difference value for the adjustment. Can be -255 to 255.
 
-### 'hue' effect node [from v2.3.3] (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/hue.png)
+### 'shadow' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
 ```
 <layer>
-  <hue value="100"/>
+  <shadow distance="10" softness="5" opacity="50"/>
 </layer>
 ```
-Must be nested inside a layer node. Rotates the hue of the parent layer.
+Must be nested inside a layer node. Renders a dropshadow on the parent layer using the attributes provided. If either of the attributes are left out, the shadow won't be drawn.
 
-#### 'value' attribute (Not optional)
-The difference value for the adjustment. Can be 0 to 359.
+#### 'distance' attribute (Not optional)
+Distance in pixels from the layer. The distance is always down to the right.
 
-### 'brightness' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/brightness.png)
+#### 'softness' attribute (Not optional)
+Defines how soft (radius) the shadow will appear. A value of 0 is sharpest.
+
+#### 'opacity' attribute (Not optional)
+Defines the opacity of the shadow. 100 is completely visible. 0 is completely transparent.
+
+### 'stroke' effect node (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/stroke.png)
 ```
 <layer>
-  <brightness value="10"/>
+  <stroke width="5" red="10" green="20" blue="30"/>
 </layer>
 ```
-Must be nested inside a layer node. Adjusts the brightness of the parent layer.
+Must be nested inside a layer node. Renders a colored outline on the parent layer. If all color attributes are left out, it averages a suitable color from the parent layer.
 
-#### 'value' attribute (Not optional)
-The difference value for the adjustment. Can be -255 to 255.
-
-### 'contrast' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/contrast.png)
-```
-<layer>
-  <contrast value="10"/>
-</layer>
-```
-Must be nested inside a layer node. Adjusts the contrast of the parent layer.
-
-#### 'value' attribute (Not optional)
-The difference value for the adjustment. Can be -255 to 255.
-
-### 'opacity' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/opacity.png)
-```
-<layer>
-  <opacity value="50"/>
-</layer>
-```
-Must be nested inside a layer node. Adjusts the opacity of the parent layer.
-
-#### 'value' attribute (Not optional)
-The opacity of the layer. Can be 0-100 where 0 is completely transparent and 100 is opaque.
-
-### 'balance' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/balance.png)
-```
-<layer>
-  <balance red="10" green="20" blue="30"/>
-</layer>
-```
-Must be nested inside a layer node. Adjusts the color balance of the parent layer.
-
+#### 'width' attribute (Not optional)
+The width of the outline in pixels.
 #### 'red' attribute (Optional)
-The red color adjustment. Can be -255-255. If left out it is set to -1.
+The red color value for the outline. Can be 0-255. If left out it is set to 0.
 #### 'green' attribute (Optional)
-The green color adjustment. Can be -255-255. If left out it is set to -1.
+The green color value for the outline. Can be 0-255. If left out it is set to 0.
 #### 'blue' attribute (Optional)
-The blue color adjustment. Can be -255-255. If left out it is set to -1.
+The blue color value for the outline. Can be 0-255. If left out it is set to 0.
+#### 'color' attribute [from v2.3.1] (Optional)
+Provides the color to use hex-style. This can be used instead of the 'red', 'green' and 'blue' attributes described above. An example could be 'color="#ff0099"'.
 
 ## Custom image resources
 From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '`[homedir]/.skyscraper/resources`' folder and use it by adding the filename to the attribute.
