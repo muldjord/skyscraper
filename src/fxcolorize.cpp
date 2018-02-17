@@ -43,10 +43,10 @@ QImage FxColorize::applyEffect(const QImage &src, const Layer &layer)
     return canvas;
   }
 
-  if(satDelta > 100 || satDelta < -100) {
+  if(satDelta > 127 || satDelta < -127) {
     satDelta = 0;
   }
-  int saturation = 127 + (127.0 / 100.0 * satDelta);
+  int saturation = 127 + satDelta;
 
   for(int y = 0; y < canvas.height(); ++y) {
     QRgb* line = (QRgb *)canvas.scanLine(y);
