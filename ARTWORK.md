@@ -290,7 +290,7 @@ Must be nested inside a layer node. Adjusts the opacity of the parent layer.
 #### 'value' attribute (Not optional)
 The opacity of the layer. Can be 0-100 where 0 is completely transparent and 100 is opaque.
 
-### 'rotate' effect node (Optional)
+### 'rotate' effect node [from v2.3.3] (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/rotate.png)
 ```
 <layer>
