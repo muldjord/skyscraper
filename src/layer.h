@@ -62,7 +62,8 @@ public:
   int y = 0;
   int width = -1;
   int height = -1;
-  int delta = 0;
+  int value = -1; // Use this for a value that can only be positive
+  int delta = 0; // Use this for a value that can both be positive and negative
   int red = -1;
   int green = -1;
   int blue = -1;
@@ -71,7 +72,8 @@ public:
   int opacity = -1;
   QPainter::CompositionMode mode = QPainter::CompositionMode_SourceOver;
   Qt::Axis axis = Qt::ZAxis;
-
+  int saturation = 127;
+  
   // Setters
   void setMode(const QString &mode);
   void setAxis(const QString &axis);
@@ -85,12 +87,13 @@ public:
   void setWidth(const int &width);
   void setHeight(const int &height);
   void setDelta(const int &delta);
+  void setValue(const int &value);
   void setRed(const int &red);
   void setGreen(const int &green);
   void setBlue(const int &blue);
   void setDistance(const int &distance);
   void setSoftness(const int &softness);
-  void setOpacity(int opacity);
+  void setOpacity(const int &opacity);
 
   void addLayer(const Layer &layer);
   QList<Layer> getLayers();

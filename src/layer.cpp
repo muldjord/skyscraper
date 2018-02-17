@@ -127,6 +127,12 @@ void Layer::setHeight(const int &height)
   this->height = height;
 }
 
+void Layer::setValue(const int &value)
+{
+  this->value = value;
+}
+
+
 void Layer::setDelta(const int &delta)
 {
   this->delta = delta;
@@ -157,12 +163,12 @@ void Layer::setSoftness(const int &softness)
   this->softness = softness;
 }
 
-void Layer::setOpacity(int opacity)
+void Layer::setOpacity(const int &opacity)
 {
   if(opacity > 100)
-    opacity = 100;
+    this->opacity = 100;
   if(opacity < 0)
-    opacity = 0;
+    this->opacity = 0;
   this->opacity = opacity;
 }
 
