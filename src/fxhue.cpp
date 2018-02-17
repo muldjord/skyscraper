@@ -41,7 +41,6 @@ QImage FxHue::applyEffect(const QImage &src, const Layer &layer)
   if(hue > 359 || hue < 0) {
     return canvas;
   }
-
   
   for(int y = 0; y < canvas.height(); ++y) {
     QRgb* line = (QRgb *)canvas.scanLine(y);
