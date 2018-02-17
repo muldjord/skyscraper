@@ -239,10 +239,13 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       }
     } else if(xml.isStartElement() && xml.name() == "colorize") {
       QXmlStreamAttributes attribs = xml.attributes();
-      newLayer.setType(T_COLORIZE);
-      if(attribs.hasAttribute("hue"))
-	newLayer.setDelta(attribs.value("", "hue").toInt());
-      layer.addLayer(newLayer);
+      if(attribs.hasAttribute("hue")) {
+	newLayer.setType(T_COLORIZE);
+	newLayer.setValue(attribs.value("", "hue").toInt());
+	if(attribs.hasAttribute("saturation"))
+	  newLayer.setDelta(attribs.value("", "saturation").toInt());
+	layer.addLayer(newLayer);
+      }
     } else if(xml.isStartElement() && xml.name() == "rotate") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("degrees")) {
