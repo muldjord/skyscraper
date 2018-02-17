@@ -134,7 +134,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Added 'colorize' effect which renders the image using one color
 * Added 'sharpen' effect which sharpens the image
 * Improved front and side textures for the 'gamebox' effect
 * Improved 'blur' and 'shadow' effect to be true gaussian
@@ -144,6 +143,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.3.3 (in progress, unreleased)
 * Added 'hue' effect which changes the hue of the image
 * Added 'saturation' effect which changes the color saturation of the image
+* Added 'colorize' effect which renders the image using one hue
 * Optimized search passes a bit
 * Re-added platform checking on 'screenscraper' and added all arcade platforms as aliases
 * Added layer render 'mode' attribute ('overlay', 'colordodge', 'hardlight' and so on)
