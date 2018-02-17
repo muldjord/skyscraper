@@ -30,6 +30,11 @@ Layer::Layer()
 }
 
 // Setters
+void Layer::setType(const int &type)
+{
+  this->type = type;
+}
+
 void Layer::setMode(const QString &mode)
 {
   if(mode == "multiply") {
@@ -71,9 +76,15 @@ void Layer::setMode(const QString &mode)
   }
 }
 
-void Layer::setType(const int &type)
+void Layer::setAxis(const QString &axis)
 {
-  this->type = type;
+  if(axis == "x") {
+    this->axis = Qt::XAxis;
+  } else if(axis == "y") {
+    this->axis = Qt::YAxis;
+  } else if(axis == "z") {
+    this->axis = Qt::ZAxis;
+  }
 }
 
 void Layer::setCanvas(const QImage &canvas)

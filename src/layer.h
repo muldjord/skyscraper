@@ -43,6 +43,7 @@
 #define T_HUE 14
 #define T_SATURATION 15
 #define T_COLORIZE 16
+#define T_ROTATE 17
 
 #include <QImage>
 #include <QPainter>
@@ -69,9 +70,11 @@ public:
   int softness = -1;
   int opacity = -1;
   QPainter::CompositionMode mode = QPainter::CompositionMode_SourceOver;
+  Qt::Axis axis = Qt::ZAxis;
 
   // Setters
   void setMode(const QString &mode);
+  void setAxis(const QString &axis);
   void setType(const int &type);
   void setCanvas(const QImage &canvas);
   void setResource(const QString &resource);
