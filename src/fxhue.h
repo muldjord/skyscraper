@@ -38,9 +38,6 @@ public:
   FxHue();
   QImage applyEffect(const QImage &src, const Layer &layer);
 
-private:
-  int truncate(int value);
-
 };
 
 #endif // FXHUE_H

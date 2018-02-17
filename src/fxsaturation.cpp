@@ -41,8 +41,8 @@ QImage FxSaturation::applyEffect(const QImage &src, const Layer &layer)
   for(int y = 0; y < canvas.height(); ++y) {
     QRgb* line = (QRgb *)canvas.scanLine(y);
     for(int x = 0; x < canvas.width(); ++x) {
-      QColor color = QColor(line[x]).toHsv();
-      color.setHsv(color.hue(), truncate(color.saturation() + saturation), color.value(),
+      QColor color(line[x]);
+      color.setHsl(color.hue(), truncate(color.hslSaturation() + saturation), color.lightness(),
 		   qAlpha(line[x]));
       line[x] = qPremultiply(color.rgba());
     }
