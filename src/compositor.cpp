@@ -46,6 +46,7 @@
 #include "fxhue.h"
 #include "fxsaturation.h"
 #include "fxcolorize.h"
+#include "fxrotate.h"
 
 Compositor::Compositor(Settings *config)
 {
@@ -242,6 +243,15 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("hue"))
 	newLayer.setDelta(attribs.value("", "hue").toInt());
       layer.addLayer(newLayer);
+    } else if(xml.isStartElement() && xml.name() == "rotate") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("degrees")) {
+	newLayer.setType(T_ROTATE);
+	newLayer.setDelta(attribs.value("degrees").toInt());
+	if(attribs.hasAttribute("axis"))
+	  newLayer.setAxis(attribs.value("", "axis").toString());
+	layer.addLayer(newLayer);
+      }
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
     } else if(xml.isEndElement() && xml.name() == "output") {
@@ -405,11 +415,16 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
     } else if(thisLayer.type == T_COLORIZE) {
       FxColorize effect;
       layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
+    } else if(thisLayer.type == T_ROTATE) {
+      FxRotate effect;
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
     }
     // Update width and height only for effects that change the dimensions in a way that
     // necessitates an update. For instance T_SHADOW does NOT require an update since we don't
     // want the alignment of the layer to take the shadow into consideration.
-    if(thisLayer.type == T_STROKE || thisLayer.type == T_GAMEBOX) {
+    if(thisLayer.type == T_STROKE ||
+       thisLayer.type == T_ROTATE ||
+       thisLayer.type == T_GAMEBOX) {
       layer.updateSize();
     }
   }
