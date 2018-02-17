@@ -63,7 +63,8 @@ HEADERS += src/skyscraper.h \
            src/fxgamebox.h \
            src/fxhue.h \
            src/fxsaturation.h \
-           src/fxcolorize.h
+           src/fxcolorize.h \
+           src/fxrotate.h
            
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
@@ -102,4 +103,5 @@ SOURCES += src/main.cpp \
            src/fxgamebox.cpp \
            src/fxhue.cpp \
            src/fxsaturation.cpp \
-           src/fxcolorize.cpp
+           src/fxcolorize.cpp \
+           src/fxrotate.cpp
