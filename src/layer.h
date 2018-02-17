@@ -42,6 +42,7 @@
 #define T_GAMEBOX 13
 #define T_HUE 14
 #define T_SATURATION 15
+#define T_COLORIZE 16
 
 #include <QImage>
 #include <QPainter>
