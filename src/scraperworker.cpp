@@ -298,11 +298,16 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
 {
   QCryptographicHash sha1(QCryptographicHash::Sha1);
 
-  // If file is some sort of script use filename for sha1
+  // If file is some sort of script or zip use filename for sha1
   bool sha1FromData = true;
+  // In case I look at this code again and think "hey, no reason to have zip there", just a
+  // reminder for myself: Yes, it makes sense to have zip here since each localdb is platform
+  // specific. And since zip's can be any which size depending on internal stuff, it makes
+  // sense to use filename for those also. Same goes for '7z'
   if(info.suffix() == "uae" || info.suffix() == "cue" ||
      info.suffix() == "sh" || info.suffix() == "svm" ||
-     info.suffix() == "mds") {
+     info.suffix() == "mds" || info.suffix() == "zip" ||
+     info.suffix() == "7z") {
     sha1FromData = false;
   }
   // If file is larger than 50 MBs, use filename for sha1
