@@ -137,6 +137,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Improved network issue handling (if user experiences unstable wifi)
+* Made 'localdb' default scraping module for all platforms
+* Now checks if localdb has any data for the given platform. If not, it will initiate 'simple mode'
+
+#### Version 2.3.4 (In progress, unreleased)
+* 'gamebox' effect no longer cuts top and bottom from src
+* 'gamebox' effect now handles side artwork that is too tall
 
 #### Version 2.3.3 (17th February 2018)
 * Added 'hue' effect which changes the hue of the image
