@@ -35,7 +35,7 @@
 LocalDb::LocalDb(const QString &dbFolder)
 {
   dbDir = QDir(dbFolder);
-  dbMutex = new QMutex(QMutex::Recursive);
+  dbMutex = new QMutex();
 }
 
 bool LocalDb::createFolders(const QString &scraper)
@@ -431,9 +431,8 @@ void LocalDb::addResources(GameEntry &entry, const Settings &config)
 void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 			  const QString &dbAbsolutePath, const Settings &config)
 {
-  QMutexLocker locker(dbMutex);
-
   bool notFound = true;
+  dbMutex->lock();
   for(int a = 0; a < resources.length(); ++a) {
     if(resources.at(a).sha1 == resource.sha1 &&
        resources.at(a).type == resource.type &&
@@ -446,6 +445,8 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       break;
     }
   }
+  dbMutex->unlock();
+  
   if(notFound) {
     bool okToAppend = true;
     if(resource.type == "cover") {
@@ -491,7 +492,9 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
     }
 
     if(okToAppend) {
+      dbMutex->lock();
       resources.append(resource);
+      dbMutex->unlock();
     }
     
   }
