@@ -29,6 +29,7 @@
 #include <QSettings>
 #include <QDirIterator>
 #include <QTimer>
+#include <QMutexLocker>
 
 #include "skyscraper.h"
 #include "xmlreader.h"
@@ -269,7 +270,7 @@ void Skyscraper::checkForFolder(QDir &folder)
 
 void Skyscraper::outputToTerminal(const QString &output)
 {
-  outputMutex.lock();
+  QMutexLocker locker(&outputMutex);
 
   printf("\033[0;32m#%d/%d\033[0m %s\n", currentFile, totalFiles, output.toStdString().c_str());
   int elapsed = timer.elapsed();
@@ -277,8 +278,6 @@ void Skyscraper::outputToTerminal(const QString &output)
 
   printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
   printf("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
-
-  outputMutex.unlock();
 }
 
 QString Skyscraper::secsToString(const int &secs)
@@ -301,7 +300,7 @@ QString Skyscraper::secsToString(const int &secs)
 
 void Skyscraper::entryReady(const GameEntry &entry)
 {
-  entryMutex.lock();
+  QMutexLocker locker(&entryMutex);
 
   GameEntry tmpEntry = entry;
 
@@ -340,13 +339,11 @@ void Skyscraper::entryReady(const GameEntry &entry)
   }
 
   currentFile++;
-
-  entryMutex.unlock();
 }
 
 void Skyscraper::checkThreads()
 {
-  checkThreadMutex.lock();
+  QMutexLocker locker(&checkThreadMutex);
 
   doneThreads++;
   if(doneThreads == config.threads) {
@@ -387,8 +384,6 @@ void Skyscraper::checkThreads()
     // All done, now clean up and exit to terminal
     emit finished();
   }
-
-  checkThreadMutex.unlock();
 }
 
 void Skyscraper::loadConfig(const QCommandLineParser &parser)
