@@ -129,15 +129,9 @@ void FxGamebox::fillWithAvg(const QImage &src, QImage &dst)
       avgBlue += qBlue(scanline[x]);
       samples++;
     }
-    if(samples != 0) {
-      avgRed /= samples;
-      avgGreen /= samples;
-      avgBlue /= samples;
-    } else {
-      avgRed = 127;
-      avgGreen = 127;
-      avgBlue = 127;
-    }
+    avgRed /= samples;
+    avgGreen /= samples;
+    avgBlue /= samples;
   }
   
   dst.fill(QColor(avgRed, avgGreen, avgBlue));
