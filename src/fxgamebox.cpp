@@ -115,14 +115,14 @@ void FxGamebox::fillWithAvg(const QImage &src, QImage &dst)
   int avgRed = 0;
   int avgGreen = 0;
   int avgBlue = 0;
-
-  if(src.height() > 20 && src.width() > 4 && dst.height() != 0) {
-    int x = 3;
-    double srcHeight = src.height();
-    double dstHeight = dst.height();
+  int x = (double)src.width() / 100.0 * 3.0;
+  
+  if(src.height() > 20 && src.width() > x && dst.height() != 0) {
+    double segDelta = (double)src.height() / 200.0;
+    double segs = 20.0;
     
     int samples = 0;
-    for(double y = 0.0; y < srcHeight / dstHeight * 20.0; y += srcHeight / dstHeight) {
+    for(double y = 0.0; y < segDelta * segs; y += segDelta) {
       QRgb *scanline = (QRgb *)src.constScanLine((int)y);
       avgRed += qRed(scanline[x]);
       avgGreen += qGreen(scanline[x]);
