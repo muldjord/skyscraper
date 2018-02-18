@@ -117,7 +117,7 @@ void FxGamebox::fillWithAvg(const QImage &src, QImage &dst)
   int avgBlue = 0;
   int x = (double)src.width() / 100.0 * 3.0;
   
-  if(src.height() > 20 && src.width() > x && dst.height() != 0) {
+  if(src.height() > 20 && src.width() > x) {
     double segDelta = (double)src.height() / 200.0;
     double segs = 20.0;
     
