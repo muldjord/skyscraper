@@ -298,15 +298,16 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
 {
   QCryptographicHash sha1(QCryptographicHash::Sha1);
 
-  // If file is some sort of script or a zip file, use filename for sha1
+  // If file is some sort of script use filename for sha1
   bool sha1FromData = true;
   if(info.suffix() == "uae" || info.suffix() == "cue" ||
      info.suffix() == "sh" || info.suffix() == "svm" ||
-     info.suffix() == "mds" || info.suffix() == "svm" ||
-     info.suffix() == "zip") {
+     info.suffix() == "mds") {
     sha1FromData = false;
   }
   // If file is larger than 50 MBs, use filename for sha1
+  // This SHOULD be enabled since this is only the sha1 used by Skyscraper's localdb
+  // Go to the screenscraper module for the recognition sha1.
   if(info.size() > 52428800) {
     sha1FromData = false;
   }
