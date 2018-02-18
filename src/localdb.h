@@ -63,7 +63,7 @@ public:
 
  private:
   QDir dbDir;
-  QMutex dbMutex;
+  QMutex *dbMutex;
 
   QMap<QString, QList<QString> > prioMap;
   
