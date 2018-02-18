@@ -116,7 +116,7 @@ void FxGamebox::fillWithAvg(const QImage &src, QImage &dst)
   int avgGreen = 0;
   int avgBlue = 0;
 
-  if(src.height() > 20 || src.width() > 4) {
+  if(src.height() > 20 && src.width() > 4) {
     int x = 3;
     double srcHeight = src.height();
     double dstHeight = dst.height();
