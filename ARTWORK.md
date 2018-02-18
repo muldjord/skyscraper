@@ -326,6 +326,8 @@ Defines the radius of the corners in pixels.
 ```
 Must be nested inside a layer node. Adjusts the color saturation of the parent layer.
 
+NOTE! If you want to completely greyscale your layer I highly recommend using the 'saturation' attribute of the 'colorize' effect instead. It uses a better estimation of percieved luminance.
+
 #### 'value' attribute (Not optional)
 The difference value for the adjustment. Can be -255 to 255.
 
