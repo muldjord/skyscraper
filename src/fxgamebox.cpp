@@ -57,25 +57,8 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
 
   QImage side(overlaySide.width(), overlaySide.height(), QImage::Format_ARGB32_Premultiplied);
 
-  int avgRed = 0;
-  int avgGreen = 0;
-  int avgBlue = 0;
-  int fromTop = 20;
-  if(src.height() < 20) {
-    fromTop = src.height();
-  }
-  for(int y = 0; y < fromTop; ++y) {
-    QRgb *scanline = (QRgb *)src.constScanLine(y);
-    avgRed += qRed(scanline[3]);
-    avgGreen += qGreen(scanline[3]);
-    avgBlue += qBlue(scanline[3]);
-  }
-  avgRed /= fromTop;
-  avgGreen /= fromTop;
-  avgBlue /= fromTop;
-
-  side.fill(QColor(avgRed, avgGreen, avgBlue));
-
+  fillWithAvg(src, side);
+  
   QImage sideImage;
   if(layer.resource == "cover") {
     sideImage = game.coverData;
@@ -125,4 +108,37 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   painter.drawImage(side.width() - 1, 0, front);
   
   return gamebox;
+}
+
+void FxGamebox::fillWithAvg(const QImage &src, QImage &dst)
+{
+  int avgRed = 0;
+  int avgGreen = 0;
+  int avgBlue = 0;
+
+  if(src.height() > 20 || src.width() > 4) {
+    int x = 3;
+    double srcHeight = src.height();
+    double dstHeight = dst.height();
+    
+    int samples = 0;
+    for(double y = 0.0; y < srcHeight / dstHeight * 20.0; y += srcHeight / dstHeight) {
+      QRgb *scanline = (QRgb *)src.constScanLine((int)y);
+      avgRed += qRed(scanline[x]);
+      avgGreen += qGreen(scanline[x]);
+      avgBlue += qBlue(scanline[x]);
+      samples++;
+    }
+    if(samples != 0) {
+      avgRed /= samples;
+      avgGreen /= samples;
+      avgBlue /= samples;
+    } else {
+      avgRed = 127;
+      avgGreen = 127;
+      avgBlue = 127;
+    }
+  }
+  
+  dst.fill(QColor(avgRed, avgGreen, avgBlue));
 }

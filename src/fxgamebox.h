@@ -40,6 +40,9 @@ public:
   FxGamebox();
   QImage applyEffect(const QImage &src, const Layer &layer, const GameEntry &game, Settings *config);
 
+private:
+  void fillWithAvg(const QImage &src, QImage &dst);
+  
 };
 
 #endif // FXGAMEBOX_H
