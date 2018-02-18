@@ -515,9 +515,9 @@ bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
 
 void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
 {
-  QMutexLocker locker(&dbMutex);
   QList<Resource> matchingResources;
   // Find all resources related to this particular rom
+  dbMutex.lock();
   foreach(Resource resource, resources) {
     if(scraper.isEmpty()) {
       if(entry.sha1 == resource.sha1) {
@@ -529,6 +529,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
       }
     }
   }
+  dbMutex.unlock();
 
   {
     QString type = "title";
