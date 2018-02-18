@@ -38,13 +38,17 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
 {
   QPainter painter;
   QTransform trans;
+  double borderFactor = 0.029;
 
-  QImage front = src;
+  QImage front(src.width(), src.height() + src.height() * borderFactor,
+	       QImage::Format_ARGB32_Premultiplied);
+  front.fill(Qt::black);
   QImage overlayFront(config->resources["boxfront.png"]);
   overlayFront = overlayFront.scaled(front.width(), front.height(),
 				     Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+  
   painter.begin(&front);
+  painter.drawImage(0, front.height() * borderFactor / 2, src);
   painter.drawImage(0, 0, overlayFront);
   painter.end();
 
@@ -52,7 +56,6 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   overlaySide = overlaySide.scaledToHeight(front.height(), Qt::SmoothTransformation);
 
   QImage side(overlaySide.width(), overlaySide.height(), QImage::Format_ARGB32_Premultiplied);
-  QImage sideImage;
 
   int avgRed = 0;
   int avgGreen = 0;
@@ -71,9 +74,9 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   avgGreen /= fromTop;
   avgBlue /= fromTop;
 
-  
   side.fill(QColor(avgRed, avgGreen, avgBlue));
 
+  QImage sideImage;
   if(layer.resource == "cover") {
     sideImage = game.coverData;
   } else if(layer.resource == "screenshot") {
@@ -90,10 +93,15 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   trans.reset();
   trans.rotate(layer.delta, Qt::ZAxis);
   sideImage = sideImage.transformed(trans, Qt::SmoothTransformation);
-  sideImage = sideImage.scaledToWidth(side.width(), Qt::SmoothTransformation);
+  if((double)sideImage.height() / sideImage.width() > (double)side.height() / side.width()) {
+    sideImage = sideImage.scaledToHeight(side.height() - side.height() * borderFactor, Qt::SmoothTransformation);
+  } else {
+    sideImage = sideImage.scaledToWidth(side.width(), Qt::SmoothTransformation);
+  }
   
   painter.begin(&side);
-  painter.drawImage(0, side.height() / 2 - sideImage.height() / 2, sideImage);
+  painter.drawImage(side.width() / 2.0 - sideImage.width() / 2.0,
+		    side.height() / 2.0 - sideImage.height() / 2.0, sideImage);
   painter.drawImage(0, 0, overlaySide);
   painter.end();
   
@@ -114,7 +122,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   gamebox.fill(Qt::transparent);
   painter.begin(&gamebox);
   painter.drawImage(0, 0, side);
-  painter.drawImage(side.width(), 0, front);
+  painter.drawImage(side.width() - 1, 0, front);
   
   return gamebox;
 }
