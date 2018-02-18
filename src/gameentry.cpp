@@ -82,3 +82,12 @@ int GameEntry::completeness(bool videoEnabled)
 
   return (int)completeness;
 }
+
+void GameEntry::resetMedia()
+{
+  coverData = QImage();
+  screenshotData = QImage();
+  wheelData = QImage();
+  marqueeData = QImage();
+  videoData = "";
+}

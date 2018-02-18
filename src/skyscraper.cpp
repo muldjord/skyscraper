@@ -310,11 +310,7 @@ void Skyscraper::entryReady(const GameEntry &entry)
     avgSearchMatch += tmpEntry.searchMatch;
     // Remove unnecessary media data to save memory before adding it to final entrylist
     // At this point data has been saved to disc, so we don't need it anymore.
-    tmpEntry.coverData = QImage();
-    tmpEntry.screenshotData = QImage();
-    tmpEntry.wheelData = QImage();
-    tmpEntry.marqueeData = QImage();
-    tmpEntry.videoData = "";
+    tmpEntry.resetMedia();
     gameEntries.append(tmpEntry);
   } else {
     notFound++;

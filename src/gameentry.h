@@ -46,6 +46,7 @@ class GameEntry
 public:
   GameEntry();
   int completeness(bool videoEnabled = false);
+  void resetMedia();
   
   QString path = "";
   QString title = "";
