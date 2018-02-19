@@ -140,9 +140,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made 'localdb' default scraping module for all platforms
 * Now checks if localdb has any data for the given platform. If not, it will initiate 'simple mode'
 
-#### Version 2.3.4 (In progress, unreleased)
-* 'gamebox' effect no longer cuts top and bottom from src
+#### Version 2.3.4 (19th February 2018)
+* 'gamebox' effect no longer cuts top and bottom from source layer
 * 'gamebox' effect now handles side artwork that is too tall
+* Optimized localdb mutexes
+* Fixed issue where searchName could be empty and cause Skyscraper to stall for 15 minutes
+* Now no longer runs screenscraper sha1 and md5 passes if filesize is 0
 
 #### Version 2.3.3 (17th February 2018)
 * Added 'hue' effect which changes the hue of the image
