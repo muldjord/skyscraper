@@ -326,10 +326,14 @@ void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
     output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
     switch(pass) {
     case 1:
-      getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
+      if(info.size() != 0) {
+	getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
+      }
       break;
     case 2:
-      getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
+      if(info.size() != 0) {
+	getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
+      }
       break;
     case 3:
       getSearchResults(gameEntries, "romnom=" + hashList.at(0), config->platform);
