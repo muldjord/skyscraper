@@ -200,7 +200,7 @@ void ScraperWorker::run()
       game.title = game.title.remove(0, 4).simplified().append(", The");
     }
 
-    game.title = StrTools::xmlUnescape(game.title);
+    // Don't unescape title since we already did that in getBestEntry()
     game.videoFile = StrTools::xmlUnescape(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
     game.description = StrTools::xmlUnescape(game.description);
     game.releaseDate = StrTools::xmlUnescape(game.releaseDate);
@@ -352,6 +352,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   int compareNumeral = StrTools::getNumeral(compareTitle);
   // Start by applying rules we are certain are needed. Add the ones that pass to potentials
   foreach(GameEntry entry, gameEntries) {
+    entry.title = StrTools::xmlUnescape(entry.title);
     int entryNumeral = StrTools::getNumeral(entry.title);
     // If numerals don't match, skip.
     // Numeral defaults to 1, even for games without a numeral.
