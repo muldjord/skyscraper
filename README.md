@@ -136,7 +136,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
-* Improved network issue handling (if user experiences unstable wifi)
 * Made 'localdb' default scraping module for all platforms
 * Now checks if localdb has any data for the given platform. If not, it will initiate 'simple mode'
 
