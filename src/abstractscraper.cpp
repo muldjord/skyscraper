@@ -521,6 +521,13 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
 {
   QString searchName = getSearchName(info.completeBaseName());
   QString searchNameOrig = searchName;
+
+  // searchName will be empty for files such as "[BIOS] Something.zip" and cause some scraping
+  // modules to return EVERYTHING in their database. We DO NOT want this since it take ages
+  // to parse it (15 minutes or more per entry) and it's faulty data anyways.
+  if(searchName.isEmpty()) {
+    return;
+  }
   
   for(int pass = 1; pass <= 4; ++pass) {
     // Reset searchName for each pass
