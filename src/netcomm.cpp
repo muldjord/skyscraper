@@ -59,18 +59,7 @@ void NetComm::request(QString query, QString postData)
 void NetComm::replyFinished(QNetworkReply *reply)
 {
   requestTimer.stop();
-  /*
-  QUrl url = reply->url();
-  if(reply->error()) {
-    printf("Download of %s failed: %s\n",
-	   url.toEncoded().constData(),
-	   qPrintable(reply->errorString()));
-  }
-  QList<QNetworkReply::RawHeaderPair> headerList = reply->rawHeaderPairs();
-  foreach(QNetworkReply::RawHeaderPair header, headerList) {
-    printf("RAW HEADER: '%s', '%s'\n", header.first.data(), header.second.data());
-  }
-  */
+
   // If we got redirected, we need to know where to proceed from
   contentType = reply->rawHeader("Content-Type");
 
