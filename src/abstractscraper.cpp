@@ -25,6 +25,7 @@
 
 #include "abstractscraper.h"
 #include "platform.h"
+#include "nametools.h"
 
 AbstractScraper::AbstractScraper()
 {
@@ -392,19 +393,14 @@ bool AbstractScraper::checkNom(const QString nom)
 
 QString AbstractScraper::getSearchName(QString baseName)
 {
-  if(config->scraper != "import" &&
-     config->platform == "scummvm" &&
-     QFileInfo::exists("/opt/retropie/configs/scummvm/scummvm.ini")) {
-    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini", QSettings::IniFormat);
-    if(scummIni.contains(baseName + "/description")) {
-      baseName = scummIni.value(baseName + "/description").toString();
+  if(config->scraper != "import") {
+    if(config->platform == "scummvm") {
+      baseName = NameTools::getScummName(baseName);
     }
-  }
-
-  if(config->scraper != "import" &&
-     (config->platform == "neogeo" || config->platform == "arcade")) {
-    if(!mameMap[baseName].isEmpty()) {
-      baseName = mameMap[baseName];
+    if(config->platform == "neogeo" ||
+       config->platform == "arcade" ||
+       config->platform == "fba") {
+      baseName = NameTools::getMameName(baseName, mameMap);
     }
   }
 
@@ -461,19 +457,14 @@ QString AbstractScraper::getSearchName(QString baseName)
 
 QString AbstractScraper::getCompareTitle(QString baseName, QString &sqrNotes, QString &parNotes)
 {
-  if(config->scraper != "import" &&
-     config->platform == "scummvm" &&
-     QFileInfo::exists("/opt/retropie/configs/scummvm/scummvm.ini")) {
-    QSettings scummIni("/opt/retropie/configs/scummvm/scummvm.ini", QSettings::IniFormat);
-    if(scummIni.contains(baseName + "/description")) {
-      baseName = scummIni.value(baseName + "/description").toString();
+  if(config->scraper != "import") {
+    if(config->platform == "scummvm") {
+      baseName = NameTools::getScummName(baseName);
     }
-  }
-
-  if(config->scraper != "import" &&
-     (config->platform == "neogeo" || config->platform == "arcade")) {
-    if(!mameMap[baseName].isEmpty()) {
-      baseName = mameMap[baseName];
+    if(config->platform == "neogeo" ||
+       config->platform == "arcade" ||
+       config->platform == "fba") {
+      baseName = NameTools::getMameName(baseName, mameMap);
     }
   }
 

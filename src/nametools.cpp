@@ -23,10 +23,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <QFileInfo>
+#include <QDir>
+#include <QSettings>
+
 #include "nametools.h"
 
-QString NameTools::getMameName(const QString &baseName, const QMap<QString, QString> &mameMap;
-)
+QString NameTools::getMameName(const QString &baseName, const QMap<QString, QString> &mameMap)
 {
   if(!mameMap[baseName].isEmpty()) {
     return mameMap[baseName];

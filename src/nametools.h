@@ -27,11 +27,12 @@
 #define NAMETOOLS_H
 
 #include <QObject>
+#include <QMap>
 
 class NameTools : public QObject
 {
 public:
-  static QString getMameName(const QString &baseName);
+  static QString getMameName(const QString &baseName, const QMap<QString, QString> &mameMap);
   static QString getScummName(const QString &baseName);
   
 };
