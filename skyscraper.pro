@@ -64,7 +64,8 @@ HEADERS += src/skyscraper.h \
            src/fxhue.h \
            src/fxsaturation.h \
            src/fxcolorize.h \
-           src/fxrotate.h
+           src/fxrotate.h \
+           src/nametools.h
            
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
@@ -104,4 +105,5 @@ SOURCES += src/main.cpp \
            src/fxhue.cpp \
            src/fxsaturation.cpp \
            src/fxcolorize.cpp \
-           src/fxrotate.cpp
+           src/fxrotate.cpp \
+           src/nametools.cpp
