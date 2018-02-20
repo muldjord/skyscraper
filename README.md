@@ -136,8 +136,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
-* Made 'localdb' default scraping module for all platforms
-* Now checks if localdb has any data for the given platform. If not, it will initiate 'simple mode'
+* Rethink default scraper in general. Maybe it makes sense to have localdb for all?
+
+#### Version 2.3.5 (In progress, unreleased)
+* Made 'scummvm' parsing look for config in homedir aswell ('.scummvmrc')
 
 #### Version 2.3.4 (19th February 2018)
 * 'gamebox' effect no longer cuts top and bottom from source layer
