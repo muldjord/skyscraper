@@ -215,7 +215,7 @@ void ScraperWorker::run()
     // Make sure we have the correct single digit format of 'players'
     game.players = StrTools::conformPlayers(game.players);
 
-    output.append("Scraper:\t\033[1;32m'" + config.scraper + "\033[0m'\n");
+    output.append("Scraper:\t'" + config.scraper + "'\n");
     if(config.scraper != "localdb" && config.scraper != "import") {
       output.append("From cache:\t" + QString((prefilledFromCache?"YES (refresh from source with '--updatedb')":"NO")) + "\n");
     }
