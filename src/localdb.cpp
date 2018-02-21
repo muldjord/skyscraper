@@ -432,7 +432,6 @@ void LocalDb::addResources(GameEntry &entry, const Settings &config)
 void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 			  const QString &dbAbsolutePath, const Settings &config)
 {
-  QMutexLocker locker(dbMutex);
   bool notFound = true;
   for(int a = 0; a < resources.length(); ++a) {
     if(resources.at(a).sha1 == resource.sha1 &&
