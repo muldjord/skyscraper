@@ -342,6 +342,7 @@ QList<Resource> LocalDb::getResources()
     
 void LocalDb::addResources(GameEntry &entry, const Settings &config)
 {
+  QMutexLocker locker(dbMutex);
   QString dbAbsolutePath = dbDir.absolutePath();
 
   if(entry.source.isEmpty()) {
@@ -431,8 +432,8 @@ void LocalDb::addResources(GameEntry &entry, const Settings &config)
 void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 			  const QString &dbAbsolutePath, const Settings &config)
 {
+  QMutexLocker locker(dbMutex);
   bool notFound = true;
-  dbMutex->lock();
   for(int a = 0; a < resources.length(); ++a) {
     if(resources.at(a).sha1 == resource.sha1 &&
        resources.at(a).type == resource.type &&
@@ -445,7 +446,6 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       break;
     }
   }
-  dbMutex->unlock();
   
   if(notFound) {
     bool okToAppend = true;
@@ -492,9 +492,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
     }
 
     if(okToAppend) {
-      dbMutex->lock();
       resources.append(resource);
-      dbMutex->unlock();
     }
     
   }
@@ -519,9 +517,9 @@ bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
 
 void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
 {
+  QMutexLocker locker(dbMutex);
   QList<Resource> matchingResources;
   // Find all resources related to this particular rom
-  dbMutex->lock();
   foreach(Resource resource, resources) {
     if(scraper.isEmpty()) {
       if(entry.sha1 == resource.sha1) {
@@ -533,7 +531,6 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
       }
     }
   }
-  dbMutex->unlock();
 
   {
     QString type = "title";
