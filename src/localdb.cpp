@@ -104,7 +104,7 @@ bool LocalDb::readDb()
 	resource.source = "generic";
       }
       if(attribs.hasAttribute("timestamp")) {
-	resource.timestamp = attribs.value("timestamp").toULong();
+	resource.timestamp = attribs.value("timestamp").toULongLong();
       } else {
 	printf("Resource with sha1 '%s' is missing 'timestamp' attribute, skipping...\n",
 	       resource.sha1.toStdString().c_str());
