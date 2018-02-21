@@ -353,6 +353,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   // Start by applying rules we are certain are needed. Add the ones that pass to potentials
   foreach(GameEntry entry, gameEntries) {
     entry.title = StrTools::xmlUnescape(entry.title);
+
     int entryNumeral = StrTools::getNumeral(entry.title);
     // If numerals don't match, skip.
     // Numeral defaults to 1, even for games without a numeral.
@@ -363,6 +364,11 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 	continue;
       }
     }
+    // Remove all brackets from name, since we pretty much NEVER want these and they fuck up
+    // our listings when using mamenames for 'arcade' (everything becomes double)
+    entry.title = entry.title.left(entry.title.indexOf("(")).simplified();
+    entry.title = entry.title.left(entry.title.indexOf("[")).simplified();
+
     potentials.append(entry);
   }
 
