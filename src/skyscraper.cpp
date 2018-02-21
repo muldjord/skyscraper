@@ -732,9 +732,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("verbose")) {
     config.verbose = true;
   }
-  if(parser.isSet("l") && parser.value("l").toInt() >= 0 && parser.value("l").toInt() <= 10000) {
-    config.maxLength = parser.value("l").toInt();
-  }
 
   frontend->checkReqs();
 
