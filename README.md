@@ -140,6 +140,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.3.5 (In progress, unreleased)
 * Made 'scummvm' parsing look for config in homedir aswell ('.scummvmrc')
+* Now always removed brackets from returned titles
 
 #### Version 2.3.4 (19th February 2018)
 * 'gamebox' effect no longer cuts top and bottom from source layer
