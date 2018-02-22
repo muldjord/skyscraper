@@ -54,7 +54,7 @@ public:
   void readPriorities();
   bool writeDb();
   void cleanDb();
-  void addResources(GameEntry entry, const Settings &config);
+  void addResources(GameEntry &entry, const Settings &config);
   void fillBlanks(GameEntry &entry, const QString scraper = "");
   void printResources();
   bool hasEntries(const QString &sha1, const QString scraper = "");
