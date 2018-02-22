@@ -340,9 +340,10 @@ QList<Resource> LocalDb::getResources()
   return resources;
 }
     
-void LocalDb::addResources(GameEntry &entry, const Settings &config)
+void LocalDb::addResources(GameEntry entry, const Settings &config)
 {
   QMutexLocker locker(dbMutex);
+
   QString dbAbsolutePath = dbDir.absolutePath();
 
   if(entry.source.isEmpty()) {
