@@ -196,6 +196,8 @@ void ScraperWorker::run()
 
     // We're done saving the raw data at this point, so feel free to manipulate game resources to better suit game list creation from here on out.
 
+    // Move 'The' to end of title for better sorting
+    // This looks like crap for some titles such as 'Simpsons: Bart vs. Blah, The' but I'll leave it in for the time being
     if(game.title.toLower().left(4) == "the ") {
       game.title = game.title.remove(0, 4).simplified().append(", The");
     }
