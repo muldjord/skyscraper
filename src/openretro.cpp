@@ -72,6 +72,9 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(searchUrlPre + searchName + searchUrlPost);
   q.exec();
   data = manager.getData();
+
+  if(data.isEmpty)
+    return;
   
   GameEntry game;
   
