@@ -137,6 +137,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Rethink default scraper in general. Maybe it makes sense to have localdb for all?
+* Threads now asks for next entry to scrape from global queue making for more efficient usage overall
+* Make sure screenshot output gets exported, even if entry has no base screenshow resource
 
 #### Version 2.3.5 (In progress, unreleased)
 * IMPORTANT: Fixed bug that caused resources to be mixed up between games because Qt's network cache wasn't cleared (Probably not a Qt bug, but a DAMN hard bug to spot either way). All previous Skyscraper releases have this bug, SO PLEASE UPDATE!!!
