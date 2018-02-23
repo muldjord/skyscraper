@@ -389,22 +389,25 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     }
 
     // Check if game is exact match if "The" at either end is manipulated
-    if(compareTitle.toLower().right(5) == ", the" && entryTitle.toLower().left(3) == "the") {
-      if(compareTitle.toLower().remove(compareTitle.length() - 5, 5) ==
-	 entryTitle.toLower().remove(0, 3)) {
-	lowestDistance = 0;
-	game = potentials.at(a);
-	return game;
+    bool match = false;
+    if(compareTitle.toLower().right(5) == ", the" && entryTitle.toLower().left(4) == "the ") {
+      if(compareTitle.toLower().left(compareTitle.length() - 5) ==
+	 entryTitle.toLower().remove(0, 4)) {
+	match = true;
       }
     }
-    if(entryTitle.toLower().right(5) == ", the" && compareTitle.toLower().left(3) == "the") {
-      if(entryTitle.toLower().remove(entryTitle.length() - 5, 5) ==
-	 compareTitle.toLower().remove(0, 3)) {
-	lowestDistance = 0;
-	game = potentials.at(a);
-	return game;
+    if(entryTitle.toLower().right(5) == ", the" && compareTitle.toLower().left(4) == "the ") {
+      if(entryTitle.toLower().left(entryTitle.length() - 5) ==
+	 compareTitle.toLower().remove(0, 4)) {
+	match = true;
       }
     }
+    if(match) {
+      lowestDistance = 0;
+      game = potentials.at(a);
+      return game;
+    }
+
     
     // Compare all words of compareTitle and entryTitle. If all words with a length of more than 3 letters are found in the entry words, return match
     QList<QString> compareWords = compareTitle.toLower().simplified().split(" ");
