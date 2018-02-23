@@ -399,8 +399,8 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
       if(entryWords.at(b).length() < 3)
 	entryWords.removeAt(b);
     }
-    // Only perform check if there's 3 or more words in compareTitle
-    if(compareWords.size() >= 3) {
+    // Only perform check if there's n or more words in compareTitle
+    if(compareWords.size() >= 4) {
       int wordsFound = 0;
       foreach(QString compareWord, compareWords) {
 	foreach(QString entryWord, entryWords) {
