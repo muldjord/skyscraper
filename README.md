@@ -143,6 +143,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made 'scummvm' parsing look for config in homedir aswell ('.scummvmrc')
 * Now always removes brackets from returned titles
 * Now always shows current scraping module in output
+* Optimized search matching even more
 
 #### Version 2.3.4 (19th February 2018)
 * 'gamebox' effect no longer cuts top and bottom from source layer
