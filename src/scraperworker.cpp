@@ -334,7 +334,7 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
 }
 
 GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
-					    const QString &compareTitle,
+					    QString compareTitle,
 					    int &lowestDistance)
 {
   GameEntry game;
@@ -380,7 +380,6 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   // Run through the potentials and find the best match
   for(int a = 0; a < potentials.length(); ++a) {
     QString entryTitle = potentials.at(a).title;
-    int entryNumeral = StrTools::getNumeral(entryTitle);
 
     // If we have a perfect hit, always use this result
     if(compareTitle == entryTitle) {
@@ -389,33 +388,72 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
       return game;
     }
 
-    // Remove subtitle from entryTitle, as it often isn't part of the filename but only do so if length of strings vary more than 4 and both contain numerals. If they don't both contain numerals it might be because the compareTitle is ONLY the subtitle (eg "Day of the tentacle"). In that case we DON'T want to remove the subtitle from entryTitle since we match with it a bit further down using "right".
-    if(compareNumeral != 1 && entryNumeral != 1) {
-      if((entryTitle.indexOf(":") != -1 ||
-	  entryTitle.indexOf(" - ") != -1 ||
-	  entryTitle.indexOf("~") != -1) &&
-	 abs(entryTitle.length() - compareTitle.length()) > 4) {
-	entryTitle = entryTitle.left(entryTitle.indexOf(":")).simplified();;
-	entryTitle = entryTitle.left(entryTitle.indexOf(" - ")).simplified();
-	entryTitle = entryTitle.left(entryTitle.indexOf("~")).simplified();
-      }
+    // Compare all words of compareTitle and entryTitle. If all words with a length of more than 3 letters are found in the entry words, return match
+    QList<QString> compareWords = compareTitle.toLower().simplified().split(" ");
+    for(int b = 0; b < compareWords.size(); ++b) {
+      if(compareWords.at(b).length() < 3)
+	compareWords.removeAt(b);
     }
-    
-    if(compareNumeral == 1) {
-      // Check if web title is similar to compareTitle without ' I'
-      // eg 'Tomb Raider' is equal to 'Tomb Raider I'
-      if(compareTitle.right(2) == " I" &&
-	 entryTitle == compareTitle.left(compareTitle.length() - 2)) {
+    QList<QString> entryWords = entryTitle.toLower().simplified().split(" ");
+    for(int b = 0; b < entryWords.size(); ++b) {
+      if(entryWords.at(b).length() < 3)
+	entryWords.removeAt(b);
+    }
+    // Only perform check if there's 3 or more words in compareTitle
+    if(compareWords.size() >= 3) {
+      int wordsFound = 0;
+      foreach(QString compareWord, compareWords) {
+	foreach(QString entryWord, entryWords) {
+	  if(entryWord == compareWord) {
+	    wordsFound++;
+	  }
+	}
+      }
+      if(wordsFound == compareWords.size()) {
 	lowestDistance = 0;
 	game = potentials.at(a);
 	return game;
       }
     }
-    
-    // The reason for using .right in the second parameter is to better hit results such as 'maniac mansion II: day of the tentacle' where the filename might be 'day of the tentacle'.
+
+    // If only one title has a subtitle (eg. has ":" or similar in name), remove subtitle from
+    // the other if length differs more than 4 in order to have a better chance of a match.
+    bool compareHasSub = (compareTitle.indexOf(":") != -1 ||
+			  compareTitle.indexOf(" - ") != -1  ||
+			  compareTitle.indexOf("~") != -1 );
+    bool entryHasSub = (entryTitle.indexOf(":") != -1  ||
+			entryTitle.indexOf(" - ") != -1  ||
+			entryTitle.indexOf("~") != -1 );
+    int lengthDiff = abs(entryTitle.length() - compareTitle.length());
+    if(lengthDiff > 4) {
+      QString comLower = compareTitle.toLower().simplified();
+      QString entLower = entryTitle.toLower().simplified();
+      if(entryHasSub && !compareHasSub) {
+	// Before cutting subtitle, check if subtitle is actually game title
+	if(entLower.right(comLower.length()) == comLower && comLower.length() >= 10) {
+	  lowestDistance = 0;
+	  game = potentials.at(a);
+	  return game;
+	}
+	entryTitle = entryTitle.left(entryTitle.indexOf(":")).simplified();
+	entryTitle = entryTitle.left(entryTitle.indexOf(" - ")).simplified();
+	entryTitle = entryTitle.left(entryTitle.indexOf("~")).simplified();
+      } else if(compareHasSub && !entryHasSub) {
+	// Before cutting subtitle, check if subtitle is actually game title
+	if(comLower.right(entLower.length()) == entLower && entLower.length() >= 10) {
+	  lowestDistance = 0;
+	  game = potentials.at(a);
+	  return game;
+	}
+	compareTitle = compareTitle.left(compareTitle.indexOf(":")).simplified();
+	compareTitle = compareTitle.left(compareTitle.indexOf(" - ")).simplified();
+	compareTitle = compareTitle.left(compareTitle.indexOf("~")).simplified();
+      }
+    }
+
     int currentDistance =
       editDistance(StrTools::xmlUnescape(compareTitle).toLower().toStdString(),
-		   StrTools::xmlUnescape(entryTitle).right(StrTools::xmlUnescape(compareTitle).length()).toLower().toStdString());
+		   StrTools::xmlUnescape(entryTitle).toLower().toStdString());
     if(currentDistance < lowestDistance) {
       lowestDistance = currentDistance;
       mostSimilar = a;
