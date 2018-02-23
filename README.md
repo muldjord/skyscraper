@@ -146,6 +146,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Now always removes brackets from returned titles
 * Now always shows current scraping module in output
 * Optimized search matching even more
+* No longer asks user about skipping entries if filenames are provided on command line
 
 #### Version 2.3.4 (19th February 2018)
 * 'gamebox' effect no longer cuts top and bottom from source layer
