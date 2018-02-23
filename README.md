@@ -139,6 +139,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Rethink default scraper in general. Maybe it makes sense to have localdb for all?
 
 #### Version 2.3.5 (In progress, unreleased)
+* IMPORTANT: Fixed bug that caused resources to be mixed up between games because Qt's network cache wasn't cleared (Probably not a Qt bug, but a DAMN hard bug to spot either way). All previous Skyscraper releases have this bug, SO PLEASE UPDATE!!!
 * Made 'scummvm' parsing look for config in homedir aswell ('.scummvmrc')
 * Now always removes brackets from returned titles
 * Now always shows current scraping module in output
