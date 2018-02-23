@@ -193,7 +193,7 @@ void Skyscraper::run()
     }
   } 
 
-  if(!config.unattend) {
+  if(!config.unattend && cliFiles.isEmpty()) {
     std::string userInput = "";
     if(gameListFile.exists() && frontend->canSkip()) {
       printf("\033[1;34mDo you wish to skip existing entries\033[0m (y/N)? ");
