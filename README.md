@@ -140,7 +140,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Threads now asks for next entry to scrape from global queue making for more efficient usage overall
 * Make sure artwork output gets exported, even if entry has no base artwork resource
 
-#### Version 2.3.5 (In progress, unreleased)
+#### Version 2.3.5 (24th February 2018)
 * IMPORTANT: Fixed bug that caused resources to be mixed up between games because Qt's network cache wasn't cleared (Probably not a Qt bug, but a DAMN hard bug to spot either way). All previous Skyscraper releases have this bug, SO PLEASE UPDATE!!!
 * Made 'scummvm' parsing look for config in homedir aswell ('.scummvmrc')
 * Now always removes brackets from returned titles
