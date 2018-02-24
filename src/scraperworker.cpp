@@ -429,10 +429,28 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 	foreach(QString entryWord, entryWords) {
 	  if(entryWord == compareWord) {
 	    wordsFound++;
+	    break;
 	  }
 	}
       }
       if(wordsFound == compareWords.size()) {
+	lowestDistance = 0;
+	game = potentials.at(a);
+	return game;
+      }
+    }
+    // Only perform check if there's 3 or more words in entryTitle
+    if(entryWords.size() >= 3) {
+      int wordsFound = 0;
+      foreach(QString entryWord, entryWords) {
+	foreach(QString compareWord, compareWords) {
+	  if(compareWord == entryWord) {
+	    wordsFound++;
+	    break;
+	  }
+	}
+      }
+      if(wordsFound == entryWords.size()) {
 	lowestDistance = 0;
 	game = potentials.at(a);
 	return game;
