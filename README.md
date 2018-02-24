@@ -36,8 +36,8 @@ You might be asked for your sudo password. On RetroPie the default password is '
 ### Download, compile and install
 When you've installed the prerequisites as described above, you can install Skyscraper by typing in the following commands:
 * $ cd
-* $ mkdir skyscraper
-* $ cd skyscraper
+* $ mkdir skysource
+* $ cd skysource
 * $ curl https://raw.githubusercontent.com/muldjord/skyscraper/master/update_skyscraper.sh | bash
 
 The last command will download and run the latest update script from Github. During the installation you might be asked for your sudo password. On RetroPie the default password is 'raspberry'.
@@ -47,7 +47,7 @@ When the script has completed you are ready to run Skyscraper!
 ### Updating Skyscraper
 To update Skyscraper simply cd into the skyscraper folder and run the update script
 * $ cd
-* $ cd skyscraper
+* $ cd skysource
 * $ ./update_skyscraper.sh
 
 You might be asked for your sudo password during the update. On RetroPie the default password is 'raspberry'.
