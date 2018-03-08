@@ -378,7 +378,7 @@ QString Platform::getFormats(QString platform)
   if(platform == "3do") {
     formats.append("*.iso");
   } else if(platform == "amiga") {
-    formats.append("*.uae *.adf *.dms *.adz *.rp9");
+    formats.append("*.uae *.adf *.dms *.adz *.rp9 *.lha");
   } else if(platform == "amstradcpc") {
     formats.append("*.dsk *.cpc");
   } else if(platform == "apple2") {
