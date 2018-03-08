@@ -41,29 +41,38 @@ OpenRetro::OpenRetro()
   titlePost = " <span";
   platformPre.append("#aaaaaa'>");
   platformPost = "</span>";
-  developerPre.append("<div class=\"game-info-row\"><span>Developer:</span>");
-  developerPost = "</div>";
-  publisherPre.append("<div class=\"game-info-row\"><span>Publisher:</span>");
-  publisherPost = "</div>";
-  playersPre.append("<div class=\"game-info-row\"><span>Players:</span>");
-  playersPost = "</div>";
-  releaseDatePre.append("<div class=\"game-info-row\"><span>Year:</span>");
-  releaseDatePost = "</div>";
-  descriptionPre.append("<div class='game-about'><p>");
-  descriptionPost = "</p></div>";
-  screenshotCounter = "2x\" data-rel='lightbox[images]'><img src=";
-  screenshotPre.append("2x\" data-rel='lightbox[images]'><img src=");
-  screenshotPre.append("<a href=\"");
-  screenshotPost = "?s=2x";
-  
-  fetchOrder.append(SCREENSHOT);
-  fetchOrder.append(COVER);
-  fetchOrder.append(PUBLISHER);
-  fetchOrder.append(RELEASEDATE);
-  fetchOrder.append(DEVELOPER);
-  fetchOrder.append(PLAYERS);
-  fetchOrder.append(TAGS);
+  descriptionPre.append("description</td>");
+  descriptionPre.append("<td style='color: black;'><div>");
+  descriptionPost = "</div></td>";
+  developerPre.append("developer</td>");
+  developerPre.append("<td style='color: black;'><div>");
+  developerPost = "</div></td>";
+  coverPre.append("front_sha1</td>");
+  coverPre.append("<div><a href=\"");
+  coverPost = "\">";
+  playersPre.append("players</td>");
+  playersPre.append("<td style='color: black;'><div>");
+  playersPost = "</div></td>";
+  publisherPre.append("publisher</td>");
+  publisherPre.append("<td style='color: black;'><div>");
+  publisherPost = "</div></td>";
+  screenshotCounter = "<td style='width: 180px; color: black;'>screen";
+  screenshotPre.append("<td style='width: 180px; color: black;'>screen");
+  screenshotPre.append("<td style='color: black;'><div><a href=\"");
+  screenshotPost = "\">";
+  releaseDatePre.append("year</td>");
+  releaseDatePre.append("<td style='color: black;'><div>");
+  releaseDatePost = "</div></td>";
+  tagsPre.append("tags</td>");
+
   fetchOrder.append(DESCRIPTION);
+  fetchOrder.append(DEVELOPER);
+  fetchOrder.append(COVER);
+  fetchOrder.append(PLAYERS);
+  fetchOrder.append(PUBLISHER);
+  fetchOrder.append(SCREENSHOT);
+  fetchOrder.append(TAGS);
+  fetchOrder.append(RELEASEDATE);
 }
 
 void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
@@ -85,7 +94,7 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
     foreach(QString nom, urlPre) {
       nomNom(nom);
     }
-    game.url = baseUrl + "/" + data.left(data.indexOf(urlPost));
+    game.url = baseUrl + "/" + data.left(data.indexOf(urlPost)) + "/edit";
 
     // Digest until title
     foreach(QString nom, titlePre) {
@@ -105,46 +114,16 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
   }
 }
 
-void OpenRetro::getScreenshot(GameEntry &game)
-{
-  // Check that we have enough screenshots
-  int screens = data.count(screenshotCounter.toUtf8());
-  if(screens >= 2) {
-    foreach(QString nom, screenshotPre) {
-      if(!checkNom(nom)) {
-	return;
-      }
-    }
-    foreach(QString nom, screenshotPre) {
-      nomNom(nom);
-    }
-  }
-  QString screenshotUrl = baseUrl + data.left(data.indexOf(screenshotPost)) + "?s=1x";
-  manager.request(screenshotUrl);
-  q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
-    game.screenshotData = image;
-  }
-}
-
-void OpenRetro::getCover(GameEntry &game)
-{
-  nomNom("</div></div><a href=\"");
-  QString coverUrl = baseUrl + data.left(data.indexOf("?s=")) + "?s=1x";
-  if(coverUrl.indexOf("0000000000") != -1) {
-    return;
-  }
-  manager.request(coverUrl);
-  q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
-    game.coverData = image;
-  }
-}
-
 void OpenRetro::getTags(GameEntry &game)
 {
+  foreach(QString nom, tagsPre) {
+    if(!checkNom(nom)) {
+      return;
+    }
+  }
+  foreach(QString nom, tagsPre) {
+    nomNom(nom);
+  }
   QString tags = "";
   QString tagBegin = "<a href=\"/browse/";
   while(data.indexOf(tagBegin) != -1) {

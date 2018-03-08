@@ -36,10 +36,7 @@ public:
   OpenRetro();
 
 private:
-  void getSearchResults(QList<GameEntry> &gameEntries,
-			QString searchName, QString platform);
-  void getScreenshot(GameEntry &game);
-  void getCover(GameEntry &game);
+  void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform);
   void getTags(GameEntry &game);
 };
 
