@@ -45,7 +45,7 @@ The last command will download and run the latest update script from Github. Dur
 When the script has completed you are ready to run Skyscraper!
 
 ### Updating Skyscraper
-To update Skyscraper simply cd into the skyscraper folder and run the update script
+To update Skyscraper when a new version is released, simply run the following commands:
 * $ cd
 * $ cd skysource
 * $ ./update_skyscraper.sh
