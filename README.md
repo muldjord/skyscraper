@@ -70,24 +70,11 @@ I recommend taking a look at the command line options first:
 This will give you a description of everything Skyscraper can do if you feel adventurous!
 
 NOTE: If you have already scraped a platform using 'Simple mode', any subsequent scrapings of said platform should be done with:
-* $ Skyscraper -p [platform] -s localdb
-
-This ensures that you make use of all the data cached by 'Simple mode', and will give you the most complete results for subsequent scrapings. A full description of the 'localdb' scraping module can be found [here](#local-database-features). You can of course add further command line options if needed.
-
-Skyscraper was designed to work with default options. If you're using the EmulationStation frontend, basically all you need to do is type:
 * $ Skyscraper -p [platform]
 
-Where [platform] must be one of the supported platforms (check '--help' for a list). This will scrape using the default scraping module for that platform.
+This will scrape the platform using the 'localdb' scraping module, and will make use of all the resources you have gathered in the local database cache. A full description of the 'localdb' scraping module can be found [here](#local-database-features). You can of course add further command line options if needed.
 
 NOTE: To enable video scraping for the scraping modules that support it, you need to add the '--videos' command line option. This is disabled per default because of the significant space requirements needed to save them.
-
-I recommend scraping with different scraping modules one after the other with the '-s' option:
-* $ Skyscraper -p [platform] -s [scraper]
-
-This will scrape using the specified scraping module instead of the default one. Every time you scrape with a new scraping module, all resources from that module will be cached locally. After you've scraped with different scraping modules, always rescrape with:
-* $ Skyscraper -p [platform] -s localdb
-
-Scraping with localdb will combine all of your locally cached resources into the most complete results. Remember to always overwrite your gamelist (keep in mind that any manual edits will be overwritten!) and NOT skip existing entries, unless you have a specific reason to do so. Read on for a more thorough description of localdb and how to prioritize the results.
 
 ### Local database features
 Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game 'title' or a game 'screenshot'. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the 'localdb' scraping module.
