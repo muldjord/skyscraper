@@ -70,7 +70,7 @@ Skyscraper is a command line tool, and has many, many options for you to fiddle 
 This will give you a description of everything Skyscraper can do if you feel adventurous!
 
 NOTE: If you have already scraped a platform using 'Simple mode', any subsequent scrapings of that particular platform should be done with:
-* $ Skyscraper -p [platform]
+* $ Skyscraper -p [platform] (For v2.3.5 and earlier use "Skyscraper -p [platform] -s localdb")
 
 This will scrape the platform using the 'localdb' scraping module, and will make use of all the resources you have gathered in the local database cache. A full description of the 'localdb' scraping module can be found [here](#local-database-features). You can of course add further command line options if needed.
 
