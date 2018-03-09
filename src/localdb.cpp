@@ -126,7 +126,7 @@ bool LocalDb::readDb()
     printf("Successfully parsed %d resources!\n\n", resources.length());
     return true;
   }
-  printf("No resources for this platform found in the local db cache. Please run Skyscraper in simple mode to gather some resources. You can run Skyscraper in simple mode simply by typing 'Skyscraper'\n");
+  printf("No resources for this platform found in the local database cache. Please run Skyscraper in simple mode by typing 'Skyscraper' and follow the instructions on screen.\n\n");
   return false;
 }
 
