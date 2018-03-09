@@ -84,7 +84,9 @@ void Skyscraper::run()
   if(!config.dbFolder.isEmpty() && config.localDb) {
     localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
     if(localDb->createFolders(config.scraper)) {
-      localDb->readDb();
+      if(!localDb->readDb() && config.scraper == "localdb") {
+	exit(0);
+      }
     } else {
       printf("Couldn't create local db folders, disabling localdb...\n");
       config.localDb = false;
