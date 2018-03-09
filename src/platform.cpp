@@ -502,123 +502,123 @@ QString Platform::getDefaultScraper(QString platform)
 {
   QString scraper;
   if(platform == "3do") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "amiga") {
-    scraper = "openretro";
+    scraper = "localdb";
   } else if(platform == "amstradcpc") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "arcade") {
-    scraper = "arcadedb";
+    scraper = "localdb";
   } else if(platform == "apple2") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "atari2600") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "atari5200") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "atari7800") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "atarijaguar") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "atarilynx") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "atarist") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "c64") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "coco") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "coleco") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "daphne") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "dragon32") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "dreamcast") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "fba") {
-    scraper = "arcadedb";
+    scraper = "localdb";
   } else if(platform == "fds") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "gameandwatch") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "gamegear") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "gb") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "gba") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "gbc") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "gc") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "genesis") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "intellivision") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "megadrive") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "mastersystem") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "msx") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "n64") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "nds") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "neogeo") {
-    scraper = "arcadedb";
+    scraper = "localdb";
   } else if(platform == "nes") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "ngp") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "ngpc") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "oric") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "pc") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "pc88") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "pcfx") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "pcengine") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "ports") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "psp") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "psx") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "saturn") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "scummvm") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "sega32x") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "segacd") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "sg-1000") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "snes") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "trs-80") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "vectrex") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "videopac") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "virtualboy") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "wii") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "wonderswan") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "wonderswancolor") {
-    scraper = "screenscraper";
+    scraper = "localdb";
   } else if(platform == "zmachine") {
-    scraper = "thegamesdb";
+    scraper = "localdb";
   } else if(platform == "zxspectrum") {
-    scraper = "worldofspectrum";
+    scraper = "localdb";
   }
   return scraper;
 }
