@@ -69,8 +69,6 @@ bool LocalDb::createFolders(const QString &scraper)
 
 bool LocalDb::readDb()
 {
-  bool result = false;
-
   QFile dbFile(dbDir.absolutePath() + "/db.xml");
   if(dbFile.open(QIODevice::ReadOnly)) {
     printf("Reading and parsing local database, please wait...\n");
@@ -123,12 +121,13 @@ bool LocalDb::readDb()
 
       resources.append(resource);
     }
-    result = true;
-    printf("Successfully parsed %d resources!\n\n", resources.length());
-    resAtLoad = resources.length();
     dbFile.close();
+    resAtLoad = resources.length();
+    printf("Successfully parsed %d resources!\n\n", resources.length());
+    return true;
   }
-  return result;
+  printf("No resources for this platform found in the local db cache. Please run Skyscraper in simple mode to gather some resources. You can run Skyscraper in simple mode simply by typing 'Skyscraper'\n");
+  return false;
 }
 
 void LocalDb::readPriorities()
