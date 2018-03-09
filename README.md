@@ -64,12 +64,12 @@ When you have completed the installation you can start Skyscraper in 'simple mod
 Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script afterwards. It's located in '[homedir]/.skyscraper/skyscript.sh'.
 
 ### Manual mode (for advanced users)
-I recommend taking a look at the command line options first:
+Skyscraper is a command line tool, and has many, many options for you to fiddle around with. I recommend taking a look at all of them to familiarize yourself with the possibilites:
 * $ Skyscraper --help
 
 This will give you a description of everything Skyscraper can do if you feel adventurous!
 
-NOTE: If you have already scraped a platform using 'Simple mode', any subsequent scrapings of said platform should be done with:
+NOTE: If you have already scraped a platform using 'Simple mode', any subsequent scrapings of that particular platform should be done with:
 * $ Skyscraper -p [platform]
 
 This will scrape the platform using the 'localdb' scraping module, and will make use of all the resources you have gathered in the local database cache. A full description of the 'localdb' scraping module can be found [here](#local-database-features). You can of course add further command line options if needed.
