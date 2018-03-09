@@ -61,7 +61,7 @@ Remember, you can completely customize the artwork Skyscraper exports. Check out
 When you have completed the installation you can start Skyscraper in 'simple mode' by running Skyscraper with no command line options by typing:
 * $ Skyscraper
 
-Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script. It's located in '[homedir]/.skyscraper/skyscript.sh'.
+Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script afterwards. It's located in '[homedir]/.skyscraper/skyscript.sh'.
 
 ### Manual mode (for advanced users)
 I recommend taking a look at the command line options first:
