@@ -130,6 +130,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
 * Added '*.lha' suffix to amiga platform
 * Changed default scraping module for all platforms to 'localdb'
+* Added 'wheel' support to 'openretro' scraping module
 
 #### Version 2.3.5 (24th February 2018)
 * IMPORTANT: Fixed bug that caused resources to be mixed up between games because Qt's network cache wasn't cleared (Probably not a Qt bug, but a DAMN hard bug to spot either way). All previous Skyscraper releases have this bug, SO PLEASE UPDATE!!!
