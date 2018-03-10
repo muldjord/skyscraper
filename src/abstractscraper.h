@@ -48,11 +48,15 @@ public:
   virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking);
 
   void setConfig(Settings *config);
+  void setRegionPrios();
+  void setLangPrios();
   void loadMameMap();
   
 protected:
   Settings *config;
-
+  QList<QString> regionPrios;
+  QList<QString> langPrios;
+  
   virtual void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 				QString platform);
   virtual void getDescription(GameEntry &game);
