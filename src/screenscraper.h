@@ -30,6 +30,10 @@
 
 #include "abstractscraper.h"
 
+#define REGION 0
+#define LANGUE 1
+#define NONE 42
+
 class ScreenScraper : public AbstractScraper
 {
   Q_OBJECT
@@ -55,6 +59,8 @@ private:
   void getMarquee(GameEntry &game);
   void getVideo(GameEntry &game);
   QString getHashes(const QFileInfo &info);
+
+  QString getXmlText(QString node, int attr, QString type = "");
 
   QString region;
   QString lang;
