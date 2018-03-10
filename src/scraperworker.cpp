@@ -73,6 +73,8 @@ void ScraperWorker::run()
   }
 
   scraper->setConfig(&config);
+  scraper->setRegionPrios();
+  scraper->setLangPrios();
   scraper->loadMameMap();
   
   platformOrig = config.platform;
