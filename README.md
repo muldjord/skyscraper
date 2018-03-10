@@ -124,15 +124,17 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Make sure artwork output gets exported, even if entry has no base artwork resource
+* Added '--purgedb' command line option that allows purging of resources from localdb
+* Added '--statsdb' command line option that prints stats for localdb
 
 #### Version 2.3.6 (in progress, unreleased)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
 * Added '*.lha' suffix to amiga platform
 * Changed default scraping module for all platforms to 'localdb'
 * Added 'wheel' support to 'openretro' scraping module
-* Rewrote thread queue so entries are taken alphabetically
+* Rewrote thread queue so entries are always taken alphabetically
 * Now forces 4 threads for 'screenscraper' scraping module to accomodate their limits
-* Updated screenscraper api to v2
+* Updated screenscraper API to use v2
 
 #### Version 2.3.5 (24th February 2018)
 * IMPORTANT: Fixed bug that caused resources to be mixed up between games because Qt's network cache wasn't cleared (Probably not a Qt bug, but a DAMN hard bug to spot either way). All previous Skyscraper releases have this bug, SO PLEASE UPDATE!!!
