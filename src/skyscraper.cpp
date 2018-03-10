@@ -66,9 +66,14 @@ void Skyscraper::run()
   printf("Screenshots folder : '\033[1;32m%s\033[0m'\n", config.screenshotsFolder.toStdString().c_str());
   printf("Wheels folder      : '\033[1;32m%s\033[0m'\n", config.wheelsFolder.toStdString().c_str());
   printf("Marquees folder    : '\033[1;32m%s\033[0m'\n", config.marqueesFolder.toStdString().c_str());
-  if(config.localDb) {
-    printf("Local db folder    : '\033[1;32m%s\033[0m'\n\n", config.dbFolder.toStdString().c_str());
+  if(config.videos) {
+    printf("Videos folder      : '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
   }
+  if(config.localDb) {
+    printf("Local db folder    : '\033[1;32m%s\033[0m'\n", config.dbFolder.toStdString().c_str());
+  }
+
+  printf("\n");
   
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
