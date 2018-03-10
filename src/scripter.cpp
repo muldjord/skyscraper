@@ -118,7 +118,7 @@ Scripter::Scripter()
   getline(std::cin, minMatchStr);
 
   std::string updateDbStr = "";
-  printf("\033[1;34mDo you wish to disable locally cached data for all scraping modules\033[0m (y/N)? ");
+  printf("\033[1;34mDo you wish to force an update of all locally cached data\033[0m (y/N)? ");
   getline(std::cin, updateDbStr);
 
   QFile scriptFile("skyscript.sh");
