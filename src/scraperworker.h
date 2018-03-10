@@ -33,14 +33,14 @@
 #include "abstractscraper.h"
 #include "settings.h"
 #include "localdb.h"
+#include "queue.h"
 
 class ScraperWorker : public QObject
 {
   Q_OBJECT
 
 public:
-  ScraperWorker(QList<QFileInfo> inputFiles, int filesPerThreads, int beginIdx,
-		Settings config, QSharedPointer<LocalDb> localDb);
+  ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb, Settings config);
   ~ScraperWorker();
   void run();
   
@@ -51,10 +51,10 @@ signals:
 
 private:
   QSharedPointer<LocalDb> localDb;
+  QSharedPointer<Queue> queue;
   
   Settings config;
   QString platformOrig;
-  QString output;
   QList<QFileInfo> inputFiles;
   int filesPerThread;
   int beginIdx;

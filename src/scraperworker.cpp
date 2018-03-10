@@ -38,14 +38,12 @@
 #include "importscraper.h"
 #include "arcadedb.h"
 
-ScraperWorker::ScraperWorker(QList<QFileInfo> inputFiles, int filesPerThread, int beginIdx,
-			     Settings config, QSharedPointer<LocalDb> localDb)
+ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb,
+			     Settings config)
 {
   this->config = config;
   this->localDb = localDb;
-  this->inputFiles = inputFiles;
-  this->filesPerThread = filesPerThread;
-  this->beginIdx = beginIdx;
+  this->queue = queue;
 }
 
 ScraperWorker::~ScraperWorker()
@@ -85,10 +83,11 @@ void ScraperWorker::run()
     exit(1);
   }
   
-  for(int a = beginIdx; a < filesPerThread + beginIdx; ++a) {
-    output = "";
+  while(queue->hasEntry()) {
+    // Reset platform in case we have manipulated it (such as changing 'amiga' to 'cd32')
     config.platform = platformOrig;
-    QFileInfo info = inputFiles.at(a);
+    QString output = "";
+    QFileInfo info = queue->takeEntry();
     QString parNotes = "";
     QString sqrNotes = "";
     QString sha1 = getSha1(info);
