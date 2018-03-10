@@ -139,6 +139,13 @@ QString StrTools::conformPlayers(QString str)
   if(QRegularExpression("^\\d - \\d").match(str).hasMatch())
     return str.mid(4, 1);
 
+  // A faulty Openretro entry is necessary as it marks "1 - 6" as "1 -6"
+  if(QRegularExpression("^\\d -\\d\\d").match(str).hasMatch())
+    return str.mid(3, 2);
+
+  if(QRegularExpression("^\\d -\\d").match(str).hasMatch())
+    return str.mid(3, 1);
+
   if(QRegularExpression("^\\d to \\d\\d").match(str).hasMatch())
     return str.mid(5, 2);
 
