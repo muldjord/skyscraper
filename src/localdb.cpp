@@ -126,7 +126,6 @@ bool LocalDb::readDb()
     printf("Successfully parsed %d resources!\n\n", resources.length());
     return true;
   }
-  printf("No resources for this platform found in the local database cache. Please run Skyscraper in simple mode by typing 'Skyscraper' and follow the instructions on screen (this is probably what you want). Or specify a specific scraping module using the '-s' command line option. Check all available options with '--help'\n\n");
   return false;
 }
 
