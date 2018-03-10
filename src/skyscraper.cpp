@@ -74,6 +74,10 @@ void Skyscraper::run()
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
   }
+  if(config.scraper == "screenscraper" && config.threads > 4) {
+    printf("Forcing 4 threads to accomodate limits in ScreenScraper scraping module\n\n");
+    config.threads = 4;
+  }
 
   doneThreads = 0;
   notFound = 0;
@@ -85,6 +89,7 @@ void Skyscraper::run()
     localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
     if(localDb->createFolders(config.scraper)) {
       if(!localDb->readDb() && config.scraper == "localdb") {
+	printf("No resources for this platform found in the local database cache. Please run Skyscraper in simple mode by typing 'Skyscraper' and follow the instructions on screen (this is probably what you want). Or specify a specific scraping module using the '-s' command line option. Check all available options with '--help'\n\n");
 	exit(0);
       }
     } else {
