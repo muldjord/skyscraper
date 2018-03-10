@@ -173,7 +173,9 @@ void Skyscraper::run()
   skippedFile.write("--- The following is a list of skipped games ---\n");
   skippedFile.close();
 
-  QList<QFileInfo> inputFiles = inputDir.entryInfoList();
+  // Create shared queue with files to process
+  QSharedPointer<Queue> queue = QSharedPointer<Queue>(new Queue());
+  queue->append(inputDir.entryInfoList());
   if(config.subDirs) {
     QDirIterator dirIt(config.inputFolder,
 		       QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
@@ -181,7 +183,7 @@ void Skyscraper::run()
     while(dirIt.hasNext()) {
       QString subdir = dirIt.next();
       inputDir.setPath(subdir);
-      inputFiles.append(inputDir.entryInfoList());
+      queue->append(inputDir.entryInfoList());
       if(config.verbose) {
 	printf("Added files from subdir: '%s'\n", subdir.toStdString().c_str());
       }
@@ -189,9 +191,9 @@ void Skyscraper::run()
   }
 
   if(!cliFiles.isEmpty()) {
-    inputFiles.clear();
+    queue->clear();
     foreach(QString cliFile, cliFiles) {
-      inputFiles.append(QFileInfo(cliFile));
+      queue->append(QFileInfo(cliFile));
     }
   } 
 
@@ -201,12 +203,12 @@ void Skyscraper::run()
       printf("\033[1;34mDo you wish to skip existing entries\033[0m (y/N)? ");
       getline(std::cin, userInput);
       if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
-	frontend->skipExisting(gameListFileString, gameEntries, inputFiles);
+	frontend->skipExisting(gameListFileString, gameEntries, queue);
       }
     }
   }
 
-  totalFiles = inputFiles.length();
+  totalFiles = queue->length();
   if(totalFiles == 0) {
     // A bit of a hack to let the scraping process take place. We want it to rewrite the gamelist
     printf("No entries to scrape...\n\n");
@@ -220,22 +222,10 @@ void Skyscraper::run()
   timer.start();
   currentFile = 1;
 
-  int filesPerThread = (totalFiles - totalFiles % config.threads) / config.threads;
-  if(totalFiles < config.threads) {
-    filesPerThread = 1;
-  }
-  
-  if(config.verbose) {
-    printf("Files per thread: %d\n", filesPerThread);
-  }
   QList<QThread*> threadList;
   for(int curThread = 1; curThread <= config.threads; ++curThread) {
-    int beginIdx = (curThread - 1) * filesPerThread;
-    if(curThread == config.threads) {
-      filesPerThread += totalFiles % config.threads;
-    }
     QThread *thread = new QThread;
-    ScraperWorker *worker = new ScraperWorker(inputFiles, filesPerThread, beginIdx, config, localDb);
+    ScraperWorker *worker = new ScraperWorker(queue, localDb, config);
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::outputToTerminal, this, &Skyscraper::outputToTerminal);
@@ -377,7 +367,7 @@ void Skyscraper::checkThreads()
     }
     printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
     printf("\033[1;32mSuccessfully scraped games: %d\033[0m\n", found);
-    printf("\033[1;33mSkipped games: %d (Filenames saved to '%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
+    printf("\033[1;33mSkipped games: %d (Filenames saved to '[homedir]/.skyscraper/%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
 
     // All done, now clean up and exit to terminal
     emit finished();

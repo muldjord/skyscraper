@@ -56,7 +56,6 @@ signals:
 private slots:
   void entryReady(const GameEntry &entry);
   void outputToTerminal(const QString &output);
-  //void addToSkipped(const QString &gameBaseName, const QString &closestMatch);
   void checkThreads();
   
 private:
@@ -73,7 +72,6 @@ private:
   QList<GameEntry> gameEntries;
   QList<QString> cliFiles;
   QMutex entryMutex;
-  //QMutex skippedMutex;
   QMutex outputMutex;
   QMutex checkThreadMutex;
   QTime timer;
@@ -86,7 +84,6 @@ private:
   int avgCompleteness;
   int currentFile;
   int totalFiles;
-
 };
 
 #endif // SKYSCRAPER_H
