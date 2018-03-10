@@ -36,7 +36,7 @@ public:
   EmulationStation();
   void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int maxDescLength);
   void skipExisting(const QString &gameListFileString, QList<GameEntry> &gameEntries,
-		    QList<QFileInfo> &inputFiles);
+		    QSharedPointer<Queue> queue);
   bool canSkip();
   QString getGameListFileName();
   QString getInputFolder();

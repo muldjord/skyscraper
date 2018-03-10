@@ -28,9 +28,11 @@
 
 #include <QObject>
 #include <QFileInfo>
+#include <QSharedPointer>
 
 #include "gameentry.h"
 #include "settings.h"
+#include "queue.h"
 
 class AbstractFrontend : public QObject
 {
@@ -44,7 +46,7 @@ public:
   virtual void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries,
 			    int maxLength);
   virtual void skipExisting(const QString &gameListFileString, QList<GameEntry> &gameEntries,
-			    QList<QFileInfo> &inputFiles);
+			    QSharedPointer<Queue> queue);
   virtual bool canSkip();
   virtual QString getGameListFileName();
   virtual QString getInputFolder();

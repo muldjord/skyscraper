@@ -34,7 +34,7 @@ AttractMode::AttractMode()
 }
 
 void AttractMode::skipExisting(const QString &gameListFileString,
-			       QList<GameEntry> &gameEntries, QList<QFileInfo> &inputFiles)
+			       QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue)
 {
   printf("Parsing existing romlist entries, please wait...\n");
   QFile gameListFile(gameListFileString);
@@ -70,9 +70,9 @@ void AttractMode::skipExisting(const QString &gameListFileString,
     if(dots % 50 == 0) {
       printf(".");
     }
-    for(int b = 0; b < inputFiles.length(); ++b) {
-      if(gameEntries.at(a).baseName == inputFiles.at(b).completeBaseName()) {
-	inputFiles.removeAt(b);
+    for(int b = 0; b < queue->length(); ++b) {
+      if(gameEntries.at(a).baseName == queue->at(b).completeBaseName()) {
+	queue->removeAt(b);
 	// We assume baseName is unique, so break after getting first hit
 	break;
       }

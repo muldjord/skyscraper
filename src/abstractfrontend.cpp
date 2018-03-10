@@ -46,7 +46,7 @@ void AbstractFrontend::assembleList(QString &, const QList<GameEntry> &, int)
 {
 }
 
-void AbstractFrontend::skipExisting(const QString &, QList<GameEntry> &, QList<QFileInfo> &)
+void AbstractFrontend::skipExisting(const QString &, QList<GameEntry> &, QSharedPointer<Queue>)
 {
 }
 

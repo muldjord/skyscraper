@@ -36,7 +36,7 @@ public:
   AttractMode();
   void checkReqs();
   void skipExisting(const QString &gameListFileString, QList<GameEntry> &gameEntries,
-		    QList<QFileInfo> &inputFiles);
+		    QSharedPointer<Queue> queue);
   void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int maxDescLength);
   bool canSkip();
   QString getGameListFileName();

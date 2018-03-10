@@ -32,7 +32,7 @@ EmulationStation::EmulationStation()
 }
 
 void EmulationStation::skipExisting(const QString &gameListFileString,
-				    QList<GameEntry> &gameEntries, QList<QFileInfo> &inputFiles)
+				    QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) 
 {
   XmlReader gameListReader;
   if(gameListReader.setFile(gameListFileString)) {
@@ -45,9 +45,9 @@ void EmulationStation::skipExisting(const QString &gameListFileString,
   printf("Resolving missing entries...\n");
   for(int a = 0; a < gameEntries.length(); ++a) {
     QFileInfo current(gameEntries.at(a).path);
-    for(int b = 0; b < inputFiles.length(); ++b) {
-      if(current.fileName() == inputFiles.at(b).fileName()) {
-	inputFiles.removeAt(b);
+    for(int b = 0; b < queue->length(); ++b) {
+      if(current.fileName() == queue->at(b).fileName()) {
+	queue->removeAt(b);
 	// We assume filename is unique, so break after getting first hit
 	break;
       }
