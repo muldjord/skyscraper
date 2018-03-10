@@ -131,6 +131,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Changed default scraping module for all platforms to 'localdb'
 * Added 'wheel' support to 'openretro' scraping module
 * Rewrote thread queue so entries are taken alphabetically
+* Now forces 4 threads for 'screenscraper' scraping module to accomodate their limits
 
 #### Version 2.3.5 (24th February 2018)
 * IMPORTANT: Fixed bug that caused resources to be mixed up between games because Qt's network cache wasn't cleared (Probably not a Qt bug, but a DAMN hard bug to spot either way). All previous Skyscraper releases have this bug, SO PLEASE UPDATE!!!
