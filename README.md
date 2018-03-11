@@ -126,6 +126,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Make sure artwork output gets exported, even if entry has no base artwork resource
 * Added '--purgedb' command line option that allows purging of resources from localdb
 * Added '--statsdb' command line option that prints stats for localdb
+* Implemented user credentials to set up threads for 'screenscraper' module
+* Implemented the option to only scrape a single resource type during a scraping run
 
 #### Version 2.3.6 (in progress, unreleased)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
