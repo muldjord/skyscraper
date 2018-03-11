@@ -19,6 +19,9 @@ Check the full list of platforms [here](PLATFORMS.md).
 
 ... More scraping sources will be added in future releases!
 
+#### Support me on Patreon
+You can support my work [here](https://www.patreon.com/muldjord). Do keep in mind that pledging is in no way a requirement for using Skyscraper. I mainly do this for my own amusement and self-education.
+
 #### Note for Amiga scraping
 For Amiga I STRONGLY recommend you to set up your RetroPie to use WHDLoad. Follow this guide:
 * http://www.ultimateamiga.co.uk/HostedProjects/RetroPieAmiga/guide.html
