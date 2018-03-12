@@ -127,12 +127,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Make sure artwork output gets exported, even if entry has no base artwork resource
-* Added '--purgedb' command line option that allows purging of resources from localdb
+* Added '--purgedb' command line option that allows purging certain resources from localdb
 * Added '--statsdb' command line option that prints stats for localdb
 * Implemented user credentials to set up threads for 'screenscraper' module
 * Implemented the option to only scrape a single resource type during a scraping run
-* Now forces '--updatedb' when using the import scraping module
-* Added 'rating' to screenscraper scraping module
 
 #### Version 2.3.6 (in progress, unreleased)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
@@ -142,6 +140,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Rewrote thread queue so entries are always taken alphabetically
 * Now forces 4 threads for 'screenscraper' scraping module to accomodate their limits
 * Updated screenscraper API to use v2
+* Added 'rating' to screenscraper scraping module
 
 #### Version 2.3.5 (24th February 2018)
 * IMPORTANT: Fixed bug that caused resources to be mixed up between games because Qt's network cache wasn't cleared (Probably not a Qt bug, but a DAMN hard bug to spot either way). All previous Skyscraper releases have this bug, SO PLEASE UPDATE!!!
