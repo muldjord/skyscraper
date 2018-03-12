@@ -131,6 +131,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--statsdb' command line option that prints stats for localdb
 * Implemented user credentials to set up threads for 'screenscraper' module
 * Implemented the option to only scrape a single resource type during a scraping run
+* Now forces '--updatedb' when using the import scraping module
+* Added 'rating' to screenscraper scraping module
 
 #### Version 2.3.6 (in progress, unreleased)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
