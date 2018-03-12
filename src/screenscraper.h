@@ -50,6 +50,7 @@ private:
   void getDeveloper(GameEntry &game);
   void getPublisher(GameEntry &game);
   void getPlayers(GameEntry &game);
+  void getRating(GameEntry &game);
   void getDescription(GameEntry &game);
   void getTags(GameEntry &game);
 

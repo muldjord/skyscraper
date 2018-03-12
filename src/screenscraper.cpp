@@ -37,6 +37,7 @@ ScreenScraper::ScreenScraper()
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(DEVELOPER);
   fetchOrder.append(PLAYERS);
+  fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(TAGS);
@@ -164,6 +165,18 @@ void ScreenScraper::getDescription(GameEntry &game)
 void ScreenScraper::getPlayers(GameEntry &game)
 {
   game.players = xmlDoc.elementsByTagName("joueurs").at(0).toElement().text();
+}
+
+void ScreenScraper::getRating(GameEntry &game)
+{
+  game.rating = xmlDoc.elementsByTagName("note").at(0).toElement().text();
+  bool toDoubleOk = false;
+  double rating = game.rating.toDouble(&toDoubleOk);
+  if(toDoubleOk) {
+    game.rating = QString::number(rating / 20.0);
+  } else {
+    game.rating = "";
+  }
 }
 
 void ScreenScraper::getTags(GameEntry &game)
