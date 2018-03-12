@@ -132,7 +132,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented user credentials to set up threads for 'screenscraper' module
 * Implemented the option to only scrape a single resource type during a scraping run
 
-#### Version 2.3.6 (in progress, unreleased)
+#### Version 2.3.6 (12th March 2018)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
 * Added '*.lha' suffix to amiga platform
 * Changed default scraping module for all platforms to 'localdb'
