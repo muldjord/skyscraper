@@ -78,10 +78,25 @@ void Skyscraper::run()
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
-  }
-  if(config.scraper == "screenscraper" && config.threads > 4) {
-    printf("Forcing 4 threads to accomodate limits in ScreenScraper scraping module\n\n");
-    config.threads = 4;
+  } else if(config.scraper == "screenscraper") {
+    if(config.userCreds.isEmpty() && config.threads > 4) {
+      printf("Forcing 4 threads to accomodate limits in ScreenScraper scraping module\n\n");
+      config.threads = 4;
+    } else {
+      NetComm manager;
+      QEventLoop q; // Event loop for use when waiting for data from NetComm.
+      connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+      manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.userCreds.split(":").at(0) + "&sspassword=" + config.userCreds.split(":").at(1));
+      q.exec();
+      QByteArray data = manager.getData();
+      QByteArray nodeBegin = "<maxthreads>";
+      QByteArray nodeEnd = "</maxthreads>";
+      int allowedThreads = QString(data.mid(data.indexOf(nodeBegin) + nodeBegin.length(), data.indexOf(nodeEnd) - (data.indexOf(nodeBegin) + nodeBegin.length()))).toInt();
+      if(allowedThreads != 0) {
+	config.threads = (allowedThreads <= 8?allowedThreads:8);
+	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", allowedThreads);
+      }
+    }
   }
 
   doneThreads = 0;
