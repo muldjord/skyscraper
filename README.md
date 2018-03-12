@@ -73,7 +73,7 @@ Skyscraper is a command line tool, and has many, many options for you to fiddle 
 This will give you a description of everything Skyscraper can do if you feel adventurous!
 
 NOTE: If you have already scraped a platform using 'Simple mode', any subsequent scrapings of that particular platform should be done with:
-* $ Skyscraper -p [platform] (For v2.3.5 and earlier use "Skyscraper -p [platform] -s localdb")
+* $ Skyscraper -p [platform]
 
 This will scrape the platform using the 'localdb' scraping module, and will make use of all the resources you have gathered in the local database cache. A full description of the 'localdb' scraping module can be found [here](#local-database-features). You can of course add further command line options if needed.
 
@@ -129,8 +129,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Make sure artwork output gets exported, even if entry has no base artwork resource
 * Added '--purgedb' command line option that allows purging certain resources from localdb
 * Added '--statsdb' command line option that prints stats for localdb
-* Implemented user credentials to set up threads for 'screenscraper' module
 * Implemented the option to only scrape a single resource type during a scraping run
+* Added 'mobygames' scraping module
+
+#### Version 2.3.7 (in progress, unreleased)
+* Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 
 #### Version 2.3.6 (12th March 2018)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
