@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
   QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption sOption("s", "Force a certain scraping module instead of the default one for the selected platform.\n(WEB: 'arcadedb', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb')", "scraper", "");
-  QCommandLineOption uOption("u", "UserID and Password for use with the selected scraping module (currently not in use).\n(Default is none)", "user:password", "");
+  QCommandLineOption uOption("u", "UserID and Password for use with the selected scraping module (currently only used by the 'screenscraper' module).\n(Default is none)", "user:password", "");
   QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 65)", "0-100", "");
   QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 2500)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use.\n(default is 4)", "1-8", "");
