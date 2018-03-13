@@ -55,22 +55,22 @@ Skyscraper::~Skyscraper()
 
 void Skyscraper::run()
 {
-  printf("Platform           : '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
-  printf("Scraper module     : '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
+  printf("Platform:           '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
+  printf("Scraper module:     '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
   if(config.emulator != "") {
-    printf("Emulator           : '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
+    printf("Emulator:           '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
   }
-  printf("Input folder       : '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
-  printf("Game list folder   : '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
-  printf("Covers folder      : '\033[1;32m%s\033[0m'\n", config.coversFolder.toStdString().c_str());
-  printf("Screenshots folder : '\033[1;32m%s\033[0m'\n", config.screenshotsFolder.toStdString().c_str());
-  printf("Wheels folder      : '\033[1;32m%s\033[0m'\n", config.wheelsFolder.toStdString().c_str());
-  printf("Marquees folder    : '\033[1;32m%s\033[0m'\n", config.marqueesFolder.toStdString().c_str());
+  printf("Input folder:       '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
+  printf("Game list folder:   '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
+  printf("Covers folder:      '\033[1;32m%s\033[0m'\n", config.coversFolder.toStdString().c_str());
+  printf("Screenshots folder: '\033[1;32m%s\033[0m'\n", config.screenshotsFolder.toStdString().c_str());
+  printf("Wheels folder:      '\033[1;32m%s\033[0m'\n", config.wheelsFolder.toStdString().c_str());
+  printf("Marquees folder:    '\033[1;32m%s\033[0m'\n", config.marqueesFolder.toStdString().c_str());
   if(config.videos) {
-    printf("Videos folder      : '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
+    printf("Videos folder:      '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
   }
   if(config.localDb) {
-    printf("Local db folder    : '\033[1;32m%s\033[0m'\n", config.dbFolder.toStdString().c_str());
+    printf("Local db folder:    '\033[1;32m%s\033[0m'\n", config.dbFolder.toStdString().c_str());
   }
 
   printf("\n");
@@ -89,6 +89,7 @@ void Skyscraper::run()
 	NetComm manager;
 	QEventLoop q; // Event loop for use when waiting for data from NetComm.
 	connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+	printf("Fetching limits for user '%s', just a sec...\n", config.userCreds.split(":").at(0).toStdString().c_str());
 	manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.userCreds.split(":").at(0) + "&sspassword=" + config.userCreds.split(":").at(1));
 	q.exec();
 	QByteArray data = manager.getData();
