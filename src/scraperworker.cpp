@@ -218,34 +218,34 @@ void ScraperWorker::run()
     // Make sure we have the correct single digit format of 'players'
     game.players = StrTools::conformPlayers(game.players);
 
-    output.append("Scraper:\t" + config.scraper + "\n");
+    output.append("Scraper:        " + config.scraper + "\n");
     if(config.scraper != "localdb" && config.scraper != "import") {
-      output.append("From cache:\t" + QString((prefilledFromCache?"YES (refresh from source with '--updatedb')":"NO")) + "\n");
+      output.append("From cache:     " + QString((prefilledFromCache?"YES (refresh from source with '--updatedb')":"NO")) + "\n");
     }
-    output.append("Search match:\t" + QString::number(searchMatch) + " %\n");
-    output.append("Compare title:\t'\033[1;32m" + compareTitle + "\033[0m'\n");
-    output.append("Result title:\t'\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
+    output.append("Search match:   " + QString::number(searchMatch) + " %\n");
+    output.append("Compare title:  '\033[1;32m" + compareTitle + "\033[0m'\n");
+    output.append("Result title:   '\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
     if(config.forceFilename) {
       game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).left(info.completeBaseName().indexOf("[")).replace("_", " ").simplified());
     }
-    output.append("Platform:\t'\033[1;32m" + game.platform + "\033[0m' (" + game.platformSrc + ")\n");
-    output.append("Release Date:\t'\033[1;32m");
+    output.append("Platform:       '\033[1;32m" + game.platform + "\033[0m' (" + game.platformSrc + ")\n");
+    output.append("Release Date:   '\033[1;32m");
     if(game.releaseDate.isEmpty()) {
       output.append("\033[0m' ()\n");
     } else {
       output.append(QDate::fromString(game.releaseDate, "yyyyMMdd").toString("yyyy-MM-dd") + "\033[0m' (" + game.releaseDateSrc + ")\n");
     }
-    output.append("Developer:\t'\033[1;32m" + game.developer + "\033[0m' (" + game.developerSrc + ")\n");
-    output.append("Publisher:\t'\033[1;32m" + game.publisher + "\033[0m' (" + game.publisherSrc + ")\n");
-    output.append("Players:\t'\033[1;32m" + game.players + "\033[0m' (" + game.playersSrc + ")\n");
-    output.append("Tags:\t\t'\033[1;32m" + game.tags + "\033[0m' (" + game.tagsSrc + ")\n");
-    output.append("Rating (0-1):\t'\033[1;32m" + game.rating + "\033[0m' (" + game.ratingSrc + ")\n");
-    output.append("Cover:\t\t" + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers?"":" (uncached)")) + " (" + game.coverSrc + ")\n");
-    output.append("Screenshot:\t" + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheScreenshots?"":" (uncached)")) + " (" + game.screenshotSrc + ")\n");
-    output.append("Wheel:\t\t" + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheWheels?"":" (uncached)")) + " (" + game.wheelSrc + ")\n");
-    output.append("Marquee:\t" + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheMarquees?"":" (uncached)")) + " (" + game.marqueeSrc + ")\n");
+    output.append("Developer:      '\033[1;32m" + game.developer + "\033[0m' (" + game.developerSrc + ")\n");
+    output.append("Publisher:      '\033[1;32m" + game.publisher + "\033[0m' (" + game.publisherSrc + ")\n");
+    output.append("Players:        '\033[1;32m" + game.players + "\033[0m' (" + game.playersSrc + ")\n");
+    output.append("Tags:           '\033[1;32m" + game.tags + "\033[0m' (" + game.tagsSrc + ")\n");
+    output.append("Rating (0-1):   '\033[1;32m" + game.rating + "\033[0m' (" + game.ratingSrc + ")\n");
+    output.append("Cover:          " + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers?"":" (uncached)")) + " (" + game.coverSrc + ")\n");
+    output.append("Screenshot:     " + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheScreenshots?"":" (uncached)")) + " (" + game.screenshotSrc + ")\n");
+    output.append("Wheel:          " + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheWheels?"":" (uncached)")) + " (" + game.wheelSrc + ")\n");
+    output.append("Marquee:        " + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheMarquees?"":" (uncached)")) + " (" + game.marqueeSrc + ")\n");
     if(config.videos) {
-      output.append("Video:\t\t" + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m (" + game.videoSrc + ")\n");
+      output.append("Video:        " + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m (" + game.videoSrc + ")\n");
     }
     output.append("\nDescription: (" + game.descriptionSrc + ")\n" + game.description.left(config.maxLength) + "\n");
 
