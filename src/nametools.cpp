@@ -64,18 +64,26 @@ QString NameTools::getNameWithSpaces(const QString &baseName)
       break;
     }
     if(a > 0) {
-      if(current.isDigit()) {
-	if(!previous.isDigit() && previous != 'x') {
-	  withSpaces.append(" ");
-	}
+      if(current.isDigit() && (!previous.isDigit() && previous != 'x')) {
+	withSpaces.append(" ");
       } else if(current == '&') {
 	withSpaces.append(" ");
+      } else if(current == 'D') {
+	if(previous != '3' && previous != '4') {
+	  withSpaces.append(" ");
+	}
       } else if(current.isUpper()) {
-	if(previous == 'D') {
+	if(previous.isLetter() && !previous.isUpper()) {
 	  withSpaces.append(" ");
-	} else if(previous.isLetter() && !previous.isUpper()) {
+	} else if(previous == '&') {
 	  withSpaces.append(" ");
-	} else if(previous != '3' && previous != '4') {
+	} else if(previous == 'D') {
+	  withSpaces.append(" ");
+	} else if(previous == 'C') {
+	  withSpaces.append(" ");
+	} else if(previous == 'O') {
+	  withSpaces.append(" ");
+	} else if(previous.isDigit()) {
 	  withSpaces.append(" ");
 	}
       }

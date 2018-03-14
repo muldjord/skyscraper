@@ -396,7 +396,7 @@ QString AbstractScraper::getSearchName(QFileInfo info)
   QString baseName = info.completeBaseName();
   
   if(config->scraper != "import") {
-    if(config->platform == "amiga" && info.suffix() == "lha") {
+    if(info.suffix() == "lha") {
       baseName = NameTools::getNameWithSpaces(baseName);
     }
     if(config->platform == "scummvm") {
