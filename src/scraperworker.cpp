@@ -94,7 +94,7 @@ void ScraperWorker::run()
     QString sqrNotes = "";
     QString sha1 = getSha1(info);
 
-    QString compareTitle = scraper->getCompareTitle(info.completeBaseName(), sqrNotes, parNotes);
+    QString compareTitle = scraper->getCompareTitle(info, sqrNotes, parNotes);
 
     // Special markings for the platform, for instance 'AGA'
     QString marking = ""; // No marking is default

@@ -391,9 +391,14 @@ bool AbstractScraper::checkNom(const QString nom)
   return false;
 }
 
-QString AbstractScraper::getSearchName(QString baseName)
+QString AbstractScraper::getSearchName(QFileInfo info)
 {
+  QString baseName = info.completeBaseName();
+  
   if(config->scraper != "import") {
+    if(config->platform == "amiga" && info.suffix() == "lha") {
+      baseName = NameTools::getNameWithSpaces(baseName);
+    }
     if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
     }
@@ -455,9 +460,14 @@ QString AbstractScraper::getSearchName(QString baseName)
   return baseName;
 }
 
-QString AbstractScraper::getCompareTitle(QString baseName, QString &sqrNotes, QString &parNotes)
+QString AbstractScraper::getCompareTitle(QFileInfo info, QString &sqrNotes, QString &parNotes)
 {
+  QString baseName = info.completeBaseName();
+
   if(config->scraper != "import") {
+    if(info.suffix() == "lha") {
+      baseName = NameTools::getNameWithSpaces(baseName);
+    }
     if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
     }
@@ -510,7 +520,7 @@ QString AbstractScraper::getCompareTitle(QString baseName, QString &sqrNotes, QS
 
 void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking)
 {
-  QString searchName = getSearchName(info.completeBaseName());
+  QString searchName = getSearchName(info);
   QString searchNameOrig = searchName;
 
   // searchName will be empty for files such as "[BIOS] Something.zip" and cause some scraping

@@ -53,3 +53,35 @@ QString NameTools::getScummName(const QString &baseName)
   }
   return baseName;
 }
+
+QString NameTools::getNameWithSpaces(const QString &baseName)
+{
+  QString withSpaces = "";
+  QChar previous;
+  for(int a = 0; a < baseName.length(); ++a) {
+    QChar current = baseName.at(a);
+    if(current == '_') {
+      break;
+    }
+    if(a > 0) {
+      if(current.isDigit()) {
+	if(!previous.isDigit() && previous != 'x') {
+	  withSpaces.append(" ");
+	}
+      } else if(current == '&') {
+	withSpaces.append(" ");
+      } else if(current.isUpper()) {
+	if(previous == 'D') {
+	  withSpaces.append(" ");
+	} else if(previous.isLetter() && !previous.isUpper()) {
+	  withSpaces.append(" ");
+	} else if(previous != '3' && previous != '4') {
+	  withSpaces.append(" ");
+	}
+      }
+    }
+    withSpaces.append(current);
+    previous = current;
+  }
+  return withSpaces;
+}
