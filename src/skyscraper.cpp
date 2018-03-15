@@ -346,6 +346,9 @@ void Skyscraper::entryReady(const GameEntry &entry)
     }
     skippedFile.close();
     if(config.skipped) {
+      // Remove unnecessary media data to save memory before adding it to final entrylist
+      // At this point data has been saved to disc, so we don't need it anymore.
+      tmpEntry.resetMedia();
       gameEntries.append(tmpEntry);
     }
   }
