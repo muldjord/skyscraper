@@ -48,12 +48,12 @@ The last command will download and run the latest update script from Github. Dur
 When the script has completed you are ready to run Skyscraper!
 
 ### Updating Skyscraper
-To update Skyscraper when a new version is released, simply run the following commands:
+From Skyscraper 2.3.2 and newer you can update to the latest version simply by running the following commands:
 * $ cd
 * $ cd skysource
 * $ ./update_skyscraper.sh
 
-You might be asked for your sudo password during the update. On RetroPie the default password is 'raspberry'.
+You might be asked for your sudo password during the update. On RetroPie the default password is 'raspberry'. If your version is older than 2.3.2 (check with '--help') you need to follow the [installation instructions](#download-compile-and-install) instead.
 
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
