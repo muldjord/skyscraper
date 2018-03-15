@@ -69,7 +69,9 @@ QString NameTools::getNameWithSpaces(const QString &baseName)
       } else if(current == '&') {
 	withSpaces.append(" ");
       } else if(current == 'D') {
-	if(previous != '3' && previous != '4') {
+	if(baseName.mid(a, 6) == "Deluxe") {
+	  withSpaces.append(" ");
+	} else if(previous != '3' && previous != '4') {
 	  withSpaces.append(" ");
 	}
       } else if(current.isUpper()) {
@@ -91,5 +93,6 @@ QString NameTools::getNameWithSpaces(const QString &baseName)
     withSpaces.append(current);
     previous = current;
   }
+  //printf("withSpaces: '%s'\n", withSpaces.toStdString().c_str());
   return withSpaces;
 }
