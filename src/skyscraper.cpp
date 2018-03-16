@@ -290,7 +290,7 @@ void Skyscraper::checkForFolder(QDir &folder)
   }
 }
 
-void Skyscraper::outputToTerminal(const QString &output)
+void Skyscraper::outputToTerminal(QString output)
 {
   QMutexLocker locker(&outputMutex);
 
@@ -320,36 +320,34 @@ QString Skyscraper::secsToString(const int &secs)
   return hours + ":" + minutes + ":" + seconds;
 }
 
-void Skyscraper::entryReady(const GameEntry &entry)
+void Skyscraper::entryReady(GameEntry entry)
 {
   QMutexLocker locker(&entryMutex);
 
-  GameEntry tmpEntry = entry;
-
-  if(tmpEntry.found) {
+  if(entry.found) {
     found++;
-    avgCompleteness += tmpEntry.completeness(config.videos);
-    avgSearchMatch += tmpEntry.searchMatch;
+    avgCompleteness += entry.completeness(config.videos);
+    avgSearchMatch += entry.searchMatch;
     // Remove unnecessary media data to save memory before adding it to final entrylist
     // At this point data has been saved to disc, so we don't need it anymore.
-    tmpEntry.resetMedia();
-    gameEntries.append(tmpEntry);
+    entry.resetMedia();
+    gameEntries.append(entry);
   } else {
     notFound++;
     QFile skippedFile(skippedFileString);
     skippedFile.open(QIODevice::Append);
-    skippedFile.write("'" + tmpEntry.baseName.toUtf8() + "'");
-    if(tmpEntry.searchMatch == 0) {
+    skippedFile.write("'" + entry.baseName.toUtf8() + "'");
+    if(entry.searchMatch == 0) {
       skippedFile.write(", No returned matches\n");
     } else {
-      skippedFile.write(", Closest match was '" + tmpEntry.title.toUtf8() + "' at " + QByteArray::number(tmpEntry.searchMatch) + "%\n");
+      skippedFile.write(", Closest match was '" + entry.title.toUtf8() + "' at " + QByteArray::number(entry.searchMatch) + "%\n");
     }
     skippedFile.close();
     if(config.skipped) {
       // Remove unnecessary media data to save memory before adding it to final entrylist
       // At this point data has been saved to disc, so we don't need it anymore.
-      tmpEntry.resetMedia();
-      gameEntries.append(tmpEntry);
+      entry.resetMedia();
+      gameEntries.append(entry);
     }
   }
   
