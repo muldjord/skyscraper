@@ -32,7 +32,6 @@
 
 class Queue : public QList<QFileInfo>
 {
-
 public:
   Queue();
   bool hasEntry();
