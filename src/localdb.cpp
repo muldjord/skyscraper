@@ -35,7 +35,6 @@
 LocalDb::LocalDb(const QString &dbFolder)
 {
   dbDir = QDir(dbFolder);
-  dbMutex = new QMutex();
 }
 
 bool LocalDb::createFolders(const QString &scraper)
@@ -429,7 +428,7 @@ void LocalDb::addResources(GameEntry &entry, const Settings &config)
 void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 			  const QString &dbAbsolutePath, const Settings &config)
 {
-  QMutexLocker locker(dbMutex);
+  QMutexLocker locker(&dbMutex);
   bool notFound = true;
   for(int a = 0; a < resources.length(); ++a) {
     if(resources.at(a).sha1 == resource.sha1 &&
@@ -497,7 +496,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 
 bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
 {
-  QMutexLocker locker(dbMutex);
+  QMutexLocker locker(&dbMutex);
   foreach(Resource res, resources) {
     if(scraper.isEmpty()) {
       if(res.sha1 == sha1) {
@@ -514,7 +513,7 @@ bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
 
 void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
 {
-  QMutexLocker locker(dbMutex);
+  QMutexLocker locker(&dbMutex);
   QList<Resource> matchingResources;
   // Find all resources related to this particular rom
   foreach(Resource resource, resources) {
@@ -700,7 +699,7 @@ bool LocalDb::fillType(QString &type, QList<Resource> &matchingResources,
 
 void LocalDb::printResources()
 {
-  QMutexLocker locker(dbMutex);
+  QMutexLocker locker(&dbMutex);
   foreach(Resource resource, resources) {
     printf("--- sha1: '%s' ---\ntype: '%s'\nsource: '%s'\ntimestamp: '%s'\nvalue: '%s'\n", resource.sha1.toStdString().c_str(), resource.type.toStdString().c_str(), resource.source.toStdString().c_str(), QString::number(resource.timestamp).toStdString().c_str(), resource.value.toStdString().c_str());
   }
