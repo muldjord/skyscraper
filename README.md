@@ -135,6 +135,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.3.7 (in progress, unreleased)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 * Now checks for .lha suffix and adds spaces where appropriate to get better results
+* Improved returned image data validity check
+* Rewrote the worker to main thread communication a bit
 
 #### Version 2.3.6 (12th March 2018)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
