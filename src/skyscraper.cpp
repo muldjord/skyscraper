@@ -263,7 +263,6 @@ void Skyscraper::run()
     //connect(worker, &ScraperWorker::addToSkipped, this, &Skyscraper::addToSkipped);
     connect(worker, &ScraperWorker::allDone, this, &Skyscraper::checkThreads);
     connect(thread, &QThread::finished, worker, &ScraperWorker::deleteLater);
-    connect(thread, &QThread::finished, thread, &QThread::deleteLater);
     threadList.append(thread);
     // Do not start more threads if we have less files than allowed threads
     if(curThread == totalFiles) {
@@ -365,44 +364,45 @@ void Skyscraper::checkThreads()
   QMutexLocker locker(&checkThreadMutex);
 
   doneThreads++;
-  if(doneThreads == config.threads) {
-    printf("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
-    if(!config.dbFolder.isEmpty() && config.localDb) {
-      localDb->writeDb();
-    }
+  if(doneThreads != config.threads)
+    return;
 
-    frontend->sortEntries(gameEntries);
-
-    QString finalOutput;
-    frontend->assembleList(finalOutput, gameEntries, config.maxLength);
-    
-    if(!config.pretend) {
-      QFile gameListFile(gameListFileString);
-      printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
-      if(gameListFile.open(QIODevice::WriteOnly)) {
-	gameListFile.write(finalOutput.toUtf8());
-	gameListFile.close();
-	printf("\033[1;32mSuccess!!!\033[0m\n\n");
-      } else {
-	printf("\033[1;31mCouldn't open file for writing!!!\nAll that work for nothing... :(\033[0m\n");
-      }
-    }
-
-    printf("\033[1;34m---- And here are some neat stats :) ----\033[0m\n");
-    printf("Total completion time: \033[1;33m%s\033[0m\n\n", secsToString(timer.elapsed()).toStdString().c_str());
-    if(found > 0) {
-      printf("Average search match: \033[1;33m%d%%\033[0m\n",
-	     (int)((double)avgSearchMatch / (double)found));
-      printf("Average entry completeness: \033[1;33m%d%%\033[0m\n\n",
-	     (int)((double)avgCompleteness / (double)found));
-    }
-    printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
-    printf("\033[1;32mSuccessfully scraped games: %d\033[0m\n", found);
-    printf("\033[1;33mSkipped games: %d (Filenames saved to '[homedir]/.skyscraper/%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
-
-    // All done, now clean up and exit to terminal
-    emit finished();
+  printf("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
+  if(!config.dbFolder.isEmpty() && config.localDb) {
+    localDb->writeDb();
   }
+
+  frontend->sortEntries(gameEntries);
+
+  QString finalOutput;
+  frontend->assembleList(finalOutput, gameEntries, config.maxLength);
+    
+  if(!config.pretend) {
+    QFile gameListFile(gameListFileString);
+    printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
+    if(gameListFile.open(QIODevice::WriteOnly)) {
+      gameListFile.write(finalOutput.toUtf8());
+      gameListFile.close();
+      printf("\033[1;32mSuccess!!!\033[0m\n\n");
+    } else {
+      printf("\033[1;31mCouldn't open file for writing!!!\nAll that work for nothing... :(\033[0m\n");
+    }
+  }
+
+  printf("\033[1;34m---- And here are some neat stats :) ----\033[0m\n");
+  printf("Total completion time: \033[1;33m%s\033[0m\n\n", secsToString(timer.elapsed()).toStdString().c_str());
+  if(found > 0) {
+    printf("Average search match: \033[1;33m%d%%\033[0m\n",
+	   (int)((double)avgSearchMatch / (double)found));
+    printf("Average entry completeness: \033[1;33m%d%%\033[0m\n\n",
+	   (int)((double)avgCompleteness / (double)found));
+  }
+  printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
+  printf("\033[1;32mSuccessfully scraped games: %d\033[0m\n", found);
+  printf("\033[1;33mSkipped games: %d (Filenames saved to '[homedir]/.skyscraper/%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
+
+  // All done, now clean up and exit to terminal
+  emit finished();
 }
 
 void Skyscraper::loadConfig(const QCommandLineParser &parser)
