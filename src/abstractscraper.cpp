@@ -268,8 +268,8 @@ void AbstractScraper::getCover(GameEntry &game)
     manager.request(baseUrl + (coverUrl.left(1) == "/"?"":"/") + coverUrl);
   }
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.coverData = image;
   }
 }
@@ -294,8 +294,8 @@ void AbstractScraper::getScreenshot(GameEntry &game)
       manager.request(baseUrl + (screenshotUrl.left(1) == "/"?"":"/") + screenshotUrl);
     }
     q.exec();
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.screenshotData = image;
     }
   }
@@ -321,8 +321,8 @@ void AbstractScraper::getWheel(GameEntry &game)
     manager.request(baseUrl + (wheelUrl.left(1) == "/"?"":"/") + wheelUrl);
   }
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.wheelData = image;
   }
 }
@@ -347,8 +347,8 @@ void AbstractScraper::getMarquee(GameEntry &game)
     manager.request(baseUrl + (marqueeUrl.left(1) == "/"?"":"/") + marqueeUrl);
   }
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.marqueeData = image;
   }
 }
@@ -380,7 +380,6 @@ void AbstractScraper::getVideo(GameEntry &game)
 void AbstractScraper::nomNom(const QString nom, bool including)
 {
   data.remove(0, data.indexOf(nom) + (including?nom.length():0));
-  //printf("Parser at: '%s'\n", data.left(20).data());
 }
 
 bool AbstractScraper::checkNom(const QString nom)
@@ -555,18 +554,6 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
       searchName = searchName.left(searchName.indexOf("-")).simplified();
       getSearchResults(gameEntries, searchName, config->platform);
       break;
-      /*
-    case 5:
-      // Try removing dots
-      searchName = searchName.replace(".", "");
-      getSearchResults(gameEntries, searchName, config->platform);
-      break;
-    case 6:
-      // Try replacing apostrophes with spaces
-      searchName = searchName.replace("%27", " ");
-      getSearchResults(gameEntries, searchName, config->platform);
-      break;
-      */
     default:
       ;
     }
