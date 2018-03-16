@@ -43,10 +43,8 @@ struct Resource {
   qint64 timestamp = 0;
 };
 
-class LocalDb : public QObject
+class LocalDb
 {
-  Q_OBJECT
-
 public:
   LocalDb(const QString &dbFolder);
   bool createFolders(const QString &scraper);
