@@ -202,8 +202,8 @@ void ScreenScraper::getCover(GameEntry &game)
   if(!url.isEmpty()) {
     manager.request(url);
     q.exec();
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.coverData = image;
     }
   }
@@ -215,8 +215,8 @@ void ScreenScraper::getScreenshot(GameEntry &game)
   if(!url.isEmpty()) {
     manager.request(url);
     q.exec();
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.screenshotData = image;
     }
   }
@@ -231,8 +231,8 @@ void ScreenScraper::getWheel(GameEntry &game)
   if(!url.isEmpty()) {
     manager.request(url);
     q.exec();
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.wheelData = image;
     }
   }
@@ -244,8 +244,8 @@ void ScreenScraper::getMarquee(GameEntry &game)
   if(!url.isEmpty()) {
     manager.request(url);
     q.exec();
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.marqueeData = image;
     }
   }

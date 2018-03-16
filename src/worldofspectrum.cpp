@@ -140,8 +140,8 @@ void WorldOfSpectrum::getCover(GameEntry &game)
     manager.request(baseUrl + (coverUrl.left(1) == "/"?"":"/") + coverUrl);
   }
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.coverData = image;
   }
 }
@@ -160,8 +160,8 @@ void WorldOfSpectrum::getScreenshot(GameEntry &game)
     manager.request(baseUrl + (screenshotUrl.left(1) == "/"?"":"/") + screenshotUrl);
   }
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.screenshotData = image;
   }
 }

@@ -149,8 +149,8 @@ void ArcadeDB::getCover(GameEntry &game)
   manager.request(jsonObj.value("url_image_flyer").toString());
   q.exec();
   {
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.coverData = image;
       return;
     }
@@ -158,8 +158,8 @@ void ArcadeDB::getCover(GameEntry &game)
   manager.request(jsonObj.value("url_image_title").toString());
   q.exec();
   {
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.coverData = image;
       return;
     }
@@ -170,8 +170,8 @@ void ArcadeDB::getScreenshot(GameEntry &game)
 {
   manager.request(jsonObj.value("url_image_ingame").toString());
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.screenshotData = image;
   }
 }
@@ -180,8 +180,8 @@ void ArcadeDB::getMarquee(GameEntry &game)
 {
   manager.request(jsonObj.value("url_image_marquee").toString());
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.marqueeData = image;
   }
 }

@@ -189,8 +189,8 @@ void TheGamesDb::getCover(GameEntry &game)
       QString coverUrl = baseUrl + "/banners/" + xmlImages.at(a).toElement().text();
       manager.request(coverUrl);
       q.exec();
-      QImage image(QImage::fromData(manager.getData()));
-      if(!image.isNull()) {
+      QImage image;
+      if(image.loadFromData(manager.getData())) {
 	game.coverData = image;
       }
       break;
@@ -206,8 +206,8 @@ void TheGamesDb::getScreenshot(GameEntry &game)
     QString screenshotUrl = baseUrl + "/banners/" + xmlScreenshots.at(0).firstChildElement("original").text();
     manager.request(screenshotUrl);
     q.exec();
-    QImage image(QImage::fromData(manager.getData()));
-    if(!image.isNull()) {
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
       game.screenshotData = image;
     }
   }
@@ -223,8 +223,8 @@ void TheGamesDb::getWheel(GameEntry &game)
   QString wheelUrl = baseUrl + "/banners/" + xmlImages.at(0).toElement().text();
   manager.request(wheelUrl);
   q.exec();
-  QImage image(QImage::fromData(manager.getData()));
-  if(!image.isNull()) {
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
     game.wheelData = image;
   }
 }
