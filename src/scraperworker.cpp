@@ -158,6 +158,7 @@ void ScraperWorker::run()
 
     if(game.found == false) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
+      game.resetMedia();
       emit outputToTerminal(output);
       emit entryReady(game);
       continue;
@@ -168,6 +169,7 @@ void ScraperWorker::run()
     if(searchMatch < config.minMatch) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' match too low :| ----\033[0m\n\n");
       game.found = false;
+      game.resetMedia();
       emit outputToTerminal(output);
       emit entryReady(game);
       continue;
