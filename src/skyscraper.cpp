@@ -205,7 +205,24 @@ void Skyscraper::run()
 
   // Create shared queue with files to process
   QSharedPointer<Queue> queue = QSharedPointer<Queue>(new Queue());
-  queue->append(inputDir.entryInfoList());
+  QList<QFileInfo> infoList = inputDir.entryInfoList();
+  if(config.startAt != "" && !infoList.isEmpty()) {
+    QFileInfo startAt(inputDir.absolutePath() + "/" + config.startAt);
+    if(startAt.exists()) {
+      while(infoList.first().fileName() != startAt.fileName()) {
+	infoList.removeFirst();
+      }
+    }
+  }
+  if(config.endAt != "" && !infoList.isEmpty()) {
+    QFileInfo endAt(inputDir.absolutePath() + "/" + config.endAt);
+    if(endAt.exists()) {
+      while(infoList.last().fileName() != endAt.fileName()) {
+	infoList.removeLast();
+      }
+    }
+  }
+  queue->append(infoList);
   if(config.subDirs) {
     QDirIterator dirIt(config.inputFolder,
 		       QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
@@ -628,6 +645,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
   }
+  if(settings.contains("startat")) {
+    config.startAt = settings.value("startat").toString();
+  }
+  if(settings.contains("endat")) {
+    config.endAt = settings.value("endat").toString();
+  }
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
   }
@@ -737,6 +760,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("nosubdirs")) {
     config.subDirs = false;
   }
+  if(parser.isSet("startat")) {
+    config.startAt = parser.value("startat");
+  }
+  if(parser.isSet("endat")) {
+    config.endAt = parser.value("endat");
+  }
   if(parser.isSet("pretend")) {
     config.pretend = true;
   }
@@ -808,6 +837,13 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     }
   }
 
+  if(config.startAt != "" || config.endAt != "") {
+    config.pretend = true;
+    config.updateDb = true;
+    config.unattend = true;
+    config.subDirs = false;
+  }
+  
   if(config.scraper == "import") {
     // Always force local db to be updated when using import scraper
     config.updateDb = true;

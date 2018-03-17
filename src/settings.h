@@ -66,6 +66,8 @@ struct Settings {
   bool noResize = false;
   QString mergeDb = "";
   bool subDirs = true;
+  QString startAt = "";
+  QString endAt = "";
   bool pretend = false;
   bool unattend = false;
   bool forceFilename = false;
