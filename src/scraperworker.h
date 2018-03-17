@@ -40,7 +40,8 @@ class ScraperWorker : public QObject
   Q_OBJECT
 
 public:
-  ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb, Settings config);
+  ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb,
+		Settings config, QString threadId);
   ~ScraperWorker();
   void run();
   
@@ -58,6 +59,7 @@ private:
   QList<QFileInfo> inputFiles;
   int filesPerThread;
   int beginIdx;
+  QString threadId;
   
   unsigned int editDistance(const std::string& s1, const std::string& s2);
   void nomNom(QByteArray &data, const QString nom, bool including = true);

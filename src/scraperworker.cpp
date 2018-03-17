@@ -39,11 +39,12 @@
 #include "arcadedb.h"
 
 ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb,
-			     Settings config)
+			     Settings config, QString threadId)
 {
   this->config = config;
   this->localDb = localDb;
   this->queue = queue;
+  this->threadId = threadId;
 }
 
 ScraperWorker::~ScraperWorker()
@@ -86,10 +87,11 @@ void ScraperWorker::run()
   }
   
   while(queue->hasEntry()) {
+    // takeEntry() also unlocks the mutex that was locked in hasEntry()
+    QFileInfo info = queue->takeEntry();
     // Reset platform in case we have manipulated it (such as changing 'amiga' to 'cd32')
     config.platform = platformOrig;
-    QString output = "";
-    QFileInfo info = queue->takeEntry();
+    QString output = "\033[1;33m(T" + threadId + ")\033[0m ";
     QString parNotes = "";
     QString sqrNotes = "";
     QString sha1 = getSha1(info);

@@ -272,7 +272,7 @@ void Skyscraper::run()
   QList<QThread*> threadList;
   for(int curThread = 1; curThread <= config.threads; ++curThread) {
     QThread *thread = new QThread;
-    ScraperWorker *worker = new ScraperWorker(queue, localDb, config);
+    ScraperWorker *worker = new ScraperWorker(queue, localDb, config, QString::number(curThread));
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::outputToTerminal, this, &Skyscraper::outputToTerminal);
