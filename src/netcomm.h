@@ -36,23 +36,20 @@ class NetComm : public QNetworkAccessManager
 
 public:
   NetComm();
-  ~NetComm();
   void request(QString query, QString postData = "");
   QByteArray getData();
-  QByteArray getRedirUrl();
   QByteArray getContentType();
 
 private slots:
   void replyFinished(QNetworkReply *reply);
-  void requestTimout();
-
+  void cancelRequest();
 
 signals:
   void dataReady();
   
 private:
+  void clearAll();
   QTimer requestTimer;
-  QByteArray redirUrl;
   QByteArray contentType;
   QByteArray data;
 };

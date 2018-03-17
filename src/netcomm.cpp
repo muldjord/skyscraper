@@ -31,29 +31,25 @@
 NetComm::NetComm()
 {
   connect(this, &NetComm::finished, this, &NetComm::replyFinished);
-  data = "";
   requestTimer.setSingleShot(true);
   requestTimer.setInterval(30000);
-  connect(&requestTimer, &QTimer::timeout, this, &NetComm::requestTimout);
-}
-
-NetComm::~NetComm()
-{
+  connect(&requestTimer, &QTimer::timeout, this, &NetComm::cancelRequest);
 }
 
 void NetComm::request(QString query, QString postData)
 {
-  clearAccessCache();
-  data = "";
+  clearAll();
   QUrl url(query);
-  QNetworkRequest request(url);
-  request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
-
-  if(postData.isEmpty()) {
-    get(request);
-  } else {
+  if(url.isValid()) {
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    post(request, postData.toUtf8());
+    
+    if(postData.isEmpty()) {
+      get(request);
+    } else {
+      post(request, postData.toUtf8());
+    }
   }
   requestTimer.start();
 }
@@ -62,16 +58,12 @@ void NetComm::replyFinished(QNetworkReply *reply)
 {
   requestTimer.stop();
 
-  // If we got redirected, we need to know where to proceed from
   contentType = reply->rawHeader("Content-Type");
 
-  if(reply->rawHeader("Location").left(4) == "http") {
-    redirUrl = reply->rawHeader("Location");
-  } else {
-    redirUrl = "";
-  }
   data = reply->readAll();
+
   reply->deleteLater();
+
   emit dataReady();
 }
 
@@ -80,20 +72,20 @@ QByteArray NetComm::getData()
   return data;
 }
 
-QByteArray NetComm::getRedirUrl()
-{
-  return redirUrl;
-}
-
 QByteArray NetComm::getContentType()
 {
   return contentType;
 }
 
-void NetComm::requestTimout()
+void NetComm::cancelRequest()
 {
-  data = "";
-  redirUrl = "";
-  contentType = "";
+  clearAll();
   emit dataReady();
+}
+
+void NetComm::clearAll()
+{
+  clearAccessCache();
+  contentType.clear();
+  data.clear();
 }
