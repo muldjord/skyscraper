@@ -262,11 +262,10 @@ void AbstractScraper::getCover(GameEntry &game)
     nomNom(nom);
   }
   QString coverUrl = data.left(data.indexOf(coverPost)).replace("&amp;", "&");
-  if(coverUrl.indexOf("http") != -1) {
-    manager.request(coverUrl);
-  } else {
-    manager.request(baseUrl + (coverUrl.left(1) == "/"?"":"/") + coverUrl);
+  if(coverUrl.left(4) != "http") {
+    coverUrl.prepend(baseUrl + (coverUrl.left(1) == "/"?"":"/"));
   }
+  manager.request(coverUrl);
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
@@ -288,11 +287,10 @@ void AbstractScraper::getScreenshot(GameEntry &game)
       }
     }
     QString screenshotUrl = data.left(data.indexOf(screenshotPost)).replace("&amp;", "&");
-    if(screenshotUrl.indexOf("http") != -1) {
-      manager.request(screenshotUrl);
-    } else {
-      manager.request(baseUrl + (screenshotUrl.left(1) == "/"?"":"/") + screenshotUrl);
+    if(screenshotUrl.left(4) != "http") {
+      screenshotUrl.prepend(baseUrl + (screenshotUrl.left(1) == "/"?"":"/"));
     }
+    manager.request(screenshotUrl);
     q.exec();
     QImage image;
     if(image.loadFromData(manager.getData())) {
@@ -315,11 +313,10 @@ void AbstractScraper::getWheel(GameEntry &game)
     nomNom(nom);
   }
   QString wheelUrl = data.left(data.indexOf(wheelPost)).replace("&amp;", "&");
-  if(wheelUrl.indexOf("http") != -1) {
-    manager.request(wheelUrl);
-  } else {
-    manager.request(baseUrl + (wheelUrl.left(1) == "/"?"":"/") + wheelUrl);
+  if(wheelUrl.left(4) != "http") {
+    wheelUrl.prepend(baseUrl + (wheelUrl.left(1) == "/"?"":"/"));
   }
+  manager.request(wheelUrl);
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
@@ -341,11 +338,10 @@ void AbstractScraper::getMarquee(GameEntry &game)
     nomNom(nom);
   }
   QString marqueeUrl = data.left(data.indexOf(marqueePost)).replace("&amp;", "&");
-  if(marqueeUrl.indexOf("http") != -1) {
-    manager.request(marqueeUrl);
-  } else {
-    manager.request(baseUrl + (marqueeUrl.left(1) == "/"?"":"/") + marqueeUrl);
+  if(marqueeUrl.left(4) != "http") {
+    marqueeUrl.prepend(baseUrl + (marqueeUrl.left(1) == "/"?"":"/"));
   }
+  manager.request(marqueeUrl);
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
@@ -367,11 +363,10 @@ void AbstractScraper::getVideo(GameEntry &game)
     nomNom(nom);
   }
   QString videoUrl = data.left(data.indexOf(videoPost)).replace("&amp;", "&");
-  if(videoUrl.indexOf("http") != -1) {
-    manager.request(videoUrl);
-  } else {
-    manager.request(baseUrl + (videoUrl.left(1) == "/"?"":"/") + videoUrl);
+  if(videoUrl.left(4) != "http") {
+    videoUrl.prepend(baseUrl + (videoUrl.left(1) == "/"?"":"/"));
   }
+  manager.request(videoUrl);
   q.exec();
   game.videoData = manager.getData();
   game.videoFormat = videoUrl.right(3);
