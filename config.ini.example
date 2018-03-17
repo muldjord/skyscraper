@@ -52,6 +52,8 @@
 #minMatch="0"
 #maxLength="10000"
 #threads="2"
+#startat="filename"
+#endat="filename"
 #pretend="false"
 #unattend="false"
 #forceFilename="false"
