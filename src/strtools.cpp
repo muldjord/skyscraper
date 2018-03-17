@@ -70,6 +70,7 @@ QString StrTools::xmlUnescape(QString str)
     replace("&#047;", "/").
     replace("&#160;", " ").
     replace("&#8211;", "-").
+    replace("&#8217;", "'").
     replace("&#xF4;", "o").
     replace("&#xE3;", "a").
     replace("&#xE4;", "ae").
