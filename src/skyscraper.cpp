@@ -97,7 +97,7 @@ void Skyscraper::run()
       int allowedThreads = QString(data.mid(data.indexOf(nodeBegin) + nodeBegin.length(), data.indexOf(nodeEnd) - (data.indexOf(nodeBegin) + nodeBegin.length()))).toInt();
       if(allowedThreads != 0) {
 	config.threads = (allowedThreads <= 8?allowedThreads:8);
-	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", allowedThreads);
+	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
       }
     }
   }
