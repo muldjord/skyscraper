@@ -543,6 +543,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("platform")) {
     config.platform = settings.value("platform").toString();
   }
+  if(settings.contains("userCreds")) {
+    config.userCreds = settings.value("userCreds").toString();
+  }
   if(settings.contains("lang")) {
     config.lang = settings.value("lang").toString();
   }

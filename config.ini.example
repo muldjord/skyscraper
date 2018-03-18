@@ -30,6 +30,7 @@
 #forceFilename="false"
 #verbose="false"
 #skipped="false"
+#userCreds="user:password"
 #lang="en"
 #region="wor"
 #artworkXml="artwork.xml"
