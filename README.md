@@ -132,6 +132,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'mobygames' scraping module
 
 #### Version 2.3.8 (in progress, unreleased)
+* Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 * Made sure artwork output gets exported, even if entry has no base artwork resource
 
 #### Version 2.3.7 (18th March 2018)
