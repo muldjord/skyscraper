@@ -79,18 +79,18 @@ void Skyscraper::run()
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
   } else if(config.scraper == "screenscraper") {
-    if(config.userCreds.isEmpty()) {
-      if(config.threads > 4) {
-	printf("Forcing 4 threads to accomodate limits in ScreenScraper scraping module\n\n");
-	config.threads = 4;
+    if(config.user.isEmpty() || config.password.isEmpty()) {
+      if(config.threads > 1) {
+	printf("Forcing 1 thread to accomodate limits in ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads.\n\n");
+	config.threads = 1;
       }
     } else {
       if(config.userCreds.indexOf(":") != -1) {
 	NetComm manager;
 	QEventLoop q; // Event loop for use when waiting for data from NetComm.
 	connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-	printf("Fetching limits for user '%s', just a sec...\n", config.userCreds.split(":").at(0).toStdString().c_str());
-	manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.userCreds.split(":").at(0) + "&sspassword=" + config.userCreds.split(":").at(1));
+	printf("Fetching limits for user '%s', just a sec...\n", config.user.toStdString().c_str());
+	manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.user + "&sspassword=" + config.password);
 	q.exec();
 	QByteArray data = manager.getData();
 	QByteArray nodeBegin = "<maxthreads>";
@@ -847,6 +847,14 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(config.scraper == "import") {
     // Always force local db to be updated when using import scraper
     config.updateDb = true;
+  }
+
+  if(!config.userCreds.isEmpty() && config.userCreds.indexOf(":") != -1) {
+    QList<QString> userCreds = config.userCreds.split(":");
+    if(userCreds.length() == 2) {
+      config.user = userCreds.at(0);
+      config.password = userCreds.at(1);
+    }
   }
 
   QFile artworkFile(config.artworkConfig);
