@@ -89,7 +89,7 @@ void NetComm::cancelRequest()
 
 void NetComm::clearAll()
 {
-  clearAccessCache();
+  //clearAccessCache();
   contentType.clear();
   data.clear();
 }
