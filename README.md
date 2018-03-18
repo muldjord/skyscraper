@@ -132,10 +132,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented the option to only scrape a single resource type during a scraping run
 * Added 'mobygames' scraping module
 
-#### Version 2.3.7 (in progress, unreleased)
+#### Version 2.3.7 (18th March 2018)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 * Now checks for .lha suffix and adds spaces where appropriate to get better results
-* Improved returned image data validity check
+* Improved returned image data validity check (libpng errors still happen, but can be ignored)
 * Rewrote the worker to main thread communication a bit
 * Implemented '--startat' option that tells Skyscraper the first file to scrape
 * Implemented '--endat' option that tells Skyscraper the last file to scrape
