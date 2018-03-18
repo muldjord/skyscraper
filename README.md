@@ -126,14 +126,16 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
-* Added '--purgedb' command line option that allows purging certain resources from localdb
-* Added '--statsdb' command line option that prints stats for localdb
+* Added '--dbpurge' command line option that allows purging certain resources from localdb
 * Implemented the option to only scrape a single resource type during a scraping run
 * Added 'mobygames' scraping module
+* Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
+* Now add <kidgame>bool</kidgame>
 
 #### Version 2.3.8 (in progress, unreleased)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 * Made sure artwork output gets exported, even if entry has no base artwork resource
+* Changed 'verbose' to 'verbosity' to allow levels and and made printed info more useful overall
 
 #### Version 2.3.7 (18th March 2018)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
