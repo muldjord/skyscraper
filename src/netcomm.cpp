@@ -32,7 +32,7 @@ NetComm::NetComm()
 {
   //connect(this, &NetComm::finished, this, &NetComm::replyFinished);
   requestTimer.setSingleShot(true);
-  requestTimer.setInterval(30000);
+  requestTimer.setInterval(60000);
   connect(&requestTimer, &QTimer::timeout, this, &NetComm::cancelRequest);
 }
 
@@ -81,6 +81,7 @@ QByteArray NetComm::getContentType()
 void NetComm::cancelRequest()
 {
   disconnect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
+  reply->abort();
   reply->deleteLater();
   clearAll();
 
