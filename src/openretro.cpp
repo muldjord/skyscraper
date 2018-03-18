@@ -167,32 +167,6 @@ void OpenRetro::getCover(GameEntry &game)
   }
 }
 
-void OpenRetro::getScreenshot(GameEntry &game)
-{
-  if(screenshotPre.isEmpty()) {
-    return;
-  }
-  // Check that we have enough screenshots
-  int screens = data.count(screenshotCounter.toUtf8());
-  if(screens >= 1) {
-    for(int a = 0; a < screens - (screens / 2); a++) {
-      foreach(QString nom, screenshotPre) {
-	nomNom(nom);
-      }
-    }
-    QString screenshotUrl = data.left(data.indexOf(screenshotPost)).replace("&amp;", "&") + "?s=512";
-    if(screenshotUrl.left(4) != "http") {
-      screenshotUrl.prepend(baseUrl + (screenshotUrl.left(1) == "/"?"":"/"));
-    }
-    manager.request(screenshotUrl);
-    q.exec();
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.screenshotData = image;
-    }
-  }
-}
-
 void OpenRetro::getWheel(GameEntry &game)
 {
   if(wheelPre.isEmpty()) {
