@@ -552,7 +552,7 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
     default:
       ;
     }
-    if(config->verbose) {
+    if(config->verbosity >= 2) {
       output.append("searchName: '" + searchName + "'\n");
       output.append("platform: '" + config->platform + "'\n");
     }

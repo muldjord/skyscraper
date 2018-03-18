@@ -61,7 +61,8 @@ struct Settings {
   bool brackets = true;
   bool localDb = true;
   bool updateDb = false;
-  bool checkDb = false;
+  bool statsDb = false;
+  QString purgeDb = "";
   bool cleanDb = false;
   bool noResize = false;
   QString mergeDb = "";
@@ -72,7 +73,7 @@ struct Settings {
   bool unattend = false;
   bool forceFilename = false;
   bool stats = false;
-  bool verbose = false;
+  int verbosity = 0;
   bool skipped = false;
   QString artworkConfig = "artwork.xml";
   QByteArray artworkXml = "";

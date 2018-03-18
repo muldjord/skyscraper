@@ -49,12 +49,12 @@ public:
   LocalDb(const QString &dbFolder);
   bool createFolders(const QString &scraper);
   bool readDb();
+  void showStats();
   void readPriorities();
   bool writeDb();
   void cleanDb();
   void addResources(GameEntry &entry, const Settings &config);
   void fillBlanks(GameEntry &entry, const QString scraper = "");
-  void printResources();
   bool hasEntries(const QString &sha1, const QString scraper = "");
   void mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder);
   QList<Resource> getResources();

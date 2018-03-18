@@ -128,13 +128,19 @@ bool LocalDb::readDb()
   return false;
 }
 
+void LocalDb::showStats()
+{
+  printf("Local database cache stats:\n");
+  printf("\n");
+}
+
 void LocalDb::readPriorities()
 {
   QDomDocument prioDoc;
   QFile prioFile(dbDir.absolutePath() + "/priorities.xml");
   printf("Looking for optional 'priorities.xml' file in local db folder... ");
   if(prioFile.open(QIODevice::ReadOnly)) {
-    printf("Found!\n");
+    printf("\033[1;32mFound!\033[0m\n");
     if(!prioDoc.setContent(prioFile.readAll())) {
       printf("Document is not XML compliant, skipping...\n\n");
       return;
@@ -694,13 +700,4 @@ bool LocalDb::fillType(QString &type, QList<Resource> &matchingResources,
     }
   }  
   return true;
-}
-
-
-void LocalDb::printResources()
-{
-  QMutexLocker locker(&dbMutex);
-  foreach(Resource resource, resources) {
-    printf("--- sha1: '%s' ---\ntype: '%s'\nsource: '%s'\ntimestamp: '%s'\nvalue: '%s'\n", resource.sha1.toStdString().c_str(), resource.type.toStdString().c_str(), resource.source.toStdString().c_str(), QString::number(resource.timestamp).toStdString().c_str(), resource.value.toStdString().c_str());
-  }
 }

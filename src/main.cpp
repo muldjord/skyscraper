@@ -138,7 +138,8 @@ int main(int argc, char *argv[])
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption nolocaldbOption("nolocaldb", "Disables local db resources. Other local db flags will then be ignored.");
   QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in local db using selected scraper. Set specific db folder with '-d'. Otherwise default db folder is used.");
-  QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d'. Otherwise default db folder is used.");
+  QCommandLineOption purgedbOption("purgedb", "Purges all resources of the given type and scraping module from the local database cache. If no module is defined the resource type will be purged from all modules. Set specific db folder with '-d', otherwise default db folder is used.", "type:module", "");
+  QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d', otherwise default db folder is used.");
   QCommandLineOption mergedbOption("mergedb", "Merge data from a specific db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d'. Otherwise default destination db folder is used.", "folder", "");
   QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the local db cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
@@ -149,7 +150,7 @@ int main(int argc, char *argv[])
   QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default 'wor')", "code", "wor");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
-  QCommandLineOption verboseOption("verbose", "Print more info while scraping.");
+  QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Can be 0-3, default is 0.)", "int", "0");
   
   parser.addOption(pOption);
   parser.addOption(iOption);
@@ -174,6 +175,7 @@ int main(int argc, char *argv[])
   parser.addOption(skippedOption);
   parser.addOption(nolocaldbOption);
   parser.addOption(updatedbOption);
+  parser.addOption(purgedbOption);
   parser.addOption(cleandbOption);
   parser.addOption(mergedbOption);
   parser.addOption(noresizeOption);
@@ -185,7 +187,7 @@ int main(int argc, char *argv[])
   parser.addOption(forcefilenameOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
-  parser.addOption(verboseOption);
+  parser.addOption(verbosityOption);
 
   parser.process(app);
 

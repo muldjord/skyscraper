@@ -120,6 +120,9 @@ void Skyscraper::run()
       config.localDb = false;
     }
   }
+  if(config.localDb && config.verbosity) {
+    localDb->showStats();
+  }
   if(config.localDb && config.cleanDb) {
     localDb->cleanDb();
     localDb->writeDb();
@@ -229,7 +232,7 @@ void Skyscraper::run()
       QString subdir = dirIt.next();
       inputDir.setPath(subdir);
       queue->append(inputDir.entryInfoList());
-      if(config.verbose) {
+      if(config.verbosity) {
 	printf("Added files from subdir: '%s'\n", subdir.toStdString().c_str());
       }
     }
@@ -561,8 +564,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("forceFilename")) {
     config.forceFilename = settings.value("forceFilename").toBool();
   }
-  if(settings.contains("verbose")) {
-    config.verbose = settings.value("verbose").toBool();
+  if(settings.contains("verbosity")) {
+    config.verbosity = settings.value("verbosity").toInt();
   }
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
@@ -661,8 +664,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("forceFilename")) {
     config.forceFilename = settings.value("forceFilename").toBool();
   }
-  if(settings.contains("verbose")) {
-    config.verbose = settings.value("verbose").toBool();
+  if(settings.contains("verbosity")) {
+    config.verbosity = settings.value("verbosity").toInt();
   }
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
@@ -749,6 +752,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("cleandb")) {
     config.cleanDb = true;
   }
+  if(parser.isSet("purgedb")) {
+    config.purgeDb = parser.value("purgedb");
+  }
   if(parser.isSet("mergedb") && QDir(config.mergeDb).exists()) {
     config.mergeDb = parser.value("mergedb");
   }
@@ -782,8 +788,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("lang")) {
     config.lang = parser.value("lang");
   }
-  if(parser.isSet("verbose")) {
-    config.verbose = true;
+  if(parser.isSet("verbosity")) {
+    config.verbosity = parser.value("verbosity").toInt();
   }
 
   frontend->checkReqs();
