@@ -33,7 +33,7 @@ NetComm::NetComm()
   //connect(this, &NetComm::finished, this, &NetComm::replyFinished);
   requestTimer.setSingleShot(true);
   requestTimer.setInterval(30000);
-  //connect(&requestTimer, &QTimer::timeout, this, &NetComm::cancelRequest);
+  connect(&requestTimer, &QTimer::timeout, this, &NetComm::cancelRequest);
 }
 
 void NetComm::request(QString query, QString postData)
@@ -51,7 +51,7 @@ void NetComm::request(QString query, QString postData)
       reply = post(request, postData.toUtf8());
     }
     connect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
-    //requestTimer.start();
+    requestTimer.start();
   } else {
     emit dataReady();
   }
@@ -59,11 +59,10 @@ void NetComm::request(QString query, QString postData)
 
 void NetComm::replyReady()
 {
+  disconnect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
   requestTimer.stop();
-
   contentType = reply->rawHeader("Content-Type");
   data = reply->readAll();
-
   reply->deleteLater();
 
   emit dataReady();
@@ -82,8 +81,9 @@ QByteArray NetComm::getContentType()
 void NetComm::cancelRequest()
 {
   disconnect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
-  clearAll();
   reply->deleteLater();
+  clearAll();
+
   emit dataReady();
 }
 
