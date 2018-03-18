@@ -276,6 +276,11 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       output.setCanvas(game.marqueeData);
     }
 
+    if(output.canvas.isNull() && output.hasLayers()) {
+      QImage tmpImage(10, 10, QImage::Format_ARGB32_Premultiplied);
+      output.setCanvas(tmpImage);
+    }
+
     output.premultiply();
     output.scale();
     
