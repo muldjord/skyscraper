@@ -141,3 +141,79 @@ void OpenRetro::getTags(GameEntry &game)
 
   game.tags = tags;
 }
+
+void OpenRetro::getCover(GameEntry &game)
+{
+  if(coverPre.isEmpty()) {
+    return;
+  }
+  foreach(QString nom, coverPre) {
+    if(!checkNom(nom)) {
+      return;
+    }
+  }
+  foreach(QString nom, coverPre) {
+    nomNom(nom);
+  }
+  QString coverUrl = data.left(data.indexOf(coverPost)).replace("&amp;", "&") + "?s=512";
+  if(coverUrl.left(4) != "http") {
+    coverUrl.prepend(baseUrl + (coverUrl.left(1) == "/"?"":"/"));
+  }
+  manager.request(coverUrl);
+  q.exec();
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
+    game.coverData = image;
+  }
+}
+
+void OpenRetro::getScreenshot(GameEntry &game)
+{
+  if(screenshotPre.isEmpty()) {
+    return;
+  }
+  // Check that we have enough screenshots
+  int screens = data.count(screenshotCounter.toUtf8());
+  if(screens >= 1) {
+    for(int a = 0; a < screens - (screens / 2); a++) {
+      foreach(QString nom, screenshotPre) {
+	nomNom(nom);
+      }
+    }
+    QString screenshotUrl = data.left(data.indexOf(screenshotPost)).replace("&amp;", "&") + "?s=512";
+    if(screenshotUrl.left(4) != "http") {
+      screenshotUrl.prepend(baseUrl + (screenshotUrl.left(1) == "/"?"":"/"));
+    }
+    manager.request(screenshotUrl);
+    q.exec();
+    QImage image;
+    if(image.loadFromData(manager.getData())) {
+      game.screenshotData = image;
+    }
+  }
+}
+
+void OpenRetro::getWheel(GameEntry &game)
+{
+  if(wheelPre.isEmpty()) {
+    return;
+  }
+  foreach(QString nom, wheelPre) {
+    if(!checkNom(nom)) {
+      return;
+    }
+  }
+  foreach(QString nom, wheelPre) {
+    nomNom(nom);
+  }
+  QString wheelUrl = data.left(data.indexOf(wheelPost)).replace("&amp;", "&") + "?s=512";
+  if(wheelUrl.left(4) != "http") {
+    wheelUrl.prepend(baseUrl + (wheelUrl.left(1) == "/"?"":"/"));
+  }
+  manager.request(wheelUrl);
+  q.exec();
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
+    game.wheelData = image;
+  }
+}
