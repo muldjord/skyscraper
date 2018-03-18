@@ -140,6 +140,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented '--startat' option that tells Skyscraper the first file to scrape
 * Implemented '--endat' option that tells Skyscraper the last file to scrape
 * Added thread id to terminal output
+* Applied serverside artwork size limit to openretro module to avoid running out of memory
+* Improved network communication class
 
 #### Version 2.3.6 (12th March 2018)
 * Completely rewrote the openretro parser to make use of the 'edit' page instead
