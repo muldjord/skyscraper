@@ -41,7 +41,7 @@ public:
   QByteArray getContentType();
 
 private slots:
-  void replyFinished(QNetworkReply *reply);
+  void replyReady();
   void cancelRequest();
 
 signals:
@@ -50,6 +50,7 @@ signals:
 private:
   void clearAll();
   QTimer requestTimer;
+  QNetworkReply *reply;
   QByteArray contentType;
   QByteArray data;
 };
