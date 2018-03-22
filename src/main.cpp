@@ -137,10 +137,11 @@ int main(int argc, char *argv[])
   QCommandLineOption skippedOption("skipped", "Include skipped entries when writing final gamelist.");
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption nolocaldbOption("nolocaldb", "Disables local db resources. Other local db flags will then be ignored.");
-  QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in local db using selected scraper. Set specific db folder with '-d'. Otherwise default db folder is used.");
-  QCommandLineOption purgedbOption("purgedb", "Purges all resources of the given type and scraping module from the local database cache. If no module is defined the resource type will be purged from all modules. Set specific db folder with '-d', otherwise default db folder is used.", "type:module", "");
-  QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d', otherwise default db folder is used.");
-  QCommandLineOption mergedbOption("mergedb", "Merge data from a specific db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d'. Otherwise default destination db folder is used.", "folder", "");
+  QCommandLineOption dbstatsOption("dbstats", "Show stats for the local database cache. This will also be shown with a verbosity level of 1 or more.");
+  QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in local db using selected scraper. Set specific db folder with '-d' otherwise default db folder is used.");
+  QCommandLineOption purgedbOption("purgedb", "Purges all resources of the given type and scraping module from the local database cache. If no module is defined the resource type will be purged from all modules. Set specific db folder with '-d' otherwise default db folder is used.", "type:module", "");
+  QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d' otherwise default db folder is used.");
+  QCommandLineOption mergedbOption("mergedb", "Merge data from the specified db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d' otherwise default db folder is used as destination.", "folder", "");
   QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the local db cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
@@ -174,6 +175,7 @@ int main(int argc, char *argv[])
   parser.addOption(nobracketsOption);
   parser.addOption(skippedOption);
   parser.addOption(nolocaldbOption);
+  parser.addOption(dbstatsOption);
   parser.addOption(updatedbOption);
   parser.addOption(purgedbOption);
   parser.addOption(cleandbOption);
