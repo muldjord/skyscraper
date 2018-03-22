@@ -61,8 +61,8 @@ struct Settings {
   bool brackets = true;
   bool localDb = true;
   bool updateDb = false;
-  bool statsDb = false;
-  QString purgeDb = "";
+  bool dbStats = false;
+  QString dbPurge = "";
   bool cleanDb = false;
   bool noResize = false;
   QString mergeDb = "";
