@@ -88,17 +88,18 @@ bool LocalDb::readDb()
       Resource resource;
       resource.sha1 = attribs.value("sha1").toString();
 
-      if(attribs.hasAttribute("type")) {
-	resource.type = attribs.value("type").toString();
-      } else {
-	printf("Resource with sha1 '%s' is missing 'type' attribute, skipping...\n",
-	       resource.sha1.toStdString().c_str());
-	continue;
-      }
       if(attribs.hasAttribute("source")) {
 	resource.source = attribs.value("source").toString();
       } else {
 	resource.source = "generic";
+      }
+      if(attribs.hasAttribute("type")) {
+	resource.type = attribs.value("type").toString();
+	addToResCounts(resource.source, resource.type);
+      } else {
+	printf("Resource with sha1 '%s' is missing 'type' attribute, skipping...\n",
+	       resource.sha1.toStdString().c_str());
+	continue;
       }
       if(attribs.hasAttribute("timestamp")) {
 	resource.timestamp = attribs.value("timestamp").toULongLong();
@@ -128,10 +129,117 @@ bool LocalDb::readDb()
   return false;
 }
 
-void LocalDb::showStats()
+bool LocalDb::purgeResources(QString purgeStr)
+{
+  if(purgeStr.indexOf(":") != -1) {
+    
+  } else {
+  }
+}
+
+void LocalDb::showStats(int verbosity)
 {
   printf("Local database cache stats:\n");
+  if(verbosity == 1) {
+    int titles = 0;
+    int platforms = 0;
+    int descriptions = 0;
+    int publishers = 0;
+    int developers = 0;
+    int players = 0;
+    int tags = 0;
+    int ratings = 0;
+    int releaseDates = 0;
+    int covers = 0;
+    int screenshots = 0;
+    int wheels = 0;
+    int marquees = 0;
+    int videos = 0;
+    for(QMap<QString, ResCounts>::iterator it = resCountsMap.begin();
+	it != resCountsMap.end(); ++it) {
+      titles += it.value().titles;
+      platforms += it.value().platforms;
+      descriptions += it.value().descriptions;
+      publishers += it.value().publishers;
+      developers += it.value().developers;
+      players += it.value().players;
+      tags += it.value().tags;
+      ratings += it.value().ratings;
+      releaseDates += it.value().releaseDates;
+      covers += it.value().covers;
+      screenshots += it.value().screenshots;
+      wheels += it.value().wheels;
+      marquees += it.value().marquees;
+      videos += it.value().videos;
+    }
+    printf("  Titles       : %d\n", titles);
+    printf("  Platforms    : %d\n", platforms);
+    printf("  Descriptions : %d\n", descriptions);
+    printf("  Publishers   : %d\n", publishers);
+    printf("  Developers   : %d\n", developers);
+    printf("  Players      : %d\n", players);
+    printf("  Tags         : %d\n", tags);
+    printf("  Ratings      : %d\n", ratings);
+    printf("  ReleaseDates : %d\n", releaseDates);
+    printf("  Covers       : %d\n", covers);
+    printf("  Screenshots  : %d\n", screenshots);
+    printf("  Wheels       : %d\n", wheels);
+    printf("  Marquees     : %d\n", marquees);
+    printf("  Videos       : %d\n", videos);
+  } else if(verbosity > 1) {
+    for(QMap<QString, ResCounts>::iterator it = resCountsMap.begin();
+	it != resCountsMap.end(); ++it) {
+      printf("'%s' module\n", it.key().toStdString().c_str());
+      printf("  Titles       : %d\n", it.value().titles);
+      printf("  Platforms    : %d\n", it.value().platforms);
+      printf("  Descriptions : %d\n", it.value().descriptions);
+      printf("  Publishers   : %d\n", it.value().publishers);
+      printf("  Developers   : %d\n", it.value().developers);
+      printf("  Players      : %d\n", it.value().players);
+      printf("  Tags         : %d\n", it.value().tags);
+      printf("  Ratings      : %d\n", it.value().ratings);
+      printf("  ReleaseDates : %d\n", it.value().releaseDates);
+      printf("  Covers       : %d\n", it.value().covers);
+      printf("  Screenshots  : %d\n", it.value().screenshots);
+      printf("  Wheels       : %d\n", it.value().wheels);
+      printf("  Marquees     : %d\n", it.value().marquees);
+      printf("  Videos       : %d\n", it.value().videos);
+    }
+  }
   printf("\n");
+}
+
+void LocalDb::addToResCounts(const QString source, const QString type)
+{
+  if(type == "title") {
+    resCountsMap[source].titles++;
+  } else if(type == "platform") {
+    resCountsMap[source].platforms++;
+  } else if(type == "description") {
+    resCountsMap[source].descriptions++;
+  } else if(type == "publisher") {
+    resCountsMap[source].publishers++;
+  } else if(type == "developer") {
+    resCountsMap[source].developers++;
+  } else if(type == "players") {
+    resCountsMap[source].players++;
+  } else if(type == "tags") {
+    resCountsMap[source].tags++;
+  } else if(type == "rating") {
+    resCountsMap[source].ratings++;
+  } else if(type == "releasedate") {
+    resCountsMap[source].releaseDates++;
+  } else if(type == "cover") {
+    resCountsMap[source].covers++;
+  } else if(type == "screenshot") {
+    resCountsMap[source].screenshots++;
+  } else if(type == "wheel") {
+    resCountsMap[source].wheels++;
+  } else if(type == "marquee") {
+    resCountsMap[source].marquees++;
+  } else if(type == "video") {
+    resCountsMap[source].videos++;
+  }
 }
 
 void LocalDb::readPriorities()
@@ -308,12 +416,27 @@ void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder
 
   foreach(Resource srcResource, srcResources) {
     bool resExists = false;
-    for(int a = 0; a < resources.length(); ++a) {
-      if(resources.at(a).sha1 == srcResource.sha1 && resources.at(a).type == srcResource.type) {
+    // This type of iterator ensures we can delete items while iterating
+    QMutableListIterator<Resource> it(resources);
+    while(it.hasNext()) {
+      Resource res = it.next();
+      if(res.sha1 == srcResource.sha1 &&
+	 res.type == srcResource.type &&
+	 res.source == srcResource.source) {
 	if(overwrite) {
-	  resources.removeAt(a);
+	  if(res.type == "cover" || res.type == "screenshot" ||
+	     res.type == "wheel" || res.type == "marquee" ||
+	     res.type == "video") {
+	    if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+	      printf("Couldn't remove media file '%s' for updating, skipping...\n", res.value.toStdString().c_str());
+	      continue;
+	    }
+	    
+	  }
+	  it.remove();
 	} else {
 	  resExists = true;
+	  break;
 	}
       }
     }
@@ -321,8 +444,10 @@ void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder
       if(srcResource.type == "cover" || srcResource.type == "screenshot" ||
 	 srcResource.type == "wheel" || srcResource.type == "marquee" ||
 	 srcResource.type == "video") {
+	dbDir.mkpath(QFileInfo(dbDir.absolutePath() + "/" + srcResource.value).absolutePath());
 	if(!QFile::copy(srcDbDir.absolutePath() + "/" + srcResource.value,
 			dbDir.absolutePath() + "/" + srcResource.value)) {
+	  printf("Couldn't copy media file '%s', skipping...\n",  srcResource.value.toStdString().c_str());
 	  continue;
 	}
       }
@@ -335,7 +460,7 @@ void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder
     }
   }
   printf("Successfully updated %d resource(s) in local database!\n", resUpdated);
-  printf("Successfully merged %d resource(s) into local database!\n\n", resMerged);
+  printf("Successfully merged %d new resource(s) into local database!\n\n", resMerged);
 }
 
 QList<Resource> LocalDb::getResources()
@@ -436,12 +561,15 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 {
   QMutexLocker locker(&dbMutex);
   bool notFound = true;
-  for(int a = 0; a < resources.length(); ++a) {
-    if(resources.at(a).sha1 == resource.sha1 &&
-       resources.at(a).type == resource.type &&
-       resources.at(a).source == resource.source) {
+  // This type of iterator ensures we can delete items while iterating
+  QMutableListIterator<Resource> it(resources);
+  while(it.hasNext()) {
+    Resource res = it.next();
+    if(res.sha1 == resource.sha1 &&
+       res.type == resource.type &&
+       res.source == resource.source) {
       if(config.updateDb) {
-	resources.removeAt(a);
+	it.remove();
       } else {
 	notFound = false;
       }

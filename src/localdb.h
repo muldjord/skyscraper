@@ -43,13 +43,31 @@ struct Resource {
   qint64 timestamp = 0;
 };
 
+struct ResCounts {
+  int titles;
+  int platforms;
+  int descriptions;
+  int publishers;
+  int developers;
+  int players;
+  int tags;
+  int ratings;
+  int releaseDates;
+  int covers;
+  int screenshots;
+  int wheels;
+  int marquees;
+  int videos;
+};
+
 class LocalDb
 {
 public:
   LocalDb(const QString &dbFolder);
   bool createFolders(const QString &scraper);
   bool readDb();
-  void showStats();
+  bool purgeResources(QString purgeStr);
+  void showStats(int verbosity);
   void readPriorities();
   bool writeDb();
   void cleanDb();
@@ -64,8 +82,11 @@ public:
   QMutex dbMutex;
 
   QMap<QString, QList<QString> > prioMap;
+
+  QMap<QString, ResCounts> resCountsMap;
   
   QList<Resource> resources;
+  void addToResCounts(const QString source, const QString type);
   void addResource(const Resource &resource, GameEntry &entry, const QString &dbAbsolutePath,
 		   const Settings &config);
   void verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &noDelete, QString resType);
