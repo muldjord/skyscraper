@@ -136,6 +136,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 * Made sure artwork output gets exported, even if entry has no base artwork resource
 * Changed 'verbose' to 'verbosity' to allow levels and and made printed info more useful overall
+* Added '--dbstats' command line option that prints stats for the local dabatase cache
+* Fixed bugs in mergedb
 
 #### Version 2.3.7 (18th March 2018)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
