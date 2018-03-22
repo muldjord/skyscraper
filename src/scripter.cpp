@@ -134,8 +134,11 @@ Scripter::Scripter()
     commandStr += " -g " + gamelistFolderStr;
   if(artworkFolderStr != "")
     commandStr += " -o " + artworkFolderStr;
-  if(frontendStr == "attractmode" && emulatorStr != "")
-    commandStr += " -e " + emulatorStr;
+  if(frontendStr == "attractmode") {
+    commandStr += " -f " + frontendStr;
+    if(emulatorStr != "")
+      commandStr += " -e " + emulatorStr;
+  }
   if(minMatchStr != "")
     commandStr += " -m " + minMatchStr;
   if(forceFilenameStr == "y" || forceFilenameStr == "Y")
