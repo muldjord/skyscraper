@@ -80,9 +80,9 @@ void Skyscraper::run()
     config.threads = 1;
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
-      if(config.threads > 1) {
-	printf("Forcing 1 thread to accomodate limits in ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads.\n\n");
-	config.threads = 1;
+      if(config.threads > 4) {
+	printf("Forcing 4 threads as this seems to be the anonymous limit in the ScreenScraper scraping module. If you have problems with 4 threads, please lower it even further. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads.\n\n");
+	config.threads = 4;
       }
     } else {
       NetComm manager;
@@ -120,8 +120,11 @@ void Skyscraper::run()
       config.localDb = false;
     }
   }
-  if(config.localDb && config.verbosity) {
-    localDb->showStats();
+  if(config.localDb && (config.verbosity || config.dbStats)) {
+    localDb->showStats(config.dbStats?2:config.verbosity);
+  }
+  if(config.localDb && config.dbPurge != "") {
+    localDb->purgeResources(config.dbPurge);
   }
   if(config.localDb && config.cleanDb) {
     localDb->cleanDb();
@@ -749,11 +752,14 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     }
     config.localDb = false;
   }
+  if(parser.isSet("dbstats")) {
+    config.dbStats = true;
+  }
   if(parser.isSet("cleandb")) {
     config.cleanDb = true;
   }
-  if(parser.isSet("purgedb")) {
-    config.purgeDb = parser.value("purgedb");
+  if(parser.isSet("dbpurge")) {
+    config.dbPurge = parser.value("dbpurge");
   }
   if(parser.isSet("mergedb") && QDir(config.mergeDb).exists()) {
     config.mergeDb = parser.value("mergedb");
