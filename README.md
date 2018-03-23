@@ -134,8 +134,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.3.8 (in progress, unreleased)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 * Made sure artwork output gets exported, even if entry has no base artwork resource
-* Changed 'verbose' to 'verbosity' to allow levels and and made printed info more useful overall
-* Added '--dbstats' command line option that prints stats for the local dabatase cache
+* Changed 'verbose' to 'verbosity' to allow levels and made terminal output more useful overall
+* Added '--dbstats' command line option that prints stats for the selected local dabatase cache
 * Added '--purgedb' command line option that allows purging resources from localdb
 * Fixed bugs in mergedb command line option
 * Fixed bug in Simle Mode where 'attractmode' would not work properly (thank you Humayun)
