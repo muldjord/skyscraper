@@ -126,7 +126,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
-* Added '--dbpurge' command line option that allows purging certain resources from localdb
 * Implemented the option to only scrape a single resource type during a scraping run
 * Added 'mobygames' scraping module
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
@@ -137,6 +136,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made sure artwork output gets exported, even if entry has no base artwork resource
 * Changed 'verbose' to 'verbosity' to allow levels and and made printed info more useful overall
 * Added '--dbstats' command line option that prints stats for the local dabatase cache
+* Added '--purgedb' command line option that allows purging resources from localdb
 * Fixed bugs in mergedb command line option
 * Fixed bug in Simle Mode where 'attractmode' would not work properly (thank you Humayun)
 
