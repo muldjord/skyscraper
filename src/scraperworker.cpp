@@ -92,23 +92,25 @@ void ScraperWorker::run()
     // Reset platform in case we have manipulated it (such as changing 'amiga' to 'cd32')
     config.platform = platformOrig;
     QString output = "\033[1;33m(T" + threadId + ")\033[0m ";
+    QString debug = "";
     QString parNotes = "";
     QString sqrNotes = "";
     QString sha1 = getSha1(info);
 
     QString compareTitle = scraper->getCompareTitle(info, sqrNotes, parNotes);
-
     // Special markings for the platform, for instance 'AGA'
     QString marking = ""; // No marking is default
     // Special for Amiga platform where there are subplatforms in filename
     if(config.platform == "amiga") {
       if(info.completeBaseName().toLower().indexOf("cd32") != -1) {
+	debug.append("Platform change: 'amiga'->'cd32', filename contains 'cd32'");
 	config.platform = "cd32";
       } else if(info.completeBaseName().toLower().indexOf("cdtv") != -1) {
+	debug.append("Platform change: 'amiga'->'cdtv', filename contains 'cdtv'");
 	config.platform = "cdtv";
       } else if(info.completeBaseName().toLower().indexOf("aga") != -1) {
+	debug.append("Added 'aga' marking for OpenRetro pass, filename contains 'aga'");
 	marking = "+aga";
-	config.platform = "aga";
       }
     }
     
@@ -142,7 +144,7 @@ void ScraperWorker::run()
 	}
 	gameEntries.append(localGame);
       } else {
-	scraper->runPasses(gameEntries, info, output, marking);
+	scraper->runPasses(gameEntries, info, output, marking, debug);
       }
     }
     
@@ -159,7 +161,7 @@ void ScraperWorker::run()
     if(game.found == false) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
       game.resetMedia();
-      emit outputToTerminal(output);
+      emit outputToTerminal(output, debug);
       emit entryReady(game);
       continue;
     }
@@ -170,7 +172,7 @@ void ScraperWorker::run()
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' match too low :| ----\033[0m\n\n");
       game.found = false;
       game.resetMedia();
-      emit outputToTerminal(output);
+      emit outputToTerminal(output, debug);
       emit entryReady(game);
       continue;
     }
@@ -253,7 +255,7 @@ void ScraperWorker::run()
     }
     output.append("\nDescription: (" + game.descriptionSrc + ")\n" + game.description.left(config.maxLength) + "\n");
 
-    emit outputToTerminal(output);
+    emit outputToTerminal(output, debug);
     emit entryReady(game);
   }
 

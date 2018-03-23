@@ -55,7 +55,7 @@ signals:
 
 private slots:
   void entryReady(GameEntry entry);
-  void outputToTerminal(QString output);
+  void outputToTerminal(QString output, QString debug);
   void checkThreads();
   
 private:

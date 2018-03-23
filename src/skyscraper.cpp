@@ -122,7 +122,8 @@ void Skyscraper::run()
   }
   if(config.localDb && (config.verbosity || config.dbStats)) {
     localDb->showStats(config.dbStats?2:config.verbosity);
-    exit(0);
+    if(config.dbStats)
+      exit(0);
   }
   if(config.localDb && !config.dbPurge.isEmpty()) {
     localDb->purgeResources(config.dbPurge);
@@ -200,9 +201,10 @@ void Skyscraper::run()
       printf("\033[1;31mIt isn't! :(\nPlease check path and permissions and try again.\033[0m\n");
       exit(1);
     }
+    printf("\n");
   }
   if(config.pretend) {
-    printf("Pretend set! Not changing any files, but still caching resources in local database.\n");
+    printf("Pretend set! Not changing any files, but still caching resources in local database.\n\n");
   }
 
   QFile skippedFile(skippedFileString);
@@ -238,10 +240,12 @@ void Skyscraper::run()
       QString subdir = dirIt.next();
       inputDir.setPath(subdir);
       queue->append(inputDir.entryInfoList());
-      if(config.verbosity) {
+      if(config.verbosity > 0) {
 	printf("Added files from subdir: '%s'\n", subdir.toStdString().c_str());
       }
     }
+    if(config.verbosity > 0)
+      printf("\n");
   }
 
   if(!cliFiles.isEmpty()) {
@@ -313,7 +317,7 @@ void Skyscraper::checkForFolder(QDir &folder)
   }
 }
 
-void Skyscraper::outputToTerminal(QString output)
+void Skyscraper::outputToTerminal(QString output, QString debug)
 {
   QMutexLocker locker(&outputMutex);
 
@@ -321,6 +325,10 @@ void Skyscraper::outputToTerminal(QString output)
   int elapsed = timer.elapsed();
   int estTime = elapsed / currentFile * totalFiles;
 
+  if(config.verbosity >= 3) {
+    printf("\033[1;33mDebug output:\033[0m\n%s\n", debug.toStdString().c_str());
+  }
+  
   printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
   printf("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
 }

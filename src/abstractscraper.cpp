@@ -512,7 +512,7 @@ QString AbstractScraper::getCompareTitle(QFileInfo info, QString &sqrNotes, QStr
   return baseName;
 }
 
-void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking)
+void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug)
 {
   QString searchName = getSearchName(info);
   QString searchNameOrig = searchName;
@@ -552,10 +552,8 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
     default:
       ;
     }
-    if(config->verbosity >= 2) {
-      output.append("searchName: '" + searchName + "'\n");
-      output.append("platform: '" + config->platform + "'\n");
-    }
+    debug.append("Search string: '" + searchName + "'\n");
+    debug.append("Platform: '" + config->platform + "'\n");
     if(!gameEntries.isEmpty()) {
       break;
     }

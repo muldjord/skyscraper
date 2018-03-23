@@ -45,7 +45,7 @@ public:
   virtual void getGameData(GameEntry &game);
   virtual QString getSearchName(QFileInfo info);
   virtual QString getCompareTitle(QFileInfo info, QString &sqrNotes, QString &parNotes);
-  virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking);
+  virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug);
 
   void setConfig(Settings *config);
   void setRegionPrios();

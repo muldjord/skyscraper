@@ -41,7 +41,7 @@ class ScreenScraper : public AbstractScraper
 public:
   ScreenScraper();
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info,
-		 QString &output, QString &marking);
+		 QString &output, QString &marking, QString &debug);
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform);

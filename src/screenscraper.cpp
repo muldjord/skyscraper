@@ -269,7 +269,7 @@ void ScreenScraper::getVideo(GameEntry &game)
   }
 }
 
-void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &)
+void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug)
 {
   QString hashes = getHashes(info);
   QList<QString> hashList = hashes.split(":");
@@ -279,20 +279,24 @@ void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
     switch(pass) {
     case 1:
       if(info.size() != 0) {
+	debug.append("Tried with sha1: " + hashList.at(2) + "\n");
 	getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
       }
       break;
     case 2:
       if(info.size() != 0) {
+	debug.append("Tried with md5: " + hashList.at(1) + "\n");
 	getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
       }
       break;
     case 3:
+      debug.append("Tried with name: " + hashList.at(0) + "\n");
       getSearchResults(gameEntries, "romnom=" + hashList.at(0), config->platform);
       break;
     default:
       ;
     }
+    debug.append("Platform: " + config->platform + "\n");
     if(!gameEntries.isEmpty()) {
       break;
     }
