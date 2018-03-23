@@ -122,9 +122,12 @@ void Skyscraper::run()
   }
   if(config.localDb && (config.verbosity || config.dbStats)) {
     localDb->showStats(config.dbStats?2:config.verbosity);
+    exit(0);
   }
-  if(config.localDb && config.dbPurge != "") {
+  if(config.localDb && !config.dbPurge.isEmpty()) {
     localDb->purgeResources(config.dbPurge);
+    localDb->writeDb();
+    exit(0);
   }
   if(config.localDb && config.cleanDb) {
     localDb->cleanDb();
@@ -758,8 +761,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("cleandb")) {
     config.cleanDb = true;
   }
-  if(parser.isSet("dbpurge")) {
-    config.dbPurge = parser.value("dbpurge");
+  if(parser.isSet("purgedb")) {
+    config.dbPurge = parser.value("purgedb");
   }
   if(parser.isSet("mergedb") && QDir(config.mergeDb).exists()) {
     config.mergeDb = parser.value("mergedb");

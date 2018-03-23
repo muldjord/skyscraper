@@ -66,7 +66,7 @@ public:
   LocalDb(const QString &dbFolder);
   bool createFolders(const QString &scraper);
   bool readDb();
-  bool purgeResources(QString purgeStr);
+  void purgeResources(QString purgeStr);
   void showStats(int verbosity);
   void readPriorities();
   bool writeDb();

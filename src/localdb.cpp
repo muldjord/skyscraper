@@ -129,12 +129,52 @@ bool LocalDb::readDb()
   return false;
 }
 
-bool LocalDb::purgeResources(QString purgeStr)
+void LocalDb::purgeResources(QString purgeStr)
 {
-  if(purgeStr.indexOf(":") != -1) {
-    
-  } else {
+  printf("Purging requested resources from database, please wait...\n");
+
+  QString module = "";
+  QString type = "";
+
+  QList<QString> definitions = purgeStr.split(",");
+  foreach(QString definition, definitions) {
+    if(definition.left(2) == "m:") {
+      module = definition.remove(0,2);
+      printf("Module: '%s'\n", module.toStdString().c_str());
+    }
+	if(definition.left(2) == "t:") {
+      type = definition.remove(0,2);
+      printf("Type: '%s'\n", type.toStdString().c_str());
+    }
   }
+
+  int purged = 0;
+
+  QMutableListIterator<Resource> it(resources);
+  while(it.hasNext()) {
+    Resource res = it.next();
+    bool remove = false;
+    if(module.isEmpty() && res.type == type) {
+      remove = true;
+    } else if(type.isEmpty() && res.source == module) {
+      remove = true;
+    } else if(res.source == module && res.type == type) {
+      remove = true;
+    }
+    if(remove) {
+      if(res.type == "cover" || res.type == "screenshot" ||
+	 res.type == "wheel" || res.type == "marquee" ||
+	 res.type == "video") {
+	if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+	  printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
+	  continue;
+	}
+      }
+      it.remove();
+      purged++;
+    }
+  }
+  printf("Successfully purged %d resources from the local database cache.\n", purged);
 }
 
 void LocalDb::showStats(int verbosity)
