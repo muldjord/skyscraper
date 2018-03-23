@@ -40,21 +40,17 @@ void NetComm::request(QString query, QString postData)
 {
   clearAll();
   QUrl url(query);
-  if(url.isValid()) {
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    
-    if(postData.isEmpty()) {
-      reply = get(request);
-    } else {
-      reply = post(request, postData.toUtf8());
-    }
-    connect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
-    requestTimer.start();
+  QNetworkRequest request(url);
+  request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
+  request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+  
+  if(postData.isEmpty()) {
+    reply = get(request);
   } else {
-    emit dataReady();
+    reply = post(request, postData.toUtf8());
   }
+  connect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
+  requestTimer.start();
 }
 
 void NetComm::replyReady()
