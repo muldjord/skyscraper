@@ -22,10 +22,6 @@ Check the full list of platforms [here](PLATFORMS.md).
 #### Support me on Patreon
 You can support my work [here](https://www.patreon.com/muldjord). Do keep in mind that pledging is in no way a requirement for using Skyscraper. I mainly do this for my own amusement and self-education.
 
-#### Note for Amiga scraping
-For Amiga I STRONGLY recommend you to set up your RetroPie to use WHDLoad. Follow this guide:
-* http://www.ultimateamiga.co.uk/HostedProjects/RetroPieAmiga/guide.html
-
 ## How to install Skyscraper
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with '$' signifies a command you need run in a terminal on the machine you wish to install it on.
 
