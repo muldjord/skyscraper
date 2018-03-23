@@ -53,13 +53,19 @@ void ArcadeDB::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(searchUrlPre + searchName);
   q.exec();
   data = manager.getData();
-  
+
+  if(data.indexOf("{\"release\":1,\"result\":[]}") != -1) {
+    return;
+  }
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
   }
-  //printf("DATA:\n%s\n", data.data());
   jsonObj = jsonDoc.object().value("result").toArray().first().toObject();
+
+  if(jsonObj.value("title") == QJsonValue::Undefined) {
+    return;
+  }
 
   GameEntry game;
   
@@ -198,7 +204,7 @@ void ArcadeDB::getVideo(GameEntry &game)
   }
 }
 
-QString ArcadeDB::getSearchName(QString baseName)
+QString ArcadeDB::getSearchName(QFileInfo info)
 {
-  return baseName;
+  return info.baseName();
 }

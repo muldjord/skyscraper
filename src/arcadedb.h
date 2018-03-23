@@ -51,7 +51,7 @@ private:
   void getScreenshot(GameEntry &game);
   void getMarquee(GameEntry &game);
   void getVideo(GameEntry &game);
-  QString getSearchName(QString baseName);
+  QString getSearchName(QFileInfo info);
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
