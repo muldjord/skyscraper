@@ -127,6 +127,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
 * Now add <kidgame>bool</kidgame>
 
+#### Version 2.3.9 (23rd March 2018)
+* Fixed bug in network communicator that would cause everything to stall
+
 #### Version 2.3.8 (23rd March 2018)
 * Implemented user credentials ('-u user:password') to set up threads for 'screenscraper' module
 * Made sure artwork output gets exported, even if entry has no base artwork resource
