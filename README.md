@@ -127,6 +127,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
 * Now add <kidgame>bool</kidgame>
 
+#### Version 2.4.0 (24rd March 2018)
+* Fixed bugs in overloaded functions for import and localdb...
+
 #### Version 2.3.9 (23rd March 2018)
 * Fixed bug in network communicator that would cause everything to stall
 
