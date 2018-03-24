@@ -33,6 +33,6 @@ void LocalScraper::getGameData(GameEntry &)
 {
 }
 
-void LocalScraper::runPasses(QList<GameEntry> &, const QFileInfo &, QString &, QString &)
+void LocalScraper::runPasses(QList<GameEntry> &, const QFileInfo &, QString &, QString &, QString &)
 {
 }
