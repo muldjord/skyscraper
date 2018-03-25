@@ -127,6 +127,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
 * Now add <kidgame>bool</kidgame>
 
+#### Version 2.4.1 (in progress, unreleased)
+* Now auto-adds '--videos' option when using 'import' scraping module
+
 #### Version 2.4.0 (24rd March 2018)
 * Fixed bugs in overloaded functions for import and localdb...
 
