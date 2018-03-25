@@ -127,13 +127,16 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
 * Added <kidgame>bool</kidgame> output when 'ages' permits it
 
+#### Version 2.4.3 (25th March 2018)
+* Fixed modules that aren't filename based to just always return first entry (Thank you AnalogHero)
+
 #### Version 2.4.2 (25th March 2018)
 * Reordered options in '--help' output
 * Changed help text for certain options for clarity
-* Made sure import scraper uses complete baseName in case filenames have more than one dots
+* Made sure import scraper uses complete baseName in case filenames have more than one dots (Thank you AnalogHero)
 
 #### Version 2.4.1 (25th March 2018)
-* Now auto-adds '--videos' option when using 'import' scraping module
+* Now auto-adds '--videos' option when using 'import' scraping module (Thank you AnalogHero)
 * Fixed bug in import scraper that would hand it the wrong filename to look for
 
 #### Version 2.4.0 (24rd March 2018)
