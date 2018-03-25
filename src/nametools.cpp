@@ -60,7 +60,7 @@ QString NameTools::getNameWithSpaces(const QString &baseName)
   QChar previous;
   for(int a = 0; a < baseName.length(); ++a) {
     QChar current = baseName.at(a);
-    if(current == '_') {
+    if(current == '_' || (a > 4 && baseName.mid(a, 4) == "Demo")) {
       break;
     }
     if(a > 0) {
