@@ -331,6 +331,8 @@ void Skyscraper::outputToTerminal(QString output, QString debug)
   
   printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
   printf("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
+
+  currentFile++;
 }
 
 QString Skyscraper::secsToString(const int &secs)
@@ -387,8 +389,6 @@ void Skyscraper::entryReady(GameEntry entry)
     printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n");
     exit(1);
   }
-
-  currentFile++;
 }
 
 void Skyscraper::checkThreads()
