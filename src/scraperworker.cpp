@@ -348,6 +348,14 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 {
   GameEntry game;
 
+  // If scraper isn't filename search based, always return first entry
+  if(config.scraper == "localdb" || config.scraper == "import" ||
+     config.scraper == "arcadedb" || config.scraper == "screenscraper") {
+    lowestDistance = 0;
+    game = gameEntries.first();
+    return game;
+  }
+
   if(gameEntries.isEmpty()) {
     game.title = compareTitle;
     game.found = false;
@@ -355,12 +363,12 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   }
 
   QList<GameEntry> potentials;
-
+  
   int compareNumeral = StrTools::getNumeral(compareTitle);
   // Start by applying rules we are certain are needed. Add the ones that pass to potentials
   foreach(GameEntry entry, gameEntries) {
     entry.title = StrTools::xmlUnescape(entry.title);
-
+    
     int entryNumeral = StrTools::getNumeral(entry.title);
     // If numerals don't match, skip.
     // Numeral defaults to 1, even for games without a numeral.
@@ -375,10 +383,10 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     // our listings when using mamenames for 'arcade' (everything becomes double)
     entry.title = entry.title.left(entry.title.indexOf("(")).simplified();
     entry.title = entry.title.left(entry.title.indexOf("[")).simplified();
-
+    
     potentials.append(entry);
   }
-
+  
   // If we have no potentials at all, return false
   if(potentials.isEmpty()) {
     game.found = false;
