@@ -348,17 +348,17 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 {
   GameEntry game;
 
+  if(gameEntries.isEmpty()) {
+    game.title = compareTitle;
+    game.found = false;
+    return game;
+  }
+
   // If scraper isn't filename search based, always return first entry
   if(config.scraper == "localdb" || config.scraper == "import" ||
      config.scraper == "arcadedb" || config.scraper == "screenscraper") {
     lowestDistance = 0;
     game = gameEntries.first();
-    return game;
-  }
-
-  if(gameEntries.isEmpty()) {
-    game.title = compareTitle;
-    game.found = false;
     return game;
   }
 
