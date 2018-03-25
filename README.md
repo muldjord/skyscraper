@@ -129,6 +129,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
 
+#### Version 2.4.4 (in progress, unreleased)
+* Search for "aga" and "cd32" in filenames and convert to [AGA] and [CD32] bracket names
+
 #### Version 2.4.3 (25th March 2018)
 * Fixed modules that aren't filename based to just always return first entry (Thank you AnalogHero)
 
