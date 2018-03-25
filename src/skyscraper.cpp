@@ -836,7 +836,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   // We know these results are always accurate
   if(config.minMatchSet == false && (config.scraper == "localdb" ||
 				     config.scraper == "screenscraper" ||
-				     config.scraper == "arcadedb")) {
+				     config.scraper == "arcadedb" ||
+				     config.scraper == "import")) {
     config.minMatch = 0;
   }
 
@@ -872,6 +873,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     // Always force local db to be updated when using import scraper
     config.updateDb = true;
     config.videos = true;
+    // minMatch set to 0 further up
   }
 
   if(!config.userCreds.isEmpty() && config.userCreds.indexOf(":") != -1) {
