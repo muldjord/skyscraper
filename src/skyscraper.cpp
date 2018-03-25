@@ -871,6 +871,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(config.scraper == "import") {
     // Always force local db to be updated when using import scraper
     config.updateDb = true;
+    config.videos = true;
   }
 
   if(!config.userCreds.isEmpty() && config.userCreds.indexOf(":") != -1) {
