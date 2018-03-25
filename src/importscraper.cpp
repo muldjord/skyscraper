@@ -140,7 +140,7 @@ void ImportScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
 
 QString ImportScraper::getCompareTitle(QFileInfo info, QString &, QString &)
 {
-  return info.baseName();
+  return info.completeBaseName();
 }
 
 void ImportScraper::getCover(GameEntry &game)
