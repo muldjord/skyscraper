@@ -125,7 +125,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Implemented the option to only scrape a single resource type during a scraping run
 * Added 'mobygames' scraping module
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
-* Now add <kidgame>bool</kidgame>
+* Added <kidgame>bool</kidgame> output when 'ages' permits it
+
+#### Version 2.4.2 (in progress, unreleased)
+* Reordered options in '--help' output
+* Changed help text for certain options for clarity
 
 #### Version 2.4.1 (25th March 2018)
 * Now auto-adds '--videos' option when using 'import' scraping module
