@@ -36,7 +36,7 @@ public:
   ImportScraper();
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &, QString &);
   void getGameData(GameEntry &game);
-  QString getCompareTitle(QString baseName, QString &, QString &);
+  QString getCompareTitle(QFileInfo info, QString &, QString &);
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
   void getWheel(GameEntry &game);
