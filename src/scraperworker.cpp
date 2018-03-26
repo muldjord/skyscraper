@@ -105,18 +105,23 @@ void ScraperWorker::run()
       if(info.completeBaseName().toLower().indexOf("cd32") != -1) {
 	debug.append("Platform change: 'amiga'->'cd32', filename contains 'cd32'");
 	config.platform = "cd32";
-	sqrNotes.append("[CD32]");
+	if(info.completeBaseName().toLower().indexOf("[cd32]") == -1)
+	  sqrNotes.append("[CD32]");
       } else if(info.completeBaseName().toLower().indexOf("cdtv") != -1) {
 	debug.append("Platform change: 'amiga'->'cdtv', filename contains 'cdtv'");
 	config.platform = "cdtv";
-	sqrNotes.append("[CDTV]");
+	if(info.completeBaseName().toLower().indexOf("[cdtv]") == -1)
+	  sqrNotes.append("[CDTV]");
       } else if(info.completeBaseName().toLower().indexOf("aga") != -1) {
 	debug.append("Added 'aga' marking for OpenRetro pass, filename contains 'aga'");
 	marking = "+aga";
-	sqrNotes.append("[AGA]");
+	if(info.completeBaseName().toLower().indexOf("[aga]") == -1)
+	  sqrNotes.append("[AGA]");
       } else if(info.completeBaseName().toLower().indexOf("demo") != -1) {
-	debug.append("Demo detected: Adding '[Demo]' bracket tag");
-	sqrNotes.append("[Demo]");
+	if(info.completeBaseName().toLower().indexOf("[demo]") == -1) {
+	  debug.append("Demo detected: Adding '[Demo]' bracket tag");
+	  sqrNotes.append("[Demo]");
+	}
       }
     }
     
