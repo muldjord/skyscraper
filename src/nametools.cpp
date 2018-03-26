@@ -56,6 +56,11 @@ QString NameTools::getScummName(const QString &baseName)
 
 QString NameTools::getNameWithSpaces(const QString &baseName)
 {
+  // Only perform if name contains no spaces
+  if(baseName.indexOf(" ") != -1) {
+    return baseName;
+  }
+
   QString withSpaces = "";
   QChar previous;
   for(int a = 0; a < baseName.length(); ++a) {
