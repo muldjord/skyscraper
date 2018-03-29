@@ -75,6 +75,13 @@ This will scrape the platform using the 'localdb' scraping module, and will make
 
 NOTE: To enable video scraping for the scraping modules that support it, you need to add the '--videos' command line option. This is disabled per default because of the significant space requirements needed to save them.
 
+### config.ini
+A lesser know, but extremely useful, feature of Skyscraper is to add your desired config variables to '`[homedir]/.skyscraper/config.ini`'. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, '`-m 100`' on command line, you can set the matching option '`minMatch="100"`' in the config.
+
+Many options can be set on two levels; either `[main]` or `[platform]`. Platform can be changed to any of the supported platforms (check list with '--help'), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will always be used.
+
+You can find an example config file at '`[homedir]/.skyscraper/config.ini.example`'. This file contains all available options. Just uncomment the ones you wish to use by removing the "#" in front of the variables.
+
 ### Local database features
 Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game 'title' or a game 'screenshot'. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the 'localdb' scraping module.
 
