@@ -17,7 +17,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * WEB: adb.arcadeitalia.net (Arcade Database by motoschifo, arcadedatabase@gmail.com, https://www.youtube.com/c/ArcadeDatabase)
 * WEB: screenscraper.fr
 * LOCAL: localdb (scrapes exclusively from cached resources, read more [here](#local-database-features))
-* LOCAL: import (imports resources located in '[homedir]/.skyscraper/import' into the local database. Read more under "Local data import")
+* LOCAL: import (imports resources located in '[homedir]/.skyscraper/import' into the local database. Read more about this [here](import/README.md)
 
 ... More scraping sources will be added in future releases!
 
