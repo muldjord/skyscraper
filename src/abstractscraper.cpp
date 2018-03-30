@@ -428,6 +428,7 @@ QString AbstractScraper::getSearchName(QFileInfo info)
     }
   }
 
+  baseName = baseName.replace("_", " ");
   baseName = baseName.replace(" - ", " ");
   baseName = baseName.replace(":", " ");
   baseName = baseName.replace(",", " ");
@@ -436,7 +437,6 @@ QString AbstractScraper::getSearchName(QFileInfo info)
   // A few game names have faulty "s's". Fix them to "s'"
   baseName = baseName.replace("s's", "s'");
   baseName = baseName.replace("'", "%27");
-  baseName = baseName.replace("_", " ");
   // Finally change all spaces to plusses since that's what most search engines understand
   baseName = baseName.simplified().replace(" ", "+");
 
