@@ -825,6 +825,9 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "gbc") {
     aliases.append("nintendo game boy color");
     aliases.append("game boy color");
+    // Workaround: ScreenScraper sometimes returns gbc results with gb platform applied
+    // This might bite me in the ass if other modules now return gb results for gbc games...
+    aliases.append("game boy");
   } else if(platform == "gc") {
     aliases.append("gamecube");
     aliases.append("nintendo gamecube");
