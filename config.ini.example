@@ -19,6 +19,7 @@
 
 #[main]
 #platform=""
+#dbFolder="/home/pi/.skyscraper/dbs"
 #frontend="emulationstation"
 #emulator=""
 #videos="false"
@@ -42,14 +43,15 @@
 #marquees="true"
 
 #[amiga]
+#inputFolder="/home/pi/RetroPie/roms/amiga"
+#gamelistFolder="/home/pi/RetroPie/roms/amiga"
+#mediaFolder="/home/pi/RetroPie/roms/amiga/media"
+#dbFolder="/home/pi/.skyscraper/dbs/amiga"
 #emulator=""
 #videos="false"
 #brackets="true"
 #scraper="screenscraper"
 #userCreds="user:password"
-#inputFolder="/home/pi/RetroPie/roms/amiga"
-#gamelistFolder="/home/pi/RetroPie/roms/amiga"
-#mediaFolder="/home/pi/RetroPie/roms/amiga/media"
 #minMatch="0"
 #maxLength="10000"
 #threads="2"
