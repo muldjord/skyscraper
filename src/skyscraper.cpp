@@ -78,6 +78,9 @@ void Skyscraper::run()
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
+  } else if(config.scraper == "mobygames" && config.threads != 1) {
+    printf("Forcing 1 thread to accomodate limits in MobyGames scraping module\n\n");
+    config.threads = 1;
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
       if(config.threads > 4) {
@@ -602,6 +605,17 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
+  // Check for command line platform here, since we need it for 'platform' config.ini entries
+  if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
+    config.platform = parser.value("p");
+  } else {
+    printf("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms, now exiting...\n");
+    exit(1);
+  }
+  if(settings.contains("dbFolder")) {
+    QString dbFolder = settings.value("dbFolder").toString();
+    config.dbFolder = dbFolder + (dbFolder.right(1) == "/"?"":"/") + config.platform;
+  }
   settings.endGroup();
 
   settings.beginGroup("localDb");
@@ -618,14 +632,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.cacheMarquees = settings.value("marquees").toBool();
   }
   settings.endGroup();
-  
-  // Check for command line platform here, since we need it for 'platform' config.ini entries
-  if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
-    config.platform = parser.value("p");
-  } else {
-    printf("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms, now exiting...\n");
-    exit(1);
-  }
 
   // Platform specific config, overrides main and defaults
   settings.beginGroup(config.platform);
@@ -641,8 +647,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     gameListFolderSet = true;
   }
   if(settings.contains("mediaFolder")) {
-    config.mediaFolder = settings.value("mediaFolder").toString();;
+    config.mediaFolder = settings.value("mediaFolder").toString();
     mediaFolderSet = true;
+  }
+  if(settings.contains("dbFolder")) {
+    config.dbFolder = settings.value("dbFolder").toString();
   }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();
@@ -722,6 +731,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 			   parser.value("s") == "thegamesdb" ||
 			   parser.value("s") == "arcadedb" ||
 			   parser.value("s") == "worldofspectrum" ||
+			   parser.value("s") == "mobygames" ||
 			   parser.value("s") == "screenscraper" ||
 			   parser.value("s") == "localdb" ||
 			   parser.value("s") == "import")) {
@@ -733,7 +743,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("d")) {
     config.dbFolder = parser.value("d");
   } else {
-    config.dbFolder = "dbs/" + config.platform;
+    if(config.dbFolder.isEmpty())
+      config.dbFolder = "dbs/" + config.platform;
   }
   if(parser.isSet("videos")) {
     config.videos = true;
