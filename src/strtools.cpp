@@ -96,21 +96,48 @@ QString StrTools::xmlEscape(QString str)
     replace("'", "&apos;");
 }
 
-QByteArray StrTools::unMagic(QByteArray str)
+QByteArray StrTools::magic(QByteArray str)
 {
-  QByteArray magicStr("WowMuchEncrypted");
+  QByteArray magicStr("WowMuchEncryptedVeryImpress");
 
   int strChars[str.length()];
   int magicChars[str.length()];
 
-  for(int a = 0; a < magicStr.length(); ++a) {
+  for(int a = 0; a < str.length(); ++a) {
+    strChars[a] = str.at(a);
+  }
+
+  for(int a = 0; a < str.length(); ++a) {
+    magicChars[a] = magicStr.at(a);
+  }
+
+  QByteArray thingie;
+  for(int a = 0; a < str.length(); ++a) {
+    thingie.append(QString::number(strChars[a] += magicChars[a]) + ";");
+  }
+
+  thingie = thingie.left(thingie.length() - 1);
+  
+  return thingie; 
+}
+
+QByteArray StrTools::unMagic(QByteArray str)
+{
+  int length = str.split(';').length();
+
+  QByteArray magicStr("WowMuchEncryptedVeryImpress");
+
+  int strChars[length];
+  int magicChars[length];
+
+  for(int a = 0; a < length; ++a) {
     strChars[a] = str.split(';').at(a).toInt();
   }
-  for(int a = 0; a < magicStr.length(); ++a) {
+  for(int a = 0; a < length; ++a) {
     magicChars[a] = magicStr.at(a);
   }
   QByteArray thingie;
-  for(int a = 0; a < magicStr.length(); ++a) {
+  for(int a = 0; a < length; ++a) {
     thingie.append(QChar(strChars[a] -= magicChars[a]));
   }
 
