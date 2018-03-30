@@ -16,6 +16,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * WEB: worldofspectrum.org
 * WEB: adb.arcadeitalia.net (Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
 * WEB: screenscraper.fr
+* WEB: mobygames.com
 * LOCAL: localdb (scrapes exclusively from cached resources. Read more [here](#local-database-features))
 * LOCAL: import (imports resources into the local cache. Read more about this [here](import/README.md))
 
@@ -139,6 +140,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge everything completely
 
 #### Version 2.4.4 (in progress, unreleased)
+* Now allows you to set custom dbFolder in config.ini both under main and platform sections
+* Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
 * For Amiga, searches for "Demo", "aga", "cdtv" and "cd32" in filenames and converts to [AGA] and [CD32] bracket names (Thanks Dom)
 * Region 'wor' has been moved below 'eu' and 'us' for Screenscraper since it often returns Japanese titles for 'wor' (Thanks maroonout09)
 * Now turns '_-_' into ' ' in filenames before doing searches (Thanks maroonout09)
