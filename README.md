@@ -144,7 +144,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Now allows you to set custom dbFolder in config.ini both under main and platform sections
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
 * For Amiga, searches for "Demo", "aga", "cdtv" and "cd32" in filenames and converts to [AGA] and [CD32] bracket names (Thanks Dom)
-* Region 'wor' has been moved below 'eu' and 'us' for Screenscraper since it often returns Japanese titles for 'wor' (Thanks maroonout09)
+* Region 'wor' has been moved below 'eu' and 'us' for Screenscraper since it often returns Japanese titles (Thanks maroonout09)
 * Now turns '_-_' into ' ' in filenames before doing searches (Thanks maroonout09)
 
 #### Version 2.4.3 (25th March 2018)
