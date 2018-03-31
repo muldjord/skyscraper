@@ -289,7 +289,6 @@ void Skyscraper::run()
     ScraperWorker *worker = new ScraperWorker(queue, localDb, config, QString::number(curThread));
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
-    connect(worker, &ScraperWorker::outputToTerminal, this, &Skyscraper::outputToTerminal);
     connect(worker, &ScraperWorker::entryReady, this, &Skyscraper::entryReady);
     //connect(worker, &ScraperWorker::addToSkipped, this, &Skyscraper::addToSkipped);
     connect(worker, &ScraperWorker::allDone, this, &Skyscraper::checkThreads);
@@ -320,24 +319,6 @@ void Skyscraper::checkForFolder(QDir &folder)
   }
 }
 
-void Skyscraper::outputToTerminal(QString output, QString debug)
-{
-  QMutexLocker locker(&outputMutex);
-
-  printf("\033[0;32m#%d/%d\033[0m %s\n", currentFile, totalFiles, output.toStdString().c_str());
-  int elapsed = timer.elapsed();
-  int estTime = elapsed / currentFile * totalFiles;
-
-  if(config.verbosity >= 3) {
-    printf("\033[1;33mDebug output:\033[0m\n%s\n", debug.toStdString().c_str());
-  }
-  
-  printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
-  printf("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
-
-  currentFile++;
-}
-
 QString Skyscraper::secsToString(const int &secs)
 {
   QString hours = QString::number(secs / 3600000 % 24);
@@ -356,9 +337,20 @@ QString Skyscraper::secsToString(const int &secs)
   return hours + ":" + minutes + ":" + seconds;
 }
 
-void Skyscraper::entryReady(GameEntry entry)
+void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
 {
   QMutexLocker locker(&entryMutex);
+
+  printf("\033[0;32m#%d/%d\033[0m %s\n", currentFile, totalFiles, output.toStdString().c_str());
+  int elapsed = timer.elapsed();
+  int estTime = elapsed / currentFile * totalFiles;
+
+  if(config.verbosity >= 3) {
+    printf("\033[1;33mDebug output:\033[0m\n%s\n", debug.toStdString().c_str());
+  }
+
+  printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
+  printf("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
 
   if(entry.found) {
     found++;
@@ -392,6 +384,7 @@ void Skyscraper::entryReady(GameEntry entry)
     printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n");
     exit(1);
   }
+  currentFile++;
 }
 
 void Skyscraper::checkThreads()

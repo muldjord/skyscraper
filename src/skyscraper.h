@@ -54,8 +54,7 @@ signals:
   void finished();
 
 private slots:
-  void entryReady(GameEntry entry);
-  void outputToTerminal(QString output, QString debug);
+  void entryReady(GameEntry entry, QString output, QString debug);
   void checkThreads();
   
 private:
@@ -72,7 +71,6 @@ private:
   QList<GameEntry> gameEntries;
   QList<QString> cliFiles;
   QMutex entryMutex;
-  QMutex outputMutex;
   QMutex checkThreadMutex;
   QTime timer;
   QString gameListFileString;
