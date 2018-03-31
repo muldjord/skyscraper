@@ -34,6 +34,7 @@ class OpenRetro : public AbstractScraper
 
 public:
   OpenRetro();
+  void getGameData(GameEntry &game);
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform);
