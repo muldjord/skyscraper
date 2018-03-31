@@ -140,6 +140,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge everything completely
 
 #### Version 2.4.4 (in progress, unreleased)
+* Changed openretro 'wheel' type to 'marquee' type. It wasn't really a wheel
 * 'openretro' now filters out variants to avoid bad screenshots (Thank you AnalogHero)
 * Now allows you to set custom dbFolder in config.ini both under main and platform sections
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
