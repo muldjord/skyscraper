@@ -47,8 +47,7 @@ public:
   
 signals:
   void allDone();
-  void entryReady(GameEntry entry);
-  void outputToTerminal(QString output, QString debug);
+  void entryReady(GameEntry entry, QString output, QString debug);
 
 private:
   QSharedPointer<LocalDb> localDb;

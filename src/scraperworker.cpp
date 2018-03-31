@@ -172,8 +172,7 @@ void ScraperWorker::run()
     if(game.found == false) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
       game.resetMedia();
-      emit outputToTerminal(output, debug);
-      emit entryReady(game);
+      emit entryReady(game, output, debug);
       continue;
     }
 
@@ -183,8 +182,7 @@ void ScraperWorker::run()
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' match too low :| ----\033[0m\n\n");
       game.found = false;
       game.resetMedia();
-      emit outputToTerminal(output, debug);
-      emit entryReady(game);
+      emit entryReady(game, output, debug);
       continue;
     }
 
@@ -266,8 +264,7 @@ void ScraperWorker::run()
     }
     output.append("\nDescription: (" + game.descriptionSrc + ")\n" + game.description.left(config.maxLength) + "\n");
 
-    emit outputToTerminal(output, debug);
-    emit entryReady(game);
+    emit entryReady(game, output, debug);
   }
 
   delete scraper;
