@@ -40,7 +40,7 @@ private:
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform);
   void getTags(GameEntry &game);
   void getCover(GameEntry &game);
-  void getWheel(GameEntry &game);
+  void getMarquee(GameEntry &game);
 };
 
 #endif // OPENRETRO_H

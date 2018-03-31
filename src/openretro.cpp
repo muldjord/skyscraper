@@ -41,9 +41,9 @@ OpenRetro::OpenRetro()
   titlePost = " <span";
   platformPre.append("#aaaaaa'>");
   platformPost = "</span>";
-  wheelPre.append(">banner_sha1</td>");
-  wheelPre.append("<div><a href=\"");
-  wheelPost = "\">";
+  marqueePre.append(">banner_sha1</td>");
+  marqueePre.append("<div><a href=\"");
+  marqueePost = "\">";
   descriptionPre.append(">description</td>");
   descriptionPre.append("<td style='color: black;'><div>");
   descriptionPost = "</div></td>";
@@ -68,7 +68,7 @@ OpenRetro::OpenRetro()
   releaseDatePost = "</div></td>";
   tagsPre.append(">tags</td>");
 
-  fetchOrder.append(WHEEL);
+  fetchOrder.append(MARQUEE);
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(DEVELOPER);
   fetchOrder.append(COVER);
@@ -222,27 +222,27 @@ void OpenRetro::getCover(GameEntry &game)
   }
 }
 
-void OpenRetro::getWheel(GameEntry &game)
+void OpenRetro::getMarquee(GameEntry &game)
 {
-  if(wheelPre.isEmpty()) {
+  if(marqueePre.isEmpty()) {
     return;
   }
-  foreach(QString nom, wheelPre) {
+  foreach(QString nom, marqueePre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, wheelPre) {
+  foreach(QString nom, marqueePre) {
     nomNom(nom);
   }
-  QString wheelUrl = data.left(data.indexOf(wheelPost)).replace("&amp;", "&") + "?s=512";
-  if(wheelUrl.left(4) != "http") {
-    wheelUrl.prepend(baseUrl + (wheelUrl.left(1) == "/"?"":"/"));
+  QString marqueeUrl = data.left(data.indexOf(marqueePost)).replace("&amp;", "&") + "?s=512";
+  if(marqueeUrl.left(4) != "http") {
+    marqueeUrl.prepend(baseUrl + (marqueeUrl.left(1) == "/"?"":"/"));
   }
-  manager.request(wheelUrl);
+  manager.request(marqueeUrl);
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.wheelData = image;
+    game.marqueeData = image;
   }
 }
