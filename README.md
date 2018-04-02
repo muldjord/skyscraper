@@ -139,7 +139,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge everything completely
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
 
-#### Version 2.4.4 (in progress, unreleased)
+#### Version 2.4.4 (2nd April 2018)
 * Changed openretro 'wheel' type to 'marquee' type. It wasn't really a wheel
 * 'openretro' now filters out variants to avoid bad screenshots (Thank you AnalogHero)
 * Now allows you to set custom dbFolder in config.ini both under main and platform sections
@@ -147,7 +147,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Region 'wor' has been moved below 'eu' and 'us' for Screenscraper since it often returns Japanese titles (Thanks maroonout09)
 * Now turns '_-_' into ' ' in filenames before doing searches (Thanks maroonout09)
 * Simplified thread result communication with main thread from two functions to just one
-* Now again properly tests for a scraping run with 30 consecutive misses
+* Now again properly tests for a scraping run with 30 consecutive misses, then exits
 
 #### Version 2.4.3 (25th March 2018)
 * Fixed modules that aren't filename based to just always return first entry (Thank you AnalogHero)
