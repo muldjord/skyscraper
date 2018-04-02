@@ -4,6 +4,8 @@
   <order type="title">
     <source>arcadedb</source>
     <source>screenscraper</source>
+    <source>thegamesdb</source>
+    <source>openretro</source>
   </order>
   <order type="platform">
     <source>thegamesdb</source>
