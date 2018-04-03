@@ -137,6 +137,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
+* Made 'import' base folder configurable
 
 #### Version 2.4.4 (2nd April 2018)
 * Changed openretro 'wheel' type to 'marquee' type. It wasn't really a wheel
