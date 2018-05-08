@@ -98,6 +98,7 @@ QStringList Platform::getPlatforms()
   platforms.append("wii");
   platforms.append("wonderswan");
   platforms.append("wonderswancolor");
+  platforms.append("x68000");
   platforms.append("zmachine");
   platforms.append("zxspectrum");
 
@@ -359,6 +360,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
+  } else if(platform  == "x68000") {
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
   } else if(platform  == "zmachine") {
     scrapers.append("thegamesdb");
     scrapers.append("localdb");
@@ -489,6 +494,8 @@ QString Platform::getFormats(QString platform)
     formats.append("*.ws");
   } else if(platform == "wonderswancolor") {
     formats.append("*.wsc");
+  } else if(platform == "x68000") {
+    formats.append("*.dim *.m3u");
   } else if(platform == "zmachine") {
     formats.append("*.dat *.z1 *.z2 *.z3 *.z4 *.z5 *.z6 *.z7 *.z8");
   } else if(platform == "zxspectrum") {
@@ -614,6 +621,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "wonderswan") {
     scraper = "localdb";
   } else if(platform == "wonderswancolor") {
+    scraper = "localdb";
+  } else if(platform == "x68000") {
     scraper = "localdb";
   } else if(platform == "zmachine") {
     scraper = "localdb";
@@ -915,6 +924,8 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("nintendo wii");
   } else if(platform == "wonderswancolor") {
     aliases.append("wonderswan color");
+  } else if(platform == "x68000") {
+    aliases.append("sharp x68000");
   } else if(platform == "zmachine") {
     aliases.append("commodore 64"); // Because this is the only platform that seems to have them
   } else if(platform == "zxspectrum") {

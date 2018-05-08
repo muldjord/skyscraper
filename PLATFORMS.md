@@ -47,6 +47,7 @@
 * Sega Master System
 * Sega Saturn
 * Sega SG-1000
+* Sharp X68000
 * Super Nintendo
 * TRS-80
 * Vectrex
