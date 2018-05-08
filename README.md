@@ -131,13 +131,16 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
-* Implemented the option to only scrape a single resource type during a scraping run
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
 * Added <kidgame>bool</kidgame> output when 'ages' permits it
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
+* Updated to new 'thegamesdb' api
 * Made 'import' base folder configurable
+
+#### Version 2.4.5 (8th May 2018)
+* Added support for the 'x68000' platform
 
 #### Version 2.4.4 (2nd April 2018)
 * Changed openretro 'wheel' type to 'marquee' type. It wasn't really a wheel
