@@ -115,9 +115,14 @@ void AttractMode::setNotes(GameEntry &entry, QString baseName)
 
 void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int)
 {
+  QFileInfo emuInfo(config->emulator);
+  bool saveDescFile = true;
+  QDir descDir(config->gameListFolder + "/" + emuInfo.completeBaseName());
+  if(!descDir.exists() && descDir.mkpath(descDir.absolutePath())) {
+    saveDescFile = false;
+  }
   finalOutput.append("#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n");
   foreach(GameEntry entry, gameEntries) {
-    QFileInfo emuInfo(config->emulator);
     finalOutput.append(entry.baseName + ";" +
 		       entry.title);
     if(config->brackets) {
@@ -139,6 +144,13 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
 		       ";" +
 		       ";" +
 		       ";\n");
+    if(!entry.description.isEmpty() && saveDescFile) {
+      QFile descFile(descDir.absolutePath() + "/" + entry.baseName + ".cfg");
+      if(descFile.open(QIODevice::WriteOnly)) {
+	descFile.write(QByteArray("Overview " + entry.description.toUtf8()));
+	descFile.close();
+      }
+    }
   }
 }
 

@@ -139,6 +139,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Updated to new 'thegamesdb' api
 * Made 'import' base folder configurable
 
+#### Version 2.4.6 (In progress, unreleased)
+* Added 'overview' support for AttractMode. It will now create the necessary cfg files to show the game descriptions.
+
 #### Version 2.4.5 (8th May 2018)
 * Added support for the 'x68000' platform
 
