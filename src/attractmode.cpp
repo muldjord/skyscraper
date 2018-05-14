@@ -147,7 +147,7 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
     if(!entry.description.isEmpty() && saveDescFile) {
       QFile descFile(descDir.absolutePath() + "/" + entry.baseName + ".cfg");
       if(descFile.open(QIODevice::WriteOnly)) {
-	descFile.write(QByteArray("Overview " + entry.description.toUtf8()));
+	descFile.write(QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified());
 	descFile.close();
       }
     }
