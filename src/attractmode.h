@@ -52,6 +52,7 @@ public:
 private:
   QString getMediaTypeFolder(QString type);
   bool checkEmulatorFile(QString fileName);
+  void setCfgLine(QString filename, QByteArray key, QByteArray content);
   void setNotes(GameEntry &entry, QString baseName);
 
 };

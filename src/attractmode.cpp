@@ -146,40 +146,45 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
 		       ";\n");
     if(!entry.description.isEmpty() && saveDescFile) {
       QByteArray desc = QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified();
-      QFile descFile(descDir.absolutePath() + "/" + entry.baseName + ".cfg");
-      if(descFile.exists()) {
-	QList<QByteArray> lines;
-	if(descFile.open(QIODevice::ReadOnly)) {
-	  while(!descFile.atEnd()) {
-	    lines.append(descFile.readLine());
-	  }
-	  descFile.close();
-	}
-	bool descFound = false;
-	for(int a = 0; a < lines.length(); ++a) {
-	  if(lines.at(a).left(8) == "overview") {
-	    lines.removeAt(a);
-	    lines.insert(a, desc);
-	    descFound = true;
-	    break;
-	  }
-	}
-	if(!descFound) {
-	  lines.append(desc);
-	}
-	if(descFile.open(QIODevice::WriteOnly)) {
-	  for(int a = 0; a < lines.length(); ++a) {
-	    QByteArray line = lines.at(a) + (lines.at(a).right(1) == "\n"?"":"\n");
-	    descFile.write(line);
-	  }
-	  descFile.close();
-	}
-      } else {
-	if(descFile.open(QIODevice::WriteOnly)) {
-	  descFile.write(desc);
-	  descFile.close();
-	}
+      setCfgLine(descDir.absolutePath() + "/" + entry.baseName + ".cfg", "overview", desc);
+    }
+  }
+}
+
+void AttractMode::setCfgLine(QString filename, QByteArray key, QByteArray content)
+{
+  QFile cfgFile(filename);
+  if(cfgFile.exists()) {
+    QList<QByteArray> lines;
+    if(cfgFile.open(QIODevice::ReadOnly)) {
+      while(!cfgFile.atEnd()) {
+	lines.append(cfgFile.readLine());
       }
+      cfgFile.close();
+    }
+    bool descFound = false;
+    for(int a = 0; a < lines.length(); ++a) {
+      if(lines.at(a).left(key.length()) == key) {
+	lines.removeAt(a);
+	lines.insert(a, content);
+	descFound = true;
+	break;
+      }
+    }
+    if(!descFound) {
+      lines.append(content);
+    }
+    if(cfgFile.open(QIODevice::WriteOnly)) {
+      for(int a = 0; a < lines.length(); ++a) {
+	QByteArray line = lines.at(a) + (lines.at(a).right(1) == "\n"?"":"\n");
+	cfgFile.write(line);
+      }
+      cfgFile.close();
+    }
+  } else {
+    if(cfgFile.open(QIODevice::WriteOnly)) {
+      cfgFile.write(content);
+      cfgFile.close();
     }
   }
 }
