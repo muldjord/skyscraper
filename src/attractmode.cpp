@@ -145,10 +145,40 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
 		       ";" +
 		       ";\n");
     if(!entry.description.isEmpty() && saveDescFile) {
+      QByteArray desc = QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified();
       QFile descFile(descDir.absolutePath() + "/" + entry.baseName + ".cfg");
-      if(descFile.open(QIODevice::WriteOnly)) {
-	descFile.write(QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified());
-	descFile.close();
+      if(descFile.exists()) {
+	QList<QByteArray> lines;
+	if(descFile.open(QIODevice::ReadOnly)) {
+	  while(!descFile.atEnd()) {
+	    lines.append(descFile.readLine());
+	  }
+	  descFile.close();
+	}
+	bool descFound = false;
+	for(int a = 0; a < lines.length(); ++a) {
+	  if(lines.at(a).left(8) == "overview") {
+	    lines.removeAt(a);
+	    lines.insert(a, desc);
+	    descFound = true;
+	    break;
+	  }
+	}
+	if(!descFound) {
+	  lines.append(desc);
+	}
+	if(descFile.open(QIODevice::WriteOnly)) {
+	  for(int a = 0; a < lines.length(); ++a) {
+	    QByteArray line = lines.at(a) + (lines.at(a).right(1) == "\n"?"":"\n");
+	    descFile.write(line);
+	  }
+	  descFile.close();
+	}
+      } else {
+	if(descFile.open(QIODevice::WriteOnly)) {
+	  descFile.write(desc);
+	  descFile.close();
+	}
       }
     }
   }
