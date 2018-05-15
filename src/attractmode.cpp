@@ -118,7 +118,7 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
   QFileInfo emuInfo(config->emulator);
   bool saveDescFile = true;
   QDir descDir(config->gameListFolder + "/" + emuInfo.completeBaseName());
-  if(!descDir.exists() && descDir.mkpath(descDir.absolutePath())) {
+  if(!descDir.exists() && !descDir.mkpath(descDir.absolutePath())) {
     saveDescFile = false;
   }
   finalOutput.append("#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n");
