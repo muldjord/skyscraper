@@ -142,7 +142,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Updated to new 'thegamesdb' api
 * Made 'import' base folder configurable
 
-#### Version 2.4.6 (In progress, unreleased)
+#### Version 2.4.6 (25th May 2018)
 * Added 'overview' support for AttractMode. It will now create the necessary cfg files to show the game descriptions
 * Added '`<kidgame>bool</kidgame>`' output to Emulationstation gamelist generation
 * Added 'ages' support in 'screenscraper' module. Will convert PEGI and ESRB to numeric
