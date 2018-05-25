@@ -129,6 +129,9 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     } else {
       finalOutput.append("    <players>" + StrTools::xmlEscape(entry.players) + "</players>\n");
     }
+    if(!entry.ages.isEmpty() && (entry.ages.toInt() >= 1 && entry.ages.toInt() <= 10)) {
+      finalOutput.append("    <kidgame>true</kidgame>\n");
+    }
     finalOutput.append("  </game>\n");
   }
   finalOutput.append("</gameList>");
