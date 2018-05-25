@@ -145,7 +145,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.4.6 (In progress, unreleased)
 * Added 'overview' support for AttractMode. It will now create the necessary cfg files to show the game descriptions
-* Added '<kidgame>bool</kidgame>' output to Emulationstation gamelist generation
+* Added '`<kidgame>bool</kidgame>`' output to Emulationstation gamelist generation
 * Added 'ages' support in 'screenscraper' module. Will convert PEGI and ESRB to numeric
 * Added 'ages' support in 'thegamesdb' module. Will convert PEGI and ESRB to numeric
 
