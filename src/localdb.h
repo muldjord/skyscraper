@@ -50,6 +50,7 @@ struct ResCounts {
   int publishers;
   int developers;
   int players;
+  int ages;
   int tags;
   int ratings;
   int releaseDates;

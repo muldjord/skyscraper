@@ -63,6 +63,7 @@ protected:
   virtual void getDeveloper(GameEntry &game);
   virtual void getPublisher(GameEntry &game);
   virtual void getPlayers(GameEntry &game);
+  virtual void getAges(GameEntry &game);
   virtual void getTags(GameEntry &game);
   virtual void getRating(GameEntry &game);
   virtual void getReleaseDate(GameEntry &game);
@@ -102,6 +103,8 @@ protected:
   QString publisherPost;
   QList<QString> playersPre;
   QString playersPost;
+  QList<QString> agesPre;
+  QString agesPost;
   QList<QString> tagsPre;
   QString tagsPost;
   QList<QString> ratingPre;

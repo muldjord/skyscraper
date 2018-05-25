@@ -39,6 +39,7 @@ ImportScraper::ImportScraper()
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(TAGS);
   fetchOrder.append(PLAYERS);
+  fetchOrder.append(AGES);
   fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
   
@@ -78,6 +79,10 @@ void ImportScraper::getGameData(GameEntry &game)
       break;
     case PLAYERS:
       getPlayers(game);
+      data = dataOrig;
+      break;
+    case AGES:
+      getAges(game);
       data = dataOrig;
       break;
     case RATING:
@@ -217,6 +222,7 @@ bool ImportScraper::loadDefinitions()
       checkForTag(publisherPre, publisherPost, publisherTag, line);
       checkForTag(developerPre, developerPost, developerTag, line);
       checkForTag(playersPre, playersPost, playersTag, line);
+      checkForTag(agesPre, agesPost, agesTag, line);
       checkForTag(ratingPre, ratingPost, ratingTag, line);
       checkForTag(tagsPre, tagsPost, tagsTag, line);
       checkForTag(releaseDatePre, releaseDatePost, releaseDateTag, line);

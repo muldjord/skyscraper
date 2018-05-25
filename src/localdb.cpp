@@ -187,6 +187,7 @@ void LocalDb::showStats(int verbosity)
     int publishers = 0;
     int developers = 0;
     int players = 0;
+    int ages = 0;
     int tags = 0;
     int ratings = 0;
     int releaseDates = 0;
@@ -203,6 +204,7 @@ void LocalDb::showStats(int verbosity)
       publishers += it.value().publishers;
       developers += it.value().developers;
       players += it.value().players;
+      ages += it.value().ages;
       tags += it.value().tags;
       ratings += it.value().ratings;
       releaseDates += it.value().releaseDates;
@@ -218,6 +220,7 @@ void LocalDb::showStats(int verbosity)
     printf("  Publishers   : %d\n", publishers);
     printf("  Developers   : %d\n", developers);
     printf("  Players      : %d\n", players);
+    printf("  Ages         : %d\n", ages);
     printf("  Tags         : %d\n", tags);
     printf("  Ratings      : %d\n", ratings);
     printf("  ReleaseDates : %d\n", releaseDates);
@@ -235,7 +238,7 @@ void LocalDb::showStats(int verbosity)
       printf("  Descriptions : %d\n", it.value().descriptions);
       printf("  Publishers   : %d\n", it.value().publishers);
       printf("  Developers   : %d\n", it.value().developers);
-      printf("  Players      : %d\n", it.value().players);
+      printf("  Ages         : %d\n", it.value().ages);
       printf("  Tags         : %d\n", it.value().tags);
       printf("  Ratings      : %d\n", it.value().ratings);
       printf("  ReleaseDates : %d\n", it.value().releaseDates);
@@ -263,6 +266,8 @@ void LocalDb::addToResCounts(const QString source, const QString type)
     resCountsMap[source].developers++;
   } else if(type == "players") {
     resCountsMap[source].players++;
+  } else if(type == "ages") {
+    resCountsMap[source].ages++;
   } else if(type == "tags") {
     resCountsMap[source].tags++;
   } else if(type == "rating") {
@@ -553,6 +558,11 @@ void LocalDb::addResources(GameEntry &entry, const Settings &config)
       resource.value = entry.players;
       addResource(resource, entry, dbAbsolutePath, config);
     }
+    if(entry.ages != "") {
+      resource.type = "ages";
+      resource.value = entry.ages;
+      addResource(resource, entry, dbAbsolutePath, config);
+    }
     if(entry.tags != "") {
       resource.type = "tags";
       resource.value = entry.tags;
@@ -754,6 +764,15 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
     if(fillType(type, matchingResources, result, source)) {
       entry.players = result;
       entry.playersSrc = source;
+    }
+  }
+  {
+    QString type = "ages";
+    QString result = "";
+    QString source = "";
+    if(fillType(type, matchingResources, result, source)) {
+      entry.ages = result;
+      entry.agesSrc = source;
     }
   }
   {

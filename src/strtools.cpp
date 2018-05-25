@@ -179,7 +179,43 @@ QString StrTools::conformPlayers(QString str)
 
   if(QRegularExpression("^\\d to \\d").match(str).hasMatch())
     return str.mid(5, 1);
+
+  if(QRegularExpression("^\\d\\+").match(str).hasMatch())
+    return str.mid(0, 1);
   
+  return str;
+}
+
+QString StrTools::conformAges(QString str)
+{
+  if(str == "E") {
+    str = "1";
+  } else if(str == "EC") {
+    str = "3";
+  } else if(str == "KA") {
+    str = "1";
+  } else if(str == "E - Everyone") {
+    str = "1";
+  } else if(str == "E10+") {
+    str = "10";
+  } else if(str == "E10+ - Everyone 10+") {
+    str = "10";
+  } else if(str == "T") {
+    str = "13";
+  } else if(str == "T - Teen") {
+    str = "13";
+  } else if(str == "M") {
+    str = "17";
+  } else if(str == "A") {
+    str = "18";
+  } else if(str == "AO") {
+    str = "18";
+  } else if(str == "AO - Adults Only") {
+    str = "18";
+  } else if(str == "M - Mature") {
+    str = "18";
+  }
+
   return str;
 }
 

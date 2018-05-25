@@ -37,6 +37,7 @@ ScreenScraper::ScreenScraper()
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(DEVELOPER);
   fetchOrder.append(PLAYERS);
+  fetchOrder.append(AGES);
   fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(RELEASEDATE);
@@ -110,6 +111,9 @@ void ScreenScraper::getGameData(GameEntry &game)
     case PLAYERS:
       getPlayers(game);
       break;
+    case AGES:
+      getAges(game);
+      break;
     case RATING:
       getRating(game);
       break;
@@ -165,6 +169,39 @@ void ScreenScraper::getDescription(GameEntry &game)
 void ScreenScraper::getPlayers(GameEntry &game)
 {
   game.players = xmlDoc.elementsByTagName("joueurs").at(0).toElement().text();
+}
+
+void ScreenScraper::getAges(GameEntry &game)
+{
+  QDomNodeList xmlNodes = xmlDoc.elementsByTagName("classification");
+
+  if(xmlNodes.isEmpty())
+    return;
+  
+  // First look for PEGI
+  for(int a = 0; a < xmlNodes.length(); ++a) {
+    QDomElement elem = xmlNodes.at(a).toElement();
+    if(elem.attribute("type") == "PEGI") {
+      game.ages = xmlNodes.at(a).toElement().text();
+      return;
+    }
+  }
+  // Then look for ESRB
+  for(int a = 0; a < xmlNodes.length(); ++a) {
+    QDomElement elem = xmlNodes.at(a).toElement();
+    if(elem.attribute("type") == "ESRB") {
+      game.ages = xmlNodes.at(a).toElement().text();
+      return;
+    }
+  }
+  // Then look for SS
+  for(int a = 0; a < xmlNodes.length(); ++a) {
+    QDomElement elem = xmlNodes.at(a).toElement();
+    if(elem.attribute("type") == "SS") {
+      game.ages = xmlNodes.at(a).toElement().text();
+      return;
+    }
+  }
 }
 
 void ScreenScraper::getRating(GameEntry &game)

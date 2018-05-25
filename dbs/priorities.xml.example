@@ -32,6 +32,13 @@
     <source>screenscraper</source>
     <source>thegamesdb</source>
   </order>
+  <order type="ages">
+    <source>import</source>
+    <source>screenscraper</source>
+    <source>thegamesdb</source>
+    <source>arcadedb</source>
+    <source>openretro</source>
+  </order>
   <order type="tags">
     <source>import</source>
     <source>arcadedb</source>

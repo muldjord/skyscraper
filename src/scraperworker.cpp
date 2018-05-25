@@ -232,6 +232,9 @@ void ScraperWorker::run()
     game.players = StrTools::xmlUnescape(game.players);
     // Make sure we have the correct single digit format of 'players'
     game.players = StrTools::conformPlayers(game.players);
+    game.ages = StrTools::xmlUnescape(game.ages);
+    // Make sure we have the correct format of 'ages'
+    game.ages = StrTools::conformAges(game.ages);
 
     output.append("Scraper:        " + config.scraper + "\n");
     if(config.scraper != "localdb" && config.scraper != "import") {
@@ -253,6 +256,7 @@ void ScraperWorker::run()
     output.append("Developer:      '\033[1;32m" + game.developer + "\033[0m' (" + game.developerSrc + ")\n");
     output.append("Publisher:      '\033[1;32m" + game.publisher + "\033[0m' (" + game.publisherSrc + ")\n");
     output.append("Players:        '\033[1;32m" + game.players + "\033[0m' (" + game.playersSrc + ")\n");
+    output.append("Ages:           '\033[1;32m" + game.ages + (game.ages.toInt() != 0?"+":"") + "\033[0m' (" + game.agesSrc + ")\n");
     output.append("Tags:           '\033[1;32m" + game.tags + "\033[0m' (" + game.tagsSrc + ")\n");
     output.append("Rating (0-1):   '\033[1;32m" + game.rating + "\033[0m' (" + game.ratingSrc + ")\n");
     output.append("Cover:          " + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers?"":" (uncached)")) + " (" + game.coverSrc + ")\n");

@@ -52,12 +52,13 @@ From the examples above you'll notice the '###SOMETHING###' tags. This is what S
 * ###DEVELOPER###
 * ###PUBLISHER###
 * ###PLAYERS###
+* ###AGES###
 * ###RATING###
 * ###TAGS###
 * ###RELEASEDATE###
 
 #### Resource formats
-For '###RATING###' and '###RELEASEDATE###' a certain format is required. Rating must be a number between 0.0 and 5.0. Release date must be of one of the following formats:
+For '###RATING###', ###AGES###, and '###RELEASEDATE###' a certain format is required. Rating must be a number between 0.0 and 5.0. Ages must be an integer between 1 and 18 (for instance "16" means it is suitable from ages 16 and up). Release date must be of one of the following formats:
 * yyyy
 * yyyy-MM
 * yyyy-MM-dd

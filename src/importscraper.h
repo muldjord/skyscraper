@@ -53,6 +53,7 @@ private:
   QString developerTag = "###DEVELOPER###";
   QString publisherTag = "###PUBLISHER###";
   QString playersTag = "###PLAYERS###";
+  QString agesTag = "###AGES###";
   QString ratingTag = "###RATING###";
   QString tagsTag = "###TAGS###";
   QString releaseDateTag = "###RELEASEDATE###";

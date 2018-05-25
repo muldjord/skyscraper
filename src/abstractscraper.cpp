@@ -93,6 +93,9 @@ void AbstractScraper::getGameData(GameEntry &game)
     case PLAYERS:
       getPlayers(game);
       break;
+    case AGES:
+      getAges(game);
+      break;
     case RATING:
       getRating(game);
       break;
@@ -191,6 +194,22 @@ void AbstractScraper::getPlayers(GameEntry &game)
     nomNom(nom);
   }
   game.players = data.left(data.indexOf(playersPost));
+}
+
+void AbstractScraper::getAges(GameEntry &game)
+{
+  if(agesPre.isEmpty()) {
+    return;
+  }
+  foreach(QString nom, agesPre) {
+    if(!checkNom(nom)) {
+      return;
+    }
+  }
+  foreach(QString nom, agesPre) {
+    nomNom(nom);
+  }
+  game.ages = data.left(data.indexOf(agesPost));
 }
 
 void AbstractScraper::getTags(GameEntry &game)

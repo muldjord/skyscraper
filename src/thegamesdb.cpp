@@ -40,6 +40,7 @@ TheGamesDb::TheGamesDb()
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(TAGS);
   fetchOrder.append(PLAYERS);
+  fetchOrder.append(AGES);
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(DEVELOPER);
   fetchOrder.append(RATING);
@@ -102,6 +103,9 @@ void TheGamesDb::getGameData(GameEntry &game)
       break;
     case PLAYERS:
       getPlayers(game);
+      break;
+    case AGES:
+      getAges(game);
       break;
     case RATING:
       getRating(game);
@@ -170,6 +174,16 @@ void TheGamesDb::getDescription(GameEntry &game)
 void TheGamesDb::getPlayers(GameEntry &game)
 {
   game.players = xmlGame.firstChildElement("Players").text();
+}
+
+void TheGamesDb::getAges(GameEntry &game)
+{
+  game.ages = xmlGame.firstChildElement("PEGI").text();
+  if(!game.ages.isEmpty())
+    return;
+  game.ages = xmlGame.firstChildElement("ESRB").text();
+  if(!game.ages.isEmpty())
+    return;
 }
 
 void TheGamesDb::getTags(GameEntry &game)

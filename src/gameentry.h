@@ -38,6 +38,7 @@
 #define RATING 9
 #define WHEEL 10
 #define MARQUEE 11
+#define AGES 12
 
 #include <QImage>
 
@@ -65,6 +66,8 @@ public:
   QString tagsSrc = "";
   QString players = "";
   QString playersSrc = "";
+  QString ages = "";
+  QString agesSrc = "";
   QString rating = "";
   QString ratingSrc = "";
 

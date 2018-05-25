@@ -76,6 +76,9 @@ int GameEntry::completeness(bool videoEnabled)
   if(players.isEmpty()) {
     completeness -= valuePerType;
   }
+  if(ages.isEmpty()) {
+    completeness -= valuePerType;
+  }
   if(videoEnabled && videoFormat.isEmpty()) {
     completeness -= valuePerType;
   }
