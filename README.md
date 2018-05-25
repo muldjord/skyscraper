@@ -137,7 +137,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Implemented 'ratings' such as ESRB ratings from sources ('classification'?, 'ages'?)
-* Added <kidgame>bool</kidgame> output when 'ages' permits it
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
@@ -145,7 +144,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made 'import' base folder configurable
 
 #### Version 2.4.6 (In progress, unreleased)
-* Added 'overview' support for AttractMode. It will now create the necessary cfg files to show the game descriptions.
+* Added 'overview' support for AttractMode. It will now create the necessary cfg files to show the game descriptions
+* Added '<kidgame>bool</kidgame>' output to Emulationstation gamelist generation
+* Added 'ages' support in 'screenscraper' module. Will convert PEGI and ESRB to numeric
+* Added 'ages' support in 'thegamesdb' module. Will convert PEGI and ESRB to numeric
 
 #### Version 2.4.5 (8th May 2018)
 * Added support for the 'x68000' platform
