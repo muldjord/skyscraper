@@ -141,6 +141,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
 * Updated to new 'thegamesdb' api
 * Made 'import' base folder configurable
+* Added 'Estimated remaining time' to output
+
+#### Version 2.4.7 (In progress, unreleased)
+* Added c16, c128 and vic20 platforms. c16 and c128 will scrape using c64 alias as they aren't directly supported by the sources
 
 #### Version 2.4.6 (25th May 2018)
 * Added 'overview' support for AttractMode. It will now create the necessary cfg files to show the game descriptions
