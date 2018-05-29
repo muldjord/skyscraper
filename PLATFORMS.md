@@ -12,7 +12,8 @@
 * Atari ST
 * Coco (Tandy Colour Computer)
 * ColecoVision
-* Commodore 64
+* Commodore 16/64/128
+* Commodore Vic-20
 * Daphne
 * Dragon 32/64
 * Dreamcast
