@@ -143,7 +143,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made 'import' base folder configurable
 * Added 'Estimated remaining time' to output
 
-#### Version 2.4.7 (In progress, unreleased)
+#### Version 2.4.7 (30th May 2018)
 * Added c16, c128 and vic20 platforms. c16 and c128 will scrape using c64 alias as they aren't directly supported by the sources
 
 #### Version 2.4.6 (25th May 2018)
