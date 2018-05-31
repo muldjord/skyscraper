@@ -586,7 +586,7 @@ void AbstractScraper::setConfig(Settings *config)
 
 void AbstractScraper::setRegionPrios()
 {
-  if(!config->region.isEmpty()) {
+  if(!config->region.isEmpty() && config->region != "eu") {
     regionPrios.append(config->region);
   }
   regionPrios.append("eu");
@@ -597,7 +597,7 @@ void AbstractScraper::setRegionPrios()
 
 void AbstractScraper::setLangPrios()
 {
-  if(!config->lang.isEmpty()) {
+  if(!config->lang.isEmpty() && config->lang != "en") {
     langPrios.append(config->lang);
   }
   langPrios.append("en");
