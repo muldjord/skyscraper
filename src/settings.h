@@ -85,8 +85,8 @@ struct Settings {
 
   QString user = "";
   QString password = "";
-  QString lang = "en";
-  QString region = "wor";
+  QString lang = "";
+  QString region = "";
 
   QMap<QString, QImage> resources;
   

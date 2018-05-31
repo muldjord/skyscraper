@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--pretend', '--updatedb' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption pretendOption("pretend", "Don't alter game list and media files, just print the results on screen. Scraped resources are still cached in the local database.");
   QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
-  QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default 'wor')", "code", "wor");
+  QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default 'eu')", "code", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Can be 0-3, default is 0.)", "int", "0");
   
