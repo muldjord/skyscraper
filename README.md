@@ -143,6 +143,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made 'import' base folder configurable
 * Added 'Estimated remaining time' to output
 
+#### Version 2.4.9 (9th June 2018)
+* Added 'mame-advmame', 'mame-mame4all' and 'mame-libretro' platforms
+
 #### Version 2.4.8 (31st May 2018)
 * Fixed bug that made region default to 'wor' instead of 'eu' and 'us' if unset
 
