@@ -70,6 +70,9 @@ QStringList Platform::getPlatforms()
   platforms.append("gc");
   platforms.append("genesis");
   platforms.append("intellivision");
+  platforms.append("mame-advmame");
+  platforms.append("mame-libretro");
+  platforms.append("mame-mame4all");
   platforms.append("mastersystem");
   platforms.append("megadrive");
   platforms.append("msx");
@@ -241,6 +244,24 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "intellivision") {
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "mame-advmame") {
+    scrapers.append("arcadedb");
+    scrapers.append("openretro");
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "mame-libretro") {
+    scrapers.append("arcadedb");
+    scrapers.append("openretro");
+    scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "mame-mame4all") {
+    scrapers.append("arcadedb");
+    scrapers.append("openretro");
     scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -453,6 +474,12 @@ QString Platform::getFormats(QString platform)
     formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "intellivision") {
     formats.append("*.int *.bin");
+  } else if(platform == "mame-advmame") {
+    formats.append("");
+  } else if(platform == "mame-libretro") {
+    formats.append("");
+  } else if(platform == "mame-mame4all") {
+    formats.append("");
   } else if(platform == "mastersystem") {
     formats.append("*.sms");
   } else if(platform == "megadrive") {
@@ -588,6 +615,12 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "intellivision") {
     scraper = "localdb";
   } else if(platform == "megadrive") {
+    scraper = "localdb";
+  } else if(platform == "mame-advmame") {
+    scraper = "localdb";
+  } else if(platform == "mame-libretro") {
+    scraper = "localdb";
+  } else if(platform == "mame-mame4all") {
     scraper = "localdb";
   } else if(platform == "mastersystem") {
     scraper = "localdb";
@@ -875,6 +908,207 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "genesis") {
     aliases.append("sega genesis");
     aliases.append("mega drive");
+  } else if(platform == "mame-advmame") {
+    aliases.append("neo geo");
+    aliases.append("neo-geo");
+    aliases.append("neo geo cd");
+    aliases.append("neo-geo cd");
+    aliases.append("neo-geo mvs");
+    aliases.append("capcom play system");
+    aliases.append("capcom play system 2");
+    aliases.append("capcom play system 3");
+    aliases.append("another arcade emulator");
+    aliases.append("cave");
+    aliases.append("daphne");
+    aliases.append("atomiswave");
+    aliases.append("model 2");
+    aliases.append("model 3");
+    aliases.append("naomi");
+    aliases.append("sega st-v");
+    aliases.append("mame");
+    aliases.append("type x");
+    aliases.append("sega classics");
+    aliases.append("irem classics");
+    aliases.append("seta");
+    aliases.append("midway classics");
+    aliases.append("capcom classics");
+    aliases.append("eighting / raizing");
+    aliases.append("tecmo");
+    aliases.append("snk classics");
+    aliases.append("namco classics");
+    aliases.append("namco system 22");
+    aliases.append("taito classics");
+    aliases.append("konami classics");
+    aliases.append("jaleco");
+    aliases.append("atari classics");
+    aliases.append("nintendo classics");
+    aliases.append("data east classics");
+    aliases.append("nmk");
+    aliases.append("sammy classics");
+    aliases.append("exidy");
+    aliases.append("acclaim");
+    aliases.append("psikyo");
+    aliases.append("non jeu");
+    aliases.append("technos");
+    aliases.append("american laser games");
+    aliases.append("dynax");
+    aliases.append("kaneko");
+    aliases.append("video system co.");
+    aliases.append("igs");
+    aliases.append("comad");
+    aliases.append("amcoe");
+    aliases.append("century electronics");
+    aliases.append("nichibutsu");
+    aliases.append("visco");
+    aliases.append("alpha denshi co.");
+    aliases.append("coleco");
+    aliases.append("playchoice");
+    aliases.append("atlus");
+    aliases.append("banpresto");
+    aliases.append("semicom");
+    aliases.append("universal");
+    aliases.append("mitchell");
+    aliases.append("seibu kaihatsu");
+    aliases.append("toaplan");
+    aliases.append("cinematronics");
+    aliases.append("incredible technologies");
+    aliases.append("gaelco");
+    aliases.append("mega-tech");
+    aliases.append("mega-play");
+  } else if(platform == "mame-libretro") {
+    aliases.append("neo geo");
+    aliases.append("neo-geo");
+    aliases.append("neo geo cd");
+    aliases.append("neo-geo cd");
+    aliases.append("neo-geo mvs");
+    aliases.append("capcom play system");
+    aliases.append("capcom play system 2");
+    aliases.append("capcom play system 3");
+    aliases.append("another arcade emulator");
+    aliases.append("cave");
+    aliases.append("daphne");
+    aliases.append("atomiswave");
+    aliases.append("model 2");
+    aliases.append("model 3");
+    aliases.append("naomi");
+    aliases.append("sega st-v");
+    aliases.append("mame");
+    aliases.append("type x");
+    aliases.append("sega classics");
+    aliases.append("irem classics");
+    aliases.append("seta");
+    aliases.append("midway classics");
+    aliases.append("capcom classics");
+    aliases.append("eighting / raizing");
+    aliases.append("tecmo");
+    aliases.append("snk classics");
+    aliases.append("namco classics");
+    aliases.append("namco system 22");
+    aliases.append("taito classics");
+    aliases.append("konami classics");
+    aliases.append("jaleco");
+    aliases.append("atari classics");
+    aliases.append("nintendo classics");
+    aliases.append("data east classics");
+    aliases.append("nmk");
+    aliases.append("sammy classics");
+    aliases.append("exidy");
+    aliases.append("acclaim");
+    aliases.append("psikyo");
+    aliases.append("non jeu");
+    aliases.append("technos");
+    aliases.append("american laser games");
+    aliases.append("dynax");
+    aliases.append("kaneko");
+    aliases.append("video system co.");
+    aliases.append("igs");
+    aliases.append("comad");
+    aliases.append("amcoe");
+    aliases.append("century electronics");
+    aliases.append("nichibutsu");
+    aliases.append("visco");
+    aliases.append("alpha denshi co.");
+    aliases.append("coleco");
+    aliases.append("playchoice");
+    aliases.append("atlus");
+    aliases.append("banpresto");
+    aliases.append("semicom");
+    aliases.append("universal");
+    aliases.append("mitchell");
+    aliases.append("seibu kaihatsu");
+    aliases.append("toaplan");
+    aliases.append("cinematronics");
+    aliases.append("incredible technologies");
+    aliases.append("gaelco");
+    aliases.append("mega-tech");
+    aliases.append("mega-play");
+  } else if(platform == "mame-mame4all") {
+    aliases.append("neo geo");
+    aliases.append("neo-geo");
+    aliases.append("neo geo cd");
+    aliases.append("neo-geo cd");
+    aliases.append("neo-geo mvs");
+    aliases.append("capcom play system");
+    aliases.append("capcom play system 2");
+    aliases.append("capcom play system 3");
+    aliases.append("another arcade emulator");
+    aliases.append("cave");
+    aliases.append("daphne");
+    aliases.append("atomiswave");
+    aliases.append("model 2");
+    aliases.append("model 3");
+    aliases.append("naomi");
+    aliases.append("sega st-v");
+    aliases.append("mame");
+    aliases.append("type x");
+    aliases.append("sega classics");
+    aliases.append("irem classics");
+    aliases.append("seta");
+    aliases.append("midway classics");
+    aliases.append("capcom classics");
+    aliases.append("eighting / raizing");
+    aliases.append("tecmo");
+    aliases.append("snk classics");
+    aliases.append("namco classics");
+    aliases.append("namco system 22");
+    aliases.append("taito classics");
+    aliases.append("konami classics");
+    aliases.append("jaleco");
+    aliases.append("atari classics");
+    aliases.append("nintendo classics");
+    aliases.append("data east classics");
+    aliases.append("nmk");
+    aliases.append("sammy classics");
+    aliases.append("exidy");
+    aliases.append("acclaim");
+    aliases.append("psikyo");
+    aliases.append("non jeu");
+    aliases.append("technos");
+    aliases.append("american laser games");
+    aliases.append("dynax");
+    aliases.append("kaneko");
+    aliases.append("video system co.");
+    aliases.append("igs");
+    aliases.append("comad");
+    aliases.append("amcoe");
+    aliases.append("century electronics");
+    aliases.append("nichibutsu");
+    aliases.append("visco");
+    aliases.append("alpha denshi co.");
+    aliases.append("coleco");
+    aliases.append("playchoice");
+    aliases.append("atlus");
+    aliases.append("banpresto");
+    aliases.append("semicom");
+    aliases.append("universal");
+    aliases.append("mitchell");
+    aliases.append("seibu kaihatsu");
+    aliases.append("toaplan");
+    aliases.append("cinematronics");
+    aliases.append("incredible technologies");
+    aliases.append("gaelco");
+    aliases.append("mega-tech");
+    aliases.append("mega-play");
   } else if(platform == "mastersystem") {
     aliases.append("sega master system");
     aliases.append("master system");

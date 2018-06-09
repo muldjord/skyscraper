@@ -25,6 +25,7 @@
 * GameCube
 * Game & Watch
 * Intellivision
+* Mame
 * Megadrive / Genesis
 * MSX (MSX, MSX 2, MSX 2+, MSX Laserdisc)
 * NeoGeo
