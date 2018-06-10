@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help improve Skyscraper
 
 ---
 
@@ -11,7 +11,7 @@ Do NOT ask questions unless you have read the documentation thoroughly. I am not
 A clear and concise description of what and where the bug is.
 
 **To Reproduce**
-Can you reproduce this behaviour? Of so, how? What EXACT command did you run that gave the error?
+Can you reproduce this behaviour? If so, how? What EXACT command did you run that gave the error?
 
 **Special circumstances**
 Is your system set up in any special manner that could interfere with how Skyscraper works?
