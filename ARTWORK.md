@@ -381,3 +381,5 @@ The file megadrive_logo.png will then be loaded from the '`[homedir]/.skyscraper
 <gamebox side="platform_logos/megadrive_logo.png" rotate="90"/>
 ```
 This will look for the file at '`[homedir]/.skyscraper/resources/platform_logos/megadrive_logo.png`'.
+
+Word of warning: All custom image resources are loaded into memory when Skyscraper starts. So please keep your resources to a minimum - otherwise it might exceed the total memory on the Pi which will cause Skyscraper to get killed by the kernel.
