@@ -5,7 +5,7 @@ about: Suggest an idea for Skyscraper
 ---
 
 **READ BEFORE YOU POST**
-Do NOT ask questions unless you have read the documentation thoroughly. I am not your personal help desk and I DO NOT have time to answer questions that are already elaborately covered. With that said, I do appreciate genuine, well described bug reports or feature requests. But please take your time to describe it well using the following template. If not, it will be deleted without response.
+Do NOT ask questions unless you have [read the documentation thoroughly](https://github.com/muldjord/skyscraper/blob/master/README.md). I am not your personal help desk and I DO NOT have time to answer questions that are already elaborately covered. With that said, I do appreciate genuine, well described bug reports or feature requests. But please take your time to describe it well using the following template. If not, it will be deleted without response.
 
 **Describe the feature**
 A clear and concise description of what and how you would like this feature to be implemented.
