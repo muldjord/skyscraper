@@ -343,14 +343,14 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
 
   printf("\033[0;32m#%d/%d\033[0m %s\n", currentFile, totalFiles, output.toStdString().c_str());
   int elapsed = timer.elapsed();
-  int estTime = elapsed / currentFile * totalFiles;
+  int estTime = (elapsed / currentFile * totalFiles) - elapsed;
 
   if(config.verbosity >= 3) {
     printf("\033[1;33mDebug output:\033[0m\n%s\n", debug.toStdString().c_str());
   }
 
   printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
-  printf("Estimated time: %s\n\n", secsToString(estTime).toStdString().c_str());
+  printf("Estimated time left: %s\n\n", secsToString(estTime).toStdString().c_str());
 
   if(entry.found) {
     found++;
