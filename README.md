@@ -141,7 +141,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
 * Updated to new 'thegamesdb' api
 * Made 'import' base folder configurable
-* Added 'Estimated remaining time' to output
+
+#### Version 2.4.10 (14th June 2018)
+* '/home/pi' is no longer hardcoded anywhere in Skyscraper. Now always uses current user home dir
+* Changed 'Estimated time total' to 'Estimated time left' in terminal output
 
 #### Version 2.4.9 (9th June 2018)
 * Added 'mame-advmame', 'mame-mame4all' and 'mame-libretro' platforms
