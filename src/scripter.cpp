@@ -121,7 +121,7 @@ Scripter::Scripter()
   printf("\033[1;34mDo you wish to force an update of all locally cached data\033[0m (y/N)? ");
   getline(std::cin, updateDbStr);
 
-  QFile scriptFile("skyscript.sh");
+  QFile scriptFile(QDir::homePath() + "/.skyscraper/skyscript.sh");
   if(!scriptFile.open(QIODevice::WriteOnly)) {
     printf("Couldn't open '~/.skyscraper/skyscript.sh' file for writing, please check permissions and rerun Skyscraper\nNow quitting...\n");
     exit(1);

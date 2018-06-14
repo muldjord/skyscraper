@@ -23,11 +23,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#include <QDir>
-#include <QDate>
-
 #include "attractmode.h"
 #include "strtools.h"
+
+#include <QDir>
+#include <QDate>
 
 AttractMode::AttractMode()
 {
@@ -245,7 +245,7 @@ QString AttractMode::getGameListFileName()
 
 QString AttractMode::getInputFolder()
 {
-  return QString("/home/pi/RetroPie/roms/" + config->platform);
+  return QString(QDir::homePath() + "/RetroPie/roms/" + config->platform);
 }
 
 QString AttractMode::getGameListFolder()

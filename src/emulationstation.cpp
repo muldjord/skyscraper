@@ -27,6 +27,8 @@
 #include "xmlreader.h"
 #include "strtools.h"
 
+#include <QDir>
+
 EmulationStation::EmulationStation()
 {
 }
@@ -149,7 +151,7 @@ QString EmulationStation::getGameListFileName()
 
 QString EmulationStation::getInputFolder()
 {
-  return QString("/home/pi/RetroPie/roms/" + config->platform);
+  return QString(QDir::homePath() + "/RetroPie/roms/" + config->platform);
 }
 
 QString EmulationStation::getGameListFolder()
