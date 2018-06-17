@@ -142,6 +142,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Updated to new 'thegamesdb' api
 * Made 'import' base folder configurable
 
+#### Version 2.4.11 (17th June 2018)
+* Added 'mega-cd' as alias for 'segacd' platform. Thank you to user trevor7oaks for reporting this
+
 #### Version 2.4.10 (14th June 2018)
 * '/home/pi' is no longer hardcoded anywhere in Skyscraper. Now always uses current user home dir
 * Changed 'Estimated time total' to 'Estimated time left' in terminal output
