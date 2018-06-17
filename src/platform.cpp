@@ -1172,6 +1172,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("megadrive 32x");
   } else if(platform == "segacd") {
     aliases.append("sega cd");
+    aliases.append("mega-cd");
   } else if(platform == "sg-1000") {
     aliases.append("sega sg-1000");
   } else if(platform == "snes") {
