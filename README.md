@@ -141,6 +141,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
 * Updated to new 'thegamesdb' api
 * Made 'import' base folder configurable
+* Added 'Did you know' hints when running Skyscraper
+* Added '--nohints' to disable hints. Can also be set in config.ini
+* Added '--relative' to make media folder relative to rom path. Can also be set in config.ini
+
+#### Version 2.4.12 (In progress, unreleased)
+* Made sure cli header always has correct number of dashes
 
 #### Version 2.4.11 (17th June 2018)
 * Added 'mega-cd' as alias for 'segacd' platform. Thank you to user trevor7oaks for reporting this
