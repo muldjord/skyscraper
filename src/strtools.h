@@ -40,6 +40,7 @@ public:
   static QString conformReleaseDate(QString str);
   static QString conformTags(QString str);
   static int getNumeral(const QString &name);
+  static QString getVersionHeader();
   
 };
 

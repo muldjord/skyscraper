@@ -359,3 +359,14 @@ int StrTools::getNumeral(const QString &name)
 
   return numeral;
 }
+
+QString StrTools::getVersionHeader()
+{
+  QString headerString = "Running Skyscraper v" VERSION " by Lars Muldjord";
+  QString dashesString = "";
+  for(int a = 0; a < headerString.length(); ++a) {
+    dashesString += "-";
+  }
+
+  return QString("\033[1;34m" + dashesString + "\033[0m\n\033[1;33m" + headerString + "\033[0m\n\033[1;34m" + dashesString + "\033[0m\n");
+}
