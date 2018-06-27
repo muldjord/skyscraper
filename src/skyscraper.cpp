@@ -41,8 +41,8 @@
 Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentDir)
 {
   qRegisterMetaType<GameEntry>("GameEntry");
-  
-  printf("\033[1;34m------------------------------------------\033[0m\n\033[1;33mRunning Skyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m------------------------------------------\033[0m\n");
+
+  printf("%s", StrTools::getVersionHeader().toStdString().c_str());
 
   config.currentDir = currentDir;
   loadConfig(parser);

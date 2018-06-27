@@ -34,6 +34,7 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 
+#include "strtools.h"
 #include "skyscraper.h"
 #include "scripter.h"
 #include "platform.h"
@@ -113,7 +114,13 @@ int main(int argc, char *argv[])
   
   QCommandLineParser parser;
 
-  parser.setApplicationDescription("\033[1;34m----------------------------------\033[0m\n\033[1;33mSkyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m----------------------------------\033[0m\nSkyscraper looks for compatible game files in the input directory. It fetches media files and other relevant information for the games. It composites game art from the recipe at '~/.skyscraper/artwork.xml' and lastly builds a game list file for use with the chosen frontend.\n\nPlease check the documentation at 'https://github.com/muldjord/skyscraper' for a detailed explanation of all features.");
+  QString headerString = "Running Skyscraper v" VERSION " by Lars Muldjord";
+  QString dashesString = "";
+  for(int a = 0; a < headerString.length(); ++a) {
+    dashesString += "-";
+  }
+  
+  parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files in the input directory. It fetches media files and other relevant information for the games. It composites game art from the recipe at '~/.skyscraper/artwork.xml' and lastly builds a game list file for use with the chosen frontend.\n\nPlease check the documentation at 'https://github.com/muldjord/skyscraper' for a detailed explanation of all features.");
   parser.addHelpOption();
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "platform", "");
   QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "frontend", "");

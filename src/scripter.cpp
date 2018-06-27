@@ -30,10 +30,12 @@
 
 #include "scripter.h"
 #include "platform.h"
+#include "strtools.h"
 
 Scripter::Scripter()
 {
-  printf("\033[1;34m------------------------------------------\033[0m\n\033[1;33mRunning Skyscraper v" VERSION " by Lars Muldjord\033[0m\n\033[1;34m------------------------------------------\033[0m\n");
+  printf("%s", StrTools::getVersionHeader().toStdString().c_str());
+
 #ifdef Q_OS_WIN
   printf("\033[1;31mYou are running Skyscraper in 'simple mode' on a Windows machine. Windows is not currently supported in this mode. The generated script WILL NOT WORK!\033[0m\n\n");
 #endif
