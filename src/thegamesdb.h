@@ -26,7 +26,8 @@
 #ifndef THEGAMESDB_H
 #define THEGAMESDB_H
 
-#include <QDomNode>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "abstractscraper.h"
 
@@ -41,7 +42,6 @@ private:
   void getSearchResults(QList<GameEntry> &gameEntries,
 			QString searchName, QString platform);
   void getGameData(GameEntry &game);
-  void getRating(GameEntry &game);
   void getReleaseDate(GameEntry &game);
   void getDeveloper(GameEntry &game);
   void getPublisher(GameEntry &game);
@@ -52,9 +52,12 @@ private:
 
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
-  void getWheel(GameEntry &game);
 
-  QDomNode xmlGame;
+  QString idToPlatform(QString id);
+  QString idToGenre(QString id);
+
+  QJsonDocument jsonDoc;
+  QJsonObject jsonObj;
   
 };
 

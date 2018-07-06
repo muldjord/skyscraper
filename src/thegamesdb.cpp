@@ -23,18 +23,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#include <QDomDocument>
-#include <QDomNodeList>
+#include <QJsonArray>
 
 #include "thegamesdb.h"
+#include "strtools.h"
 
 TheGamesDb::TheGamesDb()
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
-  baseUrl = "http://thegamesdb.net";
+  baseUrl = "https://api.thegamesdb.net";
 
-  searchUrlPre = "http://thegamesdb.net/api/GetGamesList.php?name=";
+  searchUrlPre = "https://api.thegamesdb.net/Games/ByGameName?name=";
   
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(DESCRIPTION);
@@ -43,7 +43,7 @@ TheGamesDb::TheGamesDb()
   fetchOrder.append(AGES);
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(DEVELOPER);
-  fetchOrder.append(RATING);
+  //fetchOrder.append(RATING);
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
   fetchOrder.append(WHEEL);
@@ -52,44 +52,74 @@ TheGamesDb::TheGamesDb()
 void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
 				  QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + searchName);
+  manager.request(searchUrlPre + searchName + "&apikey=" + config->userCreds);
   q.exec();
   data = manager.getData();
-  QDomDocument xmlResults;
-  xmlResults.setContent(data);
-  
-  QDomNodeList xmlGames = xmlResults.elementsByTagName("Game");
-  
-  for(int a = 0; a < xmlGames.count(); ++a) {
+
+  jsonDoc = QJsonDocument::fromJson(data);
+  if(jsonDoc.isEmpty()) {
+    return;
+  }
+  if(jsonDoc.object().value("status").toString() != "Success") {
+    return;
+  }
+  if(jsonDoc.object().value("data").toObject().value("count").toInt() < 1) {
+    return;
+  }
+  if(jsonDoc.object().value("remaining_monthly_allowance").toInt() +
+     jsonDoc.object().value("extra_allowance").toInt() < 1) {
+    printf("You've exceeded your monthly request quota from 'thegamesdb', now quitting...\n");
+    exit(1);
+  }
+
+  QJsonArray jsonGames = jsonDoc.object().value("data").toObject().value("games").toArray();
+
+  while(!jsonGames.isEmpty()) {
+    printf("HERE!\n");
+    QJsonObject jsonGame = jsonGames.first().toObject();
+    
     GameEntry game;
-    game.url = "http://thegamesdb.net/api/GetGame.php?id=" +
-      xmlGames.at(a).firstChildElement("id").text();
-    game.title = xmlGames.at(a).firstChildElement("GameTitle").text();
-    // Remove anything at the end with a parentheses. 'thegamesdb' has a habbit of adding
+    // https://api.thegamesdb.net/Games/ByGameID?id=88&apikey=XXX&fields=game_title,players,release_date,developer,publisher,genres,overview,rating,platform
+    game.id = QString::number(jsonGame.value("id").toInt());
+    printf("ID='%s'\n", game.id.toStdString().c_str());
+    game.url = "https://api.thegamesdb.net/Games/ByGameID?id=" + game.id + "&apikey=" + config->userCreds + "&fields=game_title,players,release_date,developer,publisher,genres,overview,rating";
+    game.title = jsonGame.value("game_title").toString();
+    printf("TITLE='%s'\n", game.title.toStdString().c_str());
+    // Remove anything at the end with a parentheses. 'thegamesdb' has a habit of adding
     // for instance '(1993)' to the name.
     game.title = game.title.left(game.title.indexOf("(")).simplified();
-    game.platform = xmlGames.at(a).firstChildElement("Platform").text();
-
+    game.platform = idToPlatform(jsonGame.value("platform").toString());
     if(platformMatch(game.platform, platform)) {
       gameEntries.append(game);
     }
+    jsonGames.removeFirst();
   }
 }
 
 void TheGamesDb::getGameData(GameEntry &game)
 {
   manager.request(game.url);
+  printf("URL:\n%s\n", game.url.toStdString().c_str());
   q.exec();
   data = manager.getData();
-  if(data.indexOf("503 Service Unavailable") != -1) {
-    printf("It would seem that TheGamesDb is currently offline or having difficulties. You could try setting another scraping module using '-s' or wait until TheGamesDb is back in service.\nNow quitting...\n");
+  jsonDoc = QJsonDocument::fromJson(data);
+  if(jsonDoc.isEmpty()) {
+    printf("No returned json data, is 'thegamesdb' down? Now quitting...\n");
     exit(1);
   }
-  QDomDocument xmlDoc;
-  xmlDoc.setContent(data);
-
-  xmlGame = xmlDoc.elementsByTagName("Game").at(0);
+  if(jsonDoc.object().value("data").toObject().value("count").toInt() < 1) {
+    printf("No returned json game document, is 'thegamesdb' down? Now quitting...\n");
+    exit(1);
+  }
   
+  if(jsonDoc.object().value("remaining_monthly_allowance").toInt() +
+     jsonDoc.object().value("extra_allowance").toInt() < 1) {
+    printf("You've reached the limit of your monthly request quota from 'thegamesdb', please wait until next month to try again, now quitting...\n");
+    exit(1);
+  }
+
+  jsonObj = jsonDoc.object().value("data").toObject().value("games").toObject().value("0").toObject();
+
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
     case DESCRIPTION:
@@ -139,106 +169,75 @@ void TheGamesDb::getGameData(GameEntry &game)
   }
 }
 
-void TheGamesDb::getRating(GameEntry &game)
-{
-  game.rating = xmlGame.firstChildElement("Rating").text();
-  bool toDoubleOk = false;
-  double rating = game.rating.toDouble(&toDoubleOk);
-  if(toDoubleOk) {
-    game.rating = QString::number(rating / 10.0);
-  } else {
-    game.rating = "";
-  }
-}
-
 void TheGamesDb::getReleaseDate(GameEntry &game)
 {
-  game.releaseDate = xmlGame.firstChildElement("ReleaseDate").text();
+  game.releaseDate = jsonObj.value("release_date").toString();
 }
 
 void TheGamesDb::getDeveloper(GameEntry &game)
 {
-  game.developer = xmlGame.firstChildElement("Developer").text();
+  game.developer = jsonObj.value("developer").toString();
 }
 
 void TheGamesDb::getPublisher(GameEntry &game)
 {
-  game.publisher = xmlGame.firstChildElement("Publisher").text();
+  game.publisher = jsonObj.value("publisher").toString();
 }
 
 void TheGamesDb::getDescription(GameEntry &game)
 {
-  game.description = xmlGame.firstChildElement("Overview").text();
+  game.description = jsonObj.value("overview").toString();
 }
 
 void TheGamesDb::getPlayers(GameEntry &game)
 {
-  game.players = xmlGame.firstChildElement("Players").text();
+  game.players = QString::number(jsonObj.value("players").toInt());
 }
 
 void TheGamesDb::getAges(GameEntry &game)
 {
-  game.ages = xmlGame.firstChildElement("PEGI").text();
-  if(!game.ages.isEmpty())
-    return;
-  game.ages = xmlGame.firstChildElement("ESRB").text();
-  if(!game.ages.isEmpty())
-    return;
+  game.ages = jsonObj.value("rating").toString();
 }
 
 void TheGamesDb::getTags(GameEntry &game)
 {
-  QDomNodeList xmlGenres = xmlGame.firstChildElement("Genres").elementsByTagName("genre");
-  for(int a = 0; a < xmlGenres.count(); ++a) {
-    game.tags.append(xmlGenres.at(a).toElement().text() + ", ");
+  QStringList genres = jsonObj.value("genres").toString().split(',');
+  foreach(QString genre, genres) {
+    game.tags.append(idToGenre(genre) + ", ");
   }
   game.tags = game.tags.left(game.tags.length() - 2);
 }
 
 void TheGamesDb::getCover(GameEntry &game)
 {
-  QDomNodeList xmlImages = xmlGame.firstChildElement("Images").elementsByTagName("boxart");
-  for(int a = 0; a < xmlImages.count(); ++a) {
-    if(xmlImages.at(a).toElement().attribute("side") == "front") {
-      QString coverUrl = baseUrl + "/banners/" + xmlImages.at(a).toElement().text();
-      manager.request(coverUrl);
-      q.exec();
-      QImage image;
-      if(image.loadFromData(manager.getData())) {
-	game.coverData = image;
-      }
-      break;
-    }
+  // https://api.thegamesdb.net/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
+  // https://cdn.thegamesdb.net/images/original/boxart/front/[gameid]-1.jpg
+  manager.request("https://cdn.thegamesdb.net/images/original/boxart/front/" + game.id + "-1.jpg");
+  q.exec();
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
+    game.coverData = image;
   }
 }
 
 void TheGamesDb::getScreenshot(GameEntry &game)
 {
-  QDomNodeList xmlScreenshots =
-    xmlGame.firstChildElement("Images").elementsByTagName("screenshot");
-  if(!xmlScreenshots.isEmpty()) {
-    QString screenshotUrl = baseUrl + "/banners/" + xmlScreenshots.at(0).firstChildElement("original").text();
-    manager.request(screenshotUrl);
-    q.exec();
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.screenshotData = image;
-    }
-  }
-}
-
-void TheGamesDb::getWheel(GameEntry &game)
-{
-  QDomNodeList xmlImages = xmlGame.firstChildElement("Images").elementsByTagName("banner");
-  if(xmlImages.isEmpty()) {
-    // No wheel/banner, just return
-    return;
-  }
-  QString wheelUrl = baseUrl + "/banners/" + xmlImages.at(0).toElement().text();
-  manager.request(wheelUrl);
+  // https://api.thegamesdb.net/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
+  // https://cdn.thegamesdb.net/images/original/screenshots/[gameid]-1.jpg
+  manager.request("https://cdn.thegamesdb.net/images/original/screenshots/" + game.id + "-1.jpg");
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.wheelData = image;
+    game.coverData = image;
   }
+}
+
+QString TheGamesDb::idToPlatform(QString id)
+{
+  return "snes";
+}
+
+QString TheGamesDb::idToGenre(QString id)
+{
+  return "Action";
 }
