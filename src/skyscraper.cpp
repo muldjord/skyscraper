@@ -78,6 +78,9 @@ void Skyscraper::run()
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
+  } else if(config.scraper == "thegamesdb" && config.userCreds.isEmpty()) {
+    printf("'\033[1;32mthegamesdb\033[0m' requires an API key to work. Please request one on their forums, and use it with Skyscraper by either setting the '\033[1;32m-u [api key]\033[0m' command line option, or set it in '\033[1;32m[homedir]/.skyscraper/config.ini\033[0m' with '\033[1;32muserCreds=[api key]\033[0m' either under the '\033[1;32m[main]\033[0m' section or any platform specific section depending on whether you want it to be used for all platforms or not. Now quitting...\n\n");
+    exit(0);
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in MobyGames scraping module\n\n");
     config.threads = 1;
@@ -730,7 +733,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 			   parser.value("s") == "import")) {
     config.scraper = parser.value("s");
   }
-  if(parser.isSet("u") && parser.value("u").indexOf(":") != -1) {
+  if(parser.isSet("u")) {
     config.userCreds = parser.value("u");
   }
   if(parser.isSet("d")) {
