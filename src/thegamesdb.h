@@ -54,12 +54,12 @@ private:
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
 
-  QString idToPlatform(QString id);
-  QString idToGenre(QString id);
-
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
-  
+
+  void loadMaps();
+  QMap<QString, QString> platformMap;
+  QMap<QString, QString> genreMap;
 };
 
 #endif // THEGAMESDB_H
