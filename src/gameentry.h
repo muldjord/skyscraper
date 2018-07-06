@@ -49,6 +49,7 @@ public:
   int completeness(bool videoEnabled = false);
   void resetMedia();
   
+  QString id = "";
   QString path = "";
   QString title = "";
   QString titleSrc = "";
@@ -70,7 +71,7 @@ public:
   QString agesSrc = "";
   QString rating = "";
   QString ratingSrc = "";
-
+  
   QImage coverData = QImage();
   QString coverFile = "";
   QString coverSrc = "";
