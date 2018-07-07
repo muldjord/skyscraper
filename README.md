@@ -145,8 +145,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Added '--relative' to make media folder relative to rom path. Can also be set in config.ini
 
-#### Version 2.5.0 (In progress, unreleased)
-* Implemented new 'thegamesdb' api. Now requires api key set with '-u [apikey]' to work
+#### Version 2.5.0 (7th July 2018)
+* 'thegamesdb' removed from Simple Mode scraping scripts
+* Implemented new 'thegamesdb' api, but not usable due to key constrains
 * Made sure cli header always has correct number of dashes
 
 #### Version 2.4.11 (17th June 2018)
