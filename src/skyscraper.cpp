@@ -78,9 +78,6 @@ void Skyscraper::run()
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
-  } else if(config.scraper == "thegamesdb" && config.userCreds.isEmpty()) {
-    printf("Scraping module '\033[1;32mthegamesdb\033[0m' requires an API key to work (set with '-u [apikey]') and Skyscraper does not provide one. Due to restrictions in their new API, this source is unfortunately no longer feasible to use in automated scrapers. Please set an API key or choose a different module with '-s [module]'. Check '--help' for more information on available modules. Now quitting...\n");
-    exit(1);
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in MobyGames scraping module\n\n");
     config.threads = 1;
