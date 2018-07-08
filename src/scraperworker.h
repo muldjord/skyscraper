@@ -71,6 +71,8 @@ private:
 			       QString compareTitle,
 			       int &lowestDistance);
   int getSearchMatch(const QString &title, const QString &compareTitle, const int &lowestDistance);
+
+  bool limitReached(AbstractScraper *scraper, QString &output);
 };
 
 #endif // SCRAPERWORKER_H

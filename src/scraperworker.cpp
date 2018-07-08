@@ -159,6 +159,10 @@ void ScraperWorker::run()
       }
     }
     
+    // Sort the returned entries, in case the source did a poor job of doing so itself
+    qSort(gameEntries.begin(), gameEntries.end(), 
+	  [](const GameEntry a, const GameEntry b) -> bool { return a.title.toLower() < b.title.toLower(); });
+
     int lowestDistance = 666;
     // Create the game entry we use for the rest of the process
     GameEntry game = getBestEntry(gameEntries, compareTitle, lowestDistance);
@@ -172,8 +176,13 @@ void ScraperWorker::run()
     if(game.found == false) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
       game.resetMedia();
+      bool forceEnd = limitReached(scraper, output);
       emit entryReady(game, output, debug);
-      continue;
+      if(forceEnd) {
+	break;
+      } else {
+	continue;
+      }
     }
 
     int searchMatch = getSearchMatch(game.title, compareTitle, lowestDistance);
@@ -182,8 +191,13 @@ void ScraperWorker::run()
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' match too low :| ----\033[0m\n\n");
       game.found = false;
       game.resetMedia();
+      bool forceEnd = limitReached(scraper, output);
       emit entryReady(game, output, debug);
-      continue;
+      if(forceEnd) {
+	break;
+      } else {
+	continue;
+      }
     }
 
     output.append("\033[1;34m---- Game '" + info.completeBaseName() + "' found! :) ----\033[0m\n");
@@ -268,11 +282,27 @@ void ScraperWorker::run()
     }
     output.append("\nDescription: (" + game.descriptionSrc + ")\n" + game.description.left(config.maxLength) + "\n");
 
+    bool forceEnd = limitReached(scraper, output);
     emit entryReady(game, output, debug);
+    if(forceEnd) {
+      break;
+    }
   }
 
   delete scraper;
   emit allDone();
+}
+
+bool ScraperWorker::limitReached(AbstractScraper *scraper, QString &output)
+{
+  if(scraper->reqRemaining != -1) { // -1 means there is no limit
+    output.append("\n\033[1;33m'" + config.scraper + "' requests remaining: " + QString::number(scraper->reqRemaining) + "\033[0m\n");
+    if(scraper->reqRemaining < 1) {
+      output.append("\033[1;31mRequest limit reached, forcing thread " + threadId + " to stop...\033[0m\n");
+      return true;
+    }
+  }
+  return false;
 }
 
 int ScraperWorker::getSearchMatch(const QString &title, const QString &compareTitle,
