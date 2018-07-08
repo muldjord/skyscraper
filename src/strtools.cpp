@@ -98,7 +98,7 @@ QString StrTools::xmlEscape(QString str)
 
 QByteArray StrTools::magic(QByteArray str)
 {
-  QByteArray magicStr("WowMuchEncryptedVeryImpress");
+  QByteArray magicStr("WowMuchEncryptedVeryImpressIGuessThisHasToBeQuiteLongToAlsoSupportSomeVeryLongKeys");
 
   int strChars[str.length()];
   int magicChars[str.length()];
@@ -125,7 +125,7 @@ QByteArray StrTools::unMagic(QByteArray str)
 {
   int length = str.split(';').length();
 
-  QByteArray magicStr("WowMuchEncryptedVeryImpress");
+  QByteArray magicStr("WowMuchEncryptedVeryImpressIGuessThisHasToBeQuiteLongToAlsoSupportSomeVeryLongKeys");
 
   int strChars[length];
   int magicChars[length];
