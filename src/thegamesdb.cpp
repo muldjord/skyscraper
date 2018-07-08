@@ -54,7 +54,7 @@ TheGamesDb::TheGamesDb()
 void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
 				  QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + searchName + "&apikey=" + config->userCreds);
+  manager.request(searchUrlPre + searchName + "&apikey=" + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163"));
   q.exec();
   data = manager.getData();
 
@@ -62,16 +62,12 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
   if(jsonDoc.isEmpty()) {
     return;
   }
+  reqRemaining = jsonDoc.object().value("remaining_monthly_allowance").toInt();
   if(jsonDoc.object().value("status").toString() != "Success") {
     return;
   }
   if(jsonDoc.object().value("data").toObject().value("count").toInt() < 1) {
     return;
-  }
-  if(jsonDoc.object().value("remaining_monthly_allowance").toInt() +
-     jsonDoc.object().value("extra_allowance").toInt() < 1) {
-    printf("You've exceeded your monthly request quota from 'thegamesdb', now quitting...\n");
-    exit(1);
   }
 
   QJsonArray jsonGames = jsonDoc.object().value("data").toObject().value("games").toArray();
@@ -82,7 +78,7 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
     GameEntry game;
     // https://api.thegamesdb.net/Games/ByGameID?id=88&apikey=XXX&fields=game_title,players,release_date,developer,publisher,genres,overview,rating,platform
     game.id = QString::number(jsonGame.value("id").toInt());
-    game.url = "https://api.thegamesdb.net/Games/ByGameID?id=" + game.id + "&apikey=" + config->userCreds + "&fields=game_title,players,release_date,developer,publisher,genres,overview,rating";
+    game.url = "https://api.thegamesdb.net/Games/ByGameID?id=" + game.id + "&apikey=" + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&fields=game_title,players,release_date,developer,publisher,genres,overview,rating";
     game.title = jsonGame.value("game_title").toString();
     // Remove anything at the end with a parentheses. 'thegamesdb' has a habit of adding
     // for instance '(1993)' to the name.
@@ -105,17 +101,14 @@ void TheGamesDb::getGameData(GameEntry &game)
     printf("No returned json data, is 'thegamesdb' down? Now quitting...\n");
     exit(1);
   }
+
+  reqRemaining = jsonDoc.object().value("remaining_monthly_allowance").toInt();
+
   if(jsonDoc.object().value("data").toObject().value("count").toInt() < 1) {
     printf("No returned json game document, is 'thegamesdb' down? Now quitting...\n");
     exit(1);
   }
   
-  if(jsonDoc.object().value("remaining_monthly_allowance").toInt() +
-     jsonDoc.object().value("extra_allowance").toInt() < 1) {
-    printf("You've reached the limit of your monthly request quota from 'thegamesdb', please wait until next month to try again, now quitting...\n");
-    exit(1);
-  }
-
   jsonObj = jsonDoc.object().value("data").toObject().value("games").toArray().first().toObject();
 
   for(int a = 0; a < fetchOrder.length(); ++a) {
@@ -199,9 +192,10 @@ void TheGamesDb::getAges(GameEntry &game)
 
 void TheGamesDb::getTags(GameEntry &game)
 {
-  QStringList genres = jsonObj.value("genres").toString().split(',');
-  foreach(QString genre, genres) {
-    game.tags.append(genreMap[genre] + ", ");
+  QJsonArray genres = jsonObj.value("genres").toArray();
+  while(!genres.isEmpty()) {
+    game.tags.append(genreMap[QString::number(genres.first().toInt())] + ", ");
+    genres.removeFirst();
   }
   game.tags = game.tags.left(game.tags.length() - 2);
 }
