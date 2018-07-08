@@ -51,6 +51,8 @@ public:
   void setRegionPrios();
   void setLangPrios();
   void loadMameMap();
+
+  int reqRemaining = -1;
   
 protected:
   Settings *config;
@@ -82,7 +84,7 @@ protected:
   QList<int> fetchOrder;
 
   QByteArray data;
-
+  
   QString baseUrl;
   QString searchUrlPre;
   QString searchUrlPost;
