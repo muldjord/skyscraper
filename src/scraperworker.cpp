@@ -31,6 +31,7 @@
 #include "compositor.h"
 
 #include "openretro.h"
+#include "thegamesdb.h"
 #include "worldofspectrum.h"
 #include "screenscraper.h"
 #include "localscraper.h"
@@ -56,6 +57,8 @@ void ScraperWorker::run()
 
   if(config.scraper == "openretro") {
     scraper = new OpenRetro();
+  } else if(config.scraper == "thegamesdb") {
+    scraper = new TheGamesDb();
   } else if(config.scraper == "arcadedb") {
     scraper = new ArcadeDB();
   } else if(config.scraper == "screenscraper") {
