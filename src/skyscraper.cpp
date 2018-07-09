@@ -721,7 +721,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.minMatchSet = true;
   }
   if(parser.isSet("s") && (parser.value("s") == "openretro" ||
-			   parser.value("s") == "thegamesdb" ||
 			   parser.value("s") == "arcadedb" ||
 			   parser.value("s") == "worldofspectrum" ||
 			   parser.value("s") == "mobygames" ||
