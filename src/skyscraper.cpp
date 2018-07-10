@@ -595,6 +595,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("brackets")) {
     config.brackets = !settings.value("brackets").toBool();
   }
+  if(settings.contains("relativePaths")) {
+    config.relativePaths = settings.value("relativePaths").toBool();
+  }
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
@@ -651,6 +654,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("brackets")) {
     config.brackets = !settings.value("brackets").toBool();
+  }
+  if(settings.contains("relativePaths")) {
+    config.relativePaths = settings.value("relativePaths").toBool();
   }
   if(settings.contains("minMatch")) {
     config.minMatch = settings.value("minMatch").toInt();
@@ -759,6 +765,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("nobrackets")) {
     config.brackets = false;
+  }
+  if(parser.isSet("relative")) {
+    config.relativePaths = true;
   }
   if(parser.isSet("nolocaldb")) {
     if(config.scraper == "localdb") {
