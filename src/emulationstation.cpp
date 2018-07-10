@@ -62,8 +62,11 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
 {
   finalOutput.append("<?xml version=\"1.0\"?>\n<gameList>\n");
   foreach(GameEntry entry, gameEntries) {
+    // Used to replace to achieve relative paths if '--relative' is set
+    QString absolutePath = QFileInfo(entry.path).absolutePath();
+    
     finalOutput.append("  <game>\n");
-    finalOutput.append("    <path>" + StrTools::xmlEscape(entry.path) + "</path>\n");
+    finalOutput.append("    <path>" + (config->relativePaths?StrTools::xmlEscape(entry.path).replace(absolutePath, "."):StrTools::xmlEscape(entry.path)) + "</path>\n");
     if(config->brackets) {
       finalOutput.append("    <name>" + StrTools::xmlEscape(entry.title + (entry.parNotes != ""?" " + entry.parNotes:"") + (entry.sqrNotes != ""?" " + entry.sqrNotes:"")) + "</name>\n");
     } else {
@@ -72,12 +75,12 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     if(entry.coverFile.isEmpty()) {
       finalOutput.append("    <cover />\n");
     } else {
-      finalOutput.append("    <cover>" + StrTools::xmlEscape(entry.coverFile) + "</cover>\n");
+      finalOutput.append("    <cover>" + (config->relativePaths?StrTools::xmlEscape(entry.coverFile).replace(absolutePath, "."):StrTools::xmlEscape(entry.coverFile)) + "</cover>\n");
     }
     if(entry.screenshotFile.isEmpty()) {
       finalOutput.append("    <image />\n");
     } else {
-      finalOutput.append("    <image>" + StrTools::xmlEscape(entry.screenshotFile) + "</image>\n");
+      finalOutput.append("    <image>" + (config->relativePaths?StrTools::xmlEscape(entry.screenshotFile).replace(absolutePath, "."):StrTools::xmlEscape(entry.screenshotFile)) + "</image>\n");
     }
     // <wheel> isn't supported and probably won't be, since wheel and marquee are basically the same thing
     /*
@@ -91,10 +94,10 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     if(entry.wheelFile.isEmpty()) {
       finalOutput.append("    <marquee />\n");
     } else {
-      finalOutput.append("    <marquee>" + StrTools::xmlEscape(entry.wheelFile) + "</marquee>\n");
+      finalOutput.append("    <marquee>" + (config->relativePaths?StrTools::xmlEscape(entry.wheelFile).replace(absolutePath, "."):StrTools::xmlEscape(entry.wheelFile)) + "</marquee>\n");
     }
     if(!entry.videoFormat.isEmpty()) {
-      finalOutput.append("    <video>" + StrTools::xmlEscape(entry.videoFile) + "</video>\n");
+      finalOutput.append("    <video>" + (config->relativePaths?StrTools::xmlEscape(entry.videoFile).replace(absolutePath, "."):StrTools::xmlEscape(entry.videoFile)) + "</video>\n");
     }
     if(entry.rating.isEmpty()) {
       finalOutput.append("    <rating />\n");
