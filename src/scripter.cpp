@@ -115,6 +115,12 @@ Scripter::Scripter()
   printf("\033[1;34mDo you wish to include bracket notes such as '[AGA]' and '(Psygnosis)' in the final game name\033[0m (Y/n)? ");
   getline(std::cin, bracketsStr);
 
+  std::string relativeStr = "";
+  if(frontendStr == "emulationstation") {
+    printf("\033[1;34mDo you wish to force rom relative paths in the exported gamelist.xml file?\033[0m (y/N)? ");
+    getline(std::cin, relativeStr);
+  }
+  
   std::string minMatchStr = "";
   printf("\033[1;34mWhat is the minimum search result percentage match you wish to accept\033[0m (enter for default)? ");
   getline(std::cin, minMatchStr);
@@ -149,6 +155,8 @@ Scripter::Scripter()
     commandStr += " --updatedb";
   if(bracketsStr == "n")
     commandStr += " --nobrackets";
+  if(relativeStr == "y" || relativeStr == "Y")
+    commandStr += " --relative";
   if(videosStr == "y" || videosStr == "Y") {
     commandStr += " --videos";
   }
