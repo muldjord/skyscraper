@@ -145,6 +145,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Added '--relative' to make media folder relative to rom path. Can also be set in config.ini
 
+#### Version 2.5.1 (10th July 2018)
+* Added '--relative' option which forces rom relative paths in gamelist for EmulationStation
+
 #### Version 2.5.0 (8th July 2018)
 * 'thegamesdb' removed from Simple Mode scraping scripts due to new api restrictions
 * Implemented new 'thegamesdb' api, be wary of monthly request limit!
