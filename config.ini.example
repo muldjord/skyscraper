@@ -35,6 +35,7 @@
 #lang="en"
 #region="wor"
 #artworkXml="artwork.xml"
+#relativePaths="false"
 
 #[localDb]
 #covers="true"
@@ -63,3 +64,4 @@
 #verbose="false"
 #skipped="false"
 #artworkXml="artwork.xml"
+#relativePaths="false"
