@@ -83,9 +83,9 @@ void Skyscraper::run()
     config.threads = 1;
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
-      if(config.threads > 4) {
-	printf("Forcing 4 threads as this seems to be the anonymous limit in the ScreenScraper scraping module. If you have problems with 4 threads, please lower it even further. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads.\n\n");
-	config.threads = 4;
+      if(config.threads > 1) {
+	printf("Forcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '[homedir]/.skyscraper/config.ini'.\n\n");
+	config.threads = 1;
       }
     } else {
       NetComm manager;
