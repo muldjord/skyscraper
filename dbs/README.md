@@ -52,6 +52,6 @@ A screenshot image filename for a game (file exists in 'screenshots' subfolder)
 #### wheel
 A wheel image filename for a game (file exists in 'wheels' subfolder)
 #### marquee
-A marquee image filename for a game (file exists in 'marquee' subfolder)
+A marquee image filename for a game (file exists in 'marquees' subfolder)
 #### video
 A video file filename for a game (file exists in 'videos' subfolder)
