@@ -145,6 +145,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Check if '--region' is working properly. Is it being messed up by the platform aliases? Such as 'megadrive' and 'genesis'?
 
+#### Version 2.5.2 (13th July 2018)
+* Fixed bug in 'thegamesdb' module that broke platform and genre detection
+
 #### Version 2.5.1 (10th July 2018)
 * Added '--relative' option which forces rom relative paths in gamelist for EmulationStation
 
