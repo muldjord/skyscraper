@@ -96,7 +96,7 @@ After a while you'll have accumulated a decent amount of locally cached data for
 #### Update local data
 If you wish to update / refresh the locally cached resources for a particular platform and scraping module, Skyscraper provides the '`--updatedb`' option. If this flag is set on the command line, any data in the local cache will be updated with the new incoming data.
 
-If you wish to just refresh the data for a single rom simply scrape it with '`-p [platform] -s [scraping module] --updatedb [relative or full rom path and filename]`' and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like.
+If you wish to just refresh the data for a single rom simply scrape it with '`-p [platform] -s [scraping module] --updatedb [relative or full rom path and filename]`' and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`.
 
 When you've updated information in the local cache, always remember to rescrape the entire platform with 'Skyscraper -p [platform] -s localdb' afterwards to regenerate the gamelist for the frontend.
 
