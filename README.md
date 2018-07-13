@@ -158,4 +158,4 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made sure cli header always has correct number of dashes
 
 #### Older releases
-Release notes for older older releases can be found [here](OLDERRELEASES.md)
+Release notes for older releases can be found [here](OLDERRELEASES.md).
