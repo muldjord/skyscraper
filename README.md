@@ -142,7 +142,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made 'import' base folder configurable
 * Added 'Did you know' hints when running Skyscraper
 * Added '--nohints' to disable hints. Can also be set in config.ini
-* Check if '--region' is working properly. Is it being messed up by the platform aliases? Such as 'megadrive' and 'genesis'?
 
 #### Version 2.5.2 (13th July 2018)
 * Fixed bug in 'thegamesdb' module that broke platform and genre detection
