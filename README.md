@@ -156,3 +156,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made sure 'remaining requests' is clearly stated when using 'thegamesdb'
 * Implemented request limit test which makes Skyscraper stop if limit is reached
 * Made sure cli header always has correct number of dashes
+
+#### Older releases
+Release notes for older older releases can be found [here](OLDERRELEASES.md)
