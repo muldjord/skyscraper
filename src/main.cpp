@@ -145,6 +145,7 @@ int main(int argc, char *argv[])
   QCommandLineOption skippedOption("skipped", "Include skipped entries when writing final gamelist.");
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption relativeOption("relative", "Forces all gamelist paths to be relative to rom location.");
+  QCommandLineOption allowextOption("allowext", "Force allow this file extension during a scraping run. (example: '*.zst')", "extension", "");
   QCommandLineOption nolocaldbOption("nolocaldb", "Disables local database resource cache. Other local db flags will then be ignored.");
   QCommandLineOption dbstatsOption("dbstats", "Show stats for the local database cache. This will also be shown with a verbosity level of 1 or more.");
   QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in the local database cache using selected scraping module.");
@@ -197,6 +198,7 @@ int main(int argc, char *argv[])
   parser.addOption(unattendOption);
   parser.addOption(forcefilenameOption);
   parser.addOption(relativeOption);
+  parser.addOption(allowextOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
   parser.addOption(verbosityOption);

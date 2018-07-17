@@ -149,7 +149,7 @@ void Skyscraper::run()
     localDb->readPriorities();
   }
 
-  QDir inputDir(config.inputFolder, Platform::getFormats(config.platform), QDir::Name, QDir::Files);
+  QDir inputDir(config.inputFolder, Platform::getFormats(config.platform, config.allowExtension), QDir::Name, QDir::Files);
   if(!inputDir.exists()) {
     printf("Input folder '\033[1;32m%s\033[0m' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
     exit(1);
@@ -598,6 +598,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("relativePaths")) {
     config.relativePaths = settings.value("relativePaths").toBool();
   }
+  if(settings.contains("allowExtension")) {
+    config.allowExtension = settings.value("allowExtension").toString();
+  }
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
@@ -657,6 +660,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("relativePaths")) {
     config.relativePaths = settings.value("relativePaths").toBool();
+  }
+  if(settings.contains("allowExtension")) {
+    config.allowExtension = settings.value("allowExtension").toString();
   }
   if(settings.contains("minMatch")) {
     config.minMatch = settings.value("minMatch").toInt();
@@ -768,6 +774,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("relative")) {
     config.relativePaths = true;
+  }
+  if(parser.isSet("allowext")) {
+    config.allowExtension = parser.value("allowext");
   }
   if(parser.isSet("nolocaldb")) {
     if(config.scraper == "localdb") {
