@@ -39,7 +39,7 @@ public:
 
   static QStringList getPlatforms();
   static QStringList getScrapers(QString platform);
-  static QString getFormats(QString platform);
+  static QString getFormats(QString platform, QString allowExtension);
   static QString getDefaultScraper(QString platform);
   static QStringList getAliases(QString platform);
 

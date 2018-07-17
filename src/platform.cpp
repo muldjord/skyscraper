@@ -413,9 +413,16 @@ QStringList Platform::getScrapers(QString platform)
   return scrapers;
 }
 
-QString Platform::getFormats(QString platform)
+QString Platform::getFormats(QString platform, QString allowExtension)
 {
-  QString formats = "*.zip *.7z *.zstd ";
+  QString formats = "*.zip *.7z ";
+  if(!allowExtension.isEmpty() &&
+     allowExtension.indexOf("*.") != -1) {
+    formats.append(allowExtension);
+  }
+  if(formats.right(1) != " ") {
+    formats.append(" ");
+  }
   if(platform == "3do") {
     formats.append("*.iso");
   } else if(platform == "amiga") {
