@@ -415,7 +415,7 @@ QStringList Platform::getScrapers(QString platform)
 
 QString Platform::getFormats(QString platform)
 {
-  QString formats = "*.zip *.7z ";
+  QString formats = "*.zip *.7z *.zstd ";
   if(platform == "3do") {
     formats.append("*.iso");
   } else if(platform == "amiga") {
