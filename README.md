@@ -147,7 +147,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'Did you know' hints when running Skyscraper
 * Added '--nohints' to disable hints. Can also be set in config.ini
 
-#### Version 2.5.2 (In progress, unreleased)
+#### Version 2.5.3 (In progress, unreleased)
 * Added 'zstd' as file extension for all platforms
 
 #### Version 2.5.2 (13th July 2018)
