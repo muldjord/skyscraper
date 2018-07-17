@@ -60,6 +60,7 @@ private:
   void loadMaps();
   QMap<int, QString> platformMap;
   QMap<int, QString> genreMap;
+  QMap<int, QString> developerMap;
 };
 
 #endif // THEGAMESDB_H

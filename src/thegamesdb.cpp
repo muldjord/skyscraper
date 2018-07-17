@@ -167,7 +167,8 @@ void TheGamesDb::getReleaseDate(GameEntry &game)
 
 void TheGamesDb::getDeveloper(GameEntry &game)
 {
-  game.developer = jsonObj.value("developer").toString();
+  QJsonArray developers = jsonObj.value("developers").toArray();
+  game.developer = developerMap[developers.first().toInt()];
 }
 
 void TheGamesDb::getPublisher(GameEntry &game)
@@ -353,6 +354,15 @@ void TheGamesDb::loadMaps()
   platformMap[4959] = "Watara Supervision";
   platformMap[4925] = "WonderSwan";
   platformMap[4926] = "WonderSwan Color";
+
+  QFile jsonFile("/usr/local/etc/skyscraper/Developers.json");
+  if(jsonFile.open(QIODevice::ReadOnly)) {
+    QJsonObject jsonDevs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("developers").toObject();
+    for(QJsonObject::iterator it = jsonDevs.begin(); it != jsonDevs.end(); ++it) {
+      developerMap[it.value().toObject().value("id").toInt()] = it.value().toObject().value("name").toString();
+    }
+    jsonFile.close();
+  }
 }
 
 void TheGamesDb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug)
