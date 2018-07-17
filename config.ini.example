@@ -36,6 +36,7 @@
 #region="wor"
 #artworkXml="artwork.xml"
 #relativePaths="false"
+#allowExtension="*.zst"
 
 #[localDb]
 #covers="true"
@@ -65,3 +66,4 @@
 #skipped="false"
 #artworkXml="artwork.xml"
 #relativePaths="false"
+#allowExtension="*.zst"
