@@ -10,7 +10,7 @@ unix:target.path=/usr/local/bin
 unix:target.files=Skyscraper
 
 unix:examples.path=/usr/local/etc/skyscraper
-unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 mameMap.csv ARTWORK.md
+unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 mameMap.csv ARTWORK.md Developers.json
 
 unix:dbexamples.path=/usr/local/etc/skyscraper/dbs
 unix:dbexamples.files=dbs/priorities.xml.example dbs/README.md
