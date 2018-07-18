@@ -173,7 +173,8 @@ void TheGamesDb::getDeveloper(GameEntry &game)
 
 void TheGamesDb::getPublisher(GameEntry &game)
 {
-  game.publisher = jsonObj.value("publisher").toString();
+  QJsonArray publishers = jsonObj.value("publishers").toArray();
+  game.publisher = publisherMap[publishers.first().toInt()];
 }
 
 void TheGamesDb::getDescription(GameEntry &game)
@@ -355,13 +356,25 @@ void TheGamesDb::loadMaps()
   platformMap[4925] = "WonderSwan";
   platformMap[4926] = "WonderSwan Color";
 
-  QFile jsonFile("/usr/local/etc/skyscraper/Developers.json");
-  if(jsonFile.open(QIODevice::ReadOnly)) {
-    QJsonObject jsonDevs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("developers").toObject();
-    for(QJsonObject::iterator it = jsonDevs.begin(); it != jsonDevs.end(); ++it) {
-      developerMap[it.value().toObject().value("id").toInt()] = it.value().toObject().value("name").toString();
+  {
+    QFile jsonFile("/usr/local/etc/skyscraper/tgdb_developers.json");
+    if(jsonFile.open(QIODevice::ReadOnly)) {
+      QJsonObject jsonDevs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("developers").toObject();
+      for(QJsonObject::iterator it = jsonDevs.begin(); it != jsonDevs.end(); ++it) {
+	developerMap[it.value().toObject().value("id").toInt()] = it.value().toObject().value("name").toString();
+      }
+      jsonFile.close();
     }
-    jsonFile.close();
+  }
+  {
+    QFile jsonFile("/usr/local/etc/skyscraper/tgdb_publishers.json");
+    if(jsonFile.open(QIODevice::ReadOnly)) {
+      QJsonObject jsonPubs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("publishers").toObject();
+      for(QJsonObject::iterator it = jsonPubs.begin(); it != jsonPubs.end(); ++it) {
+	publisherMap[it.value().toObject().value("id").toInt()] = it.value().toObject().value("name").toString();
+      }
+      jsonFile.close();
+    }
   }
 }
 

@@ -61,6 +61,7 @@ private:
   QMap<int, QString> platformMap;
   QMap<int, QString> genreMap;
   QMap<int, QString> developerMap;
+  QMap<int, QString> publisherMap;
 };
 
 #endif // THEGAMESDB_H
