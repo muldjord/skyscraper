@@ -151,6 +151,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--allowext' option which will force allow a file extension for the given platform. Thank you to 'herbymachine' for suggesting this
 * Added 'allowExtension' to the '[homedir]/.skyscraper/config.ini' variables for both 'main' and 'platform' specific sections. This is useful if you wish to permanently add a file extension to all or one platform when scraping
 * Implemented 'developers' change in 'thegamesdb' API
+* Implemented 'publishers' change in 'thegamesdb' API
 
 #### Version 2.5.2 (13th July 2018)
 * Fixed bug in 'thegamesdb' module that broke platform and genre detection
