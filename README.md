@@ -146,6 +146,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Made 'import' base folder configurable
 * Added 'Did you know' hints when running Skyscraper
 * Added '--nohints' to disable hints. Can also be set in config.ini
+* Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
 #### Version 2.5.3 (In progress, unreleased)
 * Added '--allowext' option which will force allow a file extension for the given platform. Thank you to 'herbymachine' for suggesting this
