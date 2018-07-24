@@ -62,7 +62,6 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(gameUrl);
   q.exec();
   data = manager.getData();
-
   if(data.indexOf("Erreur") != -1) {
     return;
   }
@@ -225,7 +224,7 @@ void ScreenScraper::getTags(GameEntry &game)
   
   for(int a = 0; a < xmlNodes.length(); ++a) {
     QDomElement elem = xmlNodes.at(a).toElement();
-    if(elem.attribute("langue") == config->lang) {
+    if(elem.attribute("langue") == langPrios.first()) {
       game.tags.append(xmlNodes.at(a).toElement().text() + ", ");
     }
   }
