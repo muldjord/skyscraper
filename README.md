@@ -148,11 +148,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
-#### Version 2.5.3 (In progress, unreleased)
+#### Version 2.5.3 (24th July 2018)
 * Added '--allowext' option which will force allow a file extension for the given platform. Thank you to 'herbymachine' for suggesting this
 * Added 'allowExtension' to the '[homedir]/.skyscraper/config.ini' variables for both 'main' and 'platform' specific sections. This is useful if you wish to permanently add a file extension to all or one platform when scraping
 * Implemented 'developers' change in 'thegamesdb' API
 * Implemented 'publishers' change in 'thegamesdb' API
+* Fixed 'Tags' bug in 'screenscraper' module
 
 #### Version 2.5.2 (13th July 2018)
 * Fixed bug in 'thegamesdb' module that broke platform and genre detection
