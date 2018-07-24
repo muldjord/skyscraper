@@ -60,7 +60,7 @@ private:
   void getWheel(GameEntry &game);
   void getMarquee(GameEntry &game);
   void getVideo(GameEntry &game);
-  QString getHashes(const QFileInfo &info);
+  QList<QString> getHashes(const QFileInfo &info);
 
   QString getXmlText(QString node, int attr, QString type = "");
 

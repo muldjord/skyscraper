@@ -308,40 +308,16 @@ void ScreenScraper::getVideo(GameEntry &game)
 
 void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug)
 {
-  QString hashes = getHashes(info);
-  QList<QString> hashList = hashes.split(":");
+  QList<QString> hashList = getHashes(info);
 
-  for(int pass = 1; pass <= 3; ++pass) {
-    output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
-    switch(pass) {
-    case 1:
-      if(info.size() != 0) {
-	debug.append("Tried with sha1: " + hashList.at(2) + "\n");
-	getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
-      }
-      break;
-    case 2:
-      if(info.size() != 0) {
-	debug.append("Tried with md5: " + hashList.at(1) + "\n");
-	getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
-      }
-      break;
-    case 3:
-      debug.append("Tried with name: " + hashList.at(0) + "\n");
-      getSearchResults(gameEntries, "romnom=" + hashList.at(0), config->platform);
-      break;
-    default:
-      ;
-    }
-    debug.append("Platform: " + config->platform + "\n");
-    if(!gameEntries.isEmpty()) {
-      break;
-    }
-  }
+  output.append("\033[1;35mPass 1\033[0m ");
+  debug.append("Tried simultaneously with (filename, sha1, md5): '" + hashList.at(0) + "', '"+ hashList.at(1) + "', '"+ hashList.at(2) + "'\n");
+  getSearchResults(gameEntries, "romnom=" + hashList.at(0) + "&md5=" + hashList.at(1) + "&sha1=" + hashList.at(2), config->platform);
 }
 
-QString ScreenScraper::getHashes(const QFileInfo &info)
+QList<QString> ScreenScraper::getHashes(const QFileInfo &info)
 {
+  QList<QString> hashList;
   QCryptographicHash md5(QCryptographicHash::Md5);
   QCryptographicHash sha1(QCryptographicHash::Sha1);
   QFile romFile(info.absoluteFilePath());
@@ -352,8 +328,11 @@ QString ScreenScraper::getHashes(const QFileInfo &info)
     sha1.addData(dataSeg);
   }
   romFile.close();
+  hashList.append(QUrl::toPercentEncoding(info.fileName()));
+  hashList.append(md5.result().toHex().toUpper());
+  hashList.append(sha1.result().toHex().toUpper());
 
-  return QUrl::toPercentEncoding(info.fileName()) + ":" + md5.result().toHex().toUpper() + ":" + sha1.result().toHex().toUpper();
+  return hashList;
 }
 
 QString ScreenScraper::getXmlText(QString node, int attr, QString type)
