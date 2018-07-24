@@ -310,29 +310,38 @@ void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
 {
   QList<QString> hashList = getHashes(info);
 
-  for(int pass = 1; pass <= 3; ++pass) {
+  for(int pass = 1; pass <= 4; ++pass) {
     output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
     switch(pass) {
     case 1:
       if(info.size() != 0) {
-	debug.append("Tried with sha1: " + hashList.at(2) + "\n");
-	getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
+	debug.append("Tried with sha1, md5, filename: '" + hashList.at(0) + "', '" + hashList.at(2) + "', '" + hashList.at(1) + "'\n");
+	debug.append("Platform: " + config->platform + "\n");
+	getSearchResults(gameEntries, "romnom=" + hashList.at(0) + "&sha1=" + hashList.at(2) + "&md5=" + hashList.at(1), config->platform);
       }
       break;
     case 2:
       if(info.size() != 0) {
-	debug.append("Tried with md5: " + hashList.at(1) + "\n");
-	getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
+	debug.append("Tried with sha1: " + hashList.at(2) + "\n");
+	debug.append("Platform: " + config->platform + "\n");
+	getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
       }
       break;
     case 3:
+      if(info.size() != 0) {
+	debug.append("Tried with md5: " + hashList.at(1) + "\n");
+	debug.append("Platform: " + config->platform + "\n");
+	getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
+      }
+      break;
+    case 4:
       debug.append("Tried with name: " + hashList.at(0) + "\n");
+      debug.append("Platform: " + config->platform + "\n");
       getSearchResults(gameEntries, "romnom=" + hashList.at(0), config->platform);
       break;
     default:
       ;
     }
-    debug.append("Platform: " + config->platform + "\n");
     if(!gameEntries.isEmpty()) {
       break;
     }
