@@ -310,9 +310,33 @@ void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
 {
   QList<QString> hashList = getHashes(info);
 
-  output.append("\033[1;35mPass 1\033[0m ");
-  debug.append("Tried simultaneously with (filename, sha1, md5): '" + hashList.at(0) + "', '"+ hashList.at(1) + "', '"+ hashList.at(2) + "'\n");
-  getSearchResults(gameEntries, "romnom=" + hashList.at(0) + "&md5=" + hashList.at(1) + "&sha1=" + hashList.at(2), config->platform);
+  for(int pass = 1; pass <= 3; ++pass) {
+    output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
+    switch(pass) {
+    case 1:
+      if(info.size() != 0) {
+	debug.append("Tried with sha1: " + hashList.at(2) + "\n");
+	getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
+      }
+      break;
+    case 2:
+      if(info.size() != 0) {
+	debug.append("Tried with md5: " + hashList.at(1) + "\n");
+	getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
+      }
+      break;
+    case 3:
+      debug.append("Tried with name: " + hashList.at(0) + "\n");
+      getSearchResults(gameEntries, "romnom=" + hashList.at(0), config->platform);
+      break;
+    default:
+      ;
+    }
+    debug.append("Platform: " + config->platform + "\n");
+    if(!gameEntries.isEmpty()) {
+      break;
+    }
+  }
 }
 
 QList<QString> ScreenScraper::getHashes(const QFileInfo &info)
