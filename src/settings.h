@@ -74,12 +74,13 @@ struct Settings {
   bool forceFilename = false;
   bool stats = false;
   int verbosity = 0;
+  int terminate = 30;
   bool skipped = false;
   QString artworkConfig = "artwork.xml";
   QByteArray artworkXml = "";
   bool relativePaths = false;
   QString allowExtension = "";
-  
+
   bool cacheCovers = true;
   bool cacheScreenshots = true;
   bool cacheWheels = true;
@@ -91,7 +92,7 @@ struct Settings {
   QString region = "";
 
   QMap<QString, QImage> resources;
-  
+
 };
 
 #endif // SETTINGS_H

@@ -697,7 +697,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("terminate")) {
     config.terminate = settings.value("terminate").toInt();
-    printf("Found terminate setting in file");
   }
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
@@ -836,7 +835,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("terminate")) {
     config.terminate = parser.value("terminate").toInt();
-    printf("Found terminate setting in CL");
   }
 
   frontend->checkReqs();
