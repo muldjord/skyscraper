@@ -74,7 +74,7 @@ void Skyscraper::run()
   }
 
   printf("\n");
-  
+
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
@@ -110,7 +110,7 @@ void Skyscraper::run()
   found = 0;
   avgCompleteness = 0;
   avgSearchMatch = 0;
-  
+
   if(!config.dbFolder.isEmpty() && config.localDb) {
     localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
     if(localDb->createFolders(config.scraper)) {
@@ -158,7 +158,7 @@ void Skyscraper::run()
   QDir gameListDir(config.gameListFolder);
   checkForFolder(gameListDir);
   config.gameListFolder = gameListDir.absolutePath();
-  
+
   QDir coversDir(config.coversFolder);
   checkForFolder(coversDir);
   config.coversFolder = coversDir.absolutePath();
@@ -194,9 +194,9 @@ void Skyscraper::run()
       printf("User chose not to overwrite, now exiting...\n");
       exit(0);
     }
-    
+
     printf("Checking if '\033[1;32m%s\033[0m' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
-    
+
     if(gameListFile.open(QIODevice::Append)) {
       printf("\033[1;32mIt is! :)\033[0m\n");
       gameListFile.close();
@@ -256,7 +256,7 @@ void Skyscraper::run()
     foreach(QString cliFile, cliFiles) {
       queue->append(QFileInfo(cliFile));
     }
-  } 
+  }
 
   if(!config.unattend && cliFiles.isEmpty()) {
     std::string userInput = "";
@@ -277,7 +277,7 @@ void Skyscraper::run()
     checkThreads();
     exit(0);
   }
-  
+
   printf("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
 
   timer.start();
@@ -378,10 +378,10 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
       gameEntries.append(entry);
     }
   }
-  
-  if(currentFile == 30 && notFound == 30 &&
+
+  if(currentFile == config.terminate && notFound == config.terminate &&
      config.scraper != "import" && config.scraper != "localdb") {
-    printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n");
+    printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of %u files we had %u misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n", config.terminate, config.terminate);
     exit(1);
   }
   currentFile++;
@@ -404,7 +404,7 @@ void Skyscraper::checkThreads()
 
   QString finalOutput;
   frontend->assembleList(finalOutput, gameEntries, config.maxLength);
-    
+
   if(!config.pretend) {
     QFile gameListFile(gameListFileString);
     printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
@@ -473,7 +473,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   current = "mameMap.csv";
   distro = "/usr/local/etc/skyscraper/mameMap.csv";
   copyFile(distro, current);
-  
+
   current = "resources/boxfront.png";
   distro = "/usr/local/etc/skyscraper/resources/boxfront.png";
   copyFile(distro, current);
@@ -546,11 +546,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
 
   frontend->setConfig(&config);
-  
+
   bool inputFolderSet = false;
   bool gameListFolderSet = false;
   bool mediaFolderSet = false;
-  
+
   // Main config, overrides defaults
   settings.beginGroup("main");
   if(settings.contains("platform")) {
@@ -695,6 +695,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("verbosity")) {
     config.verbosity = settings.value("verbosity").toInt();
   }
+  if(settings.contains("terminate")) {
+    config.terminate = settings.value("terminate").toInt();
+  }
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
   }
@@ -702,7 +705,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.artworkConfig = settings.value("artworkXml").toString();
   }
   settings.endGroup();
-  
+
   // Command line configs, overrides platform, main and defaults
   if(parser.isSet("l") && parser.value("l").toInt() >= 0 && parser.value("l").toInt() <= 10000) {
     config.maxLength = parser.value("l").toInt();
@@ -830,6 +833,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("verbosity")) {
     config.verbosity = parser.value("verbosity").toInt();
   }
+  if(parser.isSet("terminate")) {
+    config.terminate = parser.value("terminate").toInt();
+  }
 
   frontend->checkReqs();
 
@@ -848,7 +854,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   config.wheelsFolder = frontend->getWheelsFolder();
   config.marqueesFolder = frontend->getMarqueesFolder();
   config.videosFolder = frontend->getVideosFolder();
-  
+
   // Choose default scraper for chosen platform if none has been set yet
   if(config.scraper.isEmpty()) {
     config.scraper = Platform::getDefaultScraper(config.platform);
@@ -890,7 +896,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.unattend = true;
     config.subDirs = false;
   }
-  
+
   if(config.scraper == "import") {
     // Always force local db to be updated when using import scraper
     config.updateDb = true;
@@ -914,7 +920,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     printf("Couldn't read artwork xml file '\033[1;32m%s\033[0m'. Please check file and permissions. Now exiting...\n", config.artworkConfig.toStdString().c_str());
     exit(1);
   }
-  
+
   QDir resDir("./resources");
   QDirIterator resDirIt(resDir.absolutePath(),
 			QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,

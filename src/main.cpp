@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
   }
   // Remove the last ', '
   platforms = platforms.left(platforms.length() - 2);
-  
+
   QCommandLineParser parser;
 
   QString headerString = "Running Skyscraper v" VERSION " by Lars Muldjord";
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
   for(int a = 0; a < headerString.length(); ++a) {
     dashesString += "-";
   }
-  
+
   parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files in the input directory. It fetches media files and other relevant information for the games. It composites game art from the recipe at '~/.skyscraper/artwork.xml' and lastly builds a game list file for use with the chosen frontend.\n\nPlease check the documentation at 'https://github.com/muldjord/skyscraper' for a detailed explanation of all features.");
   parser.addHelpOption();
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "platform", "");
@@ -162,7 +162,8 @@ int main(int argc, char *argv[])
   QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' in that order)", "code", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Can be 0-3, default is 0.)", "int", "0");
-  
+  QCommandLineOption terminateOption("terminate", "Terminate after a set number of sequential failed lookups\n(Can be >=0, default is 30. Setting this option to 0 means each rom will be checked regardless of failures)", "int", "30");
+
   parser.addOption(pOption);
   parser.addOption(sOption);
   parser.addOption(uOption);
@@ -202,6 +203,7 @@ int main(int argc, char *argv[])
   parser.addOption(langOption);
   parser.addOption(regionOption);
   parser.addOption(verbosityOption);
+  parser.addOption(terminateOption);
 
   parser.process(app);
 

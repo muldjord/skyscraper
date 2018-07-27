@@ -56,7 +56,7 @@ signals:
 private slots:
   void entryReady(GameEntry entry, QString output, QString debug);
   void checkThreads();
-  
+
 private:
   Settings config;
   void loadConfig(const QCommandLineParser &parser);
@@ -67,7 +67,7 @@ private:
   AbstractFrontend *frontend;
 
   QSharedPointer<LocalDb> localDb;
-  
+
   QList<GameEntry> gameEntries;
   QList<QString> cliFiles;
   QMutex entryMutex;
@@ -82,6 +82,7 @@ private:
   int avgCompleteness;
   int currentFile;
   int totalFiles;
+  int termMax
 };
 
 #endif // SKYSCRAPER_H
