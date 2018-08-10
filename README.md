@@ -150,6 +150,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.5.4 (10th August 2018)
 * Added 'extensions=' to platform sections of config.ini to allow overwriting the default extensions for any platform
+* Added '--maxfails [int]' command line option and 'maxFails=[int]' config.ini option to allow user to set a higher allowed initial 'Not found' before quitting
 
 #### Version 2.5.3 (24th July 2018)
 * Added '--allowext' option which will force allow a file extension for the given platform. Thank you to 'herbymachine' for suggesting this
