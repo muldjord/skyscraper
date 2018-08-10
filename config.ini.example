@@ -66,4 +66,7 @@
 #skipped="false"
 #artworkXml="artwork.xml"
 #relativePaths="false"
-#allowExtension="*.zst"
+##Ucomment to overwrite the default allowed rom extensions for this platform
+#extensions="*.zip *.uae *.adf"
+##Uncomment to add these extensions to the default allowed extensions for this platform
+#allowExtension="*.zst *.rom"

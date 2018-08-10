@@ -78,6 +78,7 @@ struct Settings {
   QString artworkConfig = "artwork.xml";
   QByteArray artworkXml = "";
   bool relativePaths = false;
+  QString extensions = "";
   QString allowExtension = "";
   
   bool cacheCovers = true;

@@ -413,11 +413,14 @@ QStringList Platform::getScrapers(QString platform)
   return scrapers;
 }
 
-QString Platform::getFormats(QString platform, QString allowExtension)
+QString Platform::getFormats(QString platform, QString extensions, QString allowExtension)
 {
+  if(!extensions.isEmpty() && extensions.indexOf("*.") != -1) {
+    return extensions;
+  }
+
   QString formats = "*.zip *.7z ";
-  if(!allowExtension.isEmpty() &&
-     allowExtension.indexOf("*.") != -1) {
+  if(!allowExtension.isEmpty() && allowExtension.indexOf("*.") != -1) {
     formats.append(allowExtension);
   }
   if(formats.right(1) != " ") {
