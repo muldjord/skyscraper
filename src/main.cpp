@@ -157,11 +157,12 @@ int main(int argc, char *argv[])
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--pretend', '--updatedb' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--pretend', '--updatedb' and '--nosubdirs' enabled.", "filename", "");
+  QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before quitting. (Default is 30)", "1-500", "");
   QCommandLineOption pretendOption("pretend", "Don't alter game list and media files, just print the results on screen. Scraped resources are still cached in the local database.");
   QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' in that order)", "code", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
-  QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Can be 0-3, default is 0.)", "int", "0");
+  QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
   
   parser.addOption(pOption);
   parser.addOption(sOption);
@@ -194,6 +195,7 @@ int main(int argc, char *argv[])
   parser.addOption(noresizeOption);
   parser.addOption(startatOption);
   parser.addOption(endatOption);
+  parser.addOption(maxfailsOption);
   parser.addOption(pretendOption);
   parser.addOption(unattendOption);
   parser.addOption(forcefilenameOption);

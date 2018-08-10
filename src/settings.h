@@ -74,6 +74,7 @@ struct Settings {
   bool forceFilename = false;
   bool stats = false;
   int verbosity = 0;
+  int maxFails = 30;
   bool skipped = false;
   QString artworkConfig = "artwork.xml";
   QByteArray artworkXml = "";

@@ -379,7 +379,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     }
   }
   
-  if(currentFile == 30 && notFound == 30 &&
+  if(currentFile == config.maxFails && notFound == config.maxFails &&
      config.scraper != "import" && config.scraper != "localdb") {
     printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n");
     exit(1);
@@ -591,6 +591,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();
+  }
+  if(settings.contains("maxFails") &&
+     settings.value("maxFails").toInt() >= 1 &&
+     settings.value("maxFails").toInt() <= 500) {
+    config.maxFails = settings.value("maxFails").toInt();
   }
   if(settings.contains("brackets")) {
     config.brackets = !settings.value("brackets").toBool();
@@ -814,6 +819,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("endat")) {
     config.endAt = parser.value("endat");
+  }
+  if(parser.isSet("maxfails") &&
+     parser.value("maxfails").toInt() >= 1 &&
+     parser.value("maxfails").toInt() <= 500) {
+    config.maxFails = parser.value("maxfails").toInt();
   }
   if(parser.isSet("pretend")) {
     config.pretend = true;
