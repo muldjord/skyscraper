@@ -381,7 +381,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
   
   if(currentFile == config.maxFails && notFound == config.maxFails &&
      config.scraper != "import" && config.scraper != "localdb") {
-    printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of 30 files we had 30 misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n");
+    printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of %d files we had %d misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n", config.maxFails, config.maxFails);
     exit(1);
   }
   currentFile++;
