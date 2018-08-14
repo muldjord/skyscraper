@@ -148,6 +148,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
+#### Version 2.5.5 (In progress, unreleased)
+* Changed '--updatedb' to '--refresh' as the name confused users. '--updatedb' still works, but is considered deprecated
+
 #### Version 2.5.4 (10th August 2018)
 * Added 'extensions=' to platform sections of config.ini to allow overwriting the default extensions for any platform
 * Added '--maxfails [int]' command line option and 'maxFails=[int]' config.ini option to allow user to set a higher allowed initial 'Not found' before quitting
