@@ -60,7 +60,7 @@ struct Settings {
   bool videos = false;
   bool brackets = true;
   bool localDb = true;
-  bool updateDb = false;
+  bool refresh = false;
   bool dbStats = false;
   QString dbPurge = "";
   bool cleanDb = false;

@@ -125,9 +125,9 @@ Scripter::Scripter()
   printf("\033[1;34mWhat is the minimum search result percentage match you wish to accept\033[0m (enter for default)? ");
   getline(std::cin, minMatchStr);
 
-  std::string updateDbStr = "";
-  printf("\033[1;34mDo you wish to force an update of all locally cached data\033[0m (y/N)? ");
-  getline(std::cin, updateDbStr);
+  std::string refreshStr = "";
+  printf("\033[1;34mDo you wish to force a refresh of all locally cached data\033[0m (y/N)? ");
+  getline(std::cin, refreshStr);
 
   QFile scriptFile(QDir::homePath() + "/.skyscraper/skyscript.sh");
   if(!scriptFile.open(QIODevice::WriteOnly)) {
@@ -151,8 +151,8 @@ Scripter::Scripter()
     commandStr += " -m " + minMatchStr;
   if(forceFilenameStr == "y" || forceFilenameStr == "Y")
     commandStr += " --forcefilename";
-  if(updateDbStr == "y" || updateDbStr == "Y")
-    commandStr += " --updatedb";
+  if(refreshStr == "y" || refreshStr == "Y")
+    commandStr += " --refresh";
   if(bracketsStr == "n")
     commandStr += " --nobrackets";
   if(relativeStr == "y" || relativeStr == "Y")

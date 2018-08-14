@@ -148,15 +148,16 @@ int main(int argc, char *argv[])
   QCommandLineOption allowextOption("allowext", "Force allow this file extension during a scraping run. (example: '*.zst')", "extension", "");
   QCommandLineOption nolocaldbOption("nolocaldb", "Disables local database resource cache. Other local db flags will then be ignored.");
   QCommandLineOption dbstatsOption("dbstats", "Show stats for the local database cache. This will also be shown with a verbosity level of 1 or more.");
-  QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in the local database cache using selected scraping module.");
+  QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in the local database cache using selected scraping module. (Deprecated, please use --refresh)");
+  QCommandLineOption refreshOption("refresh", "Refresh resources in the local database cache for the selected scraping module.");
   QCommandLineOption purgedbOption("purgedb", "Purges all requested resources from the local database cache. You can define either module (m:[module]) or type (t:[type]) or both comma-separated (example 'm:thegamesdb,t:description'). Set specific db folder with '-d' otherwise default db folder is used.", "resources", "");
   QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d' otherwise default db folder is used.");
   QCommandLineOption mergedbOption("mergedb", "Merge data from the specified db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d' otherwise default db folder is used as destination.", "folder", "");
   QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the local db cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
-  QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--pretend', '--updatedb' and '--nosubdirs' enabled.", "filename", "");
-  QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--pretend', '--updatedb' and '--nosubdirs' enabled.", "filename", "");
+  QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
+  QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before quitting. (Default is 30)", "1-500", "");
   QCommandLineOption pretendOption("pretend", "Don't alter game list and media files, just print the results on screen. Scraped resources are still cached in the local database.");
   QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
@@ -181,6 +182,7 @@ int main(int argc, char *argv[])
   parser.addOption(dOption);
   parser.addOption(nolocaldbOption);
   parser.addOption(updatedbOption);
+  parser.addOption(refreshOption);
   parser.addOption(dbstatsOption);
   parser.addOption(cleandbOption);
   parser.addOption(mergedbOption);

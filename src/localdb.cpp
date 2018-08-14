@@ -618,7 +618,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
     if(res.sha1 == resource.sha1 &&
        res.type == resource.type &&
        res.source == resource.source) {
-      if(config.updateDb) {
+      if(config.refresh) {
 	it.remove();
       } else {
 	notFound = false;

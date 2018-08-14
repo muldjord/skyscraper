@@ -141,7 +141,7 @@ void Skyscraper::run()
   if(config.localDb && !config.mergeDb.isEmpty() && QDir(config.mergeDb).exists()) {
     LocalDb srcDb(config.mergeDb);
     srcDb.readDb();
-    localDb->mergeDb(srcDb, config.updateDb, config.mergeDb);
+    localDb->mergeDb(srcDb, config.refresh, config.mergeDb);
     localDb->writeDb();
     exit(0);
   }
@@ -806,7 +806,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.mergeDb = parser.value("mergedb");
   }
   if(parser.isSet("updatedb")) {
-    config.updateDb = true;
+    config.refresh = true;
+  }
+  if(parser.isSet("refresh")) {
+    config.refresh = true;
   }
   if(parser.isSet("noresize")) {
     config.noResize = true;
@@ -888,25 +891,25 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     }
     if(exists) {
       cliFiles.append(cliArgument);
-      // Always set pretend, updateDb and unattend true if user has supplied filenames on
+      // Always set pretend, refresh and unattend true if user has supplied filenames on
       // command line. That way they are cached, but game list is not changed and user isn't
       // asked about skipping and overwriting.
       config.pretend = true;
-      config.updateDb = true;
+      config.refresh = true;
       config.unattend = true;
     }
   }
 
   if(config.startAt != "" || config.endAt != "") {
     config.pretend = true;
-    config.updateDb = true;
+    config.refresh = true;
     config.unattend = true;
     config.subDirs = false;
   }
   
   if(config.scraper == "import") {
-    // Always force local db to be updated when using import scraper
-    config.updateDb = true;
+    // Always force local db to be refreshed when using import scraper
+    config.refresh = true;
     config.videos = true;
     // minMatch set to 0 further up
   }

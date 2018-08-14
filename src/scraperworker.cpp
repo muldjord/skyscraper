@@ -142,7 +142,7 @@ void ScraperWorker::run()
       gameEntries.append(localGame);
     } else {
       if(config.localDb && config.scraper != "localdb" &&
-	 localDb->hasEntries(sha1, config.scraper) && !config.updateDb) {
+	 localDb->hasEntries(sha1, config.scraper) && !config.refresh) {
 	prefilledFromCache = true;
 	GameEntry localGame;
 	localGame.sha1 = sha1;
@@ -252,7 +252,7 @@ void ScraperWorker::run()
 
     output.append("Scraper:        " + config.scraper + "\n");
     if(config.scraper != "localdb" && config.scraper != "import") {
-      output.append("From cache:     " + QString((prefilledFromCache?"YES (refresh from source with '--updatedb')":"NO")) + "\n");
+      output.append("From cache:     " + QString((prefilledFromCache?"YES (refresh from source with '--refresh')":"NO")) + "\n");
     }
     output.append("Search match:   " + QString::number(searchMatch) + " %\n");
     output.append("Compare title:  '\033[1;32m" + compareTitle + "\033[0m'\n");
