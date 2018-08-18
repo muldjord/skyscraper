@@ -591,6 +591,8 @@ void AbstractScraper::setRegionPrios()
   }
   regionPrios.append("eu");
   regionPrios.append("us");
+  regionPrios.append("ss");
+  regionPrios.append("uk");
   regionPrios.append("wor");
   regionPrios.append("jp");
 }
