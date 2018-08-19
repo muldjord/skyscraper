@@ -160,6 +160,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
+#### Version 2.5.6 (20th August 2018)
+* Added 'atari800' platform support
+
 #### Version 2.5.5 (18th August 2018)
 * Changed '--updatedb' to '--refresh' as the name confused users. '--updatedb' still works, but is considered deprecated
 * Added 'ss' and 'uk' regions to 'screenscraper' module which should fix A LOT of games that weren't found when using this module
