@@ -46,6 +46,7 @@ QStringList Platform::getPlatforms()
   platforms.append("amstradcpc");
   platforms.append("apple2");
   platforms.append("arcade");
+  platforms.append("atari800");
   platforms.append("atari2600");
   platforms.append("atari5200");
   platforms.append("atari7800");
@@ -135,6 +136,10 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "arcade") {
     scrapers.append("arcadedb");
     scrapers.append("openretro");
+    // scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "atari800") {
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -436,6 +441,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString allow
     formats.append("*.dsk");
   } else if(platform == "arcade") {
     formats.append("");
+  } else if(platform == "atari800") {
+    formats.append("*.a52 *.bas *.bin *.car *.xex *.atr *.xfd *.dcm *.atr.gz *.xfd.gz");
   } else if(platform == "atari2600") {
     formats.append("*.bin *.a26 *.rom *.gz");
   } else if(platform == "atari5200") {
@@ -575,6 +582,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "arcade") {
     scraper = "localdb";
   } else if(platform == "apple2") {
+    scraper = "localdb";
+  } else if(platform == "atari800") {
     scraper = "localdb";
   } else if(platform == "atari2600") {
     scraper = "localdb";
@@ -786,6 +795,8 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("gaelco");
     aliases.append("mega-tech");
     aliases.append("mega-play");
+  } else if(platform == "atari800") {
+    aliases.append("atari 800");
   } else if(platform == "atari2600") {
     aliases.append("atari 2600");
   } else if(platform == "atari5200") {
