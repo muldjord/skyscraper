@@ -25,12 +25,24 @@ Check the full list of platforms [here](PLATFORMS.md).
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with '`$`' signifies a command you need run in a terminal on the machine you wish to install it on.
 
 ### Install prerequisites
+#### Linux
 Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install it using the following commands:
 ```
 $ sudo apt-get update
 $ sudo apt-get install qt5-default
 ```
 You might be asked for your sudo password. On RetroPie the default password is '`raspberry`'. To install Qt5 on other Linux distributions, please refer to their documentation.
+
+#### OSX
+Skyscraper works perfectly on OSX aswell but is not officially supported as I don't own a Mac. But with the help of HoraceAndTheSpider here's the commands needed to install the Qt5 prerequisite:
+```
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ brew install qt5
+```
+If that went well, proceed to the default installation instructions below. It should work and give you a working installation of Skyscraper.
+
+#### Windows
+Windows is not supported at this time.
 
 ### Download, compile and install
 When you've installed the prerequisites as described above, you can install Skyscraper by typing in the following commands:
@@ -151,6 +163,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.5.5 (18th August 2018)
 * Changed '--updatedb' to '--refresh' as the name confused users. '--updatedb' still works, but is considered deprecated
 * Added 'ss' and 'uk' regions to 'screenscraper' module which should fix A LOT of games that weren't found when using this module
+* Added unofficial OSX support to the install script
 
 #### Version 2.5.4 (10th August 2018)
 * Added 'extensions=' to platform sections of config.ini to allow overwriting the default extensions for any platform
