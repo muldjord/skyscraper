@@ -7,7 +7,7 @@ QT += core network xml
 QMAKE_CXXFLAGS += -std=c++11
 
 unix:target.path=/usr/local/bin
-unix:target.files=Skyscraper
+unix:target.files=Skyscraper Skyscraper.app/Contents/MacOS/Skyscraper
 
 unix:examples.path=/usr/local/etc/skyscraper
 unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 mameMap.csv ARTWORK.md tgdb_developers.json tgdb_publishers.json
