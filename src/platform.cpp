@@ -797,6 +797,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("mega-play");
   } else if(platform == "atari800") {
     aliases.append("atari 800");
+    aliases.append("atari 5200");
   } else if(platform == "atari2600") {
     aliases.append("atari 2600");
   } else if(platform == "atari5200") {
