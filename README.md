@@ -161,6 +161,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
+#### Version 2.5.7 (21st August 2018)
+* Adde restrictions for scraping module and removed it from Simple Mode
+
 #### Version 2.5.6 (20th August 2018)
 * Added 'atari800' platform support
 
