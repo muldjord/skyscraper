@@ -36,7 +36,7 @@ TheGamesDb::TheGamesDb()
   
   baseUrl = "https://api.thegamesdb.net";
 
-  searchUrlPre = "https://api.thegamesdb.net/Games/ByGameName?name=";
+  searchUrlPre = "https://api.thegamesdb.net/Games/ByGameName?apikey=";
   
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(DESCRIPTION);
@@ -54,15 +54,16 @@ TheGamesDb::TheGamesDb()
 void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
 				  QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + searchName + "&apikey=" + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163"));
+  manager.request(searchUrlPre + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&name="+ searchName);
   q.exec();
   data = manager.getData();
-  
+
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
   }
   reqRemaining = jsonDoc.object().value("remaining_monthly_allowance").toInt();
+
   if(jsonDoc.object().value("status").toString() != "Success") {
     return;
   }
