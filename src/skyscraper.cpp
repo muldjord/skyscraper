@@ -78,6 +78,9 @@ void Skyscraper::run()
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
     config.threads = 1;
+  } else if(config.scraper == "openretro" && config.threads != 1) {
+    printf("Forcing 1 thread to accomodate limits in OpenRetro scraping module\n\n");
+    config.threads = 1;
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("Forcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour.\n\n");
     config.threads = 1;

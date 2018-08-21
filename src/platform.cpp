@@ -125,7 +125,6 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "amstradcpc") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -135,7 +134,6 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("localdb");
   } else if(platform == "arcade") {
     scrapers.append("arcadedb");
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -144,17 +142,14 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "atari2600") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "atari5200") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "atari7800") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -163,12 +158,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "atarilynx") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "atarist") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -176,12 +169,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "c64") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "c128") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -207,7 +198,6 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("localdb");
   } else if(platform == "fba") {
     scrapers.append("arcadedb");
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -224,27 +214,22 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "gb") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "gba") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "gbc") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "gc") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "genesis") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -254,39 +239,32 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("localdb");
   } else if(platform == "mame-advmame") {
     scrapers.append("arcadedb");
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "mame-libretro") {
     scrapers.append("arcadedb");
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "mame-mame4all") {
     scrapers.append("arcadedb");
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "mastersystem") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "megadrive") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "msx") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "n64") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -296,12 +274,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("localdb");
   } else if(platform == "neogeo") {
     scrapers.append("arcadedb");
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "nes") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -317,8 +293,7 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "pc") {
-    scrapers.append("openretro");
-    // scrapers.append("thegamesdb");
+    scrapers.append("thegamesdb");
     scrapers.append("localdb");
   } else if(platform == "pc88") {
     // scrapers.append("thegamesdb");
@@ -328,12 +303,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "pcengine") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "ports") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("localdb");
   } else if(platform == "psp") {
@@ -341,7 +314,6 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "psx") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("localdb");
   } else if(platform == "saturn") {
@@ -349,7 +321,6 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "scummvm") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("localdb");
   } else if(platform == "sega32x") {
@@ -365,7 +336,6 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "snes") {
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -410,7 +380,6 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("localdb");
   } else if(platform  == "zxspectrum") {
     scrapers.append("worldofspectrum");
-    scrapers.append("openretro");
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
