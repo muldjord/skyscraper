@@ -162,6 +162,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
 #### Version 2.5.7 (21st August 2018)
+* Added 'Super Famicom' as alias to 'Super Nintendo'
 * Added restrictions for 'openretro' scraping module and removed it from Simple Mode
 
 #### Version 2.5.6 (20th August 2018)
