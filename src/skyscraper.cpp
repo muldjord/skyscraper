@@ -82,7 +82,7 @@ void Skyscraper::run()
     printf("Forcing 1 thread to accomodate limits in OpenRetro scraping module\n\n");
     config.threads = 1;
   } else if(config.scraper == "mobygames" && config.threads != 1) {
-    printf("WARNING!!! The MobyGames scraping module is currently in alpha and WILL HAVE PROBLEMS! Please don't use it.\n\nForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour.\n\n");
+    printf("Forcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour.\n\n");
     config.threads = 1;
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
