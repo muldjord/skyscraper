@@ -161,6 +161,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
+#### Version 2.5.8 (24th August 2018)
+* Fixed bug in 'genesis' platform when using the 'screenscraper' module
+* Added 'megacd' platform support
+
 #### Version 2.5.7 (21st August 2018)
 * Added 'Super Famicom' as alias to 'Super Nintendo'
 * Added restrictions for 'openretro' scraping module and removed it from Simple Mode
