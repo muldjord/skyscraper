@@ -897,8 +897,10 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("gamecube");
     aliases.append("nintendo gamecube");
   } else if(platform == "genesis") {
+    aliases.append("megadrive");
     aliases.append("sega genesis");
     aliases.append("mega drive");
+    aliases.append("sega mega drive");
   } else if(platform == "mame-advmame") {
     aliases.append("neo geo");
     aliases.append("neo-geo");
