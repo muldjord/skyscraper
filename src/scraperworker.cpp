@@ -34,6 +34,7 @@
 #include "thegamesdb.h"
 #include "worldofspectrum.h"
 #include "screenscraper.h"
+#include "mobygames.h"
 #include "localscraper.h"
 #include "importscraper.h"
 #include "arcadedb.h"
@@ -63,6 +64,8 @@ void ScraperWorker::run()
     scraper = new ArcadeDB();
   } else if(config.scraper == "screenscraper") {
     scraper = new ScreenScraper();
+  } else if(config.scraper == "mobygames") {
+    scraper = new MobyGames();
   } else if(config.scraper == "worldofspectrum") {
     scraper = new WorldOfSpectrum();
   } else if(config.scraper == "localdb") {
