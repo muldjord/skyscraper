@@ -775,6 +775,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("mega-play");
   } else if(platform == "atari800") {
     aliases.append("atari 800");
+    aliases.append("atari 8-bit");
     aliases.append("atari 5200");
   } else if(platform == "atari2600") {
     aliases.append("atari 2600");
@@ -792,6 +793,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("atari st");
   } else if(platform == "c16") {
     aliases.append("plus/4");
+    aliases.append("commodore 16, plus/4");
   } else if(platform == "c64") {
     aliases.append("commodore 64");
   } else if(platform == "c128") {
@@ -803,16 +805,19 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("amiga cdtv");
   } else if(platform == "coco") {
     aliases.append("trs-80 color computer");
+    aliases.append("trs-80 coco");
   } else if(platform == "coleco") {
     aliases.append("colecovision");
   } else if(platform == "daphne") {
     aliases.append("pioneer laseractive");
+    aliases.append("laseractive");
     aliases.append("american laser games");
   } else if(platform == "dragon32") {
     aliases.append("dragon 32/64");
   } else if(platform == "dreamcast") {
     aliases.append("sega dreamcast");
   } else if(platform == "fba") {
+    aliases.append("arcade");
     aliases.append("neo geo");
     aliases.append("neo-geo");
     aliases.append("neo geo cd");
@@ -911,6 +916,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("mega drive");
     aliases.append("sega mega drive");
   } else if(platform == "mame-advmame") {
+    aliases.append("arcade");
     aliases.append("neo geo");
     aliases.append("neo-geo");
     aliases.append("neo geo cd");
@@ -978,6 +984,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("mega-tech");
     aliases.append("mega-play");
   } else if(platform == "mame-libretro") {
+    aliases.append("arcade");
     aliases.append("neo geo");
     aliases.append("neo-geo");
     aliases.append("neo geo cd");
@@ -1045,6 +1052,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("mega-tech");
     aliases.append("mega-play");
   } else if(platform == "mame-mame4all") {
+    aliases.append("arcade");
     aliases.append("neo geo");
     aliases.append("neo-geo");
     aliases.append("neo geo cd");
@@ -1148,6 +1156,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("oric 1 / atmos");
   } else if(platform == "pc") {
     aliases.append("dos");
+    aliases.append("windows");
   } else if(platform == "pc88") {
     aliases.append("pc-88");
   } else if(platform == "pcfx") {
@@ -1161,6 +1170,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc engine supergrafx");
   } else if(platform == "ports") {
     aliases.append("dos");
+    aliases.append("windows");
   } else if(platform == "psx") {
     aliases.append("sony playstation");
     aliases.append("playstation");
@@ -1193,8 +1203,10 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("commodore vic-20");
     aliases.append("vic-20");
   } else if(platform == "videopac") {
+    aliases.append("odyssey 2");
     aliases.append("magnavox odyssey 2");
     aliases.append("videopac g7000");
+    aliases.append("videopac+ g7400");
     aliases.append("magnavox odyssey²");
   } else if(platform == "virtualboy") {
     aliases.append("nintendo virtual boy");
@@ -1206,7 +1218,7 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "x68000") {
     aliases.append("sharp x68000");
   } else if(platform == "zmachine") {
-    aliases.append("commodore 64"); // Because this is the only platform that seems to have them
+    aliases.append("z-machine");
   } else if(platform == "zxspectrum") {
     aliases.append("sinclair zx spectrum");
     aliases.append("zx spectrum");
