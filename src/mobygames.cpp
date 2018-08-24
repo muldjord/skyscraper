@@ -33,7 +33,7 @@ MobyGames::MobyGames()
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
   connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);
-  limitTimer.setInterval(10000); // 10 second request limit
+  limitTimer.setInterval(1500); // 10 second request limit
   limitTimer.setSingleShot(false);
   limitTimer.start();
   
@@ -46,18 +46,16 @@ MobyGames::MobyGames()
   fetchOrder.append(TAGS);
   fetchOrder.append(PLAYERS);
   fetchOrder.append(DESCRIPTION);
-  fetchOrder.append(SCREENSHOT);
+  // Cover and screenshot MUST be last and in this order!
   fetchOrder.append(COVER);
-  fetchOrder.append(MARQUEE);
-  fetchOrder.append(VIDEO);
+  fetchOrder.append(SCREENSHOT);
 }
 
 void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
-  // Wait here until timeout, which will happen at the most every 10 seconds
+  printf("Waiting as advised by MobyGames api restrictions...\n");
   limiter.exec();
-  
   manager.request(searchUrlPre + "?api_key=" + StrTools::unMagic("175;229;170;189;188;202;211;117;164;165;185;209;164;234;180;155;199;209;224;231;193;190;173;175") + "&title=" + searchName);
   q.exec();
   data = manager.getData();
@@ -66,21 +64,54 @@ void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
   if(jsonDoc.isEmpty()) {
     return;
   }
-  jsonObj = jsonDoc.object().value("games").toArray().first().toObject();
 
-  if(jsonObj.value("title") == QJsonValue::Undefined) {
-    return;
+  QJsonArray jsonGames = jsonDoc.object().value("games").toArray();
+
+  while(!jsonGames.isEmpty()) {
+    GameEntry game;
+    
+    QJsonObject jsonGame = jsonGames.first().toObject();
+    
+    game.id = QString::number(jsonGame.value("game_id").toInt());
+    game.title = jsonGame.value("title").toString();
+    game.miscData = data;
+
+    QJsonArray jsonPlatforms = jsonGame.value("platforms").toArray();
+    while(!jsonPlatforms.isEmpty()) {
+      QJsonObject jsonPlatform = jsonPlatforms.first().toObject();
+      game.url = searchUrlPre + "/" + game.id + "/platforms/" + QString::number(jsonPlatform.value("platform_id").toInt()) + "?api_key=" + StrTools::unMagic("175;229;170;189;188;202;211;117;164;165;185;209;164;234;180;155;199;209;224;231;193;190;173;175");
+      game.platform = jsonPlatform.value("platform_name").toString();
+      if(platformMatch(game.platform, platform)) {
+	gameEntries.append(game);
+      }
+      jsonPlatforms.removeFirst();
+    }
+    jsonGames.removeFirst();
   }
-
-  GameEntry game;
-  
-  game.title = jsonObj.value("title").toString();
-  game.platform = platform;
-  gameEntries.append(game);
 }
 
 void MobyGames::getGameData(GameEntry &game)
 {
+  printf("Waiting to get game data...\n");
+  limiter.exec();
+  manager.request(game.url);
+  q.exec();
+  data = manager.getData();
+
+  // Trim data to remove { and } before appending together into a single json doc
+  data = data.trimmed();
+  data = data.remove(data.length() - 1, 1).trimmed().append(",\n");
+  game.miscData = game.miscData.remove(0, 2);
+  // Readd data from initial search as we need it
+  data.append(game.miscData);
+
+  jsonDoc = QJsonDocument::fromJson(data);
+  if(jsonDoc.isEmpty()) {
+    return;
+  }
+
+  printf("DATA:\n%s\n", data.data());
+  
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
     case DESCRIPTION:
@@ -157,16 +188,39 @@ void MobyGames::getDescription(GameEntry &game)
 
 void MobyGames::getCover(GameEntry &game)
 {
-  manager.request(jsonObj.value("url_image_flyer").toString());
+  printf("Waiting to get cover data...\n");
+  limiter.exec();
+  manager.request(game.url.insert(game.url.indexOf("?api_key="), "/covers"));
   q.exec();
-  {
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.coverData = image;
-      return;
-    }
+  data = manager.getData();
+
+  jsonDoc = QJsonDocument::fromJson(data);
+  if(jsonDoc.isEmpty()) {
+    return;
   }
-  manager.request(jsonObj.value("url_image_title").toString());
+
+  QString coverUrl = "";
+  bool found = false;
+
+  QJsonArray jsonCoverGroups = jsonDoc.object().value("cover_groups").toArray();
+  while(!jsonCoverGroups.isEmpty()) {
+    QJsonArray jsonCovers = jsonCoverGroups.first().toObject().value("covers").toArray();
+    while(!jsonCovers.isEmpty()) {
+      QJsonObject jsonCover = jsonCovers.first().toObject();
+
+      if(jsonCover.value("scan_of").toString().toLower() == "front cover") {
+	coverUrl = jsonCover.value("image").toString();
+	break;
+      }
+      jsonCovers.removeFirst();
+    }
+    if(found) {
+      break;
+    }
+    jsonCoverGroups.removeFirst();
+  }
+  
+  manager.request(coverUrl);
   q.exec();
   {
     QImage image;
@@ -179,7 +233,20 @@ void MobyGames::getCover(GameEntry &game)
 
 void MobyGames::getScreenshot(GameEntry &game)
 {
-  manager.request(jsonObj.value("url_image_ingame").toString());
+  printf("Waiting to get screenshot data...\n");
+  limiter.exec();
+  manager.request(game.url.replace("covers", "screenshots"));
+  q.exec();
+  data = manager.getData();
+
+  jsonDoc = QJsonDocument::fromJson(data);
+  if(jsonDoc.isEmpty()) {
+    return;
+  }
+
+  QJsonArray jsonScreenshots = jsonDoc.object().value("screenshots").toArray();
+  
+  manager.request(jsonScreenshots.at(qrand() % jsonScreenshots.count()).toObject().value("image").toString());
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
@@ -209,7 +276,39 @@ void MobyGames::getVideo(GameEntry &game)
   }
 }
 
+void MobyGames::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug)
+{
+  QString searchName = getSearchName(info);
+  QString searchNameOrig = searchName;
+
+  // searchName will be empty for files such as "[BIOS] Something.zip" and cause some scraping
+  // modules to return EVERYTHING in their database. We DO NOT want this since it take ages
+  // to parse it (15 minutes or more per entry) and it's faulty data anyways.
+  if(searchName.isEmpty()) {
+    return;
+  }
+  
+  for(int pass = 1; pass <= 1; ++pass) {
+    // Reset searchName for each pass
+    searchName = searchNameOrig;
+    output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
+    switch(pass) {
+    case 1:
+      getSearchResults(gameEntries, searchName, config->platform);
+      break;
+    default:
+      ;
+    }
+    debug.append("Search string: '" + searchName + "'\n");
+    debug.append("Platform: '" + config->platform + "'\n");
+    if(!gameEntries.isEmpty()) {
+      break;
+    }
+  }
+}
+/*
 QString MobyGames::getSearchName(QFileInfo info)
 {
   return info.baseName();
 }
+*/

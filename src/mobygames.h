@@ -37,6 +37,7 @@ class MobyGames : public AbstractScraper
 
 public:
   MobyGames();
+  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug);
 
 private:
   QTimer limitTimer;
@@ -53,7 +54,7 @@ private:
   void getScreenshot(GameEntry &game);
   void getMarquee(GameEntry &game);
   void getVideo(GameEntry &game);
-  QString getSearchName(QFileInfo info);
+  //QString getSearchName(QFileInfo info);
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
