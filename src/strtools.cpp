@@ -146,6 +146,9 @@ QByteArray StrTools::unMagic(QByteArray str)
 
 QString StrTools::conformPlayers(QString str)
 {
+  if(QRegularExpression("^1 Player").match(str).hasMatch())
+    return "1";
+
   if(QRegularExpression("^1 Only").match(str).hasMatch())
     return "1";
 
@@ -188,31 +191,83 @@ QString StrTools::conformPlayers(QString str)
 
 QString StrTools::conformAges(QString str)
 {
-  if(str == "E") {
+  if(str == "0 (ohne Altersbeschränkung)") {
     str = "1";
-  } else if(str == "EC") {
-    str = "3";
-  } else if(str == "KA") {
+  } else if(str == "U") {
+    str = "1";
+  } else if(str == "E") {
     str = "1";
   } else if(str == "E - Everyone") {
     str = "1";
+  } else if(str == "Everyone") {
+    str = "1";
+  } else if(str == "GA") {
+    str = "1";
+  } else if(str == "EC") {
+    str = "3";
+  } else if(str == "Early Childhood") {
+    str = "3";
+  } else if(str == "3+") {
+    str = "3";
+  } else if(str == "G") {
+    str = "3";
+  } else if(str == "KA") {
+    str = "6";
+  } else if(str == "Kids to Adults") {
+    str = "6";
+  } else if(str == "G8+") {
+    str = "8";
   } else if(str == "E10+") {
     str = "10";
   } else if(str == "E10+ - Everyone 10+") {
     str = "10";
+  } else if(str == "Everyone 10+") {
+    str = "10";
+  } else if(str == "11+") {
+    str = "11";
+  } else if(str == "12+") {
+    str = "11";
+  } else if(str == "MA-13") {
+    str = "13";
   } else if(str == "T") {
     str = "13";
   } else if(str == "T - Teen") {
     str = "13";
+  } else if(str == "Teen") {
+    str = "13";
+  } else if(str == "M") {
+    str = "15";
+  } else if(str == "M15+") {
+    str = "15";
+  } else if(str == "MA 15+") {
+    str = "15";
+  } else if(str == "MA15+") {
+    str = "15";
+  } else if(str == "PG") {
+    str = "15";
+  } else if(str == "15+") {
+    str = "15";
+  } else if(str == "MA-17") {
+    str = "17";
   } else if(str == "M") {
     str = "17";
+  } else if(str == "18+") {
+    str = "18";
+  } else if(str == "R18+") {
+    str = "18";
+  } else if(str == "18 (keine Jugendfreigabe)") {
+    str = "18";
   } else if(str == "A") {
     str = "18";
   } else if(str == "AO") {
     str = "18";
   } else if(str == "AO - Adults Only") {
     str = "18";
+  } else if(str == "Adults Only") {
+    str = "18";
   } else if(str == "M - Mature") {
+    str = "18";
+  } else if(str == "Mature") {
     str = "18";
   }
 
