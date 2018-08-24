@@ -33,7 +33,7 @@ MobyGames::MobyGames()
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
   connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);
-  limitTimer.setInterval(1500); // 10 second request limit
+  limitTimer.setInterval(10000); // 10 second request limit
   limitTimer.setSingleShot(false);
   limitTimer.start();
   
@@ -42,10 +42,13 @@ MobyGames::MobyGames()
   searchUrlPre = "https://api.mobygames.com/v1/games";
   
   fetchOrder.append(PUBLISHER);
+  fetchOrder.append(DEVELOPER);
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(TAGS);
   fetchOrder.append(PLAYERS);
   fetchOrder.append(DESCRIPTION);
+  fetchOrder.append(AGES);
+  fetchOrder.append(RATING);
   // Cover and screenshot MUST be last and in this order!
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
@@ -110,8 +113,14 @@ void MobyGames::getGameData(GameEntry &game)
     return;
   }
 
-  printf("DATA:\n%s\n", data.data());
-  
+  QJsonArray jsonArray = jsonDoc.object().value("games").toArray();
+  for(int a = 0; a < jsonArray.count(); ++a) {
+    if(QString::number(jsonArray.at(a).toObject().value("game_id").toInt()) == game.id) {
+      jsonObj = jsonArray.at(a).toObject();
+      break;
+    }
+  }
+
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
     case DESCRIPTION:
@@ -128,6 +137,9 @@ void MobyGames::getGameData(GameEntry &game)
       break;
     case RATING:
       getRating(game);
+      break;
+    case AGES:
+      getAges(game);
       break;
     case TAGS:
       getTags(game);
@@ -160,29 +172,129 @@ void MobyGames::getGameData(GameEntry &game)
 
 void MobyGames::getReleaseDate(GameEntry &game)
 {
-  game.releaseDate = jsonObj.value("year").toString();
+  game.releaseDate = jsonDoc.object().value("first_release_date").toString();
 }
 
 void MobyGames::getPlayers(GameEntry &game)
 {
-  game.players = QString::number(jsonObj.value("players").toInt());
+  QJsonArray jsonAttribs = jsonDoc.object().value("attributes").toArray();
+  for(int a = 0; a < jsonAttribs.count(); ++a) {
+    if(jsonAttribs.at(a).toObject().value("attribute_category_name").toString() == "Number of Players Supported") {
+      game.players = jsonAttribs.at(a).toObject().value("attribute_name").toString();
+    }
+  }
 }
 
 void MobyGames::getTags(GameEntry &game)
 {
-  game.tags = jsonObj.value("genre").toString();
+  QJsonArray jsonGenres = jsonObj.value("genres").toArray();
+  for(int a = 0; a < jsonGenres.count(); ++a) {
+    game.tags.append(jsonGenres.at(a).toObject().value("genre_name").toString() + ", ");
+  }
+  game.tags = game.tags.left(game.tags.length() - 2);
+}
+
+void MobyGames::getAges(GameEntry &game)
+{
+  QJsonArray jsonAges = jsonDoc.object().value("ratings").toArray();
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "PEGI Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "ELSPA Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "ESRB Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "USK Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "OFLC (Australia) Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "SELL Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "BBFC Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "OFLC (New Zealand) Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
+  for(int a = 0; a < jsonAges.count(); ++a) {
+    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "VRC Rating") {
+      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
+      break;
+    }
+  }
 }
 
 void MobyGames::getPublisher(GameEntry &game)
 {
-  game.publisher = jsonObj.value("manufacturer").toString();
+  QJsonArray jsonReleases = jsonDoc.object().value("releases").toArray();
+  for(int a = 0; a < jsonReleases.count(); ++a) {
+    QJsonArray jsonCompanies = jsonReleases.at(a).toObject().value("companies").toArray();
+    for(int b = 0; b < jsonCompanies.count(); ++b) {
+      if(jsonCompanies.at(b).toObject().value("role").toString() == "Published by") {
+	game.publisher = jsonCompanies.at(b).toObject().value("company_name").toString();
+	return;
+      }
+    }
+  }
+}
+
+void MobyGames::getDeveloper(GameEntry &game)
+{
+  QJsonArray jsonReleases = jsonDoc.object().value("releases").toArray();
+  for(int a = 0; a < jsonReleases.count(); ++a) {
+    QJsonArray jsonCompanies = jsonReleases.at(a).toObject().value("companies").toArray();
+    for(int b = 0; b < jsonCompanies.count(); ++b) {
+      if(jsonCompanies.at(b).toObject().value("role").toString() == "Developed by") {
+	game.developer = jsonCompanies.at(b).toObject().value("company_name").toString();
+	return;
+      }
+    }
+  }
 }
 
 void MobyGames::getDescription(GameEntry &game)
 {
-  game.description = jsonObj.value("history").toString();
-  if(game.description.indexOf("- TECHNICAL") != -1) {
-    game.description = game.description.left(game.description.indexOf("- TECHNICAL")).trimmed();
+  game.description = jsonObj.value("description").toString();
+}
+
+void MobyGames::getRating(GameEntry &game)
+{
+  QJsonValue jsonValue = jsonObj.value("moby_score");
+  if(jsonValue != QJsonValue::Undefined) {
+    double rating = jsonValue.toDouble();
+    game.rating = QString::number(rating);
+    if(rating != 0.0) {
+      game.rating = QString::number(rating / 10.0);
+    }
   }
 }
 
@@ -210,6 +322,7 @@ void MobyGames::getCover(GameEntry &game)
 
       if(jsonCover.value("scan_of").toString().toLower() == "front cover") {
 	coverUrl = jsonCover.value("image").toString();
+	found = true;
 	break;
       }
       jsonCovers.removeFirst();
@@ -220,13 +333,12 @@ void MobyGames::getCover(GameEntry &game)
     jsonCoverGroups.removeFirst();
   }
   
-  manager.request(coverUrl);
-  q.exec();
-  {
+  if(!coverUrl.isEmpty()) {
+    manager.request(coverUrl);
+    q.exec();
     QImage image;
     if(image.loadFromData(manager.getData())) {
       game.coverData = image;
-      return;
     }
   }
 }
@@ -246,33 +358,19 @@ void MobyGames::getScreenshot(GameEntry &game)
 
   QJsonArray jsonScreenshots = jsonDoc.object().value("screenshots").toArray();
   
-  manager.request(jsonScreenshots.at(qrand() % jsonScreenshots.count()).toObject().value("image").toString());
+  if(jsonScreenshots.count() < 1) {
+    return;
+  }
+  int chosen = 1;
+  if(jsonScreenshots.count() >= 3) {
+    // First 2 are almost always not ingame, so skip those if we have 3 or more
+    chosen = (qrand() % jsonScreenshots.count() - 3) + 3;
+  }
+  manager.request(jsonScreenshots.at(chosen).toObject().value("image").toString());
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
     game.screenshotData = image;
-  }
-}
-
-void MobyGames::getMarquee(GameEntry &game)
-{
-  manager.request(jsonObj.value("url_image_marquee").toString());
-  q.exec();
-  QImage image;
-  if(image.loadFromData(manager.getData())) {
-    game.marqueeData = image;
-  }
-}
-
-void MobyGames::getVideo(GameEntry &game)
-{
-  manager.request(jsonObj.value("url_video_shortplay").toString());
-  q.exec();
-  game.videoData = manager.getData();
-  if(game.videoData.length() > (1024 * 500)) {
-    game.videoFormat = "mp4";
-  } else {
-    game.videoData = "";
   }
 }
 

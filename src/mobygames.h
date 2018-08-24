@@ -48,12 +48,13 @@ private:
   void getReleaseDate(GameEntry &game);
   void getPlayers(GameEntry &game);
   void getTags(GameEntry &game);
+  void getDeveloper(GameEntry &game);
   void getPublisher(GameEntry &game);
   void getDescription(GameEntry &game);
+  void getAges(GameEntry &game);
+  void getRating(GameEntry &game);
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
-  void getMarquee(GameEntry &game);
-  void getVideo(GameEntry &game);
   //QString getSearchName(QFileInfo info);
 
   QJsonDocument jsonDoc;
