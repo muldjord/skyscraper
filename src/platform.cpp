@@ -75,6 +75,7 @@ QStringList Platform::getPlatforms()
   platforms.append("mame-libretro");
   platforms.append("mame-mame4all");
   platforms.append("mastersystem");
+  platforms.append("megacd");
   platforms.append("megadrive");
   platforms.append("msx");
   platforms.append("n64");
@@ -253,6 +254,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
     scrapers.append("localdb");
   } else if(platform == "mastersystem") {
+    // scrapers.append("thegamesdb");
+    scrapers.append("screenscraper");
+    scrapers.append("localdb");
+  } else if(platform == "megacd") {
     // scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
     scrapers.append("localdb");
@@ -468,6 +473,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString allow
     formats.append("");
   } else if(platform == "mastersystem") {
     formats.append("*.sms");
+  } else if(platform == "megacd") {
+    formats.append("*.cue *.iso *.chd");
   } else if(platform == "megadrive") {
     formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "msx") {
@@ -601,6 +608,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "genesis") {
     scraper = "localdb";
   } else if(platform == "intellivision") {
+    scraper = "localdb";
+  } else if(platform == "megacd") {
     scraper = "localdb";
   } else if(platform == "megadrive") {
     scraper = "localdb";
@@ -1105,6 +1114,10 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "mastersystem") {
     aliases.append("sega master system");
     aliases.append("master system");
+  } else if(platform == "megacd") {
+    aliases.append("segacd");
+    aliases.append("sega cd");
+    aliases.append("mega-cd");
   } else if(platform == "megadrive") {
     aliases.append("sega mega drive");
     aliases.append("mega drive");
@@ -1164,6 +1177,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("sega 32x");
     aliases.append("megadrive 32x");
   } else if(platform == "segacd") {
+    aliases.append("megacd");
     aliases.append("sega cd");
     aliases.append("mega-cd");
   } else if(platform == "sg-1000") {
