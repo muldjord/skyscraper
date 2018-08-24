@@ -97,6 +97,8 @@ public:
   QString videoFormat = "";
   QString baseName = "";
   bool found = true;
+
+  QByteArray miscData = "";
 };
 
 #endif // GAMEENTRY_H
