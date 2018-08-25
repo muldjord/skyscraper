@@ -81,7 +81,9 @@ struct Settings {
   bool relativePaths = false;
   QString extensions = "";
   QString allowExtension = "";
-  
+
+  int romLimit = -1;
+
   bool cacheCovers = true;
   bool cacheScreenshots = true;
   bool cacheWheels = true;
