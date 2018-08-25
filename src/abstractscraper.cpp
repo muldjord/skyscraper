@@ -448,8 +448,7 @@ QString AbstractScraper::getSearchName(QFileInfo info)
   }
 
   baseName = baseName.replace("_", " ");
-  baseName = baseName.replace(" - ", " ");
-  baseName = baseName.replace(":", " ");
+  baseName = baseName.replace(" - ", ": ");
   baseName = baseName.replace(",", " ");
   baseName = baseName.replace("&", "%26");
   baseName = baseName.replace("+", "");
@@ -563,10 +562,12 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
       }
       break;
     case 4:
-      // Remove everything after a dash or a colon for more results
-      searchName = searchName.left(searchName.indexOf(":")).simplified();
-      searchName = searchName.left(searchName.indexOf("-")).simplified();
-      getSearchResults(gameEntries, searchName, config->platform);
+      if(searchName.indexOf(":") != -1 || searchName.indexOf("-")) {
+	// Remove everything after a dash or a colon for more results
+	searchName = searchName.left(searchName.indexOf(":")).simplified();
+	searchName = searchName.left(searchName.indexOf("-")).simplified();
+	getSearchResults(gameEntries, searchName, config->platform);
+      }
       break;
     default:
       ;
