@@ -72,7 +72,7 @@ void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
     printf("\033[1;31mToo many requests!!! This is probably because some other Skyscraper user is currently using the 'mobygames' module. Please wait a while and try again.\n\nNow quitting...\033[0m\n");
     exit(1);
   }
-  
+
   QJsonArray jsonGames = jsonDoc.object().value("games").toArray();
 
   while(!jsonGames.isEmpty()) {
@@ -388,7 +388,7 @@ void MobyGames::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, 
     return;
   }
   
-  for(int pass = 1; pass <= 1; ++pass) {
+  for(int pass = 1; pass <= 2; ++pass) {
     // Reset searchName for each pass
     searchName = searchNameOrig;
     output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
@@ -396,6 +396,14 @@ void MobyGames::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, 
     case 1:
       getSearchResults(gameEntries, searchName, config->platform);
       break;
+    case 2:
+      if(searchName.indexOf(":") != -1 || searchName.indexOf("-")) {
+	// Remove everything after a dash or a colon for more results
+	searchName = searchName.left(searchName.indexOf(":")).simplified();
+	searchName = searchName.left(searchName.indexOf("-")).simplified();
+	getSearchResults(gameEntries, searchName, config->platform);
+	break;
+      }
     default:
       ;
     }
