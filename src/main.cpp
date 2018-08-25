@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
   QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '[homedir]/RetroPie/roms/[platform]')", "path", "");
   QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "path", "");
-  QCommandLineOption sOption("s", "Choose scraping module to use while scraping the selected platform.\n(WEB: 'arcadedb', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb'. Default is 'localdb')", "module", "");
+  QCommandLineOption sOption("s", "Choose scraping module to use while scraping the selected platform.\n(WEB: 'arcadedb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb'. Default is 'localdb')", "module", "");
   //QCommandLineOption sOption("s", "Choose scraping module to use while scraping the selected platform.\n(WEB: 'arcadedb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb'. Default is 'localdb')", "module", "");
   QCommandLineOption uOption("u", "UserID and Password for use with the selected scraping module (currently only used by the 'screenscraper' module).\n(Default is none)", "user:password", "");
   QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 65)", "0-100", "");
