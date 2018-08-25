@@ -76,18 +76,19 @@ void Skyscraper::run()
   printf("\n");
   
   if(config.scraper == "arcadedb" && config.threads != 1) {
-    printf("Forcing 1 thread to accomodate limits in ArcadeDB scraping module\n\n");
+    printf("\033[1;33mForcing 1 thread to accomodate limits in ArcadeDB scraping module\033[0m\n\n");
     config.threads = 1;
   } else if(config.scraper == "openretro" && config.threads != 1) {
-    printf("Forcing 1 thread to accomodate limits in OpenRetro scraping module\n\n");
+    printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1;
   } else if(config.scraper == "mobygames" && config.threads != 1) {
-    printf("Forcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour.\n\n");
+    printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
     config.threads = 1;
+    config.romLimit = 25;
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
       if(config.threads > 1) {
-	printf("Forcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '[homedir]/.skyscraper/config.ini'.\n\n");
+	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '[homedir]/.skyscraper/config.ini'.\033[0m\n\n");
 	config.threads = 1;
       }
     } else {
@@ -281,6 +282,10 @@ void Skyscraper::run()
     exit(0);
   }
   
+  if(config.romLimit != -1 && totalFiles > config.romLimit) {
+    printf("\n\033[1;33mRestriction overrun!\033[0m This scraping module only allows for scraping %d roms at a time. You can either supply the few rom titles on command line, or make use of the '--startat' and '--endat' command line options to adhere to this. Check '--help' for all options.\n\nNow quitting...\n", config.romLimit);
+    exit(0);
+  }
   printf("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
 
   timer.start();
