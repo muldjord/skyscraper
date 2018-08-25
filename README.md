@@ -16,6 +16,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * WEB: worldofspectrum.org
 * WEB: adb.arcadeitalia.net (Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
 * WEB: screenscraper.fr
+* WEB: mobygames.com
 * LOCAL: localdb (scrapes exclusively from cached resources. Read more [here](#local-database-features))
 * LOCAL: import (imports resources into the local cache. Read more about this [here](import/README.md))
 
