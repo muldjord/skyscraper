@@ -68,6 +68,11 @@ void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
     return;
   }
 
+  if(jsonDoc.object().value("code").toInt() == 429) {
+    printf("\033[1;31mToo many requests!!! This is probably because some other Skyscraper user is currently using the 'mobygames' module. Please wait a while and try again.\n\nNow quitting...\033[0m\n");
+    exit(1);
+  }
+  
   QJsonArray jsonGames = jsonDoc.object().value("games").toArray();
 
   while(!jsonGames.isEmpty()) {
@@ -148,20 +153,13 @@ void MobyGames::getGameData(GameEntry &game)
       getReleaseDate(game);
       break;
     case COVER:
-      getCover(game);
+      if(config->cacheCovers) {
+	getCover(game);
+      }
       break;
     case SCREENSHOT:
-      getScreenshot(game);
-      break;
-    case WHEEL:
-      getWheel(game);
-      break;
-    case MARQUEE:
-      getMarquee(game);
-      break;
-    case VIDEO:
-      if(config->videos) {
-	getVideo(game);
+      if(config->cacheScreenshots) {
+	getScreenshot(game);
       }
       break;
     default:
@@ -284,6 +282,11 @@ void MobyGames::getDeveloper(GameEntry &game)
 void MobyGames::getDescription(GameEntry &game)
 {
   game.description = jsonObj.value("description").toString();
+
+  // Remove all html tags within description
+  while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1 && game.description.indexOf("<") < game.description.indexOf(">")) {
+    game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
+  }
 }
 
 void MobyGames::getRating(GameEntry &game)
@@ -291,9 +294,8 @@ void MobyGames::getRating(GameEntry &game)
   QJsonValue jsonValue = jsonObj.value("moby_score");
   if(jsonValue != QJsonValue::Undefined) {
     double rating = jsonValue.toDouble();
-    game.rating = QString::number(rating);
     if(rating != 0.0) {
-      game.rating = QString::number(rating / 10.0);
+      game.rating = QString::number(rating / 5.0);
     }
   }
 }
@@ -302,7 +304,7 @@ void MobyGames::getCover(GameEntry &game)
 {
   printf("Waiting to get cover data...\n");
   limiter.exec();
-  manager.request(game.url.insert(game.url.indexOf("?api_key="), "/covers"));
+  manager.request(game.url.left(game.url.indexOf("?api_key=")) + "/covers" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
   q.exec();
   data = manager.getData();
 
@@ -347,7 +349,7 @@ void MobyGames::getScreenshot(GameEntry &game)
 {
   printf("Waiting to get screenshot data...\n");
   limiter.exec();
-  manager.request(game.url.replace("covers", "screenshots"));
+  manager.request(game.url.left(game.url.indexOf("?api_key=")) + "/screenshots" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
   q.exec();
   data = manager.getData();
 
@@ -404,9 +406,3 @@ void MobyGames::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, 
     }
   }
 }
-/*
-QString MobyGames::getSearchName(QFileInfo info)
-{
-  return info.baseName();
-}
-*/
