@@ -88,6 +88,7 @@ QString StrTools::xmlUnescape(QString str)
 QString StrTools::xmlEscape(QString str)
 {
   str = xmlUnescape(str);
+
   return str.
     replace("&", "&amp;").
     replace("<", "&lt;").
