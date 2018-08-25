@@ -162,7 +162,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
-#### Version 2.6.0 (In progress, unreleased)
+#### Version 2.6.0 (25th August 2018)
 * Added 'mobygames' scraping module
 
 #### Version 2.5.8 (24th August 2018)
