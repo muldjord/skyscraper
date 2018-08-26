@@ -192,7 +192,7 @@ void Skyscraper::run()
 
   QFile gameListFile(gameListFileString);
 
-  if(!config.pretend && !config.unattend && gameListFile.exists()) {
+  if(!config.pretend && !config.unattend && !config.unattendSkip && gameListFile.exists()) {
     std::string userInput = "";
     printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
     getline(std::cin, userInput);
@@ -268,8 +268,12 @@ void Skyscraper::run()
   if(!config.unattend && cliFiles.isEmpty()) {
     std::string userInput = "";
     if(gameListFile.exists() && frontend->canSkip()) {
-      printf("\033[1;34mDo you wish to skip existing entries\033[0m (y/N)? ");
-      getline(std::cin, userInput);
+      if(config.unattendSkip) {
+	userInput = "y";
+      } else {
+	printf("\033[1;34mDo you wish to skip existing entries\033[0m (y/N)? ");
+	getline(std::cin, userInput);
+      }
       if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
 	frontend->skipExisting(gameListFileString, gameEntries, queue);
       }
@@ -585,6 +589,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
   }
+  if(settings.contains("unattendSkip")) {
+    config.unattendSkip = settings.value("unattendSkip").toBool();
+  }
   if(settings.contains("forceFilename")) {
     config.forceFilename = settings.value("forceFilename").toBool();
   }
@@ -608,7 +615,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("maxFails") &&
      settings.value("maxFails").toInt() >= 1 &&
-     settings.value("maxFails").toInt() <= 500) {
+     settings.value("maxFails").toInt() <= 200) {
     config.maxFails = settings.value("maxFails").toInt();
   }
   if(settings.contains("brackets")) {
@@ -710,6 +717,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
+  }
+  if(settings.contains("unattendSkip")) {
+    config.unattendSkip = settings.value("unattendSkip").toBool();
   }
   if(settings.contains("interactive")) {
     config.interactive = settings.value("interactive").toBool();
@@ -861,7 +871,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("maxfails") &&
      parser.value("maxfails").toInt() >= 1 &&
-     parser.value("maxfails").toInt() <= 500) {
+     parser.value("maxfails").toInt() <= 200) {
     config.maxFails = parser.value("maxfails").toInt();
   }
   if(parser.isSet("pretend")) {
@@ -872,6 +882,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("unattend")) {
     config.unattend = true;
+  }
+  if(parser.isSet("unattendskip")) {
+    config.unattendSkip = true;
   }
   if(parser.isSet("forcefilename")) {
     config.forceFilename = true;
