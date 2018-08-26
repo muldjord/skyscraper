@@ -81,6 +81,9 @@ void Skyscraper::run()
   } else if(config.scraper == "openretro" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1;
+  } else if(config.scraper == "igdb" && config.userCreds.isEmpty()) {
+    printf("\033[1;33mThe 'igdb' scraping module needs a user key to work. You can get a free one at 'https://api.igdb.com/pricing'. Then supply it by setting it with '-u [key]' or by setting it in one of the 'userCreds' lines in '~/.skyscraper/config.ini'\033[0m\n\n");
+    exit(1);
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
     config.threads = 1;
@@ -88,7 +91,7 @@ void Skyscraper::run()
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
       if(config.threads > 1) {
-	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '[homedir]/.skyscraper/config.ini'.\033[0m\n\n");
+	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
 	config.threads = 1;
       }
     } else {
@@ -435,7 +438,7 @@ void Skyscraper::checkThreads()
   }
   printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
   printf("\033[1;32mSuccessfully scraped games: %d\033[0m\n", found);
-  printf("\033[1;33mSkipped games: %d (Filenames saved to '[homedir]/.skyscraper/%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
+  printf("\033[1;33mSkipped games: %d (Filenames saved to '~/.skyscraper/%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
 
   // All done, now clean up and exit to terminal
   emit finished();
@@ -576,6 +579,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
   }
+  if(settings.contains("interactive")) {
+    config.interactive = settings.value("interactive").toBool();
+  }
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
   }
@@ -645,7 +651,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   settings.endGroup();
 
-  // Platform specific config, overrides main and defaults
+  // Platform specific configs, overrides main and defaults
   settings.beginGroup(config.platform);
   if(settings.contains("emulator")) {
     config.emulator = settings.value("emulator").toString();
@@ -705,6 +711,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
   }
+  if(settings.contains("interactive")) {
+    config.interactive = settings.value("interactive").toBool();
+  }
   if(settings.contains("forceFilename")) {
     config.forceFilename = settings.value("forceFilename").toBool();
   }
@@ -718,8 +727,37 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.artworkConfig = settings.value("artworkXml").toString();
   }
   settings.endGroup();
-  
-  // Command line configs, overrides platform, main and defaults
+
+  // Check for command line scraping module here
+  if(parser.isSet("s") && (parser.value("s") == "openretro" ||
+			   parser.value("s") == "thegamesdb" ||
+			   parser.value("s") == "arcadedb" ||
+			   parser.value("s") == "worldofspectrum" ||
+			   parser.value("s") == "igdb" ||
+			   parser.value("s") == "mobygames" ||
+			   parser.value("s") == "screenscraper" ||
+			   parser.value("s") == "localdb" ||
+			   parser.value("s") == "import")) {
+    config.scraper = parser.value("s");
+  }
+
+  // Scraping module specific configs, overrides main, platform and defaults
+  settings.beginGroup(config.scraper);
+  if(settings.contains("userCreds")) {
+    config.userCreds = settings.value("userCreds").toString();
+  }
+  if(settings.contains("threads")) {
+    config.threads = settings.value("threads").toInt();
+  }
+  if(settings.contains("maxLength")) {
+    config.maxLength = settings.value("maxLength").toInt();
+  }
+  if(settings.contains("interactive")) {
+    config.interactive = settings.value("interactive").toBool();
+  }
+  settings.endGroup();
+
+  // Command line configs, overrides main, platform, module and defaults
   if(parser.isSet("l") && parser.value("l").toInt() >= 0 && parser.value("l").toInt() <= 10000) {
     config.maxLength = parser.value("l").toInt();
   }
@@ -747,16 +785,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("m") && parser.value("m").toInt() >= 0 && parser.value("m").toInt() <= 100) {
     config.minMatch = parser.value("m").toInt();
     config.minMatchSet = true;
-  }
-  if(parser.isSet("s") && (parser.value("s") == "openretro" ||
-			   parser.value("s") == "thegamesdb" ||
-			   parser.value("s") == "arcadedb" ||
-			   parser.value("s") == "worldofspectrum" ||
-			   parser.value("s") == "mobygames" ||
-			   parser.value("s") == "screenscraper" ||
-			   parser.value("s") == "localdb" ||
-			   parser.value("s") == "import")) {
-    config.scraper = parser.value("s");
   }
   if(parser.isSet("u")) {
     config.userCreds = parser.value("u");
@@ -839,6 +867,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("pretend")) {
     config.pretend = true;
   }
+  if(parser.isSet("interactive")) {
+    config.interactive = true;
+  }
   if(parser.isSet("unattend")) {
     config.unattend = true;
   }
@@ -915,6 +946,20 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.subDirs = false;
   }
   
+  // If interactive is set, force 1 thread and always accept the chosen result
+  if(config.interactive) {
+    if(config.scraper == "localdb" ||
+       config.scraper == "import" ||
+       config.scraper == "arcadedb" ||
+       config.scraper == "screenscraper") {
+      config.interactive = false;
+    } else {
+      config.threads = 1;
+      config.minMatch = 0;
+      config.refresh = true;
+    }
+  }
+
   if(config.scraper == "import") {
     // Always force local db to be refreshed when using import scraper
     config.refresh = true;
