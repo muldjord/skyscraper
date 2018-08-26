@@ -69,6 +69,9 @@ QList<GameEntry> XmlReader::getEntries()
     entry.wheelFile = gameNodes.at(a).firstChildElement("wheel").text();
     entry.marqueeFile = gameNodes.at(a).firstChildElement("marquee").text();
     entry.videoFile = gameNodes.at(a).firstChildElement("video").text();
+    if(!entry.videoFile.isEmpty()) {
+      entry.videoFormat = "fromxml";
+    }
     entry.description = gameNodes.at(a).firstChildElement("desc").text();
     entry.releaseDate = gameNodes.at(a).firstChildElement("releasedate").text();
     entry.developer = gameNodes.at(a).firstChildElement("developer").text();
