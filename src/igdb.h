@@ -49,19 +49,10 @@ private:
   void getDeveloper(GameEntry &game);
   void getPublisher(GameEntry &game);
   void getDescription(GameEntry &game);
-  void getAges(GameEntry &game);
   void getRating(GameEntry &game);
-  void getCover(GameEntry &game);
-  void getScreenshot(GameEntry &game);
-  //QString getSearchName(QFileInfo info);
-
-  void loadMaps();
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
-  
-  QMap<int, QString> platformMap;
-  QMap<int, QString> genreMap;
 };
 
 #endif // IGDB_H

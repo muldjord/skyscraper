@@ -32,8 +32,6 @@ Igdb::Igdb()
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
-  loadMaps();
-
   baseUrl = "https://api-endpoint.igdb.com";
 
   searchUrlPre = "https://api-endpoint.igdb.com/games/";
@@ -54,18 +52,18 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
   // Request list of games but don't allow re-releases (version_parent->not_exists=1)
-  manager.request(searchUrlPre + "?search=" + searchName + "&fields=*&filter[version_parent][not_exists]=1", "", "user-key", config->userCreds);
+  manager.request(searchUrlPre + "?search=" + searchName + "&fields=name,summary,total_rating,developers,publishers,game_modes,genres,platforms,release_dates&filter[version_parent][not_exists]=1&expand=developers,publishers,genres,platforms", "", "user-key", config->userCreds);
   //manager.request("https://api-endpoint.igdb.com/genres/?id=*&fields=name&limit=50", "", "user-key", config->userCreds);
   q.exec();
   data = manager.getData();
-  printf("DATA:\n%s\n", data.data());
+
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
   }
 
   if(jsonDoc.object().value("status").toInt() == 403) {
-    printf("\033[1;31mYour monthly limit for the 'igdb' scraping module has been reached. If you want more you can upgrade your plan at 'https://api.igdb.com/' under 'API credentials'.\033[0m\n");
+    printf("\033[1;31mYour monthly request limit for the 'igdb' scraping module has been reached. You can upgrade the limit at 'https://api.igdb.com/' under 'API credentials'.\033[0m\n");
     reqRemaining = 0;
   }
 
@@ -79,8 +77,8 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
     QJsonArray jsonPlatforms = jsonGame.toObject().value("platforms").toArray();
     foreach(const QJsonValue &jsonPlatform, jsonPlatforms) {
-      game.id = QString::number(jsonPlatform.toInt());
-      game.platform = platformMap[jsonPlatform.toInt()];
+      game.id = QString::number(jsonPlatform.toObject().value("id").toInt());
+      game.platform = jsonPlatform.toObject().value("name").toString();
       if(platformMatch(game.platform, platform)) {
 	gameEntries.append(game);
       }
@@ -173,75 +171,16 @@ void Igdb::getTags(GameEntry &game)
 {
   QJsonArray jsonGenres = jsonObj.value("genres").toArray();
   foreach(const QJsonValue &jsonGenre, jsonGenres) {
-    game.tags.append(genreMap[jsonGenre.toInt()] + ", ");
+    game.tags.append(jsonGenre.toObject().value("name").toString() + ", ");
   }
   game.tags = game.tags.left(game.tags.length() - 2);
-}
-
-void Igdb::getAges(GameEntry &game)
-{
-  QJsonArray jsonAges = jsonDoc.object().value("ratings").toArray();
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "PEGI Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "ELSPA Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "ESRB Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "USK Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "OFLC (Australia) Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "SELL Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "BBFC Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "OFLC (New Zealand) Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
-  for(int a = 0; a < jsonAges.count(); ++a) {
-    if(jsonAges.at(a).toObject().value("rating_system_name").toString() == "VRC Rating") {
-      game.ages = jsonAges.at(a).toObject().value("rating_name").toString();
-      break;
-    }
-  }
 }
 
 void Igdb::getPublisher(GameEntry &game)
 {
   QJsonArray jsonPublishers = jsonObj.value("publishers").toArray();
   if(jsonPublishers.count() == 1) {
-    game.publisher = QString::number(jsonPublishers.first().toInt());
+    game.publisher = jsonPublishers.first().toObject().value("name").toString();
   }
 }
 
@@ -249,7 +188,7 @@ void Igdb::getDeveloper(GameEntry &game)
 {
   QJsonArray jsonDevelopers = jsonObj.value("developers").toArray();
   if(jsonDevelopers.count() == 1) {
-    game.developer = QString::number(jsonDevelopers.first().toInt());
+    game.developer = jsonDevelopers.first().toObject().value("name").toString();
   }
 }
 
@@ -271,78 +210,6 @@ void Igdb::getRating(GameEntry &game)
     if(rating != 0.0) {
       game.rating = QString::number(rating / 100.0);
     }
-  }
-}
-
-void Igdb::getCover(GameEntry &game)
-{
-  manager.request(game.url.left(game.url.indexOf("?api_key=")) + "/covers" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
-  q.exec();
-  data = manager.getData();
-
-  jsonDoc = QJsonDocument::fromJson(data);
-  if(jsonDoc.isEmpty()) {
-    return;
-  }
-
-  QString coverUrl = "";
-  bool found = false;
-
-  QJsonArray jsonCoverGroups = jsonDoc.object().value("cover_groups").toArray();
-  while(!jsonCoverGroups.isEmpty()) {
-    QJsonArray jsonCovers = jsonCoverGroups.first().toObject().value("covers").toArray();
-    while(!jsonCovers.isEmpty()) {
-      QJsonObject jsonCover = jsonCovers.first().toObject();
-
-      if(jsonCover.value("scan_of").toString().toLower() == "front cover") {
-	coverUrl = jsonCover.value("image").toString();
-	found = true;
-	break;
-      }
-      jsonCovers.removeFirst();
-    }
-    if(found) {
-      break;
-    }
-    jsonCoverGroups.removeFirst();
-  }
-  
-  if(!coverUrl.isEmpty()) {
-    manager.request(coverUrl);
-    q.exec();
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.coverData = image;
-    }
-  }
-}
-
-void Igdb::getScreenshot(GameEntry &game)
-{
-  manager.request(game.url.left(game.url.indexOf("?api_key=")) + "/screenshots" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
-  q.exec();
-  data = manager.getData();
-
-  jsonDoc = QJsonDocument::fromJson(data);
-  if(jsonDoc.isEmpty()) {
-    return;
-  }
-
-  QJsonArray jsonScreenshots = jsonDoc.object().value("screenshots").toArray();
-  
-  if(jsonScreenshots.count() < 1) {
-    return;
-  }
-  int chosen = 1;
-  if(jsonScreenshots.count() >= 3) {
-    // First 2 are almost always not ingame, so skip those if we have 3 or more
-    chosen = (qrand() % jsonScreenshots.count() - 3) + 3;
-  }
-  manager.request(jsonScreenshots.at(chosen).toObject().value("image").toString());
-  q.exec();
-  QImage image;
-  if(image.loadFromData(manager.getData())) {
-    game.screenshotData = image;
   }
 }
 
@@ -381,42 +248,6 @@ void Igdb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QStri
     debug.append("Platform: '" + config->platform + "'\n");
     if(!gameEntries.isEmpty()) {
       break;
-    }
-  }
-}
-
-void Igdb::loadMaps()
-{
-  genreMap[11] = "Real Time Strategy (RTS)";
-  genreMap[9] = "Puzzle";
-  genreMap[25] = "Hack and slash/Beat 'em up";
-  genreMap[30] = "Pinball";
-  genreMap[12] = "Role-playing (RPG)";
-  genreMap[31] = "Adventure";
-  genreMap[5] = "Shooter";
-  genreMap[7] = "Music";
-  genreMap[2] = "Point-and-click";
-  genreMap[13] = "Simulator";
-  genreMap[26] = "Quiz/Trivia";
-  genreMap[33] = "Arcade";
-  genreMap[24] = "Tactical";
-  genreMap[4] = "Fighting";
-  genreMap[15] = "Strategy";
-  genreMap[16] = "Turn-based strategy (TBS)";
-  genreMap[8] = "Platform";
-  genreMap[10] = "Racing";
-  genreMap[14] = "Sport";
-  genreMap[32] = "Indie";
-  
- {
-    QFile jsonFile("/usr/local/etc/skyscraper/igdb_platforms.json");
-    if(jsonFile.open(QIODevice::ReadOnly)) {
-      QJsonArray jsonPlatforms = QJsonDocument::fromJson(jsonFile.readAll()).array();
-      foreach(const QJsonValue &jsonPlatform, jsonPlatforms) {
-	platformMap[jsonPlatform.toObject().value("id").toInt()] =
-	  jsonPlatform.toObject().value("slug").toString();
-      }
-      jsonFile.close();
     }
   }
 }
