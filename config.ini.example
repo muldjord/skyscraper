@@ -5,15 +5,18 @@
 # This is an example config file for use with Skyscraper. Use it as a template for creating
 #   your own. If you copy this file to 'config.ini' it will be used per default.
 #   You can always copy config.ini.example to a filename of your choice and make Skyscraper
-#   use it using the '-c' command line option.
+#   use it with the '-c' command line option.
 
 # You can have several platform sections in one config file. Further down is an example of
-#   an 'amiga' scraper setup. Check '--help' for more info on supported platforms.
+#   a generic platform setup. Check '--help' for more info on supported platforms.
+
+# You can have several scraping module sections in one config file. Further down is an example
+#   of a generic module setup. Check '--help' for more info on supported modules.
 
 # Remember that most of these settings can also be set as command line options. Doing so
-#   will overrule the options seen here.
-# Some options are both available as 'main' options and 'platform' options. 'platform' options
-#   will overrule 'main' options allowing you to customize each platform for certain things.
+#   will overrule the options seen here except for the scraping module configs which
+#   overrules everything else.
+# Platform specific configs overrules main configs.
 
 # Uncomment the sections and lines you wish to use:
 
@@ -28,6 +31,7 @@
 #threads="2"
 #pretend="false"
 #unattend="false"
+#interactive="false"
 #forceFilename="false"
 #verbose="false"
 #skipped="false"
@@ -45,7 +49,7 @@
 #wheels="true"
 #marquees="true"
 
-#[amiga]
+#[platform (eg. 'amiga')]
 #inputFolder="/home/pi/RetroPie/roms/amiga"
 #gamelistFolder="/home/pi/RetroPie/roms/amiga"
 #mediaFolder="/home/pi/RetroPie/roms/amiga/media"
@@ -56,12 +60,14 @@
 #scraper="screenscraper"
 #userCreds="user:password"
 #minMatch="0"
+##Sets the maximum allowed 'description' for the games
 #maxLength="10000"
 #threads="2"
 #startat="filename"
 #endat="filename"
 #pretend="false"
 #unattend="false"
+#interactive="false"
 #forceFilename="false"
 #verbose="false"
 #skipped="false"
@@ -71,3 +77,10 @@
 #extensions="*.zip *.uae *.adf"
 ##Uncomment to add these extensions to the default allowed extensions for this platform
 #allowExtension="*.zst *.rom"
+
+#[scraping module (eg. 'screenscraper')]
+#userCreds="user:password"
+#threads="1"
+##Sets the maximum allowed 'description' for the games
+#maxLength="10000"
+#interactive="false"
