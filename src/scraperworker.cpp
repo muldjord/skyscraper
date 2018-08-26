@@ -581,14 +581,14 @@ GameEntry ScraperWorker::getEntryFromUser(const QList<GameEntry> &gameEntries,
   GameEntry game;
 
   std::string entryStr = "";
-  printf("\nPotential titles for '%s':\n", compareTitle.toStdString().c_str());
+  printf("Potential entries for '\033[1;32m%s\033[0m':\n", compareTitle.toStdString().c_str());
   for(int a = 1; a <= gameEntries.length(); ++a) {
-    printf("%d: \033[1;33m%s\033[0m\n", a, gameEntries.at(a - 1).title.toStdString().c_str());
+    printf("\033[1;32m%d%s\033[0m: Title:    '\033[1;33m%s\033[0m'\n%s   platform: '\033[1;33m%s\033[0m'\n", a, QString((a < 9?" ":"")).toStdString().c_str(), gameEntries.at(a - 1).title.toStdString().c_str(), QString((a < 9?" ":"")).toStdString().c_str(), gameEntries.at(a - 1).platform.toStdString().c_str());
   }
-  printf("-1: \033[1;33mNONE OF THE ABOVE!\033[0m\n");
+  printf("\033[1;32m-1\033[0m: \033[1;33mNONE OF THE ABOVE!\033[0m\n");
   printf("\033[1;34mPlease choose the preferred entry\033[0m (Or press enter to let Skyscraper choose):\033[0m ");
   getline(std::cin, entryStr);
-
+  printf("\n");
   // Becomes 0 if input is not a number
   int chosenEntry = QString(entryStr.c_str()).toInt();
 
