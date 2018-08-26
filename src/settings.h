@@ -71,6 +71,7 @@ struct Settings {
   QString endAt = "";
   bool pretend = false;
   bool unattend = false;
+  bool unattendSkip = false;
   bool interactive = false;
   bool forceFilename = false;
   bool stats = false;
