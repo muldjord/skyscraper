@@ -10,7 +10,7 @@ unix:target.path=/usr/local/bin
 unix:target.files=Skyscraper Skyscraper.app/Contents/MacOS/Skyscraper
 
 unix:examples.path=/usr/local/etc/skyscraper
-unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 mameMap.csv ARTWORK.md tgdb_developers.json tgdb_publishers.json
+unix:examples.files=config.ini.example README.md artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 mameMap.csv ARTWORK.md tgdb_developers.json tgdb_publishers.json igdb_platforms.json
 
 unix:dbexamples.path=/usr/local/etc/skyscraper/dbs
 unix:dbexamples.files=dbs/priorities.xml.example dbs/README.md
@@ -47,6 +47,7 @@ HEADERS += src/skyscraper.h \
            src/worldofspectrum.h \
            src/screenscraper.h \
            src/mobygames.h \
+           src/igdb.h \
            src/arcadedb.h \
            src/scripter.h \
            src/platform.h \
@@ -90,6 +91,7 @@ SOURCES += src/main.cpp \
            src/worldofspectrum.cpp \
            src/screenscraper.cpp \
            src/mobygames.cpp \
+           src/igdb.cpp \
            src/arcadedb.cpp \
            src/scripter.cpp \
            src/platform.cpp \
