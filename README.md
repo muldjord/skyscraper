@@ -162,6 +162,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 
+#### Version 2.7.0 (In progress, unreleased)
+* Added scraping module specific configs in config.ini to allow different userCreds per scraping module
+* Added 'igdb' scraping module
+* Added '--interactive' mode which will ask user to choose the best result
+
 #### Version 2.6.0 (25th August 2018)
 * Added 'mobygames' scraping module
 
