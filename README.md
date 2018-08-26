@@ -78,7 +78,7 @@ When you have completed the installation you can start Skyscraper in 'Simple mod
 ```
 $ Skyscraper
 ```
-Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script afterwards. It's located in '`[homedir]/.skyscraper/skyscript.sh`'.
+Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script afterwards. It's located in '`~/.skyscraper/skyscript.sh`'.
 
 ### Manual mode (for advanced users)
 Skyscraper is a command line tool, and has many, many options for you to fiddle around with. I recommend taking a look at all of them to familiarize yourself with the possibilites:
@@ -96,11 +96,11 @@ This will scrape the platform using the '`localdb`' scraping module, and will ma
 NOTE: To enable video scraping for the scraping modules that support it, you need to add the '`--videos`' command line option. This is disabled per default because of the significant space requirements needed to save them.
 
 ### config.ini
-A lesser know, but extremely useful, feature of Skyscraper is to add your desired config variables to '`[homedir]/.skyscraper/config.ini`'. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, '`-m 100`' on command line, you can set the matching option '`minMatch="100"`' in the config.
+A lesser know, but extremely useful, feature of Skyscraper is to add your desired config variables to '`~/.skyscraper/config.ini`'. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, '`-m 100`' on command line, you can set the matching option '`minMatch="100"`' in the config.
 
 Many options can be set on two levels; either `[main]` or `[platform]`. Platform can be changed to any of the supported platforms (check list with '`--help`'), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will always be used.
 
-You can find an example config file at '`[homedir]/.skyscraper/config.ini.example`'. This file contains all available options. Just uncomment the ones you wish to use by removing the "`#`" in front of the variables.
+You can find an example config file at '`~/.skyscraper/config.ini.example`'. This file contains all available options. Just uncomment the ones you wish to use by removing the "`#`" in front of the variables.
 
 ### Local database features
 Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game '`description`' or a game '`screenshot`'. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the '`localdb`' scraping module.
@@ -130,10 +130,10 @@ Basically what I'm trying to say is that it is entirely your own fault if you've
 I addition to allowing scraping from local resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the '`-s localdb`' scraping module. For a quick overview read on below. For a more detailed description with examples go [here](import/README.md).
 
 #### Artwork import
-Skyscraper allows you to import various artwork resources from the local '`[homedir]/.skyscraper/import`' folders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called '`Bubble Bobble.nes`' you would place your screenshot for this rom inside '`[homedir]/.skyscraper/import/screenshots`' called '`Bubble Bobble.png`'. Other image file formats are also supported.
+Skyscraper allows you to import various artwork resources from the local '`~/.skyscraper/import`' folders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called '`Bubble Bobble.nes`' you would place your screenshot for this rom inside '`~/.skyscraper/import/screenshots`' called '`Bubble Bobble.png`'. Other image file formats are also supported.
 
 #### Textual data import
-For textual data, you need to first create a file called '`[homedir]/.skyscraper/import/definitions.dat`'. In this file, you must define the file content format you are providing for each rom. For instance, if your data comes in the form of 1 xml file per rom, and you wish to scrape '`publisher`' for this rom, perhaps your input file has a node like '`<publisher>This is the publisher</publisher>`'. In the '`definitions.dat`' file you'd then add a line looking like '`<publisher>###PUBLISHER###</publisher`'. The '`###PUBLISHER###`' tag is recognized by Skyscraper.
+For textual data, you need to first create a file called '`~/.skyscraper/import/definitions.dat`'. In this file, you must define the file content format you are providing for each rom. For instance, if your data comes in the form of 1 xml file per rom, and you wish to scrape '`publisher`' for this rom, perhaps your input file has a node like '`<publisher>This is the publisher</publisher>`'. In the '`definitions.dat`' file you'd then add a line looking like '`<publisher>###PUBLISHER###</publisher`'. The '`###PUBLISHER###`' tag is recognized by Skyscraper.
 
 Now run the scraper with the '`-s import`' option:
 ```
@@ -141,7 +141,7 @@ $ Skyscraper -p [platform] -s import
 ```
 If you've named the files correctly, the game will show with a green '`YES`' for cover, screenshot, wheel, marquee and/or video (if you've enabled them with the '`--videos`' option). If you've imported textual data, it will show the data at the relevant output line.
 
-Now, to make use of the imported data, scrape with the '`-s localdb`' scraping module and your resources will be prioritized above all others as defined in '`[homedir]/.skyscraper/dbs/[platform]/priorities.xml`'.
+Now, to make use of the imported data, scrape with the '`-s localdb`' scraping module and your resources will be prioritized above all others as defined in '`~/.skyscraper/dbs/[platform]/priorities.xml`'.
 ```
 $ Skyscraper -p [platform] -s localdb
 ```
@@ -201,7 +201,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.5.3 (24th July 2018)
 * Added '--allowext' option which will force allow a file extension for the given platform. Thank you to 'herbymachine' for suggesting this
-* Added 'allowExtension' to the '[homedir]/.skyscraper/config.ini' variables for both 'main' and 'platform' specific sections. This is useful if you wish to permanently add a file extension to all or one platform when scraping
+* Added 'allowExtension' to the '~/.skyscraper/config.ini' variables for both 'main' and 'platform' specific sections. This is useful if you wish to permanently add a file extension to all or one platform when scraping
 * Implemented 'developers' change in 'thegamesdb' API
 * Implemented 'publishers' change in 'thegamesdb' API
 * Fixed 'Tags' bug in 'screenscraper' module

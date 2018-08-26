@@ -1,3 +1,43 @@
+#### Version 2.5.8 (24th August 2018)
+* Fixed bug in 'genesis' platform when using the 'screenscraper' module
+* Added 'megacd' platform support
+
+#### Version 2.5.7 (21st August 2018)
+* Added 'Super Famicom' as alias to 'Super Nintendo'
+* Added restrictions for 'openretro' scraping module and removed it from Simple Mode
+
+#### Version 2.5.6 (20th August 2018)
+* Added 'atari800' platform support
+
+#### Version 2.5.5 (18th August 2018)
+* Changed '--updatedb' to '--refresh' as the name confused users. '--updatedb' still works, but is considered deprecated
+* Added 'ss' and 'uk' regions to 'screenscraper' module which should fix A LOT of games that weren't found when using this module
+* Added unofficial OSX support to the install script
+
+#### Version 2.5.4 (10th August 2018)
+* Added 'extensions=' to platform sections of config.ini to allow overwriting the default extensions for any platform
+* Added '--maxfails [int]' command line option and 'maxFails=[int]' config.ini option to allow user to set a higher allowed initial 'Not found' before quitting
+
+#### Version 2.5.3 (24th July 2018)
+* Added '--allowext' option which will force allow a file extension for the given platform. Thank you to 'herbymachine' for suggesting this
+* Added 'allowExtension' to the '~/.skyscraper/config.ini' variables for both 'main' and 'platform' specific sections. This is useful if you wish to permanently add a file extension to all or one platform when scraping
+* Implemented 'developers' change in 'thegamesdb' API
+* Implemented 'publishers' change in 'thegamesdb' API
+* Fixed 'Tags' bug in 'screenscraper' module
+
+#### Version 2.5.2 (13th July 2018)
+* Fixed bug in 'thegamesdb' module that broke platform and genre detection
+
+#### Version 2.5.1 (10th July 2018)
+* Added '--relative' option which forces rom relative paths in gamelist for EmulationStation
+
+#### Version 2.5.0 (8th July 2018)
+* 'thegamesdb' removed from Simple Mode scraping scripts due to new api restrictions
+* Implemented new 'thegamesdb' api, be wary of monthly request limit!
+* Made sure 'remaining requests' is clearly stated when using 'thegamesdb'
+* Implemented request limit test which makes Skyscraper stop if limit is reached
+* Made sure cli header always has correct number of dashes
+
 #### Version 2.4.11 (17th June 2018)
 * Added 'mega-cd' as alias for 'segacd' platform. Thank you to user trevor7oaks for reporting this
 
@@ -141,7 +181,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
     * Improved 'shadow' effect to adhere perfectly to softness as radius
 * Added '-a' command line option for setting custom artwork xml config file
 * Added 'artworkXml' config file options for setting custom artwork xml config file
-* Implemented resource system that allows user to place files in '[homedir]/.skyscraper/resources' and use them in the '[homedir]/.skyscraper/artwork.xml' layers and effects
+* Implemented resource system that allows user to place files in '~/.skyscraper/resources' and use them in the '~/.skyscraper/artwork.xml' layers and effects
 * Added 'From cache' boolean to output plus note about '--updatedb'
 * 'simple mode' now also accepts "Y" as a yes answer instead of just "y"
 * Now also looks for 'jp' region if no english region media is found for 'screenscraper' module
@@ -177,7 +217,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Added 'pc' and 'ports' platform
 
 #### Version 2.2.0 (31st of December 2017)
-* Completely rewrote how artwork is handled. Now uses '[homedir]/.skyscraper/artwork.xml' for everything.
+* Completely rewrote how artwork is handled. Now uses '~/.skyscraper/artwork.xml' for everything.
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
 * Added 'wheel' and 'marquee' media types to local database
 * Added 'nocovers', 'noscreenshots', 'nowheels' and 'nomarquees' options to allow user to disable caching of those resources locally.
@@ -256,7 +296,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Improved 'neogeo' and 'arcade' search platform matching
 
 #### Version 1.7.4 (10th August 2017)
-* Added textual import with 'import' scraper using '[homedir]/.skyscraper/important/definitions.dat' file
+* Added textual import with 'import' scraper using '~/.skyscraper/important/definitions.dat' file
 * Added video import with 'import' scraper
 * Improved 'uvlist' description scraping
 * Now properly handles empty nodes in EmulationStation gamelist.xml export
@@ -265,7 +305,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Added 'developer' support for 'uvlist' scraper
 * Improved html unescaping a lot
 * Cleaned up xml escaping
-* Added 'import' scraper, scraping from resources located in '[homedir]/.skyscraper/import' folder
+* Added 'import' scraper, scraping from resources located in '~/.skyscraper/import' folder
 
 #### Version 1.7.2 (7th August 2017)
 * Added 'uvlist' scraping module
@@ -279,7 +319,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 
 #### Version 1.7.1 (7th August 2017)
 * Moved all source files to 'src' folder
-* '[homedir]/.skyscraper' is now default folder for all files used by Skyscraper
+* '~/.skyscraper' is now default folder for all files used by Skyscraper
 * '/usr/local/bin/Skyscraper' is now default location for Skyscraper executable
 * Refined '--help' output a bit
 * Fixed lemon64 scraping
