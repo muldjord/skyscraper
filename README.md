@@ -170,54 +170,15 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added interactive mode question to 'Simple mode'
 * Changed release date patterns to regexps for cleaner code
 * Fixed bug which caused <video> tags to disappear when skipping entries with emulationstation (thank you to ozy24 for reporting this)
-* Reached commit number 1000!!!
+* Reached commit number 1000!!! I'm gonna celebrate by coding some more
 * Conformed [homedir] to be '~' everywhere
 * Added several aliases to platforms to better support all scraping modules
 * Added option for custom header when initiating network requests
 * When generating search names, all instances of ' v.X' and ' rev.X' are now removed prior to search
+* Added '--unattendskip' option to allow for always skipping existing entries without user input (thank you to ozy24 for suggesting this)
 
 #### Version 2.6.0 (25th August 2018)
 * Added 'mobygames' scraping module
-
-#### Version 2.5.8 (24th August 2018)
-* Fixed bug in 'genesis' platform when using the 'screenscraper' module
-* Added 'megacd' platform support
-
-#### Version 2.5.7 (21st August 2018)
-* Added 'Super Famicom' as alias to 'Super Nintendo'
-* Added restrictions for 'openretro' scraping module and removed it from Simple Mode
-
-#### Version 2.5.6 (20th August 2018)
-* Added 'atari800' platform support
-
-#### Version 2.5.5 (18th August 2018)
-* Changed '--updatedb' to '--refresh' as the name confused users. '--updatedb' still works, but is considered deprecated
-* Added 'ss' and 'uk' regions to 'screenscraper' module which should fix A LOT of games that weren't found when using this module
-* Added unofficial OSX support to the install script
-
-#### Version 2.5.4 (10th August 2018)
-* Added 'extensions=' to platform sections of config.ini to allow overwriting the default extensions for any platform
-* Added '--maxfails [int]' command line option and 'maxFails=[int]' config.ini option to allow user to set a higher allowed initial 'Not found' before quitting
-
-#### Version 2.5.3 (24th July 2018)
-* Added '--allowext' option which will force allow a file extension for the given platform. Thank you to 'herbymachine' for suggesting this
-* Added 'allowExtension' to the '~/.skyscraper/config.ini' variables for both 'main' and 'platform' specific sections. This is useful if you wish to permanently add a file extension to all or one platform when scraping
-* Implemented 'developers' change in 'thegamesdb' API
-* Implemented 'publishers' change in 'thegamesdb' API
-* Fixed 'Tags' bug in 'screenscraper' module
-
-#### Version 2.5.2 (13th July 2018)
-* Fixed bug in 'thegamesdb' module that broke platform and genre detection
-
-#### Version 2.5.1 (10th July 2018)
-* Added '--relative' option which forces rom relative paths in gamelist for EmulationStation
-
-#### Version 2.5.0 (8th July 2018)
-* 'thegamesdb' removed from Simple Mode scraping scripts due to new api restrictions
-* Implemented new 'thegamesdb' api, be wary of monthly request limit!
-* Made sure 'remaining requests' is clearly stated when using 'thegamesdb'
-* Implemented request limit test which makes Skyscraper stop if limit is reached
-* Made sure cli header always has correct number of dashes
 
 #### Older releases
 Release notes for older releases can be found [here](OLDERRELEASES.md).
