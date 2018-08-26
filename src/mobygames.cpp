@@ -82,7 +82,7 @@ void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
     
     game.id = QString::number(jsonGame.value("game_id").toInt());
     game.title = jsonGame.value("title").toString();
-    game.miscData = data;
+    game.miscData = QJsonDocument(jsonGame).toJson(QJsonDocument::Compact);
 
     QJsonArray jsonPlatforms = jsonGame.value("platforms").toArray();
     while(!jsonPlatforms.isEmpty()) {
@@ -106,25 +106,12 @@ void MobyGames::getGameData(GameEntry &game)
   q.exec();
   data = manager.getData();
 
-  // Trim data to remove { and } before appending together into a single json doc
-  data = data.trimmed();
-  data = data.remove(data.length() - 1, 1).trimmed().append(",\n");
-  game.miscData = game.miscData.remove(0, 2);
-  // Readd data from initial search as we need it
-  data.append(game.miscData);
-
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
   }
 
-  QJsonArray jsonArray = jsonDoc.object().value("games").toArray();
-  for(int a = 0; a < jsonArray.count(); ++a) {
-    if(QString::number(jsonArray.at(a).toObject().value("game_id").toInt()) == game.id) {
-      jsonObj = jsonArray.at(a).toObject();
-      break;
-    }
-  }
+  jsonObj = QJsonDocument::fromJson(game.miscData).object();
 
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
