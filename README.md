@@ -17,6 +17,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * WEB: adb.arcadeitalia.net (Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
 * WEB: screenscraper.fr
 * WEB: mobygames.com
+* WEB: igdb.com
 * LOCAL: localdb (scrapes exclusively from cached resources. Read more [here](#local-database-features))
 * LOCAL: import (imports resources into the local cache. Read more about this [here](import/README.md))
 
@@ -166,6 +167,14 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added scraping module specific configs in config.ini to allow different userCreds per scraping module
 * Added 'igdb' scraping module
 * Added '--interactive' mode which will ask user to choose the best result
+* Added interactive mode question to 'Simple mode'
+* Changed release date patterns to regexps for cleaner code
+* Fixed bug which caused <video> tags to disappear when skipping entries with emulationstation (thank you to ozy24 for reporting this)
+* Reached commit number 1000!!!
+* Conformed [homedir] to be '~' everywhere
+* Added several aliases to platforms to better support all scraping modules
+* Added option for custom header when initiating network requests
+* When generating search names, all instances of ' v.X' and ' rev.X' are now removed prior to search
 
 #### Version 2.6.0 (25th August 2018)
 * Added 'mobygames' scraping module
