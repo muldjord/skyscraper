@@ -36,13 +36,16 @@ NetComm::NetComm()
   connect(&requestTimer, &QTimer::timeout, this, &NetComm::cancelRequest);
 }
 
-void NetComm::request(QString query, QString postData)
+void NetComm::request(QString query, QString postData, QString headerKey, QString headerValue)
 {
   clearAll();
   QUrl url(query);
   QNetworkRequest request(url);
   request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+  if(!headerKey.isEmpty() && !headerValue.isEmpty()) {
+    request.setRawHeader(headerKey.toUtf8(), headerValue.toUtf8());
+  }
   
   if(postData.isEmpty()) {
     reply = get(request);

@@ -36,7 +36,8 @@ class NetComm : public QNetworkAccessManager
 
 public:
   NetComm();
-  void request(QString query, QString postData = "");
+  void request(QString query, QString postData = "",
+	       QString headerKey = "", QString headerValue = "");
   QByteArray getData();
   QByteArray getContentType();
 
