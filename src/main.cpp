@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
   QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption sOption("s", "Choose scraping module to use while scraping the selected platform.\n(WEB: 'arcadedb', 'igdb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb'. Default is 'localdb')", "module", "");
   //QCommandLineOption sOption("s", "Choose scraping module to use while scraping the selected platform.\n(WEB: 'arcadedb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb'. Default is 'localdb')", "module", "");
-  QCommandLineOption uOption("u", "UserID and Password for use with the selected scraping module (currently only used by the 'screenscraper' module).\n(Default is none)", "user:password", "");
+  QCommandLineOption uOption("u", "userKey or UserID and Password for use with the selected scraping module.\n(Default is none)", "key or user:password", "");
   QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 65)", "0-100", "");
   QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 2500)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use. This might change depending on the scraping module limits.\n(default is 4)", "1-8", "");
@@ -158,9 +158,10 @@ int main(int argc, char *argv[])
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
-  QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before quitting. (Default is 30)", "1-500", "");
+  QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before quitting. (Default is 30)", "1-200", "");
   QCommandLineOption pretendOption("pretend", "Don't alter game list and media files, just print the results on screen. Scraped resources are still cached in the local database.");
-  QCommandLineOption unattendOption("unattend", "Don't ask any questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
+  QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
+  QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
   QCommandLineOption interactiveOption("interactive", "Always ask user to choose best result.");
   QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' in that order)", "code", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
@@ -201,6 +202,7 @@ int main(int argc, char *argv[])
   parser.addOption(maxfailsOption);
   parser.addOption(pretendOption);
   parser.addOption(unattendOption);
+  parser.addOption(unattendskipOption);
   parser.addOption(interactiveOption);
   parser.addOption(forcefilenameOption);
   parser.addOption(relativeOption);
