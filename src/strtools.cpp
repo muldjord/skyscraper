@@ -279,61 +279,17 @@ QString StrTools::conformReleaseDate(QString str)
 {
   if(QRegularExpression("^\\d{4}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "yyyy").toString("yyyyMMdd");
-  } else if(str.length() == 7 &&
-	    str.left(4).toInt() != 0 &&
-	    str.left(4).toInt() < 3000 &&
-	    str.mid(5, 2).toInt() != 0 &&
-	    str.mid(5, 2).toInt() <= 12) {
+  } else if(QRegularExpression("^\\d{4}-[0-1]{1}\\d{1}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "yyyy-MM").toString("yyyyMMdd");
-  } else if(str.length() == 10 &&
-	    str.left(4).toInt() != 0 &&
-	    str.left(4).toInt() < 3000 &&
-	    str.mid(5, 2).toInt() != 0 &&
-	    str.mid(5, 2).toInt() <= 12 &&
-	    str.mid(8, 2).toInt() != 0 &&
-	    str.mid(8, 2).toInt() <= 31) {
+  } else if(QRegularExpression("^\\d{4}-[0-1]{1}\\d{1}-[0-3]{1}\\d{1}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "yyyy-MM-dd").toString("yyyyMMdd");
-  } else if(str.length() == 10 &&
-	    str.left(2).toInt() != 0 &&
-	    str.left(2).toInt() <= 12 &&
-	    str.mid(3, 2).toInt() != 0 &&
-	    str.mid(3, 2).toInt() <= 31 &&
-	    str.mid(6, 4).toInt() != 0 &&
-	    str.mid(6, 4).toInt() < 3000) {
+  } else if(QRegularExpression("^[0-1]{1}\\d{1}/[0-3]{1}\\d{1}/\\d{4}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "MM/dd/yyyy").toString("yyyyMMdd");
-  } else if(str.length() == 9 &&
-	    (str.left(3) == "Jan" ||
-	     str.left(3) == "Feb" ||
-	     str.left(3) == "Mar" ||
-	     str.left(3) == "Apr" ||
-	     str.left(3) == "May" ||
-	     str.left(3) == "Jun" ||
-	     str.left(3) == "Jul" ||
-	     str.left(3) == "Aug" ||
-	     str.left(3) == "Sep" ||
-	     str.left(3) == "Oct" ||
-	     str.left(3) == "Nov" ||
-	     str.left(3) == "Dec") &&
-	    str.mid(5, 4).toInt() != 0 &&
-	    str.mid(5, 4).toInt() < 3000) {
+  } else if(QRegularExpression("^\\d{4}-[a-zA-Z]{3}-[0-3]{1}\\d{1}$").match(str).hasMatch()) {
+    str = QDate::fromString(str, "yyyy-MMM-dd").toString("yyyyMMdd");
+  } else if(QRegularExpression("^[a-zA-z]{3}, \\d{4}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "MMM, yyyy").toString("yyyyMMdd");
-  } else if(str.length() == 12 &&
-	    (str.left(3) == "Jan" ||
-	     str.left(3) == "Feb" ||
-	     str.left(3) == "Mar" ||
-	     str.left(3) == "Apr" ||
-	     str.left(3) == "May" ||
-	     str.left(3) == "Jun" ||
-	     str.left(3) == "Jul" ||
-	     str.left(3) == "Aug" ||
-	     str.left(3) == "Sep" ||
-	     str.left(3) == "Oct" ||
-	     str.left(3) == "Nov" ||
-	     str.left(3) == "Dec") &&
-	    str.mid(4, 2).toInt() != 0 &&
-	    str.mid(4, 2).toInt() <= 31 &&
-	    str.mid(8, 4).toInt() != 0 &&
-	    str.mid(8, 4).toInt() < 3000) {
+  } else if(QRegularExpression("^[a-zA-z]{3} [0-3]{1}\\d{1}, \\d{4}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "MMM dd, yyyy").toString("yyyyMMdd");
   }
   return str;
