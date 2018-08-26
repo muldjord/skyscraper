@@ -27,6 +27,8 @@
 #include "platform.h"
 #include "nametools.h"
 
+#include <QRegularExpression>
+
 AbstractScraper::AbstractScraper()
 {
 }
@@ -422,7 +424,6 @@ QString AbstractScraper::getSearchName(QFileInfo info)
     }
   }
 
-  baseName = baseName.toLower();
   // Remove everything in brackets
   baseName = baseName.left(baseName.indexOf("(")).simplified();
   baseName = baseName.left(baseName.indexOf("[")).simplified();
@@ -431,10 +432,24 @@ QString AbstractScraper::getSearchName(QFileInfo info)
   // Always remove everything after a ' - ' since it's always a subtitle
   //baseName = baseName.left(baseName.indexOf(" - ")).simplified();
 
+  QRegularExpressionMatch match;
+  // Remove " rev.X" instances
+  match = QRegularExpression(" rev\\.(\\d.*\\d*|[IVX]{1,5})$").match(baseName);
+  if(match.hasMatch()) {
+    baseName = baseName.left(baseName.indexOf(match.captured(0))).simplified();
+  }
+  // Remove " v.X" instances
+  match = QRegularExpression(" v\\.(\\d.*\\d*|[IVX]{1,5})$").match(baseName);
+  if(match.hasMatch()) {
+    baseName = baseName.left(baseName.indexOf(match.captured(0))).simplified();
+  }
+
   // If we have the first game in a series, remove the ' I' for more search results
   if(baseName.right(2) == " I") {
     baseName = baseName.left(baseName.length() - 2);
   }
+
+  baseName = baseName.toLower();
 
   // Always remove 'the' from beginning or end if equal to or longer than 10 chars.
   // If it's shorter the 'the' is of more significance and shouldn't be removed.
