@@ -791,14 +791,19 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("lynx");
   } else if(platform == "atarist") {
     aliases.append("atari st");
+    aliases.append("atari st/ste");
   } else if(platform == "c16") {
     aliases.append("plus/4");
+    aliases.append("commodore plus/4");
+    aliases.append("commodore 16");
     aliases.append("commodore 16, plus/4");
   } else if(platform == "c64") {
     aliases.append("commodore 64");
+    aliases.append("commodore c64/128");
   } else if(platform == "c128") {
     aliases.append("commodore 128");
     aliases.append("commodore 64");
+    aliases.append("commodore c64/128");
   } else if(platform == "cd32") {
     aliases.append("amiga cd32");
   } else if(platform == "cdtv") {
@@ -915,6 +920,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("sega genesis");
     aliases.append("mega drive");
     aliases.append("sega mega drive");
+    aliases.append("sega mega drive/genesis");
   } else if(platform == "mame-advmame") {
     aliases.append("arcade");
     aliases.append("neo geo");
@@ -1129,6 +1135,7 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "megadrive") {
     aliases.append("genesis");
     aliases.append("sega mega drive");
+    aliases.append("sega mega drive/genesis");
     aliases.append("mega drive");
   } else if(platform == "msx") {
     aliases.append("msx2");
@@ -1141,6 +1148,8 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "neogeo") {
     aliases.append("neo-geo");
     aliases.append("neo geo");
+    aliases.append("neo geo aes");
+    aliases.append("neo geo mvs");
     aliases.append("neo geo cd");
     aliases.append("arcade");
   } else if(platform == "nes") {
@@ -1155,35 +1164,45 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "oric") {
     aliases.append("oric 1 / atmos");
   } else if(platform == "pc") {
+    aliases.append("pc dos");
     aliases.append("dos");
     aliases.append("windows");
+    aliases.append("pc (microsoft windows");
   } else if(platform == "pc88") {
     aliases.append("pc-88");
+    aliases.append("pc-8801");
   } else if(platform == "pcfx") {
     aliases.append("pc-fx");
   } else if(platform == "pcengine") {
     aliases.append("turbografx 16");
     aliases.append("turbografx cd");
     aliases.append("turbografx-16");
+    aliases.append("turbografx-16/pc engine");
+    aliases.append("turbografx-16/pc engine cd");
     aliases.append("pc engine");
     aliases.append("pc engine cd-rom");
     aliases.append("pc engine supergrafx");
   } else if(platform == "ports") {
+    aliases.append("pc dos");
     aliases.append("dos");
     aliases.append("windows");
+    aliases.append("pc (microsoft windows");
   } else if(platform == "psx") {
     aliases.append("sony playstation");
     aliases.append("playstation");
   } else if(platform == "psp") {
     aliases.append("sony playstation portable");
+    aliases.append("playstation portable");
   } else if(platform == "saturn") {
     aliases.append("sega saturn");
   } else if(platform == "scummvm") {
+    aliases.append("pc dos");
     aliases.append("pc");
     aliases.append("amiga");
     aliases.append("amiga cd32");
     aliases.append("dos");
     aliases.append("cd32");
+    aliases.append("pc (microsoft windows");
   } else if(platform == "sega32x") {
     aliases.append("sega 32x");
     aliases.append("megadrive 32x");
@@ -1195,9 +1214,9 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("sega sg-1000");
   } else if(platform == "snes") {
     aliases.append("super nintendo (snes)");
+    aliases.append("super nintendo entertainment system (snes)");
     aliases.append("super nintendo");
     aliases.append("super famicom");
-    aliases.append("snes--1");
   } else if(platform == "trs-80") {
     aliases.append("trs-80 color computer");
   } else if(platform == "vic20") {
@@ -1207,6 +1226,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("odyssey 2");
     aliases.append("magnavox odyssey 2");
     aliases.append("videopac g7000");
+    aliases.append("philips videopac g7000");
     aliases.append("videopac+ g7400");
     aliases.append("magnavox odyssey²");
   } else if(platform == "virtualboy") {
@@ -1214,6 +1234,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("virtual boy");
   } else if(platform == "wii") {
     aliases.append("nintendo wii");
+    aliases.append("wiiware");
   } else if(platform == "wonderswancolor") {
     aliases.append("wonderswan color");
   } else if(platform == "x68000") {
