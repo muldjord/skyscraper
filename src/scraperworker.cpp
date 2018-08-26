@@ -23,6 +23,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <iostream>
 #include <QTimer>
 
 #include "scraperworker.h"
@@ -34,6 +35,7 @@
 #include "thegamesdb.h"
 #include "worldofspectrum.h"
 #include "screenscraper.h"
+#include "igdb.h"
 #include "mobygames.h"
 #include "localscraper.h"
 #include "importscraper.h"
@@ -64,6 +66,8 @@ void ScraperWorker::run()
     scraper = new ArcadeDB();
   } else if(config.scraper == "screenscraper") {
     scraper = new ScreenScraper();
+  } else if(config.scraper == "igdb") {
+    scraper = new Igdb();
   } else if(config.scraper == "mobygames") {
     scraper = new MobyGames();
   } else if(config.scraper == "worldofspectrum") {
@@ -168,7 +172,13 @@ void ScraperWorker::run()
 
     int lowestDistance = 666;
     // Create the game entry we use for the rest of the process
-    GameEntry game = getBestEntry(gameEntries, compareTitle, lowestDistance);
+    GameEntry game;
+    if(config.interactive && !prefilledFromCache) {
+      game = getEntryFromUser(gameEntries, compareTitle, lowestDistance);
+    }
+    if(game.title == "") {
+      game = getBestEntry(gameEntries, compareTitle, lowestDistance);
+    }
     // Fill it with additional needed data
     game.path = info.absoluteFilePath();
     game.baseName = info.completeBaseName();
@@ -561,6 +571,37 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     }
   }
   game = potentials.at(mostSimilar);
+  return game;
+}
+
+GameEntry ScraperWorker::getEntryFromUser(const QList<GameEntry> &gameEntries,
+					  QString compareTitle,
+					  int &lowestDistance)
+{
+  GameEntry game;
+
+  std::string entryStr = "";
+  printf("\nPotential titles for '%s':\n", compareTitle.toStdString().c_str());
+  for(int a = 1; a <= gameEntries.length(); ++a) {
+    printf("%d: \033[1;33m%s\033[0m\n", a, gameEntries.at(a - 1).title.toStdString().c_str());
+  }
+  printf("-1: \033[1;33mNONE OF THE ABOVE!\033[0m\n");
+  printf("\033[1;34mPlease choose the preferred entry\033[0m (Or press enter to let Skyscraper choose):\033[0m ");
+  getline(std::cin, entryStr);
+
+  // Becomes 0 if input is not a number
+  int chosenEntry = QString(entryStr.c_str()).toInt();
+
+  if(entryStr != "") {
+    if(chosenEntry == -1) {
+      game.title = "Entries discarded by user";
+      game.found = false;
+    } else if(chosenEntry != 0) {
+      lowestDistance = 0;
+      game = gameEntries.at(chosenEntry - 1);
+    }
+  }
+
   return game;
 }
 

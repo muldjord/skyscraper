@@ -70,6 +70,9 @@ private:
   GameEntry getBestEntry(const QList<GameEntry> &gameEntries,
 			       QString compareTitle,
 			       int &lowestDistance);
+  GameEntry getEntryFromUser(const QList<GameEntry> &gameEntries,
+			     QString compareTitle,
+			     int &lowestDistance);
   int getSearchMatch(const QString &title, const QString &compareTitle, const int &lowestDistance);
 
   bool limitReached(AbstractScraper *scraper, QString &output);
