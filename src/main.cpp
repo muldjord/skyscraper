@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "platform", "");
   QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "frontend", "");
   QCommandLineOption eOption("e", "Set emulator. This is only required by the 'attractmode' frontend.\n(Default is none)", "emulator", "");
-  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '[homedir]/RetroPie/roms/[platform]')", "path", "");
+  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '~/RetroPie/roms/[platform]')", "path", "");
   QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "path", "");
   QCommandLineOption sOption("s", "Choose scraping module to use while scraping the selected platform.\n(WEB: 'arcadedb', 'igdb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'import' and 'localdb'. Default is 'localdb')", "module", "");
@@ -134,9 +134,9 @@ int main(int argc, char *argv[])
   QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 65)", "0-100", "");
   QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 2500)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use. This might change depending on the scraping module limits.\n(default is 4)", "1-8", "");
-  QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '[homedir]/.skyscraper/config.ini')", "filename", "");
-  QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '[homedir]/.skyscraper/artwork.xml')", "filename", "");
-  QCommandLineOption dOption("d", "Set local resource database cache folder.\n(default is '[homedir]/.skyscraper/dbs/[platform]')", "folder", "");
+  QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '~/.skyscraper/config.ini')", "filename", "");
+  QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '~/.skyscraper/artwork.xml')", "filename", "");
+  QCommandLineOption dOption("d", "Set local resource database cache folder.\n(default is '~/.skyscraper/dbs/[platform]')", "folder", "");
   QCommandLineOption videosOption("videos", "Enables video scraping for any scraping module. Also enables caching of video resources in the local databases. Beware, this takes up a lot of disk space!");
   QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");
   QCommandLineOption noscreenshotsOption("noscreenshots", "Disable screenshots/snaps from being cached locally. Only do this if you do not plan to use the screenshot artwork in 'artwork.xml'");
