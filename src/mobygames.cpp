@@ -70,7 +70,7 @@ void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
 
   if(jsonDoc.object().value("code").toInt() == 429) {
     printf("\033[1;31mToo many requests!!! This is probably because some other Skyscraper user is currently using the 'mobygames' module. Please wait a while and try again.\n\nNow quitting...\033[0m\n");
-    exit(1);
+    reqRemaining = 0;
   }
 
   QJsonArray jsonGames = jsonDoc.object().value("games").toArray();
