@@ -314,7 +314,7 @@ bool ScraperWorker::limitReached(AbstractScraper *scraper, QString &output)
   if(scraper->reqRemaining != -1) { // -1 means there is no limit
     output.append("\n\033[1;33m'" + config.scraper + "' requests remaining: " + QString::number(scraper->reqRemaining) + "\033[0m\n");
     if(scraper->reqRemaining < 1) {
-      output.append("\033[1;31mRequest limit reached, forcing thread " + threadId + " to stop...\033[0m\n");
+      output.append("\033[1;31mForcing thread " + threadId + " to stop...\033[0m\n");
       return true;
     }
   }
