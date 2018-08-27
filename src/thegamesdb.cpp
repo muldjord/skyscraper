@@ -62,6 +62,7 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
   if(jsonDoc.isEmpty()) {
     return;
   }
+
   reqRemaining = jsonDoc.object().value("remaining_monthly_allowance").toInt();
 
   if(jsonDoc.object().value("status").toString() != "Success") {
@@ -99,15 +100,15 @@ void TheGamesDb::getGameData(GameEntry &game)
   data = manager.getData();
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
-    printf("No returned json data, is 'thegamesdb' down? Now quitting...\n");
-    exit(1);
+    printf("No returned json data, is 'thegamesdb' down?\n");
+    reqRemaining = 0;
   }
 
   reqRemaining = jsonDoc.object().value("remaining_monthly_allowance").toInt();
 
   if(jsonDoc.object().value("data").toObject().value("count").toInt() < 1) {
-    printf("No returned json game document, is 'thegamesdb' down? Now quitting...\n");
-    exit(1);
+    printf("No returned json game document, is 'thegamesdb' down?\n");
+    reqRemaining = 0;
   }
   
   jsonObj = jsonDoc.object().value("data").toObject().value("games").toArray().first().toObject();

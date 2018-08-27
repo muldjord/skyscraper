@@ -59,7 +59,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
   if(data.indexOf("Authentication failed") != -1) {
     printf("\033[1;31mThe key you provided with either the '-u [key]' command line option or the 'userCreds=\"[key]\" variable in config.ini does not seem to work. Now quitting...\033[0m\n\n");
-    exit(1);
+    reqRemaining = 0;
   }
 
   jsonDoc = QJsonDocument::fromJson(data);
