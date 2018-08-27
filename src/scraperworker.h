@@ -67,12 +67,10 @@ private:
   void getGameData(GameEntry &game);
   QString assembleTags(QByteArray &data);
   QString getSha1(const QFileInfo &info);
-  GameEntry getBestEntry(const QList<GameEntry> &gameEntries,
-			       QString compareTitle,
-			       int &lowestDistance);
-  GameEntry getEntryFromUser(const QList<GameEntry> &gameEntries,
-			     QString compareTitle,
-			     int &lowestDistance);
+  GameEntry getBestEntry(const QList<GameEntry> &gameEntries, QString compareTitle,
+			 int &lowestDistance);
+  GameEntry getEntryFromUser(const QList<GameEntry> &gameEntries, const GameEntry &suggestedGame,
+			     const QString &compareTitle, int &lowestDistance);
   int getSearchMatch(const QString &title, const QString &compareTitle, const int &lowestDistance);
 
   bool limitReached(AbstractScraper *scraper, QString &output);

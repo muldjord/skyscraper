@@ -173,11 +173,14 @@ void ScraperWorker::run()
     int lowestDistance = 666;
     // Create the game entry we use for the rest of the process
     GameEntry game;
-    if(config.interactive && !prefilledFromCache) {
-      game = getEntryFromUser(gameEntries, compareTitle, lowestDistance);
-    }
-    if(game.title == "") {
+    if(gameEntries.isEmpty()) {
+      game.title = compareTitle;
+      game.found = false;
+    } else {
       game = getBestEntry(gameEntries, compareTitle, lowestDistance);
+      if(config.interactive && !prefilledFromCache) {
+	game = getEntryFromUser(gameEntries, game, compareTitle, lowestDistance);
+      }
     }
     // Fill it with additional needed data
     game.path = info.absoluteFilePath();
@@ -398,16 +401,10 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
 }
 
 GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
-					    QString compareTitle,
-					    int &lowestDistance)
+				      QString compareTitle,
+				      int &lowestDistance)
 {
   GameEntry game;
-
-  if(gameEntries.isEmpty()) {
-    game.title = compareTitle;
-    game.found = false;
-    return game;
-  }
 
   // If scraper isn't filename search based, always return first entry
   if(config.scraper == "localdb" || config.scraper == "import" ||
@@ -575,7 +572,8 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 }
 
 GameEntry ScraperWorker::getEntryFromUser(const QList<GameEntry> &gameEntries,
-					  QString compareTitle,
+					  const GameEntry &suggestedGame,
+					  const QString &compareTitle,
 					  int &lowestDistance)
 {
   GameEntry game;
@@ -583,7 +581,7 @@ GameEntry ScraperWorker::getEntryFromUser(const QList<GameEntry> &gameEntries,
   std::string entryStr = "";
   printf("Potential entries for '\033[1;32m%s\033[0m':\n", compareTitle.toStdString().c_str());
   for(int a = 1; a <= gameEntries.length(); ++a) {
-    printf("\033[1;32m%d%s\033[0m: Title:    '\033[1;33m%s\033[0m'\n%s   platform: '\033[1;33m%s\033[0m'\n", a, QString((a < 9?" ":"")).toStdString().c_str(), gameEntries.at(a - 1).title.toStdString().c_str(), QString((a < 9?" ":"")).toStdString().c_str(), gameEntries.at(a - 1).platform.toStdString().c_str());
+    printf("\033[1;32m%d%s\033[0m: Title:    '\033[1;32m%s\033[0m'%s\n    platform: '\033[1;33m%s\033[0m'\n", a, QString((a <= 9?" ":"")).toStdString().c_str(), gameEntries.at(a - 1).title.toStdString().c_str(), QString((gameEntries.at(a - 1).title == suggestedGame.title?" <-- Skyscraper's choice(s)":"")).toStdString().c_str(), gameEntries.at(a - 1).platform.toStdString().c_str());
   }
   printf("\033[1;32m-1\033[0m: \033[1;33mNONE OF THE ABOVE!\033[0m\n");
   printf("\033[1;34mPlease choose the preferred entry\033[0m (Or press enter to let Skyscraper choose):\033[0m ");
@@ -596,13 +594,15 @@ GameEntry ScraperWorker::getEntryFromUser(const QList<GameEntry> &gameEntries,
     if(chosenEntry == -1) {
       game.title = "Entries discarded by user";
       game.found = false;
+      return game;
     } else if(chosenEntry != 0) {
       lowestDistance = 0;
       game = gameEntries.at(chosenEntry - 1);
+      return game;
     }
   }
 
-  return game;
+  return suggestedGame;
 }
 
 // --- Console colors ---
