@@ -163,19 +163,22 @@ void TheGamesDb::getGameData(GameEntry &game)
 
 void TheGamesDb::getReleaseDate(GameEntry &game)
 {
-  game.releaseDate = jsonObj.value("release_date").toString();
+  if(jsonObj.value("release_date") != QJsonValue::Undefined)
+    game.releaseDate = jsonObj.value("release_date").toString();
 }
 
 void TheGamesDb::getDeveloper(GameEntry &game)
 {
   QJsonArray developers = jsonObj.value("developers").toArray();
-  game.developer = developerMap[developers.first().toInt()];
+  if(developers.count() != 0)
+    game.developer = developerMap[developers.first().toInt()];
 }
 
 void TheGamesDb::getPublisher(GameEntry &game)
 {
   QJsonArray publishers = jsonObj.value("publishers").toArray();
-  game.publisher = publisherMap[publishers.first().toInt()];
+  if(publishers.count() != 0)
+    game.publisher = publisherMap[publishers.first().toInt()];
 }
 
 void TheGamesDb::getDescription(GameEntry &game)
@@ -185,22 +188,27 @@ void TheGamesDb::getDescription(GameEntry &game)
 
 void TheGamesDb::getPlayers(GameEntry &game)
 {
-  game.players = QString::number(jsonObj.value("players").toInt());
+  int players = jsonObj.value("players").toInt();
+  if(players != 0)
+    game.players = QString::number(players);
 }
 
 void TheGamesDb::getAges(GameEntry &game)
 {
-  game.ages = jsonObj.value("rating").toString();
+  if(jsonObj.value("rating") != QJsonValue::Undefined)
+    game.ages = jsonObj.value("rating").toString();
 }
 
 void TheGamesDb::getTags(GameEntry &game)
 {
   QJsonArray genres = jsonObj.value("genres").toArray();
-  while(!genres.isEmpty()) {
-    game.tags.append(genreMap[genres.first().toInt()] + ", ");
-    genres.removeFirst();
+  if(genres.count() != 0) {
+    while(!genres.isEmpty()) {
+      game.tags.append(genreMap[genres.first().toInt()] + ", ");
+      genres.removeFirst();
+    }
+    game.tags = game.tags.left(game.tags.length() - 2);
   }
-  game.tags = game.tags.left(game.tags.length() - 2);
 }
 
 void TheGamesDb::getCover(GameEntry &game)
