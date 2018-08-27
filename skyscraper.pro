@@ -69,7 +69,7 @@ HEADERS += src/skyscraper.h \
            src/fxrotate.h \
            src/nametools.h \
            src/queue.h
-           
+
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
            src/netcomm.cpp \
