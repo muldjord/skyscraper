@@ -160,7 +160,7 @@ void Igdb::getPlayers(GameEntry &game)
   game.players = "1";
   QJsonArray jsonPlayers = jsonObj.value("game_modes").toArray();
   foreach(const QJsonValue &jsonPlayer, jsonPlayers) {
-    if(QString::number(jsonPlayer.toInt()) != 1) {
+    if(jsonPlayer.toInt() != 1) {
       game.players = "2";
       break;
     }
