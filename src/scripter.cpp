@@ -88,10 +88,6 @@ Scripter::Scripter()
 
   printf("User chose: '\033[1;32m%s\033[0m'\n", platformStr.c_str());
   
-  std::string interactiveStr = "";
-  printf("\033[1;34mDo you wish to manually choose the best entry when multiple results are returned\033[0m (y/N)? ");
-  getline(std::cin, interactiveStr);
-
   std::string inputFolderStr = "";
   printf("\n");
   printf("\033[1;34mPlease enter full game/rom input folder\033[0m (enter for default): ");
@@ -163,8 +159,6 @@ Scripter::Scripter()
     commandStr += " --relative";
   if(videosStr == "y" || videosStr == "Y")
     commandStr += " --videos";
-  if(interactiveStr == "y" || interactiveStr == "Y")
-    commandStr += " --interactive";
 
   commandStr += " --unattend";
   
