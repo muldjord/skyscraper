@@ -162,12 +162,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'Did you know' hints when running Skyscraper
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
+* Change 'reqRemaining' variable to work better when Skyscraper is supposed clean up and exit
 
-#### Version 2.7.0 (In progress, unreleased)
+#### Version 2.7.0 (27th August 2018)
 * Added scraping module specific configs in config.ini to allow different userCreds per scraping module
 * Added 'igdb' scraping module
 * Added '--interactive' mode which will ask user to choose the best result
-* Added interactive mode question to 'Simple mode'
 * Changed release date patterns to regexps for cleaner code
 * Fixed bug which caused <video> tags to disappear when skipping entries with emulationstation (thank you to ozy24 for reporting this)
 * Reached commit number 1000!!! I'm gonna celebrate by coding some more
