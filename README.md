@@ -166,6 +166,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed clean up and exit
 
+#### Version 2.7.2 (In progress, unreleased)
+* Fixed bug that caused the <marquee> nodes to disappear from gamelist.xml when skipping entries (Thanks to ozy24 for reporting this)
+
 #### Version 2.7.1 (28th August 2018)
 * Made sure 'Skyscraper's choice' only appears once per entry when using interactive mode
 * Added 'sidescaling' attribute to 'gamebox' compositor effect node (Thanks to darkvader for suggesting this)
