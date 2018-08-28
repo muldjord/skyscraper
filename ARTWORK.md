@@ -245,6 +245,9 @@ The filename of the [custom image resource](#custom-image-resources) to be used 
 #### 'rotate' attribute (Optional)
 Defines the rotation of the side image in degrees.
 
+#### 'sidescaling' attribute [from v2.7.1] (Optional)
+Defines how to scale the side / spine image. If left out, it will autoscale depending on the size of the artwork resource. Can be 'width', 'height' or 'both'.
+
 ### 'hue' effect node [from v2.3.3] (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/hue.png)
 ```
