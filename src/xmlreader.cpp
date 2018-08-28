@@ -66,8 +66,9 @@ QList<GameEntry> XmlReader::getEntries()
     entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
     entry.coverFile = gameNodes.at(a).firstChildElement("cover").text();
     entry.screenshotFile = gameNodes.at(a).firstChildElement("image").text();
-    entry.wheelFile = gameNodes.at(a).firstChildElement("wheel").text();
-    entry.marqueeFile = gameNodes.at(a).firstChildElement("marquee").text();
+    //entry.wheelFile = gameNodes.at(a).firstChildElement("wheel").text();
+    // This is supposed to be the wheelFile since ES currently don't support the <wheel> node
+    entry.wheelFile = gameNodes.at(a).firstChildElement("marquee").text();
     entry.videoFile = gameNodes.at(a).firstChildElement("video").text();
     if(!entry.videoFile.isEmpty()) {
       entry.videoFormat = "fromxml";
