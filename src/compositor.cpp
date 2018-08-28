@@ -222,6 +222,8 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setResource(attribs.value("side").toString());
       if(attribs.hasAttribute("rotate"))
 	newLayer.setDelta(attribs.value("rotate").toInt());
+      if(attribs.hasAttribute("sidescaling"))
+	newLayer.setScaling(attribs.value("sidescaling").toString());
       layer.addLayer(newLayer);
     } else if(xml.isStartElement() && xml.name() == "hue") {
       QXmlStreamAttributes attribs = xml.attributes();
