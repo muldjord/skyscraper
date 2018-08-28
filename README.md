@@ -163,8 +163,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed clean up and exit
-* Made it so the width if the spine of the gamebox can be set to fit the chosen artwork resource so it fits with the height of it aswell taking up all the space of the spine (Thank you to dorkvader for suggesting this)
-* Added '--checksum' cli option that allows user to overwrite the sha1 or md5 checksum of a single rom. Will disable if more than one rom is scraped (Thank you to AnalogHero for suggesting this)
+
+#### Version 2.7.1 (28th August 2018)
+* Made sure 'Skyscraper's choice' only appears once per entry when using interactive mode
+* Added 'sidescaling' attribute to 'gamebox' compositor effect node (Thanks to darkvader for suggesting this)
 
 #### Version 2.7.0 (27th August 2018)
 * Added scraping module specific configs in config.ini to allow different userCreds per scraping module
