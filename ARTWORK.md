@@ -235,7 +235,7 @@ Left image shows the result with the wheel artwork applied to the side. Right im
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
 ```
 <layer resource="cover" height="200">
-  <gamebox side="[custom image resource]" rotate="90"/>
+  <gamebox side="[custom image resource]" rotate="90" sidescaling="both"/>
 </layer>
 ```
 Must be nested inside a layer node. Renders a nifty looking 3D game box. It uses the parent layer image on the front of the box.
