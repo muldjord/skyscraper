@@ -107,6 +107,11 @@ void Layer::setVAlign(const QString &valign)
   this->valign = valign;
 }
 
+void Layer::setScaling(const QString &scaling)
+{
+  this->scaling = scaling;
+}
+
 void Layer::setX(const int &x)
 {
   this->x = x;

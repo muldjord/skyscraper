@@ -58,6 +58,7 @@ public:
   QString resource = "";
   QString align = "";
   QString valign = "";
+  QString scaling = "";
   int x = 0;
   int y = 0;
   int width = -1;
@@ -82,6 +83,7 @@ public:
   void setResource(const QString &resource);
   void setAlign(const QString &align);
   void setVAlign(const QString &valign);
+  void setScaling(const QString &value);
   void setX(const int &x);
   void setY(const int &y);
   void setWidth(const int &width);
