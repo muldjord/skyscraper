@@ -580,8 +580,14 @@ GameEntry ScraperWorker::getEntryFromUser(const QList<GameEntry> &gameEntries,
 
   std::string entryStr = "";
   printf("Potential entries for '\033[1;32m%s\033[0m':\n", compareTitle.toStdString().c_str());
+  bool suggestedShown = false;
   for(int a = 1; a <= gameEntries.length(); ++a) {
-    printf("\033[1;32m%d%s\033[0m: Title:    '\033[1;32m%s\033[0m'%s\n    platform: '\033[1;33m%s\033[0m'\n", a, QString((a <= 9?" ":"")).toStdString().c_str(), gameEntries.at(a - 1).title.toStdString().c_str(), QString((gameEntries.at(a - 1).title == suggestedGame.title?" <-- Skyscraper's choice(s)":"")).toStdString().c_str(), gameEntries.at(a - 1).platform.toStdString().c_str());
+    QString suggested = "";
+    if(gameEntries.at(a - 1).title == suggestedGame.title && !suggestedShown) {
+      suggested = " <-- Skyscraper's choice";
+      suggestedShown = true;
+    }
+    printf("\033[1;32m%d%s\033[0m: Title:    '\033[1;32m%s\033[0m'%s\n    platform: '\033[1;33m%s\033[0m'\n", a, QString((a <= 9?" ":"")).toStdString().c_str(), gameEntries.at(a - 1).title.toStdString().c_str(), suggested.toStdString().c_str(), gameEntries.at(a - 1).platform.toStdString().c_str());
   }
   printf("\033[1;32m-1\033[0m: \033[1;33mNONE OF THE ABOVE!\033[0m\n");
   printf("\033[1;34mPlease choose the preferred entry\033[0m (Or press enter to let Skyscraper choose):\033[0m ");
