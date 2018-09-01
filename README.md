@@ -164,7 +164,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added 'Did you know' hints when running Skyscraper
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
-* Change 'reqRemaining' variable to work better when Skyscraper is supposed clean up and exit
+* Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
+* Added ###title### to import scraping module
 
 #### Version 2.7.2 (In progress, unreleased)
 * Fixed bug that caused the <marquee> nodes to disappear from gamelist.xml when skipping entries (Thanks to ozy24 for reporting this)
