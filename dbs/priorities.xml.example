@@ -2,6 +2,7 @@
 <!-- Copy this file to any platform db subfolder and customize it to your liking -->
 <priorities>
   <order type="title">
+    <source>import</source>
     <source>arcadedb</source>
     <source>screenscraper</source>
     <source>thegamesdb</source>
