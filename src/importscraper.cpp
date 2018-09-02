@@ -29,6 +29,7 @@
 
 ImportScraper::ImportScraper()
 {
+  fetchOrder.append(TITLE);
   fetchOrder.append(DEVELOPER);
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(COVER);
@@ -65,6 +66,10 @@ void ImportScraper::getGameData(GameEntry &game)
   QByteArray dataOrig = data;
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
+    case TITLE:
+      getTitle(game);
+      data = dataOrig;
+      break;
     case DESCRIPTION:
       getDescription(game);
       data = dataOrig;
@@ -201,6 +206,22 @@ void ImportScraper::getVideo(GameEntry &game)
   }
 }
 
+void ImportScraper::getTitle(GameEntry &game)
+{
+  if(titlePre.isEmpty()) {
+    return;
+  }
+  foreach(QString nom, titlePre) {
+    if(!checkNom(nom)) {
+      return;
+    }
+  }
+  foreach(QString nom, titlePre) {
+    nomNom(nom);
+  }
+  game.title = data.left(data.indexOf(titlePost)).simplified();
+}
+
 void ImportScraper::loadData()
 {
   if(!textualFile.isEmpty()) {
@@ -219,6 +240,7 @@ bool ImportScraper::loadDefinitions()
   if(defFile.open(QIODevice::ReadOnly)) {
     while(!defFile.atEnd()) {
       QString line(defFile.readLine());
+      checkForTag(titlePre, titlePost, titleTag, line);
       checkForTag(publisherPre, publisherPost, publisherTag, line);
       checkForTag(developerPre, developerPost, developerTag, line);
       checkForTag(playersPre, playersPost, playersTag, line);

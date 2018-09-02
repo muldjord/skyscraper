@@ -37,6 +37,7 @@ public:
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &, QString &);
   void getGameData(GameEntry &game);
   QString getCompareTitle(QFileInfo info, QString &, QString &);
+  void getTitle(GameEntry &game);
   void getCover(GameEntry &game);
   void getScreenshot(GameEntry &game);
   void getWheel(GameEntry &game);
@@ -49,6 +50,7 @@ private:
   void loadData();
   void checkForTag(QList<QString> &pre, QString &post, QString &tag, QString &line);
 
+  QString titleTag = "###TITLE###";
   QString descriptionTag = "###DESCRIPTION###";
   QString developerTag = "###DEVELOPER###";
   QString publisherTag = "###PUBLISHER###";
