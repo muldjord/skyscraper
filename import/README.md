@@ -15,39 +15,70 @@ Skyscraper also allows you to import textual data for any rom you have in your c
 
 ### Textual data definitions file
 In order for Skyscraper to understand your textual data files, it needs a recipe. Or a definition of your format if you like. The format is completely up to you. The file must be placed at '[homedir]/.skyscraper/import/definitions.dat'. Here follows a few examples with a matching data file for comparison:
+
 ##### Example 1
 Definitions file: [homedir]/.skyscraper/import/definitions.dat
 ```
-<publisher>###PUBLISHER###</publisher>
-<players>###PLAYERS</players>
-<rating>###RATING###</rating>
+<game>
+  <title>###TITLE###</title>
+  <description>###DESCRIPTION###</description>
+  <developer>###DEVELOPER###</developer>
+  <publisher>###PUBLISHER###</publisher>
+  <players>###PLAYERS###</players>
+  <rating>###RATING###</rating>
+  <ages>###RATING###</ages>
+  <genre>###TAGS###</genre>
+  <releasedate>###RELEASEDATE###</releasedate>
+</game>
 ```
 
 Import file: [homedir]/.skyscraper/import/textual/[exact rom base name].xml
 ```
-<publisher>This is the publisher</publisher>
-<players>1 players</players>
-<rating>4.5</rating>
+<game>
+  <title>The Game Title</title>
+  <description>This game is about yada, yada yada.</description>
+  <developer>The game developer</developer>
+  <publisher>The game publisher</publisher>
+  <players>Maximum number of players supported (example '4')</players>
+  <rating>The game rating 0-5 (example '3.5')</rating>
+  <ages>Minimum age restriction as integer (example '16')</ages>
+  <genre>Genres, Comma-separated</genre>
+  <releasedate>The game release date (example '1985-06-01')</releasedate>
+</game>
+
 ```
 
 ##### Example 2
 Definitions file: [homedir]/.skyscraper/import/definitions.dat
 ```
-Publisher: ###PUBLISHER###
-Players:   ###PLAYERS###
-Rating:    ###RATING###
+Title      : ###TITLE###
+Description: ###DESCRIPTION###
+Developer  : ###DEVELOPER###
+Publisher  : ###PUBLISHER###
+Players    : ###PLAYERS###
+Rating     : ###RATING###
+Rating     : ###AGES###
+Genre      : ###TAGS###
+Date       : ###RELEASEDATE###
 ```
 
 Import file: [homedir]/.skyscraper/import/textual/[exact rom base name].txt
 ```
-Publisher: This is the publisher
-Players:   2 players
-Rating:    3.2
+Title      : Game Title
+Description: This game is about yada, yada yada.
+Developer  : The game developer
+Publisher  : The game publisher
+Players    : Maximum number of players supported (example '4')
+Rating     : The game rating 0-5 (example '3.5')
+Ages       : Minimum age restriction as integer (example '16')
+Genre      : Genres, Comma-separated
+Date       : The game release date (example '1985-06-01')
 ```
 
 #### List of known tags
 From the examples above you'll notice the '###SOMETHING###' tags. This is what Skyscraper regocnizes your data from. The full list of tags is:
 
+* ###TITLE###
 * ###DESCRIPTION###
 * ###DEVELOPER###
 * ###PUBLISHER###
@@ -58,7 +89,7 @@ From the examples above you'll notice the '###SOMETHING###' tags. This is what S
 * ###RELEASEDATE###
 
 #### Resource formats
-For '###RATING###', ###AGES###, and '###RELEASEDATE###' a certain format is required. Rating must be a number between 0.0 and 5.0. Ages must be an integer between 1 and 18 (for instance "16" means it is suitable from ages 16 and up). Release date must be of one of the following formats:
+For '###PLAYERS###', '###RATING###', ###AGES###, and '###RELEASEDATE###' a certain format is required. Players must contain just the maximum number of players as an integer such as '4'. Rating must be a number between 0.0 and 5.0. Ages must be an integer between 1 and 18 (for instance "16" means it is suitable from ages 16 and up). Release date must be of one of the following formats:
 * yyyy
 * yyyy-MM
 * yyyy-MM-dd
