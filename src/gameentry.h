@@ -39,6 +39,7 @@
 #define WHEEL 10
 #define MARQUEE 11
 #define AGES 12
+#define TITLE 13
 
 #include <QImage>
 
