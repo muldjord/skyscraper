@@ -160,8 +160,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
 * Made 'import' base folder configurable
-* Added 'Did you know' hints when running Skyscraper
-* Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 
@@ -170,6 +168,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added ###TITLE### tag to import scraping module (Thanks to ozy24 for suggesting this)
 * Updated import definition examples and documentation to include ###TITLE### tag and ###AGES### tag
 * Updated priorities.xml.example to also include 'import' under 'title'
+* Added 'Did you know' hints when running Skyscraper
+* Added '--nohints' to disable hints. Can also be set in config.ini
 
 #### Version 2.7.1 (28th August 2018)
 * Made sure 'Skyscraper's choice' only appears once per entry when using interactive mode
