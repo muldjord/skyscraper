@@ -26,7 +26,7 @@ Definitions file: [homedir]/.skyscraper/import/definitions.dat
   <publisher>###PUBLISHER###</publisher>
   <players>###PLAYERS###</players>
   <rating>###RATING###</rating>
-  <ages>###RATING###</ages>
+  <ages>###AGES###</ages>
   <genre>###TAGS###</genre>
   <releasedate>###RELEASEDATE###</releasedate>
 </game>
