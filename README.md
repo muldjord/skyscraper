@@ -163,7 +163,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 
-#### Version 2.7.2 (In progress, unreleased)
+#### Version 2.7.2 (2nd September 2018)
 * Fixed bug that caused the <marquee> nodes to disappear from gamelist.xml when skipping entries (Thanks to ozy24 for reporting this)
 * Added ###TITLE### tag to import scraping module (Thanks to ozy24 for suggesting this)
 * Updated import definition examples and documentation to include ###TITLE### tag and ###AGES### tag
