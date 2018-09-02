@@ -159,16 +159,17 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
-* Added 'mobygames' scraping module. Limited to 360 requests per hour so won't be included in 'Simple Mode'. Can be used to scrape a few games that other sources miss.
 * Made 'import' base folder configurable
 * Added 'Did you know' hints when running Skyscraper
 * Added '--nohints' to disable hints. Can also be set in config.ini
 * Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
-* Added ###title### to import scraping module
 
 #### Version 2.7.2 (In progress, unreleased)
 * Fixed bug that caused the <marquee> nodes to disappear from gamelist.xml when skipping entries (Thanks to ozy24 for reporting this)
+* Added ###TITLE### tag to import scraping module (Thanks to ozy24 for suggesting this)
+* Updated import definition examples and documentation to include ###TITLE### tag and ###AGES### tag
+* Updated priorities.xml.example to also include 'import' under 'title'
 
 #### Version 2.7.1 (28th August 2018)
 * Made sure 'Skyscraper's choice' only appears once per entry when using interactive mode
