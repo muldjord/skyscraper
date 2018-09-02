@@ -1,9 +1,9 @@
-<game>
-  <description>###DESCRIPTION###</description>
-  <developer>###DEVELOPER###</developer>
-  <publisher>###PUBLISHER###</publisher>
-  <players>###PLAYERS###</players>
-  <rating>###RATING###</rating>
-  <genre>###TAGS###</genre>
-  <releasedate>###RELEASEDATE###</releasedate>
-</game>
+Title      : ###TITLE###
+Description: ###DESCRIPTION###
+Developer  : ###DEVELOPER###
+Publisher  : ###PUBLISHER###
+Players    : ###PLAYERS###
+Rating     : ###RATING###
+Ages       : ###AGES###
+Genre      : ###TAGS###
+Date       : ###RELEASEDATE###

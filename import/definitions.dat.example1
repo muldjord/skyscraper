@@ -1,7 +1,11 @@
-Description: ###DESCRIPTION###
-Developer  : ###DEVELOPER###
-Publisher  : ###PUBLISHER###
-Players    : ###PLAYERS###
-Rating     : ###RATING###
-Genre      : ###TAGS###
-Date       : ###RELEASEDATE###
+<game>
+  <title>###TITLE###</title>
+  <description>###DESCRIPTION###</description>
+  <developer>###DEVELOPER###</developer>
+  <publisher>###PUBLISHER###</publisher>
+  <players>###PLAYERS###</players>
+  <rating>###RATING###</rating>
+  <ages>###RATING###</ages>
+  <genre>###TAGS###</genre>
+  <releasedate>###RELEASEDATE###</releasedate>
+</game>
