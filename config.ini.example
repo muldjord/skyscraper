@@ -43,6 +43,7 @@
 #artworkXml="artwork.xml"
 #relativePaths="false"
 #allowExtension="*.zst"
+#noHints="false"
 
 #[localDb]
 #covers="true"
