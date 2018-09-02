@@ -165,6 +165,7 @@ int main(int argc, char *argv[])
   QCommandLineOption interactiveOption("interactive", "Always ask user to choose best result.");
   QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' in that order)", "code", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
+  QCommandLineOption nohintsOption("nohints", "Disables the 'DID YOU KNOW:' hints when running Skyscraper.");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
   
   parser.addOption(pOption);
@@ -209,6 +210,7 @@ int main(int argc, char *argv[])
   parser.addOption(allowextOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
+  parser.addOption(nohintsOption);
   parser.addOption(verbosityOption);
 
   parser.process(app);
