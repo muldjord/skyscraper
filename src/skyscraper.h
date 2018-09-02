@@ -63,7 +63,8 @@ private:
   void copyFile(QString &distro, QString &current, bool overwrite = true);
   QString secsToString(const int &seconds);
   void checkForFolder(QDir &folder);
-
+  void showHint();
+  
   AbstractFrontend *frontend;
 
   QSharedPointer<LocalDb> localDb;

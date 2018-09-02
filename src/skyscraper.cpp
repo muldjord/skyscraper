@@ -42,6 +42,9 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentD
 {
   qRegisterMetaType<GameEntry>("GameEntry");
 
+  // Randomize timer
+  qsrand(QTime::currentTime().msec());
+  
   printf("%s", StrTools::getVersionHeader().toStdString().c_str());
 
   config.currentDir = currentDir;
@@ -75,6 +78,10 @@ void Skyscraper::run()
 
   printf("\n");
   
+  if(!config.nohints) {
+    showHint();
+  }
+
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in ArcadeDB scraping module\033[0m\n\n");
     config.threads = 1;
@@ -465,6 +472,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/README.md";
   copyFile(distro, current);
 
+  current = "hints.txt";
+  distro = "/usr/local/etc/skyscraper/hints.txt";
+  copyFile(distro, current);
+
   current = "ARTWORK.md";
   distro = "/usr/local/etc/skyscraper/ARTWORK.md";
   copyFile(distro, current);
@@ -597,6 +608,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("verbosity")) {
     config.verbosity = settings.value("verbosity").toInt();
+  }
+  if(settings.contains("noHints")) {
+    config.nohints = settings.value("noHints").toBool();
   }
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
@@ -895,6 +909,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("lang")) {
     config.lang = parser.value("lang");
   }
+  if(parser.isSet("nohints")) {
+    config.nohints = true;
+  }
   if(parser.isSet("verbosity")) {
     config.verbosity = parser.value("verbosity").toInt();
   }
@@ -1018,6 +1035,21 @@ void Skyscraper::copyFile(QString &distro, QString &current, bool overwrite)
       }
     } else {
       QFile::copy(distro, current);
+    }
+  }
+}
+
+void Skyscraper::showHint()
+{
+  QFile hintsFile("hints.txt");
+  QList<QString> hints;
+  if(hintsFile.open(QIODevice::ReadOnly)) {
+    while(!hintsFile.atEnd()) {
+      hints.append(QString(hintsFile.readLine()));
+    }
+    hintsFile.close();
+    if(!hints.isEmpty()) {
+      printf("\033[1;33mDID YOU KNOW:\033[0m %s\n", hints.at(qrand() % hints.size()).toStdString().c_str());
     }
   }
 }
