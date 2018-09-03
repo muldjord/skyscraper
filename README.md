@@ -159,9 +159,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved 'blur' and 'shadow' effect to be true gaussian
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
-* Made 'import' base folder configurable
-* Add 'autocrop' to screenshots, just like I already do with wheels. Thank you to 'chipsnblip' for pointing this out
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
+
+#### Version 2.7.3 (In progress, unreleased)
+* Improved image cropping to now also crop black borders, but only for screenshots (Thank you to 'chipsnblip' for suggesting this)
+* Made 'import' base folder configurable in config.ini
 
 #### Version 2.7.2 (2nd September 2018)
 * Fixed bug that caused the <marquee> nodes to disappear from gamelist.xml when skipping entries (Thanks to ozy24 for reporting this)
