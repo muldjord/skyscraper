@@ -23,6 +23,7 @@
 #[main]
 #platform=""
 #dbFolder="/home/pi/.skyscraper/dbs"
+#importFolder="/home/pi/.skyscraper/import"
 #frontend="emulationstation"
 #emulator=""
 #videos="false"
@@ -56,6 +57,7 @@
 #gamelistFolder="/home/pi/RetroPie/roms/amiga"
 #mediaFolder="/home/pi/RetroPie/roms/amiga/media"
 #dbFolder="/home/pi/.skyscraper/dbs/amiga"
+#importFolder="/home/pi/.skyscraper/import"
 #emulator=""
 #videos="false"
 #brackets="true"
