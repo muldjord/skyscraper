@@ -74,6 +74,7 @@ Ages       : Minimum age restriction as integer (example '16')
 Genre      : Genres, Comma-separated
 Date       : The game release date (example '1985-06-01')
 ```
+Make sure any line matches exactly with the line in the recipe including white-space characters such as spaces and tabs! Otherwise Skyscraper won't recognize it.
 
 #### List of known tags
 From the examples above you'll notice the '###SOMETHING###' tags. This is what Skyscraper regocnizes your data from. The full list of tags is:
