@@ -39,7 +39,7 @@ class ScreenScraper : public AbstractScraper
   Q_OBJECT
 
 public:
-  ScreenScraper();
+  ScreenScraper(Settings *config);
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info,
 		 QString &output, QString &marking, QString &debug);
 

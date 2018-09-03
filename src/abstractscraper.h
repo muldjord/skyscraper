@@ -40,14 +40,14 @@ class AbstractScraper : public QObject
   Q_OBJECT
 
 public:
-  AbstractScraper();
+  AbstractScraper(Settings *config);
   virtual ~AbstractScraper();
   virtual void getGameData(GameEntry &game);
   virtual QString getSearchName(QFileInfo info);
   virtual QString getCompareTitle(QFileInfo info, QString &sqrNotes, QString &parNotes);
   virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug);
 
-  void setConfig(Settings *config);
+  //void setConfig(Settings *config);
   void setRegionPrios();
   void setLangPrios();
   void loadMameMap();

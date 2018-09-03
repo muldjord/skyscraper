@@ -29,8 +29,9 @@
 
 #include <QRegularExpression>
 
-AbstractScraper::AbstractScraper()
+AbstractScraper::AbstractScraper(Settings *config)
 {
+  this->config = config;
 }
 
 AbstractScraper::~AbstractScraper()
@@ -595,10 +596,12 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
   }
 }
 
+/*
 void AbstractScraper::setConfig(Settings *config)
 {
   this->config = config;
 }
+*/
 
 void AbstractScraper::setRegionPrios()
 {

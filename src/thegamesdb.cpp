@@ -28,7 +28,7 @@
 #include "thegamesdb.h"
 #include "strtools.h"
 
-TheGamesDb::TheGamesDb()
+TheGamesDb::TheGamesDb(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 

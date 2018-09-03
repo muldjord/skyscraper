@@ -36,7 +36,7 @@ class ArcadeDB : public AbstractScraper
   Q_OBJECT
 
 public:
-  ArcadeDB();
+  ArcadeDB(Settings *config);
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,

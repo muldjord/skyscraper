@@ -33,7 +33,7 @@ class OpenRetro : public AbstractScraper
   Q_OBJECT
 
 public:
-  OpenRetro();
+  OpenRetro(Settings *config);
   void getGameData(GameEntry &game);
 
 private:

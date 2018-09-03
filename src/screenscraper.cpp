@@ -28,7 +28,7 @@
 #include "screenscraper.h"
 #include "strtools.h"
 
-ScreenScraper::ScreenScraper()
+ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 

@@ -36,7 +36,7 @@ class TheGamesDb : public AbstractScraper
   Q_OBJECT
 
 public:
-  TheGamesDb();
+  TheGamesDb(Settings *config);
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug);
 
 private:

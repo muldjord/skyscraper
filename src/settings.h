@@ -48,6 +48,7 @@ struct Settings {
   QString wheelsFolder = "";
   QString marqueesFolder = "";
   QString videosFolder = "";
+  QString importFolder = "import";
   int doneThreads = 0;
   int threads = 4;
   int minMatch = 65;
@@ -84,7 +85,7 @@ struct Settings {
   bool relativePaths = false;
   QString extensions = "";
   QString allowExtension = "";
-
+  
   int romLimit = -1;
 
   bool cacheCovers = true;

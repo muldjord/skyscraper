@@ -32,7 +32,7 @@
 class ImgTools : public QObject
 {
 public:
-  static QImage cropToFit(const QImage &image);
+  static QImage cropToFit(const QImage &image, bool cropBlack = false);
   
 };
 

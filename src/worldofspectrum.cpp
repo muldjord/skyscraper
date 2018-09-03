@@ -25,7 +25,7 @@
 
 #include "worldofspectrum.h"
 
-WorldOfSpectrum::WorldOfSpectrum()
+WorldOfSpectrum::WorldOfSpectrum(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 

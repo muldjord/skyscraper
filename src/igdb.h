@@ -36,7 +36,7 @@ class Igdb : public AbstractScraper
   Q_OBJECT
 
 public:
-  Igdb();
+  Igdb(Settings *config);
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug);
 
 private:

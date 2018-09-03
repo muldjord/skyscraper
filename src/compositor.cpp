@@ -345,8 +345,13 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
       }
       
       thisLayer.premultiply();
-      // Remove transparent areas around image);
-      thisLayer.setCanvas(ImgTools::cropToFit(thisLayer.canvas));
+      if(thisLayer.resource == "screenshot") {
+	// Crop away transparency and black borders around screenshots
+	thisLayer.setCanvas(ImgTools::cropToFit(thisLayer.canvas, true));
+      } else {
+	// Crop away transparency around all other types
+	thisLayer.setCanvas(ImgTools::cropToFit(thisLayer.canvas));
+      }
       thisLayer.scale();
 
       // Update width + height as we will need them for easier placement and alignment

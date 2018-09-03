@@ -33,7 +33,7 @@ class LocalScraper : public AbstractScraper
   Q_OBJECT
 
 public:
-  LocalScraper();
+  LocalScraper(Settings *config);
   void runPasses(QList<GameEntry> &, const QFileInfo &, QString &, QString &, QString &);
   void getGameData(GameEntry &);
 

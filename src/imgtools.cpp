@@ -25,7 +25,7 @@
 
 #include "imgtools.h"
 
-QImage ImgTools::cropToFit(const QImage &image)
+QImage ImgTools::cropToFit(const QImage &image, bool cropBlack)
 {
   int left = image.width();
   int right = 0;
@@ -38,7 +38,10 @@ QImage ImgTools::cropToFit(const QImage &image)
   for(int y = 0; y < image.height(); ++y) {
     QRgb *scanline = (QRgb *)image.scanLine(y);
     for(int x = 0; x < image.width(); ++x) {
-      if(qAlpha(scanline[x]) > 0) {
+      if(qAlpha(scanline[x]) > 0 &&
+	 (cropBlack?qRed(scanline[x]) > 0 ||
+	  qGreen(scanline[x]) > 0 ||
+	  qBlue(scanline[x]) > 0:true)) {
 	pixelsFound = true;
 	if(left > x) {
 	  left = x;
@@ -53,7 +56,7 @@ QImage ImgTools::cropToFit(const QImage &image)
       }
     }
   }
-  // Only crop if non-alpha pixels are found. Otherwise return the original
+  // Only crop if non-alpha, non-black pixels are found
   if(pixelsFound) {
     QImage cropped = image.copy(left, top, right - left, bottom - top);
     return cropped;

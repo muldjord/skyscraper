@@ -62,7 +62,7 @@ private:
   void loadConfig(const QCommandLineParser &parser);
   void copyFile(QString &distro, QString &current, bool overwrite = true);
   QString secsToString(const int &seconds);
-  void checkForFolder(QDir &folder);
+  void checkForFolder(QDir &folder, bool create = true);
   void showHint();
   
   AbstractFrontend *frontend;

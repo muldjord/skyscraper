@@ -27,7 +27,7 @@
 
 #include "importscraper.h"
 
-ImportScraper::ImportScraper()
+ImportScraper::ImportScraper(Settings *config) : AbstractScraper(config)
 {
   fetchOrder.append(TITLE);
   fetchOrder.append(DEVELOPER);
@@ -44,17 +44,17 @@ ImportScraper::ImportScraper()
   fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
   
-  covers = QDir("import/covers", "*.*",
+  covers = QDir(config->importFolder + "/covers", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
-  screenshots = QDir("import/screenshots", "*.*",
+  screenshots = QDir(config->importFolder + "/screenshots", "*.*",
 	       QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
-  wheels = QDir("import/wheels", "*.*",
+  wheels = QDir(config->importFolder + "/wheels", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
-  marquees = QDir("import/marquees", "*.*",
+  marquees = QDir(config->importFolder + "/marquees", "*.*",
 		  QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
-  videos = QDir("import/videos", "*.*",
+  videos = QDir(config->importFolder + "/videos", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
-  textual = QDir("import/textual", "*.*",
+  textual = QDir(config->importFolder + "/textual", "*.*",
 		 QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
   loadDefinitions();
 }
@@ -236,7 +236,7 @@ void ImportScraper::loadData()
 bool ImportScraper::loadDefinitions()
 {
   // Check for textual resource file
-  QFile defFile("import/definitions.dat");
+  QFile defFile(config->importFolder + "/definitions.dat");
   if(defFile.open(QIODevice::ReadOnly)) {
     while(!defFile.atEnd()) {
       QString line(defFile.readLine());

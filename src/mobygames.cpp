@@ -28,7 +28,7 @@
 #include "mobygames.h"
 #include "strtools.h"
 
-MobyGames::MobyGames()
+MobyGames::MobyGames(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 

@@ -25,7 +25,7 @@
 
 #include "openretro.h"
 
-OpenRetro::OpenRetro()
+OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 

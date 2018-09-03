@@ -59,28 +59,28 @@ void ScraperWorker::run()
   AbstractScraper *scraper;
 
   if(config.scraper == "openretro") {
-    scraper = new OpenRetro();
+    scraper = new OpenRetro(&config);
   } else if(config.scraper == "thegamesdb") {
-    scraper = new TheGamesDb();
+    scraper = new TheGamesDb(&config);
   } else if(config.scraper == "arcadedb") {
-    scraper = new ArcadeDB();
+    scraper = new ArcadeDB(&config);
   } else if(config.scraper == "screenscraper") {
-    scraper = new ScreenScraper();
+    scraper = new ScreenScraper(&config);
   } else if(config.scraper == "igdb") {
-    scraper = new Igdb();
+    scraper = new Igdb(&config);
   } else if(config.scraper == "mobygames") {
-    scraper = new MobyGames();
+    scraper = new MobyGames(&config);
   } else if(config.scraper == "worldofspectrum") {
-    scraper = new WorldOfSpectrum();
+    scraper = new WorldOfSpectrum(&config);
   } else if(config.scraper == "localdb") {
-    scraper = new LocalScraper();
+    scraper = new LocalScraper(&config);
   } else if(config.scraper == "import") {
-    scraper = new ImportScraper();
+    scraper = new ImportScraper(&config);
   } else {
-    scraper = new AbstractScraper();
+    scraper = new AbstractScraper(&config);
   }
 
-  scraper->setConfig(&config);
+  //scraper->setConfig(&config);
   scraper->setRegionPrios();
   scraper->setLangPrios();
   scraper->loadMameMap();

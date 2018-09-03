@@ -25,7 +25,7 @@
 
 #include "localscraper.h"
 
-LocalScraper::LocalScraper()
+LocalScraper::LocalScraper(Settings *config) : AbstractScraper(config)
 {
 }
 

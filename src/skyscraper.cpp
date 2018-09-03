@@ -195,6 +195,10 @@ void Skyscraper::run()
     config.videosFolder = videosDir.absolutePath();
   }
 
+  QDir importDir(config.importFolder);
+  checkForFolder(importDir, false);
+  config.importFolder = importDir.absolutePath();
+  
   gameListFileString = gameListDir.absolutePath() + "/" + frontend->getGameListFileName();
 
   QFile gameListFile(gameListFileString);
@@ -328,14 +332,20 @@ void Skyscraper::run()
   }
 }
 
-void Skyscraper::checkForFolder(QDir &folder)
+void Skyscraper::checkForFolder(QDir &folder, bool create)
 {
   if(!folder.exists()) {
-    printf("Folder '%s' doesn't exist, trying to create it... ", folder.absolutePath().toStdString().c_str());
-    if(folder.mkpath(folder.absolutePath())) {
-      printf("\033[1;32mSuccess!\033[0m\n\n");
+    printf("Folder '%s' doesn't exist", folder.absolutePath().toStdString().c_str());
+    if(create) {
+      printf(", trying to create it... ");
+      if(folder.mkpath(folder.absolutePath())) {
+	printf("\033[1;32mSuccess!\033[0m\n\n");
+      } else {
+	printf("\033[1;32mFailed!\033[0m Please check path and permissions, now exiting...\n");
+	exit(1);
+      }
     } else {
-      printf("\033[1;32mFailed!\033[0m Please check path and permissions, now exiting...\n");
+      printf(", can't continue...\n");
       exit(1);
     }
   }
@@ -655,6 +665,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     QString dbFolder = settings.value("dbFolder").toString();
     config.dbFolder = dbFolder + (dbFolder.right(1) == "/"?"":"/") + config.platform;
   }
+  if(settings.contains("importFolder")) {
+    config.importFolder = settings.value("importFolder").toString();
+  }
   settings.endGroup();
 
   settings.beginGroup("localDb");
@@ -691,6 +704,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("dbFolder")) {
     config.dbFolder = settings.value("dbFolder").toString();
+  }
+  if(settings.contains("importFolder")) {
+    config.importFolder = settings.value("importFolder").toString();
   }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();

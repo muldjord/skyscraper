@@ -28,7 +28,7 @@
 #include "igdb.h"
 #include "strtools.h"
 
-Igdb::Igdb()
+Igdb::Igdb(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 

@@ -33,7 +33,7 @@ class WorldOfSpectrum : public AbstractScraper
   Q_OBJECT
 
 public:
-  WorldOfSpectrum();
+  WorldOfSpectrum(Settings *config);
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,

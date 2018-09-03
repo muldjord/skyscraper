@@ -28,7 +28,7 @@
 #include "arcadedb.h"
 #include "strtools.h"
 
-ArcadeDB::ArcadeDB()
+ArcadeDB::ArcadeDB(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
