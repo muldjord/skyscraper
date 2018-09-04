@@ -165,6 +165,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved image cropping to now also crop black borders, but only for screenshots (Thank you to 'chipsnblip' for suggesting this)
 * Made 'import' base folder configurable in config.ini
 * Fixed bug in 'import' scraping module that caused dummy titles to be saved to localdb when scraping media resources
+* Changed 'curl' to 'wget' in update_skyscraper.sh script to avoid curl requirement
 
 #### Version 2.7.2 (2nd September 2018)
 * Fixed bug that caused the <marquee> nodes to disappear from gamelist.xml when skipping entries (Thanks to ozy24 for reporting this)
