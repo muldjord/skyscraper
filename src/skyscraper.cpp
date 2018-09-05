@@ -604,6 +604,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
   }
+  if(settings.contains("unpack")) {
+    config.unpack = settings.value("unpack").toBool();
+  }
   if(settings.contains("interactive")) {
     config.interactive = settings.value("interactive").toBool();
   }
@@ -744,6 +747,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
+  }
+  if(settings.contains("unpack")) {
+    config.unpack = settings.value("unpack").toBool();
   }
   if(settings.contains("unattend")) {
     config.unattend = settings.value("unattend").toBool();
@@ -892,6 +898,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("nosubdirs")) {
     config.subDirs = false;
+  }
+  if(parser.isSet("unpack")) {
+    config.unpack = true;
   }
   if(parser.isSet("startat")) {
     config.startAt = parser.value("startat");
