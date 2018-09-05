@@ -24,6 +24,7 @@
  */
 
 #include <QFileInfo>
+#include <QProcess>
 
 #include "screenscraper.h"
 #include "strtools.h"
@@ -352,14 +353,44 @@ QList<QString> ScreenScraper::getHashes(const QFileInfo &info)
   QList<QString> hashList;
   QCryptographicHash md5(QCryptographicHash::Md5);
   QCryptographicHash sha1(QCryptographicHash::Sha1);
-  QFile romFile(info.absoluteFilePath());
-  romFile.open(QIODevice::ReadOnly);
-  while(!romFile.atEnd()) {
-    QByteArray dataSeg = romFile.read(1024);
-    md5.addData(dataSeg);
-    sha1.addData(dataSeg);
+
+  bool unpack = config->unpack;
+  
+  if(unpack && (info.suffix() == "7z" || info.suffix() == "zip")) {
+    // For 7z (7z, zip) unpacked file reading
+    QProcess decProc;
+    decProc.setReadChannel(QProcess::StandardOutput);
+
+    decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"");
+    decProc.waitForFinished(30000);
+    if(decProc.readAllStandardOutput().indexOf(" 1 files") == -1) {
+      printf("Compressed file contains more than 1 file, falling back...\n");
+      unpack = false;
+    }
+    
+    if(unpack) {
+      decProc.start("7z x -so \"" + info.absoluteFilePath() + "\"");
+      decProc.waitForReadyRead(10000);
+      while(decProc.state() == QProcess::Running && decProc.waitForReadyRead(10000)) {
+	QByteArray dataSeg = decProc.readAllStandardOutput();
+	md5.addData(dataSeg);
+	sha1.addData(dataSeg);
+      }
+    }
   }
-  romFile.close();
+
+  if(!unpack) {
+    // For normal file reading
+    QFile romFile(info.absoluteFilePath());
+    romFile.open(QIODevice::ReadOnly);
+    while(!romFile.atEnd()) {
+      
+      QByteArray dataSeg = romFile.read(1024);
+      md5.addData(dataSeg);
+      sha1.addData(dataSeg);
+    }
+    romFile.close();
+  }
   hashList.append(QUrl::toPercentEncoding(info.fileName()));
   hashList.append(md5.result().toHex().toUpper());
   hashList.append(sha1.result().toHex().toUpper());
