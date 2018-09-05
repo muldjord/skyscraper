@@ -37,11 +37,11 @@ public:
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,
-			QString searchName, QString platform);
-  void getDescription(GameEntry &game);
-  void getCover(GameEntry &game);
-  void getScreenshot(GameEntry &game);
-  void getReleaseDate(GameEntry &game);
+			QString searchName, QString platform) override;
+  void getDescription(GameEntry &game) override;
+  void getCover(GameEntry &game) override;
+  void getScreenshot(GameEntry &game) override;
+  void getReleaseDate(GameEntry &game) override;
 
 };
 

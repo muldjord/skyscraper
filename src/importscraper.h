@@ -34,15 +34,15 @@ class ImportScraper : public AbstractScraper
 
 public:
   ImportScraper(Settings *config);
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &, QString &);
-  void getGameData(GameEntry &game);
-  QString getCompareTitle(QFileInfo info, QString &, QString &);
+  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &, QString &) override;
+  void getGameData(GameEntry &game) override;
+  QString getCompareTitle(QFileInfo info, QString &, QString &) override;
   void getTitle(GameEntry &game);
-  void getCover(GameEntry &game);
-  void getScreenshot(GameEntry &game);
-  void getWheel(GameEntry &game);
-  void getMarquee(GameEntry &game);
-  void getVideo(GameEntry &game);
+  void getCover(GameEntry &game) override;
+  void getScreenshot(GameEntry &game) override;
+  void getWheel(GameEntry &game) override;
+  void getMarquee(GameEntry &game) override;
+  void getVideo(GameEntry &game) override;
 
 private:
   bool checkType(QString baseName, QList<QFileInfo> &infos, QString &inputFile);

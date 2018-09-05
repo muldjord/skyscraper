@@ -37,19 +37,19 @@ class Igdb : public AbstractScraper
 
 public:
   Igdb(Settings *config);
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug);
+  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug) override;
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,
-			QString searchName, QString platform);
-  void getGameData(GameEntry &game);
-  void getReleaseDate(GameEntry &game);
-  void getPlayers(GameEntry &game);
-  void getTags(GameEntry &game);
-  void getDeveloper(GameEntry &game);
-  void getPublisher(GameEntry &game);
-  void getDescription(GameEntry &game);
-  void getRating(GameEntry &game);
+			QString searchName, QString platform) override;
+  void getGameData(GameEntry &game) override;
+  void getReleaseDate(GameEntry &game) override;
+  void getPlayers(GameEntry &game) override;
+  void getTags(GameEntry &game) override;
+  void getDeveloper(GameEntry &game) override;
+  void getPublisher(GameEntry &game) override;
+  void getDescription(GameEntry &game) override;
+  void getRating(GameEntry &game) override;
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;

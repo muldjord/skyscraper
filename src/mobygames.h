@@ -37,25 +37,24 @@ class MobyGames : public AbstractScraper
 
 public:
   MobyGames(Settings *config);
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug);
+  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug) override;
 
 private:
   QTimer limitTimer;
   QEventLoop limiter;
   void getSearchResults(QList<GameEntry> &gameEntries,
-			QString searchName, QString platform);
-  void getGameData(GameEntry &game);
-  void getReleaseDate(GameEntry &game);
-  void getPlayers(GameEntry &game);
-  void getTags(GameEntry &game);
-  void getDeveloper(GameEntry &game);
-  void getPublisher(GameEntry &game);
-  void getDescription(GameEntry &game);
-  void getAges(GameEntry &game);
-  void getRating(GameEntry &game);
-  void getCover(GameEntry &game);
-  void getScreenshot(GameEntry &game);
-  //QString getSearchName(QFileInfo info);
+			QString searchName, QString platform) override;
+  void getGameData(GameEntry &game) override;
+  void getReleaseDate(GameEntry &game) override;
+  void getPlayers(GameEntry &game) override;
+  void getTags(GameEntry &game) override;
+  void getDeveloper(GameEntry &game) override;
+  void getPublisher(GameEntry &game) override;
+  void getDescription(GameEntry &game) override;
+  void getAges(GameEntry &game) override;
+  void getRating(GameEntry &game) override;
+  void getCover(GameEntry &game) override;
+  void getScreenshot(GameEntry &game) override;
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;

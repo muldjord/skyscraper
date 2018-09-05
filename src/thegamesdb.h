@@ -37,22 +37,22 @@ class TheGamesDb : public AbstractScraper
 
 public:
   TheGamesDb(Settings *config);
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug);
+  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug) override;
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,
-			QString searchName, QString platform);
-  void getGameData(GameEntry &game);
-  void getReleaseDate(GameEntry &game);
-  void getDeveloper(GameEntry &game);
-  void getPublisher(GameEntry &game);
-  void getPlayers(GameEntry &game);
-  void getAges(GameEntry &game);
-  void getDescription(GameEntry &game);
-  void getTags(GameEntry &game);
+			QString searchName, QString platform) override;
+  void getGameData(GameEntry &game) override;
+  void getReleaseDate(GameEntry &game) override;
+  void getDeveloper(GameEntry &game) override;
+  void getPublisher(GameEntry &game) override;
+  void getPlayers(GameEntry &game) override;
+  void getAges(GameEntry &game) override;
+  void getDescription(GameEntry &game) override;
+  void getTags(GameEntry &game) override;
 
-  void getCover(GameEntry &game);
-  void getScreenshot(GameEntry &game);
+  void getCover(GameEntry &game) override;
+  void getScreenshot(GameEntry &game) override;
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
