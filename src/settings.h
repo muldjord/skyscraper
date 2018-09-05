@@ -85,6 +85,7 @@ struct Settings {
   bool relativePaths = false;
   QString extensions = "";
   QString allowExtension = "";
+  bool unpack = false;
   
   int romLimit = -1;
 
@@ -92,7 +93,7 @@ struct Settings {
   bool cacheScreenshots = true;
   bool cacheWheels = true;
   bool cacheMarquees = true;
-
+  
   QString user = "";
   QString password = "";
   QString lang = "";
