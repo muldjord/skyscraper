@@ -31,7 +31,7 @@ Follow the steps below to install the latest version of Skyscraper. Lines beginn
 Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install it using the following commands:
 ```
 $ sudo apt-get update
-$ sudo apt-get install qt5-default
+$ sudo apt-get install qt5-default p7zip
 ```
 You might be asked for your sudo password. On RetroPie the default password is '`raspberry`'. To install Qt5 on other Linux distributions, please refer to their documentation.
 
@@ -41,6 +41,7 @@ Skyscraper works perfectly on OSX aswell but is not officially supported as I do
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 $ brew install gnu-tar --with-default-names
 $ brew install wget
+$ brew install p7zip
 $ brew install qt5
 $ brew link qt5 --force
 ```
@@ -160,6 +161,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
+
+#### Version 2.7.4 (In progress, unreleased)
+* Added experimental '--unpack' command line option and config.ini options which enables the calculation of the checksum of the file inside 7z and zip files instead of the base file itself. Only relevant for 'screenscraper' module and requires 'p7zip' installed. (```$ sudo apt-get install p7zip```)
 
 #### Version 2.7.3 (4th September 2018)
 * Improved image cropping to now also crop black borders, but only for screenshots (Thank you to 'chipsnblip' for suggesting this)
