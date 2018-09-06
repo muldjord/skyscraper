@@ -4,6 +4,7 @@
 * Amstrad CPC
 * Apple 2
 * Arcade
+* Atari800
 * Atari2600
 * Atari5200
 * Atari7800
