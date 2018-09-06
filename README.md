@@ -24,7 +24,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 ... More scraping sources will be added in future releases!
 
 ## Patreon ##
-Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requirement if you want to use Skyscraper! But there it is. And please understand that becoming a patreon does in no way give you any special say in what features I work on or how I develop Skyscraper in the future. It will be seen as an appreciative gesture, nothing else. :)
+Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requirement if you want to use Skyscraper! But there it is. And please understand that becoming a patron does in no way give you any special say in what features I work on or how I develop Skyscraper in the future. It will be seen as an appreciative gesture, nothing else. :)
 
 ## How to install Skyscraper
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with '`$`' signifies a command you need run in a terminal on the machine you wish to install it on.
