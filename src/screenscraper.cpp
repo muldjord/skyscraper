@@ -315,27 +315,27 @@ void ScreenScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &in
     switch(pass) {
     case 1:
       if(info.size() != 0) {
-	debug.append("Tried with sha1, md5, filename: '" + hashList.at(0) + "', '" + hashList.at(2) + "', '" + hashList.at(1) + "'\n");
+	debug.append("Tried with combined filename, md5, sha1: '" + hashList.at(0) + "', '" + hashList.at(2) + "', '" + hashList.at(1) + "'\n");
 	debug.append("Platform: " + config->platform + "\n");
 	getSearchResults(gameEntries, "romnom=" + hashList.at(0) + "&sha1=" + hashList.at(2) + "&md5=" + hashList.at(1), config->platform);
       }
       break;
     case 2:
       if(info.size() != 0) {
-	debug.append("Tried with sha1: " + hashList.at(2) + "\n");
+	debug.append("Tried with sha1 only: " + hashList.at(2) + "\n");
 	debug.append("Platform: " + config->platform + "\n");
 	getSearchResults(gameEntries, "sha1=" + hashList.at(2), config->platform);
       }
       break;
     case 3:
       if(info.size() != 0) {
-	debug.append("Tried with md5: " + hashList.at(1) + "\n");
+	debug.append("Tried with md5 only: " + hashList.at(1) + "\n");
 	debug.append("Platform: " + config->platform + "\n");
 	getSearchResults(gameEntries, "md5=" + hashList.at(1), config->platform);
       }
       break;
     case 4:
-      debug.append("Tried with name: " + hashList.at(0) + "\n");
+      debug.append("Tried with filename only: " + hashList.at(0) + "\n");
       debug.append("Platform: " + config->platform + "\n");
       getSearchResults(gameEntries, "romnom=" + hashList.at(0), config->platform);
       break;
@@ -356,25 +356,44 @@ QList<QString> ScreenScraper::getHashes(const QFileInfo &info)
 
   bool unpack = config->unpack;
   
-  if(unpack && (info.suffix() == "7z" || info.suffix() == "zip")) {
+  if(unpack && (info.suffix() == "7z" || info.suffix() == "zip") && info.size() < 20480000) {
     // For 7z (7z, zip) unpacked file reading
-    QProcess decProc;
-    decProc.setReadChannel(QProcess::StandardOutput);
-
-    decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"");
-    decProc.waitForFinished(30000);
-    if(decProc.readAllStandardOutput().indexOf(" 1 files") == -1) {
-      printf("Compressed file contains more than 1 file, falling back...\n");
-      unpack = false;
+    {
+      QProcess decProc;
+      decProc.setReadChannel(QProcess::StandardOutput);
+      
+      decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"");
+      if(decProc.waitForFinished(30000)) {
+	if(decProc.exitStatus() != QProcess::NormalExit) {
+	  printf("Getting file list from compressed file failed, falling back...\n");
+	  unpack = false;
+	} else if(decProc.readAllStandardOutput().indexOf(" 1 files") == -1) {
+	  printf("Compressed file contains more than 1 file, falling back...\n");
+	  unpack = false;
+	}
+      } else {
+	printf("Getting file list from compressed file timed out or failed, falling back...\n");
+	unpack = false;
+      }
     }
     
     if(unpack) {
+      QProcess decProc;
+      decProc.setReadChannel(QProcess::StandardOutput);
+      
       decProc.start("7z x -so \"" + info.absoluteFilePath() + "\"");
-      decProc.waitForReadyRead(10000);
-      while(decProc.state() == QProcess::Running && decProc.waitForReadyRead(10000)) {
-	QByteArray dataSeg = decProc.readAllStandardOutput();
-	md5.addData(dataSeg);
-	sha1.addData(dataSeg);
+      if(decProc.waitForFinished(30000)) {
+	if(decProc.exitStatus() == QProcess::NormalExit) {
+	  QByteArray allData = decProc.readAllStandardOutput();
+	  md5.addData(allData);
+	  sha1.addData(allData);
+	} else {
+	  printf("Something went wrong when decompressing file to stdout, falling back...\n");
+	  unpack = false;
+	}
+      } else {
+	printf("Decompression process timed out or failed, falling back...\n");
+	unpack = false;
       }
     }
   }
