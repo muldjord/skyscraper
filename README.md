@@ -164,6 +164,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added option to --purgedb to purge all resources not related to your current romset
 * Added option to --purgedb to purge everything completely
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
+* Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
 
 #### Version 2.7.4 (In progress, unreleased)
 * Added experimental '--unpack' command line option and config.ini options which enables the calculation of the checksum of the file inside 7z and zip files instead of the base file itself. Only relevant for 'screenscraper' module and requires 'p7zip' installed. (```$ sudo apt-get install p7zip```)
