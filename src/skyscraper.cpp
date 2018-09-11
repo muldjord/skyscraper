@@ -685,6 +685,16 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.inputFolder = inputFolder + (inputFolder.right(1) == "/"?"":"/") + config.platform;
     inputFolderSet = true;
   }
+  if(settings.contains("gamelistFolder")) {
+    QString gamelistFolder = settings.value("gamelistFolder").toString();
+    config.gameListFolder = gamelistFolder + (gamelistFolder.right(1) == "/"?"":"/") + config.platform;
+    gameListFolderSet = true;
+  }
+  if(settings.contains("mediaFolder")) {
+    QString mediaFolder = settings.value("mediaFolder").toString();
+    config.mediaFolder = mediaFolder + (mediaFolder.right(1) == "/"?"":"/") + config.platform;
+    mediaFolderSet = true;
+  }
   if(settings.contains("importFolder")) {
     config.importFolder = settings.value("importFolder").toString();
   }

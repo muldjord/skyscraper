@@ -22,7 +22,11 @@
 
 #[main]
 #platform=""
+##Setting input, gamelist or media folder here, will automatically append '/[platform]' to path.
+##If you need better control, use the same variables under a [platform] section instead.
 #inputFolder="/home/pi/RetroPie/roms"
+#gamelistFolder="/home/pi/RetroPie/roms"
+#mediaFolder="/home/pi/RetroPie/roms"
 #dbFolder="/home/pi/.skyscraper/dbs"
 #importFolder="/home/pi/.skyscraper/import"
 #unpack="false"
