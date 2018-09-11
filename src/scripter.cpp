@@ -129,6 +129,10 @@ Scripter::Scripter()
   printf("\033[1;34mDo you wish to force a refresh of all locally cached data\033[0m (y/N)? ");
   getline(std::cin, refreshStr);
 
+  std::string unpackStr = "";
+  printf("\033[1;34mDo you wish to unpack zip and 7z roms before checksumming them (Answer 'y' here if you've zipped your roms manually)?\033[0m (y/N)? ");
+  getline(std::cin, unpackStr);
+
   QFile scriptFile(QDir::homePath() + "/.skyscraper/skyscript.sh");
   if(!scriptFile.open(QIODevice::WriteOnly)) {
     printf("Couldn't open '~/.skyscraper/skyscript.sh' file for writing, please check permissions and rerun Skyscraper\nNow quitting...\n");
@@ -153,6 +157,8 @@ Scripter::Scripter()
     commandStr += " --forcefilename";
   if(refreshStr == "y" || refreshStr == "Y")
     commandStr += " --refresh";
+  if(unpackStr == "y" || unpackStr == "Y")
+    commandStr += " --unpack";
   if(bracketsStr == "n")
     commandStr += " --nobrackets";
   if(relativeStr == "y" || relativeStr == "Y")
