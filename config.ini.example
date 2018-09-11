@@ -22,6 +22,7 @@
 
 #[main]
 #platform=""
+#inputFolder="/home/pi/RetroPie/roms"
 #dbFolder="/home/pi/.skyscraper/dbs"
 #importFolder="/home/pi/.skyscraper/import"
 #unpack="false"

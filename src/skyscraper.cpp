@@ -668,6 +668,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     QString dbFolder = settings.value("dbFolder").toString();
     config.dbFolder = dbFolder + (dbFolder.right(1) == "/"?"":"/") + config.platform;
   }
+  if(settings.contains("inputFolder")) {
+    QString inputFolder = settings.value("inputFolder").toString();
+    config.inputFolder = inputFolder + (inputFolder.right(1) == "/"?"":"/") + config.platform;
+  }
   if(settings.contains("importFolder")) {
     config.importFolder = settings.value("importFolder").toString();
   }
