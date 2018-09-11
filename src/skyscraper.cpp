@@ -30,6 +30,7 @@
 #include <QDirIterator>
 #include <QTimer>
 #include <QMutexLocker>
+#include <QProcess>
 
 #include "skyscraper.h"
 #include "xmlreader.h"
@@ -124,6 +125,17 @@ void Skyscraper::run()
   found = 0;
   avgCompleteness = 0;
   avgSearchMatch = 0;
+  
+  {
+    QProcess decProc;
+    decProc.setReadChannel(QProcess::StandardOutput);
+    decProc.start("which 7z");
+    decProc.waitForFinished(10000);
+    if(decProc.readAllStandardOutput().indexOf("7z") == -1) {
+      printf("Couldn't find '7z' command. 7z is required by the '--unpack' option. On Debian derivatives such as RetroPie you can install it with 'sudo apt-get install p7zip-full'.\n\nNow quitting...\n");
+      exit(1);
+    }
+  }
   
   if(!config.dbFolder.isEmpty() && config.localDb) {
     localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
