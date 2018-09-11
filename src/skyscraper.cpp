@@ -683,6 +683,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("inputFolder")) {
     QString inputFolder = settings.value("inputFolder").toString();
     config.inputFolder = inputFolder + (inputFolder.right(1) == "/"?"":"/") + config.platform;
+    inputFolderSet = true;
   }
   if(settings.contains("importFolder")) {
     config.importFolder = settings.value("importFolder").toString();
