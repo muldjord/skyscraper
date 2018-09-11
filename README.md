@@ -168,6 +168,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.7.4 (11th September 2018)
 * Added '--unpack' command line option and config.ini options which enables the calculation of the checksum of the file inside 7z and zip files instead of the base file itself. Only relevant for 'screenscraper' module and requires 'p7zip' installed. (```$ sudo apt-get install p7zip-full``` for Debian base systems)
 * Added 'inputFolder' to [main] section of config.ini
+* Added 'gamelistFolder' to [main] section of config.ini
+* Added 'mediaFolder' to [main] section of config.ini
 
 #### Version 2.7.3 (4th September 2018)
 * Improved image cropping to now also crop black borders, but only for screenshots (Thank you to 'chipsnblip' for suggesting this)
