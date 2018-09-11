@@ -16,3 +16,5 @@ You can use the '--help' command line option to view all available options. Most
 You can set custom input/rom, game list and media folders using the '-i', '-g' and '-o' command line options.
 Skyscraper can create game lists for multiple frontends. Check the full list with '--help' and look for the '-f' command line option.
 You can enable Skyscraper's interactive mode with '--interactive'. When this is set Skyscraper will ask the user to choose the best entries when using a search based scraping module.
+If you have all of your roms on an external harddrive, you can set the 'inputFolder' option in the '[main]' section of '~/.skyscraper/config.ini'. Then it will always use this location as the base path for all platforms.
+If you've manually compressed your roms (zip or 7z), you can use the '--unpack' option to tell Skyscraper to checksum the roms inside the compressed file instead of the compressed file itself. This is only relevant when scraping with the 'screenscraper' scraping module.
