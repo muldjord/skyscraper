@@ -20,7 +20,7 @@
 
 # Uncomment the sections and lines you wish to use:
 
-#[main]
+[main]
 #platform=""
 ##Setting input, gamelist or media folder here, will automatically append '/[platform]' to path.
 ##If you need better control, use the same variables under a [platform] section instead.
@@ -52,7 +52,7 @@
 #allowExtension="*.zst"
 #noHints="false"
 
-#[localDb]
+[localDb]
 #covers="true"
 #screenshots="true"
 #wheels="true"
