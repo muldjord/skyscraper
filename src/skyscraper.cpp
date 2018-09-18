@@ -660,7 +660,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.maxFails = settings.value("maxFails").toInt();
   }
   if(settings.contains("brackets")) {
-    config.brackets = !settings.value("brackets").toBool();
+    config.brackets = settings.value("brackets").toBool();
   }
   if(settings.contains("relativePaths")) {
     config.relativePaths = settings.value("relativePaths").toBool();
@@ -744,7 +744,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.skipped = settings.value("skipped").toBool();
   }
   if(settings.contains("brackets")) {
-    config.brackets = !settings.value("brackets").toBool();
+    config.brackets = settings.value("brackets").toBool();
   }
   if(settings.contains("relativePaths")) {
     config.relativePaths = settings.value("relativePaths").toBool();
