@@ -99,6 +99,8 @@ struct Settings {
   QString lang = "";
   QString region = "";
 
+  QString searchName = "";
+  
   QMap<QString, QImage> resources;
   
 };

@@ -39,6 +39,7 @@ public:
   ArcadeDB(Settings *config);
 
 private:
+  QList<QString> getSearchNames(const QFileInfo &info) override;
   void getSearchResults(QList<GameEntry> &gameEntries,
 			QString searchName, QString platform) override;
   void getGameData(GameEntry &game) override;
@@ -51,7 +52,6 @@ private:
   void getScreenshot(GameEntry &game) override;
   void getMarquee(GameEntry &game) override;
   void getVideo(GameEntry &game) override;
-  QString getSearchName(QFileInfo info) override;
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;

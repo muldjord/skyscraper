@@ -204,7 +204,9 @@ void ArcadeDB::getVideo(GameEntry &game)
   }
 }
 
-QString ArcadeDB::getSearchName(QFileInfo info)
+QList<QString> ArcadeDB::getSearchNames(const QFileInfo &info)
 {
-  return info.baseName();
+  QList<QString> searchNames;
+  searchNames.append(info.baseName());
+  return searchNames;
 }

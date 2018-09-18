@@ -388,7 +388,8 @@ void TheGamesDb::loadMaps()
   }
 }
 
-void TheGamesDb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug)
+/*
+void TheGamesDb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &debug)
 {
   QString searchName = getSearchName(info);
   QString searchNameOrig = searchName;
@@ -418,3 +419,4 @@ void TheGamesDb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info,
     }
   }
 }
+*/

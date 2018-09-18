@@ -407,7 +407,7 @@ bool AbstractScraper::checkNom(const QString nom)
   return false;
 }
 
-QString AbstractScraper::getSearchName(QFileInfo info)
+QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
 {
   QString baseName = info.completeBaseName();
   
@@ -485,7 +485,18 @@ QString AbstractScraper::getSearchName(QFileInfo info)
     baseName = "all+new+world+of+lemmings";
   }
 
-  return baseName;
+  QList<QString> searchNames;
+  if(!baseName.isEmpty()) {
+    searchNames.append(baseName);
+  }
+
+  if(baseName.indexOf(":") != -1 || baseName.indexOf("-")) {
+    baseName = baseName.left(baseName.indexOf(":")).simplified();
+    baseName = baseName.left(baseName.indexOf("-")).simplified();
+    searchNames.append(baseName);
+  }
+
+  return searchNames;
 }
 
 QString AbstractScraper::getCompareTitle(QFileInfo info, QString &sqrNotes, QString &parNotes)
@@ -546,62 +557,29 @@ QString AbstractScraper::getCompareTitle(QFileInfo info, QString &sqrNotes, QStr
   return baseName;
 }
 
-void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug)
+void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &debug)
 {
-  QString searchName = getSearchName(info);
-  QString searchNameOrig = searchName;
+  QList<QString> searchNames;
+  if(!config->searchName.isEmpty()) {
+    searchNames.append(config->searchName);
+  } else {
+    searchNames = getSearchNames(info);
+  }
 
-  // searchName will be empty for files such as "[BIOS] Something.zip" and cause some scraping
-  // modules to return EVERYTHING in their database. We DO NOT want this since it take ages
-  // to parse it (15 minutes or more per entry) and it's faulty data anyways.
-  if(searchName.isEmpty()) {
+  if(searchNames.isEmpty()) {
     return;
   }
-  
-  for(int pass = 1; pass <= 4; ++pass) {
-    // Reset searchName for each pass
-    searchName = searchNameOrig;
+
+  for(int pass = 1; pass <= searchNames.size(); ++pass) {
     output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
-    switch(pass) {
-    case 1:
-      searchName += marking;
-      getSearchResults(gameEntries, searchName, config->platform);
-      break;
-    case 2:
-      getSearchResults(gameEntries, searchName, config->platform);
-      break;
-    case 3:
-      if(config->platform == "cd32" || config->platform == "cdtv") {
-	// 
-	config->platform = "amiga";
-	getSearchResults(gameEntries, searchName, config->platform);
-      }
-      break;
-    case 4:
-      if(searchName.indexOf(":") != -1 || searchName.indexOf("-")) {
-	// Remove everything after a dash or a colon for more results
-	searchName = searchName.left(searchName.indexOf(":")).simplified();
-	searchName = searchName.left(searchName.indexOf("-")).simplified();
-	getSearchResults(gameEntries, searchName, config->platform);
-      }
-      break;
-    default:
-      ;
-    }
-    debug.append("Search string: '" + searchName + "'\n");
-    debug.append("Platform: '" + config->platform + "'\n");
+    getSearchResults(gameEntries, searchNames.at(pass - 1), config->platform);
+    debug.append("Tried with: '" + searchNames.at(pass - 1) + "'\n");
+    debug.append("Platform: " + config->platform + "\n");
     if(!gameEntries.isEmpty()) {
       break;
     }
   }
 }
-
-/*
-void AbstractScraper::setConfig(Settings *config)
-{
-  this->config = config;
-}
-*/
 
 void AbstractScraper::setRegionPrios()
 {

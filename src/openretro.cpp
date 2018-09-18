@@ -246,3 +246,40 @@ void OpenRetro::getMarquee(GameEntry &game)
     game.marqueeData = image;
   }
 }
+/*  
+  for(int pass = 1; pass <= 4; ++pass) {
+    searchName = searchNameOrig;
+    output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
+    switch(pass) {
+    case 1:
+      searchName += marking;
+      getSearchResults(gameEntries, searchName, config->platform);
+      break;
+    case 2:
+      getSearchResults(gameEntries, searchName, config->platform);
+      break;
+    case 3:
+      if(config->platform == "cd32" || config->platform == "cdtv") {
+	// 
+	config->platform = "amiga";
+	getSearchResults(gameEntries, searchName, config->platform);
+      }
+      break;
+    case 4:
+      if(searchName.indexOf(":") != -1 || searchName.indexOf("-")) {
+	// Remove everything after a dash or a colon for more results
+	searchName = searchName.left(searchName.indexOf(":")).simplified();
+	searchName = searchName.left(searchName.indexOf("-")).simplified();
+	getSearchResults(gameEntries, searchName, config->platform);
+      }
+      break;
+    default:
+      ;
+    }
+    debug.append("Search string: '" + searchName + "'\n");
+    debug.append("Platform: '" + config->platform + "'\n");
+    if(!gameEntries.isEmpty()) {
+      break;
+    }
+  }
+*/

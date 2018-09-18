@@ -363,6 +363,7 @@ void MobyGames::getScreenshot(GameEntry &game)
   }
 }
 
+/*
 void MobyGames::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug)
 {
   QString searchName = getSearchName(info);
@@ -401,3 +402,4 @@ void MobyGames::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, 
     }
   }
 }
+*/

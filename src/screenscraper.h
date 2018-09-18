@@ -40,10 +40,9 @@ class ScreenScraper : public AbstractScraper
 
 public:
   ScreenScraper(Settings *config);
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info,
-		 QString &output, QString &marking, QString &debug) override;
 
 private:
+  QList<QString> getSearchNames(const QFileInfo &info) override;
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform) override;
   void getGameData(GameEntry &game) override;
   void getReleaseDate(GameEntry &game) override;
@@ -60,7 +59,6 @@ private:
   void getWheel(GameEntry &game) override;
   void getMarquee(GameEntry &game) override;
   void getVideo(GameEntry &game) override;
-  QList<QString> getHashes(const QFileInfo &info);
 
   QString getXmlText(QString node, int attr, QString type = "");
 

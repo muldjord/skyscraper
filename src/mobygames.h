@@ -37,7 +37,6 @@ class MobyGames : public AbstractScraper
 
 public:
   MobyGames(Settings *config);
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug) override;
 
 private:
   QTimer limitTimer;

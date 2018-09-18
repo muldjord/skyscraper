@@ -43,9 +43,9 @@ public:
   AbstractScraper(Settings *config);
   virtual ~AbstractScraper();
   virtual void getGameData(GameEntry &game);
-  virtual QString getSearchName(QFileInfo info);
+  virtual QList<QString> getSearchNames(const QFileInfo &info);
   virtual QString getCompareTitle(QFileInfo info, QString &sqrNotes, QString &parNotes);
-  virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &marking, QString &debug);
+  virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &debug);
 
   //void setConfig(Settings *config);
   void setRegionPrios();
@@ -58,7 +58,7 @@ protected:
   Settings *config;
   QList<QString> regionPrios;
   QList<QString> langPrios;
-  
+
   virtual void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 				QString platform);
   virtual void getDescription(GameEntry &game);

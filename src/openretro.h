@@ -34,11 +34,11 @@ class OpenRetro : public AbstractScraper
 
 public:
   OpenRetro(Settings *config);
-  void getGameData(GameEntry &game) override;
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 			QString platform) override;
+  void getGameData(GameEntry &game) override;
   void getTags(GameEntry &game) override;
   void getCover(GameEntry &game) override;
   void getMarquee(GameEntry &game) override;

@@ -80,7 +80,6 @@ void ScraperWorker::run()
     scraper = new AbstractScraper(&config);
   }
 
-  //scraper->setConfig(&config);
   scraper->setRegionPrios();
   scraper->setLangPrios();
   scraper->loadMameMap();
@@ -105,33 +104,27 @@ void ScraperWorker::run()
     QString sha1 = getSha1(info);
 
     QString compareTitle = scraper->getCompareTitle(info, sqrNotes, parNotes);
-    // Special markings for the platform, for instance 'AGA'
-    QString marking = ""; // No marking is default
-    // Special for Amiga platform where there are subplatforms in filename
+
+    // For Amiga platform, change subplatforms from filename and add brackets if needed
     if(config.platform == "amiga") {
       if(info.completeBaseName().toLower().indexOf("cd32") != -1) {
-	debug.append("Platform change: 'amiga'->'cd32', filename contains 'cd32'");
+	debug.append("Platform change: 'amiga'->'cd32', filename contains 'cd32'\n");
 	config.platform = "cd32";
 	if(info.completeBaseName().toLower().indexOf("[cd32]") == -1)
 	  sqrNotes.append("[CD32]");
       } else if(info.completeBaseName().toLower().indexOf("cdtv") != -1) {
-	debug.append("Platform change: 'amiga'->'cdtv', filename contains 'cdtv'");
+	debug.append("Platform change: 'amiga'->'cdtv', filename contains 'cdtv'\n");
 	config.platform = "cdtv";
 	if(info.completeBaseName().toLower().indexOf("[cdtv]") == -1)
 	  sqrNotes.append("[CDTV]");
-      } else if(info.completeBaseName().toLower().indexOf("aga") != -1) {
-	debug.append("Added 'aga' marking for OpenRetro pass, filename contains 'aga'");
-	marking = "+aga";
-	if(info.completeBaseName().toLower().indexOf("[aga]") == -1)
-	  sqrNotes.append("[AGA]");
       } else if(info.completeBaseName().toLower().indexOf("demo") != -1) {
 	if(info.completeBaseName().toLower().indexOf("[demo]") == -1) {
-	  debug.append("Demo detected: Adding '[Demo]' bracket tag");
+	  debug.append("Demo detected: Adding '[Demo]' bracket tag\n");
 	  sqrNotes.append("[Demo]");
 	}
       }
     }
-    
+
     QList<GameEntry> gameEntries;
     
     bool prefilledFromCache = false;
@@ -162,7 +155,7 @@ void ScraperWorker::run()
 	}
 	gameEntries.append(localGame);
       } else {
-	scraper->runPasses(gameEntries, info, output, marking, debug);
+	scraper->runPasses(gameEntries, info, output, debug);
       }
     }
     

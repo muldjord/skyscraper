@@ -128,7 +128,7 @@ void ImportScraper::getGameData(GameEntry &game)
   }
 }
 
-void ImportScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &, QString &)
+void ImportScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &)
 {
   data = "";
   textualFile = "";

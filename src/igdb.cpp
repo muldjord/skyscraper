@@ -223,6 +223,7 @@ void Igdb::getRating(GameEntry &game)
   }
 }
 
+/*
 void Igdb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &, QString &debug)
 {
   QString searchName = getSearchName(info);
@@ -261,3 +262,4 @@ void Igdb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QStri
     }
   }
 }
+*/

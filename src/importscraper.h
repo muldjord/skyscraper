@@ -34,7 +34,7 @@ class ImportScraper : public AbstractScraper
 
 public:
   ImportScraper(Settings *config);
-  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &, QString &) override;
+  void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &) override;
   void getGameData(GameEntry &game) override;
   QString getCompareTitle(QFileInfo info, QString &, QString &) override;
   void getTitle(GameEntry &game);
