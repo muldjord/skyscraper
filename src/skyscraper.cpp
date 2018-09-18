@@ -318,6 +318,7 @@ void Skyscraper::run()
     printf("\n\033[1;33mRestriction overrun!\033[0m This scraping module only allows for scraping %d roms at a time. You can either supply the few rom titles on command line, or make use of the '--startat' and '--endat' command line options to adhere to this. Check '--help' for all options.\n\nNow quitting...\n", config.romLimit);
     exit(0);
   }
+
   printf("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
 
   timer.start();
@@ -947,6 +948,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("interactive")) {
     config.interactive = true;
+  }
+  // Add query only if a single filename is passed on command line
+  if(parser.isSet("query") && parser.positionalArguments().size() == 1) {
+    config.searchName = parser.value("query");
   }
   if(parser.isSet("unattend")) {
     config.unattend = true;
