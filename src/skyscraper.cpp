@@ -276,7 +276,7 @@ void Skyscraper::run()
       inputDir.setPath(subdir);
       queue->append(inputDir.entryInfoList());
       if(config.verbosity > 0) {
-	printf("Added files from subdir: '%s'\n", subdir.toStdString().c_str());
+	printf("Adding files from subdir: '%s'\n", subdir.toStdString().c_str());
       }
     }
     if(config.verbosity > 0)
