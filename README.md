@@ -158,13 +158,14 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Added 'sharpen' effect which sharpens the image
+* Add 'sharpen' effect which sharpens the image
 * Improved 'blur' and 'shadow' effect to be true gaussian
-* Added option to --purgedb to purge all resources not related to your current romset
-* Added option to --purgedb to purge everything completely
+* Add option to --purgedb to purge all resources not related to your current romset
+* Add option to --purgedb to purge everything completely
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 * Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
+* Add 'area' or 'pixels' attribute to compositor layers that allows for more uniformly scaled images in cases where they vary a lot in width and height.
 
 #### Version 2.7.5 (In progress, unreleased)
 * Fixed a bug where 'brackets="false"' in config.ini would be flipped (Thanks to Vynce for reporting this)
