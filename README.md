@@ -165,12 +165,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 * Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
-* Add 'area' or 'pixels' attribute to compositor layers that allows for more uniformly scaled images in cases where they vary a lot in width and height.
+* Add 'area' or 'pixels' attribute to compositor layers that allows for more uniformly scaled images in cases where they vary a lot in width and height (Thank you to Vynce for suggesting this)
 
 #### Version 2.7.5 (In progress, unreleased)
 * Fixed a bug where 'brackets="false"' in config.ini would be flipped (Thanks to Vynce for reporting this)
 * Completely refactored pass procedures for cleaner code and to enable '--query' option
-* Added '--query' command line option. This option requires a single rom file to be passed on command line aswell, otherwise it will be ignored
+* Added '--query' command line option. This option requires a single rom file to be passed on command line aswell, otherwise it will be ignored (Thank you to AnalogHero and Vynce for suggesting this)
 
 #### Version 2.7.4 (11th September 2018)
 * Added '--unpack' command line option and config.ini options which enables the calculation of the checksum of the file inside 7z and zip files instead of the base file itself. Only relevant for 'screenscraper' module and requires 'p7zip' installed. (```$ sudo apt-get install p7zip-full``` for Debian base systems)
