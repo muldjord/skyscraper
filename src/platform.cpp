@@ -224,6 +224,7 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "psp") {
     scrapers.append("screenscraper");
   } else if(platform == "psx") {
+    scrapers.append("screenscraper");
     scrapers.append("thegamesdb");
   } else if(platform == "saturn") {
     scrapers.append("screenscraper");
