@@ -396,6 +396,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     printf("\033[1;33mDebug output:\033[0m\n%s\n", debug.toStdString().c_str());
   }
 
+  printf("Found: %d, Not found: %d\n", found, notFound);
   printf("Elapsed time: %s\n", secsToString(elapsed).toStdString().c_str());
   printf("Estimated time left: %s\n\n", secsToString(estTime).toStdString().c_str());
 
