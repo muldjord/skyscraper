@@ -387,36 +387,3 @@ void TheGamesDb::loadMaps()
     }
   }
 }
-
-/*
-void TheGamesDb::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &debug)
-{
-  QString searchName = getSearchName(info);
-  QString searchNameOrig = searchName;
-
-  // searchName will be empty for files such as "[BIOS] Something.zip" and cause some scraping
-  // modules to return EVERYTHING in their database. We DO NOT want this since it take ages
-  // to parse it (15 minutes or more per entry) and it's faulty data anyways.
-  if(searchName.isEmpty()) {
-    return;
-  }
-  
-  for(int pass = 1; pass <= 1; ++pass) {
-    // Reset searchName for each pass
-    searchName = searchNameOrig;
-    output.append("\033[1;35mPass " + QString::number(pass) + "\033[0m ");
-    switch(pass) {
-    case 1:
-      getSearchResults(gameEntries, searchName, config->platform);
-      break;
-    default:
-      ;
-    }
-    debug.append("Search string: '" + searchName + "'\n");
-    debug.append("Platform: '" + config->platform + "'\n");
-    if(!gameEntries.isEmpty()) {
-      break;
-    }
-  }
-}
-*/
