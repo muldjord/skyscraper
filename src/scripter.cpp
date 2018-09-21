@@ -130,7 +130,7 @@ Scripter::Scripter()
   getline(std::cin, refreshStr);
 
   std::string unpackStr = "";
-  printf("\033[1;34mDo you wish to unpack zip and 7z roms before checksumming them (Answer 'y' here if you've zipped your roms manually)?\033[0m (y/N)? ");
+  printf("\033[1;34mDo you wish to checksum the files inside compressed files (Answer 'y' ONLY if you've manually compressed your roms)?\033[0m (y/N)? ");
   getline(std::cin, unpackStr);
 
   QFile scriptFile(QDir::homePath() + "/.skyscraper/skyscript.sh");
