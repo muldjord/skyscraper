@@ -364,8 +364,8 @@ QString ScraperWorker::getSha1(const QFileInfo &info)
   // sense to use filename for those also. Same goes for '7z'
   if(info.suffix() == "uae" || info.suffix() == "cue" ||
      info.suffix() == "sh" || info.suffix() == "svm" ||
-     info.suffix() == "mds" || info.suffix() == "zip" ||
-     info.suffix() == "7z") {
+     info.suffix() == "scummvm" || info.suffix() == "mds" ||
+     info.suffix() == "zip" || info.suffix() == "7z") {
     sha1FromData = false;
   }
   // If file is larger than 50 MBs, use filename for sha1
