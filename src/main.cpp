@@ -173,12 +173,12 @@ int main(int argc, char *argv[])
   parser.addOption(pOption);
   parser.addOption(sOption);
   parser.addOption(uOption);
-  parser.addOption(tOption);
   parser.addOption(iOption);
   parser.addOption(nosubdirsOption);
   parser.addOption(unpackOption);
   parser.addOption(gOption);
   parser.addOption(oOption);
+  parser.addOption(tOption);
   parser.addOption(fOption);
   parser.addOption(eOption);
   parser.addOption(mOption);
