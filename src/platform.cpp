@@ -575,14 +575,7 @@ QStringList Platform::getAliases(QString platform)
 
   // If you don't find the platform listed below, it's probably because the needed alias is
   // the same as the platform name and has already been appended above.
-  if(platform == "aga") {
-    aliases.append("amiga");
-    aliases.append("amiga (aga)");
-    aliases.append("amiga cdtv");
-    aliases.append("amiga cd32");
-    aliases.append("amiga cd32 (hack)");
-    aliases.append("amiga cd");
-  } else if(platform == "amiga") {
+  if(platform == "amiga") {
     aliases.append("amiga (aga)");
     aliases.append("amiga cdtv");
     aliases.append("amiga cd32");
