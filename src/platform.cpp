@@ -578,6 +578,16 @@ QStringList Platform::getAliases(QString platform)
   if(platform == "aga") {
     aliases.append("amiga");
     aliases.append("amiga (aga)");
+    aliases.append("amiga cdtv");
+    aliases.append("amiga cd32");
+    aliases.append("amiga cd32 (hack)");
+    aliases.append("amiga cd");
+  } else if(platform == "amiga") {
+    aliases.append("amiga (aga)");
+    aliases.append("amiga cdtv");
+    aliases.append("amiga cd32");
+    aliases.append("amiga cd32 (hack)");
+    aliases.append("amiga cd");
   } else if(platform == "amstradcpc") {
     aliases.append("amstrad cpc");
     aliases.append("cpc");
@@ -683,6 +693,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("commodore c64/128");
   } else if(platform == "cd32") {
     aliases.append("amiga cd32");
+    aliases.append("amiga cd32 (hack)");
   } else if(platform == "cdtv") {
     aliases.append("amiga cdtv");
   } else if(platform == "coco") {
