@@ -78,7 +78,7 @@ struct Settings {
   bool stats = false;
   bool nohints = false;
   int verbosity = 0;
-  int maxFails = 30;
+  int maxFails = 42;
   bool skipped = false;
   QString artworkConfig = "artwork.xml";
   QByteArray artworkXml = "";

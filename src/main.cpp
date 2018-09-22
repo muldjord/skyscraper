@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
-  QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before quitting. (Default is 30)", "1-200", "");
+  QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
   QCommandLineOption pretendOption("pretend", "Don't alter game list and media files, just print the results on screen. Scraped resources are still cached in the local database.");
   QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
