@@ -128,7 +128,6 @@ protected:
   NetComm manager;
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
 
-private:
   QMap<QString, QString> mameMap;
   
 };
