@@ -168,7 +168,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add 'area' or 'pixels' attribute to compositor layers that allows for more uniformly scaled images in cases where they vary a lot in width and height (Thank you to Vynce for suggesting this)
 
 #### Version 2.7.6 (In progress, unreleased)
-* Added running 'Found' and 'Not found' to output
+* Added 'Found', 'Not found' and 'Total' to output
+* Re-added 'aga' detection for OpenRetro after refactoring
 
 #### Version 2.7.5 (21st September 2018)
 * Fixed a bug where 'brackets="false"' in config.ini would be flipped (Thanks to Vynce for reporting this)
