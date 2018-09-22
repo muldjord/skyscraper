@@ -24,6 +24,9 @@
  */
 
 #include "openretro.h"
+#include "nametools.h"
+
+#include <QRegularExpression>
 
 OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
 {
@@ -245,4 +248,105 @@ void OpenRetro::getMarquee(GameEntry &game)
   if(image.loadFromData(manager.getData())) {
     game.marqueeData = image;
   }
+}
+
+QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
+{
+  QString baseName = info.completeBaseName();
+  
+  bool isAga = false;
+  // Look for '_aga_', ' aga ' or '[aga]'
+  if(QRegularExpression("[_[ ]{1}(aga|AGA)[_\\] ]{1}").match(baseName).hasMatch()) {
+    isAga = true;
+  }
+  
+  if(config->scraper != "import") {
+    if(info.suffix() == "lha") {
+      baseName = NameTools::getNameWithSpaces(baseName);
+    }
+    if(config->platform == "scummvm") {
+      baseName = NameTools::getScummName(baseName);
+    }
+    if(config->platform == "neogeo" ||
+       config->platform == "arcade" ||
+       config->platform == "fba") {
+      baseName = NameTools::getMameName(baseName, mameMap);
+    }
+  }
+
+  // Remove everything in brackets
+  baseName = baseName.left(baseName.indexOf("(")).simplified();
+  baseName = baseName.left(baseName.indexOf("[")).simplified();
+  // Always remove everything after a ':' since it's always a subtitle
+  //baseName = baseName.left(baseName.indexOf(":")).simplified();
+  // Always remove everything after a ' - ' since it's always a subtitle
+  //baseName = baseName.left(baseName.indexOf(" - ")).simplified();
+
+  QRegularExpressionMatch match;
+  // Remove " rev.X" instances
+  match = QRegularExpression(" rev\\.(\\d.*\\d*|[IVX]{1,5})$").match(baseName);
+  if(match.hasMatch()) {
+    baseName = baseName.left(baseName.indexOf(match.captured(0))).simplified();
+  }
+  // Remove " v.X" instances
+  match = QRegularExpression(" v\\.(\\d.*\\d*|[IVX]{1,5})$").match(baseName);
+  if(match.hasMatch()) {
+    baseName = baseName.left(baseName.indexOf(match.captured(0))).simplified();
+  }
+
+  // If we have the first game in a series, remove the ' I' for more search results
+  if(baseName.right(2) == " I") {
+    baseName = baseName.left(baseName.length() - 2);
+  }
+
+  baseName = baseName.toLower();
+
+  // Always remove 'the' from beginning or end if equal to or longer than 10 chars.
+  // If it's shorter the 'the' is of more significance and shouldn't be removed.
+  if(baseName.length() >= 10) {
+    if(baseName.simplified().left(4) == "the ") {
+      baseName = baseName.simplified().remove(0, 4);
+    }
+    if(baseName.simplified().right(5) == ", the") {
+      baseName = baseName.simplified().left(baseName.indexOf(", the"));
+    }
+  }
+
+  baseName = baseName.replace("_", " ");
+  baseName = baseName.replace(" - ", ": ");
+  baseName = baseName.replace(",", " ");
+  baseName = baseName.replace("&", "%26");
+  baseName = baseName.replace("+", "");
+  // A few game names have faulty "s's". Fix them to "s'"
+  baseName = baseName.replace("s's", "s'");
+  baseName = baseName.replace("'", "%27");
+  // Finally change all spaces to plusses since that's what most search engines understand
+  baseName = baseName.simplified().replace(" ", "+");
+
+  // Implement special cases here
+  if(baseName == "ik") {
+    baseName = "international+karate";
+  }
+  if(baseName == "arkanoid+revenge+of+doh") {
+    baseName = "arkanoid%3A+revenge+of+doh";
+  }
+  if(baseName == "lemmings+3") {
+    baseName = "all+new+world+of+lemmings";
+  }
+
+  QList<QString> searchNames;
+  if(!baseName.isEmpty()) {
+    if(isAga) {
+      searchNames.append(baseName + "+aga");
+    }
+    searchNames.append(baseName);
+  }
+
+  if(baseName.indexOf(":") != -1 || baseName.indexOf("-")) {
+    baseName = baseName.left(baseName.indexOf(":")).simplified();
+    baseName = baseName.left(baseName.indexOf("-")).simplified();
+    searchNames.append(baseName);
+  }
+
+  return searchNames;
 }

@@ -36,6 +36,7 @@ public:
   OpenRetro(Settings *config);
 
 private:
+  QList<QString> getSearchNames(const QFileInfo &info) override;
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 			QString platform) override;
   void getGameData(GameEntry &game) override;
