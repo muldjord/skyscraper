@@ -11,13 +11,13 @@ Any exported artwork can be customized completely. Check the documentation for t
 Check the full list of platforms [here](PLATFORMS.md).
 
 #### Currently supports the following scraping sources (set with '-s')
-* WEB: openretro.org
-* WEB: thegamesdb.net
-* WEB: worldofspectrum.org
-* WEB: adb.arcadeitalia.net (Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
-* WEB: screenscraper.fr
-* WEB: mobygames.com
-* WEB: igdb.com
+* ONLINE: screenscraper.fr
+* ONLINE: openretro.org
+* ONLINE: thegamesdb.net
+* ONLINE: worldofspectrum.org
+* ONLINE: adb.arcadeitalia.net (Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
+* ONLINE: mobygames.com
+* ONLINE: igdb.com
 * LOCAL: localdb (scrapes exclusively from cached resources. Read more [here](#local-database-features))
 * LOCAL: import (imports resources into the local cache. Read more about this [here](import/README.md))
 
