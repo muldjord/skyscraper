@@ -167,9 +167,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
 * Add 'area' or 'pixels' attribute to compositor layers that allows for more uniformly scaled images in cases where they vary a lot in width and height (Thank you to Vynce for suggesting this)
 
-#### Version 2.7.6 (In progress, unreleased)
+#### Version 2.7.6 (7th October 2018)
 * Added 'Found', 'Not found' and 'Total' to output
-* Re-added 'aga' detection for OpenRetro after refactoring
+* Re-added 'aga' Amiga detection for OpenRetro after refactoring
+* Added 'resource' attribute to 'output' nodes which enables user to directly export wheel as marquee but adding a <output type="marquee" resource="wheel"/> node to artwork.xml
 
 #### Version 2.7.5 (21st September 2018)
 * Fixed a bug where 'brackets="false"' in config.ini would be flipped (Thanks to Vynce for reporting this)
