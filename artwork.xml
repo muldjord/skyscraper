@@ -24,5 +24,6 @@
     </layer>
     <!-- Conclude the screenshot output and add it to the game entry to be used by the frontend -->
   </output>
-  <!-- You can add more output nodes here. In the above example we output a screenshot composited of several of the scraped resources. This can be done the same way for both 'cover', 'wheel' and 'marquee' aswell -->
+  <!-- You can add more output nodes here. In the above example we output a screenshot composited of several of the scraped resources. This can be done the same way for both 'cover', 'wheel' and 'marquee' aswell. The following output node exports a marquee, but uses the wheel resource for it to make it pretty in EmulationStation (which doesn't support wheels normally as far as I know). You can leave out the 'resource' attribute in which case it will use the 'type' as resource or you can add layers to customize it completely as in the example above. -->
+  <output type="marquee" resource="wheel"/>
 </artwork>
