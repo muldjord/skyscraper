@@ -79,8 +79,13 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
     if(xml.isStartElement() && xml.name() == "output") {
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("type")) {
-	newLayer.setResource(attribs.value("", "type").toString());
 	newLayer.setType(T_OUTPUT);
+	newLayer.setResType(attribs.value("", "type").toString());
+	if(attribs.hasAttribute("resource")) {
+	  newLayer.setResource(attribs.value("", "resource").toString());
+	} else {
+	  newLayer.setResource(attribs.value("", "type").toString());
+	}
       }
       if(attribs.hasAttribute("width"))
 	newLayer.setWidth(attribs.value("", "width").toInt());
@@ -293,22 +298,22 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       processChildLayers(game, output);
     }
 
-    if(output.resource == "cover") {
+    if(output.resType == "cover") {
       QString filename = config->coversFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.coverFile = StrTools::xmlUnescape(filename);
       }
-    } else if(output.resource == "screenshot") {
+    } else if(output.resType == "screenshot") {
       QString filename = config->screenshotsFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.screenshotFile = filename;
       }
-    } else if(output.resource == "wheel") {
+    } else if(output.resType == "wheel") {
       QString filename = config->wheelsFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.wheelFile = filename;
       }
-    } else if(output.resource == "marquee") {
+    } else if(output.resType == "marquee") {
       QString filename = config->marqueesFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.marqueeFile = filename;

@@ -55,6 +55,7 @@ public:
 
   int type = T_NONE;
   QImage canvas = QImage();
+  QString resType = "";
   QString resource = "";
   QString align = "";
   QString valign = "";
@@ -79,6 +80,7 @@ public:
   void setMode(const QString &mode);
   void setAxis(const QString &axis);
   void setType(const int &type);
+  void setResType(const QString &resType);
   void setCanvas(const QImage &canvas);
   void setResource(const QString &resource);
   void setAlign(const QString &align);

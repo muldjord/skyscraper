@@ -35,6 +35,11 @@ void Layer::setType(const int &type)
   this->type = type;
 }
 
+void Layer::setResType(const QString &resType)
+{
+  this->resType = resType;
+}
+
 void Layer::setMode(const QString &mode)
 {
   if(mode == "multiply") {
