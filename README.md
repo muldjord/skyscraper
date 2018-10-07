@@ -170,7 +170,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.7.6 (7th October 2018)
 * Added 'Found', 'Not found' and 'Total' to output
 * Re-added 'aga' Amiga detection for OpenRetro after refactoring
-* Added 'resource' attribute to 'output' nodes which enables user to directly export wheel as marquee but adding a <output type="marquee" resource="wheel"/> node to artwork.xml
+* Added 'resource' attribute to 'output' nodes which enables user to directly export wheel as marquee by adding a <output type="marquee" resource="wheel"/> node to artwork.xml
 
 #### Version 2.7.5 (21st September 2018)
 * Fixed a bug where 'brackets="false"' in config.ini would be flipped (Thanks to Vynce for reporting this)
