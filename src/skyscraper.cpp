@@ -952,10 +952,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("interactive")) {
     config.interactive = true;
   }
-  // Add query only if a single filename is passed on command line
-  if(parser.isSet("query") && parser.positionalArguments().size() == 1) {
-    config.searchName = parser.value("query");
-  }
   if(parser.isSet("unattend")) {
     config.unattend = true;
   }
@@ -1028,9 +1024,17 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.pretend = true;
       config.refresh = true;
       config.unattend = true;
+    } else {
+      printf("Filename: '%s' not found!\nRemember to add full or partial path to any filename given on command line.\n\nNow quitting...\n", cliArgument.toStdString().c_str());
+      exit(1);
     }
   }
 
+  // Add query only if a single filename was passed on command line
+  if(parser.isSet("query") && cliFiles.length() == 1) {
+    config.searchName = parser.value("query");
+  }
+  
   if(config.startAt != "" || config.endAt != "") {
     config.pretend = true;
     config.refresh = true;
