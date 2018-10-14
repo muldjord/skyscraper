@@ -62,23 +62,23 @@ The output node describes a single piece of artwork to be exported when scraping
 
 An output node with no nested 'layer' nodes will export the type with no compositing.
 
-#### 'type' attribute
+#### 'type' attribute (Not optional)
 The type to be exported. Can be:
 * screenshot
 * cover
 * wheel
 * marquee
 
-#### 'resource' attribute
+#### 'resource' attribute [from v2.7.6] (Optional)
 The resource attribute can be set to one of the following:
 * screenshot
 * cover
 * wheel
 * marquee
 
-For instance, if you wish to export a 'marquee' image but want it to make use of the 'wheel' resource instead, you can set '<output type="marquee" resource="wheel"/>'. It will then export a 'marquee' but use the raw unmanipulated 'wheel' when doing so. So if your frontend, such as EmulationStation, makes use of the 'marquee' artwork, it will then be using the 'wheel' for it instead.
+For instance, if you wish to export a 'marquee' image but want it to make use of the 'wheel' resource instead, you can set ```<output type="marquee" resource="wheel"/>```. It will then export a 'marquee' but use the raw unmanipulated 'wheel' image when doing so. So if your frontend theme, such as some EmulationStation themes, makes use of the 'marquee' artwork, it will then be using the 'wheel' for it instead. If this attribute is left out, 'resource' will be set to the same as 'type'.
 
-#### 'width' and 'height' attributes
+#### 'width' and 'height' attributes (Optional)
 Sets the width and height of the artwork export. If both are left out it will use the original size of the scraped artwork. If one is left out, it will keep the aspect ratio relative to that.
 
 ### 'layer' node(s) (Optional)
