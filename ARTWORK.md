@@ -54,7 +54,7 @@ This node is the document base node. It contains all other nodes. Don't change o
 
 ### 'output' node(s) (Optional)
 ```
-<output type="screenshot" width="640" height="400">
+<output type="screenshot" resource="wheel" width="640" height="400">
 ...
 <output>
 ```
@@ -68,6 +68,15 @@ The type to be exported. Can be:
 * cover
 * wheel
 * marquee
+
+#### 'resource' attribute
+The resource attribute can be set to one of the following:
+* screenshot
+* cover
+* wheel
+* marquee
+
+For instance, if you wish to export a 'marquee' image but want it to make use of the 'wheel' resource instead, you can set '<output type="marquee" resource="wheel"/>'. It will then export a 'marquee' but use the raw unmanipulated 'wheel' when doing so. So if your frontend, such as EmulationStation, makes use of the 'marquee' artwork, it will then be using the 'wheel' for it instead.
 
 #### 'width' and 'height' attributes
 Sets the width and height of the artwork export. If both are left out it will use the original size of the scraped artwork. If one is left out, it will keep the aspect ratio relative to that.
