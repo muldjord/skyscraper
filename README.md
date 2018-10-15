@@ -168,6 +168,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add 'area' or 'pixels' attribute to compositor layers that allows for more uniformly scaled images in cases where they vary a lot in width and height (Thank you to Vynce for suggesting this)
 * Change the 'import' folder to look into 'import/[platform]' so users can create imports per platform and keep them like that (Thanks for tacodog for suggesting this)
 
+#### Version 2.7.8 (In progress, unreleased)
+* Added CRC32 checksum attribute to 'screenscraper' pass
+
 #### Version 2.7.7 (10th October 2018)
 * Fixed instances where '--query' would be applied to all roms if a faulty filename was given on command line (Thank you to Razile89 for reporting this)
 
