@@ -46,6 +46,7 @@ HEADERS += src/skyscraper.h \
            src/thegamesdb.h \
            src/worldofspectrum.h \
            src/screenscraper.h \
+           src/crc32.h \
            src/mobygames.h \
            src/igdb.h \
            src/arcadedb.h \
@@ -90,6 +91,7 @@ SOURCES += src/main.cpp \
            src/thegamesdb.cpp \
            src/worldofspectrum.cpp \
            src/screenscraper.cpp \
+           src/crc32.cpp \
            src/mobygames.cpp \
            src/igdb.cpp \
            src/arcadedb.cpp \
