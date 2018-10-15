@@ -28,6 +28,7 @@
 
 #include "screenscraper.h"
 #include "strtools.h"
+#include "crc32.h"
 
 ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 {
@@ -311,7 +312,9 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
   QList<QString> hashList;
   QCryptographicHash md5(QCryptographicHash::Md5);
   QCryptographicHash sha1(QCryptographicHash::Sha1);
-
+  Crc32 crc;
+  crc.initInstance(1);
+  
   bool unpack = config->unpack;
   
   if(unpack && (info.suffix() == "7z" || info.suffix() == "zip") && info.size() < 20480000) {
@@ -345,6 +348,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 	  QByteArray allData = decProc.readAllStandardOutput();
 	  md5.addData(allData);
 	  sha1.addData(allData);
+	  crc.pushData(1, allData.data(), allData.length());
 	} else {
 	  printf("Something went wrong when decompressing file to stdout, falling back...\n");
 	  unpack = false;
@@ -365,18 +369,22 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
       QByteArray dataSeg = romFile.read(1024);
       md5.addData(dataSeg);
       sha1.addData(dataSeg);
+      crc.pushData(1, dataSeg.data(), dataSeg.length());
     }
     romFile.close();
   }
+
   hashList.append(QUrl::toPercentEncoding(info.fileName()));
+  hashList.append(QString::number(crc.releaseInstance(1), 16).toUpper());
   hashList.append(md5.result().toHex().toUpper());
   hashList.append(sha1.result().toHex().toUpper());
 
   QList<QString> searchNames;
   if(info.size() != 0) {
-    searchNames.append("romnom=" + hashList.at(0) + "&sha1=" + hashList.at(2) + "&md5=" + hashList.at(1));
-    searchNames.append("sha1=" + hashList.at(2));
-    searchNames.append("md5=" + hashList.at(1));
+    searchNames.append("romnom=" + hashList.at(0) + "&crc=" + hashList.at(1) + "&md5=" + hashList.at(2) + "&romtaille=" + QString::number(info.size()));
+    searchNames.append("crc=" + hashList.at(1));
+    searchNames.append("md5=" + hashList.at(2));
+    searchNames.append("sha1=" + hashList.at(3));
   }
   searchNames.append("romnom=" + hashList.at(0));
 
