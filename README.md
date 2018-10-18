@@ -101,9 +101,9 @@ This will scrape the platform using the '`localdb`' scraping module, and will ma
 NOTE: To enable video scraping for the scraping modules that support it, you need to add the '`--videos`' command line option. This is disabled per default because of the significant space requirements needed to save them.
 
 ### config.ini
-A lesser know, but extremely useful, feature of Skyscraper is to add your desired config variables to '`~/.skyscraper/config.ini`'. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, '`-m 100`' on command line, you can set the matching option '`minMatch="100"`' in the config.
+A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to '`~/.skyscraper/config.ini`'. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, '`-m 100`' on command line, you can set the matching option '`minMatch="100"`' in the config.
 
-Many options can be set on two levels; either `[main]` or `[platform]`. Platform can be changed to any of the supported platforms (check list with '`--help`'), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will always be used.
+Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can be any of the supported platforms (check list with '`--help`'), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform.
 
 You can find an example config file at '`~/.skyscraper/config.ini.example`'. This file contains all available options. Just uncomment the ones you wish to use by removing the "`#`" in front of the variables.
 
@@ -114,9 +114,9 @@ Whenever you scrape any platform with any web scraping module, Skyscraper caches
 After a while you'll have accumulated a decent amount of locally cached data for any given platform. To exclusively make use of this data Skyscraper provides the '`localdb`' scraping module (set with '`-s localdb`'). By using this source Skyscraper *only* scrapes from the locally cached data. Depending on how many sources you've scraped any given platform with, the 'localdb' module will give you almost perfect results, with almost no data missing. Per default any resource type is prioritized by timestamp. But it is also possible to prioritize them by scraping source. So if you prefer the '`description`' results from a certain scraping module, you can easily make sure that these will be prioritized above any other descriptions available. Read more about how to do this [here](dbs/README.md).
 
 #### Update local data
-If you wish to update / refresh the locally cached resources for a particular platform and scraping module, Skyscraper provides the '`--updatedb`' option. If this flag is set on the command line, any data in the local cache will be updated with the new incoming data.
+If you wish to update / refresh the locally cached resources for a particular platform and scraping module, Skyscraper provides the '`--refresh`' option. If this flag is set on the command line, any data in the local cache will be updated with the new incoming data.
 
-If you wish to just refresh the data for a single rom simply scrape it with '`-p [platform] -s [scraping module] --updatedb [relative or full rom path and filename]`' and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`.
+If you wish to just refresh the data for a single rom simply scrape it with '`-p [platform] -s [scraping module] --refresh [relative or full rom path and filename]`' and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`.
 
 When you've updated information in the local cache, always remember to rescrape the entire platform with 'Skyscraper -p [platform] -s localdb' afterwards to regenerate the gamelist for the frontend.
 
