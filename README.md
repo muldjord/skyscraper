@@ -121,7 +121,7 @@ If you wish to just refresh the data for a single rom simply scrape it with '`-p
 When you've updated information in the local cache, always remember to rescrape the entire platform with 'Skyscraper -p [platform] -s localdb' afterwards to regenerate the gamelist for the frontend.
 
 #### Default db folder
-The default folder for all of Skyscrapers' locally cached data is in the '`[homefolder]/.skyscraper/dbs`' subfolder. In this folder you'll find the individual platform db subfolders. Any platform db folder is selfcontained and can be copied to a USB drive, or zipped up and uploaded to share with friends.
+The default folder for all of Skyscrapers' locally cached data is in the '`~/.skyscraper/dbs`' subfolder. In this folder you'll find the individual platform db subfolders. Any platform db folder is selfcontained and can be copied to a USB drive, or zipped up and uploaded to share with friends.
 
 #### User-defined databases
 Normally Skyscraper uses a default local db folder for each platform. But a friend might have send you a copy of his local database folder, and you wish to scrape from his data. In this case Skyscraper allows you to force the use of a local database with the '`-d [db folder]`' command line option. Keep in mind that if your friend has zipped the db folder for convenience, you need to unzip it before use. Skyscraper does *not* currently support zipped db folders.
