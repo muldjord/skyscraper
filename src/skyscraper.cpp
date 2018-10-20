@@ -997,6 +997,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.scraper = Platform::getDefaultScraper(config.platform);
   }
 
+  // If platform subfolder exists for import path, use it
+  QDir importFolder(config.importFolder);
+  if(importFolder.exists(config.platform)) {
+    config.importFolder.append((config.importFolder.right(1) == "/"?"":"/") + config.platform);
+  }
+
   // Set minMatch to 0 for localdb, arcadedb and screenscraper
   // We know these results are always accurate
   if(config.minMatchSet == false && (config.scraper == "localdb" ||
