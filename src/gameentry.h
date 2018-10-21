@@ -72,7 +72,7 @@ public:
   QString agesSrc = "";
   QString rating = "";
   QString ratingSrc = "";
-  
+
   QImage coverData = QImage();
   QString coverFile = "";
   QString coverSrc = "";
@@ -100,6 +100,10 @@ public:
   bool found = true;
 
   QByteArray miscData = "";
+
+  // EmulationStation specific metadata for preservation
+  QString favorite = "";
+  QString hidden = "";
 };
 
 #endif // GAMEENTRY_H
