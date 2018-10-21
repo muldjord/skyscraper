@@ -91,7 +91,7 @@ public:
   void setY(const int &y);
   void setWidth(const int &width);
   void setHeight(const int &height);
-  void setMPixels(const qint64 &mPixels);
+  void setMPixels(const double &mPixels);
   void setDelta(const int &delta);
   void setValue(const int &value);
   void setRed(const int &red);

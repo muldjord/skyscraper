@@ -139,7 +139,7 @@ void Layer::setHeight(const int &height)
   this->height = height;
 }
 
-void Layer::setMPixels(const qint64 &mPixels)
+void Layer::setMPixels(const double &mPixels)
 {
   this->mPixels = mPixels;
 }
