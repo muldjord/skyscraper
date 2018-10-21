@@ -82,11 +82,8 @@ int main(int argc, char *argv[])
       exit(1);
     }
   }
-  // Remove obsolete import paths if they are empty
-  skyDir.rmdir("import/boxart");
-  skyDir.rmdir("import/snaps");
 
-  // Create current import paths
+  // Create import path
   skyDir.mkpath("import");
   skyDir.mkpath("import/textual");
   skyDir.mkpath("import/screenshots");
