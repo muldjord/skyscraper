@@ -86,6 +86,7 @@ struct Settings {
   QString extensions = "";
   QString allowExtension = "";
   bool unpack = false;
+  bool preserveOldGameList = true;
   
   int romLimit = -1;
 
