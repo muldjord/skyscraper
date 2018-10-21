@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  // Create import path
+  // Create import paths
   skyDir.mkpath("import");
   skyDir.mkpath("import/textual");
   skyDir.mkpath("import/screenshots");
