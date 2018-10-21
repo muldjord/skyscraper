@@ -169,7 +169,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.7.8 (In progress, unreleased)
 * Added CRC32 checksum attribute to 'screenscraper' pass
-* Change the 'import' folder to look into 'import/[platform]' so users can create imports per platform and keep them like that (Thanks to tacodog for suggesting this)
+* Changed the 'import' folder to look into 'import/[platform]' if it exists so users can create imports per platform. Old method also works (Thanks to tacodog for suggesting this)
 * Added 'mpixels' attribute to compositor layers that allows users to scale images to a a desired area size instead of using width and height (Thank you to Vynce for suggesting this)
 
 #### Version 2.7.7 (10th October 2018)
