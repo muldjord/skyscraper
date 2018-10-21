@@ -42,12 +42,11 @@ public:
   AbstractFrontend();
   virtual ~AbstractFrontend();
   void setConfig(Settings *config);
-  virtual void checkReqs();
-  virtual void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries,
-			    int maxLength);
-  virtual void skipExisting(const QString &gameListFileString, QList<GameEntry> &gameEntries,
-			    QSharedPointer<Queue> queue);
+  virtual void checkReqs(){};
+  virtual void assembleList(QString &, const QList<GameEntry> &, int){};
+  virtual void skipExisting(const QString &, QList<GameEntry> &, QSharedPointer<Queue>){};
   virtual bool canSkip();
+  virtual bool loadOldGameList(const QString &);
   virtual QString getGameListFileName();
   virtual QString getInputFolder();
   virtual QString getGameListFolder();
@@ -60,7 +59,7 @@ public:
 
 protected:
   Settings *config;
-
+  
 };
 
 #endif // ABSTRACTFRONTEND_H

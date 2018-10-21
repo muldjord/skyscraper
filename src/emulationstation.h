@@ -34,18 +34,23 @@ class EmulationStation : public AbstractFrontend
 
 public:
   EmulationStation();
-  void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int maxDescLength);
+  void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int maxDescLength) override;
   void skipExisting(const QString &gameListFileString, QList<GameEntry> &gameEntries,
-		    QSharedPointer<Queue> queue);
-  bool canSkip();
-  QString getGameListFileName();
-  QString getInputFolder();
-  QString getGameListFolder();
-  QString getCoversFolder();
-  QString getScreenshotsFolder();
-  QString getWheelsFolder();
-  QString getMarqueesFolder();
-  QString getVideosFolder();
+		    QSharedPointer<Queue> queue) override;
+  bool canSkip() override;
+  bool loadOldGameList(const QString &gameListFileString) override;
+  void preserveFromOld(GameEntry &entry);
+  QString getGameListFileName() override;
+  QString getInputFolder() override;
+  QString getGameListFolder() override;
+  QString getCoversFolder() override;
+  QString getScreenshotsFolder() override;
+  QString getWheelsFolder() override;
+  QString getMarqueesFolder() override;
+  QString getVideosFolder() override;
+
+private:
+  QList<GameEntry> oldEntries;
 
 };
 

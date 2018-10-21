@@ -33,6 +33,18 @@ EmulationStation::EmulationStation()
 {
 }
 
+bool EmulationStation::loadOldGameList(const QString &gameListFileString)
+{
+  // Load old game list entries so we can preserve metadata later when assembling xml
+  XmlReader gameListReader;
+  if(gameListReader.setFile(gameListFileString)) {
+    oldEntries = gameListReader.getEntries();
+    return true;
+  }
+
+  return false;
+}
+
 void EmulationStation::skipExisting(const QString &gameListFileString,
 				    QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) 
 {
@@ -41,7 +53,7 @@ void EmulationStation::skipExisting(const QString &gameListFileString,
     gameEntries = gameListReader.getEntries();
   } else {
     printf("Error while trying to load existing gamelist.xml!\n");
-    printf("Can't resolve existing entries... :(\n");
+    printf("Can't resolve existing entries, quitting... :(\n");
     exit(1);
   }
   printf("Resolving missing entries...\n");
@@ -57,6 +69,19 @@ void EmulationStation::skipExisting(const QString &gameListFileString,
   }
 }
 
+void EmulationStation::preserveFromOld(GameEntry &entry)
+{
+  foreach(GameEntry oldEntry, oldEntries) {
+    if(oldEntry.path == entry.path) {
+      if(entry.favorite.isEmpty())
+	entry.favorite = oldEntry.favorite;
+      if(entry.hidden.isEmpty())
+	entry.hidden = oldEntry.hidden;
+      break;
+    }
+  }
+}
+
 void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries,
 				    int maxLength)
 {
@@ -65,6 +90,9 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     // Used to replace to achieve relative paths if '--relative' is set
     QString absolutePath = QFileInfo(entry.path).absolutePath();
     
+    // Preserve certain data from old game list entry, but only for empty data
+    preserveFromOld(entry);
+
     finalOutput.append("  <game>\n");
     finalOutput.append("    <path>" + (config->relativePaths?StrTools::xmlEscape(entry.path).replace(absolutePath, "."):StrTools::xmlEscape(entry.path)) + "</path>\n");
     if(config->brackets) {
@@ -82,14 +110,6 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     } else {
       finalOutput.append("    <image>" + (config->relativePaths?StrTools::xmlEscape(entry.screenshotFile).replace(absolutePath, "."):StrTools::xmlEscape(entry.screenshotFile)) + "</image>\n");
     }
-    // <wheel> isn't supported and probably won't be, since wheel and marquee are basically the same thing
-    /*
-    if(entry.wheelFile.isEmpty()) {
-      finalOutput.append("    <wheel />\n");
-    } else {
-      finalOutput.append("    <wheel>" + StrTools::xmlEscape(entry.wheelFile) + "</wheel>\n");
-    }
-    */
     if(entry.marqueeFile.isEmpty()) {
       finalOutput.append("    <marquee />\n");
     } else {
@@ -132,6 +152,12 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
       finalOutput.append("    <players />\n");
     } else {
       finalOutput.append("    <players>" + StrTools::xmlEscape(entry.players) + "</players>\n");
+    }
+    if(!entry.favorite.isEmpty()) {
+      finalOutput.append("    <favorite>" + StrTools::xmlEscape(entry.favorite) + "</favorite>\n");
+    }
+    if(!entry.hidden.isEmpty()) {
+      finalOutput.append("    <hidden>" + StrTools::xmlEscape(entry.hidden) + "</hidden>\n");
     }
     if(!entry.ages.isEmpty() && (entry.ages.toInt() >= 1 && entry.ages.toInt() <= 10)) {
       finalOutput.append("    <kidgame>true</kidgame>\n");

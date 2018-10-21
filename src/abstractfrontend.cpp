@@ -38,19 +38,12 @@ void AbstractFrontend::setConfig(Settings *config)
   this->config = config;
 }
 
-void AbstractFrontend::checkReqs()
-{
-}
-
-void AbstractFrontend::assembleList(QString &, const QList<GameEntry> &, int)
-{
-}
-
-void AbstractFrontend::skipExisting(const QString &, QList<GameEntry> &, QSharedPointer<Queue>)
-{
-}
-
 bool AbstractFrontend::canSkip()
+{
+  return false;
+}
+
+bool AbstractFrontend::loadOldGameList(const QString &)
 {
   return false;
 }
