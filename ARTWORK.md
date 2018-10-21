@@ -76,10 +76,10 @@ The resource attribute can be set to one of the following:
 * wheel
 * marquee
 
-For instance, if you wish to export a 'marquee' image but want it to make use of the 'wheel' resource instead, you can set ```<output type="marquee" resource="wheel"/>```. It will then export a 'marquee' but use the raw unmanipulated 'wheel' image when doing so. So if your frontend theme, such as some EmulationStation themes, makes use of the 'marquee' artwork, it will then be using the 'wheel' for it instead. If this attribute is left out, 'resource' will be set to the same as 'type'.
+For instance, if you wish to export a 'marquee' image but want it to make use of the 'wheel' resource instead, you can set ```<output type="marquee" resource="wheel"/>```. It will then export a 'marquee' but use the raw unmanipulated 'wheel' image when doing so. So if your frontend theme, such as some EmulationStation themes, makes use of the 'marquee' artwork, it will then be using the 'wheel' for it. If this attribute is left out, 'resource' will be set to the same as 'type'.
 
 #### 'mpixels' attribute [from v2.7.8] (Optional)
-Set the desired area size for the image in mpixels (eg '0.1'). This can be used as an alternative to setting width or height and is useful in cases where images vary a lot in size. 'width' and 'height' attributes will be ignored if this is set.
+Set the desired area size for the image resource in mpixels (eg '0.1'). This can be used as an alternative to setting width or height and is useful in cases where images vary a lot in size. 'width' and 'height' attributes will be ignored if this is set.
 
 #### 'width' and 'height' attributes (Optional)
 Sets the width and height of the artwork export. If both are left out it will use the original size of the scraped artwork. If one is left out, it will keep the aspect ratio relative to that.
@@ -135,7 +135,7 @@ Defines the opacity of the layer. 100 is completely visible. 0 is completely tra
 X and Y coordinates for placement. Relative to 'align' and 'valign' and the parent layer. Either can be left out in which case it will be set to 0.
 
 #### 'mpixels' attribute [from v2.7.8] (Optional)
-Set the desired area size for the image in mpixels (eg '0.1'). This can be used as an alternative to setting width or height and is useful in cases where images vary a lot in size. 'width' and 'height' attributes will be ignored if this is set.
+Set the desired area size for the image resource in mpixels (eg '0.1'). This can be used as an alternative to setting width or height and is useful in cases where images vary a lot in size. 'width' and 'height' attributes will be ignored if this is set.
 
 #### 'width' and 'height' attributes (Optional)
 Sets the width and height of the layer. If either is left out it will keep the aspect ratio relative to the other. If both are left out it will use the original dimensions of the scraped resource.
