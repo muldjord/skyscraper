@@ -80,6 +80,8 @@ QList<GameEntry> XmlReader::getEntries()
     entry.tags = gameNodes.at(a).firstChildElement("genre").text();
     entry.rating = gameNodes.at(a).firstChildElement("rating").text();
     entry.players = gameNodes.at(a).firstChildElement("players").text();
+    entry.favorite = gameNodes.at(a).firstChildElement("favorite").text();
+    entry.hidden = gameNodes.at(a).firstChildElement("hidden").text();
     gameEntries.append(entry);
   }
   return gameEntries;
