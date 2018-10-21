@@ -167,7 +167,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 * Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
-* Read and recreate the 'favorites' and so on tags when rewriting the EmulationStation gamelist.xml
+
+#### Version 2.8.0 (In progress, unreleased)
+* Now preserves EmulationStaton gamelist.xml metadata unless new incoming data exists. This means ES specific data such as 'hidden' and 'favorite' will always be preserved
 
 #### Version 2.7.8 (21st October 2018)
 * Added CRC32 checksum attribute to 'screenscraper' pass
