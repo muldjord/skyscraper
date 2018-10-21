@@ -23,6 +23,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <math.h>
+
 #include "layer.h"
 
 Layer::Layer()
@@ -137,6 +139,11 @@ void Layer::setHeight(const int &height)
   this->height = height;
 }
 
+void Layer::setMPixels(const qint64 &mPixels)
+{
+  this->mPixels = mPixels;
+}
+
 void Layer::setValue(const int &value)
 {
   this->value = value;
@@ -200,6 +207,12 @@ void Layer::makeTransparent()
 
 void Layer::scale()
 {
+  if(mPixels != -1.0) {
+    double currentMPixels = canvas.width() * canvas.height() / 1000000.0;
+    double scaleFactor = sqrt(mPixels / currentMPixels);
+    canvas = canvas.scaledToWidth(canvas.width() * scaleFactor, Qt::SmoothTransformation);
+    return;
+  }
   if(width == -1 && height != -1) {
     canvas = canvas.scaledToHeight(height, Qt::SmoothTransformation);
   } else if(width != -1 && height == -1) {

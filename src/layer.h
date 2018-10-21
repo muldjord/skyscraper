@@ -64,6 +64,7 @@ public:
   int y = 0;
   int width = -1;
   int height = -1;
+  double mPixels = -1.0;
   int value = -1; // Use this for a value that can only be positive
   int delta = 0; // Use this for a value that can both be positive and negative
   int red = -1;
@@ -90,6 +91,7 @@ public:
   void setY(const int &y);
   void setWidth(const int &width);
   void setHeight(const int &height);
+  void setMPixels(const qint64 &mPixels);
   void setDelta(const int &delta);
   void setValue(const int &value);
   void setRed(const int &red);

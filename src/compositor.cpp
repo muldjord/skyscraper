@@ -91,6 +91,8 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setWidth(attribs.value("", "width").toInt());
       if(attribs.hasAttribute("height"))
 	newLayer.setHeight(attribs.value("", "height").toInt());
+      if(attribs.hasAttribute("mpixels"))
+	newLayer.setMPixels(attribs.value("", "mpixels").toDouble());
 
       if(newLayer.type != T_NONE) {
 	addChildLayers(newLayer, xml);
@@ -109,6 +111,8 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setWidth(attribs.value("", "width").toInt());
       if(attribs.hasAttribute("height"))
 	newLayer.setHeight(attribs.value("", "height").toInt());
+      if(attribs.hasAttribute("mpixels"))
+	newLayer.setMPixels(attribs.value("", "mpixels").toDouble());
       if(attribs.hasAttribute("align"))
 	newLayer.setAlign(attribs.value("", "align").toString());
       if(attribs.hasAttribute("valign"))
