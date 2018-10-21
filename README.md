@@ -169,10 +169,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
 * Read and recreate the 'favorites' and so on tags when rewriting the EmulationStation gamelist.xml
 
-#### Version 2.7.8 (In progress, unreleased)
+#### Version 2.7.8 (21st October 2018)
 * Added CRC32 checksum attribute to 'screenscraper' pass
-* Changed the 'import' folder to look into 'import/[platform]' if it exists so users can create imports per platform. Old method also works (Thanks to tacodog for suggesting this)
-* Added 'mpixels' attribute to compositor layers that allows users to scale images to a a desired area size instead of using width and height (Thank you to Vynce for suggesting this)
+* Changed the 'import' folder to also look into 'import/[platform]' if it exists so users can create imports per platform. Old method also works (Thanks to tacodog for suggesting this)
+* Added 'mpixels' attribute to compositor layers that allows users to scale images to a desired area size instead of using width and height (Thank you to Vynce for suggesting this)
 
 #### Version 2.7.7 (10th October 2018)
 * Fixed instances where '--query' would be applied to all roms if a faulty filename was given on command line (Thank you to Razile89 for reporting this)
