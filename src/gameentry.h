@@ -104,6 +104,9 @@ public:
   // EmulationStation specific metadata for preservation
   QString favorite = "";
   QString hidden = "";
+  QString playCount = "";
+  QString lastPlayed = "";
+  QString kidGame = "";
 };
 
 #endif // GAMEENTRY_H
