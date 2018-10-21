@@ -34,20 +34,19 @@ class AttractMode : public AbstractFrontend
 
 public:
   AttractMode();
-  void checkReqs();
+  void checkReqs() override;
   void skipExisting(const QString &gameListFileString, QList<GameEntry> &gameEntries,
-		    QSharedPointer<Queue> queue);
-  void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int maxDescLength);
-  bool canSkip();
-  QString getGameListFileName();
-  QString getInputFolder();
-  QString getGameListFolder();
-  QString getMediaFolder();
-  QString getCoversFolder();
-  QString getScreenshotsFolder();
-  QString getWheelsFolder();
-  QString getMarqueesFolder();
-  QString getVideosFolder();
+		    QSharedPointer<Queue> queue) override;
+  void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int maxDescLength) override;
+  bool canSkip() override;
+  QString getGameListFileName() override;
+  QString getInputFolder() override;
+  QString getGameListFolder() override;
+  QString getCoversFolder() override;
+  QString getScreenshotsFolder() override;
+  QString getWheelsFolder() override;
+  QString getMarqueesFolder() override;
+  QString getVideosFolder() override;
 
 private:
   QString getMediaTypeFolder(QString type);
