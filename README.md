@@ -134,8 +134,10 @@ Basically what I'm trying to say is that it is entirely your own fault if you've
 ### Local data import
 I addition to allowing scraping from local resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the '`-s localdb`' scraping module. For a quick overview read on below. For a more detailed description with examples go [here](import/README.md).
 
+NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder '`~/.skyscraper/import/amiga`' and it will use that as base instead of '`~/.skyscraper/import/`' when scraping the 'amiga' platform.
+
 #### Artwork import
-Skyscraper allows you to import various artwork resources from the local '`~/.skyscraper/import`' folders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called '`Bubble Bobble.nes`' you would place your screenshot for this rom inside '`~/.skyscraper/import/screenshots`' called '`Bubble Bobble.png`'. Other image file formats are also supported.
+Skyscraper allows you to import various artwork resources from the local '`~/.skyscraper/import/`' subfolders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a rom called '`Bubble Bobble.nes`' you would place your screenshot for this rom inside '`~/.skyscraper/import/[platform]/screenshots`' called '`Bubble Bobble.png`'. Other image file formats are also supported.
 
 #### Textual data import
 For textual data, you need to first create a file called '`~/.skyscraper/import/definitions.dat`'. In this file, you must define the file content format you are providing for each rom. For instance, if your data comes in the form of 1 xml file per rom, and you wish to scrape '`publisher`' for this rom, perhaps your input file has a node like '`<publisher>This is the publisher</publisher>`'. In the '`definitions.dat`' file you'd then add a line looking like '`<publisher>###PUBLISHER###</publisher`'. The '`###PUBLISHER###`' tag is recognized by Skyscraper.
