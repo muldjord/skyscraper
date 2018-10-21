@@ -179,8 +179,18 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     if(!entry.hidden.isEmpty()) {
       finalOutput.append("    <hidden>" + StrTools::xmlEscape(entry.hidden) + "</hidden>\n");
     }
-    if(!entry.ages.isEmpty() && (entry.ages.toInt() >= 1 && entry.ages.toInt() <= 10)) {
-      finalOutput.append("    <kidgame>true</kidgame>\n");
+    if(!entry.lastPlayed.isEmpty()) {
+      finalOutput.append("    <lastplayed>" + StrTools::xmlEscape(entry.lastPlayed) + "</lastplayed>\n");
+    }
+    if(!entry.playCount.isEmpty()) {
+      finalOutput.append("    <playcount>" + StrTools::xmlEscape(entry.playCount) + "</playcount>\n");
+    }
+    if(entry.kidGame.isEmpty()) {
+      if(!entry.ages.isEmpty() && (entry.ages.toInt() >= 1 && entry.ages.toInt() <= 10)) {
+	finalOutput.append("    <kidgame>true</kidgame>\n");
+      }
+    } else {
+      finalOutput.append("    <kidgame>" + StrTools::xmlEscape(entry.kidGame) + "</kidgame>\n");
     }
     finalOutput.append("  </game>\n");
   }
