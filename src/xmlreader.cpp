@@ -82,6 +82,9 @@ QList<GameEntry> XmlReader::getEntries()
     entry.players = gameNodes.at(a).firstChildElement("players").text();
     entry.favorite = gameNodes.at(a).firstChildElement("favorite").text();
     entry.hidden = gameNodes.at(a).firstChildElement("hidden").text();
+    entry.playCount = gameNodes.at(a).firstChildElement("playcount").text();
+    entry.lastPlayed = gameNodes.at(a).firstChildElement("lastplayed").text();
+    entry.kidGame = gameNodes.at(a).firstChildElement("kidgame").text();
     gameEntries.append(entry);
   }
   return gameEntries;

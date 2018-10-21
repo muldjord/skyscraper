@@ -77,6 +77,26 @@ void EmulationStation::preserveFromOld(GameEntry &entry)
 	entry.favorite = oldEntry.favorite;
       if(entry.hidden.isEmpty())
 	entry.hidden = oldEntry.hidden;
+      if(entry.playCount.isEmpty())
+	entry.playCount = oldEntry.playCount;
+      if(entry.lastPlayed.isEmpty())
+	entry.lastPlayed = oldEntry.lastPlayed;
+      if(entry.kidGame.isEmpty())
+	entry.kidGame = oldEntry.kidGame;
+      if(entry.developer.isEmpty())
+	entry.developer = oldEntry.developer;
+      if(entry.publisher.isEmpty())
+	entry.publisher = oldEntry.publisher;
+      if(entry.players.isEmpty())
+	entry.players = oldEntry.players;
+      if(entry.description.isEmpty())
+	entry.description = oldEntry.description;
+      if(entry.rating.isEmpty())
+	entry.rating = oldEntry.rating;
+      if(entry.releaseDate.isEmpty())
+	entry.releaseDate = oldEntry.releaseDate;
+      if(entry.tags.isEmpty())
+	entry.tags = oldEntry.tags;
       break;
     }
   }
