@@ -56,7 +56,6 @@ QList<GameEntry> XmlReader::getEntries()
 
   QDomNodeList gameNodes = elementsByTagName("game");
 
-  printf("Parsing existing xml entries...\n");
   for(int a = 0; a < gameNodes.length(); ++a) {
     GameEntry entry;
     entry.path = gameNodes.at(a).firstChildElement("path").text();
@@ -80,11 +79,11 @@ QList<GameEntry> XmlReader::getEntries()
     entry.tags = gameNodes.at(a).firstChildElement("genre").text();
     entry.rating = gameNodes.at(a).firstChildElement("rating").text();
     entry.players = gameNodes.at(a).firstChildElement("players").text();
-    entry.favorite = gameNodes.at(a).firstChildElement("favorite").text();
-    entry.hidden = gameNodes.at(a).firstChildElement("hidden").text();
-    entry.playCount = gameNodes.at(a).firstChildElement("playcount").text();
-    entry.lastPlayed = gameNodes.at(a).firstChildElement("lastplayed").text();
-    entry.kidGame = gameNodes.at(a).firstChildElement("kidgame").text();
+    entry.eSFavorite = gameNodes.at(a).firstChildElement("favorite").text();
+    entry.eSHidden = gameNodes.at(a).firstChildElement("hidden").text();
+    entry.eSPlayCount = gameNodes.at(a).firstChildElement("playcount").text();
+    entry.eSLastPlayed = gameNodes.at(a).firstChildElement("lastplayed").text();
+    entry.eSKidGame = gameNodes.at(a).firstChildElement("kidgame").text();
     gameEntries.append(entry);
   }
   return gameEntries;
