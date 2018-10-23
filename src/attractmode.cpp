@@ -45,10 +45,10 @@ bool AttractMode::loadOldGameList(const QString &gameListFileString)
 	}
 	GameEntry entry;
 	entry.baseName = snippets.at(0);
-	entry.sqrNotes = StrTools::getSqrNotes(entry.baseName);
-	entry.parNotes = StrTools::getParNotes(entry.baseName);
 	QString title = snippets.at(1);
-	entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
+	entry.sqrNotes = StrTools::getSqrNotes(title);
+	entry.parNotes = StrTools::getParNotes(title);
+	entry.title = StrTools::stripBrackets(title);
 	//entry.aMEmulator = snippets.at(2);
 	entry.aMCloneOf = snippets.at(3);
 	entry.releaseDate = snippets.at(4) + "0101";
