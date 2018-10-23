@@ -53,7 +53,7 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
   int dots = 0;
   for(int a = 0; a < gameEntries.length(); ++a) {
     dots++;
-    if(dots % 50 == 0) {
+    if(dots % 100 == 0) {
       printf(".");
       fflush(stdout);
     }
