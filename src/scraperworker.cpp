@@ -274,7 +274,7 @@ void ScraperWorker::run()
     output.append("Compare title:  '\033[1;32m" + compareTitle + "\033[0m'\n");
     output.append("Result title:   '\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
     if(config.forceFilename) {
-      game.title = StrTools::xmlUnescape(info.completeBaseName().left(info.completeBaseName().indexOf("(")).left(info.completeBaseName().indexOf("[")).replace("_", " ").simplified());
+      game.title = StrTools::xmlUnescape(StrTools::stripBrackets(info.completeBaseName()));
     }
     output.append("Platform:       '\033[1;32m" + game.platform + "\033[0m' (" + game.platformSrc + ")\n");
     output.append("Release Date:   '\033[1;32m");
