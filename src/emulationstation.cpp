@@ -45,17 +45,10 @@ bool EmulationStation::loadOldGameList(const QString &gameListFileString)
   return false;
 }
 
-void EmulationStation::skipExisting(const QString &gameListFileString,
-				    QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) 
+bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) 
 {
-  XmlReader gameListReader;
-  if(gameListReader.setFile(gameListFileString)) {
-    gameEntries = gameListReader.getEntries();
-  } else {
-    printf("Error while trying to load existing gamelist.xml!\n");
-    printf("Can't resolve existing entries, quitting... :(\n");
-    exit(1);
-  }
+  gameEntries = oldEntries;
+
   printf("Resolving missing entries...\n");
   for(int a = 0; a < gameEntries.length(); ++a) {
     QFileInfo current(gameEntries.at(a).path);
@@ -67,22 +60,23 @@ void EmulationStation::skipExisting(const QString &gameListFileString,
       }
     }
   }
+  return true;
 }
 
 void EmulationStation::preserveFromOld(GameEntry &entry)
 {
   foreach(GameEntry oldEntry, oldEntries) {
     if(oldEntry.path == entry.path) {
-      if(entry.favorite.isEmpty())
-	entry.favorite = oldEntry.favorite;
-      if(entry.hidden.isEmpty())
-	entry.hidden = oldEntry.hidden;
-      if(entry.playCount.isEmpty())
-	entry.playCount = oldEntry.playCount;
-      if(entry.lastPlayed.isEmpty())
-	entry.lastPlayed = oldEntry.lastPlayed;
-      if(entry.kidGame.isEmpty())
-	entry.kidGame = oldEntry.kidGame;
+      if(entry.eSFavorite.isEmpty())
+	entry.eSFavorite = oldEntry.eSFavorite;
+      if(entry.eSHidden.isEmpty())
+	entry.eSHidden = oldEntry.eSHidden;
+      if(entry.eSPlayCount.isEmpty())
+	entry.eSPlayCount = oldEntry.eSPlayCount;
+      if(entry.eSLastPlayed.isEmpty())
+	entry.eSLastPlayed = oldEntry.eSLastPlayed;
+      if(entry.eSKidGame.isEmpty())
+	entry.eSKidGame = oldEntry.eSKidGame;
       if(entry.developer.isEmpty())
 	entry.developer = oldEntry.developer;
       if(entry.publisher.isEmpty())
@@ -173,24 +167,24 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     } else {
       finalOutput.append("    <players>" + StrTools::xmlEscape(entry.players) + "</players>\n");
     }
-    if(!entry.favorite.isEmpty()) {
-      finalOutput.append("    <favorite>" + StrTools::xmlEscape(entry.favorite) + "</favorite>\n");
+    if(!entry.eSFavorite.isEmpty()) {
+      finalOutput.append("    <favorite>" + StrTools::xmlEscape(entry.eSFavorite) + "</favorite>\n");
     }
-    if(!entry.hidden.isEmpty()) {
-      finalOutput.append("    <hidden>" + StrTools::xmlEscape(entry.hidden) + "</hidden>\n");
+    if(!entry.eSHidden.isEmpty()) {
+      finalOutput.append("    <hidden>" + StrTools::xmlEscape(entry.eSHidden) + "</hidden>\n");
     }
-    if(!entry.lastPlayed.isEmpty()) {
-      finalOutput.append("    <lastplayed>" + StrTools::xmlEscape(entry.lastPlayed) + "</lastplayed>\n");
+    if(!entry.eSLastPlayed.isEmpty()) {
+      finalOutput.append("    <lastplayed>" + StrTools::xmlEscape(entry.eSLastPlayed) + "</lastplayed>\n");
     }
-    if(!entry.playCount.isEmpty()) {
-      finalOutput.append("    <playcount>" + StrTools::xmlEscape(entry.playCount) + "</playcount>\n");
+    if(!entry.eSPlayCount.isEmpty()) {
+      finalOutput.append("    <playcount>" + StrTools::xmlEscape(entry.eSPlayCount) + "</playcount>\n");
     }
-    if(entry.kidGame.isEmpty()) {
+    if(entry.eSKidGame.isEmpty()) {
       if(!entry.ages.isEmpty() && (entry.ages.toInt() >= 1 && entry.ages.toInt() <= 10)) {
 	finalOutput.append("    <kidgame>true</kidgame>\n");
       }
     } else {
-      finalOutput.append("    <kidgame>" + StrTools::xmlEscape(entry.kidGame) + "</kidgame>\n");
+      finalOutput.append("    <kidgame>" + StrTools::xmlEscape(entry.eSKidGame) + "</kidgame>\n");
     }
     finalOutput.append("  </game>\n");
   }
