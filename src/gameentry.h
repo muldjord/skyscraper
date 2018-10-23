@@ -102,11 +102,25 @@ public:
   QByteArray miscData = "";
 
   // EmulationStation specific metadata for preservation
-  QString favorite = "";
-  QString hidden = "";
-  QString playCount = "";
-  QString lastPlayed = "";
-  QString kidGame = "";
+  QString eSFavorite = "";
+  QString eSHidden = "";
+  QString eSPlayCount = "";
+  QString eSLastPlayed = "";
+  QString eSKidGame = "";
+
+  // AttractMode specific metadata for preservation
+  // #Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons
+  QString aMCloneOf = "";
+  QString aMRotation = "";
+  QString aMControl = "";
+  QString aMStatus = "";
+  QString aMDisplayCount = "";
+  QString aMDisplayType = "";
+  QString aMAltRomName = "";
+  QString aMAltTitle = "";
+  QString aMExtra = "";
+  QString aMButtons = "";
+
 };
 
 #endif // GAMEENTRY_H
