@@ -33,10 +33,8 @@ AttractMode::AttractMode()
 {
 }
 
-void AttractMode::skipExisting(const QString &gameListFileString,
-			       QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue)
+bool AttractMode::loadOldGameList(const QString &gameListFileString)
 {
-  printf("Parsing existing romlist entries, please wait...\n");
   QFile gameListFile(gameListFileString);
   if(gameListFile.open(QIODevice::ReadOnly)) {
     while(!gameListFile.atEnd()) {
@@ -50,19 +48,35 @@ void AttractMode::skipExisting(const QString &gameListFileString,
 	setNotes(entry, entry.baseName);
 	QString title = snippets.at(1);
 	entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
+	//entry.aMEmulator = snippets.at(2);
+	entry.aMCloneOf = snippets.at(3);
 	entry.releaseDate = snippets.at(4) + "0101";
 	entry.publisher = snippets.at(5);
 	entry.tags = snippets.at(6);
 	entry.players = snippets.at(7);
-	gameEntries.append(entry);
+	entry.aMRotation = snippets.at(8);
+	entry.aMControl = snippets.at(9);
+	entry.aMStatus = snippets.at(10);
+	entry.aMDisplayCount = snippets.at(11);
+	entry.aMDisplayType = snippets.at(12);
+	entry.aMAltRomName = snippets.at(13);
+	entry.aMAltTitle = snippets.at(14);
+	entry.aMExtra = snippets.at(15);
+	entry.aMButtons = snippets.at(16);
+	oldEntries.append(entry);
       }
     }
     gameListFile.close();
-  } else {
-    printf("Error while trying to load existing gamelist!\n");
-    printf("Can't resolve existing entries... :(\n");
-    exit(1);
+    return true;
   }
+
+  return false;
+}
+
+bool AttractMode::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue)
+{
+  gameEntries = oldEntries;
+
   printf("Resolving missing entries...");
   int dots = 0;
   for(int a = 0; a < gameEntries.length(); ++a) {
@@ -78,7 +92,8 @@ void AttractMode::skipExisting(const QString &gameListFileString,
       }
     }
   }
-    printf(" \033[1;32mDone!\033[0m\n");
+  printf(" \033[1;32mDone!\033[0m\n");
+  return true;
 }
 
 void AttractMode::setNotes(GameEntry &entry, QString baseName)
@@ -113,6 +128,49 @@ void AttractMode::setNotes(GameEntry &entry, QString baseName)
   baseName = baseNameOrig;
 }
 
+void AttractMode::preserveFromOld(GameEntry &entry)
+{
+  foreach(GameEntry oldEntry, oldEntries) {
+    if(oldEntry.baseName == entry.baseName) {
+      if(entry.developer.isEmpty())
+	entry.developer = oldEntry.developer;
+      if(entry.publisher.isEmpty())
+	entry.publisher = oldEntry.publisher;
+      if(entry.players.isEmpty())
+	entry.players = oldEntry.players;
+      if(entry.description.isEmpty())
+	entry.description = oldEntry.description;
+      if(entry.rating.isEmpty())
+	entry.rating = oldEntry.rating;
+      if(entry.releaseDate.isEmpty())
+	entry.releaseDate = oldEntry.releaseDate;
+      if(entry.tags.isEmpty())
+	entry.tags = oldEntry.tags;
+      if(entry.aMCloneOf.isEmpty())
+	entry.aMCloneOf = oldEntry.aMCloneOf;
+      if(entry.aMRotation.isEmpty())
+	entry.aMRotation = oldEntry.aMRotation;
+      if(entry.aMControl.isEmpty())
+	entry.aMControl = oldEntry.aMControl;
+      if(entry.aMStatus.isEmpty())
+	entry.aMStatus = oldEntry.aMStatus;
+      if(entry.aMDisplayCount.isEmpty())
+	entry.aMDisplayCount = oldEntry.aMDisplayCount;
+      if(entry.aMDisplayType.isEmpty())
+	entry.aMDisplayType = oldEntry.aMDisplayType;
+      if(entry.aMAltRomName.isEmpty())
+	entry.aMAltRomName = oldEntry.aMAltRomName;
+      if(entry.aMAltTitle.isEmpty())
+	entry.aMAltTitle = oldEntry.aMAltTitle;
+      if(entry.aMExtra.isEmpty())
+	entry.aMExtra = oldEntry.aMExtra;
+      if(entry.aMButtons.isEmpty())
+	entry.aMButtons = oldEntry.aMButtons;
+      break;
+    }
+  }
+}
+
 void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int)
 {
   QFileInfo emuInfo(config->emulator);
@@ -123,6 +181,9 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
   }
   finalOutput.append("#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n");
   foreach(GameEntry entry, gameEntries) {
+    // Preserve certain data from old game list entry, but only for empty data
+    preserveFromOld(entry);
+
     finalOutput.append(entry.baseName + ";" +
 		       entry.title);
     if(config->brackets) {
@@ -130,20 +191,20 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
     }
     finalOutput.append(";" +		       
 		       emuInfo.completeBaseName() + ";" +
-		       ";" +
+		       entry.aMCloneOf + ";" +
 		       QDate::fromString(entry.releaseDate, "yyyyMMdd").toString("yyyy") + ";" +
 		       entry.publisher + ";" +
 		       entry.tags + ";" +
 		       entry.players + ";" +
-		       "0" + ";" +
-		       ";" +
-		       ";" +
-		       ";" +
-		       ";" +
-		       ";" +
-		       ";" +
-		       ";" +
-		       ";\n");
+		       entry.aMRotation + ";" +
+		       entry.aMControl + ";" +
+		       entry.aMStatus + ";" +
+		       entry.aMDisplayCount + ";" +
+		       entry.aMDisplayType + ";" +
+		       entry.aMAltRomName + ";" +
+		       entry.aMAltTitle + ";" +
+		       entry.aMExtra + ";" +
+		       entry.aMButtons + ";\n");
     if(!entry.description.isEmpty() && saveDescFile) {
       QByteArray desc = QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified();
       setCfgLine(descDir.absolutePath() + "/" + entry.baseName + ".cfg", "overview", desc);
