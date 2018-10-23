@@ -171,6 +171,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.8.0 (In progress, unreleased)
 * Now tries to preserve EmulationStaton gamelist.xml metadata unless new incoming data exists
 * Now tries to preserve AttractMode romlist metadata unless new incoming data exists
+* Improved terminal output a bit with fflush and progress dots
 
 #### Version 2.7.8 (21st October 2018)
 * Added CRC32 checksum attribute to 'screenscraper' pass
