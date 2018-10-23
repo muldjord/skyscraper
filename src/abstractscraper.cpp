@@ -499,7 +499,7 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
   return searchNames;
 }
 
-QString AbstractScraper::getCompareTitle(QFileInfo info, QString &sqrNotes, QString &parNotes)
+QString AbstractScraper::getCompareTitle(QFileInfo info)
 {
   QString baseName = info.completeBaseName();
 
@@ -517,35 +517,6 @@ QString AbstractScraper::getCompareTitle(QFileInfo info, QString &sqrNotes, QStr
     }
   }
 
-  QString baseNameOrig = baseName;
-  // Get square notes
-  while(baseName.indexOf("[") != -1 && baseName.indexOf("]") != -1) {
-    if(baseName.indexOf("[") != -1 && baseName.indexOf("]") != -1) {
-      sqrNotes.append(baseName.mid(baseName.indexOf("["),
-				  baseName.indexOf("]") - baseName.indexOf("[") + 1));
-    }
-    baseName.remove(baseName.indexOf("["),
-		    baseName.indexOf("]") - baseName.indexOf("[") + 1);
-  }
-  sqrNotes = sqrNotes.simplified();
-
-  // Reset
-  baseName = baseNameOrig;
-
-  // Get parenthesis notes  
-  while(baseName.indexOf("(") != -1 && baseName.indexOf(")") != -1) {
-    if(baseName.indexOf("(") != -1 && baseName.indexOf(")") != -1) {
-      parNotes.append(baseName.mid(baseName.indexOf("("),
-				  baseName.indexOf(")") - baseName.indexOf("(") + 1) + " ");
-    }
-    baseName.remove(baseName.indexOf("("),
-		    baseName.indexOf(")") - baseName.indexOf("(") + 1);
-  }
-  parNotes = parNotes.simplified();
-
-  // Reset
-  baseName = baseNameOrig;
-  
   // Now create actual compareTitle
   baseName = baseName.replace("_", " ").left(baseName.indexOf("(")).left(baseName.indexOf("[")).simplified();
 

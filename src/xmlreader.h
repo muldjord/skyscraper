@@ -38,10 +38,6 @@ public:
   bool setFile(QString filename);
   QList<GameEntry> getEntries();
 
-private:
-  void setNotes(GameEntry &entry, QString baseName);
-  //bool exists(QString fileName, QList<GameEntry> &gameEntries);
-
 };
 
 #endif // XMLREADER_H

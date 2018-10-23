@@ -382,3 +382,45 @@ QString StrTools::getVersionHeader()
 
   return QString("\033[1;34m" + dashesString + "\033[0m\n\033[1;33m" + headerString + "\033[0m\n\033[1;34m" + dashesString + "\033[0m\n");
 }
+
+QString StrTools::getSqrNotes(QString title)
+{
+  QString sqrNotes = "";
+  
+  // Get square notes
+  while(title.indexOf("[") != -1 && title.indexOf("]") != -1) {
+    if(title.indexOf("[") != -1 && title.indexOf("]") != -1) {
+      sqrNotes.append(title.mid(title.indexOf("["),
+				title.indexOf("]") - title.indexOf("[") + 1));
+    }
+    title.remove(title.indexOf("["),
+		 title.indexOf("]") - title.indexOf("[") + 1);
+  }
+  sqrNotes = sqrNotes.simplified();
+
+  return sqrNotes;
+}
+
+QString StrTools::getParNotes(QString title)
+{
+  QString parNotes = "";
+
+  // Get parentheses notes
+  while(title.indexOf("(") != -1 && title.indexOf(")") != -1) {
+    if(title.indexOf("(") != -1 && title.indexOf(")") != -1) {
+      parNotes.append(title.mid(title.indexOf("("),
+				title.indexOf(")") - title.indexOf("(") + 1));
+    }
+    title.remove(title.indexOf("("),
+		 title.indexOf(")") - title.indexOf("(") + 1);
+  }
+  parNotes = parNotes.simplified();
+
+  return parNotes;
+}
+
+QString StrTools::stripBrackets(QString title)
+{
+  return title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
+
+}

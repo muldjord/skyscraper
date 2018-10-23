@@ -99,11 +99,10 @@ void ScraperWorker::run()
     config.platform = platformOrig;
     QString output = "\033[1;33m(T" + threadId + ")\033[0m ";
     QString debug = "";
-    QString parNotes = "";
     QString sqrNotes = "";
     QString sha1 = getSha1(info);
 
-    QString compareTitle = scraper->getCompareTitle(info, sqrNotes, parNotes);
+    QString compareTitle = scraper->getCompareTitle(info);
 
     // For Amiga platform, change subplatforms from filename and add brackets if needed
     if(config.platform == "amiga") {
@@ -179,8 +178,6 @@ void ScraperWorker::run()
     game.path = info.absoluteFilePath();
     game.baseName = info.completeBaseName();
     game.sha1 = sha1;
-    game.parNotes = parNotes;
-    game.sqrNotes = sqrNotes;
 
     if(game.found == false) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
@@ -234,6 +231,16 @@ void ScraperWorker::run()
     }
 
     // We're done saving the raw data at this point, so feel free to manipulate game resources to better suit game list creation from here on out.
+
+    // Sort out brackets here, be sure to add brackets for both returned title and filename
+    game.sqrNotes = StrTools::getSqrNotes(game.title);
+    game.sqrNotes.append(StrTools::getSqrNotes(info.completeBaseName()));
+    game.sqrNotes.append(sqrNotes); // Potential [cd32] and [cdtv] note
+    game.parNotes = StrTools::getParNotes(game.title);
+    game.parNotes.append(StrTools::getParNotes(info.completeBaseName()));
+
+    // Strip any brackets from the title as they will be readded when assembling gamelist
+    game.title = StrTools::stripBrackets(game.title);
 
     // Move 'The' to end of title for better sorting
     // This looks like crap for some titles such as 'Simpsons: Bart vs. Blah, The' but I'll leave it in for the time being

@@ -59,9 +59,9 @@ QList<GameEntry> XmlReader::getEntries()
   for(int a = 0; a < gameNodes.length(); ++a) {
     GameEntry entry;
     entry.path = gameNodes.at(a).firstChildElement("path").text();
-    QString baseName = QFileInfo(entry.path).completeBaseName();
-    setNotes(entry, baseName);
     QString title = gameNodes.at(a).firstChildElement("name").text();
+    entry.sqrNotes = StrTools::getSqrNotes(title);
+    entry.parNotes = StrTools::getParNotes(title);
     entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
     entry.coverFile = gameNodes.at(a).firstChildElement("cover").text();
     entry.screenshotFile = gameNodes.at(a).firstChildElement("image").text();
@@ -85,36 +85,4 @@ QList<GameEntry> XmlReader::getEntries()
     gameEntries.append(entry);
   }
   return gameEntries;
-}
-
-void XmlReader::setNotes(GameEntry &entry, QString baseName)
-{
-  QString baseNameOrig = baseName;
-  // Get square notes
-  while(baseName.indexOf("[") != -1 && baseName.indexOf("]") != -1) {
-    if(baseName.indexOf("[") != -1 && baseName.indexOf("]") != -1) {
-      entry.sqrNotes.append(baseName.mid(baseName.indexOf("["),
-				  baseName.indexOf("]") - baseName.indexOf("[") + 1));
-    }
-    baseName.remove(baseName.indexOf("["),
-		    baseName.indexOf("]") - baseName.indexOf("[") + 1);
-  }
-  entry.sqrNotes = entry.sqrNotes.simplified();
-
-  // Reset
-  baseName = baseNameOrig;
-
-  // Get parenthesis notes  
-  while(baseName.indexOf("(") != -1 && baseName.indexOf(")") != -1) {
-    if(baseName.indexOf("(") != -1 && baseName.indexOf(")") != -1) {
-      entry.parNotes.append(baseName.mid(baseName.indexOf("("),
-				  baseName.indexOf(")") - baseName.indexOf("(") + 1) + " ");
-    }
-    baseName.remove(baseName.indexOf("("),
-		    baseName.indexOf(")") - baseName.indexOf("(") + 1);
-  }
-  entry.parNotes = entry.parNotes.simplified();
-
-  // Reset
-  baseName = baseNameOrig;
 }

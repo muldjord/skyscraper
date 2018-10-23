@@ -36,7 +36,7 @@ public:
   ImportScraper(Settings *config);
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &) override;
   void getGameData(GameEntry &game) override;
-  QString getCompareTitle(QFileInfo info, QString &, QString &) override;
+  QString getCompareTitle(QFileInfo info) override;
   void getTitle(GameEntry &game);
   void getCover(GameEntry &game) override;
   void getScreenshot(GameEntry &game) override;

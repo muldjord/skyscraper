@@ -41,6 +41,9 @@ public:
   static QString conformTags(QString str);
   static int getNumeral(const QString &name);
   static QString getVersionHeader();
+  static QString getSqrNotes(QString title);
+  static QString getParNotes(QString title);
+  static QString stripBrackets(QString title);
   
 };
 

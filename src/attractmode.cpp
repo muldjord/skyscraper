@@ -45,7 +45,8 @@ bool AttractMode::loadOldGameList(const QString &gameListFileString)
 	}
 	GameEntry entry;
 	entry.baseName = snippets.at(0);
-	setNotes(entry, entry.baseName);
+	entry.sqrNotes = StrTools::getSqrNotes(entry.baseName);
+	entry.parNotes = StrTools::getParNotes(entry.baseName);
 	QString title = snippets.at(1);
 	entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
 	//entry.aMEmulator = snippets.at(2);
@@ -95,38 +96,6 @@ bool AttractMode::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Que
   }
   printf(" \033[1;32mDone!\033[0m\n");
   return true;
-}
-
-void AttractMode::setNotes(GameEntry &entry, QString baseName)
-{
-  QString baseNameOrig = baseName;
-  // Get square notes
-  while(baseName.indexOf("[") != -1 && baseName.indexOf("]") != -1) {
-    if(baseName.indexOf("[") != -1 && baseName.indexOf("]") != -1) {
-      entry.sqrNotes.append(baseName.mid(baseName.indexOf("["),
-				  baseName.indexOf("]") - baseName.indexOf("[") + 1));
-    }
-    baseName.remove(baseName.indexOf("["),
-		    baseName.indexOf("]") - baseName.indexOf("[") + 1);
-  }
-  entry.sqrNotes = entry.sqrNotes.simplified();
-
-  // Reset
-  baseName = baseNameOrig;
-
-  // Get parenthesis notes  
-  while(baseName.indexOf("(") != -1 && baseName.indexOf(")") != -1) {
-    if(baseName.indexOf("(") != -1 && baseName.indexOf(")") != -1) {
-      entry.parNotes.append(baseName.mid(baseName.indexOf("("),
-				  baseName.indexOf(")") - baseName.indexOf("(") + 1) + " ");
-    }
-    baseName.remove(baseName.indexOf("("),
-		    baseName.indexOf(")") - baseName.indexOf("(") + 1);
-  }
-  entry.parNotes = entry.parNotes.simplified();
-
-  // Reset
-  baseName = baseNameOrig;
 }
 
 void AttractMode::preserveFromOld(GameEntry &entry)
