@@ -169,7 +169,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
 
 #### Version 2.8.0 (In progress, unreleased)
-* Now preserves EmulationStaton gamelist.xml metadata unless new incoming data exists. This means ES specific data such as 'hidden' and 'favorite' will always be preserved
+* Now tries to preserve EmulationStaton gamelist.xml metadata unless new incoming data exists
+* Now tries to preserve AttractMode romlist metadata unless new incoming data exists
 
 #### Version 2.7.8 (21st October 2018)
 * Added CRC32 checksum attribute to 'screenscraper' pass
