@@ -342,6 +342,7 @@ bool LocalDb::writeDb()
   if(dbFile.open(QIODevice::WriteOnly)) {
     printf("Writing %d (%d new) resources to local database, please wait... ",
 	   resources.length(), resources.length() - resAtLoad);
+    fflush(stdout);
     QXmlStreamWriter xml(&dbFile);
     xml.setAutoFormatting(true);
     xml.writeStartDocument();
