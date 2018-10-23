@@ -292,6 +292,7 @@ void Skyscraper::run()
 
   if(gameListFile.exists()) {
     printf("Trying to parse and load existing game list metadata... ");
+    fflush(stdout);
     if(frontend->loadOldGameList(gameListFileString)) {
       printf("\033[1;32mSuccess!\033[0m\n\n");
       if(!config.unattend && cliFiles.isEmpty()) {
@@ -361,6 +362,7 @@ void Skyscraper::checkForFolder(QDir &folder, bool create)
     printf("Folder '%s' doesn't exist", folder.absolutePath().toStdString().c_str());
     if(create) {
       printf(", trying to create it... ");
+      fflush(stdout);
       if(folder.mkpath(folder.absolutePath())) {
 	printf("\033[1;32mSuccess!\033[0m\n\n");
       } else {
@@ -466,6 +468,7 @@ void Skyscraper::checkThreads()
   if(!config.pretend) {
     QFile gameListFile(gameListFileString);
     printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
+    fflush(stdout);
     if(gameListFile.open(QIODevice::WriteOnly)) {
       gameListFile.write(finalOutput.toUtf8());
       gameListFile.close();

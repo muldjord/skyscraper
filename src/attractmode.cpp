@@ -83,6 +83,7 @@ bool AttractMode::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Que
     dots++;
     if(dots % 50 == 0) {
       printf(".");
+      fflush(stdout);
     }
     for(int b = 0; b < queue->length(); ++b) {
       if(gameEntries.at(a).baseName == queue->at(b).completeBaseName()) {

@@ -50,7 +50,13 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
   gameEntries = oldEntries;
 
   printf("Resolving missing entries...\n");
+  int dots = 0;
   for(int a = 0; a < gameEntries.length(); ++a) {
+    dots++;
+    if(dots % 50 == 0) {
+      printf(".");
+      fflush(stdout);
+    }
     QFileInfo current(gameEntries.at(a).path);
     for(int b = 0; b < queue->length(); ++b) {
       if(current.fileName() == queue->at(b).fileName()) {
