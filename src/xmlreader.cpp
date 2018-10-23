@@ -65,8 +65,6 @@ QList<GameEntry> XmlReader::getEntries()
     entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
     entry.coverFile = gameNodes.at(a).firstChildElement("cover").text();
     entry.screenshotFile = gameNodes.at(a).firstChildElement("image").text();
-    // Wheel is not supported by EmulationStation
-    //entry.wheelFile = gameNodes.at(a).firstChildElement("wheel").text();
     entry.marqueeFile = gameNodes.at(a).firstChildElement("marquee").text();
     entry.videoFile = gameNodes.at(a).firstChildElement("video").text();
     if(!entry.videoFile.isEmpty()) {
