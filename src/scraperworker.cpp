@@ -235,7 +235,7 @@ void ScraperWorker::run()
     // Sort out brackets here, be sure to add brackets for both returned title and filename
     game.sqrNotes = StrTools::getSqrNotes(game.title);
     game.sqrNotes.append(StrTools::getSqrNotes(info.completeBaseName()));
-    game.sqrNotes.append(sqrNotes); // Potential [cd32] and [cdtv] note
+    game.sqrNotes.append(sqrNotes); // Potential [CD32] and [CDTV] note
     game.parNotes = StrTools::getParNotes(game.title);
     game.parNotes.append(StrTools::getParNotes(info.completeBaseName()));
 
