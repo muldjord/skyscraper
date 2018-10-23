@@ -218,12 +218,6 @@ void Skyscraper::run()
   QFile gameListFile(gameListFileString);
 
   if(!config.pretend && !config.unattend && !config.unattendSkip && gameListFile.exists()) {
-    printf("Trying to parse and load existing game list metadata... ");
-    if(frontend->loadOldGameList(gameListFileString)) {
-      printf("\033[1;32mSuccess!\033[0m\n\n");
-    } else {
-      printf("\033[1;33mNot found or unsupported!\033[0m\n\n");
-    }
     std::string userInput = "";
     printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
     getline(std::cin, userInput);
@@ -296,18 +290,26 @@ void Skyscraper::run()
     }
   } 
 
-  if(!config.unattend && cliFiles.isEmpty()) {
-    std::string userInput = "";
-    if(gameListFile.exists() && frontend->canSkip()) {
-      if(config.unattendSkip) {
-	userInput = "y";
-      } else {
-	printf("\033[1;34mDo you wish to skip existing entries if supported\033[0m (y/N)? ");
-	getline(std::cin, userInput);
+  if(gameListFile.exists()) {
+    printf("Trying to parse and load existing game list metadata... ");
+    if(frontend->loadOldGameList(gameListFileString)) {
+      printf("\033[1;32mSuccess!\033[0m\n\n");
+      if(!config.unattend && cliFiles.isEmpty()) {
+	std::string userInput = "";
+	if(gameListFile.exists() && frontend->canSkip()) {
+	  if(config.unattendSkip) {
+	    userInput = "y";
+	  } else {
+	    printf("\033[1;34mDo you wish to skip existing entries if supported\033[0m (y/N)? ");
+	    getline(std::cin, userInput);
+	  }
+	  if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
+	    frontend->skipExisting(gameEntries, queue);
+	  }
+	}
       }
-      if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
-	frontend->skipExisting(gameEntries, queue);
-      }
+    } else {
+      printf("\033[1;33mNot found or unsupported!\033[0m\n\n");
     }
   }
 
