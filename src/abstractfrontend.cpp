@@ -90,6 +90,7 @@ QString AbstractFrontend::getVideosFolder()
 
 void AbstractFrontend::sortEntries(QList<GameEntry> &gameEntries)
 {
+  printf("Sorting entries, please wait...\n");
   qSort(gameEntries.begin(), gameEntries.end(), 
 	[](const GameEntry a, const GameEntry b) -> bool { return a.title.toLower() < b.title.toLower(); });
 }
