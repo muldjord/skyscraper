@@ -38,56 +38,6 @@ void AbstractFrontend::setConfig(Settings *config)
   this->config = config;
 }
 
-bool AbstractFrontend::canSkip()
-{
-  return false;
-}
-
-bool AbstractFrontend::loadOldGameList(const QString &)
-{
-  return false;
-}
-
-QString AbstractFrontend::getGameListFileName()
-{
-  return QString();
-}
-
-QString AbstractFrontend::getInputFolder()
-{
-  return QString();
-}
-
-QString AbstractFrontend::getGameListFolder()
-{
-  return QString();
-}
-
-QString AbstractFrontend::getCoversFolder()
-{
-  return QString();
-}
-
-QString AbstractFrontend::getScreenshotsFolder()
-{
-  return QString();
-}
-
-QString AbstractFrontend::getWheelsFolder()
-{
-  return QString();
-}
-
-QString AbstractFrontend::getMarqueesFolder()
-{
-  return QString();
-}
-
-QString AbstractFrontend::getVideosFolder()
-{
-  return QString();
-}
-
 void AbstractFrontend::sortEntries(QList<GameEntry> &gameEntries)
 {
   printf("Sorting entries, please wait...\n");
