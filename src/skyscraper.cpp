@@ -61,7 +61,7 @@ void Skyscraper::run()
 {
   printf("Platform:           '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
   printf("Scraper module:     '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
-  if(config.emulator != "") {
+  if(!config.emulator.isEmpty()) {
     printf("Emulator:           '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
   }
   printf("Input folder:       '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
@@ -75,6 +75,9 @@ void Skyscraper::run()
   }
   if(config.localDb) {
     printf("Local db folder:    '\033[1;32m%s\033[0m'\n", config.dbFolder.toStdString().c_str());
+  }
+  if(config.scraper == "import") {
+    printf("Import folder:      '\033[1;32m%s\033[0m'\n", config.importFolder.toStdString().c_str());
   }
 
   printf("\n");
