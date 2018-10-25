@@ -97,7 +97,7 @@ QString StrTools::xmlEscape(QString str)
     replace("'", "&apos;");
 }
 
-QByteArray StrTools::magic(QByteArray str)
+QByteArray StrTools::magic(const QByteArray &str)
 {
   QByteArray magicStr("WowMuchEncryptedVeryImpressIGuessThisHasToBeQuiteLongToAlsoSupportSomeVeryLongKeys");
 
@@ -122,7 +122,7 @@ QByteArray StrTools::magic(QByteArray str)
   return thingie; 
 }
 
-QByteArray StrTools::unMagic(QByteArray str)
+QByteArray StrTools::unMagic(const QByteArray &str)
 {
   int length = str.split(';').length();
 
@@ -145,7 +145,7 @@ QByteArray StrTools::unMagic(QByteArray str)
   return thingie; 
 }
 
-QString StrTools::conformPlayers(QString str)
+QString StrTools::conformPlayers(const QString &str)
 {
   if(QRegularExpression("^1 Player").match(str).hasMatch())
     return "1";
@@ -295,7 +295,7 @@ QString StrTools::conformReleaseDate(QString str)
   return str;
 }
 
-QString StrTools::conformTags(QString str)
+QString StrTools::conformTags(const QString &str)
 {
   QString tags = "";
   QList<QString> tagList = str.split(',', QString::SkipEmptyParts);
@@ -308,13 +308,13 @@ QString StrTools::conformTags(QString str)
   return tags;
 }
 
-int StrTools::getNumeral(const QString &name)
+int StrTools::getNumeral(const QString &str)
 {
   QRegularExpressionMatch match;
   int numeral = 1;
   
   // Check for roman numerals
-  match = QRegularExpression(" [IVX]{1,5}([: ]+|$)").match(name);
+  match = QRegularExpression(" [IVX]{1,5}([: ]+|$)").match(str);
   if(match.hasMatch()) {
     QString roman = match.captured(0).replace(":", "").replace(" ", "").simplified();
     if(roman == "I") {
@@ -361,7 +361,7 @@ int StrTools::getNumeral(const QString &name)
   }
 
   // Check for digit numerals
-  match = QRegularExpression("\\d+([: ]+|$)").match(name);
+  match = QRegularExpression("\\d+([: ]+|$)").match(str);
   if(match.hasMatch()) {
     QString intStr = match.captured(0).replace(":", "").simplified();
     if(intStr.toInt() != 0) {
@@ -383,44 +383,44 @@ QString StrTools::getVersionHeader()
   return QString("\033[1;34m" + dashesString + "\033[0m\n\033[1;33m" + headerString + "\033[0m\n\033[1;34m" + dashesString + "\033[0m\n");
 }
 
-QString StrTools::getSqrNotes(QString title)
+QString StrTools::getSqrNotes(QString str)
 {
   QString sqrNotes = "";
   
   // Get square notes
-  while(title.indexOf("[") != -1 && title.indexOf("]") != -1) {
-    if(title.indexOf("[") != -1 && title.indexOf("]") != -1) {
-      sqrNotes.append(title.mid(title.indexOf("["),
-				title.indexOf("]") - title.indexOf("[") + 1));
+  while(str.indexOf("[") != -1 && str.indexOf("]") != -1) {
+    if(str.indexOf("[") != -1 && str.indexOf("]") != -1) {
+      sqrNotes.append(str.mid(str.indexOf("["),
+			      str.indexOf("]") - str.indexOf("[") + 1));
     }
-    title.remove(title.indexOf("["),
-		 title.indexOf("]") - title.indexOf("[") + 1);
+    str.remove(str.indexOf("["),
+	       str.indexOf("]") - str.indexOf("[") + 1);
   }
   sqrNotes = sqrNotes.simplified();
 
   return sqrNotes;
 }
 
-QString StrTools::getParNotes(QString title)
+QString StrTools::getParNotes(QString str)
 {
   QString parNotes = "";
 
   // Get parentheses notes
-  while(title.indexOf("(") != -1 && title.indexOf(")") != -1) {
-    if(title.indexOf("(") != -1 && title.indexOf(")") != -1) {
-      parNotes.append(title.mid(title.indexOf("("),
-				title.indexOf(")") - title.indexOf("(") + 1));
+  while(str.indexOf("(") != -1 && str.indexOf(")") != -1) {
+    if(str.indexOf("(") != -1 && str.indexOf(")") != -1) {
+      parNotes.append(str.mid(str.indexOf("("),
+			      str.indexOf(")") - str.indexOf("(") + 1));
     }
-    title.remove(title.indexOf("("),
-		 title.indexOf(")") - title.indexOf("(") + 1);
+    str.remove(str.indexOf("("),
+	       str.indexOf(")") - str.indexOf("(") + 1);
   }
   parNotes = parNotes.simplified();
 
   return parNotes;
 }
 
-QString StrTools::stripBrackets(QString title)
+QString StrTools::stripBrackets(const QString &str)
 {
-  return title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
+  return str.left(str.indexOf("(")).left(str.indexOf("[")).simplified();
 
 }

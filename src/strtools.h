@@ -33,17 +33,17 @@ class StrTools : public QObject
 public:
   static QString xmlUnescape(QString str);
   static QString xmlEscape(QString str);
-  static QByteArray magic(QByteArray str);
-  static QByteArray unMagic(QByteArray str);
-  static QString conformPlayers(QString str);
+  static QByteArray magic(const QByteArray &str);
+  static QByteArray unMagic(const QByteArray &str);
+  static QString conformPlayers(const QString &str);
   static QString conformAges(QString str);
   static QString conformReleaseDate(QString str);
-  static QString conformTags(QString str);
-  static int getNumeral(const QString &name);
+  static QString conformTags(const QString &str);
+  static int getNumeral(const QString &str);
   static QString getVersionHeader();
-  static QString getSqrNotes(QString title);
-  static QString getParNotes(QString title);
-  static QString stripBrackets(QString title);
+  static QString getSqrNotes(QString str);
+  static QString getParNotes(QString str);
+  static QString stripBrackets(const QString &str);
   
 };
 
