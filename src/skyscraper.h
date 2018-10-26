@@ -64,6 +64,7 @@ private:
   QString secsToString(const int &seconds);
   void checkForFolder(QDir &folder, bool create = true);
   void showHint();
+  void adjustToLimits();
   
   AbstractFrontend *frontend;
 

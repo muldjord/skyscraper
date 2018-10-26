@@ -86,43 +86,8 @@ void Skyscraper::run()
     showHint();
   }
 
-  if(config.scraper == "arcadedb" && config.threads != 1) {
-    printf("\033[1;33mForcing 1 thread to accomodate limits in ArcadeDB scraping module\033[0m\n\n");
-    config.threads = 1;
-  } else if(config.scraper == "openretro" && config.threads != 1) {
-    printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
-    config.threads = 1;
-  } else if(config.scraper == "igdb" && config.userCreds.isEmpty()) {
-    printf("\033[1;33mThe 'igdb' scraping module needs a user key to work. You can get a free one at 'https://api.igdb.com/pricing'. Then supply it by setting it with '-u [key]' or by setting it in one of the 'userCreds' lines in '~/.skyscraper/config.ini'\033[0m\n\n");
-    exit(1);
-  } else if(config.scraper == "mobygames" && config.threads != 1) {
-    printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
-    config.threads = 1;
-    config.romLimit = 25;
-  } else if(config.scraper == "screenscraper") {
-    if(config.user.isEmpty() || config.password.isEmpty()) {
-      if(config.threads > 1) {
-	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
-	config.threads = 1;
-      }
-    } else {
-      NetComm manager;
-      QEventLoop q; // Event loop for use when waiting for data from NetComm.
-      connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-      printf("Fetching limits for user '%s', just a sec...\n", config.user.toStdString().c_str());
-      manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.user + "&sspassword=" + config.password);
-      q.exec();
-      QByteArray data = manager.getData();
-      QByteArray nodeBegin = "<maxthreads>";
-      QByteArray nodeEnd = "</maxthreads>";
-      int allowedThreads = QString(data.mid(data.indexOf(nodeBegin) + nodeBegin.length(), data.indexOf(nodeEnd) - (data.indexOf(nodeBegin) + nodeBegin.length()))).toInt();
-      if(allowedThreads != 0) {
-	config.threads = (allowedThreads <= 8?allowedThreads:8);
-	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
-      }
-    }
-  }
-
+  adjustToLimits();
+  
   doneThreads = 0;
   notFound = 0;
   found = 0;
@@ -1136,6 +1101,46 @@ void Skyscraper::showHint()
     hintsFile.close();
     if(!hints.isEmpty()) {
       printf("\033[1;33mDID YOU KNOW:\033[0m %s\n", hints.at(qrand() % hints.size()).toStdString().c_str());
+    }
+  }
+}
+
+void Skyscraper::adjustToLimits()
+{
+  if(config.scraper == "arcadedb" && config.threads != 1) {
+    printf("\033[1;33mForcing 1 thread to accomodate limits in ArcadeDB scraping module\033[0m\n\n");
+    config.threads = 1;
+  } else if(config.scraper == "openretro" && config.threads != 1) {
+    printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
+    config.threads = 1;
+  } else if(config.scraper == "igdb" && config.userCreds.isEmpty()) {
+    printf("\033[1;33mThe 'igdb' scraping module needs a user key to work. You can get a free one at 'https://api.igdb.com/pricing'. Then supply it by setting it with '-u [key]' or by setting it in one of the 'userCreds' lines in '~/.skyscraper/config.ini'\033[0m\n\n");
+    exit(1);
+  } else if(config.scraper == "mobygames" && config.threads != 1) {
+    printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
+    config.threads = 1;
+    config.romLimit = 25;
+  } else if(config.scraper == "screenscraper") {
+    if(config.user.isEmpty() || config.password.isEmpty()) {
+      if(config.threads > 1) {
+	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+	config.threads = 1;
+      }
+    } else {
+      NetComm manager;
+      QEventLoop q; // Event loop for use when waiting for data from NetComm.
+      connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+      printf("Fetching limits for user '%s', just a sec...\n", config.user.toStdString().c_str());
+      manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.user + "&sspassword=" + config.password);
+      q.exec();
+      QByteArray data = manager.getData();
+      QByteArray nodeBegin = "<maxthreads>";
+      QByteArray nodeEnd = "</maxthreads>";
+      int allowedThreads = QString(data.mid(data.indexOf(nodeBegin) + nodeBegin.length(), data.indexOf(nodeEnd) - (data.indexOf(nodeBegin) + nodeBegin.length()))).toInt();
+      if(allowedThreads != 0) {
+	config.threads = (allowedThreads <= 8?allowedThreads:8);
+	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
+      }
     }
   }
 }
