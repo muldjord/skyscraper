@@ -83,6 +83,8 @@ void EmulationStation::preserveFromOld(GameEntry &entry)
 	entry.eSLastPlayed = oldEntry.eSLastPlayed;
       if(entry.eSKidGame.isEmpty())
 	entry.eSKidGame = oldEntry.eSKidGame;
+      if(entry.eSSortName.isEmpty())
+	entry.eSSortName = oldEntry.eSSortName;
       if(entry.developer.isEmpty())
 	entry.developer = oldEntry.developer;
       if(entry.publisher.isEmpty())
@@ -172,6 +174,9 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
       finalOutput.append("    <players />\n");
     } else {
       finalOutput.append("    <players>" + StrTools::xmlEscape(entry.players) + "</players>\n");
+    }
+    if(!entry.eSSortName.isEmpty()) {
+      finalOutput.append("    <sortname>" + StrTools::xmlEscape(entry.eSSortName) + "</sortname>\n");
     }
     if(!entry.eSFavorite.isEmpty()) {
       finalOutput.append("    <favorite>" + StrTools::xmlEscape(entry.eSFavorite) + "</favorite>\n");

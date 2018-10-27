@@ -82,6 +82,7 @@ QList<GameEntry> XmlReader::getEntries()
     entry.eSPlayCount = gameNodes.at(a).firstChildElement("playcount").text();
     entry.eSLastPlayed = gameNodes.at(a).firstChildElement("lastplayed").text();
     entry.eSKidGame = gameNodes.at(a).firstChildElement("kidgame").text();
+    entry.eSSortName = gameNodes.at(a).firstChildElement("sortname").text();
     gameEntries.append(entry);
   }
   return gameEntries;

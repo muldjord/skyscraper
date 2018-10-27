@@ -107,6 +107,7 @@ public:
   QString eSPlayCount = "";
   QString eSLastPlayed = "";
   QString eSKidGame = "";
+  QString eSSortName = "";
 
   // AttractMode specific metadata for preservation
   // #Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons
