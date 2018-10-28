@@ -167,6 +167,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 * Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
+* Make priorities.xml work from base import folder even with platform subfolder present.
 
 #### Version 2.8.0 (In progress, unreleased)
 * Now tries to preserve EmulationStaton gamelist.xml metadata unless new incoming data exists
