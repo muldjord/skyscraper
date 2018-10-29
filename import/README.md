@@ -4,7 +4,7 @@ NOTE: For any path in the following description, you can also add a platform sub
 ## Images and videos
 To import videos or images into the local Skyscraper resource cache, use the following procedure:
 * Name your image or video file with the EXACT base name of the rom you wish to connect it to. Example: 'Bubble Bobble.nes' will import images with a filename of 'Bubble Bobble.jpg' or 'Bubble Bobble.png' or other image formats. As long as the base name is an exact match. Same goes for video files. I recommend only making use of wellknown video formats, since Skyscraper imports them directly without conversion, so they need to be supported directly by the frontend you plan to use.
-* Place all of your images or videos in the '~/.skyscraper/import/screenshots', 'covers', 'wheels', 'marquees' or 'videos' folder.
+* Place all of your images or videos in the '~/.skyscraper/import/screenshots', 'covers', 'wheels', 'marquees' or 'videos' folders.
 * Now run Skyscraper with 'Skyscraper-p [platform] -s import'. If you named your files correctly, they will now be imported. Look for the green 'YES' in the output at the rom(s) you've placed files for. This will tell you if it succeeded or not.
 * The data is now imported. To now make use of the data, read [here](#how-to-actually-use-the-data).
 
@@ -78,7 +78,7 @@ Date       : The game release date (example '1985-06-01')
 ```
 
 #### List of known tags
-From the examples above you'll notice the '###SOMETHING###' tags. This is what Skyscraper regocnizes your data from. The full list of tags is:
+From the examples above you'll notice the '###SOMETHING###' tags. This is what Skyscraper recognizes your data from. The supported tags are:
 
 * ###TITLE###
 * ###DESCRIPTION###
