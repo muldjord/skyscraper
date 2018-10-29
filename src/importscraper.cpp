@@ -239,7 +239,12 @@ void ImportScraper::loadData()
 bool ImportScraper::loadDefinitions()
 {
   // Check for textual resource file
-  QFile defFile(config->importFolder + "/definitions.dat");
+  QFile defFile;
+  if(QFile::exists(config->importFolder + "/definitions.dat")) {
+    defFile.setFileName(config->importFolder + "/definitions.dat");
+  } else {
+    defFile.setFileName(config->importFolder + "/../definitions.dat");
+  }
   if(defFile.open(QIODevice::ReadOnly)) {
     while(!defFile.atEnd()) {
       QString line(defFile.readLine());
