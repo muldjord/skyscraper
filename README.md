@@ -168,7 +168,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
 
-#### Version 2.8.0 (In progress, unreleased)
+#### Version 2.8.0 (4th November 2018)
 * Now tries to preserve EmulationStaton gamelist.xml metadata unless new incoming data exists
 * Now tries to preserve AttractMode romlist metadata unless new incoming data exists
 * Improved terminal output a bit with fflush and progress dots
