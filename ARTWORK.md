@@ -1,7 +1,7 @@
 # Artwork look and effects
 Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file '`~/.skyscraper/artwork.xml`'. Each piece of artwork can be composited of one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
 
-NOTE!!! The following only applies to Skyscraper version 2.3.0 and later. Get it by following the instructions [here](README.md#how-to-install-skyscraper).
+NOTE!!! Some users seem to have a habbit of editing the '~/skysource/artwork.xml' file. THIS IS NOT THE CORRECT FILE! Please read the above. :)
 
 Watch a video demonstrating [the features here](https://youtu.be/TIDD8EFSz50)
 
