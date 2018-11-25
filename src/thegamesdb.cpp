@@ -367,7 +367,7 @@ void TheGamesDb::loadMaps()
   platformMap[4926] = "WonderSwan Color";
 
   {
-    QFile jsonFile("/usr/local/etc/skyscraper/tgdb_developers.json");
+    QFile jsonFile("tgdb_developers.json");
     if(jsonFile.open(QIODevice::ReadOnly)) {
       QJsonObject jsonDevs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("developers").toObject();
       for(QJsonObject::iterator it = jsonDevs.begin(); it != jsonDevs.end(); ++it) {
@@ -377,7 +377,7 @@ void TheGamesDb::loadMaps()
     }
   }
   {
-    QFile jsonFile("/usr/local/etc/skyscraper/tgdb_publishers.json");
+    QFile jsonFile("tgdb_publishers.json");
     if(jsonFile.open(QIODevice::ReadOnly)) {
       QJsonObject jsonPubs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("publishers").toObject();
       for(QJsonObject::iterator it = jsonPubs.begin(); it != jsonPubs.end(); ++it) {

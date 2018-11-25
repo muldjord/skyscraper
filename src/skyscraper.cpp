@@ -507,6 +507,14 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/mameMap.csv";
   copyFile(distro, current);
   
+  current = "tgdb_developers.json";
+  distro = "/usr/local/etc/skyscraper/tgdb_developers.json";
+  copyFile(distro, current);
+
+  current = "tgdb_publishers.json";
+  distro = "/usr/local/etc/skyscraper/tgdb_publishers.json";
+  copyFile(distro, current);
+
   current = "resources/boxfront.png";
   distro = "/usr/local/etc/skyscraper/resources/boxfront.png";
   copyFile(distro, current);
