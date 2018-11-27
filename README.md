@@ -167,6 +167,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 * Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
 * Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
+* Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 
 #### Version 2.8.1 (25th November 2018)
 * Now loads tgdb json files from "~/.skyscraper"
