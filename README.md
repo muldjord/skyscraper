@@ -165,9 +165,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add option to --purgedb to purge all resources not related to your current romset
 * Add option to --purgedb to purge everything completely
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
-* Make it possible to customize which entries are updated in the gamelist.xml file. So a user can ask Skyscraper to ONLY scrape, for instance, release dates and leave the rest of the nodes intact
-* Add '--replace' for use with ranged scraping. So it will write the gamelist, but only for those entries that are in the range. The rest are kept from the existing gamelist entries.
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
+
+#### Version 2.8.2 (In progress, unreleased)
+* Now autodetects region from filename and prioritizes it when scraping with "screenscraper" unless user has forced region with "--region" option (thank you to "movisman" for suggesting this)
+* Added ".cue" file extension to Amiga
 
 #### Version 2.8.1 (25th November 2018)
 * Now loads tgdb json files from "~/.skyscraper"
