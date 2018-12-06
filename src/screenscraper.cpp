@@ -54,12 +54,6 @@ ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 				     QString searchName, QString platform)
 {
-  /*
-  if(user.isEmpty() || password.isEmpty()) {
-    printf("'screenscraper' requires a userID and password to function. Please use '-u' to set them. Check '--help' for more information.\n");
-    exit(1);
-  }
-  */
   QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&ssid=" + config->user + "&sspassword=" + config->password + "&output=xml&" + searchName;
   manager.request(gameUrl);
   q.exec();
@@ -309,6 +303,24 @@ void ScreenScraper::getVideo(GameEntry &game)
 
 QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 {
+  // Reset regions as this is a new rom
+  romRegions = regionPrios;
+  if(info.fileName().indexOf("(") != -1 && config->region.isEmpty()) {
+    QString regionString = info.fileName().toLower().mid(info.fileName().indexOf("("), info.fileName().length());
+    if(regionString.indexOf("europe") != -1) {
+      romRegions.prepend("eu");
+    }
+    if(regionString.indexOf("usa") != -1) {
+      romRegions.prepend("us");
+    }
+    if(regionString.indexOf("world") != -1) {
+      romRegions.prepend("wor");
+    }
+    if(regionString.indexOf("japan") != -1) {
+      romRegions.prepend("jp");
+    }
+  }
+  
   QList<QString> hashList;
   QCryptographicHash md5(QCryptographicHash::Md5);
   QCryptographicHash sha1(QCryptographicHash::Sha1);
@@ -402,7 +414,7 @@ QString ScreenScraper::getXmlText(QString node, int attr, QString type)
       }
     }
   } else if(attr == REGION) {
-    foreach(QString region, regionPrios) {
+    foreach(QString region, romRegions) {
       for(int a = 0; a < xmlNodes.length(); ++a) {
 	QDomElement elem = xmlNodes.at(a).toElement();
 	if(type != "" && elem.attribute("type") != type)

@@ -65,6 +65,8 @@ private:
   QString region;
   QString lang;
   QDomDocument xmlDoc;  
+
+  QList<QString> romRegions;
   
 };
 
