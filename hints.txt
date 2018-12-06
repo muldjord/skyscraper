@@ -9,7 +9,7 @@ You can import your own data into the local cache using the 'import' module. You
 You can prioritize the sources of each resource type by editing the '~/.skyscraper/dbs/[platform]/priorities.xml'. Each resource type has a node with source nodes inside. If you want to prioritize a certain source for a certain resource type, just move it to the top or add it if it's not already there.
 You can turn off these hints using the '--nohints' command line option.
 You can force Skyscraper no never apply any bracket notes (such as '(Europe)' or '[aga]') to the game names by using the '--nobrackets' command line option.
-If you don't like the returned titles of your games, you can either import your own with the '-s imort' module or force it to use the filenames with the '--forcefilename' command line option.
+If you don't like the returned titles of your games, you can either import your own with the '-s import' module or force it to use the filenames with the '--forcefilename' command line option.
 You can scrape a single game by adding it to the command line either with partial or full path. You can also scrape a span of games with the '--startat' and '--endat' command line options.
 By adding the '--dbstats' command line option, you can check the status of the resources that are cached for the platform you are scraping.
 You can use the '--help' command line option to view all available options. Most of these can also be set in the '~/.skyscraper/config.ini'. Check the '~/.skyscraper/config.ini.example' file for all available options.
