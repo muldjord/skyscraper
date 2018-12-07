@@ -167,8 +167,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 
-#### Version 2.8.2 (6th December 2018)
+#### Version 2.8.2 (7th December 2018)
 * Now autodetects region from filename and prioritizes it when scraping with "screenscraper" unless user has forced region with "--region" option (thank you to "movisman" for suggesting this)
+* Fixed issue where "wheel" artwork would not be fetched for specified region even though it exists
 * Added ".cue" file extension to Amiga
 
 #### Version 2.8.1 (25th November 2018)
