@@ -84,7 +84,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
   game.url = gameUrl;
   game.platform = xmlDoc.elementsByTagName("systeme").at(0).toElement().text();
-
+  
   if(platformMatch(game.platform, platform)) {
     gameEntries.append(game);
   }
@@ -411,17 +411,22 @@ QString ScreenScraper::getXmlText(QString node, int attr, QString type)
       }
     }
   } else if(attr == REGION) {
+    QList<QString> types = type.split(";");
     foreach(QString region, romRegions) {
       for(int a = 0; a < xmlNodes.length(); ++a) {
 	QDomElement elem = xmlNodes.at(a).toElement();
-	QList<QString> types = type.split(";");
-	bool notFound = true;
-	foreach(QString currentType, types) {
-	  if(currentType != "" &&
-	     elem.attribute("type") != currentType)
-	    notFound = false;
+	bool typeMatch = false;
+	if(type.isEmpty()) {
+	  typeMatch = true;
+	} else {
+	  foreach(QString currentType, types) {
+	    if(elem.attribute("type") == currentType) {
+	      typeMatch = true;
+	      break;
+	    }
+	  }
 	}
-	if(notFound)
+	if(!typeMatch)
 	  continue;
 	if(elem.attribute("region") == region) {
 	  return elem.text();
