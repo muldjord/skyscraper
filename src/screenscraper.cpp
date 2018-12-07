@@ -256,7 +256,7 @@ void ScreenScraper::getScreenshot(GameEntry &game)
 
 void ScreenScraper::getWheel(GameEntry &game)
 {
-  QString url = getXmlText("media", REGION, "wheel");
+  QString url = getXmlText("media", REGION, "wheel;wheel-hd");
   if(!url.isEmpty()) {
     manager.request(url);
     q.exec();
@@ -414,7 +414,14 @@ QString ScreenScraper::getXmlText(QString node, int attr, QString type)
     foreach(QString region, romRegions) {
       for(int a = 0; a < xmlNodes.length(); ++a) {
 	QDomElement elem = xmlNodes.at(a).toElement();
-	if(type != "" && !elem.attribute("type").left(type.length()).contains(type))
+	QList<QString> types = type.split(";");
+	bool notFound = true;
+	foreach(QString currentType, types) {
+	  if(currentType != "" &&
+	     elem.attribute("type") != currentType)
+	    notFound = false;
+	}
+	if(notFound)
 	  continue;
 	if(elem.attribute("region") == region) {
 	  return elem.text();
