@@ -31,7 +31,6 @@
 #include <QFileInfo>
 #include <QSettings>
 
-#include "regionlist.h"
 #include "netcomm.h"
 #include "gameentry.h"
 #include "settings.h"
