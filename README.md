@@ -160,12 +160,13 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Add 'sharpen' effect which sharpens the image
-* Improved 'blur' and 'shadow' effect to be true gaussian
-* Add option to --purgedb to purge all resources not related to your current romset
-* Add option to --purgedb to purge everything completely
-* Change 'reqRemaining' variable to work better when Skyscraper is supposed to clean up and exit
+* Add "sharpen" effect which sharpens the image
+* Improved "blur" and "shadow" effect to be true gaussian
+* Add option to "--purgedb" to purge all resources not related to your current romset
+* Add option to "--purgedb" to purge everything completely
+* Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
+* Add "noResize" to config.ini variables
 
 #### Version 2.8.2 (7th December 2018)
 * Now autodetects region from filename and prioritizes it when scraping with "screenscraper" unless user has forced region with "--region" option (thank you to "movisman" for suggesting this)
