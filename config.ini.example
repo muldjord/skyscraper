@@ -53,6 +53,7 @@
 #noHints="false"
 
 [localDb]
+#noResize="false"
 #covers="true"
 #screenshots="true"
 #wheels="true"
@@ -70,6 +71,8 @@
 #brackets="true"
 #scraper="screenscraper"
 #userCreds="user:password"
+#lang="en"
+#region="wor"
 #minMatch="0"
 ##Sets the maximum allowed 'description' for the games
 #maxLength="10000"
