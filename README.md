@@ -160,6 +160,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
+* Add "scanline" effect that overlays scanlines on the underlaying layer (Thank you to "jakejm79" for suggesting this)
 * Add "sharpen" effect which sharpens the image
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add option to "--purgedb" to purge all resources not related to your current romset
