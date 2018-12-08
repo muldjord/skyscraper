@@ -31,6 +31,7 @@
 #include <QFileInfo>
 #include <QSettings>
 
+#include "regionlist.h"
 #include "netcomm.h"
 #include "gameentry.h"
 #include "settings.h"
@@ -57,6 +58,7 @@ public:
 protected:
   Settings *config;
   QList<QString> regionPrios;
+  QList<QString> regionPriosOrig;
   QList<QString> langPrios;
 
   virtual void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,

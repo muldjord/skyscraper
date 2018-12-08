@@ -300,24 +300,6 @@ void ScreenScraper::getVideo(GameEntry &game)
 
 QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 {
-  // Reset regions as this is a new rom
-  romRegions = regionPrios;
-  if(info.fileName().indexOf("(") != -1 && config->region.isEmpty()) {
-    QString regionString = info.fileName().toLower().mid(info.fileName().indexOf("("), info.fileName().length());
-    if(regionString.indexOf("europe") != -1) {
-      romRegions.prepend("eu");
-    }
-    if(regionString.indexOf("usa") != -1) {
-      romRegions.prepend("us");
-    }
-    if(regionString.indexOf("world") != -1) {
-      romRegions.prepend("wor");
-    }
-    if(regionString.indexOf("japan") != -1) {
-      romRegions.prepend("jp");
-    }
-  }
-  
   QList<QString> hashList;
   QCryptographicHash md5(QCryptographicHash::Md5);
   QCryptographicHash sha1(QCryptographicHash::Sha1);
@@ -412,7 +394,7 @@ QString ScreenScraper::getXmlText(QString node, int attr, QString type)
     }
   } else if(attr == REGION) {
     QList<QString> types = type.split(";");
-    foreach(QString region, romRegions) {
+    foreach(QString region, regionPrios) {
       for(int a = 0; a < xmlNodes.length(); ++a) {
 	QDomElement elem = xmlNodes.at(a).toElement();
 	bool typeMatch = false;

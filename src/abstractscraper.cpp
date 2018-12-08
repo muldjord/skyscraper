@@ -530,11 +530,31 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
 
 void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &debug)
 {
+  // Reset region priorities to original list
+  regionPrios = regionPriosOrig;
+  // Autodetect region and append to region priorities
+  if(info.fileName().indexOf("(") != -1 && config->region.isEmpty()) {
+    QString regionString = info.fileName().toLower().mid(info.fileName().indexOf("("), info.fileName().length());
+    if(regionString.indexOf("europe") != -1) {
+      regionPrios.prepend("eu");
+    }
+    if(regionString.indexOf("usa") != -1) {
+      regionPrios.prepend("us");
+    }
+    if(regionString.indexOf("world") != -1) {
+      regionPrios.prepend("wor");
+    }
+    if(regionString.indexOf("japan") != -1) {
+      regionPrios.prepend("jp");
+    }
+  }
+  
   QList<QString> searchNames;
-  if(!config->searchName.isEmpty()) {
-    searchNames.append(config->searchName);
-  } else {
+  if(config->searchName.isEmpty()) {
     searchNames = getSearchNames(info);
+  } else {
+    // Add the string provided by "--query"
+    searchNames.append(config->searchName);
   }
 
   if(searchNames.isEmpty()) {
@@ -563,6 +583,9 @@ void AbstractScraper::setRegionPrios()
   regionPrios.append("uk");
   regionPrios.append("wor");
   regionPrios.append("jp");
+
+  // Set original list so we can reset every time we do runPasses
+  regionPriosOrig = regionPrios;
 }
 
 void AbstractScraper::setLangPrios()

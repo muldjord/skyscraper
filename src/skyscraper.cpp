@@ -693,7 +693,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   settings.endGroup();
 
+  // localDb specific configs
   settings.beginGroup("localDb");
+  if(settings.contains("noResize")) {
+    config.noResize = settings.value("noResize").toBool();
+  }
   if(settings.contains("covers")) {
     config.cacheCovers = settings.value("covers").toBool();
   }
@@ -755,6 +759,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("userCreds")) {
     config.userCreds = settings.value("userCreds").toString();
+  }
+  if(settings.contains("lang")) {
+    config.lang = settings.value("lang").toString();
+  }
+  if(settings.contains("region")) {
+    config.region = settings.value("region").toString();
   }
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
