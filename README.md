@@ -169,7 +169,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 * Add "noResize" to config.ini variables
 
-#### Version 2.8.3 (In progress, unreleased)
+#### Version 2.8.3 (8th December 2018)
 * Added "region" and "lang" options to "[platform]" section of config.ini
 * Added "noResize" variable to "[localDb]" config.ini section
 * Fixed bug where "--query" would stop working when region was autodetected
