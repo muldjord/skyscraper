@@ -1135,6 +1135,24 @@ void Skyscraper::showHint()
 
 void Skyscraper::adjustToLimits()
 {
+  if(config.platform == "amiga") {
+    NetComm manager;
+    QEventLoop q; // Event loop for use when waiting for data from NetComm.
+    connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+    printf("Fetching 'whdload_db.xml', just a sec...");
+    manager.request("https://raw.githubusercontent.com/HoraceAndTheSpider/Amiberry-XML-Builder/master/whdload_db.xml");
+    q.exec();
+    QByteArray data = manager.getData();
+    QFile whdLoadFile("whdLoad_db.xml");
+    if(data.size() > 1000000 && whdLoadFile.open(QIODevice::WriteOnly)) {
+      whdLoadFile.write(data);
+      whdLoadFile.close();
+      printf("\033[1;32m Success!\033[0m\n\n");
+    } else {
+      printf("\033[1;31m Failed!\033[0m\n\n");
+    }
+  }
+
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in ArcadeDB scraping module\033[0m\n\n");
     config.threads = 1;
