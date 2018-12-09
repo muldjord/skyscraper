@@ -431,7 +431,9 @@ void Skyscraper::checkThreads()
   frontend->sortEntries(gameEntries);
 
   QString finalOutput;
+  printf("Assembling game list...");
   frontend->assembleList(finalOutput, gameEntries, config.maxLength);
+  printf(" \033[1;32mDone!!!\033[0m\n");
     
   if(!config.pretend) {
     QFile gameListFile(gameListFileString);
