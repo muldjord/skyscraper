@@ -167,10 +167,11 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add option to "--purgedb" to purge everything completely
 * Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
-* Add "noResize" to config.ini variables
+* Add the "--symlink" option that symlinks videos to media folder instead of copying them
 
 #### Version 2.9.0 (In progress, unreleased)
-* Now looks up Amiga .lha files in the Amiberry whdload_db.xml and retrieves data from "openretro.org" based on the uuid from the xml
+* MAJOR: Now looks up Amiga lha files in the Amiberry "whdload_db.xml" and retrieves data from "openretro.org" based on the uuid from the xml
+* Added "<scanline>" effect to compositor. Check documentation at github for more info
 
 #### Version 2.8.3 (8th December 2018)
 * Added "region" and "lang" options to "[platform]" section of config.ini
