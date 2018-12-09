@@ -561,6 +561,14 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/resources/frameexample.png";
   copyFile(distro, current, false);
 
+  current = "resources/scanlines1.png";
+  distro = "/usr/local/etc/skyscraper/resources/scanlines1.png";
+  copyFile(distro, current, false);
+
+  current = "resources/scanlines2.png";
+  distro = "/usr/local/etc/skyscraper/resources/scanlines2.png";
+  copyFile(distro, current, false);
+
   // Copy one of the example definitions.dat files if none exists
   current = "import/definitions.dat";
   distro = "/usr/local/etc/skyscraper/import/definitions.dat.example2";
