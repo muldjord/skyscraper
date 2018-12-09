@@ -1143,7 +1143,7 @@ void Skyscraper::adjustToLimits()
     manager.request("https://raw.githubusercontent.com/HoraceAndTheSpider/Amiberry-XML-Builder/master/whdload_db.xml");
     q.exec();
     QByteArray data = manager.getData();
-    QFile whdLoadFile("whdLoad_db.xml");
+    QFile whdLoadFile("whdload_db.xml");
     if(data.size() > 1000000 && whdLoadFile.open(QIODevice::WriteOnly)) {
       whdLoadFile.write(data);
       whdLoadFile.close();
