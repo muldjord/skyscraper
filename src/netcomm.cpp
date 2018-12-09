@@ -61,9 +61,9 @@ void NetComm::replyReady()
   disconnect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
   requestTimer.stop();
   contentType = reply->rawHeader("Content-Type");
+  redirUrl = reply->rawHeader("Location");
   data = reply->readAll();
   reply->deleteLater();
-
   emit dataReady();
 }
 
@@ -75,6 +75,11 @@ QByteArray NetComm::getData()
 QByteArray NetComm::getContentType()
 {
   return contentType;
+}
+
+QByteArray NetComm::getRedirUrl()
+{
+  return redirUrl;
 }
 
 void NetComm::cancelRequest()
@@ -90,6 +95,7 @@ void NetComm::cancelRequest()
 void NetComm::clearAll()
 {
   //clearAccessCache();
+  redirUrl.clear();
   contentType.clear();
   data.clear();
 }

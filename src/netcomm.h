@@ -40,6 +40,7 @@ public:
 	       QString headerKey = "", QString headerValue = "");
   QByteArray getData();
   QByteArray getContentType();
+  QByteArray getRedirUrl();
 
 private slots:
   void replyReady();
@@ -52,6 +53,7 @@ private:
   void clearAll();
   QTimer requestTimer;
   QNetworkReply *reply;
+  QByteArray redirUrl;
   QByteArray contentType;
   QByteArray data;
 };
