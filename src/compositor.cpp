@@ -47,6 +47,7 @@
 #include "fxsaturation.h"
 #include "fxcolorize.h"
 #include "fxrotate.h"
+#include "fxscanlines.h"
 
 Compositor::Compositor(Settings *config)
 {
@@ -80,19 +81,19 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("type")) {
 	newLayer.setType(T_OUTPUT);
-	newLayer.setResType(attribs.value("", "type").toString());
+	newLayer.setResType(attribs.value("type").toString());
 	if(attribs.hasAttribute("resource")) {
-	  newLayer.setResource(attribs.value("", "resource").toString());
+	  newLayer.setResource(attribs.value("resource").toString());
 	} else {
-	  newLayer.setResource(attribs.value("", "type").toString());
+	  newLayer.setResource(attribs.value("type").toString());
 	}
       }
       if(attribs.hasAttribute("width"))
-	newLayer.setWidth(attribs.value("", "width").toInt());
+	newLayer.setWidth(attribs.value("width").toInt());
       if(attribs.hasAttribute("height"))
-	newLayer.setHeight(attribs.value("", "height").toInt());
+	newLayer.setHeight(attribs.value("height").toInt());
       if(attribs.hasAttribute("mpixels"))
-	newLayer.setMPixels(attribs.value("", "mpixels").toDouble());
+	newLayer.setMPixels(attribs.value("mpixels").toDouble());
 
       if(newLayer.type != T_NONE) {
 	addChildLayers(newLayer, xml);
@@ -102,25 +103,25 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       QXmlStreamAttributes attribs = xml.attributes();
       newLayer.setType(T_LAYER);
       if(attribs.hasAttribute("resource"))
-	newLayer.setResource(attribs.value("", "resource").toString());
+	newLayer.setResource(attribs.value("resource").toString());
       if(attribs.hasAttribute("mode"))
-	newLayer.setMode(attribs.value("", "mode").toString());
+	newLayer.setMode(attribs.value("mode").toString());
       if(attribs.hasAttribute("opacity"))
-	newLayer.setOpacity(attribs.value("", "opacity").toInt());
+	newLayer.setOpacity(attribs.value("opacity").toInt());
       if(attribs.hasAttribute("width"))
-	newLayer.setWidth(attribs.value("", "width").toInt());
+	newLayer.setWidth(attribs.value("width").toInt());
       if(attribs.hasAttribute("height"))
-	newLayer.setHeight(attribs.value("", "height").toInt());
+	newLayer.setHeight(attribs.value("height").toInt());
       if(attribs.hasAttribute("mpixels"))
-	newLayer.setMPixels(attribs.value("", "mpixels").toDouble());
+	newLayer.setMPixels(attribs.value("mpixels").toDouble());
       if(attribs.hasAttribute("align"))
-	newLayer.setAlign(attribs.value("", "align").toString());
+	newLayer.setAlign(attribs.value("align").toString());
       if(attribs.hasAttribute("valign"))
-	newLayer.setVAlign(attribs.value("", "valign").toString());
+	newLayer.setVAlign(attribs.value("valign").toString());
       if(attribs.hasAttribute("x"))
-	newLayer.setX(attribs.value("", "x").toInt());
+	newLayer.setX(attribs.value("x").toInt());
       if(attribs.hasAttribute("y"))
-	newLayer.setY(attribs.value("", "y").toInt());
+	newLayer.setY(attribs.value("y").toInt());
       addChildLayers(newLayer, xml);
       layer.addLayer(newLayer);
     } else if(xml.isStartElement() && xml.name() == "shadow") {
@@ -147,13 +148,13 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setType(T_MASK);
 	newLayer.setResource(attribs.value("file").toString());
 	if(attribs.hasAttribute("width"))
-	  newLayer.setWidth(attribs.value("", "width").toInt());
+	  newLayer.setWidth(attribs.value("width").toInt());
 	if(attribs.hasAttribute("height"))
-	  newLayer.setHeight(attribs.value("", "height").toInt());
+	  newLayer.setHeight(attribs.value("height").toInt());
 	if(attribs.hasAttribute("x"))
-	  newLayer.setX(attribs.value("", "x").toInt());
+	  newLayer.setX(attribs.value("x").toInt());
 	if(attribs.hasAttribute("y"))
-	  newLayer.setY(attribs.value("", "y").toInt());
+	  newLayer.setY(attribs.value("y").toInt());
 	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "frame") {
@@ -162,13 +163,13 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setType(T_FRAME);
 	newLayer.setResource(attribs.value("file").toString());
 	if(attribs.hasAttribute("width"))
-	  newLayer.setWidth(attribs.value("", "width").toInt());
+	  newLayer.setWidth(attribs.value("width").toInt());
 	if(attribs.hasAttribute("height"))
-	  newLayer.setHeight(attribs.value("", "height").toInt());
+	  newLayer.setHeight(attribs.value("height").toInt());
 	if(attribs.hasAttribute("x"))
-	  newLayer.setX(attribs.value("", "x").toInt());
+	  newLayer.setX(attribs.value("x").toInt());
 	if(attribs.hasAttribute("y"))
-	  newLayer.setY(attribs.value("", "y").toInt());
+	  newLayer.setY(attribs.value("y").toInt());
 	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "stroke") {
@@ -177,13 +178,13 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setType(T_STROKE);
 	newLayer.setWidth(attribs.value("width").toInt());
 	if(attribs.hasAttribute("color"))
-	  newLayer.colorFromHex(attribs.value("", "color").toString());
+	  newLayer.colorFromHex(attribs.value("color").toString());
 	if(attribs.hasAttribute("red"))
-	  newLayer.setRed(attribs.value("", "red").toInt());
+	  newLayer.setRed(attribs.value("red").toInt());
 	if(attribs.hasAttribute("green"))
-	  newLayer.setGreen(attribs.value("", "green").toInt());
+	  newLayer.setGreen(attribs.value("green").toInt());
 	if(attribs.hasAttribute("blue"))
-	  newLayer.setBlue(attribs.value("", "blue").toInt());
+	  newLayer.setBlue(attribs.value("blue").toInt());
 	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "rounded") {
@@ -218,11 +219,11 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       QXmlStreamAttributes attribs = xml.attributes();
       newLayer.setType(T_BALANCE);
       if(attribs.hasAttribute("red"))
-	newLayer.setRed(attribs.value("", "red").toInt());
+	newLayer.setRed(attribs.value("red").toInt());
       if(attribs.hasAttribute("green"))
-	newLayer.setGreen(attribs.value("", "green").toInt());
+	newLayer.setGreen(attribs.value("green").toInt());
       if(attribs.hasAttribute("blue"))
-	newLayer.setBlue(attribs.value("", "blue").toInt());
+	newLayer.setBlue(attribs.value("blue").toInt());
       layer.addLayer(newLayer);
     } else if(xml.isStartElement() && xml.name() == "gamebox") {
       QXmlStreamAttributes attribs = xml.attributes();
@@ -252,9 +253,9 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       QXmlStreamAttributes attribs = xml.attributes();
       if(attribs.hasAttribute("hue")) {
 	newLayer.setType(T_COLORIZE);
-	newLayer.setValue(attribs.value("", "hue").toInt());
+	newLayer.setValue(attribs.value("hue").toInt());
 	if(attribs.hasAttribute("saturation"))
-	  newLayer.setDelta(attribs.value("", "saturation").toInt());
+	  newLayer.setDelta(attribs.value("saturation").toInt());
 	layer.addLayer(newLayer);
       }
     } else if(xml.isStartElement() && xml.name() == "rotate") {
@@ -263,9 +264,24 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setType(T_ROTATE);
 	newLayer.setDelta(attribs.value("degrees").toInt());
 	if(attribs.hasAttribute("axis"))
-	  newLayer.setAxis(attribs.value("", "axis").toString());
+	  newLayer.setAxis(attribs.value("axis").toString());
 	layer.addLayer(newLayer);
       }
+    } else if(xml.isStartElement() && xml.name() == "scanlines") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(attribs.hasAttribute("resource")) {
+	newLayer.setResource(attribs.value("resource").toString());
+      }
+      if(attribs.hasAttribute("opacity")) {
+	newLayer.setOpacity(attribs.value("opacity").toInt());
+      }
+      if(attribs.hasAttribute("mode")) {
+	newLayer.setMode(attribs.value("mode").toString());
+      } else {
+	newLayer.setMode("overlay");
+      }
+      newLayer.setType(T_SCANLINES);
+      layer.addLayer(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
     } else if(xml.isEndElement() && xml.name() == "output") {
@@ -442,6 +458,9 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
     } else if(thisLayer.type == T_ROTATE) {
       FxRotate effect;
       layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer));
+    } else if(thisLayer.type == T_SCANLINES) {
+      FxScanlines effect;
+      layer.setCanvas(effect.applyEffect(layer.canvas, thisLayer, config));
     }
     // Update width and height only for effects that change the dimensions in a way that
     // necessitates an update. For instance T_SHADOW does NOT require an update since we don't
