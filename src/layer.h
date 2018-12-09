@@ -44,6 +44,7 @@
 #define T_SATURATION 15
 #define T_COLORIZE 16
 #define T_ROTATE 17
+#define T_SCANLINES 18
 
 #include <QImage>
 #include <QPainter>
