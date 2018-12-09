@@ -51,6 +51,7 @@ public:
   void setRegionPrios();
   void setLangPrios();
   void loadMameMap();
+  void loadWhdLoadMap();
 
   int reqRemaining = -1;
   
@@ -130,6 +131,7 @@ protected:
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
 
   QMap<QString, QString> mameMap;
+  QMap<QString, QPair<QString, QString> > whdLoadMap;
   
 };
 

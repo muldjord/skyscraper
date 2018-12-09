@@ -26,8 +26,10 @@
 #include "abstractscraper.h"
 #include "platform.h"
 #include "nametools.h"
+#include "strtools.h"
 
 #include <QRegularExpression>
+#include <QDomDocument>
 
 AbstractScraper::AbstractScraper(Settings *config)
 {
@@ -413,7 +415,12 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
   
   if(config->scraper != "import") {
     if(info.suffix() == "lha") {
-      baseName = NameTools::getNameWithSpaces(baseName);
+      QString nameWithSpaces = whdLoadMap[baseName].first;
+      if(nameWithSpaces.isEmpty()) {
+	baseName = NameTools::getNameWithSpaces(baseName);
+      } else {
+	baseName = nameWithSpaces;
+      }
     }
     if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
@@ -621,6 +628,28 @@ void AbstractScraper::loadMameMap()
 	mameMap[mameName] = realName;
       }
       mameMapFile.close();
+    }
+  }
+}
+
+void AbstractScraper::loadWhdLoadMap()
+{
+  if(config->platform == "amiga") {
+    QDomDocument doc;
+    QFile whdLoadFile("whdload_db.xml");
+    if(whdLoadFile.open(QIODevice::ReadOnly)) {
+      QByteArray rawXml = whdLoadFile.readAll();
+      whdLoadFile.close();
+      if(doc.setContent(rawXml)) {
+	QDomNodeList gameNodes = doc.elementsByTagName("game");
+	for(int a = 0; a < gameNodes.length(); ++a) {
+	  QDomNode gameNode = gameNodes.at(a);
+	  QPair<QString, QString> gamePair;
+	  gamePair.first = gameNode.firstChildElement("name").text();
+	  gamePair.second = gameNode.firstChildElement("variant_uuid").text();
+	  whdLoadMap[gameNode.toElement().attribute("filename")] = gamePair;
+	}
+      }
     }
   }
 }
