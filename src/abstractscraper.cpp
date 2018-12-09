@@ -636,7 +636,15 @@ void AbstractScraper::loadWhdLoadMap()
 {
   if(config->platform == "amiga") {
     QDomDocument doc;
-    QFile whdLoadFile("whdload_db.xml");
+
+    QFile whdLoadFile;
+    if(QFileInfo::exists("whdload_db.xml"))
+      whdLoadFile.setFileName("whdload_db.xml");
+    else if(QFileInfo::exists("/opt/retropie/emulators/amiberry/whdboot/game-data/whdload_db.xml"))
+      whdLoadFile.setFileName("/opt/retropie/emulators/amiberry/whdboot/game-data/whdload_db.xml");
+    else
+      return;
+
     if(whdLoadFile.open(QIODevice::ReadOnly)) {
       QByteArray rawXml = whdLoadFile.readAll();
       whdLoadFile.close();
