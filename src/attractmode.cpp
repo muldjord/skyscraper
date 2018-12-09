@@ -143,6 +143,11 @@ void AttractMode::preserveFromOld(GameEntry &entry)
 
 void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int)
 {
+  int dots = 0;
+  int dotMod = gameEntries.length() * 0.1;
+  if(dotMod == 0)
+    dotMod = 1;
+
   QFileInfo emuInfo(config->emulator);
   bool saveDescFile = true;
   QDir descDir(config->gameListFolder + "/" + emuInfo.completeBaseName());
@@ -151,6 +156,11 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
   }
   finalOutput.append("#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n");
   foreach(GameEntry entry, gameEntries) {
+    if(dots % dotMod == 0) {
+      printf(".");
+      fflush(stdout);
+    }
+    dots++;
     // Preserve certain data from old game list entry, but only for empty data
     preserveFromOld(entry);
 

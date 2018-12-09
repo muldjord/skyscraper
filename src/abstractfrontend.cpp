@@ -44,7 +44,7 @@ void AbstractFrontend::sortEntries(QList<GameEntry> &gameEntries)
   int dots = 0;
   qSort(gameEntries.begin(), gameEntries.end(),
 	[&dots](const GameEntry a, const GameEntry b) -> bool {
-	  if(dots % 200 == 0) {
+	  if(dots % 1000 == 0) {
 	    printf(".");
 	    fflush(stdout);
 	  }

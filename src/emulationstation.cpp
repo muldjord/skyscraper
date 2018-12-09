@@ -107,8 +107,17 @@ void EmulationStation::preserveFromOld(GameEntry &entry)
 void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries,
 				    int maxLength)
 {
+  int dots = 0;
+  int dotMod = gameEntries.length() * 0.1;
+  if(dotMod == 0)
+    dotMod = 1;
   finalOutput.append("<?xml version=\"1.0\"?>\n<gameList>\n");
   foreach(GameEntry entry, gameEntries) {
+    if(dots % dotMod == 0) {
+      printf(".");
+      fflush(stdout);
+    }
+    dots++;
     // Used to replace to achieve relative paths if '--relative' is set
     QString absolutePath = QFileInfo(entry.path).absolutePath();
     
