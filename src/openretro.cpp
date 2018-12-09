@@ -34,7 +34,7 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
 
   baseUrl = "https://openretro.org";
 
-  searchUrlPre = "https://openretro.org/browse?q=";
+  searchUrlPre = "https://openretro.org";
   searchUrlPost = "&unpublished=1";
   
   searchResultPre = "<div style='margin-bottom: 4px;'>";
@@ -85,48 +85,68 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
 void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
 				 QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + searchName + searchUrlPost);
+  QString finalSearchName = searchName;
+  if(searchName.left(6) == "/game/") {
+    finalSearchName = searchName.split(";").first();
+  }
+  manager.request(searchUrlPre + finalSearchName + (searchName.left(6) == "/game/"?"":searchUrlPost));
   q.exec();
+  while(!manager.getRedirUrl().isEmpty()) {
+    manager.request(manager.getRedirUrl());
+    q.exec();
+  }
   data = manager.getData();
 
   if(data.isEmpty())
     return;
-  
+
+  if(data.contains("Error: 500 Internal Server Error") ||
+     data.contains("Error: 404 Not Found"))
+    return;
+
   GameEntry game;
   
-  while(data.indexOf(searchResultPre) != -1) {
-    nomNom(searchResultPre);
-
-    // Digest until url
-    foreach(QString nom, urlPre) {
-      nomNom(nom);
-    }
-    game.url = baseUrl + "/" + data.left(data.indexOf(urlPost)) + "/edit";
-
-    // Digest until title
-    foreach(QString nom, titlePre) {
-      nomNom(nom);
-    }
-    game.title = data.left(data.indexOf(titlePost)).replace("[AGA]", "").simplified();
-
-    // Digest until platform
-    foreach(QString nom, platformPre) {
-      nomNom(nom);
-    }
-    game.platform = data.left(data.indexOf(platformPost)).replace("&nbsp;", " ");
-
-    if(platformMatch(game.platform, platform)) {
-      gameEntries.append(game);
+  if(searchName.left(6) == "/game/") {
+    game.title = searchName.split(";").last();
+    game.platform = platform;
+    gameEntries.append(game);
+  } else {
+    while(data.indexOf(searchResultPre) != -1) {
+      nomNom(searchResultPre);
+      
+      // Digest until url
+      foreach(QString nom, urlPre) {
+	nomNom(nom);
+      }
+      game.url = baseUrl + "/" + data.left(data.indexOf(urlPost)) + "/edit";
+      
+      // Digest until title
+      foreach(QString nom, titlePre) {
+	nomNom(nom);
+      }
+      game.title = data.left(data.indexOf(titlePost)).replace("[AGA]", "").simplified();
+      
+      // Digest until platform
+      foreach(QString nom, platformPre) {
+	nomNom(nom);
+      }
+      game.platform = data.left(data.indexOf(platformPost)).replace("&nbsp;", " ");
+      
+      if(platformMatch(game.platform, platform)) {
+	gameEntries.append(game);
+      }
     }
   }
 }
 
 void OpenRetro::getGameData(GameEntry &game)
 {
-  manager.request(game.url);
-  q.exec();
-  data = manager.getData();
-
+  if(!game.url.isEmpty()) {
+    manager.request(game.url);
+    q.exec();
+    data = manager.getData();
+  }
+  
   // Remove all the variants so we don't choose between their screenshots
   data = data.left(data.indexOf("</table></div><div id='"));
   
@@ -253,7 +273,7 @@ void OpenRetro::getMarquee(GameEntry &game)
 QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
 {
   QString baseName = info.completeBaseName();
-  
+  QList<QString> searchNames;
   bool isAga = false;
   // Look for '_aga_', ' aga ' or '[aga]'
   if(QRegularExpression("[_[ ]{1}(aga|AGA)[_\\] ]{1}").match(baseName).hasMatch()) {
@@ -262,7 +282,8 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
   
   if(config->scraper != "import") {
     if(info.suffix() == "lha") {
-      baseName = NameTools::getNameWithSpaces(baseName);
+      searchNames.append("/game/" + whdLoadMap[baseName].second + ";" + whdLoadMap[baseName].first);
+      return searchNames;
     }
     if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
@@ -334,18 +355,17 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
     baseName = "all+new+world+of+lemmings";
   }
 
-  QList<QString> searchNames;
   if(!baseName.isEmpty()) {
     if(isAga) {
-      searchNames.append(baseName + "+aga");
+      searchNames.append("/browse?q=" + baseName + "+aga");
     }
-    searchNames.append(baseName);
+    searchNames.append("/browse?q=" + baseName);
   }
 
   if(baseName.indexOf(":") != -1 || baseName.indexOf("-")) {
     baseName = baseName.left(baseName.indexOf(":")).simplified();
     baseName = baseName.left(baseName.indexOf("-")).simplified();
-    searchNames.append(baseName);
+    searchNames.append("/browse?q=" + baseName);
   }
 
   return searchNames;
