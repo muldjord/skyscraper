@@ -19,7 +19,7 @@ unix:impexamples.path=/usr/local/etc/skyscraper/import
 unix:impexamples.files=import/README.md import/definitions.dat.example1 import/definitions.dat.example2
 
 unix:resexamples.path=/usr/local/etc/skyscraper/resources
-unix:resexamples.files=resources/maskexample.png resources/frameexample.png resources/boxfront.png resources/boxside.png
+unix:resexamples.files=resources/maskexample.png resources/frameexample.png resources/boxfront.png resources/boxside.png resources/scanlines1.png resources/scanlines2.png
 
 INSTALLS += target examples dbexamples impexamples resexamples
 
@@ -68,6 +68,7 @@ HEADERS += src/skyscraper.h \
            src/fxsaturation.h \
            src/fxcolorize.h \
            src/fxrotate.h \
+           src/fxscanlines.h \
            src/nametools.h \
            src/queue.h
 
@@ -113,5 +114,6 @@ SOURCES += src/main.cpp \
            src/fxsaturation.cpp \
            src/fxcolorize.cpp \
            src/fxrotate.cpp \
+           src/fxscanlines.cpp \
            src/nametools.cpp \
            src/queue.cpp
