@@ -282,8 +282,17 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
   
   if(config->scraper != "import") {
     if(info.suffix() == "lha") {
-      searchNames.append("/game/" + whdLoadMap[baseName].second + ";" + whdLoadMap[baseName].first);
-      return searchNames;
+      // Pass 1 is uuid from whdload_db.xml 
+      if(whdLoadMap.contains(baseName)) {
+	searchNames.append("/game/" + whdLoadMap[baseName].second + ";" + whdLoadMap[baseName].first);
+      }
+      // Pass 2 is either from <name> tag in whdload_db.xml or by adding spaces
+      QString nameWithSpaces = whdLoadMap[baseName].first;
+      if(nameWithSpaces.isEmpty()) {
+	baseName = NameTools::getNameWithSpaces(baseName);
+      } else {
+	baseName = nameWithSpaces;
+      }
     }
     if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
@@ -362,7 +371,7 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
     searchNames.append("/browse?q=" + baseName);
   }
 
-  if(baseName.indexOf(":") != -1 || baseName.indexOf("-")) {
+  if(baseName.indexOf(":") != -1 || baseName.indexOf("-") != -1) {
     baseName = baseName.left(baseName.indexOf(":")).simplified();
     baseName = baseName.left(baseName.indexOf("-")).simplified();
     searchNames.append("/browse?q=" + baseName);
