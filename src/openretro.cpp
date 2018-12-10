@@ -48,7 +48,11 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
   marqueePre.append("<div><a href=\"");
   marqueePost = "\">";
   // Check getDescription function for special case __long_description scrape
+  // For description
   descriptionPre.append(">description</td>");
+  descriptionPre.append("<td style='color: black;'><div>");
+  // For __long_description
+  descriptionPre.append("__long_description</td>");
   descriptionPre.append("<td style='color: black;'><div>");
   descriptionPost = "</div></td>";
   developerPre.append("black;'>developer</td>");
@@ -203,27 +207,21 @@ void OpenRetro::getDescription(GameEntry &game)
     return;
   }
   QByteArray tempData = data;
-  QList<QString> tempDescriptionPre = descriptionPre;
 
   // Check for __long_description is ordinary description isn't found
-  if(data.indexOf(descriptionPre.at(0)) == -1) {
-    descriptionPre.clear();
-    descriptionPre.append("__long_description</td>");
-    descriptionPre.append("<td style='color: black;'><div>");
-  }
-  foreach(QString nom, descriptionPre) {
-    if(!checkNom(nom)) {
-      return;
-    }
-  }
-  foreach(QString nom, descriptionPre) {
-    nomNom(nom);
+  if(data.indexOf(descriptionPre.at(0)) != -1) {
+    nomNom(descriptionPre.at(0));
+    nomNom(descriptionPre.at(1));
+  } else if(data.indexOf(descriptionPre.at(2)) != -1) {
+    nomNom(descriptionPre.at(2));
+    nomNom(descriptionPre.at(3));
+  } else {
+    return;
   }
 
   game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
   // Revert data back to pre-description
   data = tempData;
-  descriptionPre = tempDescriptionPre;
 
   while(game.description.contains("<") && game.description.contains(">") && game.description.indexOf("<") < game.description.indexOf(">")) {
     game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
