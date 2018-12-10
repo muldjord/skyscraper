@@ -208,11 +208,12 @@ void OpenRetro::getDescription(GameEntry &game)
   }
   QByteArray tempData = data;
 
-  // Check for __long_description is ordinary description isn't found
   if(data.indexOf(descriptionPre.at(0)) != -1) {
+    // If description
     nomNom(descriptionPre.at(0));
     nomNom(descriptionPre.at(1));
   } else if(data.indexOf(descriptionPre.at(2)) != -1) {
+    // If __long_description
     nomNom(descriptionPre.at(2));
     nomNom(descriptionPre.at(3));
   } else {
