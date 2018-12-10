@@ -50,7 +50,7 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
   descriptionPre.append(">description</td>");
   descriptionPre.append("<td style='color: black;'><div>");
   descriptionPost = "</div></td>";
-  developerPre.append(">developer</td>");
+  developerPre.append("black;'>developer</td>");
   developerPre.append("<td style='color: black;'><div>");
   developerPost = "</div></td>";
   coverPre.append(">front_sha1</td>");
@@ -85,11 +85,7 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
 void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
 				 QString searchName, QString platform)
 {
-  QString finalSearchName = searchName;
-  if(searchName.left(6) == "/game/") {
-    finalSearchName = searchName.split(";").first();
-  }
-  manager.request(searchUrlPre + finalSearchName + (searchName.left(6) == "/game/"?"":searchUrlPost));
+  manager.request(searchUrlPre + searchName + (searchName.left(6) == "/game/"?"":searchUrlPost));
   q.exec();
   while(!manager.getRedirUrl().isEmpty()) {
     manager.request(manager.getRedirUrl());
@@ -107,7 +103,11 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
   GameEntry game;
   
   if(searchName.left(6) == "/game/") {
-    game.title = searchName.split(";").last();
+    QByteArray tempData = data;
+    nomNom("<td style='width: 180px; color: black;'>game_name</td>");
+    nomNom("<td style='color: black;'><div>");
+    game.title = data.left(data.indexOf("</div></td>"));
+    data = tempData;
     game.platform = platform;
     gameEntries.append(game);
   } else {
@@ -284,7 +284,7 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
     if(info.suffix() == "lha") {
       // Pass 1 is uuid from whdload_db.xml 
       if(whdLoadMap.contains(baseName)) {
-	searchNames.append("/game/" + whdLoadMap[baseName].second + ";" + whdLoadMap[baseName].first);
+	searchNames.append("/game/" + whdLoadMap[baseName].second);
       }
       // Pass 2 is either from <name> tag in whdload_db.xml or by adding spaces
       QString nameWithSpaces = whdLoadMap[baseName].first;
