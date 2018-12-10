@@ -47,6 +47,7 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
   marqueePre.append(">banner_sha1</td>");
   marqueePre.append("<div><a href=\"");
   marqueePost = "\">";
+  // Check getDescription function for special case __long_description scrape
   descriptionPre.append(">description</td>");
   descriptionPre.append("<td style='color: black;'><div>");
   descriptionPost = "</div></td>";
@@ -194,6 +195,38 @@ void OpenRetro::getGameData(GameEntry &game)
       ;
     }
   }
+}
+
+void OpenRetro::getDescription(GameEntry &game)
+{
+  if(descriptionPre.isEmpty()) {
+    return;
+  }
+  QByteArray tempData = data;
+
+  // Check for __long_description is ordinary description isn't found
+  if(data.indexOf(descriptionPre.at(0)) == -1) {
+    nomNom("__long_description</td>");
+    nomNom("<td style='color: black;'><div>");
+  } else {
+    foreach(QString nom, descriptionPre) {
+      if(!checkNom(nom)) {
+	return;
+      }
+    }
+    foreach(QString nom, descriptionPre) {
+      nomNom(nom);
+    }
+  }
+
+  game.description = data.left(data.indexOf(descriptionPost));
+  data = tempData;
+
+  // Remove all html tags within description
+  while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1 && game.description.indexOf("<") < game.description.indexOf(">")) {
+    game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
+  }
+  game.description = game.description.simplified();
 }
 
 void OpenRetro::getTags(GameEntry &game)
