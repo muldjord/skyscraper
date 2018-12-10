@@ -262,7 +262,7 @@ void Skyscraper::run()
     printf("Trying to parse and load existing game list metadata... ");
     fflush(stdout);
     if(frontend->loadOldGameList(gameListFileString)) {
-      printf("\033[1;32mSuccess!\033[0m\n\n");
+      printf("\033[1;32mSuccess!\033[0m\n");
       if(!config.unattend && cliFiles.isEmpty()) {
 	std::string userInput = "";
 	if(gameListFile.exists() && frontend->canSkip()) {
@@ -278,7 +278,7 @@ void Skyscraper::run()
 	}
       }
     } else {
-      printf("\033[1;33mNot found or unsupported!\033[0m\n\n");
+      printf("\033[1;33mNot found or unsupported!\033[0m\n");
     }
   }
 
