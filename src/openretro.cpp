@@ -219,11 +219,10 @@ void OpenRetro::getDescription(GameEntry &game)
     }
   }
 
-  game.description = data.left(data.indexOf(descriptionPost));
+  game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
   data = tempData;
 
-  // Remove all html tags within description
-  while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1 && game.description.indexOf("<") < game.description.indexOf(">")) {
+  while(game.description.contains("<") && game.description.contains(">") && game.description.indexOf("<") < game.description.indexOf(">")) {
     game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
   }
   game.description = game.description.simplified();

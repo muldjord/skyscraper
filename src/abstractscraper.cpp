@@ -147,7 +147,7 @@ void AbstractScraper::getDescription(GameEntry &game)
     nomNom(nom);
   }
 
-  game.description = data.left(data.indexOf(descriptionPost));
+  game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
 
   // Remove all html tags within description
   while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1 && game.description.indexOf("<") < game.description.indexOf(">")) {
