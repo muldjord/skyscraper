@@ -323,7 +323,7 @@ void MobyGames::getCover(GameEntry &game)
   }
   
   if(!coverUrl.isEmpty()) {
-    manager.request(coverUrl);
+    manager.request(coverUrl.replace("http://", "https://"));
     q.exec();
     QImage image;
     if(image.loadFromData(manager.getData())) {
@@ -355,7 +355,7 @@ void MobyGames::getScreenshot(GameEntry &game)
     // First 2 are almost always not ingame, so skip those if we have 3 or more
     chosen = (qrand() % jsonScreenshots.count() - 3) + 3;
   }
-  manager.request(jsonScreenshots.at(chosen).toObject().value("image").toString());
+  manager.request(jsonScreenshots.at(chosen).toObject().value("image").toString().replace("http://", "https://"));
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
