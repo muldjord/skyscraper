@@ -203,6 +203,7 @@ void OpenRetro::getDescription(GameEntry &game)
     return;
   }
   QByteArray tempData = data;
+  QList<QString> tempDescriptionPre = descriptionPre;
 
   // Check for __long_description is ordinary description isn't found
   if(data.indexOf(descriptionPre.at(0)) == -1) {
@@ -222,6 +223,7 @@ void OpenRetro::getDescription(GameEntry &game)
   game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
   // Revert data back to pre-description
   data = tempData;
+  descriptionPre = tempDescriptionPre;
 
   while(game.description.contains("<") && game.description.contains(">") && game.description.indexOf("<") < game.description.indexOf(">")) {
     game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
