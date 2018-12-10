@@ -85,7 +85,8 @@ QString StrTools::xmlUnescape(QString str)
     replace("&#xB3;", "3").
     replace("&#x14D;", "o");
 
-  while(str.contains("&") && str.contains(";") && str.indexOf("&") < str.indexOf(";")) {
+  while(str.contains("&") && str.contains(";") && str.indexOf("&") < str.indexOf(";") &&
+	str.indexOf(";") - str.indexOf("&") <= 10) {
     str = str.remove(str.indexOf("&"), str.indexOf(";") + 1 - str.indexOf("&"));
   }
 
