@@ -206,20 +206,21 @@ void OpenRetro::getDescription(GameEntry &game)
 
   // Check for __long_description is ordinary description isn't found
   if(data.indexOf(descriptionPre.at(0)) == -1) {
-    nomNom("__long_description</td>");
-    nomNom("<td style='color: black;'><div>");
-  } else {
-    foreach(QString nom, descriptionPre) {
-      if(!checkNom(nom)) {
-	return;
-      }
+    descriptionPre.clear();
+    descriptionPre.append("__long_description</td>");
+    descriptionPre.append("<td style='color: black;'><div>");
+  }
+  foreach(QString nom, descriptionPre) {
+    if(!checkNom(nom)) {
+      return;
     }
-    foreach(QString nom, descriptionPre) {
-      nomNom(nom);
-    }
+  }
+  foreach(QString nom, descriptionPre) {
+    nomNom(nom);
   }
 
   game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
+  // Revert data back to pre-description
   data = tempData;
 
   while(game.description.contains("<") && game.description.contains(">") && game.description.indexOf("<") < game.description.indexOf(">")) {
