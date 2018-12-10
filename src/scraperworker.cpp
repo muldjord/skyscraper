@@ -414,6 +414,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
      (config.scraper == "openretro" && gameEntries.first().url.isEmpty())) {
     lowestDistance = 0;
     game = gameEntries.first();
+    game.title = StrTools::xmlUnescape(game.title);
     return game;
   }
 
