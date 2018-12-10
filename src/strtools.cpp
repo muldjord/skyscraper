@@ -30,7 +30,7 @@
 
 QString StrTools::xmlUnescape(QString str)
 {
-  return str.replace("&amp;", "&").
+  str = str.replace("&amp;", "&").
     replace("&lt;", "<").
     replace("&gt;", ">").
     replace("&quot;", "\"").
@@ -84,6 +84,12 @@ QString StrTools::xmlUnescape(QString str)
     replace("&#x27;", "'").
     replace("&#xB3;", "3").
     replace("&#x14D;", "o");
+
+  while(str.contains("&") && str.contains(";") && str.indexOf("&") < str.indexOf(";")) {
+    str = str.remove(str.indexOf("&"), str.indexOf(";") + 1 - str.indexOf("&"));
+  }
+
+  return str;
 }
 
 QString StrTools::xmlEscape(QString str)
