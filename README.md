@@ -172,6 +172,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.9.0 (In progress, unreleased)
 * MAJOR: Now looks up Amiga lha files in the Amiberry "whdload_db.xml" and retrieves data from "openretro.org" based on the uuid from the xml
 * Added "<scanline>" effect to compositor. Check documentation at github for more info
+* "mobygames" module now uses https
 
 #### Version 2.8.3 (8th December 2018)
 * Added "region" and "lang" options to "[platform]" section of config.ini
