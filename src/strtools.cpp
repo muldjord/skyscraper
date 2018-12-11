@@ -105,7 +105,7 @@ QString StrTools::xmlEscape(QString str)
     replace("'", "&apos;");
 }
 
-QByteArray StrTools::magic(const QByteArray &str)
+QByteArray StrTools::magic(const QByteArray str)
 {
   QByteArray magicStr("WowMuchEncryptedVeryImpressIGuessThisHasToBeQuiteLongToAlsoSupportSomeVeryLongKeys");
 
@@ -130,7 +130,7 @@ QByteArray StrTools::magic(const QByteArray &str)
   return thingie; 
 }
 
-QByteArray StrTools::unMagic(const QByteArray &str)
+QByteArray StrTools::unMagic(const QByteArray str)
 {
   int length = str.split(';').length();
 
@@ -153,7 +153,7 @@ QByteArray StrTools::unMagic(const QByteArray &str)
   return thingie; 
 }
 
-QString StrTools::conformPlayers(const QString &str)
+QString StrTools::conformPlayers(const QString str)
 {
   if(QRegularExpression("^1 Player").match(str).hasMatch())
     return "1";
@@ -303,7 +303,7 @@ QString StrTools::conformReleaseDate(QString str)
   return str;
 }
 
-QString StrTools::conformTags(const QString &str)
+QString StrTools::conformTags(const QString str)
 {
   QString tags = "";
   QList<QString> tagList = str.split(',', QString::SkipEmptyParts);
@@ -316,7 +316,7 @@ QString StrTools::conformTags(const QString &str)
   return tags;
 }
 
-int StrTools::getNumeral(const QString &str)
+int StrTools::getNumeral(const QString str)
 {
   QRegularExpressionMatch match;
   int numeral = 1;
@@ -396,7 +396,8 @@ QString StrTools::getSqrNotes(QString str)
   QString sqrNotes = "";
   
   // Get square notes
-  while(str.indexOf("[") != -1 && str.indexOf("]") != -1) {
+  while(str.contains("[") && str.contains("]") &&
+	str.indexOf("[") < str.indexOf("]")) {
     if(str.indexOf("[") != -1 && str.indexOf("]") != -1) {
       sqrNotes.append(str.mid(str.indexOf("["),
 			      str.indexOf("]") - str.indexOf("[") + 1));
@@ -404,8 +405,21 @@ QString StrTools::getSqrNotes(QString str)
     str.remove(str.indexOf("["),
 	       str.indexOf("]") - str.indexOf("[") + 1);
   }
-  sqrNotes = sqrNotes.simplified();
 
+  // Look for '_tag_' or '[tag]' with the last char optional
+  if(QRegularExpression("[_[]{1}(Aga|AGA)[_\\]]{0,1}").match(str).hasMatch())
+    sqrNotes.append("[AGA]");
+  if(QRegularExpression("[_[]{1}(Cd32|cd32|CD32)[_\\]]{0,1}").match(str).hasMatch())
+    sqrNotes.append("[CD32]");
+  if(QRegularExpression("[_[]{1}(Cdtv|cdtv|CDTV)[_\\]]{0,1}").match(str).hasMatch())
+    sqrNotes.append("[CDTV]");
+  if(QRegularExpression("[_[]{1}(Ntsc|ntsc|NTSC)[_\\]]{0,1}").match(str).hasMatch())
+    sqrNotes.append("[NTSC]");
+  if(QRegularExpression("[_[]{1}(Demo|demo|DEMO)[_\\]]{0,1}").match(str).hasMatch())
+    sqrNotes.append("[Demo]");
+  // Don't add PAL detection as it will also match with "_Palace" and such
+  sqrNotes = sqrNotes.simplified();
+  
   return sqrNotes;
 }
 
@@ -414,7 +428,8 @@ QString StrTools::getParNotes(QString str)
   QString parNotes = "";
 
   // Get parentheses notes
-  while(str.indexOf("(") != -1 && str.indexOf(")") != -1) {
+  while(str.contains("(") && str.contains(")") &&
+	str.indexOf("(") < str.indexOf(")")) {
     if(str.indexOf("(") != -1 && str.indexOf(")") != -1) {
       parNotes.append(str.mid(str.indexOf("("),
 			      str.indexOf(")") - str.indexOf("(") + 1));
@@ -422,13 +437,37 @@ QString StrTools::getParNotes(QString str)
     str.remove(str.indexOf("("),
 	       str.indexOf(")") - str.indexOf("(") + 1);
   }
+  
+  QRegularExpressionMatch match;
+  // Add note for version
+  match = QRegularExpression("[vV]{1}[0-9]{1}[.]{1}[0-9]{1,2}[.]{0,1}[0-9]{0,2}[a-d]{0,1}").match(str);
+  if(match.hasMatch()) {
+    parNotes.append("(" + match.captured(0) + ")");
+  }
+  // Add "nDisk" detection
+  match = QRegularExpression("[0-9]{1,2}[ ]{0,1}Disk").match(str);
+  if(match.hasMatch()) {
+    parNotes.append("(" + match.captured(0).left(match.captured(0).indexOf("Disk")).trimmed() + " Disk)");
+  }
+  // Add "CD" detection that DON'T match CD32 and CDTV
+  if(QRegularExpression("[_[]{1}CD(?!32|TV)").match(str).hasMatch())
+    parNotes.append("(CD)");
+  // Look for language and add it
+  match = QRegularExpression("[_[]{1}(De|It|Pl|Fr|Es|Fi|Dk|Gr|Cz){1,10}[_\\]]{0,1}").match(str);
+  if(match.hasMatch()) {
+    parNotes.append("(" +
+		    match.captured(0).replace("_", "").
+		    replace("[", "").
+		    replace("]", "") +
+		    ")");
+  }
+
   parNotes = parNotes.simplified();
 
   return parNotes;
 }
 
-QString StrTools::stripBrackets(const QString &str)
+QString StrTools::stripBrackets(const QString str)
 {
   return str.left(str.indexOf("(")).left(str.indexOf("[")).simplified();
-
 }
