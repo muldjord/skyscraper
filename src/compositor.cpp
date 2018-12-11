@@ -269,8 +269,9 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       }
     } else if(xml.isStartElement() && xml.name() == "scanlines") {
       QXmlStreamAttributes attribs = xml.attributes();
-      if(attribs.hasAttribute("resource")) {
-	newLayer.setResource(attribs.value("resource").toString());
+      newLayer.setType(T_SCANLINES);
+      if(attribs.hasAttribute("file")) {
+	newLayer.setResource(attribs.value("file").toString());
       }
       if(attribs.hasAttribute("scale")) {
 	newLayer.setScaling(attribs.value("scale").toString());
@@ -283,7 +284,6 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       } else {
 	newLayer.setMode("overlay");
       }
-      newLayer.setType(T_SCANLINES);
       layer.addLayer(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
       return;
