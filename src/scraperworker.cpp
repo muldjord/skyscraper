@@ -110,18 +110,9 @@ void ScraperWorker::run()
       if(info.completeBaseName().toLower().indexOf("cd32") != -1) {
 	debug.append("Platform change: 'amiga'->'cd32', filename contains 'cd32'\n");
 	config.platform = "cd32";
-	if(info.completeBaseName().toLower().indexOf("[cd32]") == -1)
-	  sqrNotes.append("[CD32]");
       } else if(info.completeBaseName().toLower().indexOf("cdtv") != -1) {
 	debug.append("Platform change: 'amiga'->'cdtv', filename contains 'cdtv'\n");
 	config.platform = "cdtv";
-	if(info.completeBaseName().toLower().indexOf("[cdtv]") == -1)
-	  sqrNotes.append("[CDTV]");
-      } else if(info.completeBaseName().toLower().indexOf("demo") != -1) {
-	if(info.completeBaseName().toLower().indexOf("[demo]") == -1) {
-	  debug.append("Demo detected: Adding '[Demo]' bracket tag\n");
-	  sqrNotes.append("[Demo]");
-	}
       }
     }
 
