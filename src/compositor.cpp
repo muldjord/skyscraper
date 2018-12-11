@@ -272,6 +272,9 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
       if(attribs.hasAttribute("resource")) {
 	newLayer.setResource(attribs.value("resource").toString());
       }
+      if(attribs.hasAttribute("scale")) {
+	newLayer.setScaling(attribs.value("scale").toString());
+      }
       if(attribs.hasAttribute("opacity")) {
 	newLayer.setOpacity(attribs.value("opacity").toInt());
       }
