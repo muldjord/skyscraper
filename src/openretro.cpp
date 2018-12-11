@@ -111,7 +111,10 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
     QByteArray tempData = data;
     nomNom("<td style='width: 180px; color: black;'>game_name</td>");
     nomNom("<td style='color: black;'><div>");
-    game.title = data.left(data.indexOf("</div></td>"));
+    // Remove AGA, we already add this automatically in StrTools::addSqrBrackets
+    game.title = data.left(data.indexOf("</div></td>")).replace("[AGA]", "").
+      replace("[CD32]", "").
+      replace("[CDTV]", "").simplified();
     data = tempData;
     game.platform = platform;
     gameEntries.append(game);
@@ -129,6 +132,7 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
       foreach(QString nom, titlePre) {
 	nomNom(nom);
       }
+      // Remove AGA, we already add this automatically in StrTools::addSqrBrackets
       game.title = data.left(data.indexOf(titlePost)).replace("[AGA]", "").simplified();
       
       // Digest until platform
@@ -309,8 +313,8 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
   QString baseName = info.completeBaseName();
   QList<QString> searchNames;
   bool isAga = false;
-  // Look for '_aga_', ' aga ' or '[aga]'
-  if(QRegularExpression("[_[ ]{1}(aga|AGA)[_\\] ]{1}").match(baseName).hasMatch()) {
+  // Look for '_aga_' or '[aga]' with the last char optional
+  if(QRegularExpression("[_[]{1}(Aga|AGA)[_\\]]{0,1}").match(baseName).hasMatch()) {
     isAga = true;
   }
   
