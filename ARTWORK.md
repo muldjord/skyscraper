@@ -359,7 +359,7 @@ The difference value for the adjustment. Can be -255 to 255.
 Must be nested inside a layer node. Adds a CRT monitor scanline effect to the parent layer.
 
 #### 'file' attribute (Optional)
-The filename of the [custom image resource](#custom-image-resources) to be used as the scanline overlay. If left out it defaults to ```scanlines1.png```.
+The filename of the [custom image resource](#custom-image-resources) to be used as the scanline overlay. If left out it defaults to `scanlines1.png`.
 
 #### 'scale' attribute (Optional)
 Sets the scale factor of the overlay. Can be 0.1 to 2.0. If left out it defaults to 1.0.
@@ -388,7 +388,7 @@ Sets the overlay compositing mode. It can be:
 * destinationatop
 * xor
 
-If left out the overlay is rendered using the ```overlay``` method.
+If left out the overlay is rendered using the `overlay` method.
 
 ![Mode examples](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/layer_modes.png)
 
