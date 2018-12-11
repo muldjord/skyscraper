@@ -34,7 +34,7 @@ Read on for a full description of the xml format used in '~/.skyscraper/artwork.
 
 Nodes: [Xml node](#xml-node-not-optional), [Artwork node](#artwork-node-not-optional), [Output node](#output-nodes-optional), [Layer node](#layer-nodes-optional)
 
-Effects: [Blur effect](#blur-effect-node-optional), [Brightness effect](#brightness-effect-node-optional), [Color balance effect](#balance-effect-node-optional), [Colorize effect](#colorize-effect-node-from-v233-optional), [Contrast effect](#contrast-effect-node-optional), [Frame effect](#frame-effect-node-optional), [Gamebox effect](#gamebox-effect-node-optional), [Hue effect](#hue-effect-node-from-v233-optional), [Mask effect](#mask-effect-node-optional), [Opacity effect](#opacity-effect-node-optional), [Rotate effect](#rotate-effect-node-from-v233-optional), [Rounded effect](#rounded-effect-node-optional), [Saturation effect](#saturation-effect-node-from-v233-optional), [Shadow effect](#shadow-effect-node-optional), [Stroke effect](#stroke-effect-node-optional).
+Effects: [Blur effect](#blur-effect-node-optional), [Brightness effect](#brightness-effect-node-optional), [Color balance effect](#balance-effect-node-optional), [Colorize effect](#colorize-effect-node-from-v233-optional), [Contrast effect](#contrast-effect-node-optional), [Frame effect](#frame-effect-node-optional), [Gamebox effect](#gamebox-effect-node-optional), [Hue effect](#hue-effect-node-from-v233-optional), [Mask effect](#mask-effect-node-optional), [Opacity effect](#opacity-effect-node-optional), [Rotate effect](#rotate-effect-node-from-v233-optional), [Rounded effect](#rounded-effect-node-optional), [Saturation effect](#saturation-effect-node-from-v233-optional), [Scanlines effect](#scanlines-effect-node-from-v290-optional), [Shadow effect](#shadow-effect-node-optional), [Stroke effect](#stroke-effect-node-optional).
 
 Other: [Custom image resources](#custom-image-resources).
 
@@ -348,6 +348,24 @@ NOTE! If you want to completely greyscale your layer I highly recommend using th
 
 #### 'value' attribute (Not optional)
 The difference value for the adjustment. Can be -255 to 255.
+
+### 'scanlines' effect node [from v2.9.0] (Optional)
+![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/scanlines.png)
+```
+<layer>
+  <scanlines file="scanlines1.png" scale="1.0" opacity="100"/>
+</layer>
+```
+Must be nested inside a layer node. Adds a CRT monitor scanline effect to the parent layer.
+
+#### 'file' attribute (Optional)
+The filename of the [custom image resource](#custom-image-resources) to be used as the scanline overlay. If left out it defaults to ```scanlines1.png```.
+
+#### 'scale' attribute (Optional)
+Sets the scale factor of the overlay. If left out it defaults to "1.0".
+
+#### 'opacity' attribute (Optional)
+Sets the opacity of the overlay. If left out it defaults to "100".
 
 ### 'shadow' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
