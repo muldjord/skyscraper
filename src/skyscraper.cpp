@@ -31,6 +31,7 @@
 #include <QTimer>
 #include <QMutexLocker>
 #include <QProcess>
+#include <QDomDocument>
 
 #include "skyscraper.h"
 #include "xmlreader.h"
@@ -1143,8 +1144,11 @@ void Skyscraper::adjustToLimits()
     manager.request("https://raw.githubusercontent.com/HoraceAndTheSpider/Amiberry-XML-Builder/master/whdload_db.xml");
     q.exec();
     QByteArray data = manager.getData();
+    QDomDocument tempDoc;
     QFile whdLoadFile("whdload_db.xml");
-    if(data.size() > 1000000 && whdLoadFile.open(QIODevice::WriteOnly)) {
+    if(data.size() > 1000000 &&
+       tempDoc.setContent(data) &&
+       whdLoadFile.open(QIODevice::WriteOnly)) {
       whdLoadFile.write(data);
       whdLoadFile.close();
       printf("\033[1;32m Success!\033[0m\n\n");
