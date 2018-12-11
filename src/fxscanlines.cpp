@@ -36,7 +36,32 @@ QImage FxScanlines::applyEffect(const QImage &src, const Layer &layer, Settings 
 {
   QImage canvas = src;
   QString resource = layer.resource;
+  double scaling = 1.0;
   int opacity = layer.opacity;
+
+  if(!layer.scaling.isEmpty()) {
+    bool isDouble = false;
+    layer.scaling.toDouble(&isDouble);
+    if(isDouble)
+      scaling = layer.scaling.toDouble();
+  }
+
+  if(scaling < 0.1)
+    scaling = 0.1;
+  if(scaling > 2.0)
+    scaling = 2.0;
+  /*
+  if(!layer.scaling.isEmpty()) {
+    if(layer.scaling == "auto") {
+    } else {
+      bool isDouble = false;
+      layer.scaling.toDouble(&isDouble);
+      if(isDouble)
+	scaling = layer.scaling.toDouble();
+    }
+  }
+  */
+
   if(resource.isEmpty())
     resource = "scanlines1.png";
   if(opacity == -1)
@@ -46,7 +71,7 @@ QImage FxScanlines::applyEffect(const QImage &src, const Layer &layer, Settings 
   painter.begin(&canvas);
   painter.setOpacity(opacity * 0.01);
   painter.setCompositionMode(layer.mode);
-  painter.drawImage(0, 0, config->resources[resource]);
+  painter.drawImage(0, 0, (scaling != 1.0?config->resources[resource].scaledToWidth((int)((double)config->resources[resource].width() * scaling), Qt::FastTransformation):config->resources[resource]));
   painter.end();
 
   return canvas;
