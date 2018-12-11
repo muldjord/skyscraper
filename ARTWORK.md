@@ -367,6 +367,31 @@ Sets the scale factor of the overlay. Can be 0.1 to 2.0. If left out it defaults
 #### 'opacity' attribute (Optional)
 Sets the opacity of the overlay. Can be 0 to 100. If left out it defaults to 100.
 
+#### 'mode' attribute (Optional)
+Sets the overlay compositing mode. It can be:
+* multiply
+* screen
+* overlay
+* darken
+* lighten
+* colordodge
+* colorburn
+* hardlight
+* softlight
+* difference
+* exclusion
+* sourcein
+* destinationin
+* sourceout
+* destinationout
+* sourceatop
+* destinationatop
+* xor
+
+If left out the overlay is rendered using the ```overlay``` method.
+
+![Mode examples](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/layer_modes.png)
+
 ### 'shadow' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
 ```
