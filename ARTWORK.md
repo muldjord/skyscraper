@@ -362,10 +362,10 @@ Must be nested inside a layer node. Adds a CRT monitor scanline effect to the pa
 The filename of the [custom image resource](#custom-image-resources) to be used as the scanline overlay. If left out it defaults to ```scanlines1.png```.
 
 #### 'scale' attribute (Optional)
-Sets the scale factor of the overlay. If left out it defaults to "1.0".
+Sets the scale factor of the overlay. Can be 0.1 to 2.0. If left out it defaults to 1.0.
 
 #### 'opacity' attribute (Optional)
-Sets the opacity of the overlay. If left out it defaults to "100".
+Sets the opacity of the overlay. Can be 0 to 100. If left out it defaults to 100.
 
 ### 'shadow' effect node (Optional)
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
