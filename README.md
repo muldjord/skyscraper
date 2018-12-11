@@ -160,7 +160,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (still unimplemented)
-* Add "scanline" effect that overlays scanlines on the underlaying layer (Thank you to "jakejm79" for suggesting this)
 * Add "sharpen" effect which sharpens the image
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add option to "--purgedb" to purge all resources not related to your current romset
@@ -171,10 +170,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 
 #### Version 2.9.0 (In progress, unreleased)
 * MAJOR: Now looks up Amiga lha files in the Amiberry "whdload_db.xml" and retrieves data from "openretro.org" based on the uuid from the xml
-* Added "<scanline>" effect to compositor. Check documentation at github for more info
+* Added search based fallback pass for Amiga when game isn't found via uuid
+* Added "<scanlines>" effect to compositor. Check [here](ARTWORK.md) for more info (Thank you to "jakejm79" for suggesting this)
 * "mobygames" module now uses https
 * Fixed bug in "openretro" module where "developer" would potentially scrape wrong under certain circumstances
 * Improved "description" scraping for "openretro" module
+* Improved bracket tag handling for Amiga lha files A LOT
 
 #### Version 2.8.3 (8th December 2018)
 * Added "region" and "lang" options to "[platform]" section of config.ini
