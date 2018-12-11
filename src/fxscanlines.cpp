@@ -38,7 +38,6 @@ QImage FxScanlines::applyEffect(const QImage &src, const Layer &layer, Settings 
   QString resource = layer.resource;
   double scaling = 1.0;
   int opacity = layer.opacity;
-
   if(!layer.scaling.isEmpty()) {
     bool isDouble = false;
     layer.scaling.toDouble(&isDouble);
@@ -50,6 +49,11 @@ QImage FxScanlines::applyEffect(const QImage &src, const Layer &layer, Settings 
     scaling = 0.1;
   if(scaling > 2.0)
     scaling = 2.0;
+
+  if(opacity > 100)
+    opacity = 100;
+  if(opacity < 0)
+    opacity = 0;
   /*
   if(!layer.scaling.isEmpty()) {
     if(layer.scaling == "auto") {
