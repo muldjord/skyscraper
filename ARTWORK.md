@@ -353,7 +353,7 @@ The difference value for the adjustment. Can be -255 to 255.
 ![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/scanlines.png)
 ```
 <layer>
-  <scanlines file="scanlines1.png" scale="1.0" opacity="100"/>
+  <scanlines file="scanlines1.png" scale="1.0" opacity="100" mode="overlay"/>
 </layer>
 ```
 Must be nested inside a layer node. Adds a CRT monitor scanline effect to the parent layer.
