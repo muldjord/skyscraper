@@ -176,6 +176,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Fixed bug in "openretro" module where "developer" would potentially scrape wrong under certain circumstances
 * Improved "description" scraping for "openretro" module
 * Improved bracket tag handling for Amiga lha files A LOT
+* Fixed irrelevant pass 2 when using search based sources
+* Added a pass for integer to roman conversion for search based sources (eg. 4 converts to IV)
 
 #### Version 2.8.3 (8th December 2018)
 * Added "region" and "lang" options to "[platform]" section of config.ini
