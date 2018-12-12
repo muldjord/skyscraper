@@ -98,6 +98,7 @@ QStringList Platform::getPlatforms()
   platforms.append("segacd");
   platforms.append("sg-1000");
   platforms.append("snes");
+  platforms.append("steam");
   platforms.append("ti99");
   platforms.append("trs-80");
   platforms.append("vectrex");
@@ -239,6 +240,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "sg-1000") {
     scrapers.append("screenscraper");
   } else if(platform == "snes") {
+    scrapers.append("screenscraper");
+  } else if(platform == "steam") {
     scrapers.append("screenscraper");
   } else if(platform == "ti99") {
     scrapers.append("screenscraper");
@@ -400,6 +403,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.bin *.sg");
   } else if(platform == "snes") {
     formats.append("*.smc *.sfc *.fig *.swc *.mgd *.bin");
+  } else if(platform == "steam") {
+    formats.append("*.ml *.sh");
   } else if(platform == "ti99") {
     formats.append("*.ctg");
   } else if(platform == "trs-80") {
@@ -547,6 +552,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "snes") {
     scraper = "cache";
   } else if(platform == "ti99") {
+    scraper = "cache";
+  } else if(platform == "steam") {
     scraper = "cache";
   } else if(platform == "trs-80") {
     scraper = "cache";
@@ -1057,6 +1064,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("dos");
     aliases.append("windows");
     aliases.append("pc (microsoft windows");
+    aliases.append("steam");
   } else if(platform == "pc88") {
     aliases.append("pc-88");
     aliases.append("pc-8801");
@@ -1076,6 +1084,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("dos");
     aliases.append("windows");
     aliases.append("pc (microsoft windows");
+    aliases.append("steam");
   } else if(platform == "psx") {
     aliases.append("sony playstation");
     aliases.append("playstation");
@@ -1092,6 +1101,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("dos");
     aliases.append("cd32");
     aliases.append("pc (microsoft windows");
+    aliases.append("steam");
   } else if(platform == "sega32x") {
     aliases.append("sega 32x");
     aliases.append("megadrive 32x");
@@ -1106,6 +1116,12 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("super nintendo entertainment system (snes)");
     aliases.append("super nintendo");
     aliases.append("super famicom");
+  } else if(platform == "steam") {
+    aliases.append("pc dos");
+    aliases.append("dos");
+    aliases.append("windows");
+    aliases.append("pc (microsoft windows");
+    aliases.append("pc");
   } else if(platform == "ti99") {
     aliases.append("ti-99/4a");
     aliases.append("texas instruments ti-99");
