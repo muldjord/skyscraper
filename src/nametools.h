@@ -32,9 +32,17 @@
 class NameTools : public QObject
 {
 public:
-  static QString getMameName(const QString &baseName, const QMap<QString, QString> &mameMap);
-  static QString getScummName(const QString &baseName);
-  static QString getNameWithSpaces(const QString &baseName);
+  static QString getMameName(const QString baseName, const QMap<QString, QString> &mameMap);
+  static QString getScummName(const QString baseName);
+  static QString getNameWithSpaces(const QString baseName);
+  static QString getUrlQueryName(const QString baseName);
+  static bool hasIntegerNumeral(const QString baseName);
+  static bool hasRomanNumeral(const QString baseName);
+  static QString convertToIntegerNumeral(const QString baseName);
+  static QString convertToRomanNumeral(const QString baseName);
+  static int getNumeral(const QString baseName);
+  static QString getSqrNotes(QString baseName);
+  static QString getParNotes(QString baseName);
   
 };
 

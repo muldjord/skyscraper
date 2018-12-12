@@ -28,6 +28,7 @@
 
 #include "scraperworker.h"
 #include "strtools.h"
+#include "nametools.h"
 #include "settings.h"
 #include "compositor.h"
 
@@ -225,11 +226,11 @@ void ScraperWorker::run()
     // We're done saving the raw data at this point, so feel free to manipulate game resources to better suit game list creation from here on out.
 
     // Sort out brackets here, be sure to add brackets for both returned title and filename
-    game.sqrNotes = StrTools::getSqrNotes(game.title);
-    game.sqrNotes.append(StrTools::getSqrNotes(info.completeBaseName()));
+    game.sqrNotes = NameTools::getSqrNotes(game.title);
+    game.sqrNotes.append(NameTools::getSqrNotes(info.completeBaseName()));
     game.sqrNotes.append(sqrNotes); // Potential [CD32] and [CDTV] note
-    game.parNotes = StrTools::getParNotes(game.title);
-    game.parNotes.append(StrTools::getParNotes(info.completeBaseName()));
+    game.parNotes = NameTools::getParNotes(game.title);
+    game.parNotes.append(NameTools::getParNotes(info.completeBaseName()));
 
     // Strip any brackets from the title as they will be readded when assembling gamelist
     game.title = StrTools::stripBrackets(game.title);
@@ -411,12 +412,12 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 
   QList<GameEntry> potentials;
   
-  int compareNumeral = StrTools::getNumeral(compareTitle);
+  int compareNumeral = NameTools::getNumeral(compareTitle);
   // Start by applying rules we are certain are needed. Add the ones that pass to potentials
   foreach(GameEntry entry, gameEntries) {
     entry.title = StrTools::xmlUnescape(entry.title);
     
-    int entryNumeral = StrTools::getNumeral(entry.title);
+    int entryNumeral = NameTools::getNumeral(entry.title);
     // If numerals don't match, skip.
     // Numeral defaults to 1, even for games without a numeral.
     if(compareNumeral != entryNumeral) {

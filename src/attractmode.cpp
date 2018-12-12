@@ -25,6 +25,7 @@
 
 #include "attractmode.h"
 #include "strtools.h"
+#include "nametools.h"
 
 #include <QDir>
 #include <QDate>
@@ -46,8 +47,8 @@ bool AttractMode::loadOldGameList(const QString &gameListFileString)
 	GameEntry entry;
 	entry.baseName = snippets.at(0);
 	QString title = snippets.at(1);
-	entry.sqrNotes = StrTools::getSqrNotes(title);
-	entry.parNotes = StrTools::getParNotes(title);
+	entry.sqrNotes = NameTools::getSqrNotes(title);
+	entry.parNotes = NameTools::getParNotes(title);
 	entry.title = StrTools::stripBrackets(title);
 	//entry.aMEmulator = snippets.at(2);
 	entry.aMCloneOf = snippets.at(3);

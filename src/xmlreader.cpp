@@ -26,7 +26,7 @@
 #include <QFileInfo>
 
 #include "xmlreader.h"
-#include "strtools.h"
+#include "nametools.h"
 
 XmlReader::XmlReader()
 {
@@ -60,8 +60,8 @@ QList<GameEntry> XmlReader::getEntries()
     GameEntry entry;
     entry.path = gameNodes.at(a).firstChildElement("path").text();
     QString title = gameNodes.at(a).firstChildElement("name").text();
-    entry.sqrNotes = StrTools::getSqrNotes(title);
-    entry.parNotes = StrTools::getParNotes(title);
+    entry.sqrNotes = NameTools::getSqrNotes(title);
+    entry.parNotes = NameTools::getParNotes(title);
     entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
     entry.coverFile = gameNodes.at(a).firstChildElement("cover").text();
     entry.screenshotFile = gameNodes.at(a).firstChildElement("image").text();

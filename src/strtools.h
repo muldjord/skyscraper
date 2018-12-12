@@ -39,10 +39,7 @@ public:
   static QString conformAges(QString str);
   static QString conformReleaseDate(QString str);
   static QString conformTags(const QString str);
-  static int getNumeral(const QString str);
   static QString getVersionHeader();
-  static QString getSqrNotes(QString str);
-  static QString getParNotes(QString str);
   static QString stripBrackets(const QString str);
   
 };
