@@ -178,6 +178,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved bracket tag handling for Amiga lha files A LOT
 * Fixed minor pass 2 bug when using search based sources
 * Added a pass for integer to roman conversion for search based sources (eg. 4 converts to IV)
+* "the" matching now uses regular expression for better precision
 
 #### Version 2.8.3 (8th December 2018)
 * Added "region" and "lang" options to "[platform]" section of config.ini
