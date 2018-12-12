@@ -434,15 +434,17 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
 
   QList<QString> searchNames;
 
-  QString urlQueryName = NameTools::getUrlQueryName(baseName);
-  if(!urlQueryName.isEmpty()) {
-    searchNames.append(urlQueryName);
-  }
+  if(baseName.isEmpty())
+    return searchNames;
 
-  if(baseName.indexOf(":") != -1 || baseName.indexOf("-") != -1) {
-    baseName = baseName.left(baseName.indexOf(":")).simplified();
-    baseName = baseName.left(baseName.indexOf("-")).simplified();
-    searchNames.append(baseName);
+  searchNames.append(NameTools::getUrlQueryName(baseName));
+
+  if(baseName.contains(":") || baseName.contains(" - ")) {
+    QString noSubtitle = baseName.left(baseName.indexOf(":")).simplified();
+    noSubtitle = noSubtitle.left(noSubtitle.indexOf("-")).simplified();
+    // Only add if longer than 3. We don't want to search for "the" for instance
+    if(noSubtitle.length() > 3)
+      searchNames.append(NameTools::getUrlQueryName(noSubtitle));
   }
 
   if(NameTools::hasRomanNumeral(baseName))
