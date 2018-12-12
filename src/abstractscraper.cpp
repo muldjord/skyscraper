@@ -564,9 +564,10 @@ bool AbstractScraper::platformMatch(QString found, QString platform) {
 
 void AbstractScraper::loadMameMap()
 {
-  if(config->scraper != "mamedb" &&
-     config->scraper != "import" &&
-     (config->platform == "neogeo" || config->platform == "arcade")) {
+  if(config->scraper != "import" &&
+     (config->platform == "neogeo" ||
+      config->platform == "arcade" ||
+      config->platform == "fba")) {
     QFile mameMapFile("mameMap.csv");
     if(mameMapFile.open(QIODevice::ReadOnly)) {
       while(!mameMapFile.atEnd()) {
