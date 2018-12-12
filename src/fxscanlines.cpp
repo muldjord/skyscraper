@@ -45,6 +45,11 @@ QImage FxScanlines::applyEffect(const QImage &src, const Layer &layer, Settings 
       scaling = layer.scaling.toDouble();
   }
 
+  if(resource.isEmpty() || !config->resources.contains("resource"))
+    resource = "scanlines1.png";
+  if(opacity == -1)
+    opacity = 100;
+
   if(scaling < 0.1)
     scaling = 0.1;
   if(scaling > 2.0)
@@ -54,6 +59,7 @@ QImage FxScanlines::applyEffect(const QImage &src, const Layer &layer, Settings 
     opacity = 100;
   if(opacity < 0)
     opacity = 0;
+
   /*
   if(!layer.scaling.isEmpty()) {
     if(layer.scaling == "auto") {
@@ -66,11 +72,6 @@ QImage FxScanlines::applyEffect(const QImage &src, const Layer &layer, Settings 
   }
   */
 
-  if(resource.isEmpty())
-    resource = "scanlines1.png";
-  if(opacity == -1)
-    opacity = 100;
-  
   QPainter painter;
   painter.begin(&canvas);
   painter.setOpacity(opacity * 0.01);
