@@ -415,7 +415,7 @@ QString StrTools::getSqrNotes(QString str)
     sqrNotes.append("[CDTV]");
   if(QRegularExpression("[_[]{1}(Ntsc|ntsc|NTSC)[_\\]]{0,1}").match(str).hasMatch())
     sqrNotes.append("[NTSC]");
-  if(QRegularExpression("[_[]{1}(Demo|demo|DEMO)[_\\]]{0,1}").match(str).hasMatch())
+  if(QRegularExpression("(Demo|demo|DEMO)[_\\]]{1}").match(str).hasMatch())
     sqrNotes.append("[Demo]");
   // Don't add PAL detection as it will also match with "_Palace" and such
   sqrNotes = sqrNotes.simplified();
