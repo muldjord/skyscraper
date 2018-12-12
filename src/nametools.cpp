@@ -141,12 +141,14 @@ QString NameTools::getUrlQueryName(const QString baseName)
     if(newName.simplified().left(4) == "the ") {
       newName = newName.simplified().remove(0, 4);
     }
-    if(newName.simplified().right(5) == ", the") {
-      newName = newName.simplified().left(newName.indexOf(", the"));
+    QRegularExpressionMatch match;
+    match = QRegularExpression(", the( - |:|$)").match(newName);
+    if(match.hasMatch()) {
+      newName = newName.replace(match.captured(0), " ");
     }
   }
   newName = newName.replace("_", " ");
-  newName = newName.replace(" - ", ": ");
+  newName = newName.replace(" - ", " ");
   newName = newName.replace(",", " ");
   newName = newName.replace("&", "%26");
   newName = newName.replace("+", "");
