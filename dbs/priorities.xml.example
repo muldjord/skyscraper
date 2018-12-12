@@ -3,10 +3,10 @@
 <priorities>
   <order type="title">
     <source>import</source>
+    <source>openretro</source>
     <source>arcadedb</source>
     <source>screenscraper</source>
     <source>thegamesdb</source>
-    <source>openretro</source>
   </order>
   <order type="platform">
     <source>thegamesdb</source>
