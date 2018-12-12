@@ -117,7 +117,9 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
       replace("[CDTV]", "").simplified();
     data = tempData;
     game.platform = platform;
-    gameEntries.append(game);
+    // Check if title is empty. Some games exist but have no data, not even a name. We don't want those results
+    if(!game.title.isEmpty())
+      gameEntries.append(game);
   } else {
     while(data.indexOf(searchResultPre) != -1) {
       nomNom(searchResultPre);
