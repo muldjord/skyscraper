@@ -111,6 +111,8 @@ QString NameTools::getUrlQueryName(const QString baseName)
   // Remove everything in brackets
   newName = newName.left(newName.indexOf("(")).simplified();
   newName = newName.left(newName.indexOf("[")).simplified();
+  // The following is mostly, if not only, used when getting the name from mameMap
+  newName = newName.left(newName.indexOf(" / ")).simplified();
   // Always remove everything after a ':' since it's always a subtitle
   //newName = newName.left(newName.indexOf(":")).simplified();
   // Always remove everything after a ' - ' since it's always a subtitle
