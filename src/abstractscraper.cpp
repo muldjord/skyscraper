@@ -427,6 +427,9 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
     }
     if(config->platform == "neogeo" ||
        config->platform == "arcade" ||
+       config->platform == "mame-advmame" ||
+       config->platform == "mame-libretro" ||
+       config->platform == "mame-mame4all" ||
        config->platform == "fba") {
       baseName = NameTools::getMameName(baseName, mameMap);
     }
@@ -567,6 +570,9 @@ void AbstractScraper::loadMameMap()
   if(config->scraper != "import" &&
      (config->platform == "neogeo" ||
       config->platform == "arcade" ||
+      config->platform == "mame-advmame" ||
+      config->platform == "mame-libretro" ||
+      config->platform == "mame-mame4all" ||
       config->platform == "fba")) {
     QFile mameMapFile("mameMap.csv");
     if(mameMapFile.open(QIODevice::ReadOnly)) {
