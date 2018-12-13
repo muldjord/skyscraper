@@ -168,7 +168,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 * Add the "--symlink" option that symlinks videos to media folder instead of copying them
 
-#### Version 2.9.0 (In progress, unreleased)
+#### Version 2.9.0 (13th December 2018)
 * MAJOR: Now looks up Amiga lha files in the Amiberry "whdload_db.xml" and retrieves data from "openretro.org" based on the uuid from the xml
 * Added search based fallback pass for Amiga when game isn't found via uuid
 * Added "<scanlines>" effect to compositor. Check [here](ARTWORK.md) for more info (Thank you to "jakejm79" for suggesting this)
