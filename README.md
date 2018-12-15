@@ -90,18 +90,19 @@ Skyscraper is a command line tool, and has many, many options for you to fiddle 
 ```
 $ Skyscraper --help
 ```
-This will give you a description of everything Skyscraper can do if you feel adventurous!
+This will give you a description of everything Skyscraper can do if you feel adventurous! Let's go over the most important ones:
 
-NOTE: If you have already scraped a platform using "Simple mode", any subsequent scrapings of that particular platform should be done with:
-```
-$ Skyscraper -p [platform]
-```
-This will scrape the platform using the `localdb` scraping module, and will make use of all the resources you have gathered in the local database cache. A full description of the `localdb` scraping module can be found [here](#local-database-features). You can of course add further command line options if needed.
+* `-p [platform]`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms [here](PLATFORMS.md)
+* `-s [scraping module]`: This tells Skyscraper where you would like to fetch data from. The most important one being the `localdb` module. Read more about that [here](dbs/README.md)
+* `--refresh`: Whenever you scrape a platform with any scraping module Skyscraper caches all of that data locally. When you rescrape a platform it will fetch the data from the cache instead of hammering the online servers. Using the `--refresh` option allows you to override this and tells Skyscraper to refresh the cached data directly from the online source. Please only use this option if you know the data you want to scrape has changed at the source
+* `--videos`: If you wish to scrape videos for the scraping modules that support it, you need to add the `--videos` option. This is disabled by default because of the significant space requirements needed to save them
+* `--pretend`: This bypasses any game list generation and artwork compositing code, but still caches any incoming data. Useful when scraping with the non-localdb modules, as it's faster while you are just gathering data into your localdb cache
+* `--unattend`: This just bypasses any questions at the beginning of a scraping run. Setting `--unattend` will then always answer yes to overwriting an existing game list and not skip existing entries
 
-NOTE: To enable video scraping for the scraping modules that support it, you need to add the `--videos` command line option. This is disabled per default because of the significant space requirements needed to save them.
+For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` as described below. This will make the options permanent so you don't need to type them in all the time.
 
 ### config.ini
-A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `~/.skyscraper/config.ini`. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, `-m 100` on command line, you can set the matching option `minMatch="100"` in the config.
+A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `~/.skyscraper/config.ini`. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, `-i [some folder]` on command line, you can set the matching option `inputFolder="[some folder]"` in the config.
 
 Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can be any of the supported platforms (check list with `--help`), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform.
 
