@@ -351,7 +351,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
       }
     }
   } else {
-    printf("File either not a compressed file or exceeds 2 meg size limit, falling back...\n");
+    printf("File either not a compressed file or exceeds 8 meg size limit, falling back...\n");
     unpack = false;
   }
 
