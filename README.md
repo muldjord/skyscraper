@@ -168,8 +168,9 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 * Add the "--symlink" option that symlinks videos to media folder instead of copying them
 
-#### Version 2.9.1 (In progress, unreleased)
-* Fixed bug when using --unpack where files exceeding limits would get checksummed wrongfully when using the "screenscraper" module. (Thank you to CookiePLMonster for reporting the issue)
+#### Version 2.9.1 (15th December 2018)
+* Fixed bug in "screenscraper" module when using --unpack where files exceeding limits would get checksummed as the "Point Blank" game. (Thank you to CookiePLMonster for reporting this issue)
+* Raised --unpack size limit to 8 megs
 
 #### Version 2.9.0 (13th December 2018)
 * MAJOR: Now looks up Amiga lha files in the Amiberry "whdload_db.xml" and retrieves data from "openretro.org" based on the uuid from the xml
