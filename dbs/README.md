@@ -1,10 +1,12 @@
 # Local database cache
 Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game `description` or a game `screenshot`. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the `localdb` scraping module.
 
-#### localdb scraping module
-After a while you'll have accumulated a decent amount of locally cached data for any given platform. To exclusively make use of this data Skyscraper provides the `localdb` scraping module (set with `-s localdb`). By using this source Skyscraper *only* scrapes from the locally cached data. Depending on how many sources you've scraped any given platform with, the `localdb` module will give you almost perfect results, with almost no data missing. By default any resource type is prioritized by timestamp. But it is also possible to prioritize them by scraping source. So if you prefer the `description` results from a certain scraping module, you can easily make sure that these will be prioritized above any other descriptions available. Read more about how to do this [here](#the-mandatory-exception-to-the-rule).
+Think of the local database cache as the cache in an internet browser. Most of the data on webpages don't change much. By caching some of the data locally, it can load parts of a webpage from that data, instead of loading it from the remote server. This is exactly how the Skyscraper cache works.
 
-#### Update local data
+#### localdb scraping module
+After a while you'll have accumulated a decent amount of locally cached data for any given platform. To exclusively make use of this data Skyscraper provides the `localdb` scraping module (set with `-s localdb` or leave out the `-s` option altogether as `localdb` is used by default). By using this source Skyscraper *only* scrapes from the locally cached data. Depending on how many sources you've scraped any given platform with, the `localdb` module will give you almost perfect results, with almost no data missing. By default any resource type is prioritized by timestamp. But it is also possible to prioritize them by scraping source. So if you prefer the `description` results from a certain scraping module, you can easily make sure that these will be prioritized above any other descriptions available. Read more about how to do this [here](#the-mandatory-exception-to-the-rule).
+
+#### Update locally cached data
 If you wish to update / refresh the locally cached resources for a particular platform and scraping module, Skyscraper provides the `--refresh` option. If this flag is set on the command line, any data in the local cache will be updated with the new incoming data.
 
 If you wish to just refresh the data for a single rom simply scrape it with `-p [platform] -s [scraping module] --refresh [relative or full rom path and filename]` and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`.
@@ -34,9 +36,7 @@ There is ONE file that you can and should edit inside each of the platform db fo
 Skyscraper provides the example file `~/.skyscraper/dbs/priorities.xml.example`. Please don't edit this file manually, as it will be overwritten when you update Skyscraper. When a platform is scraped for the first time, it will automatically copy the example file to `~/.skyscraper/dbs/[platform]/priorities.xml` unless it already exists. You can of course also copy the file yourself before scraping a platform. If you do so, be sure to remove the `.example` part of the filename so it's just called `priorities.xml`.
 
 #### Other cool stuff you CAN DO
-And what I encourage you to do! :) Each subfolder in this folder is self-contained and can be copied to your friends at your convenience. Just zip it up or copy the folder itself over to some other computer that has Skyscraper 1.6.0 or later installed, and you can make use of the data using the `-s localdb` scraping module option. If you add it at a non-default location, set the db folder with `-d [dbfolder]`.
-
-Keep in mind that you need to unzip the folder before using it. Skyscraper currently does not support zipped db's.
+Each subfolder in this folder is self-contained and can be copied to other Skyscraper installations at your convenience. Just copy the folder itself over to some other computer that has Skyscraper 1.6.0 or later installed, and you can make use of the data using the `-s localdb` scraping module option. If you add it at a non-default location, set the db folder with `-d [dbfolder]`.
 
 #### To those who live the thug life
 ... and decide to completely ignore my warnings. If you absolutely insist on editing the databases by hand, here's a description of the format. It's really, really simple.
