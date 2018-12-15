@@ -108,30 +108,6 @@ Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can
 
 You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just uncomment the ones you wish to use by removing the "`#`" in front of the variables.
 
-### Local database features
-Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game `description` or a game `screenshot`. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the `localdb` scraping module.
-
-#### LocalDb scraping module
-After a while you'll have accumulated a decent amount of locally cached data for any given platform. To exclusively make use of this data Skyscraper provides the `localdb` scraping module (set with `-s localdb`). By using this source Skyscraper *only* scrapes from the locally cached data. Depending on how many sources you've scraped any given platform with, the `localdb` module will give you almost perfect results, with almost no data missing. Per default any resource type is prioritized by timestamp. But it is also possible to prioritize them by scraping source. So if you prefer the `description` results from a certain scraping module, you can easily make sure that these will be prioritized above any other descriptions available. Read more about how to do this [here](dbs/README.md).
-
-#### Update local data
-If you wish to update / refresh the locally cached resources for a particular platform and scraping module, Skyscraper provides the `--refresh` option. If this flag is set on the command line, any data in the local cache will be updated with the new incoming data.
-
-If you wish to just refresh the data for a single rom simply scrape it with `-p [platform] -s [scraping module] --refresh [relative or full rom path and filename]` and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`.
-
-When you've updated information in the local cache, always remember to rescrape the entire platform with `Skyscraper -p [platform] -s localdb` afterwards to regenerate the gamelist for the frontend.
-
-#### Default db folder
-The default folder for all of Skyscrapers' locally cached data is in the `~/.skyscraper/dbs` subfolder. In this folder you'll find the individual platform db subfolders. Any platform db folder is selfcontained and can be copied to a USB drive, or zipped up and uploaded to share with friends.
-
-#### User-defined databases
-Normally Skyscraper uses a default local db folder for each platform. But a friend might have send you a copy of his local database folder, and you wish to scrape from his data. In this case Skyscraper allows you to force the use of a local database with the `-d [db folder]` command line option. Keep in mind that if your friend has zipped the db folder for convenience, you need to unzip it before use. Skyscraper does *not* currently support zipped db folders.
-
-#### Tiny words of warning
-If you start copying your local databases to and from friends, or you accumulate some really big local databases that you sleep with at night because you love them so much - ALWAYS remember to back these up from time to time! Skyscraper is software. Software has bugs. And even though I do quite a bit of testing and feel confident in my code, bugs are inevitable from time to time.
-
-Basically what I'm trying to say is that it is entirely your own fault if you've spent 6 months creating a bunch of local db's and suddenly you overwrite them unintentionally or Skyscraper corrupts the data for some i-have-no-idea-how reason. It could happen. So... PLAN YOUR BACKUPS! And don't come crying to me. :D
-
 ### Local data import
 I addition to allowing scraping from local resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the `-s localdb` scraping module. For a quick overview read on below. For a more detailed description with examples go [here](import/README.md).
 
