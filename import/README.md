@@ -1,5 +1,7 @@
 # Local data import
-NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import` when importing for the "amiga" platform.
+The following described how to import your own custom textual, artwork or video data into the local database cache.
+
+NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import/` when importing for the `amiga` platform.
 
 ## Images and videos
 To import videos or images into the local Skyscraper resource cache, use the following procedure:
