@@ -1,24 +1,24 @@
 # Local data import
-NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder '`~/.skyscraper/import/amiga`' and it will use that as base instead of '`~/.skyscraper/import`' when importing for the 'amiga' platform.
+NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import` when importing for the "amiga" platform.
 
 ## Images and videos
 To import videos or images into the local Skyscraper resource cache, use the following procedure:
-* Name your image or video file with the EXACT base name of the rom you wish to connect it to. Example: 'Bubble Bobble.nes' will import images with a filename of 'Bubble Bobble.jpg' or 'Bubble Bobble.png' or other image formats. As long as the base name is an exact match. Same goes for video files. I recommend only making use of wellknown video formats, since Skyscraper imports them directly without conversion, so they need to be supported directly by the frontend you plan to use.
-* Place all of your images or videos in the '~/.skyscraper/import/screenshots', 'covers', 'wheels', 'marquees' or 'videos' folders.
-* Now run Skyscraper with 'Skyscraper-p [platform] -s import'. If you named your files correctly, they will now be imported. Look for the green 'YES' in the output at the rom(s) you've placed files for. This will tell you if it succeeded or not.
+* Name your image or video file with the EXACT base name of the rom you wish to connect it to. Example: `Bubble Bobble.nes` will import images with a filename of `Bubble Bobble.jpg` or `Bubble Bobble.png` or other well-known image formats. As long as the base name is an exact match. Same goes for video files. I recommend only making use of well-known video formats since Skyscraper imports them directly without conversion, so they need to be supported directly by the frontend you plan to use.
+* Place all of your images or videos in the `~/.skyscraper/import/screenshots`, `covers`, `wheels`, `marquees` or `videos` folders.
+* Now run Skyscraper with `Skyscraper-p [platform] -s import`. If you named your files correctly, they will now be imported. Look for the green 'YES' in the output at the rom(s) you've placed files for. This will tell you if it succeeded or not.
 * The data is now imported. To now make use of the data, read [here](#how-to-actually-use-the-data).
 
 ### Special note for videos
-If you are importing videos, you also need to add the command line option '--videos' for this to work. Videos aren't imported or scraped per default, since it is considered a huge disk space hog. So keep this in mind if you want to import videos into the cache.
+If you are importing videos, you also need to add the command line option `--videos` for this to work. Videos aren't imported or scraped per default, since it is considered a huge disk space hog. So keep this in mind if you want to import videos into the cache.
 
 ## Textual data (publisher, players, rating and so on)
-Skyscraper also allows you to import textual data for any rom you have in your collection. All you need to do is to prepare files for each rom with an exactly matching base name. For instance 'Bubble Bobble.nes' should have a file called 'Bubble Bobble.txt' or 'Bubble Bobble.xml' or whatever suffix you want to use. The suffix is not important. What IS important is that you place all of these raw data files into the '~/.skyscraper/import/textual' folder. And then you need to make a definitions file so Skyscraper has a recipe for these files.
+Skyscraper also allows you to import textual data for any rom you have in your collection. All you need to do is to prepare files for each rom with an exactly matching base name. For instance `Bubble Bobble.nes` should have a file called `Bubble Bobble.txt` or `Bubble Bobble.xml` or whatever suffix you want to use. The suffix is not important. What IS important is that you place all of these raw data files into the `~/.skyscraper/import/textual` folder. And then you need to make a definitions file so Skyscraper has a recipe for these files.
 
 ### Textual data definitions file
-In order for Skyscraper to understand your textual data files, it needs a recipe. Or a definition of your format if you like. The format is completely up to you. The file must be placed at '~/.skyscraper/import/definitions.dat'. Here follows a few examples with a matching data file for comparison:
+In order for Skyscraper to understand your textual data files, it needs a recipe. Or a definition of your format if you like. The format is completely up to you. The file must be placed at `~/.skyscraper/import/definitions.dat`. Here follows a few examples with a matching data file for comparison:
 
 ##### Example 1
-Definitions file: ~/.skyscraper/import/definitions.dat
+Definitions file: `~/.skyscraper/import/definitions.dat`
 ```
 <game>
   <title>###TITLE###</title>
@@ -33,7 +33,7 @@ Definitions file: ~/.skyscraper/import/definitions.dat
 </game>
 ```
 
-Import file: ~/.skyscraper/import/textual/[exact rom base name].xml
+Import file: `~/.skyscraper/import/textual/[exact rom base name].xml`
 ```
 <game>
   <title>The Game Title</title>
@@ -51,7 +51,7 @@ Import file: ~/.skyscraper/import/textual/[exact rom base name].xml
 Make sure any line matches exactly with the line in the recipe including white-space characters such as spaces and tabs! Otherwise Skyscraper won't recognize it.
 
 ##### Example 2
-Definitions file: ~/.skyscraper/import/definitions.dat
+Definitions file: `~/.skyscraper/import/definitions.dat`
 ```
 Title      : ###TITLE###
 Description: ###DESCRIPTION###
@@ -64,7 +64,7 @@ Genre      : ###TAGS###
 Date       : ###RELEASEDATE###
 ```
 
-Import file: ~/.skyscraper/import/textual/[exact rom base name].txt
+Import file: `~/.skyscraper/import/textual/[exact rom base name].txt`
 ```
 Title      : Game Title
 Description: This game is about yada, yada yada.
@@ -78,7 +78,7 @@ Date       : The game release date (example '1985-06-01')
 ```
 
 #### List of known tags
-From the examples above you'll notice the '###SOMETHING###' tags. This is what Skyscraper recognizes your data from. The supported tags are:
+From the examples above you'll notice the `###SOMETHING###` tags. This is what Skyscraper recognizes your data from. The supported tags are:
 
 * ###TITLE###
 * ###DESCRIPTION###
@@ -91,7 +91,7 @@ From the examples above you'll notice the '###SOMETHING###' tags. This is what S
 * ###RELEASEDATE###
 
 #### Resource formats
-For '###PLAYERS###', '###RATING###', ###AGES###, and '###RELEASEDATE###' a certain format is required. Players must contain just the maximum number of players as an integer such as '4'. Rating must be a number between 0.0 and 5.0. Ages must be an integer between 1 and 18 (for instance "16" means it is suitable from ages 16 and up). Release date must be of one of the following formats:
+For `###PLAYERS###`, `###RATING###`, `###AGES###`, and `###RELEASEDATE###` a certain format is required. Players must contain just the maximum number of players as an integer such as '4'. Rating must be a number between 0.0 and 5.0. Ages must be an integer between 1 and 18 (for instance "16" means it is suitable from ages 16 and up). Release date must be of one of the following formats:
 * yyyy
 * yyyy-MM
 * yyyy-MM-dd
@@ -100,4 +100,4 @@ For '###PLAYERS###', '###RATING###', ###AGES###, and '###RELEASEDATE###' a certa
 * MMM dd, yyyy (MMM is Jan, Feb and so on...)
 
 ## How to actually USE the data
-When you've imported all of your data into the local Skyscraper cache, you can make use of it by scraping the platform with 'Skyscraper -p [platform] -s localdb'. This will make use of your imported data. Read more about the localdb scraping module [here](../dbs/README.md).
+When you've imported all of your data into the local Skyscraper cache, you can make use of it by scraping the platform with `Skyscraper -p [platform] -s localdb` (you can actually leave out `-s localdb` as it will be used by default). This will make use of your imported data. Read more about the localdb scraping module [here](../dbs/README.md).
