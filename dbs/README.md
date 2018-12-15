@@ -5,7 +5,7 @@ MOST FILES AND FOLDERS INSIDE THE `~/.skyscraper/dbs` FOLDER ARE NOT MEANT TO BE
 If you decide to add your own files to the subfolders, you risk them being deleted by Skyscraper later on if it is run with one of the database cleanup command line options. You've been warned! :)
 
 ## The mandatory exception to the rule
-There is ONE file that you can and should edit inside each of the platform db folders. That file is called `priorities.xml` and decides the scraper priority of resources for each resource type. For instance, if you know that "thegamesdb" always provides the best "descriptions" for games, you'd add an `<order type="description">` node with a `<source>thegamesdb</source>` subnode. You can have multiple `<source>` nodes, Skyscraper will then prefer the topmost source when scraping with the `localdb` (set with `-s localdb`) scraping module. If the topmost isn't found, it'll use the next one and so on. If the `<order>` node is empty, it will prioritize using timestamps for when each resource was added to the cache.
+There is ONE file that you can and should edit inside each of the platform db folders. That file is called `priorities.xml` and decides the scraper priority of resources for each resource type. For instance, if you know that `thegamesdb` always provides the best `descriptions` for games, you'd add an `<order type="description">` node with a `<source>thegamesdb</source>` subnode. You can have multiple `<source>` nodes, Skyscraper will then prefer the topmost source when scraping with the `localdb` (set with `-s localdb`) scraping module. If the topmost isn't found, it'll use the next one and so on. If the `<order>` node is empty, it will prioritize using timestamps for when each resource was added to the cache.
 
 Skyscraper provides the example file `~/.skyscraper/dbs/priorities.xml.example`. When a platform is scraped for the first time, it will automatically copy the example file to `~/.skyscraper/dbs/[platform]/priorities.xml` unless it already exists. You can of course also copy the file yourself before scraping a platform. If you do so, be sure to remove the `.example` part of the filename so it's just called `priorities.xml`.
 
@@ -15,7 +15,7 @@ And what I encourage you to do! :) Each subfolder in this folder is self-contain
 Keep in mind that you need to unzip the folder before using it. Skyscraper currently does not support zipped db's.
 
 ## To those who live the thug life
-... and decide to completely ignore my warnings. If you absolutely insist on editing the databases by hand (DON'T!), here's a description of the format. It's really, really simple. (It is, but DON'T!)
+... and decide to completely ignore my warnings. If you absolutely insist on editing the databases by hand, here's a description of the format. It's really, really simple.
 
 ### Sha1 primary key
 The database consists of sha1 summed entry resources. The sha1 sum is calculated from the rom data or, in special cases, the filename (in cases where the file data is a script or similar). An entry can look like this:
