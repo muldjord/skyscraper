@@ -108,8 +108,11 @@ Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can
 
 You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just uncomment the ones you wish to use by removing the "`#`" in front of the variables.
 
+### Local database cache
+One of Skyscraper's most powerful features is the local database cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](dbs/README.md).
+
 ### Local data import
-I addition to allowing scraping from local resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the `-s localdb` scraping module. For a quick overview read on below. For a more detailed description with examples go [here](import/README.md).
+I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the `-s localdb` scraping module. For a quick overview read on below. For a more detailed description with examples go [here](import/README.md).
 
 NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import/` when importing for the `amiga` platform.
 
