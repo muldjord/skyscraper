@@ -305,53 +305,56 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
   QCryptographicHash sha1(QCryptographicHash::Sha1);
   Crc32 crc;
   crc.initInstance(1);
-  
+
   bool unpack = config->unpack;
-  
-  // Size limit for "unpack" is set to 8 megs to ensure the pi doesn't run out of memory
-  if(unpack && (info.suffix() == "7z" || info.suffix() == "zip") && info.size() < 81920000) {
-    // For 7z (7z, zip) unpacked file reading
-    {
-      QProcess decProc;
-      decProc.setReadChannel(QProcess::StandardOutput);
-      
-      decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"");
-      if(decProc.waitForFinished(30000)) {
-	if(decProc.exitStatus() != QProcess::NormalExit) {
-	  printf("Getting file list from compressed file failed, falling back...\n");
-	  unpack = false;
-	} else if(!decProc.readAllStandardOutput().contains(" 1 files")) {
-	  printf("Compressed file contains more than 1 file, falling back...\n");
-	  unpack = false;
-	}
-      } else {
-	printf("Getting file list from compressed file timed out or failed, falling back...\n");
-	unpack = false;
-      }
-    }
-    
-    if(unpack) {
-      QProcess decProc;
-      decProc.setReadChannel(QProcess::StandardOutput);
-      
-      decProc.start("7z x -so \"" + info.absoluteFilePath() + "\"");
-      if(decProc.waitForFinished(30000)) {
-	if(decProc.exitStatus() == QProcess::NormalExit) {
-	  QByteArray allData = decProc.readAllStandardOutput();
-	  md5.addData(allData);
-	  sha1.addData(allData);
-	  crc.pushData(1, allData.data(), allData.length());
+
+  if(unpack) {
+    // Size limit for "unpack" is set to 8 megs to ensure the pi doesn't run out of memory
+    if((info.suffix() == "7z" || info.suffix() == "zip") && info.size() < 81920000) {
+      // For 7z (7z, zip) unpacked file reading
+      {
+	QProcess decProc;
+	decProc.setReadChannel(QProcess::StandardOutput);
+
+	decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"");
+	if(decProc.waitForFinished(30000)) {
+	  if(decProc.exitStatus() != QProcess::NormalExit) {
+	    printf("Getting file list from compressed file failed, falling back...\n");
+	    unpack = false;
+	  } else if(!decProc.readAllStandardOutput().contains(" 1 files")) {
+	    printf("Compressed file contains more than 1 file, falling back...\n");
+	    unpack = false;
+	  }
 	} else {
-	  printf("Something went wrong when decompressing file to stdout, falling back...\n");
+	  printf("Getting file list from compressed file timed out or failed, falling back...\n");
 	  unpack = false;
 	}
-      } else {
-	printf("Decompression process timed out or failed, falling back...\n");
-	unpack = false;
       }
+
+      if(unpack) {
+	QProcess decProc;
+	decProc.setReadChannel(QProcess::StandardOutput);
+
+	decProc.start("7z x -so \"" + info.absoluteFilePath() + "\"");
+	if(decProc.waitForFinished(30000)) {
+	  if(decProc.exitStatus() == QProcess::NormalExit) {
+	    QByteArray allData = decProc.readAllStandardOutput();
+	    md5.addData(allData);
+	    sha1.addData(allData);
+	    crc.pushData(1, allData.data(), allData.length());
+	  } else {
+	    printf("Something went wrong when decompressing file to stdout, falling back...\n");
+	    unpack = false;
+	  }
+	} else {
+	  printf("Decompression process timed out or failed, falling back...\n");
+	  unpack = false;
+	}
+      }
+    } else {
+      printf("File either not a compressed file or exceeds 8 meg size limit, falling back...\n");
+      unpack = false;
     }
-  } else {
-    unpack = false;
   }
 
   if(!unpack) {
