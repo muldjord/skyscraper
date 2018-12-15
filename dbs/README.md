@@ -1,5 +1,5 @@
 # Local database description
-MOST FILES AND FOLDERS INSIDE THE `[homedir]/.skyscraper/dbs` FOLDER ARE NOT MEANT TO BE MANIPULATED BY HAND!!! It can be done, but don't complain to me about the format of the database. It is NOT meant to be understood by humans. It is meant to be efficient for reading and parsing by Skyscraper itself. Same goes for the media files that reside in the subfolders.
+MOST FILES AND FOLDERS INSIDE THE `~/.skyscraper/dbs` FOLDER ARE NOT MEANT TO BE MANIPULATED BY HAND!!! It can be done, but don't complain to me about the format of the database. It is NOT meant to be understood by humans. It is meant to be efficient for reading and parsing by Skyscraper itself. Same goes for the media files that reside in the subfolders.
 
 ## Don't leave custom files in here
 If you decide to add your own files to the subfolders, you risk them being deleted by Skyscraper later on if it is run with one of the database cleanup command line options. You've been warned! :)
