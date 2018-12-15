@@ -1,7 +1,7 @@
 # Local database cache
 Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game `description` or a game `screenshot`. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the `localdb` scraping module.
 
-#### LocalDb scraping module
+#### localdb scraping module
 After a while you'll have accumulated a decent amount of locally cached data for any given platform. To exclusively make use of this data Skyscraper provides the `localdb` scraping module (set with `-s localdb`). By using this source Skyscraper *only* scrapes from the locally cached data. Depending on how many sources you've scraped any given platform with, the `localdb` module will give you almost perfect results, with almost no data missing. By default any resource type is prioritized by timestamp. But it is also possible to prioritize them by scraping source. So if you prefer the `description` results from a certain scraping module, you can easily make sure that these will be prioritized above any other descriptions available. Read more about how to do this [here](#the-mandatory-exception-to-the-rule).
 
 #### Update local data
