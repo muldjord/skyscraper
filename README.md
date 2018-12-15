@@ -111,28 +111,8 @@ You can find an example config file at `~/.skyscraper/config.ini.example`. This 
 ### Local database cache
 One of Skyscraper's most powerful features is the local database cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](dbs/README.md).
 
-### Local data import
-I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the local cache, which in turn allows you to scrape your roms with it using the `-s localdb` scraping module. For a quick overview read on below. For a more detailed description with examples go [here](import/README.md).
-
-NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import/` when importing for the `amiga` platform.
-
-#### Artwork import
-Skyscraper allows you to import various artwork resources from the local `~/.skyscraper/import/` subfolders. Simply place your data inside these folders with the EXACT filename of the roms you wish to connect them to. For instance, if you have a Nes rom called `Bubble Bobble.nes` you would place your screenshot for this rom inside `~/.skyscraper/import/screenshots` or `~/.skyscraper/import/nes/screenshots` called `Bubble Bobble.png`. Other image file formats are also supported.
-
-#### Textual data import
-For textual data, you need to first create a file called `~/.skyscraper/import/definitions.dat`. In this file, you must define the file content format you are providing for each rom. For instance, if your data comes in the form of 1 xml file per rom, and you wish to scrape `publisher` for this rom, perhaps your input file has a node like `<publisher>This is the publisher</publisher>`. In the `definitions.dat` file you'd then add a line looking like `<publisher>###PUBLISHER###</publisher`. The `###PUBLISHER###` tag is recognized by Skyscraper.
-
-Now run the scraper with the `-s import` option:
-```
-$ Skyscraper -p [platform] -s import
-```
-If you've named the files correctly, the game will show with a green `YES` for cover, screenshot, wheel, marquee and/or video (if you've enabled them with the `--videos` option). If you've imported textual data, it will show the data at the relevant output line.
-
-Now, to make use of the imported data, scrape with the `-s localdb` scraping module and your resources will be prioritized above all others as defined in `~/.skyscraper/dbs/[platform]/priorities.xml`.
-```
-$ Skyscraper -p [platform] -s localdb
-```
-Then start your frontend and enjoy your newly imported data. :)
+### Custom data import
+I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the local cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data using the `-s localdb` scraping module. Read more about how this works [here](import/README.md).
 
 ### Artwork look and effects
 Check the full artwork documentation [here](ARTWORK.md)
