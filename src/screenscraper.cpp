@@ -319,7 +319,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 	if(decProc.exitStatus() != QProcess::NormalExit) {
 	  printf("Getting file list from compressed file failed, falling back...\n");
 	  unpack = false;
-	} else if(decProc.readAllStandardOutput().indexOf(" 1 files") == -1) {
+	} else if(!decProc.readAllStandardOutput().contains(" 1 files")) {
 	  printf("Compressed file contains more than 1 file, falling back...\n");
 	  unpack = false;
 	}
