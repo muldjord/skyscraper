@@ -1,5 +1,5 @@
 # Local data import
-The following described how to import your own custom textual, artwork or video data into the local database cache.
+The following describes how to import your own custom textual, artwork and / or video data into the local database cache for later use with the `-s localdb` scraping module.
 
 NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import/` when importing for the `amiga` platform.
 
