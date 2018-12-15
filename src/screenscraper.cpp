@@ -308,7 +308,8 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
   
   bool unpack = config->unpack;
   
-  if(unpack && (info.suffix() == "7z" || info.suffix() == "zip") && info.size() < 20480000) {
+  // Size limit for "unpack" is set to 8 megs to ensure the pi doesn't run out of memory
+  if(unpack && (info.suffix() == "7z" || info.suffix() == "zip") && info.size() < 81920000) {
     // For 7z (7z, zip) unpacked file reading
     {
       QProcess decProc;
