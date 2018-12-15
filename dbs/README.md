@@ -18,7 +18,7 @@ Keep in mind that you need to unzip the folder before using it. Skyscraper curre
 ... and decide to completely ignore my warnings. If you absolutely insist on editing the databases by hand, here's a description of the format. It's really, really simple.
 
 ### Sha1 primary key
-The database consists of sha1 summed entry resources. The sha1 sum is calculated from the rom data or, in special cases, the filename (in cases where the file data is a script or similar). An entry can look like this:
+The database consists of resource entries connected to a sha1 checksum. The sha1 is calculated from the rom data or, in special cases, the filename (in cases where the file data is a script or similar). An entry can look like this:
 
 ```xml
 <resource sha1="[sha1 sum]" type="[resource type]" source="[scraping source]" timestamp="[msecs sine epoch]">Resource data</resource>
