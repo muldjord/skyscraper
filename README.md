@@ -127,6 +127,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 * Add the "--symlink" option that symlinks videos to media folder instead of copying them
+* Added emulationstation gamelist.xml importer (esgamelist)
 
 #### Version 2.9.2 (In progress, unreleased)
 * Removed version bracket tag for Amiga lha files
