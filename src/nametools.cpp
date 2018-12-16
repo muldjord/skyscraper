@@ -406,11 +406,7 @@ QString NameTools::getParNotes(QString baseName)
   }
   
   QRegularExpressionMatch match;
-  // Add note for version
-  match = QRegularExpression("[vV]{1}[0-9]{1}[.]{1}[0-9]{1,2}[.]{0,1}[0-9]{0,2}[a-d]{0,1}").match(baseName);
-  if(match.hasMatch()) {
-    parNotes.append("(" + match.captured(0) + ")");
-  }
+
   // Add "nDisk" detection
   match = QRegularExpression("[0-9]{1,2}[ ]{0,1}Disk").match(baseName);
   if(match.hasMatch()) {
