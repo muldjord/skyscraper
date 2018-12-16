@@ -1,4 +1,4 @@
-# Local data import
+# Custom data import
 The following describes how to import your own custom textual, artwork and / or video data into the local database cache for later use with the `-s localdb` scraping module.
 
 NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import/` when importing for the `amiga` platform.
@@ -19,7 +19,7 @@ Skyscraper also allows you to import textual data for any rom you have in your c
 ### Textual data definitions file
 In order for Skyscraper to understand your textual data files, it needs a recipe. Or a definition of your format if you like. The format is completely up to you. The file must be placed at `~/.skyscraper/import/definitions.dat`. Here follows a few examples with a matching data file for comparison:
 
-##### Example 1
+#### Example 1
 Definitions file: `~/.skyscraper/import/definitions.dat`
 ```
 <game>
@@ -52,7 +52,7 @@ Import file: `~/.skyscraper/import/textual/[exact rom base name].xml`
 ```
 Make sure any line matches exactly with the line in the recipe including white-space characters such as spaces and tabs! Otherwise Skyscraper won't recognize it.
 
-##### Example 2
+#### Example 2
 Definitions file: `~/.skyscraper/import/definitions.dat`
 ```
 Title      : ###TITLE###
