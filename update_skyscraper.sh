@@ -25,6 +25,7 @@ then
     rm ${LATEST}.tar.gz
     echo "--- Cleaning out old build if one exists ---"
     make clean
+    rm .qmake.stash
     qmake
     if [ $? != 0 ]
     then
