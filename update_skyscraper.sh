@@ -20,6 +20,7 @@ then
     tar xvzf ${LATEST}.tar.gz --strip-components 1 --overwrite
     if [ $? != 0 ]
     then
+	rm VERSION
 	exit
     fi
     rm ${LATEST}.tar.gz
@@ -29,18 +30,21 @@ then
     qmake
     if [ $? != 0 ]
     then
+	rm VERSION
 	exit
     fi
     echo "--- Building Skyscraper v.${LATEST} ---"
     make
     if [ $? != 0 ]
     then
+	rm VERSION
 	exit
     fi
     echo "--- Installing Skyscraper v.${LATEST} ---"
     sudo make install
     if [ $? != 0 ]
     then
+	rm VERSION
 	exit
     fi
     echo "--- Skyscraper has been updated to v.${LATEST} ---"
