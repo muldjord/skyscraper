@@ -40,13 +40,16 @@ private:
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 			QString platform) override;
   void getGameData(GameEntry &game) override;
-  QImage loadImageData(const QDomNode& gamenode, QString tag);
-  QString loadVideoData(const QDomNode& gamenode);
-  QString checkName(QString value);
+  QImage loadImageData(const QString fileName);
+  void loadVideoData(GameEntry &game, const QString fileName);
+  QString getAbsoluteFileName(const QString fileName);
 
-  QDomDocument doc;
+  QDomDocument xmlDoc;
+  QDomNodeList games;
+  QDomNode gameNode;
+  
   QString basePath;
-  QString gamelistXml;
+  QString gameListXml;
 };
 
 #endif // ESGAMELIST_H
