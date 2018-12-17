@@ -1,3 +1,10 @@
+/***************************************************************************
+ *            esgamelist.h
+ *
+ *  Mon Dec 17 08:00:00 CEST 2018
+ *  Copyright 2018 Lars Muldjord & Martin Gerhardy
+ *  muldjordlars@gmail.com
+ ****************************************************************************/
 /*
  *  This file is part of skyscraper.
  *
@@ -16,7 +23,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#pragma once
+#ifndef ESGAMELIST_H
+#define ESGAMELIST_H
 
 #include "abstractscraper.h"
 #include <QDomDocument>
@@ -25,18 +33,20 @@ class ESGameList: public AbstractScraper {
 Q_OBJECT
 
 public:
-	ESGameList(Settings *config);
+  ESGameList(Settings *config);
 
 private:
-	QList<QString> getSearchNames(const QFileInfo &info) override;
-	void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
+  QList<QString> getSearchNames(const QFileInfo &info) override;
+  void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 			QString platform) override;
-	void getGameData(GameEntry &game) override;
-	QImage loadImageData(const QDomNode& gamenode, QString tag);
-	QString loadVideoData(const QDomNode& gamenode);
-	QString checkName(QString value);
+  void getGameData(GameEntry &game) override;
+  QImage loadImageData(const QDomNode& gamenode, QString tag);
+  QString loadVideoData(const QDomNode& gamenode);
+  QString checkName(QString value);
 
-	QDomDocument doc;
-	QString basePath;
-	QString gamelistXml;
+  QDomDocument doc;
+  QString basePath;
+  QString gamelistXml;
 };
+
+#endif // ESGAMELIST_H
