@@ -44,12 +44,8 @@ private:
   void loadVideoData(GameEntry &game, const QString fileName);
   QString getAbsoluteFileName(const QString fileName);
 
-  QDomDocument xmlDoc;
   QDomNodeList games;
   QDomNode gameNode;
-  
-  QString basePath;
-  QString gameListXml;
 };
 
 #endif // ESGAMELIST_H

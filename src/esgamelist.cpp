@@ -29,23 +29,28 @@
 #include <QDir>
 
 ESGameList::ESGameList(Settings *config) : AbstractScraper(config) {
-  basePath = QDir::homePath() + "/RetroPie/roms/" + config->platform + "/";
-  gameListXml = basePath + "gamelist.xml";
+  baseUrl = config->inputFolder + (config->inputFolder.right(1) != "/"?"/":"");
+  QString gameListXml = baseUrl + "gamelist.xml";
+  if(!QFileInfo::exists(gameListXml)) {
+    baseUrl = "import/" + config->platform + "/";
+    gameListXml = baseUrl + "gamelist.xml";
+  }
+  QDomDocument xmlDoc;
   QFile gameListFile(gameListXml);
   if(gameListFile.open(QIODevice::ReadOnly)) {
     xmlDoc.setContent(&gameListFile);
     gameListFile.close();
+    games = xmlDoc.elementsByTagName("game");
   }
-  games = xmlDoc.elementsByTagName("game");
 }
 
 void ESGameList::getSearchResults(QList<GameEntry> &gameEntries,
 				  QString searchName, QString platform) {
-  gameNode = QDomNode();
-  
   if(games.isEmpty())
     return;
-  
+
+  gameNode.clear();
+
   for(int i = 0; i < games.size(); ++i) {
     // Find <game> where last part of <path> matches file name
     if(games.item(i).firstChildElement("path").text().endsWith(searchName)) {
@@ -60,7 +65,7 @@ void ESGameList::getSearchResults(QList<GameEntry> &gameEntries,
 }
 
 void ESGameList::getGameData(GameEntry &game) {
-  if(games.isEmpty())
+  if(gameNode.isNull())
     return;
   
   game.releaseDate = gameNode.firstChildElement("releasedate").text();
@@ -102,12 +107,13 @@ void ESGameList::loadVideoData(GameEntry &game, const QString fileName) {
   }
 }
 
-QString ESGameList::getAbsoluteFileName(const QString fileName) {
+QString ESGameList::getAbsoluteFileName(QString fileName) {
   if(QFileInfo::exists(fileName)) {
     return QFileInfo(fileName).absoluteFilePath();
   }
-  if(QFileInfo::exists(basePath + fileName)) {
-    return QFileInfo(basePath + fileName).absoluteFilePath();
+  fileName.prepend(baseUrl);
+  if(QFileInfo::exists(fileName)) {
+    return QFileInfo(fileName).absoluteFilePath();
   }
   return "";
 }
