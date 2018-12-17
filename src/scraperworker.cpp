@@ -41,6 +41,7 @@
 #include "localscraper.h"
 #include "importscraper.h"
 #include "arcadedb.h"
+#include "esgamelist.h"
 
 ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb,
 			     Settings config, QString threadId)
@@ -73,6 +74,8 @@ void ScraperWorker::run()
     scraper = new MobyGames(&config);
   } else if(config.scraper == "worldofspectrum") {
     scraper = new WorldOfSpectrum(&config);
+  } else if(config.scraper == "esgamelist") {
+    scraper = new ESGameList(&config);
   } else if(config.scraper == "localdb") {
     scraper = new LocalScraper(&config);
   } else if(config.scraper == "import") {
