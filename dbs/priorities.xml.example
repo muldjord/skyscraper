@@ -3,6 +3,7 @@
 <priorities>
   <order type="title">
     <source>import</source>
+    <source>esgamelist</source>
     <source>openretro</source>
     <source>arcadedb</source>
     <source>screenscraper</source>
@@ -13,6 +14,7 @@
   </order>
   <order type="releasedate">
     <source>import</source>
+    <source>esgamelist</source>
     <source>arcadedb</source>
     <source>screenscraper</source>
     <source>openretro</source>
@@ -20,14 +22,17 @@
   </order>
   <order type="developer">
     <source>import</source>
+    <source>esgamelist</source>
     <source>arcadedb</source>
   </order>
   <order type="publisher">
     <source>import</source>
+    <source>esgamelist</source>
     <source>arcadedb</source>
   </order>
   <order type="players">
     <source>import</source>
+    <source>esgamelist</source>
     <source>arcadedb</source>
     <source>openretro</source>
     <source>screenscraper</source>
@@ -35,6 +40,7 @@
   </order>
   <order type="ages">
     <source>import</source>
+    <source>esgamelist</source>
     <source>screenscraper</source>
     <source>thegamesdb</source>
     <source>arcadedb</source>
@@ -42,6 +48,7 @@
   </order>
   <order type="tags">
     <source>import</source>
+    <source>esgamelist</source>
     <source>arcadedb</source>
     <source>openretro</source>
     <source>screenscraper</source>
@@ -51,18 +58,21 @@
   </order>
   <order type="description">
     <source>import</source>
+    <source>esgamelist</source>
     <source>thegamesdb</source>
     <source>screenscraper</source>
     <source>openretro</source>
   </order>
   <order type="cover">
     <source>import</source>
+    <source>esgamelist</source>
     <source>screenscraper</source>
     <source>openretro</source>
     <source>thegamesdb</source>
   </order>
   <order type="screenshot">
     <source>import</source>
+    <source>esgamelist</source>
     <source>screenscraper</source>
     <source>arcadedb</source>
     <source>openretro</source>
@@ -74,11 +84,13 @@
   </order>
   <order type="marquee">
     <source>import</source>
+    <source>esgamelist</source>
     <source>screenscraper</source>
     <source>thegamesdb</source>
   </order>
   <order type="video">
     <source>import</source>
+    <source>esgamelist</source>
     <source>screenscraper</source>
   </order>
 </priorities>
