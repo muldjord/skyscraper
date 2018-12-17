@@ -20,6 +20,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * ONLINE: igdb.com
 * LOCAL: localdb (scrapes exclusively from cached resources. Read more [here](#local-database-features))
 * LOCAL: import (imports resources into the local cache. Read more about this [here](import/README.md))
+* LOCAL: esgamelist (by "mgerhardy". Scrapes data from an EmulationStation gameslist)
 
 ... More scraping sources will be added in future releases!
 
@@ -127,10 +128,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 * Add the "--symlink" option that symlinks videos to media folder instead of copying them
-* Added emulationstation gamelist.xml importer (esgamelist)
 
 #### Version 2.9.2 (In progress, unreleased)
 * Removed version bracket tag for Amiga lha files
+* Added emulationstation gamelist.xml importer by "mgerhardy" (esgamelist)
 
 #### Version 2.9.1 (15th December 2018)
 * Fixed bug in "screenscraper" module when using --unpack where files exceeding limits would get checksummed as the "Point Blank" game. (Thank you to CookiePLMonster for reporting this issue)
