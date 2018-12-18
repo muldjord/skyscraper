@@ -657,6 +657,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("videos")) {
     config.videos = settings.value("videos").toBool();
   }
+  if(settings.contains("pngquant")) {
+    config.pngquant = settings.value("pngquant").toBool();
+  }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();
   }
@@ -889,6 +892,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("videos")) {
     config.videos = true;
+  }
+  if(parser.isSet("pngquant")) {
+    config.pngquant = true;
   }
   if(parser.isSet("nocovers")) {
     config.cacheCovers = false;

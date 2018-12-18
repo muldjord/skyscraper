@@ -45,6 +45,7 @@ public:
 private:
   void addChildLayers(Layer &layer, QXmlStreamReader &xml);
   void processChildLayers(GameEntry &game, Layer &layer);
+  void pngquant(QString filename);
   Settings *config;
   Layer outputs;
   

@@ -63,6 +63,7 @@ struct Settings {
   bool localDb = true;
   bool refresh = false;
   bool dbStats = false;
+  bool pngquant = false;
   QString dbPurge = "";
   bool cleanDb = false;
   bool noResize = false;

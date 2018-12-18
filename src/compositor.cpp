@@ -27,6 +27,7 @@
 #include <QSettings>
 #include <QPainter>
 #include <QDomDocument>
+#include <QProcess>
 
 #include "compositor.h"
 #include "strtools.h"
@@ -325,24 +326,38 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       QString filename = config->coversFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.coverFile = StrTools::xmlUnescape(filename);
+	pngquant(game.coverFile);
       }
     } else if(output.resType == "screenshot") {
       QString filename = config->screenshotsFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.screenshotFile = filename;
+	pngquant(game.screenshotFile);
       }
     } else if(output.resType == "wheel") {
       QString filename = config->wheelsFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.wheelFile = filename;
+	pngquant(game.wheelFile);
       }
     } else if(output.resType == "marquee") {
       QString filename = config->marqueesFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.marqueeFile = filename;
+	pngquant(game.marqueeFile);
       }
     }
   }
+}
+
+void Compositor::pngquant(QString filename)
+{
+  if (!config->pngquant) {
+    return;
+  }
+  QStringList arguments;
+  arguments << "--ext" << "\".png\"" << "--force" << filename;
+  QProcess::execute("pngquant", arguments);
 }
 
 void Compositor::processChildLayers(GameEntry &game, Layer &layer)
