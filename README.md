@@ -102,8 +102,8 @@ This will give you a description of everything Skyscraper can do if you feel adv
 
 If you have your roms in a non-default location (default is `/home/[user]/RetroPie/roms/[platform]`) or wish to export the game list or artwork to non-default locations, you will also need these:
 * `-i [path]`: Sets a non-default rom input folder
-* `-g [path]`: Sets the game list export folder (defaults to the same as rom input folder if scraping for EmulationStation)
-* `-o [path]`: Sets the artwork export folder (defaults to the same as game list export folder if scraping for EmulationStation)
+* `-g [path]`: Sets a non-default game list export folder (defaults to the same as rom input folder if scraping for EmulationStation)
+* `-o [path]`: Sets a non-default artwork export folder (defaults to the same as game list export folder if scraping for EmulationStation)
 
 For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` as described [here](#configini). This will make the options permanent so you don't need to type them in all the time.
 
