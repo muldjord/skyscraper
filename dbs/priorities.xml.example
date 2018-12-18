@@ -2,6 +2,7 @@
 <!-- Copy this file to any platform db subfolder and customize it to your liking -->
 <priorities>
   <order type="title">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>openretro</source>
@@ -10,9 +11,11 @@
     <source>thegamesdb</source>
   </order>
   <order type="platform">
+    <source>esgamelist</source>
     <source>thegamesdb</source>
   </order>
   <order type="releasedate">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>arcadedb</source>
@@ -21,16 +24,19 @@
     <source>thegamesdb</source>
   </order>
   <order type="developer">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>arcadedb</source>
   </order>
   <order type="publisher">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>arcadedb</source>
   </order>
   <order type="players">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>arcadedb</source>
@@ -39,6 +45,7 @@
     <source>thegamesdb</source>
   </order>
   <order type="ages">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>screenscraper</source>
@@ -47,6 +54,7 @@
     <source>openretro</source>
   </order>
   <order type="tags">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>arcadedb</source>
@@ -54,9 +62,11 @@
     <source>screenscraper</source>
   </order>
   <order type="players">
+    <source>esgamelist</source>
     <source>import</source>
   </order>
   <order type="description">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>thegamesdb</source>
@@ -64,6 +74,7 @@
     <source>openretro</source>
   </order>
   <order type="cover">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>screenscraper</source>
@@ -71,6 +82,7 @@
     <source>thegamesdb</source>
   </order>
   <order type="screenshot">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>screenscraper</source>
@@ -78,17 +90,20 @@
     <source>openretro</source>
   </order>
   <order type="wheel">
+    <source>esgamelist</source>
     <source>import</source>
     <source>screenscraper</source>
     <source>thegamesdb</source>
   </order>
   <order type="marquee">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>screenscraper</source>
     <source>thegamesdb</source>
   </order>
   <order type="video">
+    <source>esgamelist</source>
     <source>import</source>
     <source>esgamelist</source>
     <source>screenscraper</source>
