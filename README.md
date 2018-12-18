@@ -100,14 +100,21 @@ This will give you a description of everything Skyscraper can do if you feel adv
 * `--pretend`: This bypasses any game list generation and artwork compositing code, but still caches any incoming data. Useful when scraping with the non-localdb modules, as it's faster while you are just gathering data into your localdb cache
 * `--unattend`: This just bypasses any questions at the beginning of a scraping run. Setting `--unattend` will then always answer yes to overwriting an existing game list and not skip existing entries
 
-For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` as described below. This will make the options permanent so you don't need to type them in all the time.
+For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` as described [here](#configini). This will make the options permanent so you don't need to type them in all the time.
+
+#### Scraping and caching single roms or a subset of roms
+In some cases it necessary to update the cached data for a single or a subset of roms. Skyscraper allows this by letting you either provide one or more single rom filenames to be added to the end of a command line OR by using the `--startat` and `--endat` options (read more about those with `--help`). For single roms, here's an example: `Skyscraper -p amiga -s openretro "/path/to/rom name.lha"`. Be aware that this only updates the local cache for this particular rom. It DOES NOT update it in your game list. To do so you need to rescrape the platform using the cached data with the command `Skyscraper -p [platform]`. This implicitly adds `-s localdb` which is the default scraper and scrapes the platform using all of your cached data.
 
 ### config.ini
 A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `~/.skyscraper/config.ini`. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, `-i [some folder]` on command line, you can set the matching option `inputFolder="[some folder]"` in the config.
 
 Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can be any of the supported platforms (check list with `--help`), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform.
 
-You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just uncomment the ones you wish to use by removing the "`#`" in front of the variables.
+For options dedicated to a single scraping module, you can create sections for each of them. For instance, you can create a `[screenscraper]` section and add a `userCreds="user:pass"` line. Doing this will always use these credentials when scraping from the `screenscraper` scraping module.
+
+Lastly, you can also add a `[localDb]` section to enable / disable the caching of certain resource types.
+
+You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables.
 
 ### Local database cache
 One of Skyscraper's most powerful features is the local database cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](dbs/README.md).
