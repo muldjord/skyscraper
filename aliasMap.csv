@@ -3,7 +3,7 @@
 #
 # Note that this file is global and will be used when scraping ANY platform.
 #
-# Format:
-# "Rom Filename (Europe)";"Use This Name Instead (Europe)"
+# Format (without the quotes):
+# "Rom Filename (Europe);Use This Name Instead (Europe)"
 #
 # Add your lines below this comment:
