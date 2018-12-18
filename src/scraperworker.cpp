@@ -104,7 +104,6 @@ void ScraperWorker::run()
     config.platform = platformOrig;
     QString output = "\033[1;33m(T" + threadId + ")\033[0m ";
     QString debug = "";
-    QString sqrNotes = "";
     QString sha1 = getSha1(info);
 
     QString compareTitle = scraper->getCompareTitle(info);
@@ -231,7 +230,6 @@ void ScraperWorker::run()
     // Sort out brackets here, be sure to add brackets for both returned title and filename
     game.sqrNotes = NameTools::getSqrNotes(game.title);
     game.sqrNotes.append(NameTools::getSqrNotes(info.completeBaseName()));
-    game.sqrNotes.append(sqrNotes); // Potential [CD32] and [CDTV] note
     game.parNotes = NameTools::getParNotes(game.title);
     game.parNotes.append(NameTools::getParNotes(info.completeBaseName()));
 
