@@ -56,8 +56,6 @@ private:
   Settings config;
   QString platformOrig;
   QList<QFileInfo> inputFiles;
-  int filesPerThread;
-  int beginIdx;
   QString threadId;
   
   unsigned int editDistance(const std::string& s1, const std::string& s2);
