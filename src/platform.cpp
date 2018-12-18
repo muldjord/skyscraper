@@ -276,7 +276,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString allow
   }
 
   QString formats = "*.zip *.7z ";
-  if(!allowExtension.isEmpty() && allowExtension.indexOf("*.") != -1) {
+  if(!allowExtension.isEmpty() && allowExtension.contains("*.")) {
     formats.append(allowExtension);
   }
   if(formats.right(1) != " ") {
@@ -395,7 +395,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString allow
   } else if(platform == "sg-1000") {
     formats.append("*.bin *.sg");
   } else if(platform == "snes") {
-    formats.append("*.smc *.sfc *.fig *.swc");
+    formats.append("*.smc *.sfc *.fig *.swc *.mgd *.bin");
   } else if(platform == "trs-80") {
     formats.append("*.dsk");
   } else if(platform == "vectrex") {
