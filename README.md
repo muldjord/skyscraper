@@ -145,6 +145,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.9.2 (In progress, unreleased)
 * Removed version bracket tag for Amiga lha files
 * Added "esgamelist" emulationstation gamelist.xml scraping module. Contributed by "mgerhardy". Rewritten by me to better conform to Skyscraper design
+* Improved getCompareTitle for mame games and lha files
+* Code cleanup for sqrNotes
 
 #### Version 2.9.1 (15th December 2018)
 * Fixed bug in "screenscraper" module when using --unpack where files exceeding limits would get checksummed as the "Point Blank" game. (Thank you to CookiePLMonster for reporting this issue)
