@@ -50,6 +50,7 @@ public:
   //void setConfig(Settings *config);
   void setRegionPrios();
   void setLangPrios();
+  void loadAliasMap();
   void loadMameMap();
   void loadWhdLoadMap();
 
@@ -131,6 +132,7 @@ protected:
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
 
   QMap<QString, QString> mameMap;
+  QMap<QString, QString> aliasMap;
   QMap<QString, QPair<QString, QString> > whdLoadMap;
   
 };

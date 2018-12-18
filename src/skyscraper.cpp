@@ -554,6 +554,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/artwork.xml";
   copyFile(distro, current, false); // False means it won't overwrite if it exists
 
+  current = "aliasMap.csv";
+  distro = "/usr/local/etc/skyscraper/aliasMap.csv";
+  copyFile(distro, current, false);
+
   current = "resources/maskexample.png";
   distro = "/usr/local/etc/skyscraper/resources/maskexample.png";
   copyFile(distro, current, false);

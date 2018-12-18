@@ -86,6 +86,7 @@ void ScraperWorker::run()
 
   scraper->setRegionPrios();
   scraper->setLangPrios();
+  scraper->loadAliasMap();
   scraper->loadMameMap();
   scraper->loadWhdLoadMap();
   

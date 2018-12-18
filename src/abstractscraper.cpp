@@ -414,24 +414,24 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
   QString baseName = info.completeBaseName();
   
   if(config->scraper != "import") {
-    if(info.suffix() == "lha") {
+    if(aliasMap.contains(baseName)) {
+      baseName = aliasMap[baseName];
+    } else if(info.suffix() == "lha") {
       QString nameWithSpaces = whdLoadMap[baseName].first;
       if(nameWithSpaces.isEmpty()) {
 	baseName = NameTools::getNameWithSpaces(baseName);
       } else {
 	baseName = nameWithSpaces;
       }
-    }
-    if(config->platform == "scummvm") {
+    } else if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
-    }
-    if(config->platform == "neogeo" ||
-       config->platform == "arcade" ||
-       config->platform == "mame-advmame" ||
-       config->platform == "mame-libretro" ||
-       config->platform == "mame-mame4all" ||
-       config->platform == "fba") {
-      baseName = NameTools::getMameName(baseName, mameMap);
+    } else if((config->platform == "neogeo" ||
+	       config->platform == "arcade" ||
+	       config->platform == "mame-advmame" ||
+	       config->platform == "mame-libretro" ||
+	       config->platform == "mame-mame4all" ||
+	       config->platform == "fba") && mameMap.contains(baseName)) {
+      baseName = mameMap[baseName];
     }
   }
 
@@ -464,24 +464,24 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
   QString baseName = info.completeBaseName();
 
   if(config->scraper != "import") {
-    if(info.suffix() == "lha") {
+    if(aliasMap.contains(baseName)) {
+      baseName = aliasMap[baseName];
+    } else if(info.suffix() == "lha") {
       QString nameWithSpaces = whdLoadMap[baseName].first;
       if(nameWithSpaces.isEmpty()) {
 	baseName = NameTools::getNameWithSpaces(baseName);
       } else {
 	baseName = nameWithSpaces;
       }
-    }
-    if(config->platform == "scummvm") {
+    } else if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
-    }
-    if(config->platform == "neogeo" ||
-       config->platform == "arcade" ||
-       config->platform == "mame-advmame" ||
-       config->platform == "mame-libretro" ||
-       config->platform == "mame-mame4all" ||
-       config->platform == "fba") {
-      baseName = NameTools::getMameName(baseName, mameMap);
+    } else if((config->platform == "neogeo" ||
+	       config->platform == "arcade" ||
+	       config->platform == "mame-advmame" ||
+	       config->platform == "mame-libretro" ||
+	       config->platform == "mame-mame4all" ||
+	       config->platform == "fba") && mameMap.contains(baseName)) {
+      baseName = mameMap[baseName];
     }
   }
 
@@ -575,6 +575,29 @@ bool AbstractScraper::platformMatch(QString found, QString platform) {
   return false;
 }
 
+void AbstractScraper::loadAliasMap()
+{
+  if(!QFileInfo::exists("aliasMap.csv"))
+    return;
+  QFile aliasMapFile("aliasMap.csv");
+  if(aliasMapFile.open(QIODevice::ReadOnly)) {
+    while(!aliasMapFile.atEnd()) {
+      QByteArray line = aliasMapFile.readLine();
+      if(line.left(1) == "#")
+	continue;
+      QList<QByteArray> pair = line.split(';');
+      if(pair.size() != 2)
+	continue;
+      QString baseName = pair.at(0);
+      QString aliasName = pair.at(1);
+      baseName = baseName.replace("\"", "").simplified();
+      aliasName = aliasName.replace("\"", "").simplified();
+      aliasMap[baseName] = aliasName;
+    }
+    aliasMapFile.close();
+  }
+}
+
 void AbstractScraper::loadMameMap()
 {
   if(config->scraper != "import" &&
@@ -588,6 +611,8 @@ void AbstractScraper::loadMameMap()
     if(mameMapFile.open(QIODevice::ReadOnly)) {
       while(!mameMapFile.atEnd()) {
 	QList<QByteArray> pair = mameMapFile.readLine().split(';');
+	if(pair.size() != 2)
+	  continue;
 	QString mameName = pair.at(0);
 	QString realName = pair.at(1);
 	mameName = mameName.replace("\"", "").simplified();
@@ -598,6 +623,7 @@ void AbstractScraper::loadMameMap()
     }
   }
 }
+
 
 void AbstractScraper::loadWhdLoadMap()
 {

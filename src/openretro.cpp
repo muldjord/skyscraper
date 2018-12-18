@@ -321,7 +321,9 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
   }
   
   if(config->scraper != "import") {
-    if(info.suffix() == "lha") {
+    if(aliasMap.contains(baseName)) {
+      baseName = aliasMap[baseName];
+    } else if(info.suffix() == "lha") {
       // Pass 1 is uuid from whdload_db.xml 
       if(whdLoadMap.contains(baseName)) {
 	searchNames.append("/game/" + whdLoadMap[baseName].second);
@@ -333,14 +335,15 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
       } else {
 	baseName = nameWithSpaces;
       }
-    }
-    if(config->platform == "scummvm") {
+    } else if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
-    }
-    if(config->platform == "neogeo" ||
-       config->platform == "arcade" ||
-       config->platform == "fba") {
-      baseName = NameTools::getMameName(baseName, mameMap);
+    } else if((config->platform == "neogeo" ||
+	       config->platform == "arcade" ||
+	       config->platform == "mame-advmame" ||
+	       config->platform == "mame-libretro" ||
+	       config->platform == "mame-mame4all" ||
+	       config->platform == "fba") && mameMap.contains(baseName)) {
+      baseName = mameMap[baseName];
     }
   }
 
