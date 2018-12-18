@@ -140,13 +140,13 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
 * Add the option to use textual data in the artwork compositor, enabling the option to add Publisher and other info as a layer
 * Add the "--symlink" option that symlinks videos to media folder instead of copying them
-* Add "--aliases" option that forces the use of a title alias when searching for specific filenames. Load from aliases.xml or .cvs
 
 #### Version 2.9.2 (In progress, unreleased)
 * Removed version bracket tag for Amiga lha files
 * Added "esgamelist" emulationstation gamelist.xml scraping module. Contributed by "mgerhardy". Rewritten by me to better conform to Skyscraper design
 * Improved getCompareTitle for mame games and lha files
 * Code cleanup for sqrNotes
+* Added aliasMap.csv that forces the use of a title alias when searching for specific filenames
 
 #### Version 2.9.1 (15th December 2018)
 * Fixed bug in "screenscraper" module when using --unpack where files exceeding limits would get checksummed as the "Point Blank" game. (Thank you to CookiePLMonster for reporting this issue)
