@@ -1,0 +1,9 @@
+# This file allows you to force aliases for any rom filename.
+# One filename + alias per line. DO NOT ADD THE SUFFIX such as ".zip"!
+#
+# Note that this file is global and will be used when scraping ANY platform.
+#
+# Format:
+# "Rom Filename (Europe)";"Use This Name Instead (Europe)"
+#
+# Add your lines below this comment:
