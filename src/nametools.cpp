@@ -30,14 +30,6 @@
 
 #include "nametools.h"
 
-QString NameTools::getMameName(const QString baseName, const QMap<QString, QString> &mameMap)
-{
-  if(!mameMap[baseName].isEmpty()) {
-    return mameMap[baseName];
-  }
-  return baseName;
-}
-
 QString NameTools::getScummName(const QString baseName)
 {
   // Set to global for RetroPie

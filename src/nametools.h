@@ -32,7 +32,6 @@
 class NameTools : public QObject
 {
 public:
-  static QString getMameName(const QString baseName, const QMap<QString, QString> &mameMap);
   static QString getScummName(const QString baseName);
   static QString getNameWithSpaces(const QString baseName);
   static QString getUrlQueryName(const QString baseName);
