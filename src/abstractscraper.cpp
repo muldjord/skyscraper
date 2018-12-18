@@ -465,13 +465,21 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
 
   if(config->scraper != "import") {
     if(info.suffix() == "lha") {
-      baseName = NameTools::getNameWithSpaces(baseName);
+      QString nameWithSpaces = whdLoadMap[baseName].first;
+      if(nameWithSpaces.isEmpty()) {
+	baseName = NameTools::getNameWithSpaces(baseName);
+      } else {
+	baseName = nameWithSpaces;
+      }
     }
     if(config->platform == "scummvm") {
       baseName = NameTools::getScummName(baseName);
     }
     if(config->platform == "neogeo" ||
        config->platform == "arcade" ||
+       config->platform == "mame-advmame" ||
+       config->platform == "mame-libretro" ||
+       config->platform == "mame-mame4all" ||
        config->platform == "fba") {
       baseName = NameTools::getMameName(baseName, mameMap);
     }
@@ -480,9 +488,11 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
   // Now create actual compareTitle
   baseName = baseName.replace("_", " ").left(baseName.indexOf("(")).left(baseName.indexOf("[")).simplified();
 
-  // Always move The to the beginning of the name if found at the end
-  if(baseName.right(5) == ", The") {
-    baseName = baseName.left(baseName.indexOf(",")).prepend("The ");
+  // Always move ", The" to the beginning of the name
+  QRegularExpressionMatch match;
+  match = QRegularExpression(", [Tt]he").match(baseName);
+  if(match.hasMatch()) {
+    baseName = baseName.replace(match.captured(0), "").prepend(match.captured(0).right(3));
   }
   
   return baseName;
