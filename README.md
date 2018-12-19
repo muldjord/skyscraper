@@ -20,7 +20,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * ONLINE: igdb.com
 * LOCAL: localdb (scrapes exclusively from cached resources. Read more [here](#local-database-features))
 * LOCAL: import (imports resources into the local cache. Read more about this [here](import/README.md))
-* LOCAL: esgamelist (by "mgerhardy". Scrapes data from an EmulationStation gameslist)
+* LOCAL: esgamelist (by Lars Muldjord and mgerhardy. Scrapes data from an EmulationStation gameslist)
 
 ... More scraping sources will be added in future releases!
 
