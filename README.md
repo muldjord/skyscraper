@@ -1,5 +1,5 @@
 # Skyscraper by Lars Muldjord
-A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system. It scrapes and caches various game resources from various web sources, including media such as screenshot, cover and video. It then gives you the option to combine all of these resources into the most complete results by using the provided `localdb` scraping module.
+A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system. It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to combine all of these resources into the most complete results by using the provided `localdb` scraping module.
 
 Any exported artwork can be customized completely. Check the documentation for that [here](ARTWORK.md).
 
