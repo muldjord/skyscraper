@@ -1197,6 +1197,9 @@ void Skyscraper::adjustToLimits()
 	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
       }
     }
+  } else if(config.scraper == "esgamelist") {
+    printf("\033[1;33mForcing --pretend as not to overwrite the gamelist.xml after scraping.\033[0m\n\n");
+    config.pretend = true;
   }
 }
 
