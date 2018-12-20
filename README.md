@@ -146,6 +146,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Code cleanup for sqrNotes
 * Added aliasMap.csv that forces the use of a title alias when searching for specific filenames
 * Added "--symlink" option which forces cached videos to be symlinked to destination instead of being copied when scraping with the "localdb" scraping module
+* Added the "ti99" platform. (Thank you to "jhbeskow" for suggesting it)
 
 #### Version 2.9.1 (15th December 2018)
 * Fixed bug in "screenscraper" module when using --unpack where files exceeding limits would get checksummed as the "Point Blank" game. (Thank you to CookiePLMonster for reporting this issue)
