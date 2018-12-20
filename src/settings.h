@@ -59,6 +59,7 @@ struct Settings {
   int totalFiles = 0;
   int maxLength = 2500;
   bool videos = false;
+  bool symlink = false;
   bool brackets = true;
   bool localDb = true;
   bool refresh = false;
