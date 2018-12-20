@@ -849,6 +849,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
       if(videoFile.open(QIODevice::ReadOnly)) {
 	entry.videoData = videoFile.readAll();
 	entry.videoFormat = info.suffix();
+	entry.videoFile = info.absoluteFilePath();
 	entry.videoSrc = source;
 	videoFile.close();
       }
