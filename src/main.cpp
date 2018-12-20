@@ -134,6 +134,7 @@ int main(int argc, char *argv[])
   QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '~/.skyscraper/artwork.xml')", "filename", "");
   QCommandLineOption dOption("d", "Set local resource database cache folder.\n(default is '~/.skyscraper/dbs/[platform]')", "folder", "");
   QCommandLineOption videosOption("videos", "Enables video scraping for any scraping module. Also enables caching of video resources in the local databases. Beware, this takes up a lot of disk space!");
+  QCommandLineOption symlinkOption("symlink", "Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!");
   QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");
   QCommandLineOption noscreenshotsOption("noscreenshots", "Disable screenshots/snaps from being cached locally. Only do this if you do not plan to use the screenshot artwork in 'artwork.xml'");
   QCommandLineOption nowheelsOption("nowheels", "Disable wheels from being cached locally. Only do this if you do not plan to use the wheel artwork in 'artwork.xml'");
@@ -190,6 +191,7 @@ int main(int argc, char *argv[])
   parser.addOption(mergedbOption);
   parser.addOption(purgedbOption);
   parser.addOption(videosOption);
+  parser.addOption(symlinkOption);
   parser.addOption(nocoversOption);
   parser.addOption(noscreenshotsOption);
   parser.addOption(nowheelsOption);
