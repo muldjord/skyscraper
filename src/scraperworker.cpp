@@ -212,10 +212,22 @@ void ScraperWorker::run()
       // Process all artwork
       compositor.saveAll(game, info.completeBaseName());
       if(config.videos && game.videoFormat != "") {
-	QFile videoFile(config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat);
-	if(videoFile.open(QIODevice::WriteOnly)) {
-	  videoFile.write(game.videoData);
-	  videoFile.close();
+	QString videoDst = config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat;
+	QFile videoFileDst(videoDst);
+	if(videoFileDst.exists()) {
+	  // Try to remove existing video destination file first
+	  videoFileDst.remove();
+	}
+	if(config.symlink && config.scraper == "localdb" && !game.videoFile.isEmpty()) {
+	  QFile videoFile(game.videoFile);
+	  if(videoFile.exists())
+	    videoFile.link(videoDst);
+	} else {
+	  QFile videoFile(videoDst);
+	  if(videoFile.open(QIODevice::WriteOnly)) {
+	    videoFile.write(game.videoData);
+	    videoFile.close();
+	  }
 	}
       }
     }
