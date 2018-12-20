@@ -52,6 +52,7 @@
 * Sega SG-1000
 * Sharp X68000
 * Super Nintendo
+* TI-99/4A
 * TRS-80
 * Vectrex
 * Videopac (Oddysey 2)
