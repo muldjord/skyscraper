@@ -121,10 +121,10 @@ void ScraperWorker::run()
     }
 
     QList<GameEntry> gameEntries;
-    
-    bool prefilledFromCache = false;
+
+    bool fromCache = false;
     if(config.localDb && config.scraper == "localdb" && localDb->hasEntries(sha1)) {
-      prefilledFromCache = true;
+      fromCache = true;
       GameEntry localGame;
       localGame.sha1 = sha1;
       localDb->fillBlanks(localGame);
@@ -138,7 +138,7 @@ void ScraperWorker::run()
     } else {
       if(config.localDb && config.scraper != "localdb" &&
 	 localDb->hasEntries(sha1, config.scraper) && !config.refresh) {
-	prefilledFromCache = true;
+	fromCache = true;
 	GameEntry localGame;
 	localGame.sha1 = sha1;
 	localDb->fillBlanks(localGame, config.scraper);
@@ -166,7 +166,7 @@ void ScraperWorker::run()
       game.found = false;
     } else {
       game = getBestEntry(gameEntries, compareTitle, lowestDistance);
-      if(config.interactive && !prefilledFromCache) {
+      if(config.interactive && !fromCache) {
 	game = getEntryFromUser(gameEntries, game, compareTitle, lowestDistance);
       }
     }
@@ -204,7 +204,7 @@ void ScraperWorker::run()
 
     output.append("\033[1;34m---- Game '" + info.completeBaseName() + "' found! :) ----\033[0m\n");
     
-    if(!prefilledFromCache) {
+    if(!fromCache) {
       scraper->getGameData(game);
     }
 
@@ -221,7 +221,7 @@ void ScraperWorker::run()
     }
 
     // Always cache resources, even if pretend is set
-    if(config.localDb && config.scraper != "localdb" && game.found && !prefilledFromCache) {
+    if(config.localDb && config.scraper != "localdb" && game.found && !fromCache) {
       game.source = config.scraper;
       localDb->addResources(game, config);
     }
@@ -263,7 +263,7 @@ void ScraperWorker::run()
 
     output.append("Scraper:        " + config.scraper + "\n");
     if(config.scraper != "localdb" && config.scraper != "import") {
-      output.append("From cache:     " + QString((prefilledFromCache?"YES (refresh from source with '--refresh')":"NO")) + "\n");
+      output.append("From cache:     " + QString((fromCache?"YES (refresh from source with '--refresh')":"NO")) + "\n");
     }
     output.append("Search match:   " + QString::number(searchMatch) + " %\n");
     output.append("Compare title:  '\033[1;32m" + compareTitle + "\033[0m'\n");
