@@ -138,7 +138,6 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add option to "--purgedb" to purge all resources not related to your current romset
 * Add option to "--purgedb" to purge everything completely
 * Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
-* Add the "--symlink" option that symlinks videos to media folder instead of copying them
 
 #### Version 2.9.2 (In progress, unreleased)
 * Removed version bracket tag for Amiga lha files
@@ -146,6 +145,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved getCompareTitle for mame games and lha files
 * Code cleanup for sqrNotes
 * Added aliasMap.csv that forces the use of a title alias when searching for specific filenames
+* Added "--symlink" option which forces cached videos to be symlinked to destination instead of being copied when scraping with the "localdb" scraping module
 
 #### Version 2.9.1 (15th December 2018)
 * Fixed bug in "screenscraper" module when using --unpack where files exceeding limits would get checksummed as the "Point Blank" game. (Thank you to CookiePLMonster for reporting this issue)
