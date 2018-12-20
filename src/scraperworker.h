@@ -55,17 +55,10 @@ private:
   
   Settings config;
   QString platformOrig;
-  QList<QFileInfo> inputFiles;
-  int filesPerThread;
-  int beginIdx;
   QString threadId;
   
   unsigned int editDistance(const std::string& s1, const std::string& s2);
-  void nomNom(QByteArray &data, const QString nom, bool including = true);
 
-  void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform);
-  void getGameData(GameEntry &game);
-  QString assembleTags(QByteArray &data);
   QString getSha1(const QFileInfo &info);
   GameEntry getBestEntry(const QList<GameEntry> &gameEntries, QString compareTitle,
 			 int &lowestDistance);
