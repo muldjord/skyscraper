@@ -657,6 +657,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("videos")) {
     config.videos = settings.value("videos").toBool();
   }
+  if(settings.contains("symlink")) {
+    config.symlink = settings.value("symlink").toBool();
+  }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();
   }
@@ -784,6 +787,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
   }
+  if(settings.contains("videos")) {
+    config.videos = settings.value("videos").toBool();
+  }
+  if(settings.contains("symlink")) {
+    config.symlink = settings.value("symlink").toBool();
+  }
   if(settings.contains("startat")) {
     config.startAt = settings.value("startat").toString();
   }
@@ -889,6 +898,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("videos")) {
     config.videos = true;
+  }
+  if(parser.isSet("symlink")) {
+    config.symlink = true;
   }
   if(parser.isSet("nocovers")) {
     config.cacheCovers = false;
