@@ -98,6 +98,7 @@ QStringList Platform::getPlatforms()
   platforms.append("segacd");
   platforms.append("sg-1000");
   platforms.append("snes");
+  platforms.append("ti99");
   platforms.append("trs-80");
   platforms.append("vectrex");
   platforms.append("vic20");
@@ -237,6 +238,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "sg-1000") {
     scrapers.append("screenscraper");
   } else if(platform == "snes") {
+    scrapers.append("screenscraper");
+  } else if(platform == "ti99") {
     scrapers.append("screenscraper");
   } else if(platform == "trs-80") {
     scrapers.append("screenscraper");
@@ -396,6 +399,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString allow
     formats.append("*.bin *.sg");
   } else if(platform == "snes") {
     formats.append("*.smc *.sfc *.fig *.swc *.mgd *.bin");
+  } else if(platform == "ti99") {
+    formats.append("*.ctg");
   } else if(platform == "trs-80") {
     formats.append("*.dsk");
   } else if(platform == "vectrex") {
@@ -539,6 +544,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "sg-1000") {
     scraper = "localdb";
   } else if(platform == "snes") {
+    scraper = "localdb";
+  } else if(platform == "ti99") {
     scraper = "localdb";
   } else if(platform == "trs-80") {
     scraper = "localdb";
@@ -1098,6 +1105,10 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("super nintendo entertainment system (snes)");
     aliases.append("super nintendo");
     aliases.append("super famicom");
+  } else if(platform == "ti99") {
+    aliases.append("ti-99/4a");
+    aliases.append("texas instruments ti-99");
+    aliases.append("texas instruments ti-99/4a");
   } else if(platform == "trs-80") {
     aliases.append("trs-80 color computer");
   } else if(platform == "vic20") {
