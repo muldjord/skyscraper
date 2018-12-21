@@ -183,58 +183,86 @@ void LocalDb::purgeResources(QString purgeStr)
 void LocalDb::vacuumResources(const QString inputFolder, const QString filter)
 {
   std::string userInput = "";
-  printf("\033[1;31mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Local db folder' further up.\n\n\033[0m\033[1;34mDo you wish to continue\033[0m (y/N)? ", inputFolder.toStdString().c_str());
+  printf("\033[1;31mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories matching the suffixes supported by the platform and any extension(s) you might have added manually). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Local db folder' further up and is usually located under '~/.skyscraper/' unless you've set it manually.\n\n\033[0m\033[1;34mDo you wish to continue\033[0m (y/N)? ", inputFolder.toStdString().c_str());
   getline(std::cin, userInput);
   if(userInput != "y") {
-    printf("User chose not to continue, cancelling vacuum...\n");
+    printf("User chose not to continue, cancelling vacuum...\n\n");
     return;
   }
   QList<QString> sha1List;
   QStringList filters = filter.split(" ");
   if(filter.size() < 2) {
-    printf("Suffix filters less than 2. Something is wrong, cancelling vacuum...\n");
+    printf("Found less than 2 suffix filters. Something is wrong, cancelling vacuum...\n");
     return;
   }
-  printf("Vacuuming resources from cache, please wait...\n");
+  printf("Vacuuming resources from cache, please wait...");
+  QList<QFileInfo> fileInfos;
   QDirIterator dirIt(inputFolder,
 		     filters,
 		     QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
 		     QDirIterator::Subdirectories);
   while(dirIt.hasNext()) {
     dirIt.next();
-    sha1List.append(NameTools::getSha1(dirIt.fileInfo()));
+    fileInfos.append(dirIt.fileInfo());
   }
-  if(sha1List.isEmpty()) {
-    printf("Input folder returned no entries, cancelling vacuum...\n");
+  if(fileInfos.isEmpty()) {
+    printf("Input folder returned no entries, cancelling vacuum...\n\n");
     return;
+  }
+  {
+    int dots = 0;
+    int dotsMod = fileInfos.size() / 10;
+    foreach(QFileInfo info, fileInfos) {
+      if(dots % dotsMod == 0) {
+	printf(".");
+	fflush(stdout);
+      }
+      dots++;
+      sha1List.append(NameTools::getSha1(info));
+    }
   }
   
   int vacuumed = 0;
+  {
+    int dots = 0;
+    int dotsMod = resources.size() / 10;
 
-  QMutableListIterator<Resource> it(resources);
-  while(it.hasNext()) {
-    Resource res = it.next();
-    bool remove = true;
-    foreach(QString sha1, sha1List) {
-      if(res.sha1 == sha1) {
-	remove = false;
-	break;
+    QMutableListIterator<Resource> it(resources);
+    while(it.hasNext()) {
+      if(dots % dotsMod == 0) {
+	printf(".");
+	fflush(stdout);
       }
-    }
-    if(remove) {
-      if(res.type == "cover" || res.type == "screenshot" ||
-	 res.type == "wheel" || res.type == "marquee" ||
-	 res.type == "video") {
-	if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
-	  printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
-	  continue;
+      dots++;
+      Resource res = it.next();
+      bool remove = true;
+      foreach(QString sha1, sha1List) {
+	if(res.sha1 == sha1) {
+	  remove = false;
+	  break;
 	}
       }
-      it.remove();
-      vacuumed++;
+      if(remove) {
+	if(res.type == "cover" || res.type == "screenshot" ||
+	   res.type == "wheel" || res.type == "marquee" ||
+	   res.type == "video") {
+	  if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+	    printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
+	    continue;
+	  }
+	}
+	it.remove();
+	vacuumed++;
+      }
     }
   }
-  printf("Successfully vacuumed %d resources from the local database cache.\n", vacuumed);
+  printf("\033[1;32m Done!\033[0m\n");
+  if(vacuumed == 0) {
+    printf("All resources match a file in your romset. No resources vacuumed.\n");
+  } else {
+    printf("Successfully vacuumed %d resources from the local database cache.\n", vacuumed);
+  }
+  printf("\n");
 }
 
 void LocalDb::showStats(int verbosity)
