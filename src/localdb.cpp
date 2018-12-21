@@ -206,14 +206,15 @@ void LocalDb::vacuumResources(const QString inputFolder, const QString filter)
     fileInfos.append(dirIt.fileInfo());
   }
   if(fileInfos.isEmpty()) {
-    printf("Input folder returned no entries, cancelling vacuum...\n\n");
+    printf("\nInput folder returned no entries, cancelling vacuum...\n\n");
     return;
   }
   {
     int dots = 0;
-    int dotsMod = fileInfos.size() / 10;
+    // Always make dotMod at least 1 or it will give "floating point exception" when modulo
+    int dotMod = fileInfos.size() * 0.1 + 1;
     foreach(QFileInfo info, fileInfos) {
-      if(dots % dotsMod == 0) {
+      if(dots % dotMod == 0) {
 	printf(".");
 	fflush(stdout);
       }
@@ -225,11 +226,12 @@ void LocalDb::vacuumResources(const QString inputFolder, const QString filter)
   int vacuumed = 0;
   {
     int dots = 0;
-    int dotsMod = resources.size() / 10;
+    // Always make dotMod at least 1 or it will give "floating point exception" when modulo
+    int dotMod = resources.size() * 0.1 + 1;
 
     QMutableListIterator<Resource> it(resources);
     while(it.hasNext()) {
-      if(dots % dotsMod == 0) {
+      if(dots % dotMod == 0) {
 	printf(".");
 	fflush(stdout);
       }

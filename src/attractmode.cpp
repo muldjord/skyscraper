@@ -145,7 +145,8 @@ void AttractMode::preserveFromOld(GameEntry &entry)
 void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int)
 {
   int dots = 0;
-  int dotMod = gameEntries.length() * 0.1;
+  // Always make dotMod at least 1 or it will give "floating point exception" when modulo
+  int dotMod = gameEntries.length() * 0.1 + 1;
   if(dotMod == 0)
     dotMod = 1;
 
