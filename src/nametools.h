@@ -27,7 +27,7 @@
 #define NAMETOOLS_H
 
 #include <QObject>
-#include <QMap>
+#include <QFileInfo>
 
 class NameTools : public QObject
 {
@@ -42,7 +42,8 @@ public:
   static int getNumeral(const QString baseName);
   static QString getSqrNotes(QString baseName);
   static QString getParNotes(QString baseName);
-  
+  static QString getSha1(const QFileInfo &info);
+
 };
 
 #endif // NAMETOOLS_H
