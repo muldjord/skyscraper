@@ -126,7 +126,11 @@ void Skyscraper::run()
       exit(0);
   }
   if(config.localDb && !config.dbPurge.isEmpty()) {
-    localDb->purgeResources(config.dbPurge);
+    if(config.dbPurge == "vacuum") {
+      localDb->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.allowExtension));
+    } else {
+      localDb->purgeResources(config.dbPurge);
+    }
     localDb->writeDb();
     exit(0);
   }
