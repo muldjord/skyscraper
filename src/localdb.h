@@ -68,6 +68,7 @@ public:
   bool createFolders(const QString &scraper);
   bool readDb();
   void purgeResources(QString purgeStr);
+  void vacuumResources(const QString inputFolder, const QString filters);
   void showStats(int verbosity);
   void readPriorities();
   bool writeDb();
