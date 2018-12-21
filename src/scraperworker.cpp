@@ -105,7 +105,7 @@ void ScraperWorker::run()
     config.platform = platformOrig;
     QString output = "\033[1;33m(T" + threadId + ")\033[0m ";
     QString debug = "";
-    QString sha1 = getSha1(info);
+    QString sha1 = NameTools::getSha1(info);
 
     QString compareTitle = scraper->getCompareTitle(info);
 
@@ -364,48 +364,6 @@ unsigned int ScraperWorker::editDistance(const std::string& s1, const std::strin
     col.swap(prevCol);
   }
   return prevCol[len2];
-}
-
-QString ScraperWorker::getSha1(const QFileInfo &info)
-{
-  QCryptographicHash sha1(QCryptographicHash::Sha1);
-
-  // If file is some sort of script or zip use filename for sha1
-  bool sha1FromData = true;
-  // In case I look at this code again and think "hey, no reason to have zip there", just a
-  // reminder for myself: Yes, it makes sense to have zip here since each localdb is platform
-  // specific. And since zip's can be any which size depending on internal stuff, it makes
-  // sense to use filename for those also. Same goes for '7z'
-  if(info.suffix() == "uae" || info.suffix() == "cue" ||
-     info.suffix() == "sh" || info.suffix() == "svm" ||
-     info.suffix() == "scummvm" || info.suffix() == "mds" ||
-     info.suffix() == "zip" || info.suffix() == "7z" ||
-     info.suffix() == "gdi") {
-    sha1FromData = false;
-  }
-  // If file is larger than 50 MBs, use filename for sha1
-  // This SHOULD be enabled since this is only the sha1 used by Skyscraper's localdb
-  // Go to the screenscraper module for the recognition sha1.
-  if(info.size() > 52428800) {
-    sha1FromData = false;
-  }
-
-  if(sha1FromData) {
-    QFile romFile(info.absoluteFilePath());
-    if(romFile.open(QIODevice::ReadOnly)) {
-      while(!romFile.atEnd()) {
-	sha1.addData(romFile.read(1024));
-      }
-      romFile.close();
-    } else {
-      printf("Couldn't calculate sha1 hash sum of rom file '%s', please check permissions and try again, now exiting...\n", info.fileName().toStdString().c_str());
-      exit(1);
-    }
-  } else {
-    sha1.addData(info.fileName().toUtf8());
-  }
-
-  return sha1.result().toHex();
 }
 
 GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,

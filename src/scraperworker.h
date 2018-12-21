@@ -59,7 +59,6 @@ private:
   
   unsigned int editDistance(const std::string& s1, const std::string& s2);
 
-  QString getSha1(const QFileInfo &info);
   GameEntry getBestEntry(const QList<GameEntry> &gameEntries, QString compareTitle,
 			 int &lowestDistance);
   GameEntry getEntryFromUser(const QList<GameEntry> &gameEntries, const GameEntry &suggestedGame,
