@@ -61,7 +61,7 @@ Skyscraper::~Skyscraper()
 void Skyscraper::run()
 {
   printf("Platform:           '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
-  printf("Scraper module:     '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
+  printf("Scraping module:    '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
   if(!config.emulator.isEmpty()) {
     printf("Emulator:           '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
   }
