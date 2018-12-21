@@ -135,11 +135,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Add "sharpen" effect which sharpens the image
 * Improved "blur" and "shadow" effect to be true gaussian
-* Add option to "--purgedb" to purge all resources not related to your current romset
 * Add option to "--purgedb" to purge everything completely
 * Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
 
-#### Version 2.9.2 (In progress, unreleased)
+#### Version 2.9.5 (In progress, unreleased)
 * Removed version bracket tag for Amiga lha files
 * Added "esgamelist" emulationstation gamelist.xml scraping module. Contributed by "mgerhardy". Rewritten by me to better conform to Skyscraper design
 * Improved getCompareTitle for mame games and lha files
@@ -147,6 +146,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Added aliasMap.csv that forces the use of a title alias when searching for specific filenames
 * Added "--symlink" option which forces cached videos to be symlinked to destination instead of being copied when scraping with the "localdb" scraping module
 * Added the "ti99" platform. (Thank you to "jhbeskow" for suggesting it)
+* Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
 
 #### Version 2.9.1 (15th December 2018)
 * Fixed bug in "screenscraper" module when using --unpack where files exceeding limits would get checksummed as the "Point Blank" game. (Thank you to CookiePLMonster for reporting this issue)
