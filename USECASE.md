@@ -6,6 +6,7 @@ So let's dig in!
 ### You have some files and no data
 You probably installed Skyscraper in order to get some data and artwork on your frontend game lists. So let's say that you have a bunch of Super Nintendo files you wish to populate with data.
 
+![Skyscraper flowchart](https://raw.githubusercontent.com/muldjord/skyscraper/master/dbs/skyscraper_overview_chart.png)
 
 #### The gathering phase
 Skyscraper can gather data from several scraping modules / sources (set with `-s [module]`). So you'd start by scraping the `snes` platform (set with `-p [platform]`) with one or more of those modules. Each time you do so, all of the data will be saved in the Skyscraper cache.
