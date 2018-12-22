@@ -32,6 +32,6 @@ You're done! The platform has been scraped and you can relaunch your frontend to
 ### But what about...
 Yes, yes, yes. This is just the basics. You can customize the artwork completely to your liking. You can prioritize the different cached resources any way you like. You can scrape single games in order to gather information for just that one game. You can enable video scraping. You can import your own data into the cache. You can clean your cache. You can create aliases for games that are difficult to scrape. You can change your preferred region and language for the modules that support it. You can set up keys or user id's and password for the scraping modules that take advantage of this. There's *a lot* you can do if you want to.
 
-The important thing to note is that most of the defaults for Skyscraper is set to work well for most users. So unless you see something you want to change, you don't have to. But it's equally important to know that you *can*.
+The important thing to note is that the defaults for Skyscraper is set to work well for most users. So unless you see something you want to change, you don't have to. But it's equally important to know that you *can*.
 
-If you're interested in any of this, please read the entire documentation thorougly. Everything is documented to the last detail. It can seem overwhelming. But it also gives you some really powerful options to scrape just the way you want.
+If this piqued your interest, please read the entire documentation thorougly. Everything is documented to the last detail. It can seem overwhelming. But it gives you some really powerful options to scrape just the way you want. Read more about the advanced features [here](README.md#manual-mode-for-advanced-users)
