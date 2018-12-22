@@ -103,7 +103,7 @@ This will give you a description of everything Skyscraper can do if you feel adv
 If you have your roms in a non-default location (default is `/home/[user]/RetroPie/roms/[platform]`) or wish to export the game list or artwork to non-default locations, you will also need these:
 * `-i [path]`: Sets a non-default rom input folder
 * `-g [path]`: Sets a non-default game list export folder (defaults to the same as rom input folder if scraping for EmulationStation)
-* `-o [path]`: Sets a non-default artwork export folder (defaults to the same as game list export folder if scraping for EmulationStation)
+* `-o [path]`: Sets a non-default artwork export folder (defaults to the same as game list export folder + `/media` if scraping for EmulationStation)
 
 For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` as described [here](#configini). This will make the options permanent so you don't need to type them in all the time.
 
@@ -111,9 +111,9 @@ For almost any command line option, consider setting them in the `~/.skyscraper/
 Sometimes you'd want to update the cached data for a single or a subset of roms. Skyscraper allows this by letting you either provide one or more single rom filenames to be added to the end of a command line OR by using the `--startat` and `--endat` options (read more about those with `--help`). For single roms, here's an example: `Skyscraper -p amiga -s openretro "/path/to/rom name.lha"`. Be aware that this only updates the local cache for this particular rom. It DOES NOT update it in your game list. To do so you need to rescrape the platform using the cached data with the command `Skyscraper -p [platform]`. This implicitly adds `-s localdb` which is the default scraper and scrapes the platform using all of your previously cached data.
 
 ### config.ini
-A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `~/.skyscraper/config.ini`. Any options set in this file will be used per default by Skyscraper. So if you always use, for example, `-i [some folder]` on command line, you can set the matching option `inputFolder="[some folder]"` in the config.
+A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `~/.skyscraper/config.ini`. Any options set in this file will be used by default by Skyscraper. So if you always use, for example, `-i [some folder]` on command line, you can set the matching option `inputFolder="[some folder]"` in the config.
 
-Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can be any of the supported platforms (check list with `--help`), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform.
+Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can be any of the supported platforms (check list with `--help` under the `-p` option), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform.
 
 For options dedicated to a single scraping module, you can create sections for each of them. For instance, you can create a `[screenscraper]` section and add a `userCreds="user:pass"` line. Doing this will always use these credentials when scraping from the `screenscraper` scraping module.
 
