@@ -180,6 +180,51 @@ void LocalDb::purgeResources(QString purgeStr)
   printf("Successfully purged %d resources from the local database cache.\n", purged);
 }
 
+void LocalDb::purgeAll()
+{
+  std::string userInput = "";
+  printf("\033[1;31mWARNING!!! You are about to purge / remove ALL resources from the Skyscaper cache connected to the currently selected platform. THIS CANNOT BE UNDONE!\n\n\033[0m\033[1;34mDo you wish to continue\033[0m (y/N)? ");
+  getline(std::cin, userInput);
+  if(userInput != "y") {
+    printf("User chose not to continue, cancelling purge...\n\n");
+    return;
+  }
+
+  printf("Purging ALL resources for the selected platform, please wait...");
+
+  int purged = 0;
+  int dots = 0;
+  // Always make dotMod at least 1 or it will give "floating point exception" when modulo
+  int dotMod = resources.size() * 0.1 + 1;
+  
+  QMutableListIterator<Resource> it(resources);
+  while(it.hasNext()) {
+    if(dots % dotMod == 0) {
+      printf(".");
+      fflush(stdout);
+    }
+    dots++;
+    Resource res = it.next();
+    if(res.type == "cover" || res.type == "screenshot" ||
+       res.type == "wheel" || res.type == "marquee" ||
+       res.type == "video") {
+      if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+	printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
+	continue;
+      }
+    }
+    it.remove();
+    purged++;
+  }
+  printf("\033[1;32m Done!\033[0m\n");
+  if(purged == 0) {
+    printf("No resources for the current platform found in the local database cache.\n");
+  } else {
+    printf("Successfully purged %d resources from the local database cache.\n", purged);
+  }
+  printf("\n");
+}
+
 void LocalDb::vacuumResources(const QString inputFolder, const QString filter)
 {
   std::string userInput = "";
