@@ -136,7 +136,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add "sharpen" effect which sharpens the image
 * Improved "blur" and "shadow" effect to be true gaussian
 
-#### Version 2.9.5 (In progress, unreleased)
+#### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
 * MAJOR: Added option "--purgedb all" that purges all resources for the selected platform. Remember to make backups of your cache before using this
 * MAJOR: Added "--symlink" option which forces cached videos to be symlinked to destination instead of being copied when scraping with the "localdb" scraping module
