@@ -1,3 +1,81 @@
+#### Version 2.8.3 (8th December 2018)
+* Added "region" and "lang" options to "[platform]" section of config.ini
+* Added "noResize" variable to "[localDb]" config.ini section
+* Fixed bug where "--query" would stop working when region was autodetected
+
+#### Version 2.8.2 (7th December 2018)
+* Now autodetects region from filename and prioritizes it when scraping with "screenscraper" unless user has forced region with "--region" option (thank you to "movisman" for suggesting this)
+* Fixed issue where "wheel" artwork would not be fetched for specified region even though it exists
+* Added ".cue" file extension to Amiga
+
+#### Version 2.8.1 (25th November 2018)
+* Now loads tgdb json files from "~/.skyscraper"
+
+#### Version 2.8.0 (4th November 2018)
+* Now tries to preserve EmulationStaton gamelist.xml metadata unless new incoming data exists
+* Now tries to preserve AttractMode romlist metadata unless new incoming data exists
+* Improved terminal output a bit with fflush and progress dots
+* Now looks for 'definitions.dat' in base import folder before trying import/[platform] folder
+
+#### Version 2.7.8 (21st October 2018)
+* Added CRC32 checksum attribute to 'screenscraper' pass
+* Changed the 'import' folder to also look into 'import/[platform]' if it exists so users can create imports per platform. Old method also works (Thanks to tacodog for suggesting this)
+* Added 'mpixels' attribute to compositor layers that allows users to scale images to a desired area size instead of using width and height (Thank you to Vynce for suggesting this)
+
+#### Version 2.7.7 (10th October 2018)
+* Fixed instances where '--query' would be applied to all roms if a faulty filename was given on command line (Thank you to Razile89 for reporting this)
+
+#### Version 2.7.6 (7th October 2018)
+* Added 'Found', 'Not found' and 'Total' to output
+* Re-added 'aga' Amiga detection for OpenRetro after refactoring
+* Added 'resource' attribute to 'output' nodes which enables user to directly export wheel as marquee by adding a <output type="marquee" resource="wheel"/> node to artwork.xml
+
+#### Version 2.7.5 (21st September 2018)
+* Fixed a bug where 'brackets="false"' in config.ini would be flipped (Thanks to Vynce for reporting this)
+* Completely refactored pass procedures for cleaner code and to enable '--query' option
+* Added '--query' command line option. This option requires a single rom file to be passed on command line aswell, otherwise it will be ignored (Thank you to AnalogHero and Vynce for suggesting this)
+* Added scrapers to 'psx' and 'pc' platforms when using Simple Mode
+
+#### Version 2.7.4 (11th September 2018)
+* Added '--unpack' command line option and config.ini options which enables the calculation of the checksum of the file inside 7z and zip files instead of the base file itself. Only relevant for 'screenscraper' module and requires 'p7zip' installed. (```$ sudo apt-get install p7zip-full``` for Debian base systems)
+* Added 'inputFolder' to [main] section of config.ini
+* Added 'gamelistFolder' to [main] section of config.ini
+* Added 'mediaFolder' to [main] section of config.ini
+
+#### Version 2.7.3 (4th September 2018)
+* Improved image cropping to now also crop black borders, but only for screenshots (Thank you to 'chipsnblip' for suggesting this)
+* Made 'import' base folder configurable in config.ini
+* Fixed bug in 'import' scraping module that caused dummy titles to be saved to localdb when scraping media resources
+* Changed 'curl' to 'wget' in update_skyscraper.sh script to avoid curl requirement
+
+#### Version 2.7.2 (2nd September 2018)
+* Fixed bug that caused the <marquee> nodes to disappear from gamelist.xml when skipping entries (Thanks to ozy24 for reporting this)
+* Added ###TITLE### tag to import scraping module (Thanks to ozy24 for suggesting this)
+* Updated import definition examples and documentation to include ###TITLE### tag and ###AGES### tag
+* Updated priorities.xml.example to also include 'import' under 'title'
+* Added 'Did you know' hints when running Skyscraper
+* Added '--nohints' to disable hints. Can also be set in config.ini
+
+#### Version 2.7.1 (28th August 2018)
+* Made sure 'Skyscraper's choice' only appears once per entry when using interactive mode
+* Added 'sidescaling' attribute to 'gamebox' compositor effect node (Thanks to darkvader for suggesting this)
+
+#### Version 2.7.0 (27th August 2018)
+* Added scraping module specific configs in config.ini to allow different userCreds per scraping module
+* Added 'igdb' scraping module
+* Added '--interactive' mode which will ask user to choose the best result
+* Changed release date patterns to regexps for cleaner code
+* Fixed bug which caused <video> tags to disappear when skipping entries with emulationstation (thank you to ozy24 for reporting this)
+* Reached commit number 1000!!! I'm gonna celebrate by coding some more
+* Conformed [homedir] to be '~' everywhere
+* Added several aliases to platforms to better support all scraping modules
+* Added option for custom header when initiating network requests
+* When generating search names, all instances of ' v.X' and ' rev.X' are now removed prior to search
+* Added '--unattendskip' option to allow for always skipping existing entries without user input (thank you to ozy24 for suggesting this)
+
+#### Version 2.6.0 (25th August 2018)
+* Added 'mobygames' scraping module
+
 #### Version 2.5.8 (24th August 2018)
 * Fixed bug in 'genesis' platform when using the 'screenscraper' module
 * Added 'megacd' platform support
