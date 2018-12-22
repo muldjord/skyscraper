@@ -135,11 +135,10 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version x.x.x (still unimplemented)
 * Add "sharpen" effect which sharpens the image
 * Improved "blur" and "shadow" effect to be true gaussian
-* Add option to "--purgedb" to purge everything completely
-* Change "reqRemaining" variable to work better when Skyscraper is supposed to clean up and exit
 
 #### Version 2.9.5 (In progress, unreleased)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
+* MAJOR: Added option "--purgedb all" that purges all resources for the selected platform. Remember to make backups of your cache before using this
 * MAJOR: Added "--symlink" option which forces cached videos to be symlinked to destination instead of being copied when scraping with the "localdb" scraping module
 * MAJOR: Added "esgamelist" emulationstation gamelist.xml scraping module. Contributed by "mgerhardy". Rewritten by me to better conform to Skyscraper design
 * MAJOR: Added aliasMap.csv that forces the use of a title alias when searching for specific filenames
