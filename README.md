@@ -84,6 +84,7 @@ $ cd
 $ rm -Rf skysource
 $ rm -Rf .skyscraper
 ```
+You might be asked for your sudo password during the processs. On RetroPie the default password is `raspberry`.
 
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
