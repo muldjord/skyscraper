@@ -27,10 +27,10 @@ $ Skyscraper -p snes
 Running that command will implicitly add `-s localdb` which scrapes data from the local Skyscraper cache. And it will do so by combining all of the cached data into the most complete results. This phase also includes the artwork compositing and game list generation.
 
 ### So what then?
-You're done! The platform has been scraped and you can relaunch your frontend to enjoy the newly scraped data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *combining* phase. Always gather first, then combine afterwards.
+You're done! The platform has been scraped and you can relaunch your frontend to enjoy the newly scraped data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *combining* phase. Always gather first, then combine afterwards. *Always!*
 
 ### But what about...
-Yes, yes, yes. This is just the basics. You can customize the artwork completely to your liking. You can prioritize the different cached resources any way you like. You can scrape single games in order to gather information for just that one game. You can enable video scraping. You can clean up the cache every once in a while. You can create aliases for games that are difficult to scrape. You can change your preferred region and language for the modules that support it. You can set up keys or user id's and password for the scraping modules that take advantage of this. There's *a lot* you can do if you want to.
+Yes, yes, yes. This is just the basics. You can customize the artwork completely to your liking. You can prioritize the different cached resources any way you like. You can scrape single games in order to gather information for just that one game. You can enable video scraping. You can import your own data into the cache. You can clean your cache. You can create aliases for games that are difficult to scrape. You can change your preferred region and language for the modules that support it. You can set up keys or user id's and password for the scraping modules that take advantage of this. There's *a lot* you can do if you want to.
 
 The important thing to note is that most of the defaults for Skyscraper is set to work well for most users. So unless you see something you want to change, you don't have to. But it's equally important to know that you *can*.
 
