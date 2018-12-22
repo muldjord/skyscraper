@@ -74,6 +74,17 @@ $ ./update_skyscraper.sh
 ```
 You might be asked for your sudo password during the update. On RetroPie the default password is `raspberry`. If your version is older than 2.3.2 (check with `--help`) you need to follow the [installation instructions](#download-compile-and-install) instead.
 
+## How to uninstall Skyscraper
+If you've installed Skyscraper using the instructions in this readme, you can uninstall it using the following commands:
+```
+$ cd
+$ cd skysource
+$ sudo make uninstall
+$ cd
+$ rm -Rf skysource
+$ rm -Rf .skyscraper
+```
+
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
 
