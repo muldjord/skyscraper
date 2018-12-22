@@ -92,7 +92,7 @@ IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit y
 Remember, you can completely customize the artwork Skyscraper exports. Check out the documentation [here](ARTWORK.md). If you just want to use the default (pretty cool looking) artwork Skyscraper provides, read on.
 
 ### A simple use case
-For first-time users I recommend reading the short and to-the-point [use case](USECASE.md). Please read it and if it catches your interest check out the advanced options [here](manual-mode-for-advanced-users). If you just want to scrape a platform and be done with it check [Simple mode](simple-mode).
+For first-time users I recommend reading the short and to-the-point [use case](USECASE.md). Please read it and if it catches your interest check out the advanced options [here](#manual-mode-for-advanced-users). If you just want to scrape a platform and be done with it check [Simple mode](#simple-mode).
 
 ### Simple mode
 When you have completed the installation you can start Skyscraper in "Simple mode" by running Skyscraper with no command line options by typing:
