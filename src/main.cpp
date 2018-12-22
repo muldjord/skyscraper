@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
   }
   // Remove the last ', '
   platforms = platforms.left(platforms.length() - 2);
-  
+
   QCommandLineParser parser;
 
   QString headerString = "Running Skyscraper v" VERSION " by Lars Muldjord";
@@ -116,8 +116,8 @@ int main(int argc, char *argv[])
   for(int a = 0; a < headerString.length(); ++a) {
     dashesString += "-";
   }
-  
-  parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files in the input directory. It fetches media files and other relevant information for the games. It composites game art from the recipe at '~/.skyscraper/artwork.xml' and lastly builds a game list file for use with the chosen frontend.\n\nPlease check the documentation at 'https://github.com/muldjord/skyscraper' for a detailed explanation of all features.");
+
+  parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files in the input directory. It fetches media files and other relevant information for the games. It composites game art from the recipe at '~/.skyscraper/artwork.xml' and lastly builds a game list file for use with the chosen frontend.\n\nIn addition to the command line options Skyscraper also provides a lot of customizable options for configuration, artwork, game name aliases, resource priorities and much more. Please check the full documentation at 'https://github.com/muldjord/skyscraper' for a detailed explanation of all features.");
   parser.addHelpOption();
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "platform", "");
   QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "frontend", "");
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
   QCommandLineOption dbstatsOption("dbstats", "Show stats for the local database cache. This will also be shown with a verbosity level of 1 or more.");
   QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in the local database cache using selected scraping module. (Deprecated, please use --refresh)");
   QCommandLineOption refreshOption("refresh", "Refresh resources in the local database cache for the selected scraping module.");
-  QCommandLineOption purgedbOption("purgedb", "Purges all requested resources from the local database cache. You can define either module (m:[module]) or type (t:[type]) or both comma-separated (example 'm:thegamesdb,t:description'). You can also just type 'vacuum' which will compare your romset to any cached resource and remove the resources that you no longer have roms for. Set specific db folder with '-d' otherwise default db folder is used.", "resources", "");
+  QCommandLineOption purgedbOption("purgedb", "Purges all requested resources from the local database cache. You can define either module 'm:[module]' or type 't:[type]' or both comma-separated (example 'm:thegamesdb,t:description').\nYou can also just type 'vacuum' which will compare your romset to any cached resource and remove the resources that you no longer have roms for.\nLastly, you can type 'all' which will purge ALL resources from the cache that are connected to the currently selected platform / db folder.\nSet specific db folder with '-d' otherwise default db folder is used.", "resources", "");
   QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d' otherwise default db folder is used.");
   QCommandLineOption mergedbOption("mergedb", "Merge data from the specified db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d' otherwise default db folder is used as destination.", "folder", "");
   QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the local db cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
