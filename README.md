@@ -93,7 +93,7 @@ $ Skyscraper --help
 ```
 This will give you a description of everything Skyscraper can do if you feel adventurous! Let's go over the most important ones:
 
-* `-p [platform]`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms under the `-s` option with `--help`
+* `-p [platform]`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms under the `-p` option with `--help`
 * `-s [scraping module]`: This tells Skyscraper where you would like to fetch data from. The most important one being the `localdb` module. Read more about that [here](dbs/README.md)
 * `--refresh`: Whenever you scrape a platform with any scraping module Skyscraper caches all of that data locally. When you rescrape a platform it will fetch the data from the cache instead of hammering the online servers. Using the `--refresh` option allows you to override this and tells Skyscraper to refresh the cached data directly from the online source. Please only use this option if you know the data you want to scrape has changed at the source
 * `--videos`: If you wish to scrape videos for the scraping modules that support it, you need to add the `--videos` option. This is disabled by default because of the significant space requirements needed to save them
