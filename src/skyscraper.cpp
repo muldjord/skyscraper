@@ -213,8 +213,8 @@ void Skyscraper::run()
     }
     printf("\n");
   }
-  if(config.pretend) {
-    printf("Pretend set! Not changing any files, but still caching resources in local database.\n\n");
+  if(config.pretend && config.scraper == "localdb") {
+    printf("Pretend set! Not changing any files, just showing output.\n\n");
   }
 
   QFile skippedFile(skippedFileString);
@@ -1039,6 +1039,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(config.minMatchSet == false && (config.scraper == "localdb" ||
 				     config.scraper == "screenscraper" ||
 				     config.scraper == "arcadedb" ||
+				     config.scraper == "esgamelist" ||
 				     config.scraper == "import")) {
     config.minMatch = 0;
   }
@@ -1084,6 +1085,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     if(config.scraper == "localdb" ||
        config.scraper == "import" ||
        config.scraper == "arcadedb" ||
+       config.scraper == "esgamelist" ||
        config.scraper == "screenscraper") {
       config.interactive = false;
     } else {
@@ -1126,6 +1128,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     resFile = resFile.remove(0, resFile.indexOf("resources/") + 10); // Also cut off 'resources/'
     config.resources[resFile] = QImage("resources/" + resFile);
   }
+
+  // ALWAYS set pretend for any non-localdb scraping modules
+  if(config.scraper != "localdb" && !config.pretend)
+    config.pretend = true;
 }
 
 void Skyscraper::copyFile(QString &distro, QString &current, bool overwrite)
