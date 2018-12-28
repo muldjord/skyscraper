@@ -154,10 +154,10 @@ int main(int argc, char *argv[])
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption unpackOption("unpack", "Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
-  QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
-  QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--pretend', '--refresh' and '--nosubdirs' enabled.", "filename", "");
+  QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "filename", "");
+  QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
-  QCommandLineOption pretendOption("pretend", "Don't alter game list and media files, just print the results on screen. Scraped resources are still cached in the local database.");
+  QCommandLineOption pretendOption("pretend", "Don't alter any files, just print the results on screen. This option is on by default for all scraping modules except the 'localdb' module.");
   QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
   QCommandLineOption interactiveOption("interactive", "Always ask user to choose best result.");
