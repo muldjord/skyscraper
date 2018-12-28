@@ -170,11 +170,7 @@ Scripter::Scripter()
   
   scriptFile.write("#!/bin/bash\n");
   foreach(QString scraper, Platform::getScrapers(QString(platformStr.c_str()))) {
-    if(scraper == "localdb") {
-      scriptFile.write((commandStr + " -s " + scraper.toStdString() + "\n").c_str());
-    } else {
-      scriptFile.write((commandStr + " -s " + scraper.toStdString() + " --pretend\n").c_str());
-    }
+    scriptFile.write((commandStr + " -s " + scraper.toStdString() + "\n").c_str());
   }
   scriptFile.close();
   
