@@ -152,6 +152,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
+* Add bool check for writing cache and game list media files in case disk has run out of space. Output any problems to stdout
 
 #### Version 3.0.0 (In progress, unreleased)
 * '--pretend' now default for all scraping modules except 'localdb'
