@@ -152,10 +152,12 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
-* Add bool check for writing cache and game list media files in case disk has run out of space. Output any problems to stdout
+* Add better control of which modules are allowed to be used when scraping from "localdb"
 
 #### Version 3.0.0 (In progress, unreleased)
-* '--pretend' now default for all scraping modules except 'localdb'
+* Game list creation and media compositing now only processed when using the "localdb" (default) module
+* Now converts textual "\n" in descriptions to newlines. Useful when importing textual data (Thank you to 'scthirouin' for requesting it)
+* Added check for writing cache and game list media files in case disk has run out of space. Outputs any problems to stdout but doesn't abort
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
