@@ -1057,7 +1057,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     }
     if(exists) {
       cliFiles.append(cliArgument);
-      // Always set pretend, refresh and unattend true if user has supplied filenames on
+      // Always set refresh and unattend true if user has supplied filenames on
       // command line. That way they are cached, but game list is not changed and user isn't
       // asked about skipping and overwriting.
       config.refresh = true;
