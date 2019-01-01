@@ -321,26 +321,38 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       processChildLayers(game, output);
     }
 
+    int errors = 0;
     if(output.resType == "cover") {
       QString filename = config->coversFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.coverFile = StrTools::xmlUnescape(filename);
+      } else {
+	errors++;
       }
     } else if(output.resType == "screenshot") {
       QString filename = config->screenshotsFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.screenshotFile = filename;
+      } else {
+	errors++;
       }
     } else if(output.resType == "wheel") {
       QString filename = config->wheelsFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.wheelFile = filename;
+      } else {
+	errors++;
       }
     } else if(output.resType == "marquee") {
       QString filename = config->marqueesFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
 	game.marqueeFile = filename;
+      } else {
+	errors++;
       }
+    }
+    if(errors > 0) {
+      printf("\033[1;33mWarning! Couldn't write game list media file. Have you run out of disk space?\n\033[0m");
     }
   }
 }
