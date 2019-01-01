@@ -192,7 +192,9 @@ void Skyscraper::run()
 
   QFile gameListFile(gameListFileString);
 
-  if(!config.pretend && !config.unattend && !config.unattendSkip && gameListFile.exists()) {
+  if(!config.pretend && config.scraper == "localdb" &&
+     !config.unattend && !config.unattendSkip &&
+     gameListFile.exists()) {
     std::string userInput = "";
     printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
     getline(std::cin, userInput);
@@ -276,7 +278,7 @@ void Skyscraper::run()
 	  if(config.unattendSkip) {
 	    userInput = "y";
 	  } else {
-	    printf("\033[1;34mDo you wish to skip existing entries if supported\033[0m (y/N)? ");
+	    printf("\033[1;34mDo you want to skip already existing game list entries\033[0m (y/N)? ");
 	    getline(std::cin, userInput);
 	  }
 	  if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
@@ -315,7 +317,6 @@ void Skyscraper::run()
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::entryReady, this, &Skyscraper::entryReady);
-    //connect(worker, &ScraperWorker::addToSkipped, this, &Skyscraper::addToSkipped);
     connect(worker, &ScraperWorker::allDone, this, &Skyscraper::checkThreads);
     connect(thread, &QThread::finished, worker, &ScraperWorker::deleteLater);
     threadList.append(thread);
@@ -442,7 +443,7 @@ void Skyscraper::checkThreads()
   frontend->assembleList(finalOutput, gameEntries, config.maxLength);
   printf(" \033[1;32mDone!!!\033[0m\n");
     
-  if(!config.pretend) {
+  if(!config.pretend && config.scraper == "localdb") {
     QFile gameListFile(gameListFileString);
     printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
     fflush(stdout);
@@ -1059,7 +1060,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       // Always set pretend, refresh and unattend true if user has supplied filenames on
       // command line. That way they are cached, but game list is not changed and user isn't
       // asked about skipping and overwriting.
-      config.pretend = true;
       config.refresh = true;
       config.unattend = true;
     } else {
@@ -1074,7 +1074,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   
   if(config.startAt != "" || config.endAt != "") {
-    config.pretend = true;
     config.refresh = true;
     config.unattend = true;
     config.subDirs = false;
@@ -1128,10 +1127,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     resFile = resFile.remove(0, resFile.indexOf("resources/") + 10); // Also cut off 'resources/'
     config.resources[resFile] = QImage("resources/" + resFile);
   }
-
-  // ALWAYS set pretend for any non-localdb scraping modules
-  if(config.scraper != "localdb" && !config.pretend)
-    config.pretend = true;
 }
 
 void Skyscraper::copyFile(QString &distro, QString &current, bool overwrite)
@@ -1221,9 +1216,6 @@ void Skyscraper::adjustToLimits()
 	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
       }
     }
-  } else if(config.scraper == "esgamelist") {
-    printf("\033[1;33mForcing --pretend as not to overwrite the gamelist.xml after scraping.\033[0m\n\n");
-    config.pretend = true;
   }
 }
 
