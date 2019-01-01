@@ -1,5 +1,5 @@
 ## A typical Skyscraper use case
-The following describes a typical way of using Skyscraper. It's important to know that Skyscraper isn't just a *run once and you're done* tool. It isn't complicated to use by any means. It just has a couple of layers you should familiarize yourself with in order to get the best results.
+The following describes a typical way of using Skyscraper. It's really simple to use once you understand the core concept. It has a couple of layers you should familiarize yourself with in order to get the best results.
 
 So let's dig in!
 
