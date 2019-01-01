@@ -271,9 +271,7 @@ void MobyGames::getDescription(GameEntry &game)
   game.description = jsonObj.value("description").toString();
 
   // Remove all html tags within description
-  while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1 && game.description.indexOf("<") < game.description.indexOf(">")) {
-    game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
-  }
+  game.description = StrTools::stripHtmlTags(game.description);
 }
 
 void MobyGames::getRating(GameEntry &game)

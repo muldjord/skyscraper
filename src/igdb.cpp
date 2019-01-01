@@ -207,9 +207,7 @@ void Igdb::getDescription(GameEntry &game)
   game.description = jsonObj.value("summary").toString();
 
   // Remove all html tags within description
-  while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1 && game.description.indexOf("<") < game.description.indexOf(">")) {
-    game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
-  }
+  game.description = StrTools::stripHtmlTags(game.description);
 }
 
 void Igdb::getRating(GameEntry &game)
