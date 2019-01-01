@@ -208,7 +208,7 @@ void ScraperWorker::run()
       scraper->getGameData(game);
     }
 
-    if(!config.pretend) {
+    if(!config.pretend && config.scraper == "localdb") {
       // Process all artwork
       compositor.saveAll(game, info.completeBaseName());
       if(config.videos && game.videoFormat != "") {
