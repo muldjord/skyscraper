@@ -49,6 +49,9 @@ private:
   void getPublisher(GameEntry &game) override;
   void getDescription(GameEntry &game) override;
   void getRating(GameEntry &game) override;
+  void getScreenshot(GameEntry &game) override;
+
+  QList<QString> getSearchNames(const QFileInfo &info) override;
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;

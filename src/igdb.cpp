@@ -27,14 +27,15 @@
 
 #include "igdb.h"
 #include "strtools.h"
+#include "nametools.h"
 
 Igdb::Igdb(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
-  baseUrl = "https://api-endpoint.igdb.com";
+  baseUrl = "https://api-v3.igdb.com";
 
-  searchUrlPre = "https://api-endpoint.igdb.com/games/";
+  searchUrlPre = "https://api-v3.igdb.com";
   
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(RATING);
@@ -52,17 +53,23 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
   // Request list of games but don't allow re-releases (version_parent->not_exists=1)
-  manager.request(searchUrlPre + "?search=" + searchName + "&fields=name,summary,total_rating,developers,publishers,game_modes,genres,platforms,release_dates&filter[version_parent][not_exists]=1&expand=developers,publishers,genres,platforms", "", "user-key", config->userCreds);
+
+  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", config->userCreds);
+
+  //manager.request(searchUrlPre + "?search=" + searchName + "&fields=name,summary,total_rating,developers,publishers,game_modes,genres,platforms,release_dates&filter[version_parent][not_exists]=1&expand=developers,publishers,genres,platforms", "", "user-key", config->userCreds);
+
   //manager.request("https://api-endpoint.igdb.com/genres/?id=*&fields=name&limit=50", "", "user-key", config->userCreds);
   q.exec();
   data = manager.getData();
 
-  if(data.indexOf("Limits exceeded") != -1) {
+  printf("DATA:\n%s\n", data.data());
+  
+  if(data.contains("Limits exceeded")) {
     printf("\033[1;31mYour monthly request limit for the 'igdb' scraping module has been reached. You can upgrade the limit at 'https://api.igdb.com/' under 'API credentials'.\033[0m\n");
     reqRemaining = 0;
   }
 
-  if(data.indexOf("Authentication failed") != -1) {
+  if(data.contains("Authentication failed")) {
     printf("\033[1;31mThe key you provided with either the '-u [key]' command line option or the 'userCreds=\"[key]\" variable in config.ini does not seem to work. Now quitting...\033[0m\n\n");
     reqRemaining = 0;
   }
@@ -82,10 +89,11 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   foreach(const QJsonValue &jsonGame, jsonGames) {
     GameEntry game;
     
-    game.title = jsonGame.toObject().value("name").toString();
-    game.miscData = QJsonDocument(jsonGame.toObject()).toJson(QJsonDocument::Compact);
+    game.title = jsonGame.toObject().value("game").toObject().value("name").toString();
+    printf("Title is: '%s'\n", game.title.toStdString().c_str());
+    game.miscData = QJsonDocument(jsonGame.toObject().value("game").toObject()).toJson(QJsonDocument::Compact);
 
-    QJsonArray jsonPlatforms = jsonGame.toObject().value("platforms").toArray();
+    QJsonArray jsonPlatforms = jsonGame.toObject().value("game").toObject().value("platforms").toArray();
     foreach(const QJsonValue &jsonPlatform, jsonPlatforms) {
       game.id = QString::number(jsonPlatform.toObject().value("id").toInt());
       game.platform = jsonPlatform.toObject().value("name").toString();
@@ -220,3 +228,69 @@ void Igdb::getRating(GameEntry &game)
     }
   }
 }
+
+void Igdb::getScreenshot(GameEntry &game)
+{
+  /* This might work
+https://api-v3.igdb.com/games/
+fields screenshots; where id = 1942 & where platform = [platformid from gameentry];
+
+More info: https://api-docs.igdb.com/?shell#images
+   */
+}
+
+QList<QString> Igdb::getSearchNames(const QFileInfo &info)
+{
+  QString baseName = info.completeBaseName();
+
+  if(aliasMap.contains(baseName)) {
+    baseName = aliasMap[baseName];
+  } else if(info.suffix() == "lha") {
+    QString nameWithSpaces = whdLoadMap[baseName].first;
+    if(nameWithSpaces.isEmpty()) {
+      baseName = NameTools::getNameWithSpaces(baseName);
+    } else {
+      baseName = nameWithSpaces;
+    }
+  } else if(config->platform == "scummvm") {
+    baseName = NameTools::getScummName(baseName);
+  } else if((config->platform == "neogeo" ||
+	     config->platform == "arcade" ||
+	     config->platform == "mame-advmame" ||
+	     config->platform == "mame-libretro" ||
+	     config->platform == "mame-mame4all" ||
+	     config->platform == "fba") && mameMap.contains(baseName)) {
+    baseName = mameMap[baseName];
+  }
+  baseName = StrTools::stripBrackets(baseName);
+  QList<QString> searchNames;
+  searchNames.append(baseName);
+  return searchNames;
+}
+
+/*
+JSON SEARCH RESULT:
+[
+  {
+    "id": 105940,
+    "game": {
+      "id": 1073,
+      "name": "Super Mario World 2: Yoshi\u0027s Island",
+      "platforms": [
+        {
+          "id": 19,
+          "name": "Super Nintendo Entertainment System (SNES)"
+        },
+        {
+          "id": 24,
+          "name": "Game Boy Advance"
+        },
+        {
+          "id": 47,
+          "name": "Virtual Console (Nintendo)"
+        }
+      ]
+    }
+  }
+]
+ */
