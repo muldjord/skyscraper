@@ -52,16 +52,11 @@ Igdb::Igdb(Settings *config) : AbstractScraper(config)
 void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
-  // Request list of games but don't allow re-releases (version_parent->not_exists=1)
+  // Request list of games but don't allow re-releases ("game.version_parent = null")
 
-  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", config->userCreds);
-
-  //manager.request(searchUrlPre + "?search=" + searchName + "&fields=name,summary,total_rating,developers,publishers,game_modes,genres,platforms,release_dates&filter[version_parent][not_exists]=1&expand=developers,publishers,genres,platforms", "", "user-key", config->userCreds);
-
-  //manager.request("https://api-endpoint.igdb.com/genres/?id=*&fields=name&limit=50", "", "user-key", config->userCreds);
+  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
   q.exec();
   data = manager.getData();
-
   printf("DATA:\n%s\n", data.data());
   
   if(data.contains("Limits exceeded")) {
@@ -90,12 +85,11 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
     GameEntry game;
     
     game.title = jsonGame.toObject().value("game").toObject().value("name").toString();
-    printf("Title is: '%s'\n", game.title.toStdString().c_str());
-    game.miscData = QJsonDocument(jsonGame.toObject().value("game").toObject()).toJson(QJsonDocument::Compact);
+    game.id = QString::number(jsonGame.toObject().value("game").toObject().value("id").toInt());
 
     QJsonArray jsonPlatforms = jsonGame.toObject().value("game").toObject().value("platforms").toArray();
     foreach(const QJsonValue &jsonPlatform, jsonPlatforms) {
-      game.id = QString::number(jsonPlatform.toObject().value("id").toInt());
+      //game.miscData = QString::number(jsonPlatform.toObject().value("id").toInt());
       game.platform = jsonPlatform.toObject().value("name").toString();
       if(platformMatch(game.platform, platform)) {
 	gameEntries.append(game);
@@ -106,6 +100,12 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void Igdb::getGameData(GameEntry &game)
 {
+  manager.request(baseUrl + "/games/", "fields *; where id = " + game.id + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+  q.exec();
+  data = manager.getData();
+
+  printf("DATA:\n%s\n", data.data());
+
   jsonDoc = QJsonDocument::fromJson(game.miscData);
   if(jsonDoc.isEmpty()) {
     return;
@@ -293,4 +293,100 @@ JSON SEARCH RESULT:
     }
   }
 ]
+
+[
+  {
+    "id": 1070,
+    "age_ratings": [
+      19985,
+      19986
+    ],
+    "aggregated_rating": 100.0,
+    "aggregated_rating_count": 1,
+    "alternative_names": [
+      3781,
+      3782
+    ],
+    "category": 0,
+    "cover": 69388,
+    "created_at": 1339200000,
+    "external_games": [
+      188859,
+      245175
+    ],
+    "first_release_date": 659145600,
+    "game_modes": [
+      1,
+      2
+    ],
+    "genres": [
+      8
+    ],
+    "involved_companies": [
+      22190,
+      22191,
+      22192
+    ],
+    "name": "Super Mario World",
+    "platforms": [
+      5,
+      19,
+      41,
+      137
+    ],
+    "player_perspectives": [
+      4
+    ],
+    "popularity": 17.52125071670721,
+    "rating": 92.53825753171901,
+    "rating_count": 516,
+    "release_dates": [
+      132781,
+      132782,
+      132783,
+      132784,
+      132785,
+      132786,
+      143838,
+      143839,
+      143840,
+      143841,
+      143842
+    ],
+    "screenshots": [
+      9506,
+      9507,
+      9508,
+      9509,
+      174828,
+      174829,
+      174830,
+      174831,
+      174832,
+      174833,
+      174834,
+      174835
+    ],
+    "slug": "super-mario-world",
+    "summary": "Super Mario World (known in Japan as Super Mario World: Super Mario Bros. 4) is a side-scrolling platformer developed by Nintendo EAD and published by Nintendo for the Super Nintendo Entertainment System on November 21, 1990 (in Japan), August 31, 1991 (in North America), and April 11, 1992 (in Europe). \n \nOne of the launch titles of the SNES (and bundled with early systems in North America), Super Mario World is the fifth main game in the Super Mario series. (starring Nintendo\u0027s mascot, Mario, and his brother, Luigi). The game follows both Mario brothers as they explore Dinosaur Land (known for its large amount of dinosaurs) to find and defeat the evil Koopa king Bowser (and his seven underlings, the Koopalings) while rescuing Princess Toadstool. \n \nAlong with new abilities (such as the \"Spin Jump\"), a new power-up (the \"Cape Feather\") and more obstacles, the game introduces dinosaur companions (known as Yoshi) that Mario and Luigi can ride. Yoshi, known for using their long tongues to snare and eat enemies, have become a fan-favorite among the series (giving them their own games and spin-offs, most notably this game\u0027s prequel). \n \nSpecial bundles of the SNES in 1994 included a compilation cartridge mixing Super Mario World with Super Mario All-Stars. The only difference in this version is a new sprite set for Luigi. The original game was later ported to the Game Boy Advance on February 11, 2002 as Super Mario World: Super Mario Advance 2. Along with a special version of the original Mario Bros., the port includes a variety of differences, including Luigi as a selectable character (who now has unique features, such as his floating jump from Super Mario Bros. 2), new voice acting, and the ability to save anywhere. The original game was also digitally re-released in Nintendo\u0027s Virtual Console platform for the Wii (on February 5, 2007) and Wii U (on April 26, 2013).",
+    "tags": [
+      1,
+      268435464
+    ],
+    "themes": [
+      1
+    ],
+    "total_rating": 96.2691287658595,
+    "total_rating_count": 517,
+    "updated_at": 1546214400,
+    "url": "https://www.igdb.com/games/super-mario-world",
+    "videos": [
+      17409
+    ],
+    "websites": [
+      11549
+    ]
+  }
+]
+
  */
