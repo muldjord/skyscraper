@@ -157,7 +157,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
 * Now converts textual "\n" in descriptions to newlines. Useful when importing textual data (Thank you to 'scthirouin' for requesting it)
-* Added check for writing cache and game list media files in case disk has run out of space. Outputs any problems to stdout but doesn't abort
+* Added disk space check. Now aborts if disk has less than 200 megs left
 * Updated 'igdb' API til APIv3000. Key now global for all users
 * Fixed ES game list release dates by adding "T000000" (Thank you to 'michaelbaudino' for noticing)
 * Added 'subdirs' to config.ini (Thank you to 'otherguy' for noticing it was missing)
