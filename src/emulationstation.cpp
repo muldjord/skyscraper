@@ -163,7 +163,7 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     if(entry.releaseDate.isEmpty()) {
       finalOutput.append("    <releasedate />\n");
     } else {
-      finalOutput.append("    <releasedate>" + StrTools::xmlEscape(entry.releaseDate) + "</releasedate>\n");
+      finalOutput.append("    <releasedate>" + StrTools::xmlEscape(entry.releaseDate) + "T000000</releasedate>\n");
     }
     if(entry.developer.isEmpty()) {
       finalOutput.append("    <developer />\n");
