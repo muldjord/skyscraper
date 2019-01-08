@@ -20,7 +20,7 @@ $ Skyscraper -p snes -s thegamesdb
 ```
 For each of those two commands, all of the data that was gathered is now cached inside Skyscraper. For each game it will contain information from both of those sources.
 
-#### The combining phase
+#### The game list generation phase
 And here comes the clever part. By having gathered data from both sources (`screenscraper` *and* `thegamesdb`) there's a good chance that you will get a complete result if the data from both is combined. And that's *exactly* what Skyscraper can do for you.
 ```
 $ Skyscraper -p snes
