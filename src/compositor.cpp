@@ -352,7 +352,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       }
     }
     if(errors > 0) {
-      printf("\033[1;33mWarning! Couldn't write game list media file. Have you run out of disk space?\n\033[0m");
+      printf("\033[1;33mWarning! Couldn't write one or more game list media file(s).\n\033[0m");
     }
   }
 }
