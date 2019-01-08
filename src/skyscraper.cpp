@@ -35,6 +35,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QStorageInfo>
 
 #include "skyscraper.h"
 #include "xmlreader.h"
@@ -247,7 +248,7 @@ void Skyscraper::run()
     }
   }
   queue->append(infoList);
-  if(config.subDirs) {
+  if(config.subdirs) {
     QDirIterator dirIt(config.inputFolder,
 		       QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
 		       QDirIterator::Subdirectories);
@@ -424,6 +425,14 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     exit(1);
   }
   currentFile++;
+
+  if(QStorageInfo(QDir(config.mediaFolder)).bytesFree() < 209715200 ||
+     QStorageInfo(QDir::current()).bytesFree() < 209715200) {
+    printf("\033[1;31mYou have very little disk space left, please free up some space and try again. Now aborting...\033[0m\n\n");
+    doneThreads = config.threads - 1;
+    checkThreads();
+    exit(0);
+  }
 }
 
 void Skyscraper::checkThreads()
@@ -971,7 +980,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.noResize = true;
   }
   if(parser.isSet("nosubdirs")) {
-    config.subDirs = false;
+    config.subdirs = false;
   }
   if(parser.isSet("unpack")) {
     config.unpack = true;
@@ -1085,7 +1094,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(config.startAt != "" || config.endAt != "") {
     config.refresh = true;
     config.unattend = true;
-    config.subDirs = false;
+    config.subdirs = false;
   }
   
   // If interactive is set, force 1 thread and always accept the chosen result
