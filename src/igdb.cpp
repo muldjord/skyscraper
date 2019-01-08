@@ -44,7 +44,7 @@ Igdb::Igdb(Settings *config) : AbstractScraper(config)
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(PLAYERS);
   fetchOrder.append(TAGS);
-  //fetchOrder.append(AGES);
+  fetchOrder.append(AGES);
   //fetchOrder.append(COVER);
   //fetchOrder.append(SCREENSHOT);
 }
@@ -99,18 +99,18 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void Igdb::getGameData(GameEntry &game)
 {
-  manager.request(baseUrl + "/games/", "fields age_ratings.rating,rating,rating_count,total_rating,total_rating_count,aggregated_rating,cover.url,game_modes.name,genre.name,release_dates.date,screenshots.url,summary,; where id = " + game.id + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.name,genres.name,release_dates.date,screenshots.url,summary,release_dates.date,release_dates.platform,involved_companies.company.name,involved_company.developed,involved_company.published; where id = " + game.id + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
   q.exec();
   data = manager.getData();
 
   printf("DATA:\n%s\n", data.data());
 
-  jsonDoc = QJsonDocument::fromJson(game.miscData);
+  jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
   }
 
-  jsonObj = jsonDoc.object();
+  jsonObj = jsonDoc.array().first().toObject();
   
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
@@ -193,6 +193,36 @@ void Igdb::getTags(GameEntry &game)
   game.tags = game.tags.left(game.tags.length() - 2);
 }
 
+void Igdb::getAges(GameEntry &game)
+{
+  int agesEnum = jsonObj.value("age_ratings").toArray().first().toObject().value("rating").toInt();
+  if(agesEnum == 1) {
+    game.ages = "3";
+  } else if(agesEnum == 2) {
+    game.ages = "7";
+  } else if(agesEnum == 3) {
+    game.ages = "12";
+  } else if(agesEnum == 4) {
+    game.ages = "16";
+  } else if(agesEnum == 5) {
+    game.ages = "18";
+  } else if(agesEnum == 6) {
+    // Rating pending
+  } else if(agesEnum == 7) {
+    game.ages = "EC";
+  } else if(agesEnum == 8) {
+    game.ages = "E";
+  } else if(agesEnum == 9) {
+    game.ages = "E10";
+  } else if(agesEnum == 10) {
+    game.ages = "T";
+  } else if(agesEnum == 11) {
+    game.ages = "M";
+  } else if(agesEnum == 12) {
+    game.ages = "AO";
+  }
+}
+
 void Igdb::getPublisher(GameEntry &game)
 {
   QJsonArray jsonPublishers = jsonObj.value("publishers").toArray();
@@ -211,10 +241,10 @@ void Igdb::getDeveloper(GameEntry &game)
 
 void Igdb::getDescription(GameEntry &game)
 {
-  game.description = jsonObj.value("summary").toString();
-
-  // Remove all html tags within description
-  game.description = StrTools::stripHtmlTags(game.description);
+  QJsonValue jsonValue = jsonObj.value("summary");
+  if(jsonValue != QJsonValue::Undefined) {
+    game.description = StrTools::stripHtmlTags(jsonValue.toString());
+  }
 }
 
 void Igdb::getRating(GameEntry &game)
@@ -226,16 +256,6 @@ void Igdb::getRating(GameEntry &game)
       game.rating = QString::number(rating / 100.0);
     }
   }
-}
-
-void Igdb::getScreenshot(GameEntry &game)
-{
-  /* This might work
-https://api-v3.igdb.com/games/
-fields screenshots; where id = 1942 & where platform = [platformid from gameentry];
-
-More info: https://api-docs.igdb.com/?shell#images
-   */
 }
 
 QList<QString> Igdb::getSearchNames(const QFileInfo &info)
