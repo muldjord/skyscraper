@@ -159,7 +159,8 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Now converts textual "\n" in descriptions to newlines. Useful when importing textual data (Thank you to 'scthirouin' for requesting it)
 * Added check for writing cache and game list media files in case disk has run out of space. Outputs any problems to stdout but doesn't abort
 * Updated 'igdb' API til APIv3000. Key now global for all users
-* Fixed ES game list release dates by adding "T000000"
+* Fixed ES game list release dates by adding "T000000" (Thank you to 'michaelbaudino' for noticing)
+* Added 'subdirs' to config.ini (Thank you to 'otherguy' for noticing it was missing)
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
