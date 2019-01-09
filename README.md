@@ -161,6 +161,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Updated 'igdb' API til APIv3000. Key now global for all users
 * Fixed ES game list release dates by adding "T000000" (Thank you to 'michaelbaudino' for noticing)
 * Added 'subdirs' to config.ini (Thank you to 'otherguy' for noticing it was missing)
+* '--startat' and '--endat' now supports current workdir file paths
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
