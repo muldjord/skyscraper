@@ -59,12 +59,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   data = manager.getData();
   
   if(data.contains("Limits exceeded")) {
-    printf("\033[1;31mYour monthly request limit for the 'igdb' scraping module has been reached. You can upgrade the limit at 'https://api.igdb.com/' under 'API credentials'.\033[0m\n");
-    reqRemaining = 0;
-  }
-
-  if(data.contains("Authentication failed")) {
-    printf("\033[1;31mThe key you provided with either the '-u [key]' command line option or the 'userCreds=\"[key]\" variable in config.ini does not seem to work. Now quitting...\033[0m\n\n");
+    printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
   }
 
