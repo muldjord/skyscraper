@@ -53,11 +53,10 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
   // Request list of games but don't allow re-releases ("game.version_parent = null")
-
   manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
   q.exec();
   data = manager.getData();
-  
+
   if(data.contains("Limits exceeded")) {
     printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
@@ -68,8 +67,8 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
     return;
   }
 
-  if(jsonDoc.object().value("status").toInt() == 403) {
-    printf("\033[1;31mYour monthly request limit for the 'igdb' scraping module has been reached. You can upgrade the limit at 'https://api.igdb.com/' under 'API credentials'.\033[0m\n");
+  if(jsonDoc.array().first().toObject().value("status").toInt() == 403) {
+    printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
   }
 
@@ -94,11 +93,9 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void Igdb::getGameData(GameEntry &game)
 {
-  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.name,genres.name,screenshots.url,summary,release_dates.human,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.category,release_dates.region,release_dates.human,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
   q.exec();
   data = manager.getData();
-
-  printf("DATA:\n%s\n", data.data());
 
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
@@ -153,7 +150,8 @@ void Igdb::getReleaseDate(GameEntry &game)
 {
   QJsonArray jsonDates = jsonObj.value("release_dates").toArray();
   foreach(const QJsonValue &jsonDate, jsonDates) {
-    if(QString::number(jsonDate.toObject().value("platform").toInt()) == game.id.split(";").last()) {
+    if(QString::number(jsonDate.toObject().value("platform").toInt()) ==
+       game.id.split(";").last()) {
       game.releaseDate = jsonDate.toObject().value("human").toString();
       break;
     }
@@ -172,7 +170,7 @@ void Igdb::getPlayers(GameEntry &game)
   game.players = "1";
   QJsonArray jsonPlayers = jsonObj.value("game_modes").toArray();
   foreach(const QJsonValue &jsonPlayer, jsonPlayers) {
-    if(jsonPlayer.toInt() != 1) {
+    if(jsonPlayer.toObject().value("id").toInt() != 1) {
       game.players = "2";
       break;
     }
@@ -289,126 +287,6 @@ QList<QString> Igdb::getSearchNames(const QFileInfo &info)
 }
 
 /*
-JSON SEARCH RESULT:
-[
-  {
-    "id": 105940,
-    "game": {
-      "id": 1073,
-      "name": "Super Mario World 2: Yoshi\u0027s Island",
-      "platforms": [
-        {
-          "id": 19,
-          "name": "Super Nintendo Entertainment System (SNES)"
-        },
-        {
-          "id": 24,
-          "name": "Game Boy Advance"
-        },
-        {
-          "id": 47,
-          "name": "Virtual Console (Nintendo)"
-        }
-      ]
-    }
-  }
-]
-
-[
-  {
-    "id": 1070,
-    "age_ratings": [
-      19985,
-      19986
-    ],
-    "aggregated_rating": 100.0,
-    "aggregated_rating_count": 1,
-    "alternative_names": [
-      3781,
-      3782
-    ],
-    "category": 0,
-    "cover": 69388,
-    "created_at": 1339200000,
-    "external_games": [
-      188859,
-      245175
-    ],
-    "first_release_date": 659145600,
-    "game_modes": [
-      1,
-      2
-    ],
-    "genres": [
-      8
-    ],
-    "involved_companies": [
-      22190,
-      22191,
-      22192
-    ],
-    "name": "Super Mario World",
-    "platforms": [
-      5,
-      19,
-      41,
-      137
-    ],
-    "player_perspectives": [
-      4
-    ],
-    "popularity": 17.52125071670721,
-    "rating": 92.53825753171901,
-    "rating_count": 516,
-    "release_dates": [
-      132781,
-      132782,
-      132783,
-      132784,
-      132785,
-      132786,
-      143838,
-      143839,
-      143840,
-      143841,
-      143842
-    ],
-    "screenshots": [
-      9506,
-      9507,
-      9508,
-      9509,
-      174828,
-      174829,
-      174830,
-      174831,
-      174832,
-      174833,
-      174834,
-      174835
-    ],
-    "slug": "super-mario-world",
-    "summary": "Super Mario World (known in Japan as Super Mario World: Super Mario Bros. 4) is a side-scrolling platformer developed by Nintendo EAD and published by Nintendo for the Super Nintendo Entertainment System on November 21, 1990 (in Japan), August 31, 1991 (in North America), and April 11, 1992 (in Europe). \n \nOne of the launch titles of the SNES (and bundled with early systems in North America), Super Mario World is the fifth main game in the Super Mario series. (starring Nintendo\u0027s mascot, Mario, and his brother, Luigi). The game follows both Mario brothers as they explore Dinosaur Land (known for its large amount of dinosaurs) to find and defeat the evil Koopa king Bowser (and his seven underlings, the Koopalings) while rescuing Princess Toadstool. \n \nAlong with new abilities (such as the \"Spin Jump\"), a new power-up (the \"Cape Feather\") and more obstacles, the game introduces dinosaur companions (known as Yoshi) that Mario and Luigi can ride. Yoshi, known for using their long tongues to snare and eat enemies, have become a fan-favorite among the series (giving them their own games and spin-offs, most notably this game\u0027s prequel). \n \nSpecial bundles of the SNES in 1994 included a compilation cartridge mixing Super Mario World with Super Mario All-Stars. The only difference in this version is a new sprite set for Luigi. The original game was later ported to the Game Boy Advance on February 11, 2002 as Super Mario World: Super Mario Advance 2. Along with a special version of the original Mario Bros., the port includes a variety of differences, including Luigi as a selectable character (who now has unique features, such as his floating jump from Super Mario Bros. 2), new voice acting, and the ability to save anywhere. The original game was also digitally re-released in Nintendo\u0027s Virtual Console platform for the Wii (on February 5, 2007) and Wii U (on April 26, 2013).",
-    "tags": [
-      1,
-      268435464
-    ],
-    "themes": [
-      1
-    ],
-    "total_rating": 96.2691287658595,
-    "total_rating_count": 517,
-    "updated_at": 1546214400,
-    "url": "https://www.igdb.com/games/super-mario-world",
-    "videos": [
-      17409
-    ],
-    "websites": [
-      11549
-    ]
-  }
-]
-
 [
   {
     "id": 1070,
@@ -431,11 +309,11 @@ JSON SEARCH RESULT:
     "game_modes": [
       {
         "id": 1,
-        "name": "Single player"
+        "slug": "single-player"
       },
       {
         "id": 2,
-        "name": "Multiplayer"
+        "slug": "multiplayer"
       }
     ],
     "genres": [
@@ -476,57 +354,79 @@ JSON SEARCH RESULT:
     "release_dates": [
       {
         "id": 132781,
-        "date": 659145600,
-        "platform": 19
+        "category": 0,
+        "human": "1990-Nov-21",
+        "platform": 19,
+        "region": 5
       },
       {
         "id": 132782,
-        "date": 682041600,
-        "platform": 19
+        "category": 0,
+        "human": "1991-Aug-13",
+        "platform": 19,
+        "region": 2
       },
       {
         "id": 132783,
-        "date": 702950400,
-        "platform": 19
+        "category": 0,
+        "human": "1992-Apr-11",
+        "platform": 19,
+        "region": 1
       },
       {
         "id": 132784,
-        "date": 1456963200,
-        "platform": 137
+        "category": 0,
+        "human": "2016-Mar-03",
+        "platform": 137,
+        "region": 2
       },
       {
         "id": 132785,
-        "date": 1366934400,
-        "platform": 41
+        "category": 0,
+        "human": "2013-Apr-26",
+        "platform": 41,
+        "region": 2
       },
       {
         "id": 132786,
+        "category": 7,
+        "human": "TBD",
         "platform": 5
       },
       {
         "id": 143838,
-        "date": 1170633600,
-        "platform": 5
+        "category": 0,
+        "human": "2007-Feb-05",
+        "platform": 5,
+        "region": 2
       },
       {
         "id": 143839,
-        "date": 1170979200,
-        "platform": 5
+        "category": 0,
+        "human": "2007-Feb-09",
+        "platform": 5,
+        "region": 1
       },
       {
         "id": 143840,
-        "date": 1165017600,
-        "platform": 5
+        "category": 0,
+        "human": "2006-Dec-02",
+        "platform": 5,
+        "region": 5
       },
       {
         "id": 143841,
-        "date": 1367020800,
-        "platform": 41
+        "category": 0,
+        "human": "2013-Apr-27",
+        "platform": 41,
+        "region": 1
       },
       {
         "id": 143842,
-        "date": 1367020800,
-        "platform": 41
+        "category": 0,
+        "human": "2013-Apr-27",
+        "platform": 41,
+        "region": 5
       }
     ],
     "screenshots": [
@@ -583,5 +483,4 @@ JSON SEARCH RESULT:
     "total_rating": 96.2689865175066
   }
 ]
-
- */
+*/
