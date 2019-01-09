@@ -91,7 +91,7 @@ void Skyscraper::run()
     showHint();
   }
 
-  adjustToLimits();
+  doPrescrapeJobs();
   
   doneThreads = 0;
   notFound = 0;
@@ -232,7 +232,10 @@ void Skyscraper::run()
   QSharedPointer<Queue> queue = QSharedPointer<Queue>(new Queue());
   QList<QFileInfo> infoList = inputDir.entryInfoList();
   if(config.startAt != "" && !infoList.isEmpty()) {
-    QFileInfo startAt(inputDir.absolutePath() + "/" + config.startAt);
+    QFileInfo startAt(config.currentDir + "/" + config.startAt);
+    if(!startAt.exists()) {
+      startAt.setFile(inputDir.absolutePath() + "/" + config.startAt);
+    }
     if(startAt.exists()) {
       while(infoList.first().fileName() != startAt.fileName()) {
 	infoList.removeFirst();
@@ -240,7 +243,10 @@ void Skyscraper::run()
     }
   }
   if(config.endAt != "" && !infoList.isEmpty()) {
-    QFileInfo endAt(inputDir.absolutePath() + "/" + config.endAt);
+    QFileInfo endAt(config.currentDir + "/" + config.endAt);
+    if(!endAt.exists()) {
+      endAt.setFile(inputDir.absolutePath() + "/" + config.endAt);
+    }
     if(endAt.exists()) {
       while(infoList.last().fileName() != endAt.fileName()) {
 	infoList.removeLast();
@@ -1176,12 +1182,14 @@ void Skyscraper::showHint()
   }
 }
 
-void Skyscraper::adjustToLimits()
+void Skyscraper::doPrescrapeJobs()
 {
-  if(config.platform == "amiga") {
-    NetComm manager;
-    QEventLoop q; // Event loop for use when waiting for data from NetComm.
-    connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+  NetComm manager;
+  QEventLoop q; // Event loop for use when waiting for data from NetComm.
+  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+  
+  if(config.platform == "amiga" &&
+     config.scraper != "localdb" && config.scraper != "import" && config.scraper != "esgamelist") {
     printf("Fetching 'whdload_db.xml', just a sec...");
     manager.request("https://raw.githubusercontent.com/HoraceAndTheSpider/Amiberry-XML-Builder/master/whdload_db.xml");
     q.exec();
@@ -1206,9 +1214,6 @@ void Skyscraper::adjustToLimits()
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1;
   } else if(config.scraper == "igdb") {
-    NetComm manager;
-    QEventLoop q; // Event loop for use when waiting for data from NetComm.
-    connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
     printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
     config.threads = 1;
     printf("Fetching IGDB key status, just a sec...\n");
@@ -1254,9 +1259,6 @@ void Skyscraper::adjustToLimits()
 	config.threads = 1;
       }
     } else {
-      NetComm manager;
-      QEventLoop q; // Event loop for use when waiting for data from NetComm.
-      connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
       printf("Fetching limits for user '%s', just a sec...\n", config.user.toStdString().c_str());
       manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.user + "&sspassword=" + config.password);
       q.exec();
