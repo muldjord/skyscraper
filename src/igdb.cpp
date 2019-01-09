@@ -88,7 +88,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
     QJsonArray jsonPlatforms = jsonGame.toObject().value("game").toObject().value("platforms").toArray();
     foreach(const QJsonValue &jsonPlatform, jsonPlatforms) {
-      //game.miscData = QString::number(jsonPlatform.toObject().value("id").toInt());
+      game.id.append(";" + QString::number(jsonPlatform.toObject().value("id").toInt()));
       game.platform = jsonPlatform.toObject().value("name").toString();
       if(platformMatch(game.platform, platform)) {
 	gameEntries.append(game);
@@ -99,7 +99,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void Igdb::getGameData(GameEntry &game)
 {
-  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.name,genres.name,release_dates.date,screenshots.url,summary,release_dates.date,release_dates.platform,involved_companies.company.name,involved_company.developed,involved_company.published; where id = " + game.id + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.name,genres.name,screenshots.url,summary,release_dates.human,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
   q.exec();
   data = manager.getData();
 
@@ -158,7 +158,7 @@ void Igdb::getReleaseDate(GameEntry &game)
 {
   QJsonArray jsonDates = jsonObj.value("release_dates").toArray();
   foreach(const QJsonValue &jsonDate, jsonDates) {
-    if(QString::number(jsonDate.toObject().value("platform").toInt()) == game.id) {
+    if(QString::number(jsonDate.toObject().value("platform").toInt()) == game.id.split(";").last()) {
       game.releaseDate = jsonDate.toObject().value("human").toString();
       break;
     }
@@ -225,18 +225,24 @@ void Igdb::getAges(GameEntry &game)
 
 void Igdb::getPublisher(GameEntry &game)
 {
-  QJsonArray jsonPublishers = jsonObj.value("publishers").toArray();
-  if(jsonPublishers.count() == 1) {
-    game.publisher = jsonPublishers.first().toObject().value("name").toString();
-  }
+  QJsonArray jsonCompanies = jsonObj.value("involved_companies").toArray();
+  foreach(const QJsonValue &jsonCompany, jsonCompanies) {
+    if(jsonCompany.toObject().value("publisher").toBool() == true) {
+      game.publisher = jsonCompany.toObject().value("company").toObject().value("name").toString();
+      return;
+    }
+  }  
 }
 
 void Igdb::getDeveloper(GameEntry &game)
 {
-  QJsonArray jsonDevelopers = jsonObj.value("developers").toArray();
-  if(jsonDevelopers.count() == 1) {
-    game.developer = jsonDevelopers.first().toObject().value("name").toString();
-  }
+  QJsonArray jsonCompanies = jsonObj.value("involved_companies").toArray();
+  foreach(const QJsonValue &jsonCompany, jsonCompanies) {
+    if(jsonCompany.toObject().value("developer").toBool() == true) {
+      game.developer = jsonCompany.toObject().value("company").toObject().value("name").toString();
+      return;
+    }
+  }  
 }
 
 void Igdb::getDescription(GameEntry &game)
@@ -405,6 +411,181 @@ JSON SEARCH RESULT:
     "websites": [
       11549
     ]
+  }
+]
+
+[
+  {
+    "id": 1070,
+    "age_ratings": [
+      {
+        "id": 19985,
+        "category": 1,
+        "rating": 3
+      },
+      {
+        "id": 19986,
+        "category": 2,
+        "rating": 2
+      }
+    ],
+    "cover": {
+      "id": 69388,
+      "url": "//images.igdb.com/igdb/image/upload/t_thumb/co1hjg.jpg"
+    },
+    "game_modes": [
+      {
+        "id": 1,
+        "name": "Single player"
+      },
+      {
+        "id": 2,
+        "name": "Multiplayer"
+      }
+    ],
+    "genres": [
+      {
+        "id": 8,
+        "name": "Platform"
+      }
+    ],
+    "involved_companies": [
+      {
+        "id": 22190,
+        "company": {
+          "id": 421,
+          "name": "Nintendo EAD"
+        },
+        "developer": true,
+        "publisher": false
+      },
+      {
+        "id": 22191,
+        "company": {
+          "id": 70,
+          "name": "Nintendo"
+        },
+        "developer": false,
+        "publisher": true
+      },
+      {
+        "id": 22192,
+        "company": {
+          "id": 2889,
+          "name": "Mattel"
+        },
+        "developer": false,
+        "publisher": true
+      }
+    ],
+    "release_dates": [
+      {
+        "id": 132781,
+        "date": 659145600,
+        "platform": 19
+      },
+      {
+        "id": 132782,
+        "date": 682041600,
+        "platform": 19
+      },
+      {
+        "id": 132783,
+        "date": 702950400,
+        "platform": 19
+      },
+      {
+        "id": 132784,
+        "date": 1456963200,
+        "platform": 137
+      },
+      {
+        "id": 132785,
+        "date": 1366934400,
+        "platform": 41
+      },
+      {
+        "id": 132786,
+        "platform": 5
+      },
+      {
+        "id": 143838,
+        "date": 1170633600,
+        "platform": 5
+      },
+      {
+        "id": 143839,
+        "date": 1170979200,
+        "platform": 5
+      },
+      {
+        "id": 143840,
+        "date": 1165017600,
+        "platform": 5
+      },
+      {
+        "id": 143841,
+        "date": 1367020800,
+        "platform": 41
+      },
+      {
+        "id": 143842,
+        "date": 1367020800,
+        "platform": 41
+      }
+    ],
+    "screenshots": [
+      {
+        "id": 9506,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/i9sgtqwdmmdjzox51rgu.jpg"
+      },
+      {
+        "id": 9507,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/pdkvjmhh5urjnrwng5cg.jpg"
+      },
+      {
+        "id": 9508,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/bbkmycy8wacpka1hroy5.jpg"
+      },
+      {
+        "id": 9509,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/xqj7kfjsgqrboda05dnp.jpg"
+      },
+      {
+        "id": 174828,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/swouq6zc6c5jjq6exjcx.jpg"
+      },
+      {
+        "id": 174829,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/lzyxgb64aw2a28ufdkhj.jpg"
+      },
+      {
+        "id": 174830,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/gfngetbkukbrjztd5u1b.jpg"
+      },
+      {
+        "id": 174831,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/pnqm1e1nczs9zkyukd5b.jpg"
+      },
+      {
+        "id": 174832,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/xqpfrjf6tclfjmr4gkhi.jpg"
+      },
+      {
+        "id": 174833,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/oxfxrwtxbswrrqf4dc9x.jpg"
+      },
+      {
+        "id": 174834,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/nwdmxtvfj7tro1iqwgbn.jpg"
+      },
+      {
+        "id": 174835,
+        "url": "//images.igdb.com/igdb/image/upload/t_thumb/j58abebg08zrh6vjdvkk.jpg"
+      }
+    ],
+    "summary": "Super Mario World (known in Japan as Super Mario World: Super Mario Bros. 4) is a side-scrolling platformer developed by Nintendo EAD and published by Nintendo for the Super Nintendo Entertainment System on November 21, 1990 (in Japan), August 31, 1991 (in North America), and April 11, 1992 (in Europe). \n \nOne of the launch titles of the SNES (and bundled with early systems in North America), Super Mario World is the fifth main game in the Super Mario series. (starring Nintendo\u0027s mascot, Mario, and his brother, Luigi). The game follows both Mario brothers as they explore Dinosaur Land (known for its large amount of dinosaurs) to find and defeat the evil Koopa king Bowser (and his seven underlings, the Koopalings) while rescuing Princess Toadstool. \n \nAlong with new abilities (such as the \"Spin Jump\"), a new power-up (the \"Cape Feather\") and more obstacles, the game introduces dinosaur companions (known as Yoshi) that Mario and Luigi can ride. Yoshi, known for using their long tongues to snare and eat enemies, have become a fan-favorite among the series (giving them their own games and spin-offs, most notably this game\u0027s prequel). \n \nSpecial bundles of the SNES in 1994 included a compilation cartridge mixing Super Mario World with Super Mario All-Stars. The only difference in this version is a new sprite set for Luigi. The original game was later ported to the Game Boy Advance on February 11, 2002 as Super Mario World: Super Mario Advance 2. Along with a special version of the original Mario Bros., the port includes a variety of differences, including Luigi as a selectable character (who now has unique features, such as his floating jump from Super Mario Bros. 2), new voice acting, and the ability to save anywhere. The original game was also digitally re-released in Nintendo\u0027s Virtual Console platform for the Wii (on February 5, 2007) and Wii U (on April 26, 2013).",
+    "total_rating": 96.2689865175066
   }
 ]
 
