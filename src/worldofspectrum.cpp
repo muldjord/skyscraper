@@ -24,6 +24,7 @@
  */
 
 #include "worldofspectrum.h"
+#include "strtools.h"
 
 WorldOfSpectrum::WorldOfSpectrum(Settings *config) : AbstractScraper(config)
 {
@@ -119,9 +120,8 @@ void WorldOfSpectrum::getDescription(GameEntry &game)
     nomNom(nom);
   }
   game.description = data.left(data.indexOf(descriptionPost));
-  while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1) {
-    game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
-  }
+  // Remove all html tags within description
+  game.description = StrTools::stripHtmlTags(game.description);
 }
 
 void WorldOfSpectrum::getCover(GameEntry &game)

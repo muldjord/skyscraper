@@ -809,6 +809,8 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
 
     if(okToAppend) {
       resources.append(resource);
+    } else {
+      printf("\033[1;33mWarning! Couldn't add resource to cache. Have you run out of disk space?\n\033[0m");
     }
     
   }

@@ -32,6 +32,10 @@
 #include <QMutexLocker>
 #include <QProcess>
 #include <QDomDocument>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QStorageInfo>
 
 #include "skyscraper.h"
 #include "xmlreader.h"
@@ -192,7 +196,9 @@ void Skyscraper::run()
 
   QFile gameListFile(gameListFileString);
 
-  if(!config.pretend && !config.unattend && !config.unattendSkip && gameListFile.exists()) {
+  if(!config.pretend && config.scraper == "localdb" &&
+     !config.unattend && !config.unattendSkip &&
+     gameListFile.exists()) {
     std::string userInput = "";
     printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
     getline(std::cin, userInput);
@@ -213,8 +219,8 @@ void Skyscraper::run()
     }
     printf("\n");
   }
-  if(config.pretend) {
-    printf("Pretend set! Not changing any files, but still caching resources in local database.\n\n");
+  if(config.pretend && config.scraper == "localdb") {
+    printf("Pretend set! Not changing any files, just showing output.\n\n");
   }
 
   QFile skippedFile(skippedFileString);
@@ -242,7 +248,7 @@ void Skyscraper::run()
     }
   }
   queue->append(infoList);
-  if(config.subDirs) {
+  if(config.subdirs) {
     QDirIterator dirIt(config.inputFolder,
 		       QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
 		       QDirIterator::Subdirectories);
@@ -276,7 +282,7 @@ void Skyscraper::run()
 	  if(config.unattendSkip) {
 	    userInput = "y";
 	  } else {
-	    printf("\033[1;34mDo you wish to skip existing entries if supported\033[0m (y/N)? ");
+	    printf("\033[1;34mDo you want to skip already existing game list entries\033[0m (y/N)? ");
 	    getline(std::cin, userInput);
 	  }
 	  if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
@@ -315,7 +321,6 @@ void Skyscraper::run()
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::entryReady, this, &Skyscraper::entryReady);
-    //connect(worker, &ScraperWorker::addToSkipped, this, &Skyscraper::addToSkipped);
     connect(worker, &ScraperWorker::allDone, this, &Skyscraper::checkThreads);
     connect(thread, &QThread::finished, worker, &ScraperWorker::deleteLater);
     threadList.append(thread);
@@ -420,6 +425,14 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     exit(1);
   }
   currentFile++;
+
+  if(QStorageInfo(QDir(config.mediaFolder)).bytesFree() < 209715200 ||
+     QStorageInfo(QDir::current()).bytesFree() < 209715200) {
+    printf("\033[1;31mYou have very little disk space left, please free up some space and try again. Now aborting...\033[0m\n\n");
+    doneThreads = config.threads - 1;
+    checkThreads();
+    exit(0);
+  }
 }
 
 void Skyscraper::checkThreads()
@@ -442,7 +455,7 @@ void Skyscraper::checkThreads()
   frontend->assembleList(finalOutput, gameEntries, config.maxLength);
   printf(" \033[1;32mDone!!!\033[0m\n");
     
-  if(!config.pretend) {
+  if(!config.pretend && config.scraper == "localdb") {
     QFile gameListFile(gameListFileString);
     printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
     fflush(stdout);
@@ -648,8 +661,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("verbosity")) {
     config.verbosity = settings.value("verbosity").toInt();
   }
-  if(settings.contains("noHints")) {
-    config.nohints = settings.value("noHints").toBool();
+  if(settings.contains("hints")) {
+    config.nohints = !settings.value("hints").toBool();
+  }
+  if(settings.contains("subdirs")) {
+    config.subdirs = settings.value("subdirs").toBool();
   }
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
@@ -719,8 +735,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   // localDb specific configs
   settings.beginGroup("localDb");
-  if(settings.contains("noResize")) {
-    config.noResize = settings.value("noResize").toBool();
+  if(settings.contains("resize")) {
+    config.noResize = !settings.value("resize").toBool();
   }
   if(settings.contains("covers")) {
     config.cacheCovers = settings.value("covers").toBool();
@@ -764,6 +780,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("brackets")) {
     config.brackets = settings.value("brackets").toBool();
+  }
+  if(settings.contains("subdirs")) {
+    config.subdirs = settings.value("subdirs").toBool();
   }
   if(settings.contains("relativePaths")) {
     config.relativePaths = settings.value("relativePaths").toBool();
@@ -961,7 +980,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.noResize = true;
   }
   if(parser.isSet("nosubdirs")) {
-    config.subDirs = false;
+    config.subdirs = false;
   }
   if(parser.isSet("unpack")) {
     config.unpack = true;
@@ -1039,6 +1058,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(config.minMatchSet == false && (config.scraper == "localdb" ||
 				     config.scraper == "screenscraper" ||
 				     config.scraper == "arcadedb" ||
+				     config.scraper == "esgamelist" ||
 				     config.scraper == "import")) {
     config.minMatch = 0;
   }
@@ -1055,10 +1075,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     }
     if(exists) {
       cliFiles.append(cliArgument);
-      // Always set pretend, refresh and unattend true if user has supplied filenames on
+      // Always set refresh and unattend true if user has supplied filenames on
       // command line. That way they are cached, but game list is not changed and user isn't
       // asked about skipping and overwriting.
-      config.pretend = true;
       config.refresh = true;
       config.unattend = true;
     } else {
@@ -1073,10 +1092,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   
   if(config.startAt != "" || config.endAt != "") {
-    config.pretend = true;
     config.refresh = true;
     config.unattend = true;
-    config.subDirs = false;
+    config.subdirs = false;
   }
   
   // If interactive is set, force 1 thread and always accept the chosen result
@@ -1084,6 +1102,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     if(config.scraper == "localdb" ||
        config.scraper == "import" ||
        config.scraper == "arcadedb" ||
+       config.scraper == "esgamelist" ||
        config.scraper == "screenscraper") {
       config.interactive = false;
     } else {
@@ -1186,9 +1205,40 @@ void Skyscraper::adjustToLimits()
   } else if(config.scraper == "openretro" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1;
-  } else if(config.scraper == "igdb" && config.userCreds.isEmpty()) {
-    printf("\033[1;33mThe 'igdb' scraping module needs a user key to work. You can get a free one at 'https://api.igdb.com/pricing'. Then supply it by setting it with '-u [key]' or by setting it in one of the 'userCreds' lines in '~/.skyscraper/config.ini'\033[0m\n\n");
-    exit(1);
+  } else if(config.scraper == "igdb") {
+    NetComm manager;
+    QEventLoop q; // Event loop for use when waiting for data from NetComm.
+    connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+    printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
+    config.threads = 1;
+    printf("Fetching IGDB key status, just a sec...\n");
+    manager.request("https://api-v3.igdb.com/api_status", "", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+    q.exec();
+    QByteArray data = manager.getData();
+    QJsonObject jsonObj = QJsonDocument::fromJson(data).array().first().toObject();
+    if(jsonObj.isEmpty()) {
+      printf("Recieved invalid IGDB server response, maybe their server is having issues, please try again later...\n");
+      if(config.verbosity >= 1)
+	printf("Answer was:\n%s\n", data.data());
+      exit(1);
+    }
+    bool authorized = jsonObj.value("authorized").toBool();
+    if(authorized) {
+      QString plan = jsonObj.value("plan").toString();
+      jsonObj = jsonObj.value("usage_reports").toObject().value("usage_report").toObject();
+      QString limit = QString::number(jsonObj.value("max_value").toInt());
+      QString requests = QString::number(jsonObj.value("current_value").toInt());
+      QString resetDate = jsonObj.value("period_end").toString();
+      printf("Plan       : %s\n", plan.toStdString().c_str());
+      printf("Requests   : %s / %s\n", requests.toStdString().c_str(), limit.toStdString().c_str());
+      printf("Period ends: %s\n", resetDate.toStdString().c_str());
+    } else {
+      printf("IGDB says key is unauthorized, can't continue...\n");
+      if(config.verbosity >= 1)
+	printf("Answer was:\n%s\n", data.data());
+      exit(1);
+    }
+    printf("\n");
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
     config.threads = 1;
@@ -1215,9 +1265,6 @@ void Skyscraper::adjustToLimits()
 	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
       }
     }
-  } else if(config.scraper == "esgamelist") {
-    printf("\033[1;33mForcing --pretend as not to overwrite the gamelist.xml after scraping.\033[0m\n\n");
-    config.pretend = true;
   }
 }
 

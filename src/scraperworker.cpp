@@ -155,8 +155,11 @@ void ScraperWorker::run()
     }
     
     // Sort the returned entries, in case the source did a poor job of doing so itself
+    // I disabled this as it messed up results containing dual-game results ("game 1 + game 2")
+    /*
     qSort(gameEntries.begin(), gameEntries.end(), 
 	  [](const GameEntry a, const GameEntry b) -> bool { return a.title.toLower() < b.title.toLower(); });
+    */
 
     int lowestDistance = 666;
     // Create the game entry we use for the rest of the process
@@ -208,7 +211,7 @@ void ScraperWorker::run()
       scraper->getGameData(game);
     }
 
-    if(!config.pretend) {
+    if(!config.pretend && config.scraper == "localdb") {
       // Process all artwork
       compositor.saveAll(game, info.completeBaseName());
       if(config.videos && game.videoFormat != "") {

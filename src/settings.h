@@ -68,7 +68,7 @@ struct Settings {
   bool cleanDb = false;
   bool noResize = false;
   QString mergeDb = "";
-  bool subDirs = true;
+  bool subdirs = true;
   QString startAt = "";
   QString endAt = "";
   bool pretend = false;

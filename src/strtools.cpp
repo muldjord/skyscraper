@@ -331,3 +331,11 @@ QString StrTools::stripBrackets(const QString str)
 {
   return str.left(str.indexOf("(")).left(str.indexOf("[")).simplified();
 }
+
+QString StrTools::stripHtmlTags(QString str)
+{
+  while(str.contains("<") && str.contains(">") && str.indexOf("<") < str.indexOf(">")) {
+    str = str.remove(str.indexOf("<"), str.indexOf(">") + 1 - str.indexOf("<"));
+  }
+  return str;
+}

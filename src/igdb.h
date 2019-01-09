@@ -45,10 +45,13 @@ private:
   void getReleaseDate(GameEntry &game) override;
   void getPlayers(GameEntry &game) override;
   void getTags(GameEntry &game) override;
+  void getAges(GameEntry &game) override;
   void getDeveloper(GameEntry &game) override;
   void getPublisher(GameEntry &game) override;
   void getDescription(GameEntry &game) override;
   void getRating(GameEntry &game) override;
+
+  QList<QString> getSearchNames(const QFileInfo &info) override;
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;

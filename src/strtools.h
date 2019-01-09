@@ -41,6 +41,7 @@ public:
   static QString conformTags(const QString str);
   static QString getVersionHeader();
   static QString stripBrackets(const QString str);
+  static QString stripHtmlTags(QString str);
   
 };
 

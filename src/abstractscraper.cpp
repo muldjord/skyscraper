@@ -148,12 +148,10 @@ void AbstractScraper::getDescription(GameEntry &game)
   }
 
   game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
+  game.description = game.description.replace("\\n", "\n");
 
   // Remove all html tags within description
-  while(game.description.indexOf("<") != -1 && game.description.indexOf(">") != -1 && game.description.indexOf("<") < game.description.indexOf(">")) {
-    game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
-  }
-  game.description = game.description.simplified();
+  game.description = StrTools::stripHtmlTags(game.description);
 }
 
 void AbstractScraper::getDeveloper(GameEntry &game)

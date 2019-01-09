@@ -25,6 +25,7 @@
 
 #include "openretro.h"
 #include "nametools.h"
+#include "strtools.h"
 
 #include <QRegularExpression>
 
@@ -230,10 +231,8 @@ void OpenRetro::getDescription(GameEntry &game)
   // Revert data back to pre-description
   data = tempData;
 
-  while(game.description.contains("<") && game.description.contains(">") && game.description.indexOf("<") < game.description.indexOf(">")) {
-    game.description = game.description.remove(game.description.indexOf("<"), game.description.indexOf(">") + 1 - game.description.indexOf("<"));
-  }
-  game.description = game.description.simplified();
+  // Remove all html tags within description
+  game.description = StrTools::stripHtmlTags(game.description);
 }
 
 void OpenRetro::getTags(GameEntry &game)

@@ -51,10 +51,12 @@
 #artworkXml="artwork.xml"
 #relativePaths="false"
 #allowExtension="*.zst"
-#noHints="false"
+#hints="false"
+#subdirs="true"
+
 
 [localDb]
-#noResize="false"
+#resize="false"
 #covers="true"
 #screenshots="true"
 #wheels="true"
@@ -94,6 +96,7 @@
 #extensions="*.zip *.uae *.adf"
 ##Uncomment to add these extensions to the default allowed extensions for this platform
 #allowExtension="*.zst *.rom"
+#subdirs="true"
 
 #[scraping module (eg. 'screenscraper')]
 #userCreds="user:password"
