@@ -1232,6 +1232,10 @@ void Skyscraper::adjustToLimits()
       printf("Plan       : %s\n", plan.toStdString().c_str());
       printf("Requests   : %s / %s\n", requests.toStdString().c_str(), limit.toStdString().c_str());
       printf("Period ends: %s\n", resetDate.toStdString().c_str());
+      if(requests.toInt() >= limit.toInt()) {
+	printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
+	exit(1);
+      }
     } else {
       printf("IGDB says key is unauthorized, can't continue...\n");
       if(config.verbosity >= 1)
