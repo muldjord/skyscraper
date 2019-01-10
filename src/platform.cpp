@@ -272,15 +272,15 @@ QStringList Platform::getScrapers(QString platform)
   return scrapers;
 }
 
-QString Platform::getFormats(QString platform, QString extensions, QString allowExtension)
+QString Platform::getFormats(QString platform, QString extensions, QString addExtensions)
 {
-  if(!extensions.isEmpty() && extensions.indexOf("*.") != -1) {
+  if(!extensions.isEmpty() && extensions.contains("*.")) {
     return extensions;
   }
 
   QString formats = "*.zip *.7z ";
-  if(!allowExtension.isEmpty() && allowExtension.contains("*.")) {
-    formats.append(allowExtension);
+  if(!addExtensions.isEmpty() && addExtensions.contains("*.")) {
+    formats.append(addExtensions);
   }
   if(formats.right(1) != " ") {
     formats.append(" ");
