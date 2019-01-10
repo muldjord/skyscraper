@@ -22,7 +22,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * LOCAL: `import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
 * LOCAL: esgamelist (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
 ##### Game list generation and artwork compositing
-* GENERATE: `localdb` (Generates a game list by combining cached resources. Read more [here](#local-database-features))
+* GENERATE: `localdb` (Generates a game list by combining cached resources. Read more [here](dbs/README.md))
 
 ... More scraping sources will be added in future releases!
 
