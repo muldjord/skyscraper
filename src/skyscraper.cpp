@@ -133,7 +133,7 @@ void Skyscraper::run()
     if(config.dbPurge == "all") {
       localDb->purgeAll();
     } else if(config.dbPurge == "vacuum") {
-      localDb->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.allowExtension));
+      localDb->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions));
     } else {
       localDb->purgeResources(config.dbPurge);
     }
@@ -156,7 +156,7 @@ void Skyscraper::run()
     localDb->readPriorities();
   }
 
-  QDir inputDir(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.allowExtension), QDir::Name, QDir::Files);
+  QDir inputDir(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), QDir::Name, QDir::Files);
   if(!inputDir.exists()) {
     printf("Input folder '\033[1;32m%s\033[0m' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
     exit(1);
@@ -702,8 +702,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("relativePaths")) {
     config.relativePaths = settings.value("relativePaths").toBool();
   }
-  if(settings.contains("allowExtension")) {
-    config.allowExtension = settings.value("allowExtension").toString();
+  if(settings.contains("addExtensions")) {
+    config.addExtensions = settings.value("addExtensions").toString();
   }
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
@@ -739,8 +739,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   settings.endGroup();
 
-  // localDb specific configs
-  settings.beginGroup("localDb");
+  // cache specific configs
+  settings.beginGroup("cache");
   if(settings.contains("resize")) {
     config.noResize = !settings.value("resize").toBool();
   }
@@ -796,8 +796,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("extensions")) {
     config.extensions = settings.value("extensions").toString();
   }
-  if(settings.contains("allowExtension")) {
-    config.allowExtension = settings.value("allowExtension").toString();
+  if(settings.contains("addExtensions")) {
+    config.addExtensions = settings.value("addExtensions").toString();
   }
   if(settings.contains("minMatch")) {
     config.minMatch = settings.value("minMatch").toInt();
@@ -954,8 +954,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("relative")) {
     config.relativePaths = true;
   }
-  if(parser.isSet("allowext")) {
-    config.allowExtension = parser.value("allowext");
+  if(parser.isSet("addext")) {
+    config.addExtensions = parser.value("addext");
   }
   if(parser.isSet("nolocaldb")) {
     if(config.scraper == "localdb") {
