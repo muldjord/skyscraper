@@ -142,15 +142,14 @@ int main(int argc, char *argv[])
   QCommandLineOption skippedOption("skipped", "Include skipped entries when writing final gamelist.");
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption relativeOption("relative", "Forces all gamelist paths to be relative to rom location.");
-  QCommandLineOption allowextOption("allowext", "Force allow this file extension during a scraping run. (example: '*.zst')", "extension", "");
-  QCommandLineOption nolocaldbOption("nolocaldb", "Disables local database resource cache. Other local db flags will then be ignored.");
-  QCommandLineOption dbstatsOption("dbstats", "Show stats for the local database cache. This will also be shown with a verbosity level of 1 or more.");
-  QCommandLineOption updatedbOption("updatedb", "Refresh all existing resources in the local database cache using selected scraping module. (Deprecated, please use --refresh)");
-  QCommandLineOption refreshOption("refresh", "Refresh resources in the local database cache for the selected scraping module.");
-  QCommandLineOption purgedbOption("purgedb", "Purges all requested resources from the local database cache. You can define either module 'm:[module]' or type 't:[type]' or both comma-separated (example 'm:thegamesdb,t:description').\nYou can also just type 'vacuum' which will compare your romset to any cached resource and remove the resources that you no longer have roms for.\nLastly, you can type 'all' which will purge ALL resources from the cache that are connected to the currently selected platform / db folder.\nSet specific db folder with '-d' otherwise default db folder is used.", "resources", "");
+  QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext)", "extension", "");
+  QCommandLineOption nolocaldbOption("nolocaldb", "Disables the localdb resource cache. Other localdb flags will then be ignored.");
+  QCommandLineOption dbstatsOption("dbstats", "Show stats for the localdb resource cache. This will also be shown with a verbosity level of 1 or more.");
+  QCommandLineOption refreshOption("refresh", "Refresh resources in the localdb resource cache from the selected scraping module.");
+  QCommandLineOption purgedbOption("purgedb", "Purges all requested resources from the localdb resource cache. You can define either module 'm:[module]' or type 't:[type]' or both comma-separated (example 'm:thegamesdb,t:description').\nYou can also just type 'vacuum' which will compare your romset to any cached resource and remove the resources that you no longer have roms for.\nLastly, you can type 'all' which will purge ALL resources from the cache that are connected to the currently selected platform / db folder.\nSet specific db folder with '-d' otherwise default db folder is used.", "resources", "");
   QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d' otherwise default db folder is used.");
   QCommandLineOption mergedbOption("mergedb", "Merge data from the specified db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d' otherwise default db folder is used as destination.", "folder", "");
-  QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the local db cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
+  QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the localdb resource cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption unpackOption("unpack", "Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
@@ -184,7 +183,6 @@ int main(int argc, char *argv[])
   parser.addOption(aOption);
   parser.addOption(dOption);
   parser.addOption(nolocaldbOption);
-  parser.addOption(updatedbOption);
   parser.addOption(refreshOption);
   parser.addOption(dbstatsOption);
   parser.addOption(cleandbOption);
@@ -209,7 +207,7 @@ int main(int argc, char *argv[])
   parser.addOption(queryOption);
   parser.addOption(forcefilenameOption);
   parser.addOption(relativeOption);
-  parser.addOption(allowextOption);
+  parser.addOption(addextOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
   parser.addOption(nohintsOption);
