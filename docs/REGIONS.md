@@ -61,7 +61,7 @@ region="de"
 ```
 
 ## Other notes
-When a region is specified by the user, this region will be prioritized. However, if a resource can't be found with that specific region, it will fall back to the following list of regions and look for a resource with the topmost region first, then the next and so forth:
+When a region is specified by the user, this region will be prioritized. However, if a resource can't be found with that specific region, it will fall back to the following list of regions and look for a resource with the topmost region first, then the next and so on:
 * eu
 * us
 * wor
