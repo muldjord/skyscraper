@@ -1,7 +1,7 @@
 # Skyscraper by Lars Muldjord
 A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system. It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to combine all of these resources into the most complete results by using the provided `localdb` scraping module.
 
-Any exported artwork can be customized completely. Check the documentation for that [here](ARTWORK.md).
+Any exported artwork can be customized completely. Check the documentation for that [here](docs/ARTWORK.md).
 
 #### Currently supports the following frontends (set with '-f'):
 * EmulationStation
@@ -89,10 +89,10 @@ You might be asked for your sudo password during the processs. On RetroPie the d
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
 
-Remember, you can completely customize the artwork Skyscraper exports. Check out the documentation [here](ARTWORK.md). If you just want to use the default (pretty cool looking) artwork Skyscraper provides, read on.
+Remember, you can completely customize the artwork Skyscraper exports. Check out the documentation [here](docs/ARTWORK.md). If you just want to use the default (pretty cool looking) artwork Skyscraper provides, read on.
 
 ### A simple use case
-For first-time users I recommend reading the short and to-the-point [use case](USECASE.md). Please read it and if it catches your interest check out the advanced options [here](#manual-mode-for-advanced-users). If you just want to scrape a platform and be done with it check [Simple mode](#simple-mode).
+For first-time users I recommend reading the short and to-the-point [use case](docs/USECASE.md). Please read it and if it catches your interest check out the advanced options [here](#manual-mode-for-advanced-users). If you just want to scrape a platform and be done with it check [Simple mode](#simple-mode).
 
 ### Simple mode
 When you have completed the installation you can start Skyscraper in *Simple mode* by running Skyscraper with no command line options by typing:
@@ -143,7 +143,7 @@ One of Skyscraper's most powerful features is the local database cache. It's imp
 I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the local cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data. Read more about how this works [here](import/README.md).
 
 ### Artwork look and effects
-Check the full artwork documentation [here](ARTWORK.md)
+Check the full artwork documentation [here](docs/ARTWORK.md)
 
 ## Release notes
 
@@ -189,7 +189,7 @@ Check the full artwork documentation [here](ARTWORK.md)
 #### Version 2.9.0 (13th December 2018)
 * MAJOR: Now looks up Amiga lha files in the Amiberry "whdload_db.xml" and retrieves data from "openretro.org" based on the uuid from the xml
 * Added search based fallback pass for Amiga when game isn't found via uuid
-* Added "<scanlines>" effect to compositor. Check [here](ARTWORK.md) for more info (Thank you to "jakejm79" for suggesting this)
+* Added "<scanlines>" effect to compositor. Check [here](docs/ARTWORK.md) for more info (Thank you to "jakejm79" for suggesting this)
 * "mobygames" module now uses https
 * Fixed bug in "openretro" module where "developer" would potentially scrape wrong under certain circumstances
 * Improved "description" scraping for "openretro" module

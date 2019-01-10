@@ -243,7 +243,7 @@
 * Now looks up 'scummvm' dummy files in 'scummvm.ini' and uses the correct game name
 
 #### Version 2.3.0 (7th February 2018)
-The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
+The ARTWORK release. Check artwork documentation [here](docs/ARTWORK.md)
 * MAJOR: Completely rewrote the artwork compositing engine
     * Now supports nested layers which anchors to the parent layer for easy placement
     * Implemented 'balance' effect that adjusts the colors of the parent layer
@@ -299,7 +299,7 @@ The ARTWORK release. Check artwork documentation [here](ARTWORK.md)
 * Implemented 'wheel' and 'marquee' media types and rewrote EVERYTHING to make use of them. :D (this was a damn long rewrite!!!!)
 * Added 'wheel' and 'marquee' media types to local database
 * Added 'nocovers', 'noscreenshots', 'nowheels' and 'nomarquees' options to allow user to disable caching of those resources locally.
-* Added 'noresize' option to disable resizing artwork resources when saving them to localdb. NOTE! This it NOT directly related to how artwork is rendered. Check the [artwork](ARTWORK.md) documentation if you want to disable them when exporting the frontend artwork.
+* Added 'noresize' option to disable resizing artwork resources when saving them to localdb. NOTE! This it NOT directly related to how artwork is rendered. Check the [artwork](docs/ARTWORK.md) documentation if you want to disable them when exporting the frontend artwork.
 * Added support for 'fba' platform
 
 #### Version 2.1.1 (27th December 2017)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This is the default artwork.xml provided by Skyscraper. More examples can be found in '~/.skyscraper'. Be sure to check the full artwork documentation here: https://github.com/muldjord/skyscraper/blob/master/ARTWORK.md -->
+<!-- This is the default artwork.xml provided by Skyscraper. More examples can be found in '~/.skyscraper'. Be sure to check the full artwork documentation here: https://github.com/muldjord/skyscraper/blob/master/docs/ARTWORK.md -->
 <artwork>
   <!-- Create a screenshot output for the frontend and set its width and height. If no layers are nested inside the output node, it will export the screenshot raw and just resize it according to width and height. If layers are nested inside, it will create an empty canvas of the defined size and composite the layers on top of it. -->
   <output type="screenshot" width="640" height="480">
