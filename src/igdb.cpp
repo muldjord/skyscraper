@@ -45,8 +45,6 @@ Igdb::Igdb(Settings *config) : AbstractScraper(config)
   fetchOrder.append(PLAYERS);
   fetchOrder.append(TAGS);
   fetchOrder.append(AGES);
-  //fetchOrder.append(COVER);
-  //fetchOrder.append(SCREENSHOT);
 }
 
 void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
@@ -93,7 +91,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void Igdb::getGameData(GameEntry &game)
 {
-  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.category,release_dates.region,release_dates.human,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.date,release_dates.region,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
   q.exec();
   data = manager.getData();
 
@@ -148,6 +146,7 @@ void Igdb::getGameData(GameEntry &game)
 
 void Igdb::getReleaseDate(GameEntry &game)
 {
+  /*
   QJsonArray jsonDates = jsonObj.value("release_dates").toArray();
   foreach(const QJsonValue &jsonDate, jsonDates) {
     if(QString::number(jsonDate.toObject().value("platform").toInt()) ==
@@ -155,6 +154,41 @@ void Igdb::getReleaseDate(GameEntry &game)
       game.releaseDate = jsonDate.toObject().value("human").toString();
       break;
     }
+  }
+  */
+
+  QJsonArray jsonDates = jsonObj.value("release_dates").toArray();
+  bool regionMatch = false;
+  foreach(QString region, regionPrios) {
+    foreach(const QJsonValue &jsonDate, jsonDates) {
+      int regionEnum = jsonDate.toObject().value("region").toInt();
+      QString curRegion = "";
+      if(regionEnum == 1)
+	curRegion = "eu";
+      else if(regionEnum == 2)
+	curRegion = "us";
+      else if(regionEnum == 3)
+	curRegion = "au";
+      else if(regionEnum == 4)
+	curRegion = "nz";
+      else if(regionEnum == 5)
+	curRegion = "jp";
+      else if(regionEnum == 6)
+	curRegion = "cn";
+      else if(regionEnum == 7)
+	curRegion = "asi";
+      else if(regionEnum == 8)
+	curRegion = "wor";
+      if(QString::number(jsonDate.toObject().value("platform").toInt()) ==
+	 game.id.split(";").last() &&
+	 region == curRegion) {
+	game.releaseDate = QDateTime::fromMSecsSinceEpoch((qint64)jsonDate.toObject().value("date").toInt() * 1000).toString("yyyyMMdd");
+	regionMatch = true;
+	break;
+      }
+    }
+    if(regionMatch)
+      break;
   }
 }
 
