@@ -85,7 +85,7 @@ struct Settings {
   QByteArray artworkXml = "";
   bool relativePaths = false;
   QString extensions = "";
-  QString allowExtension = "";
+  QString addExtensions = "";
   bool unpack = false;
   bool preserveOldGameList = true;
   
