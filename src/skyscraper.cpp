@@ -311,7 +311,7 @@ void Skyscraper::run()
   }
   
   if(config.romLimit != -1 && totalFiles > config.romLimit) {
-    printf("\n\033[1;33mRestriction overrun!\033[0m This scraping module only allows for scraping %d roms at a time. You can either supply the few rom titles on command line, or make use of the '--startat' and '--endat' command line options to adhere to this. Check '--help' for all options.\n\nNow quitting...\n", config.romLimit);
+    printf("\n\033[1;33mRestriction overrun!\033[0m This scraping module only allows for scraping up to %d roms at a time. You can either supply a few rom filenames on command line, or make use of the '--startat' and / or '--endat' command line options to adhere to this. Please check '--help' for more info.\n\nNow quitting...\n", config.romLimit);
     exit(0);
   }
 
@@ -1216,6 +1216,7 @@ void Skyscraper::doPrescrapeJobs()
   } else if(config.scraper == "igdb") {
     printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
     config.threads = 1;
+    config.romLimit = 5;
     printf("Fetching IGDB key status, just a sec...\n");
     manager.request("https://api-v3.igdb.com/api_status", "", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
     q.exec();
