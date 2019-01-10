@@ -153,15 +153,23 @@ Check the full artwork documentation [here](ARTWORK.md)
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Add better control of which modules are allowed to be used when scraping from "localdb"
+* Change the 'localDb' config section to 'cache' to avoid confusion with 'localdb' module section
 
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
-* Now converts textual "\n" in descriptions to newlines. Useful when importing textual data (Thank you to 'scthirouin' for requesting it)
+* Now converts textual "\n" in descriptions to newlines. Useful when importing textual data (Thank you to "scthirouin" for requesting it)
 * Added disk space check. Now aborts if disk has less than 200 megs left
-* Updated 'igdb' API til APIv3000. Key now global for all users
-* Fixed ES game list release dates by adding "T000000" (Thank you to 'michaelbaudino' for noticing)
-* Added 'subdirs' to config.ini (Thank you to 'otherguy' for noticing it was missing)
-* '--startat' and '--endat' now supports current workdir file paths
+* Updated "igdb" API til APIv3000. Key now global for all users
+* Fixed ES game list release dates by adding "T000000" (Thank you to "michaelbaudino" for noticing)
+* Added "subdirs" to config.ini (Thank you to "otherguy" for noticing it was missing)
+* "--startat" and "--endat" now supports current workdir file paths
+* Changed "allowExtension" config variable to "addExtensions"
+* Changed "noHints" config variable to "hints"
+* Changed "noBrackets" config variable to "brackets"
+* Changed "noResize" config variable to "resize"
+* Removed "--updatedb" cli option as it was deprecated (use "--refresh" instead)
+* Changed "--allowext" cli option to "--addext"
+* Changed "localDb" config section name to "cache"
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
