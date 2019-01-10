@@ -1,5 +1,5 @@
 # Local database cache
-Whenever you scrape any platform with any web scraping module, Skyscraper caches each resource locally. A resource can, for instance, be a game `description` or a game `screenshot`. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the `localdb` scraping module.
+Whenever you scrape any platform with any *gathering* scraping module, Skyscraper caches each resource internally. A resource can, for instance, be a game `description` or a game `screenshot`. Each game can have several versions of each resource cached locally. One of each type per web scraping module. This comes in handy when using the `localdb` scraping module.
 
 Think of the local database cache as the cache in an internet browser. Most of the data on webpages don't change much. By caching some of the data locally, it can load parts of a webpage from that data, instead of loading it from the remote server. This is exactly how the Skyscraper cache works.
 
