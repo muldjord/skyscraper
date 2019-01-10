@@ -50,12 +50,11 @@
 #region="wor"
 #artworkXml="artwork.xml"
 #relativePaths="false"
-#allowExtension="*.zst"
+#addExtensions="*.zst"
 #hints="false"
 #subdirs="true"
 
-
-[localDb]
+[cache]
 #resize="false"
 #covers="true"
 #screenshots="true"
@@ -95,7 +94,7 @@
 ##Ucomment to overwrite the default allowed rom extensions for this platform
 #extensions="*.zip *.uae *.adf"
 ##Uncomment to add these extensions to the default allowed extensions for this platform
-#allowExtension="*.zst *.rom"
+#addExtensions="*.zst *.rom"
 #subdirs="true"
 
 #[scraping module (eg. 'screenscraper')]
