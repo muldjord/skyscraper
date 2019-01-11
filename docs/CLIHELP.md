@@ -111,7 +111,7 @@ Some scraping modules are based on a file name or title based search. This optio
 Skyscraper -p snes -s thegamesdb -m 50
 ```
 
-#### -l <0-10000>
+#### -l &lt;0-10000&gt;
 Sets the maximum length of returned game descriptions. This is a convenience option if you feel like game descriptions are too long. By default it is set to 2500.
 ###### Example(s)
 ```
