@@ -184,7 +184,7 @@ This option allows you to merge two localdb resource caches together and then qu
 Read more about the localdb resource cache [here](LOCALDBCACHE.md).
 ###### Example(s)
 ```
-Skyscraper -p snes --mergedb /path/to/cache/folder
+Skyscraper -p snes --mergedb "/path/to cache/folder"
 ```
 
 #### --purgedb &lt;resources&gt;
