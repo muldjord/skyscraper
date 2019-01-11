@@ -12,17 +12,17 @@ Check the full list of platforms [here](PLATFORMS.md).
 
 #### Currently supports the following scraping modules (set with '-s')
 ##### For gathering and caching resources
-* ONLINE: `screenscraper` (screenscraper.fr)
-* ONLINE: `openretro` (openretro.org)
-* ONLINE: `thegamesdb` (thegamesdb.net)
-* ONLINE: `worldofspectrum` (worldofspectrum.org)
-* ONLINE: `arcadedb` (adb.arcadeitalia.net, Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
+* ONLINE: `-s screenscraper` (screenscraper.fr)
+* ONLINE: `-s openretro` (openretro.org)
+* ONLINE: `-s thegamesdb` (thegamesdb.net)
+* ONLINE: `-s worldofspectrum` (worldofspectrum.org)
+* ONLINE: `-s arcadedb` (adb.arcadeitalia.net, Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
 * ONLINE: mobygames (mobygames.com)
-* ONLINE: `igdb` (igdb.com)
-* LOCAL: `import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
-* LOCAL: esgamelist (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
+* ONLINE: `-s igdb` (igdb.com)
+* LOCAL: `-s import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
+* LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
 ##### For generating a game list with composited artwork
-* GENERATE: `localdb` (Generates a game list by combining cached resources. Read more [here](dbs/README.md))
+* GENERATE: `-s localdb` (Generates a game list by combining cached resources. Read more [here](dbs/README.md))
 
 ... More scraping sources will be added in future releases!
 
