@@ -170,6 +170,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Changed "noBrackets" config variable to "brackets"
 * Changed "noResize" config variable to "resize"
 * Removed "--updatedb" cli option as it was deprecated (use "--refresh" instead)
+* Removed "--nolocaldb" cli option as it is irrelevant after 3.0.0 usage changes
 * Changed "--allowext" cli option to "--addext"
 * Changed "localDb" config section name to "cache"
 
