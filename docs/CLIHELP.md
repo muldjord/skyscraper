@@ -357,8 +357,8 @@ The `--query` option is an *experts only* option, but it's very useful to get re
 ```
 $ Skyscraper -p snes -s thegamesdb --query "rick+dangerous" /full/or/partial/path/to/rom.zip
 $ Skyscraper -p snes -s screenscraper --query "md5=[checksum]" /full/or/partial/path/to/rom.zip
-$ Skyscraper -p snes -s screenscraper --query "romnom=file name.zip" /full/or/partial/path/to/rom.zip
-$ Skyscraper -p snes -s screenscraper --query "sha1=[checksum]&romnom=file name.zip" /full/or/partial/path/to/rom.zip
+$ Skyscraper -p snes -s screenscraper --query "romnom=file%20name.zip" /full/or/partial/path/to/rom.zip
+$ Skyscraper -p snes -s screenscraper --query "sha1=[checksum]&romnom=file%20name.zip" /full/or/partial/path/to/rom.zip
 ```
 
 #### --forcefilename
