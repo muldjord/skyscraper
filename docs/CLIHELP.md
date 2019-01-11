@@ -184,7 +184,8 @@ This option allows you to merge two localdb resource caches together and then qu
 Read more about the localdb resource cache [here](LOCALDBCACHE.md).
 ###### Example(s)
 ```
-Skyscraper -p snes --mergedb "/path/to cache/folder"
+Skyscraper -p snes --mergedb "/path/to source/cache/folder"
+Skyscraper -p snes --mergedb "/path/to source/cache/folder" -d "/path/to destination/cache/folder"
 ```
 
 #### --purgedb &lt;resources&gt;
@@ -213,7 +214,7 @@ Skyscraper -p snes --purgedb all
 ```
 
 #### --videos
-By default Skyscraper doesn't scrape and cache video resources because of the significant space required to save them. You can enable videos using this option.
+By default Skyscraper doesn't scrape and cache video resources because of the significant disk space required to save them. You can enable videos using this option.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --videos
@@ -222,7 +223,7 @@ Skyscraper -p snes --videos
 ```
 
 #### --symlink
-Enabling this option is only relevant while also using the `--videos`. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
+Enabling this option is only relevant while also using the `--videos` option. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --videos --symlink
@@ -231,28 +232,28 @@ Skyscraper -p snes --videos --symlink
 ```
 
 #### --nocovers
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, enabling this can save you some space.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nocovers
 ```
 
-#### --noscreenshotss
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+#### --noscreenshots
+Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, enabling this can save you some space.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb --noscreenshotss
+Skyscraper -p snes -s thegamesdb --noscreenshots
 ```
 
 #### --nowheels
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, enabling this can save you some space.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nowheels
 ```
 
 #### --nomarquees
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, enabling this can save you some space.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nomarquees
