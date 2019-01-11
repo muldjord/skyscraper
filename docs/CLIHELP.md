@@ -283,11 +283,11 @@ Skyscraper -p amiga -s openretro --noresize
 ```
 
 #### --startat &lt;filename&gt;
-If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and forwards. Use it in conjunction with the `--endat` option described below to further narrow the subset of files you wish to scrape.
+If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and onwards. Use it in conjunction with the `--endat` option described below to further narrow the subset of files you wish to gather resources for.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
 
-NOTE 2! Instead of using this option, if you just want to scrape and cache data for 1 or 2 roms you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb /full/or/partial/path/to/rom.zip`.
+NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb /full/or/partial/path/to/rom.zip`.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --startat "rom name.zip"
@@ -295,11 +295,11 @@ Skyscraper -p snes -s thegamesdb --startat "partial/path/to/rom name.zip"
 ```
 
 #### --endat &lt;filename&gt;
-If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrapes alphabetically until it reaches this rom, then stops. Use it in conjunction with the `--startat` option described above to further narrow the subset of files you wish to scrape.
+If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrapes alphabetically until it reaches this rom, then stops. Use it in conjunction with the `--startat` option described above to further narrow the subset of files you wish to gather resources for.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
 
-NOTE 2! Instead of using this option, if you just want to scrape and cache data for 1 or 2 roms you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb /full/or/partial/path/to/rom.zip`.
+NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb /full/or/partial/path/to/rom.zip`.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --endat "rom name.zip"
@@ -321,14 +321,14 @@ Skyscraper -p snes --pretend
 ```
 
 #### --unattend
-By default Skyscraper won't overwrite an existing game list and it will ask if you wish to skip existing game list entries. Bu using this option Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need of user input.
+When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input.
 ###### Example(s)
 ```
 Skyscraper -p snes --unattend
 ```
 
 #### --unattendskip
-By default Skyscraper won't overwrite an existing game list and it will ask if you wish to skip existing game list entries. Bu using this option Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need of user input.
+When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input.
 ###### Example(s)
 ```
 Skyscraper -p snes --unattendskip
@@ -342,20 +342,15 @@ Skyscraper -p snes -s thegamesdb --interactive
 ```
 
 #### --query &lt;string&gt;
-For most modules a search query is sent to the scraping module in an URL format. That means that a filename such as "Rick Dangerous.lha" becomes "rick+dangerous". The '+' here means a space. You could probably also use the URL encoded space "rick%20dangerous" but my tests show that most modules expect spaces as '+'. And it is the "rick+dangerous" that you, as the user, can pass as the query, like so:
+For most modules a search query is sent to the scraping module in an URL format. This means that a filename such as "Rick Dangerous.lha" becomes "rick+dangerous". The '+' here means a space. You could probably also use the URL encoded space "rick%20dangerous" but my tests show that most modules expect spaces as '+'. And it is the "rick+dangerous" part that you, as the user, can pass as the query, like so:
 ```
 $ Skyscraper -p [platform] -s [module] --query "rick+dangerous" [filename]
 ```
 Remember to also add a filename that you wish to use the override with. Otherwise the query will be ignored.
 
-But not all of the scraping modules are search name based. For instance, the `screenscraper` module can use a variety of different search methods. So for screenscraper you also have the option of overriding the checksums it use to search for a game. This is especially convenient in cases where a filename exists multiple times in their database and your own local file doesn't match with any of the connected checksums (maybe you've compressed the rom yourself or whatever).
-In this case you can look up one of the working checksums on the Screenscrapers website (screenscraper.fr) and override the checksum like these examples:
+But not all of the scraping modules are search name based. For instance, the `screenscraper` module can use a variety of different search methods. So for screenscraper you also have the option of overriding the checksums it uses to search for a game. This is especially convenient in cases where a filename exists multiple times in their database and your own local file doesn't match with any of the connected checksums (maybe you've compressed the rom yourself). In this case you can look up one of the working checksums on the Screenscraper website (screenscraper.fr) and override the checksum.
 
-$ Skyscraper -p [platform] -s [module] --query sha1=[checksum] [filename]
-$ Skyscraper -p [platform] -s [module] --query md5=[checksum] [filename]
-$ Skyscraper -p [platform] -s [module] --query sha1=[checksum]&md5=[checksum]&romnom=[exact url encoded filename] [filename]
-
-The last example combines two of the checksum options and even the `romnom` attribute which is "rom name" in French (Screenscraper is French). You obviously only need one of the checksum options, it's just to show that you can combine them if you really need to.
+You can use any combination of `crc=[checksum]`, `md5=[checksum]`, `sha1=[checksum]` and `romnom=[filename]` (which is "rom name" in French - Screenscraper is French). Most times you only need one of these, but you can combine them by separating them with a `&`.
 
 The `--query` option is an *experts only* option, but it's very useful to get results for those last difficult roms.
 ###### Example(s)
@@ -363,10 +358,11 @@ The `--query` option is an *experts only* option, but it's very useful to get re
 $ Skyscraper -p snes -s thegamesdb --query "rick+dangerous" /full/or/partial/path/to/rom.zip
 $ Skyscraper -p snes -s screenscraper --query "md5=[checksum]" /full/or/partial/path/to/rom.zip
 $ Skyscraper -p snes -s screenscraper --query "romnom=file name.zip" /full/or/partial/path/to/rom.zip
+$ Skyscraper -p snes -s screenscraper --query "sha1=[checksum]&romnom=file name.zip" /full/or/partial/path/to/rom.zip
 ```
 
 #### --forcefilename
-This option forces Skyscraper to use the file name instead of the cached titles when generating a game list.
+This option forces Skyscraper to use the file name (excluding extension) instead of the cached titles when generating a game list.
 ###### Example(s)
 ```
 Skyscraper -p snes --forcefilename
@@ -380,7 +376,7 @@ Skyscraper -p snes --relative
 ```
 
 #### --addext &lt;extension&gt;
-If you have a rom that Skyscraper doesn't even try to gather data for, it's probably because it has a file extension that isn't currently supported. This option allows you to temporarily add support for any file extension. If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version.
+If you have a rom that Skyscraper doesn't even try to gather data for, it might be because it has a file extension that isn't currently supported. This option allows you to temporarily add support for any file extension. If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version of Skyscraper.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --addext *.ext
@@ -394,7 +390,7 @@ Sets the desired langauge when gathering data into the localdb resource cache. T
 Skyscraper -p snes -s screenscraper --lang es
 ```
 
-#### --lang &lt;code&gt;
+#### --region &lt;code&gt;
 Sets the desired region when gathering data into the localdb resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md).
 ###### Example(s)
 ```
@@ -409,7 +405,7 @@ Skyscraper -p snes --nohints
 ```
 
 #### --verbosity &lt;0-3&gt;
-Sets how verbose Skyscraper should be when running. Default level is 0. The higher the value, the more info Skyscraper will print while running.
+Sets how verbose Skyscraper should be when running. Default level is 0. The higher the value, the more info Skyscraper will output to the terminal while running.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --verbosity 3
