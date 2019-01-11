@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
   QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '~/.skyscraper/config.ini')", "filename", "");
   QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '~/.skyscraper/artwork.xml')", "filename", "");
   QCommandLineOption dOption("d", "Set local resource database cache folder.\n(default is '~/.skyscraper/dbs/[platform]')", "folder", "");
-  QCommandLineOption videosOption("videos", "Enables video scraping for any scraping module. Also enables caching of video resources in the local databases. Beware, this takes up a lot of disk space!");
+  QCommandLineOption videosOption("videos", "Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!");
   QCommandLineOption symlinkOption("symlink", "Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!");
   QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");
   QCommandLineOption noscreenshotsOption("noscreenshots", "Disable screenshots/snaps from being cached locally. Only do this if you do not plan to use the screenshot artwork in 'artwork.xml'");
@@ -143,7 +143,6 @@ int main(int argc, char *argv[])
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption relativeOption("relative", "Forces all gamelist paths to be relative to rom location.");
   QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext)", "extension", "");
-  QCommandLineOption nolocaldbOption("nolocaldb", "Disables the localdb resource cache. Other localdb flags will then be ignored.");
   QCommandLineOption dbstatsOption("dbstats", "Show stats for the localdb resource cache. This will also be shown with a verbosity level of 1 or more.");
   QCommandLineOption refreshOption("refresh", "Refresh resources in the localdb resource cache from the selected scraping module.");
   QCommandLineOption purgedbOption("purgedb", "Purges all requested resources from the localdb resource cache. You can define either module 'm:[module]' or type 't:[type]' or both comma-separated (example 'm:thegamesdb,t:description').\nYou can also just type 'vacuum' which will compare your romset to any cached resource and remove the resources that you no longer have roms for.\nLastly, you can type 'all' which will purge ALL resources from the cache that are connected to the currently selected platform / db folder.\nSet specific db folder with '-d' otherwise default db folder is used.", "resources", "");
@@ -152,11 +151,11 @@ int main(int argc, char *argv[])
   QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the localdb resource cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption unpackOption("unpack", "Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.");
-  QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title.");
+  QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "filename", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
-  QCommandLineOption pretendOption("pretend", "Don't alter any files, just print the results on screen. This option is on by default for all scraping modules except the 'localdb' module.");
+  QCommandLineOption pretendOption("pretend", "Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.");
   QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
   QCommandLineOption interactiveOption("interactive", "Always ask user to choose best result.");
@@ -182,7 +181,6 @@ int main(int argc, char *argv[])
   parser.addOption(cOption);
   parser.addOption(aOption);
   parser.addOption(dOption);
-  parser.addOption(nolocaldbOption);
   parser.addOption(refreshOption);
   parser.addOption(dbstatsOption);
   parser.addOption(cleandbOption);
