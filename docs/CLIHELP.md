@@ -137,7 +137,7 @@ Skyscraper -p snes -a "/path/to/artwork.xml"
 #### -d &lt;folder&gt;
 Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *localdb resource cache*. By default this folder is set to `~/.skyscraper/dbs/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers, `screenshots` etc.).
 
-NOTE! If you wish to always use a certain location as base folder for your localdb resource cache, it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
+NOTE! If you wish to always use a certain location as base folder for your localdb resource cache (for instance a folder on a USB drive), it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -d "/custom/localdb/cache/path"
