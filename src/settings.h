@@ -61,7 +61,6 @@ struct Settings {
   bool videos = false;
   bool symlink = false;
   bool brackets = true;
-  bool localDb = true;
   bool refresh = false;
   bool dbStats = false;
   QString dbPurge = "";
