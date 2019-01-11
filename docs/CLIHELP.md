@@ -97,7 +97,7 @@ Sets the frontend you wish to export a game list for. By default Skyscraper will
 Skyscraper -p snes -f attractmode -e snes
 ```
 
-#### -e <emulator>
+#### -e &lt;emulator&gt;
 Note! This option is *only* applicable when using the `-f attractmode` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform.
 ###### Example(s)
 ```
