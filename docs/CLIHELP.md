@@ -86,7 +86,7 @@ Skyscraper -p snes -s screenscraper -o "/path/to/where/you/want/the/artwork/file
 ```
 
 #### -t &lt;1-8&gt;
-Sets the desired number of parallel threads to be run when scraping. NOTE! Some modules have maximum allowed threads. If you set this higher than the allowed value, it will be auto-adjusted.
+Sets the desired number of parallel threads to be run when scraping. NOTE! Some modules have maximum allowed threads. If you set this higher than the allowed value, it will be auto-adjusted. By default it is set to 4.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb -t 5
@@ -110,7 +110,7 @@ Skyscraper -p snes -f attractmode -e snes
 Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground.
 ###### Example(s)
 ```
-Skyscraper -p snes -m 50
+Skyscraper -p snes -s thegamesdb -m 50
 ```
 
 #### -l &lt;0-10000&gt;
@@ -121,24 +121,26 @@ Skyscraper -p snes -l 500
 ```
 
 #### -c &lt;filename&gt;
-Sets a non-default config file. By default it Skyscraper uses the file `~/.skyscraper/config.ini`.
+Sets a non-default config file. By default Skyscraper uses the file `~/.skyscraper/config.ini`.
 ###### Example(s)
 ```
-Skyscraper -p snes -c /path/to/config.ini
+Skyscraper -p snes -c "/path/to/config.ini"
 ```
 
 #### -a &lt;filename&gt;
-Sets a non-default xml file to use when setting up the artwork compositing. By default it Skyscraper uses the file `~/.skyscraper/artwork.xml`.
+Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`.
 ###### Example(s)
 ```
-Skyscraper -p snes -a /path/to/artwork.xml
+Skyscraper -p snes -a "/path/to/artwork.xml"
 ```
 
 #### -d &lt;folder&gt;
-Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the "localdb resource cache". By default this folder is set to `~/.skyscraper/dbs/[platform set with -p]`. Unless you have a good reason to, don't change this. The folder pointed to should a folder with a Skyscraper `db.xml` file and its required subfolders inside of it.
+Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *localdb resource cache*. By default this folder is set to `~/.skyscraper/dbs/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers, `screenshots` etc.).
+
+NOTE! If you wish to always use a certain location as base folder for your localdb resource cache, it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
 ###### Example(s)
 ```
-Skyscraper -p snes -d /custom/localdb/cache/path
+Skyscraper -p snes -d "/custom/localdb/cache/path"
 ```
 
 #### --refresh
