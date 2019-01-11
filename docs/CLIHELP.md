@@ -135,7 +135,7 @@ Skyscraper -p snes -a "/path/to/artwork.xml"
 ```
 
 #### -d &lt;folder&gt;
-Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *localdb resource cache*. By default this folder is set to `~/.skyscraper/dbs/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers, `screenshots` etc.).
+Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *localdb resource cache*. By default this folder is set to `~/.skyscraper/dbs/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
 NOTE! If you wish to always use a certain location as base folder for your localdb resource cache (for instance a folder on a USB drive), it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
 ###### Example(s)
@@ -157,6 +157,8 @@ Skyscraper -p snes -s screenscraper --refresh
 #### --dbstats
 This will print the stats for the localdb resource cache that is connected to the chosen platform and then quit. It will tell you how many resources of each type are cached for each scraping module for that particular platform. If you wish to purge all or some of the data from the cache, please check the `--purgedb` option.
 
+Read more about the localdb resource cache [here](LOCALDBCACHE.md).
+
 NOTE! You can set a custom db folder to show stats for with the `-d` option.
 ###### Example(s)
 ```
@@ -164,18 +166,22 @@ Skyscraper -p snes --dbstats
 ```
 
 #### --cleandb
-This will test the integrity of the localdb resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the db.xml file connected to the platform.
+This will test the integrity of the localdb resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the `db.xml` file connected to the platform.
+
+Read more about the localdb resource cache [here](LOCALDBCACHE.md).
 
 NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the localdb resource cache database and related files.
 
-NOTE 2! You can set a custom db folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers, `screenshots` etc.).
+NOTE 2! You can set a custom localdb resource cache folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 ###### Example(s)
 ```
 Skyscraper -p snes --cleandb
 ```
 
 #### --mergedb &lt;folder&gt;
-This option allows you to merge two localdb resource caches together and then quit. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option. Any folder pointed to should be a folder where a the `db.xml` file resides.
+This option allows you to merge two localdb resource caches together and then quit. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option. Any folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+
+Read more about the localdb resource cache [here](LOCALDBCACHE.md).
 ###### Example(s)
 ```
 Skyscraper -p snes --mergedb /path/to/cache/folder
@@ -192,7 +198,9 @@ You can also purge all resources that don't have any connection to your current 
 
 Lastly, you can purge *all* resources from the cache for the chosen platform using the keyword `all`.
 
-NOTE! You can set a custom db folder to purge resources from with the `-d` option.
+Read more about the localdb resource cache [here](LOCALDBCACHE.md).
+
+NOTE! You can set a custom db folder to purge resources from with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
 Warning! Using any of these commands cannot be undone, so please consider making a backup.
 ###### Example(s)
