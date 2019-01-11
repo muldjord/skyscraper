@@ -1,7 +1,11 @@
 ## Command line options
 Look below to find a thorough description of all command line options available when using Skyscraper. These options should be used with the `Skyscraper` command.
 
+Please take note that almost all of these options are set at a useful default (and can therefore be left out) and should only be used / changed if your use case requires it.
+
 If you've installed Skyscraper through the RetroPie-Setup the executable is instead located at `/opt/retropie/supplementary/skyscraper/Skyscraper`. In that case I recommend creating a symbolic link to the executable. Do this by running `$ sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper` (without the `$`). This will enable you to just type `Skyscraper` when running it from command line.
+
+IMPORTANT! Most of the options can also be set in the `~/.skyscraper/config.ini` file thus removing the need to type them on command line all the time. Check the config.ini doc [here](CONFIGINI.md) for more info on this.
 
 #### -h, --help
 Outputs the help text for all command line options to the terminal.
@@ -11,61 +15,145 @@ Skyscraper --help
 Skyscraper -h
 ```
 
-  -p <platform>              The platform you wish to scrape.
-                             (Currently supports '3do', 'amiga', 'amstradcpc',
-                             'apple2', 'arcade', 'atari800', 'atari2600',
-                             'atari5200', 'atari7800', 'atarijaguar',
-                             'atarilynx', 'atarist', 'c16', 'c64', 'c128',
-                             'coco', 'coleco', 'daphne', 'dragon32',
-                             'dreamcast', 'fba', 'fds', 'gameandwatch',
-                             'gamegear', 'gb', 'gba', 'gbc', 'gc', 'genesis',
-                             'intellivision', 'mame-advmame', 'mame-libretro',
-                             'mame-mame4all', 'mastersystem', 'megacd',
-                             'megadrive', 'msx', 'n64', 'nds', 'neogeo', 'nes',
-                             'ngp', 'ngpc', 'oric', 'pc', 'pc88', 'pcfx',
-                             'pcengine', 'ports', 'psp', 'psx', 'saturn',
-                             'scummvm', 'sega32x', 'segacd', 'sg-1000', 'snes',
-                             'ti99', 'trs-80', 'vectrex', 'vic20', 'videopac',
-                             'virtualboy', 'wii', 'wonderswan',
-                             'wonderswancolor', 'x68000', 'zmachine',
-                             'zxspectrum'.)
-  -s <module>                Choose scraping module to use while scraping the
-                             selected platform.
-                             (WEB: 'arcadedb', 'igdb', 'mobygames', 'openretro',
-                             'screenscraper', 'thegamesdb' and
-                             'worldofspectrum', LOCAL: 'esgamelist', 'import'
-                             and 'localdb'. Default is 'localdb')
-  -u <key or user:password>  userKey or UserID and Password for use with the
-                             selected scraping module.
-                             (Default is none)
-  -i <path>                  Folder which contains the game/rom files.
-                             (default is '~/RetroPie/roms/[platform]')
-  --nosubdirs                Do not include input folder subdirectories when
-                             scraping.
-  --unpack                   Unpacks and checksums the file inside 7z or zip
-                             files instead of the compressed file itself. Be
-                             aware that this option requires '7z' to be
-                             installed on the system to work. Only relevant for
-                             'screenscraper' scraping module.
-  -g <path>                  Game list export folder.
-                             (default depends on frontend)
-  -o <path>                  Game media export folder.
-                             (default depends on frontend)
-  -t <1-8>                   Number of scraper threads to use. This might
-                             change depending on the scraping module limits.
-                             (default is 4)
-  -f <frontend>              Frontend to scrape for.
-                             (Currently supports 'emulationstation' and
-                             'attractmode'. Default is 'emulationstation')
-  -e <emulator>              Set emulator. This is only required by the
-                             'attractmode' frontend.
-                             (Default is none)
-  -m <0-100>                 Minimum match percentage when comparing search
-                             result titles to filename titles.
-                             (default is 65)
-  -l <0-10000>               Maximum game description length. Everything longer
-                             than this will be truncated.
-                             (default is 2500)
+#### -p <platform>
+Sets the platform you wish to scrape. Supported platforms can be seen using the `--help` option described above.
+
+Running the following commands will scrape from all cached resources and generate a game list and composite artwork using the recipe in `~/.skyscraper/artwork.xml` (check the artwork documentation for more info on this [here](ARTWORK.md).
+
+Before running these commands you need to first gather some data into the cache. Please read the description of `-s <module>` below.
+###### Example(s)
+```
+Skyscraper -p amiga
+Skyscraper -p snes
+
+```
+
+#### -s <module>
+Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the localdb resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <platform>` description above.
+###### Example(s)
+```
+Skyscraper -p amiga -s openretro
+Skyscraper -p snes -s screenscraper
+Skyscraper -p amiga -s esgamelist
+Skyscraper -p snes -s import
+```
+To read more about each scraping module, check [here](SCRAPINGMODULES.md).
+
+#### -u <key or user:password>
+Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper -u <your key>
+```
+
+#### -i <path>
+Sets the rom input folder. By default Skyscraper will look for roms in the `/home/[user]/RetroPie/roms/[platform]` folder. If your roms are located in a non-default location, you can set the input path using this option.
+###### Example(s)
+```
+Skyscraper -p snes -i "/path/to/your/snes/roms"
+```
+
+#### --nosubdirs
+By default Skyscraper will include roms located in subfolders. By adding this option Skyscraper will only scrape the roms located directly in the input folder. See `-i <path>` above to read more about the rom input folder.
+###### Example(s)
+```
+Skyscraper -p snes --nosubdirs
+```
+
+#### --unpack
+Some scraping modules use file checksums to identify the game in their databases. If you've compressed your roms to zip or 7z files yourself, this can pose a problem in getting a good result. You can then try to use this option. Doing so will extract the rom and do the file checksum on the rom itself instead of the compressed file.
+
+NOTE! Only use this option if you are having problems getting the roms identified from the compressed files. It slows down the scraping process significantly and should therefore be avoided if possible.
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --unpack
+```
+
+#### -g <path>
+Sets the game list export folder. By default Skyscraper exports the game list to the same directory as the rom input folder. This enables you to change that to a non-default location.
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper -g "/your/desired/game list/export/path"
+```
+
+#### -o <path>
+Sets the artwork output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location. Read more about the artwork compositing [here](ARTWORK.md).
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper -o "/path/to/where/you/want/the/artwork/files"
+```
+
+#### -t <1-8>
+Sets the desired number of parallel threads to be run when scraping. NOTE! Some modules have maximum allowed threads. If you set this higher than the allowed value, it will be auto-adjusted.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -t 5
+```
+
+#### -f <frontend>
+Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported aswell. If exporting for the `attractmode` frontend, please also take note of the required `-e` option that goes along with using the `attractmode` frontend.
+###### Example(s)
+```
+Skyscraper -p snes -f attractmode -e snes
+```
+
+#### -e <emulator>
+Note! This option is *only* applicable when using the `-f attractmode` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform.
+###### Example(s)
+```
+Skyscraper -p snes -f attractmode -e snes
+```
+
+#### -m <0-100>
+Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -m 50
+```
+
+#### -l <0-10000>
+Sets the maximum length of returned game descriptions. This is a convenience option if you feel like game descriptions are too long. By default it is set to 2500.
+###### Example(s)
+```
+Skyscraper -p snes -l 500
+```
+
+#### -c <filename>
+Sets a non-default config file. By default it Skyscraper uses the file `~/.skyscraper/config.ini`.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -c /path/to/config.ini
+```
+
+#### 
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -m 50
+```
+
+#### 
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -m 50
+```
+
+#### 
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -m 50
+```
+
+#### 
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -m 50
+```
+
+#### 
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb -m 50
+```
   -c <filename>              Use this config file to set up Skyscraper.
                              (default is '~/.skyscraper/config.ini')
   -a <filename>              Use this artwork xml file to set up the artwork
