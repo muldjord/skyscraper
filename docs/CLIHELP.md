@@ -30,6 +30,8 @@ Skyscraper -p snes
 
 #### -s &lt;module&gt;
 Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the localdb resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <platform>` description above.
+
+To generate a game list from the localdb resource cache, just leave out the `-s` option entirely.
 ###### Example(s)
 ```
 Skyscraper -p amiga -s openretro
@@ -98,7 +100,7 @@ Skyscraper -p snes -f attractmode -e snes
 ```
 
 #### -e &lt;emulator&gt;
-Note! This option is *only* applicable when using the `-f attractmode` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform.
+NOTE! This option is *only* applicable when using the `-f attractmode` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform.
 ###### Example(s)
 ```
 Skyscraper -p snes -f attractmode -e snes
@@ -108,7 +110,7 @@ Skyscraper -p snes -f attractmode -e snes
 Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb -m 50
+Skyscraper -p snes -m 50
 ```
 
 #### -l &lt;0-10000&gt;
@@ -122,140 +124,280 @@ Skyscraper -p snes -l 500
 Sets a non-default config file. By default it Skyscraper uses the file `~/.skyscraper/config.ini`.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb -c /path/to/config.ini
+Skyscraper -p snes -c /path/to/config.ini
 ```
 
-#### 
+#### -a &lt;filename&gt;
+Sets a non-default xml file to use when setting up the artwork compositing. By default it Skyscraper uses the file `~/.skyscraper/artwork.xml`.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb -m 50
+Skyscraper -p snes -a /path/to/artwork.xml
 ```
 
-#### 
+#### -d &lt;folder&gt;
+Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the "localdb resource cache". By default this folder is set to `~/.skyscraper/dbs/[platform set with -p]`. Unless you have a good reason to, don't change this. The folder pointed to should a folder with a Skyscraper `db.xml` file and its required subfolders inside of it.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb -m 50
+Skyscraper -p snes -d /custom/localdb/cache/path
 ```
 
-#### 
+#### --refresh
+Skyscraper has a localdb resource cache which works just like the browser cache in Firefox. If you scrape and gather resources for a platform with the same scraping module twice, it will grab the data from the cache instead of hammering the online servers again. This has the advantage in the case whree you scrape a rom set twice, only the roms that weren't recognized the first time around will be looked up and fetched from the online servers. Everything else will be loaded from the cache.
+
+You can force all data to be refetched from the servers by setting this option, effectively bypassing the cache.
+
+NOTE! *Only* use this option if you know data has changed for several roms at the source. Otherwise you are hammering the servers for no reason.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb -m 50
+Skyscraper -p snes -s screenscraper --refresh
 ```
 
-#### 
+#### --dbstats
+This will print the stats for the localdb resource cache that is connected to the chosen platform and then quit. It will tell you how many resources of each type are cached for each scraping module for that particular platform. If you wish to purge all or some of the data from the cache, please check the `--purgedb` option.
+
+NOTE! You can set a custom db folder to show stats for with the `-d` option.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb -m 50
+Skyscraper -p snes --dbstats
 ```
 
-#### 
+#### --cleandb
+This will test the integrity of the localdb resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the db.xml file connected to the platform.
+
+NOTE! You can set a custom db folder to clean with the `-d` option.
 ###### Example(s)
 ```
-Skyscraper -p snes -s thegamesdb -m 50
+Skyscraper -p snes --cleandb
 ```
-  -c &lt;filename&gt;              Use this config file to set up Skyscraper.
-                             (default is '~/.skyscraper/config.ini')
-  -a &lt;filename&gt;              Use this artwork xml file to set up the artwork
-                             compositing.
-                             (default is '~/.skyscraper/artwork.xml')
-  -d &lt;folder&gt;                Set local resource database cache folder.
-                             (default is '~/.skyscraper/dbs/[platform]')
-  --nolocaldb                Disables the localdb resource cache. Other localdb
-                             flags will then be ignored.
-  --refresh                  Refresh resources in the localdb resource cache
-                             from the selected scraping module.
-  --dbstats                  Show stats for the localdb resource cache. This
-                             will also be shown with a verbosity level of 1 or
-                             more.
-  --cleandb                  Remove media files that have no entry in the db
-                             and vice versa. Set specific db folder with '-d'
-                             otherwise default db folder is used.
-  --mergedb &lt;folder&gt;         Merge data from the specified db folder into local
-                             destination db. Set db you wish to merge from with
-                             this flag. Set destination db folder with '-d'
-                             otherwise default db folder is used as destination.
-  --purgedb &lt;resources&gt;      Purges all requested resources from the localdb
-                             resource cache. You can define either module
-                             'm:[module]' or type 't:[type]' or both
-                             comma-separated (example
-                             'm:thegamesdb,t:description').
-                             You can also just type 'vacuum' which will compare
-                             your romset to any cached resource and remove the
-                             resources that you no longer have roms for.
-                             Lastly, you can type 'all' which will purge ALL
-                             resources from the cache that are connected to the
-                             currently selected platform / db folder.
-                             Set specific db folder with '-d' otherwise default
-                             db folder is used.
-  --videos                   Enables video scraping for any scraping module.
-                             Also enables caching of video resources in the
-                             local databases. Beware, this takes up a lot of
-                             disk space!
-  --symlink                  Forces cached videos to be symlinked to game list
-                             destination to save space. WARNING! Deleting or
-                             moving files from your cache can invalidate the
-                             links!
-  --nocovers                 Disable covers/boxart from being cached locally.
-                             Only do this if you do not plan to use the cover
-                             artwork in 'artwork.xml'
-  --noscreenshots            Disable screenshots/snaps from being cached
-                             locally. Only do this if you do not plan to use the
-                             screenshot artwork in 'artwork.xml'
-  --nowheels                 Disable wheels from being cached locally. Only do
-                             this if you do not plan to use the wheel artwork in
-                             'artwork.xml'
-  --nomarquees               Disable marquees from being cached locally. Only
-                             do this if you do not plan to use the marquee
-                             artwork in 'artwork.xml'
-  --nobrackets               Disables any [] and () tags in the frontend game
-                             titles.
-  --skipped                  Include skipped entries when writing final
-                             gamelist.
-  --noresize                 Disable resizing of artwork when saving it to the
-                             localdb resource cache. Normally they are resized
-                             to save space. Setting this option will save them
-                             as is. NOTE! This is NOT related to how Skyscraper
-                             renders the artwork when scraping. Check the online
-                             'Artwork' documentation to know more about this.
-  --startat &lt;filename&gt;       Tells Skyscraper which file to start at. Forces
-                             '--refresh' and '--nosubdirs' enabled.
-  --endat &lt;filename&gt;         Tells Skyscraper which file to end at. Forces
-                             '--refresh' and '--nosubdirs' enabled.
-  --maxfails &lt;1-200&gt;         Sets the allowed number of initial 'Not found'
-                             results before rage-quitting. (Default is 42)
-  --pretend                  Don't alter any files, just print the results on
-                             screen. This option is on by default for all
-                             scraping modules except the 'localdb' module.
-  --unattend                 Don't ask any initial questions when scraping. It
-                             will then always overwrite existing gamelist and
-                             not skip existing entries.
-  --unattendskip             Don't ask any initial questions when scraping. It
-                             will then always overwrite existing gamelist and
-                             always skip existing entries.
-  --interactive              Always ask user to choose best result.
-  --query &lt;string&gt;           Allows you to set a custom search query (eg.
-                             'rick+dangerous' for name based modules or
-                             'sha1=[checksum]', 'md5=[checksum]' or
-                             'romnom=[filename]' for the 'screenscraper'
-                             module). Requires the single rom filename you wish
-                             to override for to be passed on command line
-                             aswell, otherwise it will be ignored.
-  --forcefilename            Use filename as game name instead of the returned
-                             game title.
-  --relative                 Forces all gamelist paths to be relative to rom
-                             location.
-  --addext &lt;extension&gt;       Add this or these file extension(s) to accepted
-                             file extensions during a scraping run. (example:
-                             '*.zst' or '*.zst *.ext)
-  --lang &lt;code&gt;              Set preferred result language for scraping modules
-                             that support it.
-                             (Default 'en')
-  --region &lt;code&gt;            Set preferred game region for scraping modules
-                             that support it.
-                             (Default prioritization is 'eu', 'us', 'wor' and
-                             'jp' in that order)
-  --nohints                  Disables the 'DID YOU KNOW:' hints when running
-                             Skyscraper.
-  --verbosity &lt;0-3&gt;          Print more info while scraping
-                             (Default is 0.)
+
+#### --mergedb &lt;folder&gt;
+This option allows you to merge two localdb resource caches together and then quit. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option. The folder(s) pointed to should be the folder(s) where the `db.xml` file resides.
+###### Example(s)
+```
+Skyscraper -p snes --mergedb /path/to/cache/folder
+```
+
+#### --purgedb &lt;resources&gt;
+This is a powerful option that allows you to purge the requested resources from the localdb resource cache connected to the selected platform.
+
+You can purge all resources from a certain module with `m:[module]` or of a certain type with `t:[type]` or a combination of the two separated by a `,`.
+
+Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
+
+You can also purge all resources that don't have any connection to your current romset for the selected platform by using the `vacuum` keyword. This is extremely useful if you've removed a bunch of roms from your collection and you wish to purge any cached data you don't need anymore.
+
+Lastly, you can purge *all* resources from the cache for the chosen platform using the keyword `all`.
+
+NOTE! You can set a custom db folder to purge resources from with the `-d` option.
+
+Warning! Using any of these commands cannot be undone, so please consider making a backup.
+###### Example(s)
+```
+Skyscraper -p snes --purgedb vacuum
+Skyscraper -p snes --purgedb m:thegamesdb
+Skyscraper -p snes --purgedb t:cover
+Skyscraper -p snes --purgedb m:arcadedb,t:publisher
+Skyscraper -p snes --purgedb all
+```
+
+#### --videos
+By default Skyscraper doesn't scrape and cache video resources because of the significant space required to save them. You can enable videos using this option.
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --videos
+Skyscraper -p snes -s arcadedb --videos
+Skyscraper -p snes --videos
+```
+
+#### --symlink
+Enabling this option is only relevant while also using the `--videos`. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --videos --symlink
+Skyscraper -p snes -s arcadedb --videos --symlink
+Skyscraper -p snes --videos --symlink
+```
+
+#### --nocovers
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --nocovers
+```
+
+#### --noscreenshotss
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --noscreenshotss
+```
+
+#### --nowheels
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --nowheels
+```
+
+#### --nomarquees
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this can save you some space.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --nomarquees
+```
+
+#### --nobrackets
+Use this option to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the localdb resource cache.
+###### Example(s)
+```
+Skyscraper -p snes --nobrackets
+```
+
+#### --skipped
+If a rom has no resources attached to it in the cache, it will be left out when generating a game list file. It will still show up in the frontend (at least it does for EmulationStation) but it won't exist in the game list file. You can safely leave out this option unless you need the empty entries for some reason.
+###### Example(s)
+```
+Skyscraper -p snes --skipped
+```
+
+#### --noresize
+By default, to save space, Skyscraper resizes large pieces of artwork before adding them to the localdb resource cache. Adding this option will disable this and save the artwork files exactly as they are retrieved from the scraping module.
+
+NOTE! This is not related to the artwork compositing that happens when generating a game list. This is *only* related to how Skyscraper handles artwork when adding it to the localdb resource cache while gathering data from the scraping modules.
+###### Example(s)
+```
+Skyscraper -p amiga -s openretro --noresize
+```
+
+#### --startat &lt;filename&gt;
+If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and forwards. Use it in conjunction with the `--endat` option described below to further narrow the subset of files you wish to scrape.
+
+NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
+
+NOTE 2! Instead of using this option, if you just want to scrape and cache data for 1 or 2 roms you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb /full/or/partial/path/to/rom.zip`.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --startat "rom name.zip"
+Skyscraper -p snes -s thegamesdb --startat "partial/path/to/rom name.zip"
+```
+
+#### --endat &lt;filename&gt;
+If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrapes alphabetically until it reaches this rom, then stops. Use it in conjunction with the `--startat` option described above to further narrow the subset of files you wish to scrape.
+
+NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
+
+NOTE 2! Instead of using this option, if you just want to scrape and cache data for 1 or 2 roms you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb /full/or/partial/path/to/rom.zip`.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --endat "rom name.zip"
+Skyscraper -p snes -s thegamesdb --endat "partial/path/to/rom name.zip"
+```
+
+#### --maxfails &lt;1-200&gt;
+Not all scraping modules support all platforms. This means that you can potentially start a scraping run with a module and a platform that is incompatible. This will hammer the servers for potentially hundreds of roms but provide 0 results for any of them. To avoid this Skyscraper has a builtin limit for initially allowed failed rom lookups. If this is reached it will quit. Setting this option allows you to set this limit yourself, but not above a maximum of 200. The default limit is 42. Don't change this unless you have a very good reason to do so.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --maxfails 75
+```
+
+#### --pretend
+This option is *only* relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It can be very useful to check exactly what and how the data will be combined from the localdb resource cache.
+###### Example(s)
+```
+Skyscraper -p snes --pretend
+```
+
+#### --unattend
+By default Skyscraper won't overwrite an existing game list and it will ask if you wish to skip existing game list entries. Bu using this option Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need of user input.
+###### Example(s)
+```
+Skyscraper -p snes --unattend
+```
+
+#### --unattendskip
+By default Skyscraper won't overwrite an existing game list and it will ask if you wish to skip existing game list entries. Bu using this option Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need of user input.
+###### Example(s)
+```
+Skyscraper -p snes --unattendskip
+```
+
+#### --interactive
+When gathering data from any of the scraping modules many potential entries will be returned. Normally Skyscraper chooses the best entry for you. But should you wish to choose the best entry yourself, you can enable this option. Skyscraper will then list the returned entries and let you choose which one is the best one.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --interactive
+```
+
+#### --query &lt;string&gt;
+For most modules a search query is sent to the scraping module in an URL format. That means that a filename such as "Rick Dangerous.lha" becomes "rick+dangerous". The '+' here means a space. You could probably also use the URL encoded space "rick%20dangerous" but my tests show that most modules expect spaces as '+'. And it is the "rick+dangerous" that you, as the user, can pass as the query, like so:
+```
+$ Skyscraper -p [platform] -s [module] --query "rick+dangerous" [filename]
+```
+Remember to also add a filename that you wish to use the override with. Otherwise the query will be ignored.
+
+But not all of the scraping modules are search name based. For instance, the `screenscraper` module can use a variety of different search methods. So for screenscraper you also have the option of overriding the checksums it use to search for a game. This is especially convenient in cases where a filename exists multiple times in their database and your own local file doesn't match with any of the connected checksums (maybe you've compressed the rom yourself or whatever).
+In this case you can look up one of the working checksums on the Screenscrapers website (screenscraper.fr) and override the checksum like these examples:
+
+$ Skyscraper -p [platform] -s [module] --query sha1=[checksum] [filename]
+$ Skyscraper -p [platform] -s [module] --query md5=[checksum] [filename]
+$ Skyscraper -p [platform] -s [module] --query sha1=[checksum]&md5=[checksum]&romnom=[exact url encoded filename] [filename]
+
+The last example combines two of the checksum options and even the `romnom` attribute which is "rom name" in French (Screenscraper is French). You obviously only need one of the checksum options, it's just to show that you can combine them if you really need to.
+
+The `--query` option is an *experts only* option, but it's very useful to get results for those last difficult roms.
+###### Example(s)
+```
+$ Skyscraper -p snes -s thegamesdb --query "rick+dangerous" /full/or/partial/path/to/rom.zip
+$ Skyscraper -p snes -s screenscraper --query "md5=[checksum]" /full/or/partial/path/to/rom.zip
+$ Skyscraper -p snes -s screenscraper --query "romnom=file name.zip" /full/or/partial/path/to/rom.zip
+```
+
+#### --forcefilename
+This option forces Skyscraper to use the file name instead of the cached titles when generating a game list.
+###### Example(s)
+```
+Skyscraper -p snes --forcefilename
+```
+
+#### --relative
+Only relevant when generating an EmulationStation game list (which is the default frontend when the `-f` option is left out). This forces the rom and any media paths inside the game list to be relative to the rom input folder.
+###### Example(s)
+```
+Skyscraper -p snes --relative
+```
+
+#### --addext &lt;extension&gt;
+If you have a rom that Skyscraper doesn't even try to gather data for, it's probably because it has a file extension that isn't currently supported. This option allows you to temporarily add support for any file extension. If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --addext *.ext
+Skyscraper -p snes -s thegamesdb --addext "*.ext1 *.ext2"
+```
+
+#### --lang &lt;code&gt;
+Sets the desired langauge when gathering data into the localdb resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --lang es
+```
+
+#### --lang &lt;code&gt;
+Sets the desired region when gathering data into the localdb resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md).
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --region jp
+```
+
+#### --nohints
+Diables the "Did you know" hints when running Skyscraper.
+###### Example(s)
+```
+Skyscraper -p snes --nohints
+```
+
+#### --verbosity &lt;0-3&gt;
+Sets how verbose Skyscraper should be when running. Default level is 0. The higher the value, the more info Skyscraper will print while running.
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --verbosity 3
+```
