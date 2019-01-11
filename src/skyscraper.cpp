@@ -78,9 +78,7 @@ void Skyscraper::run()
   if(config.videos) {
     printf("Videos folder:      '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
   }
-  if(config.localDb) {
-    printf("Local db folder:    '\033[1;32m%s\033[0m'\n", config.dbFolder.toStdString().c_str());
-  }
+  printf("Local db folder:    '\033[1;32m%s\033[0m'\n", config.dbFolder.toStdString().c_str());
   if(config.scraper == "import") {
     printf("Import folder:      '\033[1;32m%s\033[0m'\n", config.importFolder.toStdString().c_str());
   }
@@ -112,24 +110,24 @@ void Skyscraper::run()
     }
   }
   
-  if(!config.dbFolder.isEmpty() && config.localDb) {
+  if(!config.dbFolder.isEmpty()) {
     localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
     if(localDb->createFolders(config.scraper)) {
       if(!localDb->readDb() && config.scraper == "localdb") {
 	printf("No resources for this platform found in the local database cache. Please run Skyscraper in simple mode by typing 'Skyscraper' and follow the instructions on screen (this is probably what you want). Or specify a specific scraping module using the '-s' command line option. Check all available options with '--help'\n\n");
-	exit(0);
+	exit(1);
       }
     } else {
-      printf("Couldn't create local db folders, disabling localdb...\n");
-      config.localDb = false;
+      printf("Couldn't create localdb folders, please check folder permissions and try again...\n");
+      exit(1);
     }
   }
-  if(config.localDb && (config.verbosity || config.dbStats)) {
+  if(config.verbosity || config.dbStats) {
     localDb->showStats(config.dbStats?2:config.verbosity);
     if(config.dbStats)
       exit(0);
   }
-  if(config.localDb && !config.dbPurge.isEmpty()) {
+  if(!config.dbPurge.isEmpty()) {
     if(config.dbPurge == "all") {
       localDb->purgeAll();
     } else if(config.dbPurge == "vacuum") {
@@ -140,21 +138,19 @@ void Skyscraper::run()
     localDb->writeDb();
     exit(0);
   }
-  if(config.localDb && config.cleanDb) {
+  if(config.cleanDb) {
     localDb->cleanDb();
     localDb->writeDb();
     exit(0);
   }
-  if(config.localDb && !config.mergeDb.isEmpty() && QDir(config.mergeDb).exists()) {
+  if(!config.mergeDb.isEmpty() && QDir(config.mergeDb).exists()) {
     LocalDb srcDb(config.mergeDb);
     srcDb.readDb();
     localDb->mergeDb(srcDb, config.refresh, config.mergeDb);
     localDb->writeDb();
     exit(0);
   }
-  if(config.localDb) {
-    localDb->readPriorities();
-  }
+  localDb->readPriorities();
 
   QDir inputDir(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), QDir::Name, QDir::Files);
   if(!inputDir.exists()) {
@@ -450,7 +446,7 @@ void Skyscraper::checkThreads()
     return;
 
   printf("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
-  if(!config.dbFolder.isEmpty() && config.localDb) {
+  if(!config.dbFolder.isEmpty()) {
     localDb->writeDb();
   }
 
@@ -956,13 +952,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("addext")) {
     config.addExtensions = parser.value("addext");
-  }
-  if(parser.isSet("nolocaldb")) {
-    if(config.scraper == "localdb") {
-      printf("Selected scraper 'localdb' can't be used with '--nolocaldb' flag, exiting.\n");
-      exit(1);
-    }
-    config.localDb = false;
   }
   if(parser.isSet("dbstats")) {
     config.dbStats = true;
