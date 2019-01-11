@@ -5,7 +5,7 @@ If you've installed Skyscraper through the RetroPie-Setup the executable is inst
 
 #### -h, --help
 Outputs the help text for all command line options to the terminal.
-##### Example(s)
+* Example(s)
 ```
 Skyscraper --help
 Skyscraper -h
