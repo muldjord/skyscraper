@@ -168,7 +168,7 @@ This will test the integrity of the localdb resource cache connected to the chos
 
 NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to localdb resource cache database and related files.
 
-NOTE! You can set a custom db folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers, `screenshots` etc.).
+NOTE 2! You can set a custom db folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers, `screenshots` etc.).
 ###### Example(s)
 ```
 Skyscraper -p snes --cleandb
