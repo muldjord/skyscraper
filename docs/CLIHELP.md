@@ -15,7 +15,7 @@ Skyscraper --help
 Skyscraper -h
 ```
 
-#### -p <platform>
+#### -p &lt;platform&gt;
 Sets the platform you wish to scrape. Supported platforms can be seen using the `--help` option described above.
 
 Running the following commands will scrape from all cached resources and generate a game list and composite artwork using the recipe in `~/.skyscraper/artwork.xml` (check the artwork documentation for more info on this [here](ARTWORK.md).
@@ -28,7 +28,7 @@ Skyscraper -p snes
 
 ```
 
-#### -s <module>
+#### -s &lt;module&gt;
 Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the localdb resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <platform>` description above.
 ###### Example(s)
 ```
@@ -39,14 +39,14 @@ Skyscraper -p snes -s import
 ```
 To read more about each scraping module, check [here](SCRAPINGMODULES.md).
 
-#### -u <key or user:password>
+#### -u &lt;key or user:password&gt;
 Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper -u <your key>
 ```
 
-#### -i <path>
+#### -i &lt;path&gt;
 Sets the rom input folder. By default Skyscraper will look for roms in the `/home/[user]/RetroPie/roms/[platform]` folder. If your roms are located in a non-default location, you can set the input path using this option.
 ###### Example(s)
 ```
@@ -69,28 +69,28 @@ NOTE! Only use this option if you are having problems getting the roms identifie
 Skyscraper -p snes -s screenscraper --unpack
 ```
 
-#### -g <path>
+#### -g &lt;path&gt;
 Sets the game list export folder. By default Skyscraper exports the game list to the same directory as the rom input folder. This enables you to change that to a non-default location.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper -g "/your/desired/game list/export/path"
 ```
 
-#### -o <path>
+#### -o &lt;path&gt;
 Sets the artwork output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location. Read more about the artwork compositing [here](ARTWORK.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper -o "/path/to/where/you/want/the/artwork/files"
 ```
 
-#### -t <1-8>
+#### -t &lt;1-8&gt;
 Sets the desired number of parallel threads to be run when scraping. NOTE! Some modules have maximum allowed threads. If you set this higher than the allowed value, it will be auto-adjusted.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb -t 5
 ```
 
-#### -f <frontend>
+#### -f &lt;frontend&gt;
 Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported aswell. If exporting for the `attractmode` frontend, please also take note of the required `-e` option that goes along with using the `attractmode` frontend.
 ###### Example(s)
 ```
@@ -104,7 +104,7 @@ Note! This option is *only* applicable when using the `-f attractmode` option. I
 Skyscraper -p snes -f attractmode -e snes
 ```
 
-#### -m <0-100>
+#### -m &lt;0-100&gt;
 Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground.
 ###### Example(s)
 ```
@@ -118,7 +118,7 @@ Sets the maximum length of returned game descriptions. This is a convenience opt
 Skyscraper -p snes -l 500
 ```
 
-#### -c <filename>
+#### -c &lt;filename&gt;
 Sets a non-default config file. By default it Skyscraper uses the file `~/.skyscraper/config.ini`.
 ###### Example(s)
 ```
@@ -154,12 +154,12 @@ Skyscraper -p snes -s thegamesdb -m 50
 ```
 Skyscraper -p snes -s thegamesdb -m 50
 ```
-  -c <filename>              Use this config file to set up Skyscraper.
+  -c &lt;filename&gt;              Use this config file to set up Skyscraper.
                              (default is '~/.skyscraper/config.ini')
-  -a <filename>              Use this artwork xml file to set up the artwork
+  -a &lt;filename&gt;              Use this artwork xml file to set up the artwork
                              compositing.
                              (default is '~/.skyscraper/artwork.xml')
-  -d <folder>                Set local resource database cache folder.
+  -d &lt;folder&gt;                Set local resource database cache folder.
                              (default is '~/.skyscraper/dbs/[platform]')
   --nolocaldb                Disables the localdb resource cache. Other localdb
                              flags will then be ignored.
@@ -171,11 +171,11 @@ Skyscraper -p snes -s thegamesdb -m 50
   --cleandb                  Remove media files that have no entry in the db
                              and vice versa. Set specific db folder with '-d'
                              otherwise default db folder is used.
-  --mergedb <folder>         Merge data from the specified db folder into local
+  --mergedb &lt;folder&gt;         Merge data from the specified db folder into local
                              destination db. Set db you wish to merge from with
                              this flag. Set destination db folder with '-d'
                              otherwise default db folder is used as destination.
-  --purgedb <resources>      Purges all requested resources from the localdb
+  --purgedb &lt;resources&gt;      Purges all requested resources from the localdb
                              resource cache. You can define either module
                              'm:[module]' or type 't:[type]' or both
                              comma-separated (example
@@ -218,11 +218,11 @@ Skyscraper -p snes -s thegamesdb -m 50
                              as is. NOTE! This is NOT related to how Skyscraper
                              renders the artwork when scraping. Check the online
                              'Artwork' documentation to know more about this.
-  --startat <filename>       Tells Skyscraper which file to start at. Forces
+  --startat &lt;filename&gt;       Tells Skyscraper which file to start at. Forces
                              '--refresh' and '--nosubdirs' enabled.
-  --endat <filename>         Tells Skyscraper which file to end at. Forces
+  --endat &lt;filename&gt;         Tells Skyscraper which file to end at. Forces
                              '--refresh' and '--nosubdirs' enabled.
-  --maxfails <1-200>         Sets the allowed number of initial 'Not found'
+  --maxfails &lt;1-200&gt;         Sets the allowed number of initial 'Not found'
                              results before rage-quitting. (Default is 42)
   --pretend                  Don't alter any files, just print the results on
                              screen. This option is on by default for all
@@ -234,7 +234,7 @@ Skyscraper -p snes -s thegamesdb -m 50
                              will then always overwrite existing gamelist and
                              always skip existing entries.
   --interactive              Always ask user to choose best result.
-  --query <string>           Allows you to set a custom search query (eg.
+  --query &lt;string&gt;           Allows you to set a custom search query (eg.
                              'rick+dangerous' for name based modules or
                              'sha1=[checksum]', 'md5=[checksum]' or
                              'romnom=[filename]' for the 'screenscraper'
@@ -245,17 +245,17 @@ Skyscraper -p snes -s thegamesdb -m 50
                              game title.
   --relative                 Forces all gamelist paths to be relative to rom
                              location.
-  --addext <extension>       Add this or these file extension(s) to accepted
+  --addext &lt;extension&gt;       Add this or these file extension(s) to accepted
                              file extensions during a scraping run. (example:
                              '*.zst' or '*.zst *.ext)
-  --lang <code>              Set preferred result language for scraping modules
+  --lang &lt;code&gt;              Set preferred result language for scraping modules
                              that support it.
                              (Default 'en')
-  --region <code>            Set preferred game region for scraping modules
+  --region &lt;code&gt;            Set preferred game region for scraping modules
                              that support it.
                              (Default prioritization is 'eu', 'us', 'wor' and
                              'jp' in that order)
   --nohints                  Disables the 'DID YOU KNOW:' hints when running
                              Skyscraper.
-  --verbosity <0-3>          Print more info while scraping
+  --verbosity &lt;0-3&gt;          Print more info while scraping
                              (Default is 0.)
