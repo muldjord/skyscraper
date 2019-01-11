@@ -123,7 +123,7 @@ void ScraperWorker::run()
     QList<GameEntry> gameEntries;
 
     bool fromCache = false;
-    if(config.localDb && config.scraper == "localdb" && localDb->hasEntries(sha1)) {
+    if(config.scraper == "localdb" && localDb->hasEntries(sha1)) {
       fromCache = true;
       GameEntry localGame;
       localGame.sha1 = sha1;
@@ -136,7 +136,7 @@ void ScraperWorker::run()
       }
       gameEntries.append(localGame);
     } else {
-      if(config.localDb && config.scraper != "localdb" &&
+      if(config.scraper != "localdb" &&
 	 localDb->hasEntries(sha1, config.scraper) && !config.refresh) {
 	fromCache = true;
 	GameEntry localGame;
@@ -236,7 +236,7 @@ void ScraperWorker::run()
     }
 
     // Always cache resources, even if pretend is set
-    if(config.localDb && config.scraper != "localdb" && game.found && !fromCache) {
+    if(config.scraper != "localdb" && game.found && !fromCache) {
       game.source = config.scraper;
       localDb->addResources(game, config);
     }
