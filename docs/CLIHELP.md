@@ -79,7 +79,7 @@ Skyscraper -p snes -s screenscraper -g "/your/desired/game list/export/path"
 ```
 
 #### -o &lt;path&gt;
-Sets the artwork output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location. Read more about the artwork compositing [here](ARTWORK.md).
+Sets the artwork / media output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location. Read more about the artwork compositing [here](ARTWORK.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper -o "/path/to/where/you/want/the/artwork/files"
