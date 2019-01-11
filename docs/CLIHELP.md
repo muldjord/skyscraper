@@ -232,28 +232,28 @@ Skyscraper -p snes --videos --symlink
 ```
 
 #### --nocovers
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, enabling this can save you some space.
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this option can save you some space.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nocovers
 ```
 
 #### --noscreenshots
-Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, enabling this can save you some space.
+Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, this option can save you some space.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --noscreenshots
 ```
 
 #### --nowheels
-Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, enabling this can save you some space.
+Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, this option can save you some space.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nowheels
 ```
 
 #### --nomarquees
-Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, enabling this can save you some space.
+Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, this option can save you some space.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nomarquees
