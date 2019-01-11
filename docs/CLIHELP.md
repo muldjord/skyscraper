@@ -166,7 +166,7 @@ Skyscraper -p snes --dbstats
 #### --cleandb
 This will test the integrity of the localdb resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the db.xml file connected to the platform.
 
-NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to localdb resource cache database and related files.
+NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the localdb resource cache database and related files.
 
 NOTE 2! You can set a custom db folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers, `screenshots` etc.).
 ###### Example(s)
