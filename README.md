@@ -22,7 +22,7 @@ Check the full list of platforms [here](PLATFORMS.md).
 * LOCAL: `-s import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
 * LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
 ##### For generating a game list with composited artwork
-* GENERATE: `-s localdb` (Generates a game list by combining cached resources. Read more [here](dbs/README.md))
+* GENERATE: `-s localdb` (Generates a game list by combining cached resources. Read more [here](docs/LOCALDBCACHE.md))
 
 ... More scraping sources will be added in future releases!
 
@@ -111,7 +111,7 @@ $ Skyscraper --help
 This will give you a description of everything Skyscraper can do if you feel adventurous! Let's go over the most important ones:
 
 * `-p [platform]`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms under the `-p` option with `--help`
-* `-s [scraping module]`: This tells Skyscraper where you would like to fetch data from. The most important one being the `localdb` module. Read more about that [here](dbs/README.md)
+* `-s [scraping module]`: This tells Skyscraper where you would like to fetch data from. The most important one being the `localdb` module. Read more about that [here](docs/LOCALDBCACHE.md)
 * `--refresh`: Whenever you scrape a platform with any scraping module Skyscraper caches all of that data locally. When you rescrape a platform it will fetch the data from the cache instead of hammering the online servers. Using the `--refresh` option allows you to override this and tells Skyscraper to refresh the cached data directly from the online source. Please only use this option if you know the data you want to scrape has changed at the source
 * `--videos`: If you wish to scrape videos for the scraping modules that support it, you need to add the `--videos` option. This is disabled by default because of the significant space requirements needed to save them
 * `--pretend`: This bypasses any game list generation and artwork compositing code, but still caches any incoming data. Useful when scraping with the non-localdb modules, as it's faster while you are just gathering data into your localdb cache
@@ -139,7 +139,7 @@ Lastly, you can also add a `[localDb]` section to enable / disable the caching o
 You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables.
 
 ### Local database cache
-One of Skyscraper's most powerful features is the local database cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](dbs/README.md).
+One of Skyscraper's most powerful features is the local database cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](docs/LOCALDBCACHE.md).
 
 ### Custom data import
 I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the local cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data. Read more about how this works [here](import/README.md).
