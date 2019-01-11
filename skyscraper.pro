@@ -13,7 +13,7 @@ unix:examples.path=/usr/local/etc/skyscraper
 unix:examples.files=config.ini.example README.md hints.txt artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 aliasMap.csv mameMap.csv docs/ARTWORK.md tgdb_developers.json tgdb_publishers.json
 
 unix:dbexamples.path=/usr/local/etc/skyscraper/dbs
-unix:dbexamples.files=dbs/priorities.xml.example dbs/README.md
+unix:dbexamples.files=dbs/priorities.xml.example docs/LOCALDBCACHE.md
 
 unix:impexamples.path=/usr/local/etc/skyscraper/import
 unix:impexamples.files=import/README.md import/definitions.dat.example1 import/definitions.dat.example2
