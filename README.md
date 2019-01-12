@@ -172,6 +172,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Removed "--nolocaldb" cli option as it is irrelevant after 3.0.0 usage changes
 * Changed "--allowext" cli option to "--addext"
 * Changed "localDb" config section name to "cache"
+* Removed "userCreds" option from main and platform sections in config.ini. They should be set in scraping module section instead
+* Changed "startat" config.ini option to "startAt"
+* Changed "endat" config.ini option to "endAt"
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
