@@ -633,9 +633,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("platform")) {
     config.platform = settings.value("platform").toString();
   }
-  if(settings.contains("userCreds")) {
-    config.userCreds = settings.value("userCreds").toString();
-  }
   if(settings.contains("lang")) {
     config.lang = settings.value("lang").toString();
   }
@@ -802,9 +799,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("scraper")) {
     config.scraper = settings.value("scraper").toString();
   }
-  if(settings.contains("userCreds")) {
-    config.userCreds = settings.value("userCreds").toString();
-  }
   if(settings.contains("lang")) {
     config.lang = settings.value("lang").toString();
   }
@@ -820,11 +814,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("symlink")) {
     config.symlink = settings.value("symlink").toBool();
   }
-  if(settings.contains("startat")) {
-    config.startAt = settings.value("startat").toString();
+  if(settings.contains("startAt")) {
+    config.startAt = settings.value("startAt").toString();
   }
-  if(settings.contains("endat")) {
-    config.endAt = settings.value("endat").toString();
+  if(settings.contains("endAt")) {
+    config.endAt = settings.value("endAt").toString();
   }
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
