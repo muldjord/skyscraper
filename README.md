@@ -154,8 +154,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
-* Add better control of which modules are allowed to be used when scraping from "localdb"
-* Change the 'localDb' config section to 'cache' to avoid confusion with 'localdb' module section
+* Fix '--relative' option when using subdirectories: https://github.com/muldjord/skyscraper/issues/102
 
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
