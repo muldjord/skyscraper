@@ -157,6 +157,7 @@ void Skyscraper::run()
     printf("Input folder '\033[1;32m%s\033[0m' doesn't exist or can't be seen by current user. Please check path and permissions.\n", inputDir.absolutePath().toStdString().c_str());
     exit(1);
   }
+  config.inputFolder = inputDir.absolutePath();
 
   QDir gameListDir(config.gameListFolder);
   checkForFolder(gameListDir);
@@ -454,7 +455,7 @@ void Skyscraper::checkThreads()
 
   QString finalOutput;
   printf("Assembling game list...");
-  frontend->assembleList(finalOutput, gameEntries, config.maxLength);
+  frontend->assembleList(finalOutput, gameEntries);
   printf(" \033[1;32mDone!!!\033[0m\n");
     
   if(!config.pretend && config.scraper == "localdb") {
