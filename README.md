@@ -10,8 +10,7 @@ Any exported artwork can be customized completely. Check the documentation for t
 #### Currently supports the following platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
-#### Currently supports the following scraping modules (set with '-s')
-##### For gathering and caching resources
+#### Currently supports the following scraping modules when gathering resources (set with '-s')
 Use any of the following modules to gather resources into the Skyscraper localdb resource cache:
 * ONLINE: `-s screenscraper` (screenscraper.fr)
 * ONLINE: `-s openretro` (openretro.org)
@@ -22,6 +21,7 @@ Use any of the following modules to gather resources into the Skyscraper localdb
 * ONLINE: `-s igdb` (igdb.com)
 * LOCAL: `-s import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
 * LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
+Read more about each of the modules [here](docs/SCRAPINGMODULES.md).
 ##### For generating a game list with composited artwork
 Skyscraper will generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml` if you leave out the `-s` option entirely. Read more about the localdb resource cache [here](docs/LOCALDBCACHE.md))
 
