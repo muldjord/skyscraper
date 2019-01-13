@@ -503,16 +503,16 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
   // Autodetect region and append to region priorities
   if(info.fileName().indexOf("(") != -1 && config->region.isEmpty()) {
     QString regionString = info.fileName().toLower().mid(info.fileName().indexOf("("), info.fileName().length());
-    if(regionString.indexOf("europe") != -1) {
+    if(regionString.contains("europe") || regionString.contains("(e)")) {
       regionPrios.prepend("eu");
     }
-    if(regionString.indexOf("usa") != -1) {
+    if(regionString.contains("usa") || regionString.contains("(u)")) {
       regionPrios.prepend("us");
     }
-    if(regionString.indexOf("world") != -1) {
+    if(regionString.contains("world")) {
       regionPrios.prepend("wor");
     }
-    if(regionString.indexOf("japan") != -1) {
+    if(regionString.contains("japan") || regionString.contains("(j)")) {
       regionPrios.prepend("jp");
     }
   }
