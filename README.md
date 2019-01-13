@@ -8,7 +8,7 @@ Any exported artwork can be customized completely. Check the documentation for t
 * AttractMode
 
 #### Currently supports the following platforms (set with '-p'):
-Check the full list of platforms [here](PLATFORMS.md).
+Check the full list of platforms [here](docs/PLATFORMS.md).
 
 #### Currently supports the following scraping modules (set with '-s')
 ##### For gathering and caching resources
