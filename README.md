@@ -154,7 +154,6 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
-* Fix '--relative' option when using subdirectories: https://github.com/muldjord/skyscraper/issues/102
 
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
@@ -175,6 +174,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Removed "userCreds" option from main and platform sections in config.ini. They should be set in scraping module section instead
 * Changed "startat" config.ini option to "startAt"
 * Changed "endat" config.ini option to "endAt"
+* Fixed "--relative" option when combined with roms in subdirs
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
