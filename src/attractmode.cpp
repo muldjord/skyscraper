@@ -142,7 +142,7 @@ void AttractMode::preserveFromOld(GameEntry &entry)
   }
 }
 
-void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int)
+void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries)
 {
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
@@ -188,7 +188,7 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
 		       entry.aMExtra + ";" +
 		       entry.aMButtons + ";\n");
     if(!entry.description.isEmpty() && saveDescFile) {
-      QByteArray desc = QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified();
+      QByteArray desc = QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified().left(config->maxLength);
       setCfgLine(descDir.absolutePath() + "/" + entry.baseName + ".cfg", "overview", desc);
     }
   }

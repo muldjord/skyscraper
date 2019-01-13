@@ -36,7 +36,7 @@ public:
   AttractMode();
   void checkReqs() override;
   bool skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) override;
-  void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries, int maxDescLength) override;
+  void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries) override;
   bool canSkip() override;
   bool loadOldGameList(const QString &gameListFileString) override;
   void preserveFromOld(GameEntry &entry) override;
