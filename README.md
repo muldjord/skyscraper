@@ -12,6 +12,7 @@ Check the full list of platforms [here](docs/PLATFORMS.md).
 
 #### Currently supports the following scraping modules (set with '-s')
 ##### For gathering and caching resources
+Use any of the following modules to gather resources into the Skyscraper localdb resource cache:
 * ONLINE: `-s screenscraper` (screenscraper.fr)
 * ONLINE: `-s openretro` (openretro.org)
 * ONLINE: `-s thegamesdb` (thegamesdb.net)
@@ -22,9 +23,7 @@ Check the full list of platforms [here](docs/PLATFORMS.md).
 * LOCAL: `-s import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
 * LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
 ##### For generating a game list with composited artwork
-* GENERATE: `-s localdb` (Generates a game list by combining cached resources. Read more [here](docs/LOCALDBCACHE.md))
-
-... More scraping sources will be added in future releases!
+Skyscraper will generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml` if you leave out the `-s` option entirely. Read more about the localdb resource cache [here](docs/LOCALDBCACHE.md))
 
 ## Patreon
 Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requirement if you want to use Skyscraper! But there it is. And please understand that becoming a patron does in no way give you any special say in what features I work on or how I develop Skyscraper in the future. It will be seen as an appreciative gesture, nothing else. :)
