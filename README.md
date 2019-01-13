@@ -10,7 +10,7 @@ Any exported artwork can be customized completely. Check the documentation for t
 #### Currently supports the following platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
-#### Currently supports the following scraping modules when gathering resources (set with '-s')
+#### Currently supports the following scraping modules for gathering resources (set with '-s')
 Use any of the following modules to gather resources into the Skyscraper localdb resource cache:
 * ONLINE: `-s screenscraper` (screenscraper.fr)
 * ONLINE: `-s openretro` (openretro.org)
