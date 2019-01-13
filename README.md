@@ -21,8 +21,10 @@ Use any of the following modules to gather game resources into the Skyscraper lo
 * ONLINE: `-s igdb` (igdb.com)
 * LOCAL: `-s import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
 * LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
+
 Read more about each of the modules [here](docs/SCRAPINGMODULES.md).
-##### For generating a game list with composited artwork
+
+##### Generating a game list with composited artwork
 Skyscraper will generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml` if you leave out the `-s` option entirely. Read more about the localdb resource cache [here](docs/LOCALDBCACHE.md))
 
 ## Patreon
