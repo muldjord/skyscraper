@@ -173,8 +173,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Changed "--allowext" cli option to "--addext"
 * Changed "localDb" config section name to "cache"
 * Removed "userCreds" option from main and platform sections in config.ini. They should be set in scraping module section instead
-* Changed "startat" config.ini option to "startAt"
-* Changed "endat" config.ini option to "endAt"
+* Removed "scraper" config.ini variable as it made no sense to ever set it like that
+* Changed "startat" config.ini option to "startAt" to conform with style of other variables
+* Changed "endat" config.ini option to "endAt" to conform with style of other variables
 * Fixed "--relative" option when combined with roms in subdirs
 * "--unattend" options now answers "y" to all "--purgedb" prompt automatically
 
