@@ -229,7 +229,10 @@ void Skyscraper::run()
   QSharedPointer<Queue> queue = QSharedPointer<Queue>(new Queue());
   QList<QFileInfo> infoList = inputDir.entryInfoList();
   if(config.startAt != "" && !infoList.isEmpty()) {
-    QFileInfo startAt(config.currentDir + "/" + config.startAt);
+    QFileInfo startAt(config.startAt);
+    if(!startAt.exists()) {
+      startAt.setFile(config.currentDir + "/" + config.startAt);
+    }
     if(!startAt.exists()) {
       startAt.setFile(inputDir.absolutePath() + "/" + config.startAt);
     }
@@ -240,7 +243,10 @@ void Skyscraper::run()
     }
   }
   if(config.endAt != "" && !infoList.isEmpty()) {
-    QFileInfo endAt(config.currentDir + "/" + config.endAt);
+    QFileInfo endAt(config.endAt);
+    if(!endAt.exists()) {
+      endAt.setFile(config.currentDir + "/" + config.endAt);
+    }
     if(!endAt.exists()) {
       endAt.setFile(inputDir.absolutePath() + "/" + config.endAt);
     }
@@ -1054,21 +1060,22 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   // If user has set specific files to scrape on command line set them internally
   foreach(QString cliArgument, parser.positionalArguments()) {
-    bool exists = false;
-    if(QFile::exists(cliArgument)) {
-      exists = true;
-    } else if(QFile::exists(cliArgument.prepend(config.currentDir + "/"))) {
-      exists = true;
+    QFileInfo cliFile(cliArgument);
+    if(!cliFile.exists()) {
+      cliFile.setFile(config.currentDir + "/" + cliArgument);
     }
-    if(exists) {
-      cliFiles.append(cliArgument);
+    if(!cliFile.exists()) {
+      cliFile.setFile(config.inputFolder + "/" + cliArgument);
+    }
+    if(cliFile.exists()) {
+      cliFiles.append(cliFile.absoluteFilePath());
       // Always set refresh and unattend true if user has supplied filenames on
       // command line. That way they are cached, but game list is not changed and user isn't
       // asked about skipping and overwriting.
       config.refresh = true;
       config.unattend = true;
     } else {
-      printf("Filename: '%s' not found!\nRemember to add full or partial path to any filename given on command line.\n\nNow quitting...\n", cliArgument.toStdString().c_str());
+      printf("Filename: '%s' not found!\n\nNow quitting...\n", cliArgument.toStdString().c_str());
       exit(1);
     }
   }
