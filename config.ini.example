@@ -71,7 +71,6 @@
 #videos="false"
 #symlink="false"
 #brackets="true"
-#scraper="screenscraper"
 #lang="en"
 #region="wor"
 #minMatch="0"

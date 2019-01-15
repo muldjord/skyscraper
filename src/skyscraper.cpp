@@ -797,9 +797,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.minMatch = settings.value("minMatch").toInt();
     config.minMatchSet = true;
   }
-  if(settings.contains("scraper")) {
-    config.scraper = settings.value("scraper").toString();
-  }
   if(settings.contains("lang")) {
     config.lang = settings.value("lang").toString();
   }
