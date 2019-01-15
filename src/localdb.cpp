@@ -180,14 +180,17 @@ void LocalDb::purgeResources(QString purgeStr)
   printf("Successfully purged %d resources from the local database cache.\n", purged);
 }
 
-void LocalDb::purgeAll()
+void LocalDb::purgeAll(const bool unattend)
 {
-  std::string userInput = "";
-  printf("\033[1;31mWARNING!!! You are about to purge / remove ALL resources from the Skyscaper cache connected to the currently selected platform. THIS CANNOT BE UNDONE!\n\n\033[0m\033[1;34mDo you wish to continue\033[0m (y/N)? ");
-  getline(std::cin, userInput);
-  if(userInput != "y") {
-    printf("User chose not to continue, cancelling purge...\n\n");
-    return;
+  if(!unattend) {
+    printf("\033[1;31mWARNING!!! You are about to purge / remove ALL resources from the Skyscaper cache connected to the currently selected platform. THIS CANNOT BE UNDONE!\033[0m\n\n");
+    printf("\033[1;34mDo you wish to continue\033[0m (y/N)? ");
+    std::string userInput = "";
+    getline(std::cin, userInput);
+    if(userInput != "y") {
+      printf("User chose not to continue, cancelling purge...\n\n");
+      return;
+    }
   }
 
   printf("Purging ALL resources for the selected platform, please wait...");
@@ -225,15 +228,19 @@ void LocalDb::purgeAll()
   printf("\n");
 }
 
-void LocalDb::vacuumResources(const QString inputFolder, const QString filter)
+void LocalDb::vacuumResources(const QString inputFolder, const QString filter, const bool unattend)
 {
-  std::string userInput = "";
-  printf("\033[1;31mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories matching the suffixes supported by the platform and any extension(s) you might have added manually). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Local db folder' further up and is usually located under '~/.skyscraper/' unless you've set it manually.\n\n\033[0m\033[1;34mDo you wish to continue\033[0m (y/N)? ", inputFolder.toStdString().c_str());
-  getline(std::cin, userInput);
-  if(userInput != "y") {
-    printf("User chose not to continue, cancelling vacuum...\n\n");
-    return;
+  if(!unattend) {
+    std::string userInput = "";
+    printf("\033[1;31mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories matching the suffixes supported by the platform and any extension(s) you might have added manually). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Local db folder' further up and is usually located under '~/.skyscraper/' unless you've set it manually.\033[0m\n\n", inputFolder.toStdString().c_str());
+    printf("\033[1;34mDo you wish to continue\033[0m (y/N)? ");
+    getline(std::cin, userInput);
+    if(userInput != "y") {
+      printf("User chose not to continue, cancelling vacuum...\n\n");
+      return;
+    }
   }
+  
   QList<QString> sha1List;
   QStringList filters = filter.split(" ");
   if(filter.size() < 2) {

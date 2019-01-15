@@ -176,6 +176,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Changed "startat" config.ini option to "startAt"
 * Changed "endat" config.ini option to "endAt"
 * Fixed "--relative" option when combined with roms in subdirs
+* "--unattend" options now answers "y" to all "--purgedb" prompt automatically
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
