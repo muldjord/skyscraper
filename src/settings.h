@@ -99,7 +99,9 @@ struct Settings {
   QString password = "";
   QString lang = "";
   QString region = "";
-
+  QString langPrios = "";
+  QString regionPrios = "";
+  
   QString searchName = "";
   
   QMap<QString, QImage> resources;
