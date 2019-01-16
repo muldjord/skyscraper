@@ -218,11 +218,17 @@ void ScreenScraper::getTags(GameEntry &game)
   if(xmlNodes.isEmpty())
     return;
   
-  for(int a = 0; a < xmlNodes.length(); ++a) {
-    QDomElement elem = xmlNodes.at(a).toElement();
-    if(elem.attribute("langue") == langPrios.first()) {
-      game.tags.append(xmlNodes.at(a).toElement().text() + ", ");
+  bool foundLang = false;
+  foreach(QString lang, config->langPrios) {
+    for(int a = 0; a < xmlNodes.length(); ++a) {
+      QDomElement elem = xmlNodes.at(a).toElement();
+      if(elem.attribute("langue") == lang) {
+	game.tags.append(xmlNodes.at(a).toElement().text() + ", ");
+	foundLang = true;
+      }
     }
+    if(foundLang)
+      break;
   }
   
   game.tags = game.tags.left(game.tags.length() - 2);
@@ -422,7 +428,7 @@ QString ScreenScraper::getXmlText(QString node, int attr, QString type)
       }
     }
   } else if(attr == LANGUE) {
-    foreach(QString lang, langPrios) {
+    foreach(QString lang, config->langPrios) {
       for(int a = 0; a < xmlNodes.length(); ++a) {
 	QDomElement elem = xmlNodes.at(a).toElement();
 	if(type != "" && elem.attribute("type") != type)

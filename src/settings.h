@@ -99,13 +99,19 @@ struct Settings {
   QString password = "";
   QString lang = "";
   QString region = "";
-  QString langPrios = "";
-  QString regionPrios = "";
+  QString langPriosStr = "";
+  QString regionPriosStr = "";
   
   QString searchName = "";
   
   QMap<QString, QImage> resources;
-  
+  QMap<QString, QString> mameMap;
+  QMap<QString, QString> aliasMap;
+  QMap<QString, QPair<QString, QString> > whdLoadMap;
+
+  QList<QString> regionPrios;
+  QList<QString> langPrios;
+
 };
 
 #endif // SETTINGS_H

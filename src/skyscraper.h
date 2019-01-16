@@ -65,6 +65,11 @@ private:
   void checkForFolder(QDir &folder, bool create = true);
   void showHint();
   void doPrescrapeJobs();
+  void loadAliasMap();
+  void loadMameMap();
+  void loadWhdLoadMap();
+  void setRegionPrios();
+  void setLangPrios();
   
   AbstractFrontend *frontend;
 

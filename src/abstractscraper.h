@@ -48,19 +48,11 @@ public:
   virtual void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &debug);
 
   //void setConfig(Settings *config);
-  void setRegionPrios();
-  void setLangPrios();
-  void loadAliasMap();
-  void loadMameMap();
-  void loadWhdLoadMap();
 
   int reqRemaining = -1;
   
 protected:
   Settings *config;
-  QList<QString> regionPrios;
-  QList<QString> regionPriosOrig;
-  QList<QString> langPrios;
 
   virtual void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 				QString platform);
@@ -128,13 +120,12 @@ protected:
   QList<QString> videoPre;
   QString videoPost;
 
+  // This is used when file names have a region in them. The original regionPrios is in Settings
+  QList<QString> regionPrios;
+
   NetComm manager;
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
 
-  QMap<QString, QString> mameMap;
-  QMap<QString, QString> aliasMap;
-  QMap<QString, QPair<QString, QString> > whdLoadMap;
-  
 };
 
 #endif // ABSTRACTSCRAPER_H

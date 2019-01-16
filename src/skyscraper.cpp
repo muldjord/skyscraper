@@ -647,10 +647,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.region = settings.value("region").toString();
   }
   if(settings.contains("langPrios")) {
-    config.langPrios = settings.value("langPrios").toString();
+    config.langPriosStr = settings.value("langPrios").toString();
   }
   if(settings.contains("regionPrios")) {
-    config.regionPrios = settings.value("regionPrios").toString();
+    config.regionPriosStr = settings.value("regionPrios").toString();
   }
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
@@ -816,10 +816,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.region = settings.value("region").toString();
   }
   if(settings.contains("langPrios")) {
-    config.langPrios = settings.value("langPrios").toString();
+    config.langPriosStr = settings.value("langPrios").toString();
   }
   if(settings.contains("regionPrios")) {
-    config.regionPrios = settings.value("regionPrios").toString();
+    config.regionPriosStr = settings.value("regionPrios").toString();
   }
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
@@ -1184,6 +1184,13 @@ void Skyscraper::showHint()
 
 void Skyscraper::doPrescrapeJobs()
 {
+  loadAliasMap();
+  loadMameMap();
+  loadWhdLoadMap();
+
+  setRegionPrios();
+  setLangPrios();
+
   NetComm manager;
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
@@ -1272,6 +1279,125 @@ void Skyscraper::doPrescrapeJobs()
 	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
       }
     }
+  }
+}
+
+void Skyscraper::loadAliasMap()
+{
+  if(!QFileInfo::exists("aliasMap.csv"))
+    return;
+  QFile aliasMapFile("aliasMap.csv");
+  if(aliasMapFile.open(QIODevice::ReadOnly)) {
+    while(!aliasMapFile.atEnd()) {
+      QByteArray line = aliasMapFile.readLine();
+      if(line.left(1) == "#")
+	continue;
+      QList<QByteArray> pair = line.split(';');
+      if(pair.size() != 2)
+	continue;
+      QString baseName = pair.at(0);
+      QString aliasName = pair.at(1);
+      baseName = baseName.replace("\"", "").simplified();
+      aliasName = aliasName.replace("\"", "").simplified();
+      config.aliasMap[baseName] = aliasName;
+    }
+    aliasMapFile.close();
+  }
+}
+
+void Skyscraper::loadMameMap()
+{
+  if(config.scraper != "import" &&
+     (config.platform == "neogeo" ||
+      config.platform == "arcade" ||
+      config.platform == "mame-advmame" ||
+      config.platform == "mame-libretro" ||
+      config.platform == "mame-mame4all" ||
+      config.platform == "fba")) {
+    QFile mameMapFile("mameMap.csv");
+    if(mameMapFile.open(QIODevice::ReadOnly)) {
+      while(!mameMapFile.atEnd()) {
+	QList<QByteArray> pair = mameMapFile.readLine().split(';');
+	if(pair.size() != 2)
+	  continue;
+	QString mameName = pair.at(0);
+	QString realName = pair.at(1);
+	mameName = mameName.replace("\"", "").simplified();
+	realName = realName.replace("\"", "").simplified();
+	config.mameMap[mameName] = realName;
+      }
+      mameMapFile.close();
+    }
+  }
+}
+
+
+void Skyscraper::loadWhdLoadMap()
+{
+  if(config.platform == "amiga") {
+    QDomDocument doc;
+
+    QFile whdLoadFile;
+    if(QFileInfo::exists("whdload_db.xml"))
+      whdLoadFile.setFileName("whdload_db.xml");
+    else if(QFileInfo::exists("/opt/retropie/emulators/amiberry/whdboot/game-data/whdload_db.xml"))
+      whdLoadFile.setFileName("/opt/retropie/emulators/amiberry/whdboot/game-data/whdload_db.xml");
+    else
+      return;
+
+    if(whdLoadFile.open(QIODevice::ReadOnly)) {
+      QByteArray rawXml = whdLoadFile.readAll();
+      whdLoadFile.close();
+      if(doc.setContent(rawXml)) {
+	QDomNodeList gameNodes = doc.elementsByTagName("game");
+	for(int a = 0; a < gameNodes.length(); ++a) {
+	  QDomNode gameNode = gameNodes.at(a);
+	  QPair<QString, QString> gamePair;
+	  gamePair.first = gameNode.firstChildElement("name").text();
+	  gamePair.second = gameNode.firstChildElement("variant_uuid").text();
+	  config.whdLoadMap[gameNode.toElement().attribute("filename")] = gamePair;
+	}
+      }
+    }
+  }
+}
+
+void Skyscraper::setRegionPrios()
+{
+  // Load single custom region
+  if(!config.region.isEmpty()) {
+    config.regionPrios.append(config.region);
+  }
+  
+  // Load custom region prioritizations
+  if(!config.regionPriosStr.isEmpty()) {
+    foreach(QString region, config.regionPriosStr.split(",")) {
+      config.regionPrios.append(region);
+    }
+  } else {
+    config.regionPrios.append("eu");
+    config.regionPrios.append("us");
+    config.regionPrios.append("ss");
+    config.regionPrios.append("uk");
+    config.regionPrios.append("wor");
+    config.regionPrios.append("jp");
+  }
+}
+
+void Skyscraper::setLangPrios()
+{
+  // Load single custom lang
+  if(!config.lang.isEmpty()) {
+    config.langPrios.append(config.lang);
+  }
+  
+  // Load custom lang prioritizations
+  if(!config.langPriosStr.isEmpty()) {
+    foreach(QString lang, config.langPriosStr.split(",")) {
+      config.langPrios.append(lang);
+    }
+  } else {
+    config.langPrios.append("en");
   }
 }
 

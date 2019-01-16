@@ -84,12 +84,6 @@ void ScraperWorker::run()
     scraper = new AbstractScraper(&config);
   }
 
-  scraper->setRegionPrios();
-  scraper->setLangPrios();
-  scraper->loadAliasMap();
-  scraper->loadMameMap();
-  scraper->loadWhdLoadMap();
-  
   platformOrig = config.platform;
 
   Compositor compositor(&config);

@@ -412,10 +412,10 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
   QString baseName = info.completeBaseName();
   
   if(config->scraper != "import") {
-    if(aliasMap.contains(baseName)) {
-      baseName = aliasMap[baseName];
+    if(config->aliasMap.contains(baseName)) {
+      baseName = config->aliasMap[baseName];
     } else if(info.suffix() == "lha") {
-      QString nameWithSpaces = whdLoadMap[baseName].first;
+      QString nameWithSpaces = config->whdLoadMap[baseName].first;
       if(nameWithSpaces.isEmpty()) {
 	baseName = NameTools::getNameWithSpaces(baseName);
       } else {
@@ -428,8 +428,8 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
 	       config->platform == "mame-advmame" ||
 	       config->platform == "mame-libretro" ||
 	       config->platform == "mame-mame4all" ||
-	       config->platform == "fba") && mameMap.contains(baseName)) {
-      baseName = mameMap[baseName];
+	       config->platform == "fba") && config->mameMap.contains(baseName)) {
+      baseName = config->mameMap[baseName];
     }
   }
 
@@ -462,10 +462,10 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
   QString baseName = info.completeBaseName();
 
   if(config->scraper != "import") {
-    if(aliasMap.contains(baseName)) {
-      baseName = aliasMap[baseName];
+    if(config->aliasMap.contains(baseName)) {
+      baseName = config->aliasMap[baseName];
     } else if(info.suffix() == "lha") {
-      QString nameWithSpaces = whdLoadMap[baseName].first;
+      QString nameWithSpaces = config->whdLoadMap[baseName].first;
       if(nameWithSpaces.isEmpty()) {
 	baseName = NameTools::getNameWithSpaces(baseName);
       } else {
@@ -478,8 +478,8 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
 	       config->platform == "mame-advmame" ||
 	       config->platform == "mame-libretro" ||
 	       config->platform == "mame-mame4all" ||
-	       config->platform == "fba") && mameMap.contains(baseName)) {
-      baseName = mameMap[baseName];
+	       config->platform == "fba") && config->mameMap.contains(baseName)) {
+      baseName = config->mameMap[baseName];
     }
   }
 
@@ -498,8 +498,8 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
 
 void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &output, QString &debug)
 {
-  // Reset region priorities to original list
-  regionPrios = regionPriosOrig;
+  // Reset region priorities to original list from Settings
+  regionPrios = config->regionPrios;
   // Autodetect region and append to region priorities
   if(info.fileName().indexOf("(") != -1 && config->region.isEmpty()) {
     QString regionString = info.fileName().toLower().mid(info.fileName().indexOf("("), info.fileName().length());
@@ -540,48 +540,6 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
   }
 }
 
-void AbstractScraper::setRegionPrios()
-{
-  // Load single custom region
-  if(!config->region.isEmpty()) {
-    regionPrios.append(config->region);
-  }
-  
-  // Load custom region prioritizations
-  if(!config->regionPrios.isEmpty()) {
-    foreach(QString region, config->regionPrios.split(",")) {
-      regionPrios.append(region);
-    }
-  } else {
-    regionPrios.append("eu");
-    regionPrios.append("us");
-    regionPrios.append("ss");
-    regionPrios.append("uk");
-    regionPrios.append("wor");
-    regionPrios.append("jp");
-  }
-
-  // Set original list so we can reset every time we do runPasses
-  regionPriosOrig = regionPrios;
-}
-
-void AbstractScraper::setLangPrios()
-{
-  // Load single custom lang
-  if(!config->lang.isEmpty()) {
-    langPrios.append(config->lang);
-  }
-  
-  // Load custom lang prioritizations
-  if(!config->langPrios.isEmpty()) {
-    foreach(QString lang, config->langPrios.split(",")) {
-      langPrios.append(lang);
-    }
-  } else {
-    langPrios.append("en");
-  }
-}
-
 bool AbstractScraper::platformMatch(QString found, QString platform) {
   foreach(QString p, Platform::getAliases(platform)) {
     if(found.toLower() == p) {
@@ -589,84 +547,4 @@ bool AbstractScraper::platformMatch(QString found, QString platform) {
     }
   }
   return false;
-}
-
-void AbstractScraper::loadAliasMap()
-{
-  if(!QFileInfo::exists("aliasMap.csv"))
-    return;
-  QFile aliasMapFile("aliasMap.csv");
-  if(aliasMapFile.open(QIODevice::ReadOnly)) {
-    while(!aliasMapFile.atEnd()) {
-      QByteArray line = aliasMapFile.readLine();
-      if(line.left(1) == "#")
-	continue;
-      QList<QByteArray> pair = line.split(';');
-      if(pair.size() != 2)
-	continue;
-      QString baseName = pair.at(0);
-      QString aliasName = pair.at(1);
-      baseName = baseName.replace("\"", "").simplified();
-      aliasName = aliasName.replace("\"", "").simplified();
-      aliasMap[baseName] = aliasName;
-    }
-    aliasMapFile.close();
-  }
-}
-
-void AbstractScraper::loadMameMap()
-{
-  if(config->scraper != "import" &&
-     (config->platform == "neogeo" ||
-      config->platform == "arcade" ||
-      config->platform == "mame-advmame" ||
-      config->platform == "mame-libretro" ||
-      config->platform == "mame-mame4all" ||
-      config->platform == "fba")) {
-    QFile mameMapFile("mameMap.csv");
-    if(mameMapFile.open(QIODevice::ReadOnly)) {
-      while(!mameMapFile.atEnd()) {
-	QList<QByteArray> pair = mameMapFile.readLine().split(';');
-	if(pair.size() != 2)
-	  continue;
-	QString mameName = pair.at(0);
-	QString realName = pair.at(1);
-	mameName = mameName.replace("\"", "").simplified();
-	realName = realName.replace("\"", "").simplified();
-	mameMap[mameName] = realName;
-      }
-      mameMapFile.close();
-    }
-  }
-}
-
-
-void AbstractScraper::loadWhdLoadMap()
-{
-  if(config->platform == "amiga") {
-    QDomDocument doc;
-
-    QFile whdLoadFile;
-    if(QFileInfo::exists("whdload_db.xml"))
-      whdLoadFile.setFileName("whdload_db.xml");
-    else if(QFileInfo::exists("/opt/retropie/emulators/amiberry/whdboot/game-data/whdload_db.xml"))
-      whdLoadFile.setFileName("/opt/retropie/emulators/amiberry/whdboot/game-data/whdload_db.xml");
-    else
-      return;
-
-    if(whdLoadFile.open(QIODevice::ReadOnly)) {
-      QByteArray rawXml = whdLoadFile.readAll();
-      whdLoadFile.close();
-      if(doc.setContent(rawXml)) {
-	QDomNodeList gameNodes = doc.elementsByTagName("game");
-	for(int a = 0; a < gameNodes.length(); ++a) {
-	  QDomNode gameNode = gameNodes.at(a);
-	  QPair<QString, QString> gamePair;
-	  gamePair.first = gameNode.firstChildElement("name").text();
-	  gamePair.second = gameNode.firstChildElement("variant_uuid").text();
-	  whdLoadMap[gameNode.toElement().attribute("filename")] = gamePair;
-	}
-      }
-    }
-  }
 }
