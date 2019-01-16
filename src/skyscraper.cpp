@@ -646,6 +646,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("region")) {
     config.region = settings.value("region").toString();
   }
+  if(settings.contains("langPrios")) {
+    config.langPrios = settings.value("langPrios").toString();
+  }
+  if(settings.contains("regionPrios")) {
+    config.regionPrios = settings.value("regionPrios").toString();
+  }
   if(settings.contains("pretend")) {
     config.pretend = settings.value("pretend").toBool();
   }
@@ -808,6 +814,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("region")) {
     config.region = settings.value("region").toString();
+  }
+  if(settings.contains("langPrios")) {
+    config.langPrios = settings.value("langPrios").toString();
+  }
+  if(settings.contains("regionPrios")) {
+    config.regionPrios = settings.value("regionPrios").toString();
   }
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();

@@ -542,15 +542,24 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
 
 void AbstractScraper::setRegionPrios()
 {
-  if(!config->region.isEmpty() && config->region != "eu") {
+  // Load single custom region
+  if(!config->region.isEmpty()) {
     regionPrios.append(config->region);
   }
-  regionPrios.append("eu");
-  regionPrios.append("us");
-  regionPrios.append("ss");
-  regionPrios.append("uk");
-  regionPrios.append("wor");
-  regionPrios.append("jp");
+  
+  // Load custom region prioritizations
+  if(!config->regionPrios.isEmpty()) {
+    foreach(QString region, config->regionPrios.split(",")) {
+      regionPrios.append(region);
+    }
+  } else {
+    regionPrios.append("eu");
+    regionPrios.append("us");
+    regionPrios.append("ss");
+    regionPrios.append("uk");
+    regionPrios.append("wor");
+    regionPrios.append("jp");
+  }
 
   // Set original list so we can reset every time we do runPasses
   regionPriosOrig = regionPrios;
@@ -558,10 +567,19 @@ void AbstractScraper::setRegionPrios()
 
 void AbstractScraper::setLangPrios()
 {
-  if(!config->lang.isEmpty() && config->lang != "en") {
+  // Load single custom lang
+  if(!config->lang.isEmpty()) {
     langPrios.append(config->lang);
   }
-  langPrios.append("en");
+  
+  // Load custom lang prioritizations
+  if(!config->langPrios.isEmpty()) {
+    foreach(QString lang, config->langPrios.split(",")) {
+      langPrios.append(lang);
+    }
+  } else {
+    langPrios.append("en");
+  }
 }
 
 bool AbstractScraper::platformMatch(QString found, QString platform) {
