@@ -47,6 +47,8 @@
 #maxFails="30"
 #lang="en"
 #region="wor"
+#langPrios="en,de,es"
+#regionPrios="eu,us,ss,uk,wor,jp"
 #artworkXml="artwork.xml"
 #relativePaths="false"
 #addExtensions="*.zst"
@@ -73,6 +75,8 @@
 #brackets="true"
 #lang="en"
 #region="wor"
+#langPrios="en,de,es"
+#regionPrios="eu,us,ss,uk,wor,jp"
 #minMatch="0"
 ##Sets the maximum allowed 'description' for the games
 #maxLength="10000"
