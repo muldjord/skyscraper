@@ -1,9 +1,17 @@
-# This file allows you to force aliases for any rom filename.
+# This file allows you to force search name aliases for any rom filename.
 # One filename + alias per line. DO NOT ADD THE SUFFIX such as ".zip"!
 #
-# Note that this file is global and will be used when scraping ANY platform.
+# Note 1! This file is global and will be used when scraping ANY platform.
+#
+# Note 2! All bracket info in these titles are ignored. This is a search name alias
+#         NOT a title alias. It merely provides a different base name for Skyscraper
+#         when it creates the search query. It is meant to help scrape files that have
+#         abstract file names where the search based scraping modules have a hard time
+#         finding good results.
+#         If you wish to keep or add brackets to a title you can still do so by adding
+#         them to the actual file instead.
 #
 # Format (without the quotes):
-# "Rom Filename (Europe);Use This Name Instead (Europe)"
+# "Rom Filename (Europe);Use This Name Instead"
 #
 # Add your lines below this comment:
