@@ -180,6 +180,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Changed "endat" config.ini option to "endAt" to conform with style of other variables
 * Fixed "--relative" option when combined with roms in subdirs
 * "--unattend" options now answers "y" to all "--purgedb" prompt automatically
+* Added "regionPrios" and "langPrios" variables to config.ini for main and platform sections
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
