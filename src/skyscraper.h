@@ -29,7 +29,6 @@
 #include <QObject>
 #include <QFile>
 #include <QTime>
-#include <QMutex>
 #include <QCommandLineParser>
 
 #include "netcomm.h"

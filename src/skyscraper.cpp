@@ -38,7 +38,6 @@
 #include <QStorageInfo>
 
 #include "skyscraper.h"
-#include "xmlreader.h"
 #include "strtools.h"
 
 #include "emulationstation.h"
