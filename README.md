@@ -155,6 +155,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
+* Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
