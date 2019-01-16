@@ -23,8 +23,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#ifndef LOCALDB_H
-#define LOCALDB_H
+#ifndef CACHE_H
+#define CACHE_H
 
 #include <QObject>
 #include <QString>
@@ -61,29 +61,29 @@ struct ResCounts {
   int videos;
 };
 
-class LocalDb
+class Cache
 {
 public:
-  LocalDb(const QString &dbFolder);
+  Cache(const QString &cacheFolder);
   bool createFolders(const QString &scraper);
-  bool readDb();
+  bool read();
   void purgeResources(QString purgeStr);
   void purgeAll(const bool unattend = false);
   void vacuumResources(const QString inputFolder, const QString filters,
 		       const bool unattend = false);
   void showStats(int verbosity);
   void readPriorities();
-  bool writeDb();
-  void cleanDb();
+  bool write();
+  void clean();
   void addResources(GameEntry &entry, const Settings &config);
   void fillBlanks(GameEntry &entry, const QString scraper = "");
   bool hasEntries(const QString &sha1, const QString scraper = "");
-  void mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder);
+  void merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFolder);
   QList<Resource> getResources();
 
  private:
-  QDir dbDir;
-  QMutex dbMutex;
+  QDir cacheDir;
+  QMutex cacheMutex;
 
   QMap<QString, QList<QString> > prioMap;
 
@@ -91,7 +91,7 @@ public:
   
   QList<Resource> resources;
   void addToResCounts(const QString source, const QString type);
-  void addResource(const Resource &resource, GameEntry &entry, const QString &dbAbsolutePath,
+  void addResource(const Resource &resource, GameEntry &entry, const QString &cacheAbsolutePath,
 		   const Settings &config);
   void verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &noDelete, QString resType);
   void verifyResources(int &resourcesDeleted);
@@ -101,4 +101,4 @@ public:
   int resAtLoad = 0;
 };
 
-#endif // LOCALDB_H
+#endif // CACHE_H

@@ -35,46 +35,46 @@
 #include "localdb.h"
 #include "nametools.h"
 
-LocalDb::LocalDb(const QString &dbFolder)
+Cache::Cache(const QString &cacheFolder)
 {
-  dbDir = QDir(dbFolder);
+  cacheDir = QDir(cacheFolder);
 }
 
-bool LocalDb::createFolders(const QString &scraper)
+bool Cache::createFolders(const QString &scraper)
 {
   if(scraper != "localdb") {
-    if(!dbDir.mkpath(dbDir.absolutePath() + "/covers/" + scraper)) {
+    if(!cacheDir.mkpath(cacheDir.absolutePath() + "/covers/" + scraper)) {
       return false;
     }
-    if(!dbDir.mkpath(dbDir.absolutePath() + "/screenshots/" + scraper)) {
+    if(!cacheDir.mkpath(cacheDir.absolutePath() + "/screenshots/" + scraper)) {
       return false;
     }
-    if(!dbDir.mkpath(dbDir.absolutePath() + "/wheels/" + scraper)) {
+    if(!cacheDir.mkpath(cacheDir.absolutePath() + "/wheels/" + scraper)) {
       return false;
     }
-    if(!dbDir.mkpath(dbDir.absolutePath() + "/marquees/" + scraper)) {
+    if(!cacheDir.mkpath(cacheDir.absolutePath() + "/marquees/" + scraper)) {
       return false;
     }
-    if(!dbDir.mkpath(dbDir.absolutePath() + "/videos/" + scraper)) {
+    if(!cacheDir.mkpath(cacheDir.absolutePath() + "/videos/" + scraper)) {
       return false;
     }
   }
 
-  // Copy priorities.xml example file to db folder if it doesn't already exist
-  if(!QFileInfo::exists(dbDir.absolutePath() + "/priorities.xml")) {
+  // Copy priorities.xml example file to cache folder if it doesn't already exist
+  if(!QFileInfo::exists(cacheDir.absolutePath() + "/priorities.xml")) {
     QFile::copy("dbs/priorities.xml.example",
-		dbDir.absolutePath() + "/priorities.xml");
+		cacheDir.absolutePath() + "/priorities.xml");
   }
   
   return true;
 }
 
-bool LocalDb::readDb()
+bool Cache::read()
 {
-  QFile dbFile(dbDir.absolutePath() + "/db.xml");
-  if(dbFile.open(QIODevice::ReadOnly)) {
+  QFile cacheFile(cacheDir.absolutePath() + "/cache.xml");
+  if(cacheFile.open(QIODevice::ReadOnly)) {
     printf("Reading and parsing local database cache, please wait...\n");
-    QXmlStreamReader xml(&dbFile);
+    QXmlStreamReader xml(&cacheFile);
     while(!xml.atEnd()) {
       if(xml.readNext() != QXmlStreamReader::StartElement) {
 	continue;
@@ -115,7 +115,7 @@ bool LocalDb::readDb()
       if(resource.type == "cover" || resource.type == "screenshot" ||
 	 resource.type == "wheel" || resource.type == "marquee" ||
 	 resource.type == "video") {
-	if(!QFileInfo::exists(dbDir.absolutePath() + "/" + resource.value)) {
+	if(!QFileInfo::exists(cacheDir.absolutePath() + "/" + resource.value)) {
 	  printf("Source file '%s' missing, skipping entry...\n",
 		 resource.value.toStdString().c_str());
 	  continue;
@@ -124,7 +124,7 @@ bool LocalDb::readDb()
 
       resources.append(resource);
     }
-    dbFile.close();
+    cacheFile.close();
     resAtLoad = resources.length();
     printf("Successfully parsed %d resources!\n\n", resources.length());
     return true;
@@ -132,7 +132,7 @@ bool LocalDb::readDb()
   return false;
 }
 
-void LocalDb::purgeResources(QString purgeStr)
+void Cache::purgeResources(QString purgeStr)
 {
   printf("Purging requested resources from cache, please wait...\n");
 
@@ -168,7 +168,7 @@ void LocalDb::purgeResources(QString purgeStr)
       if(res.type == "cover" || res.type == "screenshot" ||
 	 res.type == "wheel" || res.type == "marquee" ||
 	 res.type == "video") {
-	if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+	if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	  printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
 	  continue;
 	}
@@ -180,7 +180,7 @@ void LocalDb::purgeResources(QString purgeStr)
   printf("Successfully purged %d resources from the local database cache.\n", purged);
 }
 
-void LocalDb::purgeAll(const bool unattend)
+void Cache::purgeAll(const bool unattend)
 {
   if(!unattend) {
     printf("\033[1;31mWARNING!!! You are about to purge / remove ALL resources from the Skyscaper cache connected to the currently selected platform. THIS CANNOT BE UNDONE!\033[0m\n\n");
@@ -211,7 +211,7 @@ void LocalDb::purgeAll(const bool unattend)
     if(res.type == "cover" || res.type == "screenshot" ||
        res.type == "wheel" || res.type == "marquee" ||
        res.type == "video") {
-      if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+      if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
 	continue;
       }
@@ -228,11 +228,11 @@ void LocalDb::purgeAll(const bool unattend)
   printf("\n");
 }
 
-void LocalDb::vacuumResources(const QString inputFolder, const QString filter, const bool unattend)
+void Cache::vacuumResources(const QString inputFolder, const QString filter, const bool unattend)
 {
   if(!unattend) {
     std::string userInput = "";
-    printf("\033[1;31mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories matching the suffixes supported by the platform and any extension(s) you might have added manually). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Local db folder' further up and is usually located under '~/.skyscraper/' unless you've set it manually.\033[0m\n\n", inputFolder.toStdString().c_str());
+    printf("\033[1;31mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories matching the suffixes supported by the platform and any extension(s) you might have added manually). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Cache folder' further up and is usually located under '~/.skyscraper/' unless you've set it manually.\033[0m\n\n", inputFolder.toStdString().c_str());
     printf("\033[1;34mDo you wish to continue\033[0m (y/N)? ");
     getline(std::cin, userInput);
     if(userInput != "y") {
@@ -300,7 +300,7 @@ void LocalDb::vacuumResources(const QString inputFolder, const QString filter, c
 	if(res.type == "cover" || res.type == "screenshot" ||
 	   res.type == "wheel" || res.type == "marquee" ||
 	   res.type == "video") {
-	  if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+	  if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	    printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
 	    continue;
 	  }
@@ -319,7 +319,7 @@ void LocalDb::vacuumResources(const QString inputFolder, const QString filter, c
   printf("\n");
 }
 
-void LocalDb::showStats(int verbosity)
+void Cache::showStats(int verbosity)
 {
   printf("Local database cache stats:\n");
   if(verbosity == 1) {
@@ -394,7 +394,7 @@ void LocalDb::showStats(int verbosity)
   printf("\n");
 }
 
-void LocalDb::addToResCounts(const QString source, const QString type)
+void Cache::addToResCounts(const QString source, const QString type)
 {
   if(type == "title") {
     resCountsMap[source].titles++;
@@ -429,11 +429,11 @@ void LocalDb::addToResCounts(const QString source, const QString type)
   }
 }
 
-void LocalDb::readPriorities()
+void Cache::readPriorities()
 {
   QDomDocument prioDoc;
-  QFile prioFile(dbDir.absolutePath() + "/priorities.xml");
-  printf("Looking for optional 'priorities.xml' file in local db folder... ");
+  QFile prioFile(cacheDir.absolutePath() + "/priorities.xml");
+  printf("Looking for optional 'priorities.xml' file in cache folder... ");
   if(prioFile.open(QIODevice::ReadOnly)) {
     printf("\033[1;32mFound!\033[0m\n");
     if(!prioDoc.setContent(prioFile.readAll())) {
@@ -476,16 +476,16 @@ void LocalDb::readPriorities()
   printf("!\n\n");
 }
 
-bool LocalDb::writeDb()
+bool Cache::write()
 {
   bool result = false;
 
-  QFile dbFile(dbDir.absolutePath() + "/db.xml");
-  if(dbFile.open(QIODevice::WriteOnly)) {
+  QFile cacheFile(cacheDir.absolutePath() + "/cache.xml");
+  if(cacheFile.open(QIODevice::WriteOnly)) {
     printf("Writing %d (%d new) resources to local database, please wait... ",
 	   resources.length(), resources.length() - resAtLoad);
     fflush(stdout);
-    QXmlStreamWriter xml(&dbFile);
+    QXmlStreamWriter xml(&cacheFile);
     xml.setAutoFormatting(true);
     xml.writeStartDocument();
     xml.writeStartElement("resources");
@@ -501,28 +501,28 @@ bool LocalDb::writeDb()
     xml.writeEndDocument();
     result = true;
     printf("\033[1;32mSuccess!\033[0m\n");
-    dbFile.close();
+    cacheFile.close();
   }
   return result;
 }
 
-// This verifies all attached media files and deletes those that have no entry in the db
-void LocalDb::cleanDb()
+// This verifies all attached media files and deletes those that have no entry in the cache
+void Cache::clean()
 {
   // TODO: Add format checks for each resource type, and remove if deemed corrupt
 
   printf("Starting cleaning run on local database, please wait...\n");
 
-  if(!QFileInfo::exists(dbDir.absolutePath() + "/db.xml")) {
-    printf("'db.xml' not found, db cleaning cancelled...\n");
+  if(!QFileInfo::exists(cacheDir.absolutePath() + "/cache.xml")) {
+    printf("'cache.xml' not found, cache cleaning cancelled...\n");
     return;
   }
 
-  QDir coversDir(dbDir.absolutePath() + "/covers", "*.*", QDir::Name, QDir::Files);
-  QDir screenshotsDir(dbDir.absolutePath() + "/screenshots", "*.*", QDir::Name, QDir::Files);
-  QDir wheelsDir(dbDir.absolutePath() + "/wheels", "*.*", QDir::Name, QDir::Files);
-  QDir marqueesDir(dbDir.absolutePath() + "/marquees", "*.*", QDir::Name, QDir::Files);
-  QDir videosDir(dbDir.absolutePath() + "/videos", "*.*", QDir::Name, QDir::Files);
+  QDir coversDir(cacheDir.absolutePath() + "/covers", "*.*", QDir::Name, QDir::Files);
+  QDir screenshotsDir(cacheDir.absolutePath() + "/screenshots", "*.*", QDir::Name, QDir::Files);
+  QDir wheelsDir(cacheDir.absolutePath() + "/wheels", "*.*", QDir::Name, QDir::Files);
+  QDir marqueesDir(cacheDir.absolutePath() + "/marquees", "*.*", QDir::Name, QDir::Files);
+  QDir videosDir(cacheDir.absolutePath() + "/videos", "*.*", QDir::Name, QDir::Files);
 
   QDirIterator coversDirIt(coversDir.absolutePath(),
 			   QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
@@ -558,20 +558,20 @@ void LocalDb::cleanDb()
   } else {
     printf("Successfully deleted %d files with no resource entry.\n", filesDeleted);
     if(filesNoDelete != 0) {
-      printf("%d files couldn't be deleted, please check file permissions and re-run with '--cleandb'.\n", filesNoDelete);
+      printf("%d files couldn't be deleted, please check file permissions and re-run with '--cleancache'.\n", filesNoDelete);
     }
     printf("\n");
   }
 }
 
-void LocalDb::verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &filesNoDelete, QString resType)
+void Cache::verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &filesNoDelete, QString resType)
 {
   while(dirIt.hasNext()) {
     QFileInfo fileInfo(dirIt.next());
     bool valid = false;
     foreach(Resource resource, resources) {
       if(resource.type == resType) {
-	QFileInfo resInfo(dbDir.absolutePath() + "/" + resource.value);
+	QFileInfo resInfo(cacheDir.absolutePath() + "/" + resource.value);
 	if(fileInfo.fileName() == resInfo.fileName()) {
 	  valid = true;
 	  break;
@@ -592,30 +592,30 @@ void LocalDb::verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &filesNoDe
   }
 }
 
-void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder)
+void Cache::merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFolder)
 {
   printf("Merging databases, please wait...\n");
-  QList<Resource> srcResources = srcDb.getResources();
+  QList<Resource> mergeResources = mergeCache.getResources();
 
-  QDir srcDbDir(srcDbFolder);
+  QDir mergeCacheDir(mergeCacheFolder);
   
   int resUpdated = 0;
   int resMerged = 0;
 
-  foreach(Resource srcResource, srcResources) {
+  foreach(Resource mergeResource, mergeResources) {
     bool resExists = false;
     // This type of iterator ensures we can delete items while iterating
     QMutableListIterator<Resource> it(resources);
     while(it.hasNext()) {
       Resource res = it.next();
-      if(res.sha1 == srcResource.sha1 &&
-	 res.type == srcResource.type &&
-	 res.source == srcResource.source) {
+      if(res.sha1 == mergeResource.sha1 &&
+	 res.type == mergeResource.type &&
+	 res.source == mergeResource.source) {
 	if(overwrite) {
 	  if(res.type == "cover" || res.type == "screenshot" ||
 	     res.type == "wheel" || res.type == "marquee" ||
 	     res.type == "video") {
-	    if(!QFile::remove(dbDir.absolutePath() + "/" + res.value)) {
+	    if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	      printf("Couldn't remove media file '%s' for updating, skipping...\n", res.value.toStdString().c_str());
 	      continue;
 	    }
@@ -629,13 +629,13 @@ void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder
       }
     }
     if(!resExists) {
-      if(srcResource.type == "cover" || srcResource.type == "screenshot" ||
-	 srcResource.type == "wheel" || srcResource.type == "marquee" ||
-	 srcResource.type == "video") {
-	dbDir.mkpath(QFileInfo(dbDir.absolutePath() + "/" + srcResource.value).absolutePath());
-	if(!QFile::copy(srcDbDir.absolutePath() + "/" + srcResource.value,
-			dbDir.absolutePath() + "/" + srcResource.value)) {
-	  printf("Couldn't copy media file '%s', skipping...\n",  srcResource.value.toStdString().c_str());
+      if(mergeResource.type == "cover" || mergeResource.type == "screenshot" ||
+	 mergeResource.type == "wheel" || mergeResource.type == "marquee" ||
+	 mergeResource.type == "video") {
+	cacheDir.mkpath(QFileInfo(cacheDir.absolutePath() + "/" + mergeResource.value).absolutePath());
+	if(!QFile::copy(mergeCacheDir.absolutePath() + "/" + mergeResource.value,
+			cacheDir.absolutePath() + "/" + mergeResource.value)) {
+	  printf("Couldn't copy media file '%s', skipping...\n",  mergeResource.value.toStdString().c_str());
 	  continue;
 	}
       }
@@ -644,21 +644,21 @@ void LocalDb::mergeDb(LocalDb &srcDb, bool overwrite, const QString &srcDbFolder
       } else {
 	resMerged++;
       }
-      resources.append(srcResource);
+      resources.append(mergeResource);
     }
   }
   printf("Successfully updated %d resource(s) in local database!\n", resUpdated);
   printf("Successfully merged %d new resource(s) into local database!\n\n", resMerged);
 }
 
-QList<Resource> LocalDb::getResources()
+QList<Resource> Cache::getResources()
 {
   return resources;
 }
     
-void LocalDb::addResources(GameEntry &entry, const Settings &config)
+void Cache::addResources(GameEntry &entry, const Settings &config)
 {
-  QString dbAbsolutePath = dbDir.absolutePath();
+  QString cacheAbsolutePath = cacheDir.absolutePath();
 
   if(entry.source.isEmpty()) {
     printf("Something is wrong, resource with sha1 '%s' has no source, exiting...\n",
@@ -674,85 +674,85 @@ void LocalDb::addResources(GameEntry &entry, const Settings &config)
     if(entry.title != "") {
       resource.type = "title";
       resource.value = entry.title;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.platform != "") {
       resource.type = "platform";
       resource.value = entry.platform;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.description != "") {
       resource.type = "description";
       resource.value = entry.description;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.publisher != "") {
       resource.type = "publisher";
       resource.value = entry.publisher;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.developer != "") {
       resource.type = "developer";
       resource.value = entry.developer;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.players != "") {
       resource.type = "players";
       resource.value = entry.players;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.ages != "") {
       resource.type = "ages";
       resource.value = entry.ages;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.tags != "") {
       resource.type = "tags";
       resource.value = entry.tags;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.rating != "") {
       resource.type = "rating";
       resource.value = entry.rating;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.releaseDate != "") {
       resource.type = "releasedate";
       resource.value = entry.releaseDate;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(entry.videoData != "" && entry.videoFormat != "") {
       resource.type = "video";
       resource.value = "videos/" + entry.source + "/"  + entry.sha1 + "." + entry.videoFormat;
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.coverData.isNull() && config.cacheCovers) {
       resource.type = "cover";
       resource.value = "covers/" + entry.source + "/" + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.screenshotData.isNull() && config.cacheScreenshots) {
       resource.type = "screenshot";
       resource.value = "screenshots/" + entry.source + "/"  + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.wheelData.isNull() && config.cacheWheels) {
       resource.type = "wheel";
       resource.value = "wheels/" + entry.source + "/"  + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.marqueeData.isNull() && config.cacheMarquees) {
       resource.type = "marquee";
       resource.value = "marquees/" + entry.source + "/"  + entry.sha1 + ".png";
-      addResource(resource, entry, dbAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config);
     }
   }
 }
 
-void LocalDb::addResource(const Resource &resource, GameEntry &entry,
-			  const QString &dbAbsolutePath, const Settings &config)
+void Cache::addResource(const Resource &resource, GameEntry &entry,
+			  const QString &cacheAbsolutePath, const Settings &config)
 {
-  QMutexLocker locker(&dbMutex);
+  QMutexLocker locker(&cacheMutex);
   bool notFound = true;
   // This type of iterator ensures we can delete items while iterating
   QMutableListIterator<Resource> it(resources);
@@ -777,7 +777,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.coverData.height() >= 512 && !config.noResize) {
 	entry.coverData = entry.coverData.scaledToHeight(512, Qt::SmoothTransformation);
       }
-      if(!entry.coverData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.coverData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "screenshot") {
@@ -785,7 +785,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.screenshotData.width() >= 640 && !config.noResize) {
 	entry.screenshotData = entry.screenshotData.scaledToWidth(640, Qt::SmoothTransformation);
       }
-      if(!entry.screenshotData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.screenshotData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "wheel") {
@@ -793,7 +793,7 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.wheelData.width() >= 640 && !config.noResize) {
 	entry.wheelData = entry.wheelData.scaledToWidth(640, Qt::SmoothTransformation);
       }
-      if(!entry.wheelData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.wheelData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "marquee") {
@@ -801,11 +801,11 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
       if(entry.marqueeData.width() >= 640 && !config.noResize) {
 	entry.marqueeData = entry.marqueeData.scaledToWidth(640, Qt::SmoothTransformation);
       }
-      if(!entry.marqueeData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(dbAbsolutePath + "/" + resource.value)) {
+      if(!entry.marqueeData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
 	okToAppend = false;
       }
     } else if(resource.type == "video") {
-      QFile videoFile(dbAbsolutePath + "/" + resource.value);
+      QFile videoFile(cacheAbsolutePath + "/" + resource.value);
       if(videoFile.open(QIODevice::WriteOnly)) {
 	videoFile.write(entry.videoData);
 	videoFile.close();
@@ -823,9 +823,9 @@ void LocalDb::addResource(const Resource &resource, GameEntry &entry,
   }
 }
 
-bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
+bool Cache::hasEntries(const QString &sha1, const QString scraper)
 {
-  QMutexLocker locker(&dbMutex);
+  QMutexLocker locker(&cacheMutex);
   foreach(Resource res, resources) {
     if(scraper.isEmpty()) {
       if(res.sha1 == sha1) {
@@ -840,9 +840,9 @@ bool LocalDb::hasEntries(const QString &sha1, const QString scraper)
   return false;
 }
 
-void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
+void Cache::fillBlanks(GameEntry &entry, const QString scraper)
 {
-  QMutexLocker locker(&dbMutex);
+  QMutexLocker locker(&cacheMutex);
   QList<Resource> matchingResources;
   // Find all resources related to this particular rom
   foreach(Resource resource, resources) {
@@ -952,7 +952,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.coverData = QImage(dbDir.absolutePath() + "/" + result);
+      entry.coverData = QImage(cacheDir.absolutePath() + "/" + result);
       entry.coverSrc = source;
     }
   }
@@ -961,7 +961,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.screenshotData = QImage(dbDir.absolutePath() + "/" + result);
+      entry.screenshotData = QImage(cacheDir.absolutePath() + "/" + result);
       entry.screenshotSrc = source;
     }
   }
@@ -970,7 +970,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.wheelData = QImage(dbDir.absolutePath() + "/" + result);
+      entry.wheelData = QImage(cacheDir.absolutePath() + "/" + result);
       entry.wheelSrc = source;
     }
   }
@@ -979,7 +979,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.marqueeData = QImage(dbDir.absolutePath() + "/" + result);
+      entry.marqueeData = QImage(cacheDir.absolutePath() + "/" + result);
       entry.marqueeSrc = source;
     }
   }
@@ -988,7 +988,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      QFileInfo info(dbDir.absolutePath() + "/" + result);
+      QFileInfo info(cacheDir.absolutePath() + "/" + result);
       QFile videoFile(info.absoluteFilePath());
       if(videoFile.open(QIODevice::ReadOnly)) {
 	entry.videoData = videoFile.readAll();
@@ -1001,7 +1001,7 @@ void LocalDb::fillBlanks(GameEntry &entry, const QString scraper)
   }
 }
 
-bool LocalDb::fillType(QString &type, QList<Resource> &matchingResources,
+bool Cache::fillType(QString &type, QList<Resource> &matchingResources,
 		       QString &result, QString &source)
 {
   QList<Resource> typeResources;
