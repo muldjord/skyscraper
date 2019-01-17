@@ -169,7 +169,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Changed "noHints" config variable to "hints"
 * Changed "noBrackets" config variable to "brackets"
 * Changed "noResize" config variable to "resize"
-* Removed "--updatedb" cli option as it was deprecated (use "--refresh" instead)
+* Removed "--updatedb" cli option as it was deprecated (use "--cache refresh" instead)
 * Removed "--nolocaldb" cli option as it is irrelevant after 3.0.0 usage changes
 * Changed "--allowext" cli option to "--addext"
 * Removed "localDb"/"cache" config sections and moved options to "main"
@@ -178,7 +178,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Changed "startat" config.ini option to "startAt" to conform with style of other variables
 * Changed "endat" config.ini option to "endAt" to conform with style of other variables
 * Fixed "--relative" option when combined with roms in subdirs
-* "--unattend" options now answers "y" to all "--purgedb" prompt automatically
+* "--unattend" options now answers "y" to all "--cache purge:" prompts automatically
 * Added "regionPrios" and "langPrios" variables to config.ini for main and platform sections
 * Added auto-migration from old config.ini format to v3.0.0 format
 * Added auto-migration from "dbs" folder to "cache" folder
