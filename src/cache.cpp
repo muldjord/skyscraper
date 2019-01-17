@@ -579,7 +579,7 @@ void Cache::verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &filesNoDele
     QFileInfo fileInfo(dirIt.next());
     if(!resFileNames.contains(fileInfo.absoluteFilePath())) {
       printf("No resource entry for file '%s', deleting... ",
-	     fileInfo.fileName().toStdString().c_str());
+	     fileInfo.absoluteFilePath().toStdString().c_str());
       if(QFile::remove(fileInfo.absoluteFilePath())) {
 	printf("OK!\n");
 	filesDeleted++;
