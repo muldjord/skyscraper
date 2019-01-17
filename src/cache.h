@@ -74,7 +74,7 @@ public:
   void showStats(int verbosity);
   void readPriorities();
   bool write();
-  void clean();
+  void validate();
   void addResources(GameEntry &entry, const Settings &config);
   void fillBlanks(GameEntry &entry, const QString scraper = "");
   bool hasEntries(const QString &sha1, const QString scraper = "");

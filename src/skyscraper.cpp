@@ -141,7 +141,7 @@ void Skyscraper::run()
     exit(0);
   }
   if(config.cacheOptions == "validate") {
-    cache->clean();
+    cache->validate();
     cache->write();
     exit(0);
   }

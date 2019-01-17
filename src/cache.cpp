@@ -508,11 +508,11 @@ bool Cache::write()
 }
 
 // This verifies all attached media files and deletes those that have no entry in the cache
-void Cache::clean()
+void Cache::validate()
 {
   // TODO: Add format checks for each resource type, and remove if deemed corrupt
 
-  printf("Starting cleaning run on resource cache, please wait...\n");
+  printf("Starting resource cache validation run, please wait...\n");
 
   if(!QFileInfo::exists(cacheDir.absolutePath() + "/db.xml")) {
     printf("'db.xml' not found, cache cleaning cancelled...\n");
