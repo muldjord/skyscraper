@@ -322,7 +322,7 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter, con
 
 void Cache::showStats(int verbosity)
 {
-  printf("Local database cache stats:\n");
+  printf("Resource cache stats for selected platform:\n");
   if(verbosity == 1) {
     int titles = 0;
     int platforms = 0;
