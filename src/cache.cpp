@@ -1,5 +1,5 @@
 /***************************************************************************
- *            localdb.cpp
+ *            cache.cpp
  *
  *  Wed Jun 18 12:00:00 CEST 2017
  *  Copyright 2017 Lars Muldjord
@@ -32,7 +32,7 @@
 #include <QDateTime>
 #include <QDomDocument>
 
-#include "localdb.h"
+#include "cache.h"
 #include "nametools.h"
 
 Cache::Cache(const QString &cacheFolder)
@@ -42,7 +42,7 @@ Cache::Cache(const QString &cacheFolder)
 
 bool Cache::createFolders(const QString &scraper)
 {
-  if(scraper != "localdb") {
+  if(scraper != "cache") {
     if(!cacheDir.mkpath(cacheDir.absolutePath() + "/covers/" + scraper)) {
       return false;
     }
@@ -71,7 +71,7 @@ bool Cache::createFolders(const QString &scraper)
 
 bool Cache::read()
 {
-  QFile cacheFile(cacheDir.absolutePath() + "/cache.xml");
+  QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::ReadOnly)) {
     printf("Reading and parsing local database cache, please wait...\n");
     QXmlStreamReader xml(&cacheFile);
@@ -134,6 +134,7 @@ bool Cache::read()
 
 void Cache::purgeResources(QString purgeStr)
 {
+  purgeStr.replace("purge:", "");
   printf("Purging requested resources from cache, please wait...\n");
 
   QString module = "";
@@ -141,11 +142,11 @@ void Cache::purgeResources(QString purgeStr)
 
   QList<QString> definitions = purgeStr.split(",");
   foreach(QString definition, definitions) {
-    if(definition.left(2) == "m:") {
+    if(definition.left(2) == "m=") {
       module = definition.remove(0,2);
       printf("Module: '%s'\n", module.toStdString().c_str());
     }
-	if(definition.left(2) == "t:") {
+	if(definition.left(2) == "t=") {
       type = definition.remove(0,2);
       printf("Type: '%s'\n", type.toStdString().c_str());
     }
@@ -480,7 +481,7 @@ bool Cache::write()
 {
   bool result = false;
 
-  QFile cacheFile(cacheDir.absolutePath() + "/cache.xml");
+  QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::WriteOnly)) {
     printf("Writing %d (%d new) resources to local database, please wait... ",
 	   resources.length(), resources.length() - resAtLoad);
@@ -513,8 +514,8 @@ void Cache::clean()
 
   printf("Starting cleaning run on local database, please wait...\n");
 
-  if(!QFileInfo::exists(cacheDir.absolutePath() + "/cache.xml")) {
-    printf("'cache.xml' not found, cache cleaning cancelled...\n");
+  if(!QFileInfo::exists(cacheDir.absolutePath() + "/db.xml")) {
+    printf("'db.xml' not found, cache cleaning cancelled...\n");
     return;
   }
 

@@ -31,7 +31,7 @@
 struct Settings {
   QString currentDir = "";
 
-  QString dbFolder = "";
+  QString cacheFolder = "";
   QString gameListFileString = "";
   QString skippedFileString = "";
   QString configFile = "";
@@ -62,11 +62,8 @@ struct Settings {
   bool symlink = false;
   bool brackets = true;
   bool refresh = false;
-  bool dbStats = false;
-  QString dbPurge = "";
-  bool cleanDb = false;
+  QString cacheOptions = "";
   bool noResize = false;
-  QString mergeDb = "";
   bool subdirs = true;
   QString startAt = "";
   QString endAt = "";

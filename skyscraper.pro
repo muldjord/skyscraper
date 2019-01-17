@@ -12,8 +12,8 @@ unix:target.files=Skyscraper Skyscraper.app/Contents/MacOS/Skyscraper
 unix:examples.path=/usr/local/etc/skyscraper
 unix:examples.files=config.ini.example README.md hints.txt artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 aliasMap.csv mameMap.csv docs/ARTWORK.md tgdb_developers.json tgdb_publishers.json
 
-unix:dbexamples.path=/usr/local/etc/skyscraper/dbs
-unix:dbexamples.files=dbs/priorities.xml.example docs/LOCALDBCACHE.md
+unix:dbexamples.path=/usr/local/etc/skyscraper/cache
+unix:dbexamples.files=cache/priorities.xml.example docs/CACHE.md
 
 unix:impexamples.path=/usr/local/etc/skyscraper/import
 unix:impexamples.files=import/README.md import/definitions.dat.example1 import/definitions.dat.example2
@@ -35,7 +35,7 @@ HEADERS += src/skyscraper.h \
            src/imgtools.h \
            src/esgamelist.h \
            src/scraperworker.h \
-           src/localdb.h \
+           src/cache.h \
            src/localscraper.h \
            src/importscraper.h \
            src/gameentry.h \
@@ -82,7 +82,7 @@ SOURCES += src/main.cpp \
            src/imgtools.cpp \
            src/esgamelist.cpp \
            src/scraperworker.cpp \
-           src/localdb.cpp \
+           src/cache.cpp \
            src/localscraper.cpp \
            src/importscraper.cpp \
            src/gameentry.cpp \

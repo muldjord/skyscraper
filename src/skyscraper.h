@@ -33,7 +33,7 @@
 
 #include "netcomm.h"
 #include "scraperworker.h"
-#include "localdb.h"
+#include "cache.h"
 #include "abstractfrontend.h"
 #include "settings.h"
 #include "platform.h"
@@ -72,7 +72,7 @@ private:
   
   AbstractFrontend *frontend;
 
-  QSharedPointer<LocalDb> localDb;
+  QSharedPointer<Cache> cache;
   
   QList<GameEntry> gameEntries;
   QList<QString> cliFiles;

@@ -95,8 +95,11 @@ int main(int argc, char *argv[])
   // Create resources folder
   skyDir.mkpath("resources");
 
-  // Create localdb folder
-  skyDir.mkpath("dbs");
+  // Rename 'dbs' folder to migrate 2.x users to 3.x
+  skyDir.rename(skyDir.absolutePath() + "/dbs", skyDir.absolutePath() + "/cache");
+
+  // Create cache folder
+  skyDir.mkpath("cache");
   QDir::setCurrent(skyDir.absolutePath());
 
   // Install the custom debug message handler used by qDebug()
@@ -119,20 +122,20 @@ int main(int argc, char *argv[])
 
   parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files in the input directory. It fetches media files and other relevant information for the games. It composites game art from the recipe at '~/.skyscraper/artwork.xml' and lastly builds a game list file for use with the chosen frontend.\n\nIn addition to the command line options Skyscraper also provides a lot of customizable options for configuration, artwork, game name aliases, resource priorities and much more. Please check the full documentation at 'https://github.com/muldjord/skyscraper' for a detailed explanation of all features.");
   parser.addHelpOption();
-  QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "platform", "");
-  QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "frontend", "");
-  QCommandLineOption eOption("e", "Set emulator. This is only required by the 'attractmode' frontend.\n(Default is none)", "emulator", "");
-  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '~/RetroPie/roms/[platform]')", "path", "");
-  QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "path", "");
-  QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "path", "");
-  QCommandLineOption sOption("s", "Choose scraping module to use while scraping the selected platform.\n(WEB: 'arcadedb', 'igdb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'esgamelist', 'import' and 'localdb'. Default is 'localdb')", "module", "");
-  QCommandLineOption uOption("u", "userKey or UserID and Password for use with the selected scraping module.\n(Default is none)", "key or user:password", "");
+  QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "PLATFORM", "");
+  QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "FRONTEND", "");
+  QCommandLineOption eOption("e", "Set emulator. This is only required by the 'attractmode' frontend.\n(Default is none)", "EMULATOR", "");
+  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '~/RetroPie/roms/[platform]')", "PATH", "");
+  QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "PATH", "");
+  QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "PATH", "");
+  QCommandLineOption sOption("s", "Choose scraping module to gather resources from for selected platform.\n(WEB: 'arcadedb', 'igdb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'esgamelist' and 'import'. Leave '-s' out to generate game list from cached resources)", "MODULE", "");
+  QCommandLineOption uOption("u", "userKey or UserID and Password for use with the selected scraping module.\n(Default is none)", "KEY/USER:PASSWORD", "");
   QCommandLineOption mOption("m", "Minimum match percentage when comparing search result titles to filename titles.\n(default is 65)", "0-100", "");
   QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 2500)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use. This might change depending on the scraping module limits.\n(default is 4)", "1-8", "");
-  QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '~/.skyscraper/config.ini')", "filename", "");
-  QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '~/.skyscraper/artwork.xml')", "filename", "");
-  QCommandLineOption dOption("d", "Set local resource database cache folder.\n(default is '~/.skyscraper/dbs/[platform]')", "folder", "");
+  QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '~/.skyscraper/config.ini')", "FILENAME", "");
+  QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '~/.skyscraper/artwork.xml')", "FILENAME", "");
+  QCommandLineOption dOption("d", "Set local resource database cache folder.\n(default is '~/.skyscraper/cache/[platform]')", "FOLDER", "");
   QCommandLineOption videosOption("videos", "Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!");
   QCommandLineOption symlinkOption("symlink", "Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!");
   QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");
@@ -142,26 +145,22 @@ int main(int argc, char *argv[])
   QCommandLineOption skippedOption("skipped", "Include skipped entries when writing final gamelist.");
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption relativeOption("relative", "Forces all gamelist paths to be relative to rom location.");
-  QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext)", "extension", "");
-  QCommandLineOption dbstatsOption("dbstats", "Show stats for the localdb resource cache. This will also be shown with a verbosity level of 1 or more.");
-  QCommandLineOption refreshOption("refresh", "Refresh resources in the localdb resource cache from the selected scraping module.");
-  QCommandLineOption purgedbOption("purgedb", "Purges all requested resources from the localdb resource cache. You can define either module 'm:[module]' or type 't:[type]' or both comma-separated (example 'm:thegamesdb,t:description').\nYou can also just type 'vacuum' which will compare your romset to any cached resource and remove the resources that you no longer have roms for.\nLastly, you can type 'all' which will purge ALL resources from the cache that are connected to the currently selected platform / db folder.\nSet specific db folder with '-d' otherwise default db folder is used.", "resources", "");
-  QCommandLineOption cleandbOption("cleandb", "Remove media files that have no entry in the db and vice versa. Set specific db folder with '-d' otherwise default db folder is used.");
-  QCommandLineOption mergedbOption("mergedb", "Merge data from the specified db folder into local destination db. Set db you wish to merge from with this flag. Set destination db folder with '-d' otherwise default db folder is used as destination.", "folder", "");
-  QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the localdb resource cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
+  QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext)", "EXTENSION(S)", "");
+  QCommandLineOption cacheOption("cache", "This option is the master option for all options related to the resource cache. It must be followed by 'COMMAND[:OPTIONS]'.\n'show' Will print a status of all cached resources.\n'validate' will check the consistency of the cache.\n'vacuum' Will compare your romset to any cached resource and remove the resources that you no longer have roms for.\n'purge:all' Will remove ALL cached resources for the selected platform.\n'merge:PATH' will merge two caches together.\n'purge:m=MODULE,t=TYPE' Will remove cached resources related to the selected module(m) and / or type(t). Either one can be left out in which case ALL resources from the selected module or ALL resource from the selected type will be removed.\n'refresh' Will force a refresh of existing cached resources for any scraping module. Requires a scraping module set with '-s'.", "COMMAND[:OPTIONS]", "");
+  QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the resource cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption unpackOption("unpack", "Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list.");
-  QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "filename", "");
-  QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "filename", "");
+  QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
+  QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
   QCommandLineOption pretendOption("pretend", "Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.");
   QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
   QCommandLineOption interactiveOption("interactive", "Always ask user to choose best result.");
-  QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=[checksum]', 'md5=[checksum]' or 'romnom=[filename]' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line aswell, otherwise it will be ignored.", "string", "");
-  QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' in that order)", "code", "eu");
-  QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "code", "en");
+  QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=CHECKSUM', 'md5=CHECKSUM' or 'romnom=FILENAME' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line aswell, otherwise it will be ignored.", "QUERY", "");
+  QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' in that order)", "CODE", "eu");
+  QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "CODE", "en");
   QCommandLineOption nohintsOption("nohints", "Disables the 'DID YOU KNOW:' hints when running Skyscraper.");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
   
@@ -181,11 +180,7 @@ int main(int argc, char *argv[])
   parser.addOption(cOption);
   parser.addOption(aOption);
   parser.addOption(dOption);
-  parser.addOption(refreshOption);
-  parser.addOption(dbstatsOption);
-  parser.addOption(cleandbOption);
-  parser.addOption(mergedbOption);
-  parser.addOption(purgedbOption);
+  parser.addOption(cacheOption);
   parser.addOption(videosOption);
   parser.addOption(symlinkOption);
   parser.addOption(nocoversOption);

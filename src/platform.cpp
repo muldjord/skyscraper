@@ -266,8 +266,8 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   }
 
-  // Always add 'localdb' as the last one
-  scrapers.append("localdb");
+  // Always add 'cache' as the last one
+  scrapers.append("cache");
   
   return scrapers;
 }
@@ -432,143 +432,143 @@ QString Platform::getDefaultScraper(QString platform)
 {
   QString scraper;
   if(platform == "3do") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "amiga") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "amstradcpc") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "arcade") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "apple2") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "atari800") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "atari2600") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "atari5200") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "atari7800") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "atarijaguar") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "atarilynx") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "atarist") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "c16") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "c64") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "c128") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "coco") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "coleco") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "daphne") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "dragon32") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "dreamcast") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "fba") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "fds") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "gameandwatch") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "gamegear") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "gb") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "gba") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "gbc") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "gc") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "genesis") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "intellivision") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "megacd") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "megadrive") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "mame-advmame") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "mame-libretro") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "mame-mame4all") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "mastersystem") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "msx") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "n64") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "nds") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "neogeo") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "nes") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "ngp") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "ngpc") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "oric") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "pc") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "pc88") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "pcfx") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "pcengine") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "ports") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "psp") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "psx") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "saturn") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "scummvm") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "sega32x") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "segacd") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "sg-1000") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "snes") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "ti99") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "trs-80") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "vectrex") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "vic20") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "videopac") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "virtualboy") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "wii") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "wonderswan") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "wonderswancolor") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "x68000") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "zmachine") {
-    scraper = "localdb";
+    scraper = "cache";
   } else if(platform == "zxspectrum") {
-    scraper = "localdb";
+    scraper = "cache";
   }
   return scraper;
 }

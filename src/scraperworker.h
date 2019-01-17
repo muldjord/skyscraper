@@ -32,7 +32,7 @@
 
 #include "abstractscraper.h"
 #include "settings.h"
-#include "localdb.h"
+#include "cache.h"
 #include "queue.h"
 
 class ScraperWorker : public QObject
@@ -40,7 +40,7 @@ class ScraperWorker : public QObject
   Q_OBJECT
 
 public:
-  ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb,
+  ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<Cache> cache,
 		Settings config, QString threadId);
   ~ScraperWorker();
   void run();
@@ -50,7 +50,7 @@ signals:
   void entryReady(GameEntry entry, QString output, QString debug);
 
 private:
-  QSharedPointer<LocalDb> localDb;
+  QSharedPointer<Cache> cache;
   QSharedPointer<Queue> queue;
   
   Settings config;

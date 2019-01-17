@@ -77,7 +77,7 @@ void Skyscraper::run()
   if(config.videos) {
     printf("Videos folder:      '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
   }
-  printf("Local db folder:    '\033[1;32m%s\033[0m'\n", config.dbFolder.toStdString().c_str());
+  printf("Local db folder:    '\033[1;32m%s\033[0m'\n", config.cacheFolder.toStdString().c_str());
   if(config.scraper == "import") {
     printf("Import folder:      '\033[1;32m%s\033[0m'\n", config.importFolder.toStdString().c_str());
   }
@@ -109,47 +109,56 @@ void Skyscraper::run()
     }
   }
   
-  if(!config.dbFolder.isEmpty()) {
-    localDb = QSharedPointer<LocalDb>(new LocalDb(config.dbFolder));
-    if(localDb->createFolders(config.scraper)) {
-      if(!localDb->readDb() && config.scraper == "localdb") {
+  if(!config.cacheFolder.isEmpty()) {
+    cache = QSharedPointer<Cache>(new Cache(config.cacheFolder));
+    if(cache->createFolders(config.scraper)) {
+      if(!cache->read() && config.scraper == "cache") {
 	printf("No resources for this platform found in the local database cache. Please run Skyscraper in simple mode by typing 'Skyscraper' and follow the instructions on screen (this is probably what you want). Or specify a specific scraping module using the '-s' command line option. Check all available options with '--help'\n\n");
 	exit(1);
       }
     } else {
-      printf("Couldn't create localdb folders, please check folder permissions and try again...\n");
+      printf("Couldn't create cache folders, please check folder permissions and try again...\n");
       exit(1);
     }
   }
-  if(config.verbosity || config.dbStats) {
-    localDb->showStats(config.dbStats?2:config.verbosity);
-    if(config.dbStats)
+  if(config.verbosity || config.cacheOptions == "show") {
+    cache->showStats(config.cacheOptions == "show"?2:config.verbosity);
+    if(config.cacheOptions == "show")
       exit(0);
   }
-  if(!config.dbPurge.isEmpty()) {
-    if(config.dbPurge == "all") {
-      localDb->purgeAll(config.unattend || config.unattendSkip);
-    } else if(config.dbPurge == "vacuum") {
-      localDb->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), config.unattend || config.unattendSkip);
-    } else {
-      localDb->purgeResources(config.dbPurge);
+  if(!config.cacheOptions.isEmpty() &&
+     (config.cacheOptions.contains("purge:") ||
+      config.cacheOptions.contains("vacuum"))) {
+    if(config.cacheOptions == "purge:all") {
+      cache->purgeAll(config.unattend || config.unattendSkip);
+    } else if(config.cacheOptions == "vacuum") {
+      cache->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), config.unattend || config.unattendSkip);
+    } else if(config.cacheOptions.contains("purge:m=") ||
+	      config.cacheOptions.contains("purge:t=")) {
+      cache->purgeResources(config.cacheOptions);
     }
-    localDb->writeDb();
+    cache->write();
     exit(0);
   }
-  if(config.cleanDb) {
-    localDb->cleanDb();
-    localDb->writeDb();
+  if(config.cacheOptions == "validate") {
+    cache->clean();
+    cache->write();
     exit(0);
   }
-  if(!config.mergeDb.isEmpty() && QDir(config.mergeDb).exists()) {
-    LocalDb srcDb(config.mergeDb);
-    srcDb.readDb();
-    localDb->mergeDb(srcDb, config.refresh, config.mergeDb);
-    localDb->writeDb();
+  if(!config.cacheOptions.isEmpty() &&
+     config.cacheOptions.contains("merge:")) {
+    QFileInfo mergeCacheInfo(config.cacheOptions.replace("merge:", ""));
+    if(mergeCacheInfo.exists()) {
+      Cache mergeCache(mergeCacheInfo.absoluteFilePath());
+      mergeCache.read();
+      cache->merge(mergeCache, config.refresh, mergeCacheInfo.absoluteFilePath());
+      cache->write();
+    } else {
+      printf("Folder to merge from doesn't seem to exist, can't continue...\n");
+    }
     exit(0);
   }
-  localDb->readPriorities();
+  cache->readPriorities();
 
   QDir inputDir(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), QDir::Name, QDir::Files);
   if(!inputDir.exists()) {
@@ -192,7 +201,7 @@ void Skyscraper::run()
 
   QFile gameListFile(gameListFileString);
 
-  if(!config.pretend && config.scraper == "localdb" &&
+  if(!config.pretend && config.scraper == "cache" &&
      !config.unattend && !config.unattendSkip &&
      gameListFile.exists()) {
     std::string userInput = "";
@@ -215,7 +224,7 @@ void Skyscraper::run()
     }
     printf("\n");
   }
-  if(config.pretend && config.scraper == "localdb") {
+  if(config.pretend && config.scraper == "cache") {
     printf("Pretend set! Not changing any files, just showing output.\n\n");
   }
 
@@ -325,7 +334,7 @@ void Skyscraper::run()
   QList<QThread*> threadList;
   for(int curThread = 1; curThread <= config.threads; ++curThread) {
     QThread *thread = new QThread;
-    ScraperWorker *worker = new ScraperWorker(queue, localDb, config, QString::number(curThread));
+    ScraperWorker *worker = new ScraperWorker(queue, cache, config, QString::number(curThread));
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::entryReady, this, &Skyscraper::entryReady);
@@ -428,7 +437,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
   printf("Est. time left : \033[1;33m%s\033[0m\n\n", secsToString(estTime).toStdString().c_str());
 
   if(currentFile == config.maxFails && notFound == config.maxFails &&
-     config.scraper != "import" && config.scraper != "localdb") {
+     config.scraper != "import" && config.scraper != "cache") {
     printf("\033[1;31mThis is NOT going well! I guit! *slams the door*\nNo, seriously, out of %d files we had %d misses. So either the scraping source is down or you are using a scraping source that doesn't support this platform. Please try another scraping module (check '--help').\n\nNow exiting...\033[0m\n", config.maxFails, config.maxFails);
     exit(1);
   }
@@ -452,8 +461,8 @@ void Skyscraper::checkThreads()
     return;
 
   printf("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
-  if(!config.dbFolder.isEmpty()) {
-    localDb->writeDb();
+  if(!config.cacheFolder.isEmpty()) {
+    cache->write();
   }
 
   frontend->sortEntries(gameEntries);
@@ -463,7 +472,7 @@ void Skyscraper::checkThreads()
   frontend->assembleList(finalOutput, gameEntries);
   printf(" \033[1;32mDone!!!\033[0m\n");
     
-  if(!config.pretend && config.scraper == "localdb") {
+  if(!config.pretend && config.scraper == "cache") {
     QFile gameListFile(gameListFileString);
     printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
     fflush(stdout);
@@ -720,9 +729,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     printf("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms, now exiting...\n");
     exit(1);
   }
-  if(settings.contains("dbFolder")) {
-    QString dbFolder = settings.value("dbFolder").toString();
-    config.dbFolder = dbFolder + (dbFolder.right(1) == "/"?"":"/") + config.platform;
+  if(settings.contains("cacheFolder")) {
+    QString cacheFolder = settings.value("cacheFolder").toString();
+    config.cacheFolder = cacheFolder + (cacheFolder.right(1) == "/"?"":"/") + config.platform;
   }
   if(settings.contains("inputFolder")) {
     QString inputFolder = settings.value("inputFolder").toString();
@@ -780,8 +789,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.mediaFolder = settings.value("mediaFolder").toString();
     mediaFolderSet = true;
   }
-  if(settings.contains("dbFolder")) {
-    config.dbFolder = settings.value("dbFolder").toString();
+  if(settings.contains("cacheFolder")) {
+    config.cacheFolder = settings.value("cacheFolder").toString();
   }
   if(settings.contains("importFolder")) {
     config.importFolder = settings.value("importFolder").toString();
@@ -873,7 +882,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 			   parser.value("s") == "mobygames" ||
 			   parser.value("s") == "screenscraper" ||
 			   parser.value("s") == "esgamelist" ||
-			   parser.value("s") == "localdb" ||
+			   parser.value("s") == "cache" ||
 			   parser.value("s") == "import")) {
     config.scraper = parser.value("s");
   }
@@ -927,10 +936,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.userCreds = parser.value("u");
   }
   if(parser.isSet("d")) {
-    config.dbFolder = parser.value("d");
+    config.cacheFolder = parser.value("d");
   } else {
-    if(config.dbFolder.isEmpty())
-      config.dbFolder = "dbs/" + config.platform;
+    if(config.cacheFolder.isEmpty())
+      config.cacheFolder = "cache/" + config.platform;
   }
   if(parser.isSet("videos")) {
     config.videos = true;
@@ -962,23 +971,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("addext")) {
     config.addExtensions = parser.value("addext");
   }
-  if(parser.isSet("dbstats")) {
-    config.dbStats = true;
-  }
-  if(parser.isSet("cleandb")) {
-    config.cleanDb = true;
-  }
-  if(parser.isSet("purgedb")) {
-    config.dbPurge = parser.value("purgedb");
-  }
-  if(parser.isSet("mergedb") && QDir(config.mergeDb).exists()) {
-    config.mergeDb = parser.value("mergedb");
-  }
-  if(parser.isSet("updatedb")) {
-    config.refresh = true;
-  }
-  if(parser.isSet("refresh")) {
-    config.refresh = true;
+  if(parser.isSet("cache")) {
+    config.cacheOptions = parser.value("cache");
+    if(config.cacheOptions == "refresh")
+      config.refresh = true;
   }
   if(parser.isSet("noresize")) {
     config.noResize = true;
@@ -1057,9 +1053,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.importFolder.append((config.importFolder.right(1) == "/"?"":"/") + config.platform);
   }
 
-  // Set minMatch to 0 for localdb, arcadedb and screenscraper
+  // Set minMatch to 0 for cache, arcadedb and screenscraper
   // We know these results are always accurate
-  if(config.minMatchSet == false && (config.scraper == "localdb" ||
+  if(config.minMatchSet == false && (config.scraper == "cache" ||
 				     config.scraper == "screenscraper" ||
 				     config.scraper == "arcadedb" ||
 				     config.scraper == "esgamelist" ||
@@ -1104,7 +1100,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   
   // If interactive is set, force 1 thread and always accept the chosen result
   if(config.interactive) {
-    if(config.scraper == "localdb" ||
+    if(config.scraper == "cache" ||
        config.scraper == "import" ||
        config.scraper == "arcadedb" ||
        config.scraper == "esgamelist" ||
@@ -1195,7 +1191,7 @@ void Skyscraper::doPrescrapeJobs()
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
   
   if(config.platform == "amiga" &&
-     config.scraper != "localdb" && config.scraper != "import" && config.scraper != "esgamelist") {
+     config.scraper != "cache" && config.scraper != "import" && config.scraper != "esgamelist") {
     printf("Fetching 'whdload_db.xml', just a sec...");
     manager.request("https://raw.githubusercontent.com/HoraceAndTheSpider/Amiberry-XML-Builder/master/whdload_db.xml");
     q.exec();

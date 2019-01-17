@@ -43,11 +43,11 @@
 #include "arcadedb.h"
 #include "esgamelist.h"
 
-ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<LocalDb> localDb,
+ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<Cache> cache,
 			     Settings config, QString threadId)
 {
   this->config = config;
-  this->localDb = localDb;
+  this->cache = cache;
   this->queue = queue;
   this->threadId = threadId;
 }
@@ -76,7 +76,7 @@ void ScraperWorker::run()
     scraper = new WorldOfSpectrum(&config);
   } else if(config.scraper == "esgamelist") {
     scraper = new ESGameList(&config);
-  } else if(config.scraper == "localdb") {
+  } else if(config.scraper == "cache") {
     scraper = new LocalScraper(&config);
   } else if(config.scraper == "import") {
     scraper = new ImportScraper(&config);
@@ -117,11 +117,11 @@ void ScraperWorker::run()
     QList<GameEntry> gameEntries;
 
     bool fromCache = false;
-    if(config.scraper == "localdb" && localDb->hasEntries(sha1)) {
+    if(config.scraper == "cache" && cache->hasEntries(sha1)) {
       fromCache = true;
       GameEntry localGame;
       localGame.sha1 = sha1;
-      localDb->fillBlanks(localGame);
+      cache->fillBlanks(localGame);
       if(localGame.title.isEmpty()) {
 	localGame.title = compareTitle;
       }
@@ -130,12 +130,12 @@ void ScraperWorker::run()
       }
       gameEntries.append(localGame);
     } else {
-      if(config.scraper != "localdb" &&
-	 localDb->hasEntries(sha1, config.scraper) && !config.refresh) {
+      if(config.scraper != "cache" &&
+	 cache->hasEntries(sha1, config.scraper) && !config.refresh) {
 	fromCache = true;
 	GameEntry localGame;
 	localGame.sha1 = sha1;
-	localDb->fillBlanks(localGame, config.scraper);
+	cache->fillBlanks(localGame, config.scraper);
 	if(localGame.title.isEmpty()) {
 	  localGame.title = compareTitle;
 	}
@@ -205,7 +205,7 @@ void ScraperWorker::run()
       scraper->getGameData(game);
     }
 
-    if(!config.pretend && config.scraper == "localdb") {
+    if(!config.pretend && config.scraper == "cache") {
       // Process all artwork
       compositor.saveAll(game, info.completeBaseName());
       if(config.videos && game.videoFormat != "") {
@@ -215,7 +215,7 @@ void ScraperWorker::run()
 	  // Try to remove existing video destination file first
 	  videoFileDst.remove();
 	}
-	if(config.symlink && config.scraper == "localdb" && !game.videoFile.isEmpty()) {
+	if(config.symlink && config.scraper == "cache" && !game.videoFile.isEmpty()) {
 	  QFile videoFile(game.videoFile);
 	  if(videoFile.exists())
 	    videoFile.link(videoDst);
@@ -230,9 +230,9 @@ void ScraperWorker::run()
     }
 
     // Always cache resources, even if pretend is set
-    if(config.scraper != "localdb" && game.found && !fromCache) {
+    if(config.scraper != "cache" && game.found && !fromCache) {
       game.source = config.scraper;
-      localDb->addResources(game, config);
+      cache->addResources(game, config);
     }
 
     // We're done saving the raw data at this point, so feel free to manipulate game resources to better suit game list creation from here on out.
@@ -271,8 +271,8 @@ void ScraperWorker::run()
     game.ages = StrTools::conformAges(game.ages);
 
     output.append("Scraper:        " + config.scraper + "\n");
-    if(config.scraper != "localdb" && config.scraper != "import") {
-      output.append("From cache:     " + QString((fromCache?"YES (refresh from source with '--refresh')":"NO")) + "\n");
+    if(config.scraper != "cache" && config.scraper != "import") {
+      output.append("From cache:     " + QString((fromCache?"YES (refresh from source with '--cache refresh')":"NO")) + "\n");
     }
     output.append("Search match:   " + QString::number(searchMatch) + " %\n");
     output.append("Compare title:  '\033[1;32m" + compareTitle + "\033[0m'\n");
@@ -370,7 +370,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   GameEntry game;
 
   // If scraper isn't filename search based, always return first entry
-  if(config.scraper == "localdb" || config.scraper == "import" ||
+  if(config.scraper == "cache" || config.scraper == "import" ||
      config.scraper == "arcadedb" || config.scraper == "screenscraper" ||
      config.scraper == "esgamelist" ||
      (config.scraper == "openretro" && gameEntries.first().url.isEmpty())) {
