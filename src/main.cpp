@@ -70,7 +70,8 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QStri
 int main(int argc, char *argv[])
 {
   QCoreApplication app(argc, argv);
-
+  app.setApplicationVersion(VERSION);
+  
   // Get current dir. If user has specified file(s) on command line we need this.
   QString currentDir = QDir::currentPath();
 
@@ -122,6 +123,7 @@ int main(int argc, char *argv[])
 
   parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files in the input directory. It fetches media files and other relevant information for the games. It composites game art from the recipe at '~/.skyscraper/artwork.xml' and lastly builds a game list file for use with the chosen frontend.\n\nIn addition to the command line options Skyscraper also provides a lot of customizable options for configuration, artwork, game name aliases, resource priorities and much more. Please check the full documentation at 'https://github.com/muldjord/skyscraper' for a detailed explanation of all features.");
   parser.addHelpOption();
+  parser.addVersionOption();
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "PLATFORM", "");
   QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "FRONTEND", "");
   QCommandLineOption eOption("e", "Set emulator. This is only required by the 'attractmode' frontend.\n(Default is none)", "EMULATOR", "");
