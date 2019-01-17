@@ -156,7 +156,6 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
-* Auto-migrate "dbs" folder and "db.xml" files to "cache" for 2.x to 3.x users
 
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
@@ -173,7 +172,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Removed "--updatedb" cli option as it was deprecated (use "--refresh" instead)
 * Removed "--nolocaldb" cli option as it is irrelevant after 3.0.0 usage changes
 * Changed "--allowext" cli option to "--addext"
-* Changed "localDb" config section name to "cache"
+* Removed "localDb"/"cache" config sections and moved options to "main"
 * Removed "userCreds" option from main and platform sections in config.ini. They should be set in scraping module section instead
 * Removed "scraper" config.ini variable as it made no sense to ever set it like that
 * Changed "startat" config.ini option to "startAt" to conform with style of other variables
@@ -181,6 +180,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Fixed "--relative" option when combined with roms in subdirs
 * "--unattend" options now answers "y" to all "--purgedb" prompt automatically
 * Added "regionPrios" and "langPrios" variables to config.ini for main and platform sections
+* Added auto-migration from old config.ini format to v3.0.0 format
+* Added auto-migration from "dbs" folder to "cache" folder
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
