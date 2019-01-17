@@ -619,6 +619,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
      END updating files from distribution files
     ----- */
 
+  migrate(parser.isSet("c")?parser.value("c"):"config.ini");
+
   QSettings settings(parser.isSet("c")?parser.value("c"):"config.ini", QSettings::IniFormat);
 
   // Start by setting frontend, since we need it to set default for gamelist and so on
@@ -722,6 +724,21 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
+  if(settings.contains("cacheResize")) {
+    config.noResize = !settings.value("cacheResize").toBool();
+  }
+  if(settings.contains("cacheCovers")) {
+    config.cacheCovers = settings.value("cacheCovers").toBool();
+  }
+  if(settings.contains("cacheScreenshots")) {
+    config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
+  }
+  if(settings.contains("cacheWheels")) {
+    config.cacheWheels = settings.value("cacheWheels").toBool();
+  }
+  if(settings.contains("cacheMarquees")) {
+    config.cacheMarquees = settings.value("cacheMarquees").toBool();
+  }
   // Check for command line platform here, since we need it for 'platform' config.ini entries
   if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
     config.platform = parser.value("p");
@@ -753,25 +770,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   settings.endGroup();
 
-  // cache specific configs
-  settings.beginGroup("cache");
-  if(settings.contains("resize")) {
-    config.noResize = !settings.value("resize").toBool();
-  }
-  if(settings.contains("covers")) {
-    config.cacheCovers = settings.value("covers").toBool();
-  }
-  if(settings.contains("screenshots")) {
-    config.cacheScreenshots = settings.value("screenshots").toBool();
-  }
-  if(settings.contains("wheels")) {
-    config.cacheWheels = settings.value("wheels").toBool();
-  }
-  if(settings.contains("marquees")) {
-    config.cacheMarquees = settings.value("marquees").toBool();
-  }
-  settings.endGroup();
-
   // Platform specific configs, overrides main and defaults
   settings.beginGroup(config.platform);
   if(settings.contains("emulator")) {
@@ -791,6 +789,21 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("cacheFolder")) {
     config.cacheFolder = settings.value("cacheFolder").toString();
+  }
+  if(settings.contains("cacheResize")) {
+    config.noResize = !settings.value("cacheResize").toBool();
+  }
+  if(settings.contains("cacheCovers")) {
+    config.cacheCovers = settings.value("cacheCovers").toBool();
+  }
+  if(settings.contains("cacheScreenshots")) {
+    config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
+  }
+  if(settings.contains("cacheWheels")) {
+    config.cacheWheels = settings.value("cacheWheels").toBool();
+  }
+  if(settings.contains("cacheMarquees")) {
+    config.cacheMarquees = settings.value("cacheMarquees").toBool();
   }
   if(settings.contains("importFolder")) {
     config.importFolder = settings.value("importFolder").toString();
@@ -1393,6 +1406,50 @@ void Skyscraper::setLangPrios()
     }
   } else {
     config.langPrios.append("en");
+  }
+}
+
+void Skyscraper::migrate(QString filename)
+{
+  if(QFileInfo::exists(filename + ".old"))
+    return;
+
+  QByteArray data;
+  QFile settings(filename);
+  if(settings.open(QIODevice::ReadOnly)) {
+    data = settings.readAll();
+    settings.close();
+  }
+  QFile oldSettings(filename + ".old");
+  if(oldSettings.open(QIODevice::WriteOnly)) {
+    printf("Migrating old config.ini to new v3.0.0 format. Old config saved to '%s'\n\n", oldSettings.fileName().toStdString().c_str());
+    oldSettings.write(data);
+    oldSettings.close();
+  }
+  data.replace("allowExtension=", "addExtensions="); 
+  data.replace("startat=", "startAt="); 
+  data.replace("endat=", "endAt="); 
+  data.replace("noHints=\"true\"", "hints=\"false\"");
+  data.replace("noHints=\"false\"", "hints=\"true\"");
+  data.replace("noHints=true", "hints=false");
+  data.replace("noHints=false", "hints=true");
+  data.replace("noBrackets=\"true\"", "brackets=\"false\"");
+  data.replace("noBrackets=\"false\"", "brackets=\"true\"");
+  data.replace("noBrackets=true", "brackets=false");
+  data.replace("noBrackets=false", "brackets=true");
+  data.replace("noResize=\"true\"", "resize=\"false\"");
+  data.replace("noResize=\"false\"", "resize=\"true\"");
+  data.replace("noResize=true", "resize=false");
+  data.replace("noResize=false", "resize=true");
+  data.replace("\n[cache]\n", ""); 
+  data.replace("\n[localDb]\n", ""); 
+  data.replace("covers=", "cacheCovers="); 
+  data.replace("screenshots=", "cacheScreenshots="); 
+  data.replace("wheels=", "cacheWheels="); 
+  data.replace("marquees=", "cacheMarquees="); 
+  if(settings.open(QIODevice::WriteOnly)) {
+    settings.write(data);
+    settings.close();
   }
 }
 

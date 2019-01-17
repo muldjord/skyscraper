@@ -69,6 +69,7 @@ private:
   void loadWhdLoadMap();
   void setRegionPrios();
   void setLangPrios();
+  void migrate(QString filename);
   
   AbstractFrontend *frontend;
 
