@@ -149,7 +149,6 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
-* Check if '--cache validate' can be optimized, it's very slow
 
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
@@ -176,6 +175,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added "regionPrios" and "langPrios" variables to config.ini for main and platform sections
 * Added auto-migration from old config.ini format to v3.0.0 format
 * Added auto-migration from "dbs" folder to "cache" folder
+* Optimized "--cache validate" A LOT
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
