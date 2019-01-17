@@ -231,6 +231,7 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   } else if(platform == "scummvm") {
     scrapers.append("screenscraper");
+    scrapers.append("thegamesdb");
   } else if(platform == "sega32x") {
     scrapers.append("screenscraper");
   } else if(platform == "segacd") {
