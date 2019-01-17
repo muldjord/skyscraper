@@ -73,7 +73,7 @@ bool Cache::read()
 {
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::ReadOnly)) {
-    printf("Reading and parsing local database cache, please wait...\n");
+    printf("Reading and parsing resource cache, please wait...\n");
     QXmlStreamReader xml(&cacheFile);
     while(!xml.atEnd()) {
       if(xml.readNext() != QXmlStreamReader::StartElement) {
@@ -178,7 +178,7 @@ void Cache::purgeResources(QString purgeStr)
       purged++;
     }
   }
-  printf("Successfully purged %d resources from the local database cache.\n", purged);
+  printf("Successfully purged %d resources from the cache.\n", purged);
 }
 
 void Cache::purgeAll(const bool unattend)
@@ -222,9 +222,9 @@ void Cache::purgeAll(const bool unattend)
   }
   printf("\033[1;32m Done!\033[0m\n");
   if(purged == 0) {
-    printf("No resources for the current platform found in the local database cache.\n");
+    printf("No resources for the current platform found in the resource cache.\n");
   } else {
-    printf("Successfully purged %d resources from the local database cache.\n", purged);
+    printf("Successfully purged %d resources from the resource cache.\n", purged);
   }
   printf("\n");
 }
@@ -315,7 +315,7 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter, con
   if(vacuumed == 0) {
     printf("All resources match a file in your romset. No resources vacuumed.\n");
   } else {
-    printf("Successfully vacuumed %d resources from the local database cache.\n", vacuumed);
+    printf("Successfully vacuumed %d resources from the resource cache.\n", vacuumed);
   }
   printf("\n");
 }
@@ -483,7 +483,7 @@ bool Cache::write()
 
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::WriteOnly)) {
-    printf("Writing %d (%d new) resources to local database, please wait... ",
+    printf("Writing %d (%d new) resources to cache, please wait... ",
 	   resources.length(), resources.length() - resAtLoad);
     fflush(stdout);
     QXmlStreamWriter xml(&cacheFile);
@@ -512,7 +512,7 @@ void Cache::clean()
 {
   // TODO: Add format checks for each resource type, and remove if deemed corrupt
 
-  printf("Starting cleaning run on local database, please wait...\n");
+  printf("Starting cleaning run on resource cache, please wait...\n");
 
   if(!QFileInfo::exists(cacheDir.absolutePath() + "/db.xml")) {
     printf("'db.xml' not found, cache cleaning cancelled...\n");
@@ -648,8 +648,8 @@ void Cache::merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFo
       resources.append(mergeResource);
     }
   }
-  printf("Successfully updated %d resource(s) in local database!\n", resUpdated);
-  printf("Successfully merged %d new resource(s) into local database!\n\n", resMerged);
+  printf("Successfully updated %d resource(s) in cache!\n", resUpdated);
+  printf("Successfully merged %d new resource(s) into cache!\n\n", resMerged);
 }
 
 QList<Resource> Cache::getResources()
