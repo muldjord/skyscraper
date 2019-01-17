@@ -1,5 +1,5 @@
 # Skyscraper by Lars Muldjord
-A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system. It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to combine all of these resources into the most complete results by using the provided `localdb` scraping module.
+A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system. It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to generate a game list and artwork for the chosen frontend by combining all of the cached resources.
 
 Any exported artwork can be customized completely. Check the documentation for that [here](docs/ARTWORK.md).
 
@@ -11,7 +11,7 @@ Any exported artwork can be customized completely. Check the documentation for t
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
 #### Currently supports the following scraping modules for gathering resources (set with '-s')
-Use any of the following modules to gather game resources into the Skyscraper localdb resource cache:
+Use any of the following modules to gather game resources into the Skyscraper resource cache:
 * ONLINE: `-s screenscraper` (screenscraper.fr)
 * ONLINE: `-s openretro` (openretro.org)
 * ONLINE: `-s thegamesdb` (thegamesdb.net)
@@ -19,13 +19,13 @@ Use any of the following modules to gather game resources into the Skyscraper lo
 * ONLINE: `-s arcadedb` (adb.arcadeitalia.net, Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
 * ONLINE: mobygames (mobygames.com)
 * ONLINE: `-s igdb` (igdb.com)
-* LOCAL: `-s import` (imports resources into the local cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
+* LOCAL: `-s import` (imports resources into the resource cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
 * LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/[user]/RetroPie/roms/[platform]/gamelist.xml` or `~/.skyscraper/import/gamelist.xml`)
 
 Read more about each of the modules [here](docs/SCRAPINGMODULES.md).
 
 ##### Generating a game list with composited artwork
-Skyscraper will generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml` if you leave out the `-s` option entirely. Read more about the localdb resource cache [here](docs/LOCALDBCACHE.md).
+Skyscraper will generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml` if you leave out the `-s` option entirely. Read more about the resource cache [here](docs/CACHE.md).
 
 ## Patreon
 Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requirement if you want to use Skyscraper! But there it is. And please understand that becoming a patron does in no way give you any special say in what features I work on or how I develop Skyscraper in the future. It will be seen as an appreciative gesture, nothing else. :)
@@ -112,10 +112,9 @@ $ Skyscraper --help
 This will give you a description of everything Skyscraper can do if you feel adventurous! Let's go over the most important ones:
 
 * `-p [platform]`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms under the `-p` option with `--help`
-* `-s [scraping module]`: This tells Skyscraper where you would like to fetch data from. The most important one being the `localdb` module. Read more about that [here](docs/LOCALDBCACHE.md)
-* `--refresh`: Whenever you scrape a platform with any scraping module Skyscraper caches all of that data locally. When you rescrape a platform it will fetch the data from the cache instead of hammering the online servers. Using the `--refresh` option allows you to override this and tells Skyscraper to refresh the cached data directly from the online source. Please only use this option if you know the data you want to scrape has changed at the source
+* `-s [scraping module]`: This tells Skyscraper where you would like to scrape and cache resources from. Read more about that [here](docs/CACHE.md)
+* `--cache refresh`: Whenever you scrape a platform with any scraping module Skyscraper caches all of that data locally. When you rescrape a platform it will fetch the data from the cache instead of hammering the online servers. Using the `--cache refresh` option allows you to override this and tells Skyscraper to refresh the cached data directly from the online source. Please only use this option if you know the data you want to scrape has changed at the source
 * `--videos`: If you wish to scrape videos for the scraping modules that support it, you need to add the `--videos` option. This is disabled by default because of the significant space requirements needed to save them
-* `--pretend`: This bypasses any game list generation and artwork compositing code, but still caches any incoming data. Useful when scraping with the non-localdb modules, as it's faster while you are just gathering data into your localdb cache
 * `--unattend`: This just bypasses any questions at the beginning of a scraping run. Setting `--unattend` will then always answer yes to overwriting an existing game list and not skip existing entries
 
 If you have your roms in a non-default location (default is `/home/[user]/RetroPie/roms/[platform]`) or wish to export the game list or artwork to non-default locations, you will also need these:
@@ -123,27 +122,21 @@ If you have your roms in a non-default location (default is `/home/[user]/RetroP
 * `-g [path]`: Sets a non-default game list export folder (defaults to the same as rom input folder if scraping for EmulationStation)
 * `-o [path]`: Sets a non-default artwork export folder (defaults to the same as game list export folder + `/media` if scraping for EmulationStation)
 
-For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` as described [here](#configini). This will make the options permanent so you don't need to type them in all the time.
+For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` file as described [here](#docs/CONFIGINI.md). This will make the options permanent so you don't need to type them in all the time.
 
 #### Scraping and caching single roms or a subset of roms
-Sometimes you'd want to update the cached data for a single or a subset of roms. Skyscraper allows this by letting you either provide one or more single rom filenames to be added to the end of a command line OR by using the `--startat` and `--endat` options (read more about those with `--help`). For single roms, here's an example: `Skyscraper -p amiga -s openretro "/path/to/rom name.lha"`. Be aware that this only updates the local cache for this particular rom. It DOES NOT update it in your game list. To do so you need to rescrape the platform using the cached data with the command `Skyscraper -p [platform]`. This implicitly adds `-s localdb` which is the default scraper and scrapes the platform using all of your previously cached data.
+Sometimes you'd want to update the cached data for a single or a subset of roms. Skyscraper allows this by letting you either provide one or more single rom filenames to be added to the end of a command line OR by using the `--startat` and `--endat` options (read more about those with `--help`). For single roms, here's an example: `Skyscraper -p amiga -s openretro "/path/to/rom name.lha"`. Be aware that this only updates the resource cache for this particular rom. It DOES NOT update it in your game list. To do so you need to regenerate the game list by simply leaving out the `-s` option entirely like so `Skyscraper -p [platform]`.
 
 ### config.ini
 A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `~/.skyscraper/config.ini`. Any options set in this file will be used by default by Skyscraper. So if you always use, for example, `-i [some folder]` on command line, you can set the matching option `inputFolder="[some folder]"` in the config.
 
-Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can be any of the supported platforms (check list with `--help` under the `-p` option), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform.
+For a full description of all availabe config options, check [here](docs/CONFIGINI.md).
 
-For options dedicated to a single scraping module, you can create sections for each of them. For instance, you can create a `[screenscraper]` section and add a `userCreds="user:pass"` line. Doing this will always use these credentials when scraping from the `screenscraper` scraping module.
-
-Lastly, you can also add a `[localDb]` section to enable / disable the caching of certain resource types.
-
-You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables.
-
-### Local database cache
-One of Skyscraper's most powerful features is the local database cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](docs/LOCALDBCACHE.md).
+### Resource cache
+One of Skyscraper's most powerful features is the resource cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](docs/CACHE.md).
 
 ### Custom data import
-I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the local cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data. Read more about how this works [here](import/README.md).
+I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the resource cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data. Read more about how this works [here](import/README.md).
 
 ### Artwork look and effects
 Check the full artwork documentation [here](docs/ARTWORK.md)
