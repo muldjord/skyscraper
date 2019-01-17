@@ -5,47 +5,29 @@ Please take note that almost all of these options are set at a useful default (a
 
 If you've installed Skyscraper through the RetroPie-Setup the executable is instead located at `/opt/retropie/supplementary/skyscraper/Skyscraper`. In that case I recommend creating a symbolic link to the executable. Do this by running `$ sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper` (without the `$`). This will enable you to just type `Skyscraper` when running it from command line.
 
+Many options can be set on two levels; either `[main]` or `[amiga]`. `amiga` can be any of the supported platforms (check list with `--help` under the `-p` option), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform.
+
+For options dedicated to a single scraping module, you can create sections for each of them. For instance, you can create a `[screenscraper]` section and add a `userCreds="user:pass"` line. Doing this will always use these credentials when scraping from the `screenscraper` scraping module.
+
+You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables.
+
 NOTE! You can set a custom configuration file with the `-c [filename]` command line option. Read more all available command line options [here](CLIHELP.md).
 
 ###### Example config.ini file
 ```
-# --------------------------------------------------------------------
-# Skyscraper by Lars Muldjord (https://github.com/muldjord/skyscraper)
-# --------------------------------------------------------------------
-
-# This is an example config file for use with Skyscraper. Use it as a template for creating
-#   your own. If you copy this file to 'config.ini' it will be used per default.
-#   You can always copy config.ini.example to a filename of your choice and make Skyscraper
-#   use it with the '-c' command line option.
-
-# You can have several platform sections in one config file. Further down is an example of
-#   a generic platform setup. Check '--help' for more info on supported platforms.
-
-# You can have several scraping module sections in one config file. Further down is an example
-#   of a generic module setup. Check '--help' for more info on supported modules.
-
-# Remember that most of these settings can also be set as command line options. Doing so
-#   will overrule the options seen here except for the scraping module configs which
-#   overrules everything else.
-# Platform specific configs overrules main configs.
-
-# Uncomment the sections and lines you wish to use:
-
 [main]
 inputFolder="/path/to/your/roms"
-dbFolder="/path/to/your/desired/db/cache/base/folder"
+cacheFolder="/path/to/your/desired/db/cache/base/folder"
 videos="true"
 unattend="true"
 verbosity="1"
 lang="ja"
 region="jp"
-
-[cache]
-marquees="false"
+cacheMarquees="false"
 
 [amiga]
 inputFolder="/specific/path/just/for/amiga/roms"
-dbFolder="/specific/path/just/for/amiga/cache"
+cacheFolder="/specific/path/just/for/amiga/cache"
 minMatch="50"
 maxLength="200"
 artworkXml="artwork-amiga.xml"
