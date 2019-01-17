@@ -62,7 +62,7 @@ bool Cache::createFolders(const QString &scraper)
 
   // Copy priorities.xml example file to cache folder if it doesn't already exist
   if(!QFileInfo::exists(cacheDir.absolutePath() + "/priorities.xml")) {
-    QFile::copy("dbs/priorities.xml.example",
+    QFile::copy("cache/priorities.xml.example",
 		cacheDir.absolutePath() + "/priorities.xml");
   }
   
@@ -559,7 +559,7 @@ void Cache::clean()
   } else {
     printf("Successfully deleted %d files with no resource entry.\n", filesDeleted);
     if(filesNoDelete != 0) {
-      printf("%d files couldn't be deleted, please check file permissions and re-run with '--cleancache'.\n", filesNoDelete);
+      printf("%d files couldn't be deleted, please check file permissions and re-run with '--cache validate'.\n", filesNoDelete);
     }
     printf("\n");
   }

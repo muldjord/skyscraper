@@ -12,8 +12,8 @@ unix:target.files=Skyscraper Skyscraper.app/Contents/MacOS/Skyscraper
 unix:examples.path=/usr/local/etc/skyscraper
 unix:examples.files=config.ini.example README.md hints.txt artwork.xml artwork.xml.example1 artwork.xml.example2 artwork.xml.example3 artwork.xml.example4 aliasMap.csv mameMap.csv docs/ARTWORK.md tgdb_developers.json tgdb_publishers.json
 
-unix:dbexamples.path=/usr/local/etc/skyscraper/cache
-unix:dbexamples.files=cache/priorities.xml.example docs/CACHE.md
+unix:cacheexamples.path=/usr/local/etc/skyscraper/cache
+unix:cacheexamples.files=cache/priorities.xml.example docs/CACHE.md
 
 unix:impexamples.path=/usr/local/etc/skyscraper/import
 unix:impexamples.files=import/README.md import/definitions.dat.example1 import/definitions.dat.example2
@@ -21,7 +21,7 @@ unix:impexamples.files=import/README.md import/definitions.dat.example1 import/d
 unix:resexamples.path=/usr/local/etc/skyscraper/resources
 unix:resexamples.files=resources/maskexample.png resources/frameexample.png resources/boxfront.png resources/boxside.png resources/scanlines1.png resources/scanlines2.png
 
-INSTALLS += target examples dbexamples impexamples resexamples
+INSTALLS += target examples cacheexamples impexamples resexamples
 
 include(./VERSION)
 DEFINES+=VERSION=\\\"$$VERSION\\\"

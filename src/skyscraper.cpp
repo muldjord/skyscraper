@@ -562,12 +562,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/resources/boxside.png";
   copyFile(distro, current);
 
-  current = "dbs/README.md";
-  distro = "/usr/local/etc/skyscraper/dbs/README.md";
+  current = "cache/README.md";
+  distro = "/usr/local/etc/skyscraper/cache/README.md";
   copyFile(distro, current);
 
-  current = "dbs/priorities.xml.example";
-  distro = "/usr/local/etc/skyscraper/dbs/priorities.xml.example";
+  current = "cache/priorities.xml.example";
+  distro = "/usr/local/etc/skyscraper/cache/priorities.xml.example";
   copyFile(distro, current);
 
   current = "import/README.md";
