@@ -28,7 +28,9 @@ $ Skyscraper -p snes
 Running that command will generate a game list for the chosen frontend (default is "EmulationStation"). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing.
 
 ### So what then?
-You're done! The platform has been scraped and you can relaunch your frontend to enjoy the newly scraped data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *combining* phase. Always gather first, then combine afterwards. *Always!*
+You're done! The platform has been scraped and you can relaunch your frontend to enjoy the newly scraped data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *game list generation* phase. Always gather first, then generate the game list afterwards. *Always!*
+
+NOTE! You can always regenerate a game list if you changed the artwork configuration or gathered new data for any of your roms. Simply rerun the above command again and the game list will be regenerated from your new settings.
 
 ### But what about...
 Yes, yes, yes. This is just the basics. You can customize the artwork completely to your liking. You can prioritize the different cached resources any way you like. You can scrape single games in order to gather information for just that one game. You can enable video scraping. You can import your own data into the cache. You can clean your cache. You can create aliases for games that are difficult to scrape. You can change your preferred region and language for the modules that support it. You can set up keys or user id's and password for the scraping modules that take advantage of this. There's *a lot* you can do if you want to.
