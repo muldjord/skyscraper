@@ -77,7 +77,7 @@ void Skyscraper::run()
   if(config.videos) {
     printf("Videos folder:      '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
   }
-  printf("Local db folder:    '\033[1;32m%s\033[0m'\n", config.cacheFolder.toStdString().c_str());
+  printf("Cache folder:       '\033[1;32m%s\033[0m'\n", config.cacheFolder.toStdString().c_str());
   if(config.scraper == "import") {
     printf("Import folder:      '\033[1;32m%s\033[0m'\n", config.importFolder.toStdString().c_str());
   }
