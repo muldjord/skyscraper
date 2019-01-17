@@ -512,7 +512,7 @@ void Cache::validate()
 {
   // TODO: Add format checks for each resource type, and remove if deemed corrupt
 
-  printf("Starting resource cache validation run. This can take several minutes to complete, please be patient...\n");
+  printf("Starting resource cache validation run, please wait...\n");
 
   if(!QFileInfo::exists(cacheDir.absolutePath() + "/db.xml")) {
     printf("'db.xml' not found, cache cleaning cancelled...\n");
