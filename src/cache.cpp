@@ -567,19 +567,17 @@ void Cache::validate()
 
 void Cache::verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &filesNoDelete, QString resType)
 {
+  QList<QString> resFileNames;
+  foreach(Resource resource, resources) {
+    if(resource.type == resType) {
+      QFileInfo resInfo(cacheDir.absolutePath() + "/" + resource.value);
+      resFileNames.append(resInfo.absoluteFilePath());
+    }
+  }
+
   while(dirIt.hasNext()) {
     QFileInfo fileInfo(dirIt.next());
-    bool valid = false;
-    foreach(Resource resource, resources) {
-      if(resource.type == resType) {
-	QFileInfo resInfo(cacheDir.absolutePath() + "/" + resource.value);
-	if(fileInfo.fileName() == resInfo.fileName()) {
-	  valid = true;
-	  break;
-	}
-      }
-    }
-    if(!valid) {
+    if(!resFileNames.contains(fileInfo.absoluteFilePath())) {
       printf("No resource entry for file '%s', deleting... ",
 	     fileInfo.fileName().toStdString().c_str());
       if(QFile::remove(fileInfo.absoluteFilePath())) {
