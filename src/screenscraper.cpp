@@ -72,7 +72,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   game.title = getXmlText("nom", REGION);
   
   // 'screenscraper' sometimes returns a faulty result with the following name. If we get this
-  // result, DON'T use it. It will provide faulty data for localdb
+  // result, DON'T use it. It will provide faulty data for the cache
   if(game.title.toLower().indexOf("hack") != -1 && game.title.toLower().indexOf("link") != -1) {
     return;
   }

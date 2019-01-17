@@ -25,7 +25,7 @@ And here comes the clever part. By having gathered data from both sources (`scre
 ```
 $ Skyscraper -p snes
 ```
-Running that command will implicitly add `-s localdb` which scrapes data from the local Skyscraper cache. And it will do so by combining all of the cached data into the most complete results. This phase also includes the artwork compositing and game list generation.
+Running that command will generate a game list for the chosen frontend (default is "EmulationStation"). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing.
 
 ### So what then?
 You're done! The platform has been scraped and you can relaunch your frontend to enjoy the newly scraped data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *combining* phase. Always gather first, then combine afterwards. *Always!*

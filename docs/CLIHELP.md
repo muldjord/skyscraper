@@ -29,9 +29,9 @@ Skyscraper -p snes
 ```
 
 #### -s &lt;module&gt;
-Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the localdb resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <platform>` description above.
+Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <platform>` description above.
 
-To generate a game list from the localdb resource cache, just leave out the `-s` option entirely.
+To generate a game list from the resource cache, just leave out the `-s` option entirely.
 ###### Example(s)
 ```
 Skyscraper -p amiga -s openretro
@@ -135,16 +135,16 @@ Skyscraper -p snes -a "/path/to/artwork.xml"
 ```
 
 #### -d &lt;folder&gt;
-Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *localdb resource cache*. By default this folder is set to `~/.skyscraper/dbs/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
-NOTE! If you wish to always use a certain location as base folder for your localdb resource cache (for instance a folder on a USB drive), it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
+NOTE! If you wish to always use a certain location as base folder for your resource cache (for instance a folder on a USB drive), it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
 ###### Example(s)
 ```
-Skyscraper -p snes -d "/custom/localdb/cache/path"
+Skyscraper -p snes -d "/custom/cache/path"
 ```
 
 #### --refresh
-Skyscraper has a localdb resource cache which works just like the browser cache in Firefox. If you scrape and gather resources for a platform with the same scraping module twice, it will grab the data from the cache instead of hammering the online servers again. This has the advantage in the case where you scrape a rom set twice, only the roms that weren't recognized the first time around will be fetched from the online servers. Everything else will be loaded from the cache.
+Skyscraper has a resource cache which works just like the browser cache in Firefox. If you scrape and gather resources for a platform with the same scraping module twice, it will grab the data from the cache instead of hammering the online servers again. This has the advantage in the case where you scrape a rom set twice, only the roms that weren't recognized the first time around will be fetched from the online servers. Everything else will be loaded from the cache.
 
 You can force all data to be refetched from the servers by setting this option, effectively bypassing the cache.
 
@@ -155,9 +155,9 @@ Skyscraper -p snes -s screenscraper --refresh
 ```
 
 #### --dbstats
-This will print the stats for the localdb resource cache that is connected to the chosen platform and then quit. It will tell you how many resources of each type are cached for each scraping module for that particular platform. If you wish to purge all or some of the data from the cache, please check the `--purgedb` option.
+This will print the stats for the resource cache that is connected to the chosen platform and then quit. It will tell you how many resources of each type are cached for each scraping module for that particular platform. If you wish to purge all or some of the data from the cache, please check the `--purgedb` option.
 
-Read more about the localdb resource cache [here](LOCALDBCACHE.md).
+Read more about the resource cache [here](CACHE.md).
 
 NOTE! You can set a custom db folder to show stats for with the `-d` option.
 ###### Example(s)
@@ -166,22 +166,22 @@ Skyscraper -p snes --dbstats
 ```
 
 #### --cleandb
-This will test the integrity of the localdb resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the `db.xml` file connected to the platform.
+This will test the integrity of the resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the `db.xml` file connected to the platform.
 
-Read more about the localdb resource cache [here](LOCALDBCACHE.md).
+Read more about the resource cache [here](CACHE.md).
 
-NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the localdb resource cache database and related files.
+NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the resource cache database and related files.
 
-NOTE 2! You can set a custom localdb resource cache folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+NOTE 2! You can set a custom resource cache folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 ###### Example(s)
 ```
 Skyscraper -p snes --cleandb
 ```
 
 #### --mergedb &lt;folder&gt;
-This option allows you to merge two localdb resource caches together and then quit. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option. Any folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+This option allows you to merge two resource caches together and then quit. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option. Any folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
-Read more about the localdb resource cache [here](LOCALDBCACHE.md).
+Read more about the resource cache [here](CACHE.md).
 ###### Example(s)
 ```
 Skyscraper -p snes --mergedb "/path/to source/cache/folder"
@@ -189,7 +189,7 @@ Skyscraper -p snes --mergedb "/path/to source/cache/folder" -d "/path/to destina
 ```
 
 #### --purgedb &lt;resources&gt;
-This is a powerful option that allows you to purge the requested resources from the localdb resource cache connected to the selected platform.
+This is a powerful option that allows you to purge the requested resources from the resource cache connected to the selected platform.
 
 You can purge all resources from a certain module with `m:[module]` or of a certain type with `t:[type]` or a combination of the two separated by a `,`.
 
@@ -199,7 +199,7 @@ You can also purge all resources that don't have any connection to your current 
 
 Lastly, you can purge *all* resources from the cache for the chosen platform using the keyword `all`.
 
-Read more about the localdb resource cache [here](LOCALDBCACHE.md).
+Read more about the resource cache [here](CACHE.md).
 
 NOTE! You can set a custom db folder to purge resources from with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
@@ -260,7 +260,7 @@ Skyscraper -p snes -s thegamesdb --nomarquees
 ```
 
 #### --nobrackets
-Use this option to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the localdb resource cache.
+Use this option to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the resource cache.
 ###### Example(s)
 ```
 Skyscraper -p snes --nobrackets
@@ -274,9 +274,9 @@ Skyscraper -p snes --skipped
 ```
 
 #### --noresize
-By default, to save space, Skyscraper resizes large pieces of artwork before adding them to the localdb resource cache. Adding this option will disable this and save the artwork files exactly as they are retrieved from the scraping module.
+By default, to save space, Skyscraper resizes large pieces of artwork before adding them to the resource cache. Adding this option will disable this and save the artwork files exactly as they are retrieved from the scraping module.
 
-NOTE! This is not related to the artwork compositing that happens when generating a game list. This is *only* related to how Skyscraper handles artwork when adding it to the localdb resource cache while gathering data from the scraping modules.
+NOTE! This is not related to the artwork compositing that happens when generating a game list. This is *only* related to how Skyscraper handles artwork when adding it to the resource cache while gathering data from the scraping modules.
 ###### Example(s)
 ```
 Skyscraper -p amiga -s openretro --noresize
@@ -314,7 +314,7 @@ Skyscraper -p snes -s thegamesdb --maxfails 75
 ```
 
 #### --pretend
-This option is *only* relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It can be very useful to check exactly what and how the data will be combined from the localdb resource cache.
+This option is *only* relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It can be very useful to check exactly what and how the data will be combined from the resource cache.
 ###### Example(s)
 ```
 Skyscraper -p snes --pretend
@@ -384,14 +384,14 @@ Skyscraper -p snes -s thegamesdb --addext "*.ext1 *.ext2"
 ```
 
 #### --lang &lt;code&gt;
-Sets the desired langauge when gathering data into the localdb resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
+Sets the desired langauge when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --lang es
 ```
 
 #### --region &lt;code&gt;
-Sets the desired region when gathering data into the localdb resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md).
+Sets the desired region when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --region jp
