@@ -149,6 +149,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
+* Check if '--cache validate' can be optimized, it's very slow
 
 #### Version 3.0.0 (In progress, unreleased)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
