@@ -1393,6 +1393,26 @@ void Skyscraper::setRegionPrios()
     config.regionPrios.append("uk");
     config.regionPrios.append("wor");
     config.regionPrios.append("jp");
+    config.regionPrios.append("au");
+    config.regionPrios.append("ame");
+    config.regionPrios.append("de");
+    config.regionPrios.append("cus");
+    config.regionPrios.append("cn");
+    config.regionPrios.append("kr");
+    config.regionPrios.append("asi");
+    config.regionPrios.append("br");
+    config.regionPrios.append("sp");
+    config.regionPrios.append("fr");
+    config.regionPrios.append("gr");
+    config.regionPrios.append("it");
+    config.regionPrios.append("no");
+    config.regionPrios.append("dk");
+    config.regionPrios.append("nz");
+    config.regionPrios.append("nl");
+    config.regionPrios.append("pl");
+    config.regionPrios.append("ru");
+    config.regionPrios.append("se");
+    config.regionPrios.append("tw");
   }
 }
 
