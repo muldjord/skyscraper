@@ -3,8 +3,11 @@ Whenever you scrape any platform with any *gathering* scraping module, Skyscrape
 
 Think of the resource cache as the cache in an internet browser. Most of the data on webpages don't change much. By caching some of the data locally, it can load parts of a webpage from that data, instead of loading it from the remote server. This is exactly how the Skyscraper cache works.
 
+#### Default resource cache folder
+The default base folder for all of Skyscrapers' locally cached data is in the `~/.skyscraper/cache` folder. In this folder you'll find individual platform subfolders. Any of these are selfcontained and contains all of the cached data for that particular platform.
+
 #### Resource and scraping module priorities
-There is ONE file that you can and should edit inside each of the platform db folders. That file is called `priorities.xml` and decides the scraper priority of resources for each resource type. For instance, if you know that `thegamesdb` always provides the best `descriptions` for games, you'd add an `<order type="description">` node with a `<source>thegamesdb</source>` subnode. You can have multiple `<source>` nodes, Skyscraper will then prefer the topmost source when generating a game list. If the topmost isn't found, it'll use the next one and so on. If the `<order>` node is empty, it will prioritize using timestamps for when each resource was added to the cache.
+There is ONE file that you can and should edit inside each of the platform subfolders. That file is called `priorities.xml` and decides the scraper priority of resources for each resource type. For instance, if you know that `thegamesdb` always provides the best `descriptions` for games, you'd add an `<order type="description">` node with a `<source>thegamesdb</source>` subnode. You can have multiple `<source>` nodes, Skyscraper will then prefer the topmost source when generating a game list. If the topmost isn't found, it'll use the next one and so on. If the `<order>` node is empty, it will prioritize using timestamps for when each resource was added to the cache.
 
 Skyscraper provides the example file `~/.skyscraper/cache/priorities.xml.example`. Please don't edit this file manually, as it will be overwritten when you update Skyscraper. When a platform is scraped for the first time, it will automatically copy the example file to `~/.skyscraper/cache/[platform]/priorities.xml` unless it already exists. You can of course also copy the file yourself before scraping a platform. If you do so, be sure to remove the `.example` part of the filename so it's just called `priorities.xml`.
 
@@ -17,9 +20,6 @@ If you wish to update / refresh the locally cached resources for a particular pl
 If you wish to just refresh the data for a single rom simply scrape it with `-p [platform] -s [scraping module] --refresh [relative or full rom path and filename]` and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`.
 
 When you've updated information in the resource cache, always remember to re-generate the game list by simply running `Skyscraper -p [platform]`.
-
-#### Default resource cache folder
-The default base folder for all of Skyscrapers' locally cached data is in the `~/.skyscraper/cache` folder. In this folder you'll find individual platform subfolders. Any of these are selfcontained and contains all of the cached data for that particular platform.
 
 #### User-defined databases
 Normally Skyscraper uses a default resource cache folder for each platform. But a friend might have send you a copy of his folders, and you wish to scrape from his or her data. In this case Skyscraper allows you to force the use of a custom resource cache with the `-d [folder]` command line option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
