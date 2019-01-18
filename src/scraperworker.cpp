@@ -229,7 +229,7 @@ void ScraperWorker::run()
       }
     }
 
-    // Always cache resources, even if pretend is set
+    // Add all resources to the cache
     if(config.scraper != "cache" && game.found && !fromCache) {
       game.source = config.scraper;
       cache->addResources(game, config);
