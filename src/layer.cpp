@@ -244,6 +244,12 @@ bool Layer::hasLayers()
 bool Layer::save(QString filename)
 {
   canvas = canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied);
+
+  // Don't complain if canvas is empty, just return true as if it was saved correctly
+  // Otherwise we get "couldn't write media file" errors in compositor for empty canvases
+  if(canvas.isNull())
+    return true;
+
   if(canvas.save(filename)) {
     return true;
   }
