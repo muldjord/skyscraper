@@ -563,7 +563,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   copyFile(distro, current);
 
   current = "cache/README.md";
-  distro = "/usr/local/etc/skyscraper/cache/README.md";
+  distro = "/usr/local/etc/skyscraper/docs/CACHE.md";
   copyFile(distro, current);
 
   current = "cache/priorities.xml.example";
