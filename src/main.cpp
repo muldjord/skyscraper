@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
   QCommandLineOption tOption("t", "Number of scraper threads to use. This might change depending on the scraping module limits.\n(default is 4)", "1-8", "");
   QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '~/.skyscraper/config.ini')", "FILENAME", "");
   QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '~/.skyscraper/artwork.xml')", "FILENAME", "");
-  QCommandLineOption dOption("d", "Set local resource database cache folder.\n(default is '~/.skyscraper/cache/[platform]')", "FOLDER", "");
+  QCommandLineOption dOption("d", "Set custom resource cache folder.\n(default is '~/.skyscraper/cache/[platform]')", "FOLDER", "");
   QCommandLineOption videosOption("videos", "Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!");
   QCommandLineOption symlinkOption("symlink", "Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!");
   QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");

@@ -113,7 +113,7 @@ void Skyscraper::run()
     cache = QSharedPointer<Cache>(new Cache(config.cacheFolder));
     if(cache->createFolders(config.scraper)) {
       if(!cache->read() && config.scraper == "cache") {
-	printf("No resources for this platform found in the local database cache. Please run Skyscraper in simple mode by typing 'Skyscraper' and follow the instructions on screen (this is probably what you want). Or specify a specific scraping module using the '-s' command line option. Check all available options with '--help'\n\n");
+	printf("No resources for this platform found in the resource cache. Please specify a scraping module with '-s' to gather some resources before trying to generate a game list. Check all available modules with '--help'. You can also run Skyscraper in simple mode by typing 'Skyscraper' and follow the instructions on screen.\n\n");
 	exit(1);
       }
     } else {
@@ -1131,7 +1131,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
 
   if(config.scraper == "import") {
-    // Always force local db to be refreshed when using import scraper
+    // Always force the cache to be refreshed when using import scraper
     config.refresh = true;
     config.videos = true;
     // minMatch set to 0 further up
