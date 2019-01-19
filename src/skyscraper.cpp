@@ -1450,6 +1450,7 @@ void Skyscraper::migrate(QString filename)
     oldSettings.write(data);
     oldSettings.close();
   }
+  data.replace("dbFolder=", "cacheFolder="); 
   data.replace("allowExtension=", "addExtensions="); 
   data.replace("startat=", "startAt="); 
   data.replace("endat=", "endAt="); 
