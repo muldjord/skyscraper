@@ -346,7 +346,7 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
     }
   }
 
-  baseName = NameTools::getUrlQueryName(baseName);
+  baseName = NameTools::getUrlQueryName(baseName, 2);
 
   if(!baseName.isEmpty()) {
     if(isAga) {

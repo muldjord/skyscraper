@@ -98,7 +98,7 @@ QString NameTools::getNameWithSpaces(const QString baseName)
   return withSpaces;
 }
 
-QString NameTools::getUrlQueryName(const QString baseName)
+QString NameTools::getUrlQueryName(const QString baseName, const int words, const QString spaceChar)
 {
   QString newName = baseName;
   // Remove everything in brackets
@@ -150,8 +150,8 @@ QString NameTools::getUrlQueryName(const QString baseName)
   // A few game names have faulty "s's". Fix them to "s'"
   newName = newName.replace("s's", "s'");
   newName = newName.replace("'", "%27");
-  // Finally change all spaces to plusses since that's what most search engines understand
-  newName = newName.simplified().replace(" ", "+");
+  // Finally change all spaces to requested char. Default is '+' since that's what most search engines seem to understand
+  newName = newName.simplified().replace(" ", spaceChar);
 
   // Implement special cases here
   if(newName == "ik") {
@@ -164,6 +164,16 @@ QString NameTools::getUrlQueryName(const QString baseName)
     newName = "all+new+world+of+lemmings";
   }
   
+  if(words != -1) {
+    QList<QString> wordList = newName.split(spaceChar);
+    if(wordList.size() > words) {
+      newName.clear();
+      for(int a = 0; a < words; ++a) {
+	newName.append(wordList.at(a) + spaceChar);
+      }
+      newName = newName.left(newName.length() - spaceChar.length());
+    }
+  }
   return newName;
 }
 
