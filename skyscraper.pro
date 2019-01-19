@@ -16,7 +16,7 @@ unix:cacheexamples.path=/usr/local/etc/skyscraper/cache
 unix:cacheexamples.files=cache/priorities.xml.example docs/CACHE.md
 
 unix:impexamples.path=/usr/local/etc/skyscraper/import
-unix:impexamples.files=import/README.md import/definitions.dat.example1 import/definitions.dat.example2
+unix:impexamples.files=docs/IMPORT.md import/definitions.dat.example1 import/definitions.dat.example2
 
 unix:resexamples.path=/usr/local/etc/skyscraper/resources
 unix:resexamples.files=resources/maskexample.png resources/frameexample.png resources/boxfront.png resources/boxside.png resources/scanlines1.png resources/scanlines2.png
