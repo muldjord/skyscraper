@@ -571,7 +571,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   copyFile(distro, current);
 
   current = "import/README.md";
-  distro = "/usr/local/etc/skyscraper/import/README.md";
+  distro = "/usr/local/etc/skyscraper/import/IMPORT.md";
   copyFile(distro, current);
 
   current = "import/definitions.dat.example1";
