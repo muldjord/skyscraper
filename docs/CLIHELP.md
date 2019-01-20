@@ -392,7 +392,7 @@ Skyscraper -p snes -s thegamesdb --addext "*.ext1 *.ext2"
 ```
 
 #### --lang &lt;CODE&gt;
-Sets the desired langauge when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md). Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Sets the desired language when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md). Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --lang es
