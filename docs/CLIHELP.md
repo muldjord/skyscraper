@@ -51,14 +51,14 @@ Skyscraper -p snes -s screenscraper -u <userid:password>
 ```
 
 #### -i &lt;PATH&gt;
-Sets the rom input folder. By default Skyscraper will look for roms in the `/home/[user]/RetroPie/roms/[platform]` folder. If your roms are located in a non-default location, you can set the input path using this option. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Sets the rom input folder. By default Skyscraper will look for roms in the `/home/<user>/RetroPie/roms/<platform>` folder. If your roms are located in a non-default location, you can set the input path using this option. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -i "/path/to/your/snes/roms"
 ```
 
 #### --nosubdirs
-By default Skyscraper will include roms located in subfolders. By adding this option Skyscraper will only scrape the roms located directly in the input folder. See `-i <path>` above to read more about the rom input folder. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+By default Skyscraper will include roms located in subfolders. By adding this option Skyscraper will only scrape the roms located directly in the input folder. See `-i <PATH>` above to read more about the rom input folder. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --nosubdirs
@@ -137,7 +137,7 @@ Skyscraper -p snes -a "/path/to/artwork.xml"
 ```
 
 #### -d &lt;FOLDER&gt;
-Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/<platform>`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
 NOTE! If you wish to always use a certain location as base folder for your resource cache (for instance a folder on a USB drive), it is *strongly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
 ###### Example(s)
@@ -196,7 +196,7 @@ Skyscraper -p snes --cache validate
 ```
 
 ##### --cache merge:&lt;FOLDER&gt;
-This option allows you to merge two resource caches together. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option.
+This option allows you to merge two resource caches together. It will merge the cache located at the `<FOLDER>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option.
 ###### Example(s)
 ```
 Skyscraper -p snes --cache "merge:path/to/source/cache/folder"
@@ -208,7 +208,7 @@ This is a powerful option that allows you to purge the requested resources from 
 
 You can purge *all* resources from the cache for the chosen platform using the keyword `all`.
 
-You can purge specific resources from a certain module with `m=[module]` or of a certain type with `t=[type]` or a combination of the two separated by a `,`.
+You can purge specific resources from a certain module with `m=<MODULE>` or of a certain type with `t=<TYPE>` or a combination of the two separated by a `,`.
 
 Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
 
@@ -290,7 +290,7 @@ NOTE! This is not related to the artwork compositing that happens when generatin
 Skyscraper -p amiga -s openretro --noresize
 ```
 
-#### --startat &lt;filename&gt;
+#### --startat &lt;FILENAME&gt;
 If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and onwards. Use it in conjunction with the `--endat` option described below to further narrow the subset of files you wish to gather resources for.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
@@ -302,7 +302,7 @@ Skyscraper -p snes -s thegamesdb --startat "rom name.zip"
 Skyscraper -p snes -s thegamesdb --startat "partial/path/to/rom name.zip"
 ```
 
-#### --endat &lt;filename&gt;
+#### --endat &lt;FILENAME&gt;
 If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrapes alphabetically until it reaches this rom, then stops. Use it in conjunction with the `--startat` option described above to further narrow the subset of files you wish to gather resources for.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
@@ -349,7 +349,7 @@ When gathering data from any of the scraping modules many potential entries will
 Skyscraper -p snes -s thegamesdb --interactive
 ```
 
-#### --query &lt;string&gt;
+#### --query &lt;STRING&gt;
 For most modules a search query is sent to the scraping module in an URL format. This means that a filename such as "Rick Dangerous.lha" becomes "rick+dangerous". The '+' here means a space. You could probably also use the URL encoded space "rick%20dangerous" but my tests show that most modules expect spaces as '+'. And it is the "rick+dangerous" part that you, as the user, can pass as the query, like so:
 ```
 $ Skyscraper -p [platform] -s [module] --query "rick+dangerous" [filename]
