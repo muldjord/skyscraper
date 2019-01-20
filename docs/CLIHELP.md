@@ -7,7 +7,7 @@ If you've installed Skyscraper through the RetroPie-Setup the executable is inst
 
 IMPORTANT! Most of the options can also be set in the `~/.skyscraper/config.ini` file thus removing the need to type them on command line all the time. Check the config.ini doc [here](CONFIGINI.md) for more info on this.
 
-*NOTE! All options have now been updated to reflect the changes in the upcoming 3.0.0 release. If you wish to check the 2.9.5 option descriptions, please check a previous version of this file from before January 20th.*
+*NOTE! All options have now been updated to reflect the changes in the upcoming 3.0.0 release. If you wish to check the 2.9.5 option descriptions, please check a previous version of this file from before January 10th.*
 
 #### -h, --help
 Outputs the help text for all command line options to the terminal.
