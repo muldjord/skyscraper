@@ -109,18 +109,20 @@ Skyscraper is a command line tool, and has many, many options for you to fiddle 
 ```
 $ Skyscraper --help
 ```
-This will give you a description of everything Skyscraper can do if you feel adventurous! Let's go over the most important ones:
+This will give you a description of everything Skyscraper can do if you feel adventurous! For a thorough description of all available options, check [here](docs/CLIHELP.md).
 
-* `-p [platform]`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms under the `-p` option with `--help`
-* `-s [scraping module]`: This tells Skyscraper where you would like to scrape and cache resources from. Read more about that [here](docs/CACHE.md)
+Let's go over the most important ones:
+
+* `-p <PLATFORM>`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms under the `-p` option with `--help`
+* `-s <SCRAPING MODULE>`: This tells Skyscraper where you would like to scrape and cache resources from. Read more about that [here](docs/CACHE.md)
 * `--cache refresh`: Whenever you scrape a platform with any scraping module Skyscraper caches all of that data locally. When you rescrape a platform it will fetch the data from the cache instead of hammering the online servers. Using the `--cache refresh` option allows you to override this and tells Skyscraper to refresh the cached data directly from the online source. Please only use this option if you know the data you want to scrape has changed at the source
 * `--videos`: If you wish to scrape videos for the scraping modules that support it, you need to add the `--videos` option. This is disabled by default because of the significant space requirements needed to save them
 * `--unattend`: This just bypasses any questions at the beginning of a scraping run. Setting `--unattend` will then always answer yes to overwriting an existing game list and not skip existing entries
 
-If you have your roms in a non-default location (default is `/home/[user]/RetroPie/roms/[platform]`) or wish to export the game list or artwork to non-default locations, you will also need these:
-* `-i [path]`: Sets a non-default rom input folder
-* `-g [path]`: Sets a non-default game list export folder (defaults to the same as rom input folder if scraping for EmulationStation)
-* `-o [path]`: Sets a non-default artwork export folder (defaults to the same as game list export folder + `/media` if scraping for EmulationStation)
+If you have your roms in a non-default location (default is `/home/<user>/RetroPie/roms/<platform>`) or wish to export the game list or artwork to non-default locations, you will also need these:
+* `-i <PATH>`: Sets a non-default rom input folder
+* `-g <PATH>`: Sets a non-default game list export folder (defaults to the same as rom input folder if scraping for EmulationStation)
+* `-o <PATH>`: Sets a non-default artwork export folder (defaults to the same as game list export folder + `/media` if scraping for EmulationStation)
 
 For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` file as described [here](#docs/CONFIGINI.md). This will make the options permanent so you don't need to type them in all the time.
 
@@ -136,7 +138,7 @@ For a full description of all availabe config options, check [here](docs/CONFIGI
 One of Skyscraper's most powerful features is the resource cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](docs/CACHE.md).
 
 ### Custom data import
-I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the resource cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data. Read more about how this works [here](import/README.md).
+I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the resource cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data. Read more about how this works [here](docs/IMPORT.md).
 
 ### Artwork look and effects
 Check the full artwork documentation [here](docs/ARTWORK.md)
