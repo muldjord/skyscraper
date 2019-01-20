@@ -82,24 +82,25 @@ Date       : The game release date (example '1985-06-01')
 #### List of known tags
 From the examples above you'll notice the `###SOMETHING###` tags. This is what Skyscraper recognizes your data from. The supported tags are:
 
-* ###TITLE###
-* ###DESCRIPTION###
-* ###DEVELOPER###
-* ###PUBLISHER###
-* ###PLAYERS###
-* ###AGES###
-* ###RATING###
-* ###TAGS###
-* ###RELEASEDATE###
+* `###TITLE###`
+* `###DESCRIPTION###`
+* `###DEVELOPER###`
+* `###PUBLISHER###`
+* `###PLAYERS###`
+* `###AGES###`
+* `###RATING###`
+* `###TAGS###`
+* `###RELEASEDATE###`
 
 #### Resource formats
 For `###PLAYERS###`, `###RATING###`, `###AGES###`, and `###RELEASEDATE###` a certain format is required. Players must contain just the maximum number of players as an integer such as '4'. Rating must be a number between 0.0 and 5.0. Ages must be an integer between 1 and 18 (for instance "16" means it is suitable from ages 16 and up). Release date must be of one of the following formats:
-* yyyy
-* yyyy-MM
-* yyyy-MM-dd
-* MM/dd/yyyy
-* MMM, yyyy (MMM is Jan, Feb and so on...)
-* MMM dd, yyyy (MMM is Jan, Feb and so on...)
+* `yyyy`
+* `yyyy-MM`
+* `yyyy-MM-dd`
+* `yyyy-MMM-dd` (MMM is Jan, Feb and so on...)
+* `MM/dd/yyyy`
+* `MMM, yyyy` (MMM is Jan, Feb and so on...)
+* `MMM dd, yyyy` (MMM is Jan, Feb and so on...)
 
 ## How to actually USE the data
 When you've imported all of your data into the resource cache, you can make use of it by enabling Skyscrapers *game list generation* mode simply by leaving out the `-s` command line option entirely. The game list generator will then make use of your imported data. Read more about the resurce cache [here](CACHE.md).
