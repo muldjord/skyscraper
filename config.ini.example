@@ -21,9 +21,8 @@
 # Uncomment the sections and lines you wish to use:
 
 [main]
-#platform=""
 ##Setting input, gamelist or media folder here, will automatically append '/[platform]' to path.
-##If you need better control, use the same variables under a [platform] section instead.
+##If you need better control, use the same variables under a [<platform>] section instead.
 #inputFolder="/home/pi/RetroPie/roms"
 #gamelistFolder="/home/pi/RetroPie/roms"
 #mediaFolder="/home/pi/RetroPie/roms"
@@ -60,7 +59,7 @@
 #hints="false"
 #subdirs="true"
 
-#[platform (eg. 'amiga')]
+#[<platform, eg 'amiga'>]
 #inputFolder="/home/pi/RetroPie/roms/amiga"
 #gamelistFolder="/home/pi/RetroPie/roms/amiga"
 #mediaFolder="/home/pi/RetroPie/roms/amiga/media"
@@ -70,7 +69,7 @@
 #cacheScreenshots="true"
 #cacheWheels="true"
 #cacheMarquees="true"
-#importFolder="/home/pi/.skyscraper/import"
+#importFolder="/home/pi/.skyscraper/import/amiga"
 #unpack="false"
 #emulator=""
 #videos="false"
@@ -81,7 +80,6 @@
 #langPrios="en,de,es"
 #regionPrios="eu,us,ss,uk,wor,jp"
 #minMatch="0"
-##Sets the maximum allowed 'description' for the games
 #maxLength="10000"
 #threads="2"
 #startAt="filename"
@@ -95,15 +93,12 @@
 #skipped="false"
 #artworkXml="artwork.xml"
 #relativePaths="false"
-##Ucomment to overwrite the default allowed rom extensions for this platform
 #extensions="*.zip *.uae *.adf"
-##Uncomment to add these extensions to the default allowed extensions for this platform
 #addExtensions="*.zst *.rom"
 #subdirs="true"
 
-#[scraping module (eg. 'screenscraper')]
+#[<scraping module, eg 'screenscaper'>]
 #userCreds="user:password"
 #threads="1"
-##Sets the maximum allowed 'description' for the games
 #maxLength="10000"
 #interactive="false"
