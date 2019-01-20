@@ -912,6 +912,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
   }
+  if(settings.contains("minMatch")) {
+    config.minMatch = settings.value("minMatch").toInt();
+    config.minMatchSet = true;
+  }
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
   }
