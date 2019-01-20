@@ -45,7 +45,7 @@ Below follows a description of all scraping modules.
 #### OpenRetro
 * Shortname: *`openretro`*
 * Type: *Online*
-* Website: *[www.openretro.org](https://www.openretro.org/)*
+* Website: *[www.openretro.org](https://www.openretro.org)*
 * Type: *WHDLoad uuid based, File name search based*
 * User credential support: *None required*
 * API request limit: *None*
@@ -83,3 +83,41 @@ Below follows a description of all scraping modules.
 * Example use:
   * `Skyscraper -p fba -s igdb <SINGLE FILE TO SCRAPE>`
   * `Skyscraper -p fba -s igdb --startat <FILE TO START AT> --endat <FILE TO END AT>`
+
+#### World of Spectrum
+* Shortname: *`worldofspectrum`*
+* Type: *Online*
+* Website: *[www.worldofspectrum.org](http://www.worldofspectrum.org)*
+* Type: *File name search based*
+* User credential support: *None required*
+* API request limit: *None*
+* Thread limit: *None*
+* Platform support: *Exclusively ZX Spectrum games*
+* Media support: *`cover`, `screenshot`*
+* Example use: `Skyscraper -p zxspectrum -s worldofspectrum`
+
+#### EmulationStation game list
+* Shortname: *`esgamelist`*
+* Type: *Local*
+* Website: *[https://emulationstation.org](https://emulationstation.org)*
+* Type: *Exact file name match*
+* User credential support: *None required*
+* API request limit: *None*
+* Thread limit: *None*
+* Platform support: *All*
+* Media support: *`cover`, `screenshot`, `marquee`*
+* Example use: `Skyscraper -p snes -s esgamelist`
+
+#### Custom resource import scraper
+* Shortname: *`import`*
+* Type: *Local*
+* Website: *[Skyscraper@github](https://github.com/muldjord/skyscraper)*
+* Type: *Exact file name match*
+* User credential support: *None required*
+* API request limit: *None*
+* Thread limit: *None*
+* Platform support: *All*
+* Media support: *`cover`, `screenshot`, `wheel`, `marquee`, `video`*
+* Example use: `Skyscraper -p snes -s import`
+
+Read a thorough descriptio of this module [here](IMPORT.md).
