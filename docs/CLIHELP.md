@@ -7,6 +7,8 @@ If you've installed Skyscraper through the RetroPie-Setup the executable is inst
 
 IMPORTANT! Most of the options can also be set in the `~/.skyscraper/config.ini` file thus removing the need to type them on command line all the time. Check the config.ini doc [here](CONFIGINI.md) for more info on this.
 
+*NOTE! All options have now been updated to reflect the changes in the upcoming 3.0.0 release. If you wish to check the 2.9.5 option descriptions, please check a previous version of this file from before January 10th.*
+
 #### -h, --help
 Outputs the help text for all command line options to the terminal.
 ###### Example(s)
@@ -15,7 +17,7 @@ Skyscraper --help
 Skyscraper -h
 ```
 
-#### -p &lt;platform&gt;
+#### -p &lt;PLATFORM&gt;
 Sets the platform you wish to scrape. Supported platforms can be seen using the `--help` option described above.
 
 Running the following commands will scrape from all cached resources and generate a game list and composite artwork using the recipe in `~/.skyscraper/artwork.xml` (check the artwork documentation for more info on this [here](ARTWORK.md).
@@ -28,7 +30,7 @@ Skyscraper -p snes
 
 ```
 
-#### -s &lt;module&gt;
+#### -s &lt;MODULE&gt;
 Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <platform>` description above.
 
 To generate a game list from the resource cache, just leave out the `-s` option entirely.
@@ -41,22 +43,22 @@ Skyscraper -p snes -s import
 ```
 To read more about each scraping module, check [here](SCRAPINGMODULES.md).
 
-#### -u &lt;key or user:password&gt;
-Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
+#### -u &lt;KEY or USERID:PASSWORD&gt;
+Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md). Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
-Skyscraper -p snes -s screenscraper -u <your key>
+Skyscraper -p snes -s screenscraper -u <userid:password>
 ```
 
-#### -i &lt;path&gt;
-Sets the rom input folder. By default Skyscraper will look for roms in the `/home/[user]/RetroPie/roms/[platform]` folder. If your roms are located in a non-default location, you can set the input path using this option.
+#### -i &lt;PATH&gt;
+Sets the rom input folder. By default Skyscraper will look for roms in the `/home/[user]/RetroPie/roms/[platform]` folder. If your roms are located in a non-default location, you can set the input path using this option. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -i "/path/to/your/snes/roms"
 ```
 
 #### --nosubdirs
-By default Skyscraper will include roms located in subfolders. By adding this option Skyscraper will only scrape the roms located directly in the input folder. See `-i <path>` above to read more about the rom input folder.
+By default Skyscraper will include roms located in subfolders. By adding this option Skyscraper will only scrape the roms located directly in the input folder. See `-i <path>` above to read more about the rom input folder. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --nosubdirs
@@ -71,15 +73,15 @@ NOTE! Only use this option if you are having problems getting the roms identifie
 Skyscraper -p snes -s screenscraper --unpack
 ```
 
-#### -g &lt;path&gt;
-Sets the game list export folder. By default Skyscraper exports the game list to the same directory as the rom input folder. This enables you to change that to a non-default location.
+#### -g &lt;PATH&gt;
+Sets the game list export folder. By default Skyscraper exports the game list to the same directory as the rom input folder. This enables you to change that to a non-default location. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper -g "/your/desired/game list/export/path"
 ```
 
-#### -o &lt;path&gt;
-Sets the artwork / media output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location. Read more about the artwork compositing [here](ARTWORK.md).
+#### -o &lt;PATH&gt;
+Sets the artwork / media output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location. Read more about the artwork compositing [here](ARTWORK.md). Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper -o "/path/to/where/you/want/the/artwork/files"
@@ -92,22 +94,22 @@ Sets the desired number of parallel threads to be run when scraping. NOTE! Some 
 Skyscraper -p snes -s thegamesdb -t 5
 ```
 
-#### -f &lt;frontend&gt;
-Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported aswell. If exporting for the `attractmode` frontend, please also take note of the required `-e` option that goes along with using the `attractmode` frontend.
+#### -f &lt;FRONTEND&gt;
+Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported aswell. If exporting for the `attractmode` frontend, please also take note of the required `-e` option that goes along with using the `attractmode` frontend. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -f attractmode -e snes
 ```
 
-#### -e &lt;emulator&gt;
-NOTE! This option is *only* applicable when using the `-f attractmode` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform.
+#### -e &lt;EMULATOR&gt;
+NOTE! This option is *only* applicable when using the `-f attractmode` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -f attractmode -e snes
 ```
 
 #### -m &lt;0-100&gt;
-Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground.
+Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb -m 50
@@ -120,24 +122,24 @@ Sets the maximum length of returned game descriptions. This is a convenience opt
 Skyscraper -p snes -l 500
 ```
 
-#### -c &lt;filename&gt;
+#### -c &lt;FILENAME&gt;
 Sets a non-default config file. By default Skyscraper uses the file `~/.skyscraper/config.ini`.
 ###### Example(s)
 ```
 Skyscraper -p snes -c "/path/to/config.ini"
 ```
 
-#### -a &lt;filename&gt;
-Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`.
+#### -a &lt;FILENAME&gt;
+Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md). Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -a "/path/to/artwork.xml"
 ```
 
-#### -d &lt;folder&gt;
+#### -d &lt;FOLDER&gt;
 Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
-NOTE! If you wish to always use a certain location as base folder for your resource cache (for instance a folder on a USB drive), it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
+NOTE! If you wish to always use a certain location as base folder for your resource cache (for instance a folder on a USB drive), it is *strongly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -d "/custom/cache/path"
@@ -146,7 +148,7 @@ Skyscraper -p snes -d "/custom/cache/path"
 #### --refresh
 Skyscraper has a resource cache which works just like the browser cache in Firefox. If you scrape and gather resources for a platform with the same scraping module twice, it will grab the data from the cache instead of hammering the online servers again. This has the advantage in the case where you scrape a rom set twice, only the roms that weren't recognized the first time around will be fetched from the online servers. Everything else will be loaded from the cache.
 
-You can force all data to be refetched from the servers by setting this option, effectively bypassing the cache.
+You can force all data to be refetched from the servers by setting this option, effectively updating the cached data with new data from the source.
 
 NOTE! *Only* use this option if you know data has changed for several roms at the source. Otherwise you are hammering the servers for no reason.
 ###### Example(s)
@@ -154,67 +156,73 @@ NOTE! *Only* use this option if you know data has changed for several roms at th
 Skyscraper -p snes -s screenscraper --refresh
 ```
 
-#### --dbstats
-This will print the stats for the resource cache that is connected to the chosen platform and then quit. It will tell you how many resources of each type are cached for each scraping module for that particular platform. If you wish to purge all or some of the data from the cache, please check the `--purgedb` option.
+#### --cache <COMMAND[:OPTIONS]>
+This is the cache master option. It contains several subcommands that allows you to manipulate the cached data for the selected platform.
+
+NOTE! For any of these commands you can set a non-default resource cache folder with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
 Read more about the resource cache [here](CACHE.md).
 
-NOTE! You can set a custom db folder to show stats for with the `-d` option.
+##### --cache show
+Shows the cache stats for the chosen platform. It will list how many resources of each type you currently have cached for each scraping module.
 ###### Example(s)
 ```
-Skyscraper -p snes --dbstats
+Skyscraper -p snes --cache show
 ```
 
-#### --cleandb
-This will test the integrity of the resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the `db.xml` file connected to the platform.
-
-Read more about the resource cache [here](CACHE.md).
-
-NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the resource cache database and related files.
-
-NOTE 2! You can set a custom resource cache folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+##### --cache refresh
+Same as [--refresh](#--refresh).
 ###### Example(s)
 ```
-Skyscraper -p snes --cleandb
+Skyscraper -p snes -s screenscraper --cache refresh
 ```
 
-#### --mergedb &lt;folder&gt;
-This option allows you to merge two resource caches together and then quit. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option. Any folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+##### --cache vacuum
+You can purge all resources that don't have any connection to your current romset for the selected platform by using the `vacuum` command. This is extremely useful if you've removed a bunch of roms from your collection and you wish to purge any cached data you don't need anymore.
 
-Read more about the resource cache [here](CACHE.md).
+Warning! Vacuuming the cache cannot be undone, so please consider making a backup.
 ###### Example(s)
 ```
-Skyscraper -p snes --mergedb "/path/to source/cache/folder"
-Skyscraper -p snes --mergedb "/path/to source/cache/folder" -d "/path/to destination/cache/folder"
+Skyscraper -p snes --cache vacuum
 ```
 
-#### --purgedb &lt;resources&gt;
+##### --cache validate
+This will test the integrity of the resource cache connected to the chosen platform. It will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the `db.xml` file connected to the platform.
+
+NOTE! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the resource cache database and related files.
+###### Example(s)
+```
+Skyscraper -p snes --cache validate
+```
+
+##### --cache merge:&lt;FOLDER&gt;
+This option allows you to merge two resource caches together. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option.
+###### Example(s)
+```
+Skyscraper -p snes --cache "merge:path/to/source/cache/folder"
+Skyscraper -p snes --cache "merge:path/to/source/cache/folder" -d "/path/to/nondefault/destination/cache/folder"
+```
+
+##### --cache purge:<KEYWORD|MODULE and/or TYPE>
 This is a powerful option that allows you to purge the requested resources from the resource cache connected to the selected platform.
 
-You can purge all resources from a certain module with `m:[module]` or of a certain type with `t:[type]` or a combination of the two separated by a `,`.
+You can purge *all* resources from the cache for the chosen platform using the keyword `all`.
+
+You can purge specific resources from a certain module with `m=[module]` or of a certain type with `t=[type]` or a combination of the two separated by a `,`.
 
 Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
 
-You can also purge all resources that don't have any connection to your current romset for the selected platform by using the `vacuum` keyword. This is extremely useful if you've removed a bunch of roms from your collection and you wish to purge any cached data you don't need anymore.
-
-Lastly, you can purge *all* resources from the cache for the chosen platform using the keyword `all`.
-
-Read more about the resource cache [here](CACHE.md).
-
-NOTE! You can set a custom db folder to purge resources from with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
-
-Warning! Using any of these commands cannot be undone, so please consider making a backup.
+Warning! Purging anything from the cache cannot be undone, so please consider making a backup.
 ###### Example(s)
 ```
-Skyscraper -p snes --purgedb vacuum
-Skyscraper -p snes --purgedb m:thegamesdb
-Skyscraper -p snes --purgedb t:cover
-Skyscraper -p snes --purgedb m:arcadedb,t:publisher
-Skyscraper -p snes --purgedb all
+Skyscraper -p snes --cache purge:all
+Skyscraper -p snes --cache purge:m=thegamesdb
+Skyscraper -p snes --cache purge:t=cover
+Skyscraper -p snes --cache purge:m=thegamesdb,t=cover
 ```
 
 #### --videos
-By default Skyscraper doesn't scrape and cache video resources because of the significant disk space required to save them. You can enable videos using this option.
+By default Skyscraper doesn't scrape and cache video resources because of the significant disk space required to save them. You can enable videos using this option. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --videos
@@ -223,7 +231,7 @@ Skyscraper -p snes --videos
 ```
 
 #### --symlink
-Enabling this option is only relevant while also using the `--videos` option. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
+Enabling this option is only relevant while also using the `--videos` option. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --videos --symlink
@@ -232,35 +240,35 @@ Skyscraper -p snes --videos --symlink
 ```
 
 #### --nocovers
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this option can save you some space.
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nocovers
 ```
 
 #### --noscreenshots
-Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, this option can save you some space.
+Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --noscreenshots
 ```
 
 #### --nowheels
-Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, this option can save you some space.
+Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nowheels
 ```
 
 #### --nomarquees
-Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, this option can save you some space.
+Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nomarquees
 ```
 
 #### --nobrackets
-Use this option to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the resource cache.
+Use this option to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the resource cache. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --nobrackets
@@ -314,21 +322,21 @@ Skyscraper -p snes -s thegamesdb --maxfails 75
 ```
 
 #### --pretend
-This option is *only* relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It can be very useful to check exactly what and how the data will be combined from the resource cache.
+This option is *only* relevant when generating a game list (by leaving out the `-s <MODULE>` option). It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It can be very useful to check exactly what and how the data will be combined from the resource cache.
 ###### Example(s)
 ```
 Skyscraper -p snes --pretend
 ```
 
 #### --unattend
-When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input.
+When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --unattend
 ```
 
 #### --unattendskip
-When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input.
+When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --unattendskip
@@ -375,30 +383,30 @@ Only relevant when generating an EmulationStation game list (which is the defaul
 Skyscraper -p snes --relative
 ```
 
-#### --addext &lt;extension&gt;
-If you have a rom that Skyscraper doesn't even try to gather data for, it might be because it has a file extension that isn't currently supported. This option allows you to temporarily add support for any file extension. If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version of Skyscraper.
+#### --addext &lt;EXTENSION&gt;
+If you have a rom that Skyscraper doesn't even try to gather data for, it might be because it has a file extension that isn't currently supported. This option allows you to temporarily add support for any file extension. If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version of Skyscraper. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --addext *.ext
 Skyscraper -p snes -s thegamesdb --addext "*.ext1 *.ext2"
 ```
 
-#### --lang &lt;code&gt;
-Sets the desired langauge when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
+#### --lang &lt;CODE&gt;
+Sets the desired langauge when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md). Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --lang es
 ```
 
-#### --region &lt;code&gt;
-Sets the desired region when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md).
+#### --region &lt;CODE&gt;
+Sets the desired region when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md). Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --region jp
 ```
 
 #### --nohints
-Diables the "Did you know" hints when running Skyscraper.
+Diables the "Did you know" hints when running Skyscraper. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --nohints
