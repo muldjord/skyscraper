@@ -406,7 +406,7 @@ Skyscraper -p snes -s screenscraper --region jp
 ```
 
 #### --nohints
-Diables the "Did you know" hints when running Skyscraper. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Disables the "Did you know" hints when running Skyscraper. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --nohints
