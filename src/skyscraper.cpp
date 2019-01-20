@@ -721,6 +721,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("addExtensions")) {
     config.addExtensions = settings.value("addExtensions").toString();
   }
+  if(settings.contains("minMatch")) {
+    config.minMatch = settings.value("minMatch").toInt();
+    config.minMatchSet = true;
+  }
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
