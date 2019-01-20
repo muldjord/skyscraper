@@ -33,7 +33,7 @@ MOST FILES AND FOLDERS INSIDE THE `~/.skyscraper/cache` FOLDER ARE NOT MEANT TO 
 If you decide to add your own files to the subfolders, you risk them being deleted by Skyscraper later on if it is run with one of the database cleanup command line options. You've been warned!
 
 #### Other cool stuff you CAN DO
-Each subfolder in the `~/.skyscraper/cache/` folder is self-contained and can be copied to other Skyscraper installations at your convenience. Just copy the folder itself over to some other computer that has Skyscraper 1.6.0 or later installed, and you can make use of the data when generating game list. If you add it at a non-default location, set the custom folder with `-d [dbfolder]`.
+Each subfolder in the `~/.skyscraper/cache/` folder is self-contained and can be copied to other Skyscraper installations at your convenience. Just copy the folder itself over to some other computer that has Skyscraper 1.6.0 or later installed, and you can make use of the data when generating game lists. If you add it at a non-default location, set the custom folder with `-d <FOLDER>`.
 
 #### To those who live the thug life
 If you absolutely insist on editing the databases by hand, here's a description of the format. It's really, really simple.
