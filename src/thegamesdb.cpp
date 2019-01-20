@@ -48,7 +48,7 @@ TheGamesDb::TheGamesDb(Settings *config) : AbstractScraper(config)
   //fetchOrder.append(RATING);
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
-  fetchOrder.append(WHEEL);
+  //fetchOrder.append(WHEEL);
 }
 
 void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
