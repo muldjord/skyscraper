@@ -1,5 +1,5 @@
 # Custom data import
-The following describes how to import your own custom textual, artwork and / or video data into the local database cache for later use with the `-s localdb` scraping module.
+The following describes how to import your own custom textual, artwork and / or video data into the local database cache for later use when generating game lists (enable game list generation mode simply by leaving out the `-s` command line option).
 
 NOTE: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import/` when importing for the `amiga` platform.
 
@@ -102,4 +102,4 @@ For `###PLAYERS###`, `###RATING###`, `###AGES###`, and `###RELEASEDATE###` a cer
 * MMM dd, yyyy (MMM is Jan, Feb and so on...)
 
 ## How to actually USE the data
-When you've imported all of your data into the local Skyscraper cache, you can make use of it by scraping the platform with `Skyscraper -p [platform] -s localdb` (you can actually leave out `-s localdb` as it will be used by default). This will make use of your imported data. Read more about the localdb scraping module [here](../dbs/README.md).
+When you've imported all of your data into the resource cache, you can make use of it by enabling Skyscrapers *game list generation* mode simply by leaving out the `-s` command line option entirely. The game list generator will then make use of your imported data. Read more about the resurce cache [here](CACHE.md).
