@@ -52,7 +52,7 @@ Below follows a description of all scraping modules.
 
 #### MobyGames
 * Shortname: `mobygames`
-* Website: *www.mobygames.com](https://www.mobygames.com)*
+* Website: *[www.mobygames.com](https://www.mobygames.com)*
 * Type: *File name search based*
 * User credential support: *None required*
 * API request limit: *1 request per 10 seconds*
