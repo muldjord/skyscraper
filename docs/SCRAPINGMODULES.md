@@ -108,6 +108,10 @@ Below follows a description of all scraping modules.
 * Media support: *`cover`, `screenshot`, `marquee`*
 * Example use: `Skyscraper -p snes -s esgamelist`
 
+This modules allows you to import data from an existing EmulationStation game list into the Skyscraper cache. This is useful if you already have a lot of data and artwork in a gamelist.xml file and you wish to use it with Skyscraper.
+
+Skyscraper will search for the `gamelist.xml` file at `<INPUT FOLDER>/gamelist.xml` which by default is `/home/<USER>/RetroPie/roms/<PLATFORM>/gamelist.xml`. If that file isn't found it will look for it at `~/.skyscraper/import/<PLATFORM>/gamelist.xml`.
+
 #### Custom resource import scraper
 * Shortname: *`import`*
 * Type: *Local*
@@ -120,4 +124,4 @@ Below follows a description of all scraping modules.
 * Media support: *`cover`, `screenshot`, `wheel`, `marquee`, `video`*
 * Example use: `Skyscraper -p snes -s import`
 
-Read a thorough descriptio of this module [here](IMPORT.md).
+Read a thorough description of this module [here](IMPORT.md).
