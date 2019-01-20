@@ -303,7 +303,7 @@ Skyscraper -p snes -s thegamesdb --startat "partial/path/to/rom name.zip"
 ```
 
 #### --endat &lt;FILENAME&gt;
-If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrapes alphabetically until it reaches this rom, then stops. Use it in conjunction with the `--startat` option described above to further narrow the subset of files you wish to gather resources for.
+If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrape alphabetically until it reaches this rom, then stop. Use it in conjunction with the `--startat` option described above to further narrow the subset of files you wish to gather resources for.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
 
