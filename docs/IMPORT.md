@@ -11,7 +11,7 @@ To import videos or images into the resource cache, use the following procedure:
 * The data is now imported. To now make use of the data, read [here](#how-to-actually-use-the-data).
 
 ### Special note for videos
-If you are importing videos, you also need to add the command line option `--videos` for this to work. Videos aren't imported or scraped per default, since it is considered a huge disk space hog. So keep this in mind if you want to import videos into the cache.
+If you are importing videos, you also need to add the command line option `--videos` for this to work. Videos aren't imported or scraped by default, since it is considered a huge disk space hog. So keep this in mind if you want to import videos into the cache. If you plan on always using videos, consider adding this option to the [config.ini](CONFIGINI.md) instead.
 
 ## Textual data (publisher, players, rating and so on)
 Skyscraper also allows you to import textual data for any rom you have in your collection. All you need to do is to prepare files for each rom with an exactly matching base name. For instance `Bubble Bobble.nes` should have a file called `Bubble Bobble.txt` or `Bubble Bobble.xml` or whatever suffix you want to use. The suffix is not important. What IS important is that you place all of these raw data files into the `~/.skyscraper/import/textual` folder. And then you need to make a definitions file so Skyscraper has a recipe for these files.
