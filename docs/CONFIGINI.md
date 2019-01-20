@@ -153,8 +153,15 @@ Sets a non-default xml file to use when setting up the artwork compositing. By d
 #### relativePaths="false"
 Currently only relevant when generating an EmulationStation game list (which is the default frontend when the `-f` option is left out). Enabling this forces the rom and any media paths inside the game list to be relative to the rom input folder.
 
+#### extensions="*.zip *.uae *.adf"
+Completely overwrites the rom extensions Skyscraper allows for the chosen platform.
+
+NOTE! If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version of Skyscraper.
+
 #### addExtensions="*.zst *.smt"
-If you have a rom that Skyscraper doesn't even try to gather data for, it might be because it has a file extension that isn't currently supported. This option allows you to add support for any file extension. If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version of Skyscraper.
+Adds the rom extensions to the ones that are already supported by the platform.
+
+NOTE! If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version of Skyscraper.
 
 #### hints="false"
 Disables the "Did you know" hints when running Skyscraper.
@@ -162,46 +169,15 @@ Disables the "Did you know" hints when running Skyscraper.
 #### subdirs="true"
 By default Skyscraper will include roms located in subfolders. By disabling this option Skyscraper will only scrape the roms located directly in the input folder. See `inputFolder="<PATH>"` further up to read more about the rom input folder.
 
-#[<platform, eg 'amiga'>]
-#inputFolder="/home/pi/RetroPie/roms/amiga"
-#gamelistFolder="/home/pi/RetroPie/roms/amiga"
-#mediaFolder="/home/pi/RetroPie/roms/amiga/media"
-#cacheFolder="/home/pi/.skyscraper/cache/amiga"
-#cacheResize="false"
-#cacheCovers="true"
-#cacheScreenshots="true"
-#cacheWheels="true"
-#cacheMarquees="true"
-#importFolder="/home/pi/.skyscraper/import/amiga"
-#unpack="false"
-#emulator=""
-#videos="false"
-#symlink="false"
-#brackets="true"
-#lang="en"
-#region="wor"
-#langPrios="en,de,es"
-#regionPrios="eu,us,ss,uk,wor,jp"
-#minMatch="0"
-#maxLength="10000"
-#threads="2"
-#startAt="filename"
-#endAt="filename"
-#pretend="false"
-#unattend="false"
-#unattendSkip="false"
-#interactive="false"
-#forceFilename="false"
-#verbosity="1"
-#skipped="false"
-#artworkXml="artwork.xml"
-#relativePaths="false"
-#extensions="*.zip *.uae *.adf"
-#addExtensions="*.zst *.rom"
-#subdirs="true"
+#### startAt="filename"
+If you only ever wish to gather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and onwards.
 
-#[<scraping module, eg 'screenscaper'>]
-#userCreds="user:password"
-#threads="1"
-#maxLength="10000"
-#interactive="false"
+NOTE! Please consider using the command line option `--startat <FILENAME>` instead. It makes little sense to set this permanently in your configuration unless you *always* want it to only ever scrape from a certain file and onward. But you can if you absolutely want to.
+
+#### endAt="filename"
+If you only ever wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrape alphabetically until it reaches this rom, then stop.
+
+NOTE! Please consider using the command line option `--endat <FILENAME>` instead. It makes little sense to set this permanently in your configuration unless you *always* want it to only ever scrape up until it reaches a certain file. But you can if you absolutely want to.
+
+#### userCreds="user:password"
+Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
