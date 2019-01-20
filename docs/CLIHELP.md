@@ -7,6 +7,8 @@ If you've installed Skyscraper through the RetroPie-Setup the executable is inst
 
 IMPORTANT! Most of the options can also be set in the `~/.skyscraper/config.ini` file thus removing the need to type them on command line all the time. Check the config.ini doc [here](CONFIGINI.md) for more info on this.
 
+*NOTE! All options have now been updated to reflect the changes in the upcoming 3.0.0 release. If you wish to check the 2.9.5 option descriptions, please check a previous version of this file from before January 20th.*
+
 #### -h, --help
 Outputs the help text for all command line options to the terminal.
 ###### Example(s)
@@ -45,7 +47,7 @@ To read more about each scraping module, check [here](SCRAPINGMODULES.md).
 Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
 ###### Example(s)
 ```
-Skyscraper -p snes -s screenscraper -u <your key>
+Skyscraper -p snes -s screenscraper -u <userid:password>
 ```
 
 #### -i &lt;path&gt;
@@ -128,7 +130,7 @@ Skyscraper -p snes -c "/path/to/config.ini"
 ```
 
 #### -a &lt;filename&gt;
-Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`.
+Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -a "/path/to/artwork.xml"
@@ -137,7 +139,7 @@ Skyscraper -p snes -a "/path/to/artwork.xml"
 #### -d &lt;folder&gt;
 Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/[platform]`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
-NOTE! If you wish to always use a certain location as base folder for your resource cache (for instance a folder on a USB drive), it is *strogly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
+NOTE! If you wish to always use a certain location as base folder for your resource cache (for instance a folder on a USB drive), it is *strongly* recommended to set this in the config.ini file instead. Read more about config.ini [here](CONFIGINI.md).
 ###### Example(s)
 ```
 Skyscraper -p snes -d "/custom/cache/path"
@@ -146,7 +148,7 @@ Skyscraper -p snes -d "/custom/cache/path"
 #### --refresh
 Skyscraper has a resource cache which works just like the browser cache in Firefox. If you scrape and gather resources for a platform with the same scraping module twice, it will grab the data from the cache instead of hammering the online servers again. This has the advantage in the case where you scrape a rom set twice, only the roms that weren't recognized the first time around will be fetched from the online servers. Everything else will be loaded from the cache.
 
-You can force all data to be refetched from the servers by setting this option, effectively bypassing the cache.
+You can force all data to be refetched from the servers by setting this option, effectively updating the cached data with new data from the source.
 
 NOTE! *Only* use this option if you know data has changed for several roms at the source. Otherwise you are hammering the servers for no reason.
 ###### Example(s)
@@ -154,63 +156,69 @@ NOTE! *Only* use this option if you know data has changed for several roms at th
 Skyscraper -p snes -s screenscraper --refresh
 ```
 
-#### --dbstats
-This will print the stats for the resource cache that is connected to the chosen platform and then quit. It will tell you how many resources of each type are cached for each scraping module for that particular platform. If you wish to purge all or some of the data from the cache, please check the `--purgedb` option.
+#### --cache <COMMAND[:OPTIONS]>
+This is the cache master option. It contains several subcommands that allows you to manipulate the cached data for the selected platform.
+
+NOTE! For any of these commands you can set a non-default resource db folder as source with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
 Read more about the resource cache [here](CACHE.md).
 
-NOTE! You can set a custom db folder to show stats for with the `-d` option.
+##### --cache show
+Shows the cache stats for the chosen platform. It will list how many resources of each type you currently have cached for each scraping module.
 ###### Example(s)
 ```
-Skyscraper -p snes --dbstats
+Skyscraper -p snes --cache show
 ```
 
-#### --cleandb
-This will test the integrity of the resource cache connected to the chosen platform and then quit. If will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the `db.xml` file connected to the platform.
-
-Read more about the resource cache [here](CACHE.md).
-
-NOTE 1! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the resource cache database and related files.
-
-NOTE 2! You can set a custom resource cache folder to clean with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+##### --cache refresh
+See [--refresh](#--refresh).
 ###### Example(s)
 ```
-Skyscraper -p snes --cleandb
+Skyscraper -p snes -s screenscraper --cache refresh
 ```
 
-#### --mergedb &lt;folder&gt;
-This option allows you to merge two resource caches together and then quit. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option. Any folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+##### --cache vacuum
+You can purge all resources that don't have any connection to your current romset for the selected platform by using the `vacuum` command. This is extremely useful if you've removed a bunch of roms from your collection and you wish to purge any cached data you don't need anymore.
 
-Read more about the resource cache [here](CACHE.md).
+Warning! Vacuuming the cache cannot be undone, so please consider making a backup.
 ###### Example(s)
 ```
-Skyscraper -p snes --mergedb "/path/to source/cache/folder"
-Skyscraper -p snes --mergedb "/path/to source/cache/folder" -d "/path/to destination/cache/folder"
+Skyscraper -p snes --cache vacuum
 ```
 
-#### --purgedb &lt;resources&gt;
+##### --cache validate
+This will test the integrity of the resource cache connected to the chosen platform. It will remove / clean out any stray files that aren't connected to an entry in the cache and vice versa. It's not really necessary to use this option unless you have manually deleted any of the cached files or entries in the `db.xml` file connected to the platform.
+
+NOTE! This option doesn't clean up your game list media folders. You will need to do that yourself since Skyscraper has no idea what files you might keep in those folders. This option only relates to the resource cache database and related files.
+###### Example(s)
+```
+Skyscraper -p snes --cache validate
+```
+
+##### --cache merge:&lt;FOLDER&gt;
+This option allows you to merge two resource caches together. It will merge the cache located at the `<folder>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option.
+###### Example(s)
+```
+Skyscraper -p snes --cache "merge:path/to/source/cache/folder"
+Skyscraper -p snes --cache "merge:path/to/source/cache/folder" -d "/path/to/nondefault/destination/cache/folder"
+```
+
+##### --cache purge:<KEYWORD|MODULE and/or TYPE>
 This is a powerful option that allows you to purge the requested resources from the resource cache connected to the selected platform.
 
-You can purge all resources from a certain module with `m:[module]` or of a certain type with `t:[type]` or a combination of the two separated by a `,`.
+You can purge *all* resources from the cache for the chosen platform using the keyword `all`.
+
+You can purge specific resources from a certain module with `m:[module]` or of a certain type with `t:[type]` or a combination of the two separated by a `,`.
 
 Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
 
-You can also purge all resources that don't have any connection to your current romset for the selected platform by using the `vacuum` keyword. This is extremely useful if you've removed a bunch of roms from your collection and you wish to purge any cached data you don't need anymore.
-
-Lastly, you can purge *all* resources from the cache for the chosen platform using the keyword `all`.
-
-Read more about the resource cache [here](CACHE.md).
-
-NOTE! You can set a custom db folder to purge resources from with the `-d` option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
-
-Warning! Using any of these commands cannot be undone, so please consider making a backup.
+Warning! Purging anything from the cache cannot be undone, so please consider making a backup.
 ###### Example(s)
 ```
-Skyscraper -p snes --purgedb vacuum
-Skyscraper -p snes --purgedb m:thegamesdb
-Skyscraper -p snes --purgedb t:cover
-Skyscraper -p snes --purgedb m:arcadedb,t:publisher
-Skyscraper -p snes --purgedb all
+Skyscraper -p snes --cache purge:all
+Skyscraper -p snes --cache purge:m=thegamesdb
+Skyscraper -p snes --cache purge:t=cover
+Skyscraper -p snes --cache purge:m=thegamesdb,t=cover
 ```
 
 #### --videos
