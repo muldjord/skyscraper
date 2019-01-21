@@ -19,7 +19,7 @@ Use any of the following modules to gather game resources into the Skyscraper re
 * ONLINE: `-s arcadedb` (adb.arcadeitalia.net, Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
 * ONLINE: mobygames (mobygames.com)
 * ONLINE: `-s igdb` (igdb.com)
-* LOCAL: `-s import` (imports resources into the resource cache from the `~/.skyscraper/import` folder. Read more about this [here](import/README.md))
+* LOCAL: `-s import` (imports resources into the resource cache from the `~/.skyscraper/import` folder. Read more about this [here](docs/IMPORT.md))
 * LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/<USER>/RetroPie/roms/<PLATFORM>/gamelist.xml` or `~/.skyscraper/import/<PLATFORM>/gamelist.xml`)
 
 Read more about each of the modules [here](docs/SCRAPINGMODULES.md).
