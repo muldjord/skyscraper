@@ -361,7 +361,7 @@ void Skyscraper::checkForFolder(QDir &folder, bool create)
       printf(", trying to create it... ");
       fflush(stdout);
       if(folder.mkpath(folder.absolutePath())) {
-	printf("\033[1;32mSuccess!\033[0m\n\n");
+	printf("\033[1;32mSuccess!\033[0m\n");
       } else {
 	printf("\033[1;32mFailed!\033[0m Please check path and permissions, now exiting...\n");
 	exit(1);
