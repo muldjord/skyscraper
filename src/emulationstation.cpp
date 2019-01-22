@@ -119,11 +119,28 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     }
     dots++;
 
+    QString entryType = "game";
+    QString entryPath = entry.path;
+
+    // Check if game is in subfolder and if it's a .cue or .m3u file.
+    // If so, change entry to <folder> type.
+    QFileInfo entryInfo(entry.path);
+    QString entryAbsolutePath = entryInfo.absolutePath();
+    if(entryAbsolutePath.count("/") == config->inputFolder.count("/") + 1) {
+      QString entrySuffix = entryInfo.suffix();
+      if((entrySuffix == "cue" ||
+	  entrySuffix == "m3u") &&
+	 QDir(entryAbsolutePath, "*.cue *.m3u").count() == 1) {
+	entryType = "folder";
+	entryPath = entryAbsolutePath;
+      }
+    }
+
     // Preserve certain data from old game list entry, but only for empty data
     preserveFromOld(entry);
 
-    finalOutput.append("  <game>\n");
-    finalOutput.append("    <path>" + (config->relativePaths?StrTools::xmlEscape(entry.path).replace(config->inputFolder, "."):StrTools::xmlEscape(entry.path)) + "</path>\n");
+    finalOutput.append("  <" + entryType + ">\n");
+    finalOutput.append("    <path>" + (config->relativePaths?StrTools::xmlEscape(entryPath).replace(config->inputFolder, "."):StrTools::xmlEscape(entryPath)) + "</path>\n");
     if(config->brackets) {
       finalOutput.append("    <name>" + StrTools::xmlEscape(entry.title + (entry.parNotes != ""?" " + entry.parNotes:"") + (entry.sqrNotes != ""?" " + entry.sqrNotes:"")) + "</name>\n");
     } else {
@@ -206,7 +223,7 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     } else {
       finalOutput.append("    <kidgame>" + StrTools::xmlEscape(entry.eSKidGame) + "</kidgame>\n");
     }
-    finalOutput.append("  </game>\n");
+    finalOutput.append("  </" + entryType + ">\n");
   }
   finalOutput.append("</gameList>");
 }
