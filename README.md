@@ -3,29 +3,18 @@ A powerful and versatile yet easy to use game scraper written in C++ for use wit
 
 Any exported artwork can be customized completely. Check the documentation for that [here](docs/ARTWORK.md).
 
-#### Currently supports the following frontends (set with '-f'):
-* EmulationStation
-* AttractMode
-
-#### Currently supports the following platforms (set with '-p'):
+#### Supported platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
-#### Currently supports the following scraping modules for gathering resources (set with '-s')
-Use any of the following modules to gather game resources into the Skyscraper resource cache:
-* ONLINE: `-s screenscraper` (screenscraper.fr)
-* ONLINE: `-s openretro` (openretro.org)
-* ONLINE: `-s thegamesdb` (thegamesdb.net)
-* ONLINE: `-s worldofspectrum` (worldofspectrum.org)
-* ONLINE: `-s arcadedb` (adb.arcadeitalia.net, Arcade Database by motoschifo, arcadedatabase@gmail.com, [youtube](https://www.youtube.com/c/ArcadeDatabase))
-* ONLINE: mobygames (mobygames.com)
-* ONLINE: `-s igdb` (igdb.com)
-* LOCAL: `-s import` (imports resources into the resource cache from the `~/.skyscraper/import` folder. Read more about this [here](docs/IMPORT.md))
-* LOCAL: `-s esgamelist` (Scrapes and caches data from an EmulationStation gamelist.xml located at `/home/<USER>/RetroPie/roms/<PLATFORM>/gamelist.xml` or `~/.skyscraper/import/<PLATFORM>/gamelist.xml`)
-
-Read more about each of the modules [here](docs/SCRAPINGMODULES.md).
+#### Supported scraping sources (set with '-s')
+Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache for later use when generating game lists for your chosen frontend. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md).
 
 ##### Generating a game list with composited artwork
-Skyscraper will generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml` if you leave out the `-s` option entirely. Read more about the resource cache [here](docs/CACHE.md).
+Skyscraper will use all previously cached resources to generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml`. Enable the *game list generator* by simply leaving out the `-s` option entirely. Read more about the resource cache [here](docs/CACHE.md).
+
+#### Supported frontends (set with '-f'):
+* EmulationStation
+* AttractMode
 
 ## Patreon
 Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requirement if you want to use Skyscraper! But there it is. And please understand that becoming a patron does in no way give you any special say in what features I work on or how I develop Skyscraper in the future. It will be seen as an appreciative gesture, nothing else. :)
