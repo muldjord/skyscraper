@@ -6,11 +6,11 @@ Any exported artwork can be customized completely. Check the documentation for t
 #### Supported platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
-#### Supported scraping sources (set with '-s')
+#### Supported scraping modules (set with '-s')
 Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache for later use when generating game lists for your chosen frontend. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md).
 
 ##### Generating a game list with composited artwork
-Skyscraper will use all previously cached resources to generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml`. Enable the *game list generator* by simply leaving out the `-s` option entirely. Read more about the resource cache [here](docs/CACHE.md).
+Skyscraper can use all previously cached resources to generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml`. Enable the *game list generator* by simply leaving out the `-s` option entirely. Read more about the resource cache [here](docs/CACHE.md).
 
 #### Supported frontends (set with '-f'):
 * EmulationStation
