@@ -167,6 +167,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added auto-migration from old config.ini format to v3.0.0 format
 * Added auto-migration from "dbs" folder to "cache" folder
 * Optimized "--cache validate" A LOT
+* Now converts ES game list entries to <folder> entries if a .cue or .m3u file is found in a subfolder. This causes the information and artwork to be shown when selecting the folder in ES rather than the .cue or .m3u file inside the subfolder. This is very useful for psx scraping
 
 #### Version 2.9.5 (22nd December 2018)
 * MAJOR: Added option "--purgedb vacuum" which vacuums all resources not related to your current romset. Remember to make backups of your cache before using this
