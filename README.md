@@ -141,7 +141,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 
-#### Version 3.0.0 (In progress, unreleased)
+#### Version 3.0.0 (23rd January 2019)
 * Game list creation and media compositing now only processed when using the "localdb" (default) module
 * Now converts textual "\n" in descriptions to newlines. Useful when importing textual data (Thank you to "scthirouin" for requesting it)
 * Added disk space check. Now aborts if disk has less than 200 megs left
