@@ -5,7 +5,11 @@ about: Create a report to help improve Skyscraper
 ---
 
 **READ BEFORE YOU POST**
-Do NOT ask questions unless you have read the documentation thoroughly. I DO NOT have time to answer questions that are already elaborately covered. With that said, I do appreciate genuine, well described bug reports or feature requests. But please take your time to describe it well using the following template. If not, it will be deleted without response.
+Do not ask questions on how to use Skyscraper here. This is for BUG / ERROR reports only. Skyscraper questions can be asked at the [RetroPie forums](https://retropie.org.uk/forum) where other users might be able to help you out.
+
+Before you do, please read the [documentation](https://github.com/muldjord/skyscraper/blob/master/README.md) thoroughtly. Every feature and option is documented down to the last detail.
+
+If you've encountered a bug, please take your time to describe it well using the following template. If not, it will be deleted without response.
 
 **Describe the bug**
 A clear and concise description of what and where the bug is.
