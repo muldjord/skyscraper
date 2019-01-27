@@ -284,7 +284,7 @@ QList<QString> Igdb::getSearchNames(const QFileInfo &info)
 {
   QString baseName = info.completeBaseName();
 
-  if(config->aliasMap.contains(baseName)) {
+  if(!config->aliasMap[baseName].isEmpty()) {
     baseName = config->aliasMap[baseName];
   } else if(info.suffix() == "lha") {
     QString nameWithSpaces = config->whdLoadMap[baseName].first;
@@ -300,7 +300,7 @@ QList<QString> Igdb::getSearchNames(const QFileInfo &info)
 	     config->platform == "mame-advmame" ||
 	     config->platform == "mame-libretro" ||
 	     config->platform == "mame-mame4all" ||
-	     config->platform == "fba") && config->mameMap.contains(baseName)) {
+	     config->platform == "fba") && !config->mameMap[baseName].isEmpty()) {
     baseName = config->mameMap[baseName];
   }
   baseName = StrTools::stripBrackets(baseName);

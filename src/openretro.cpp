@@ -320,11 +320,11 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
   }
   
   if(config->scraper != "import") {
-    if(config->aliasMap.contains(baseName)) {
+    if(!config->aliasMap[baseName].isEmpty()) {
       baseName = config->aliasMap[baseName];
     } else if(info.suffix() == "lha") {
       // Pass 1 is uuid from whdload_db.xml 
-      if(config->whdLoadMap.contains(baseName)) {
+      if(!config->whdLoadMap[baseName].second.isEmpty()) {
 	searchNames.append("/game/" + config->whdLoadMap[baseName].second);
       }
       // Pass 2 is either from <name> tag in whdload_db.xml or by adding spaces
@@ -341,7 +341,7 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
 	       config->platform == "mame-advmame" ||
 	       config->platform == "mame-libretro" ||
 	       config->platform == "mame-mame4all" ||
-	       config->platform == "fba") && config->mameMap.contains(baseName)) {
+	       config->platform == "fba") && !config->mameMap[baseName].isEmpty()) {
       baseName = config->mameMap[baseName];
     }
   }
