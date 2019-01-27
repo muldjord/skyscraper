@@ -993,7 +993,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.addExtensions = parser.value("addext");
   }
   if(parser.isSet("refresh")) {
-    printf("The '--refresh' option is deprecated, please use '--cache refresh' instead.\n\n");
     config.refresh = true;
   }
   if(parser.isSet("cache")) {
