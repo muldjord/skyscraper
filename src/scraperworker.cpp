@@ -399,8 +399,10 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     }
     // Remove all brackets from name, since we pretty much NEVER want these and they fuck up
     // our listings when using mamenames for 'arcade' (everything becomes double)
-    entry.title = entry.title.left(entry.title.indexOf("(")).simplified();
-    entry.title = entry.title.left(entry.title.indexOf("[")).simplified();
+    if(config.scraper != "openretro") {
+      entry.title = entry.title.left(entry.title.indexOf("(")).simplified();
+      entry.title = entry.title.left(entry.title.indexOf("[")).simplified();
+    }
     
     potentials.append(entry);
   }
