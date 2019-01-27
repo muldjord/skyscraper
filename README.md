@@ -141,8 +141,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 
-#### Version 3.0.1 (In progress, unreleased)
+#### Version 3.0.1 (27th January 2019)
 * Added note for '--query' option when user forgets to add a file name on command line
+* Fixed minor bugs in aliasMap, mameMap and whdLoad map lookups
 
 #### Version 3.0.0 (23rd January 2019)
 * Game list creation and media compositing now only processed when leaving out the "-s" option
