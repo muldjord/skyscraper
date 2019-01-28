@@ -248,7 +248,7 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter, con
     printf("Found less than 2 suffix filters. Something is wrong, cancelling vacuum...\n");
     return;
   }
-  printf("Vacuuming resources from cache, this can several minutes, please wait...");
+  printf("Vacuuming resources from cache, this can take several minutes, please wait...");
   QList<QFileInfo> fileInfos;
   QDirIterator dirIt(inputFolder,
 		     filters,
