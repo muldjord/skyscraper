@@ -48,6 +48,7 @@
 #include "fxcolorize.h"
 #include "fxrotate.h"
 #include "fxscanlines.h"
+#include "fxsharpen.h"
 
 Compositor::Compositor(Settings *config)
 {
@@ -283,6 +284,13 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 	newLayer.setMode(attribs.value("mode").toString());
       } else {
 	newLayer.setMode("overlay");
+      }
+      layer.addLayer(newLayer);
+    } else if(xml.isStartElement() && xml.name() == "sharpen") {
+      QXmlStreamAttributes attribs = xml.attributes();
+      newLayer.setType(T_SHARPEN);
+      if(attribs.hasAttribute("strength")) {
+	newLayer.setValue(attribs.value("strength").toInt());
       }
       layer.addLayer(newLayer);
     } else if(xml.isEndElement() && xml.name() == "layer") {
