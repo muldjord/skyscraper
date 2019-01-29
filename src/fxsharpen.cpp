@@ -34,38 +34,57 @@ FxSharpen::FxSharpen()
 
 QImage FxSharpen::applyEffect(const QImage &src, const Layer &layer)
 {
-  QImage canvas = src;
-
-  int strength = layer.value;
-  if(strength == -1)
-    strength = 100;
-
-  double kern[] = {0, -1, 0,
-		   -1, 5, -1,
-		   0, -1, 0};
-
-  /*
-  int hue = layer.value;
-  int satDelta = layer.delta;
-
-  if(hue > 359 || hue < 0) {
-    return canvas;
+  double strength = 5.0;
+  if(layer.value >= 0 && layer.value <= 100) {
+    strength = layer.value * 0.1;
   }
 
-  if(satDelta > 127 || satDelta < -127) {
-    satDelta = 0;
-  }
-  int saturation = 127 + satDelta;
-  */
+  double kernel[] = {0.0, -strength, 0.0,
+		     -strength, 1.0 + 4.0 * strength, -strength,
+		     0.0, -strength, 0.0};
 
-  for(int y = 0; y < canvas.height(); ++y) {
-    QRgb* line = (QRgb *)canvas.scanLine(y);
-    for(int x = 0; x < canvas.width(); ++x) {
-        QColor color(line[x]);
-	color.setRgb(qRed(line[x]), qGreen(line[x]), qBlue(line[x]));
-	line[x] = qPremultiply(color.rgba());
+  QImage buffer1 = src;
+  QRgb *buffer1Bits = (QRgb *)buffer1.bits();
+
+  QImage buffer2(buffer1.width(), buffer1.height(), QImage::Format_ARGB32_Premultiplied);
+  QRgb *buffer2Bits = (QRgb *)buffer2.bits();
+  
+  int width = buffer1.width(), height = buffer1.height();
+  
+  for(int y = 1; y < height - 1; ++y) {
+    for(int x = 1; x < width - 1; ++x) {
+      for(int a = 0; a < 9; ++a) {
+	
+      }
     }
   }
   
-  return canvas;
+  return buffer2;
 }
+
+/*
+ for(int i=1;i<b.getHeight()-1;i++) {
+       for(int j=1;j<b.getWidth()-1;j++) {
+          double linc_r=0, linc_g=0,linc_b=0;
+          for(int k=0; k<=2; k++) {
+             for(int l=0; l<=2; l++) {
+                linc_r +=( (b.getPixel(j+l-1,i+k-1)).getRed()  * mask[
+k*3 + l] );
+                linc_g +=( (b.getPixel(j+l-1,i+k-1)).getGreen()* mask[
+k*3 + l] );
+                linc_b +=( (b.getPixel(j+l-1,i+k-1)).getBlue() * mask[
+k*3 + l] );
+             }
+          }
+          //Check ranges etc
+          ....
+
+          R = (byte)round(linc_r);
+          G = (byte)round(linc_g);
+          B = (byte)round(linc_b);
+
+          result.drawPixel(Pixel(R,G,B), j,i);
+       }
+    }
+    }
+*/
