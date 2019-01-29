@@ -1245,6 +1245,7 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1;
   } else if(config.scraper == "igdb") {
+    bool exitNow = false;
     printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
     config.threads = 1;
     config.romLimit = 5;
@@ -1255,12 +1256,9 @@ void Skyscraper::doPrescrapeJobs()
     QJsonObject jsonObj = QJsonDocument::fromJson(data).array().first().toObject();
     if(jsonObj.isEmpty()) {
       printf("Recieved invalid IGDB server response, maybe their server is having issues, please try again later...\n");
-      if(config.verbosity >= 1)
-	printf("Answer was:\n%s\n", data.data());
-      exit(1);
+      exitNow = true;
     }
-    bool authorized = jsonObj.value("authorized").toBool();
-    if(authorized) {
+    if(jsonObj.value("authorized").toBool()) {
       QString plan = jsonObj.value("plan").toString();
       jsonObj = jsonObj.value("usage_reports").toObject().value("usage_report").toObject();
       QString limit = QString::number(jsonObj.value("max_value").toInt());
@@ -1269,16 +1267,18 @@ void Skyscraper::doPrescrapeJobs()
       printf("Plan       : %s\n", plan.toStdString().c_str());
       printf("Requests   : %s / %s\n", requests.toStdString().c_str(), limit.toStdString().c_str());
       printf("Period ends: %s\n", resetDate.toStdString().c_str());
-      if(requests.toInt() >= limit.toInt()) {
-	printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
-	exit(1);
-      }
     } else {
-      printf("IGDB says key is unauthorized, can't continue...\n");
-      if(config.verbosity >= 1)
-	printf("Answer was:\n%s\n", data.data());
-      exit(1);
+      if(jsonObj.value("status").toInt() == 403) {
+	printf("IGDB monthly request limit has been reached, can't continue with this module...\n");
+      } else {
+	printf("IGDB says key is unauthorized, can't continue with this module...\n");
+      }
+      exitNow = true;
     }
+    if(config.verbosity >= 1)
+      printf("Answer was:\n%s\n", data.data());
+    if(exitNow)
+      exit(1);
     printf("\n");
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
