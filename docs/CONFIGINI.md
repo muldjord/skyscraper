@@ -11,7 +11,7 @@ For options dedicated to a single scraping module you can create sections for ea
 
 You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables. Remember to also uncomment the section the option relates to such as `[main]` or `[amiga]`.
 
-NOTE! You can set a custom configuration file with the `-c [filename]` command line option. Read more all available command line options [here](CLIHELP.md).
+NOTE! You can set a custom configuration file with the `-c <FILENAME>` command line option. Read more all available command line options [here](CLIHELP.md).
 
 ###### Example config.ini file
 ```
