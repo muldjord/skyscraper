@@ -9,7 +9,7 @@ You probably installed Skyscraper in order to get some data and artwork on your 
 ![Skyscraper flowchart](https://raw.githubusercontent.com/muldjord/skyscraper/master/docs/skyscraper_overview_chart.png)
 
 #### The gathering phase
-Skyscraper can gather data from several scraping modules / sources (set with `-s [module]`). So you'd start by scraping the `snes` platform (set with `-p [platform]`) with one or more of those modules. Each time you do so, all of the data will be saved in the Skyscraper cache.
+Skyscraper can gather data from several scraping modules / sources (set with `-s <MODULE>`). So you'd start by scraping the `snes` platform (set with `-p <PLATFORM>`) with one or more of those modules. Each time you do so, all of the data will be saved in the Skyscraper cache.
 
 ```
 $ Skyscraper -p snes -s screenscraper
@@ -25,7 +25,7 @@ And here comes the clever part. By having gathered data from both sources (`scre
 ```
 $ Skyscraper -p snes
 ```
-Running that command will generate a game list for the chosen frontend (default is "EmulationStation"). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing.
+Running that command will generate a game list for the chosen frontend (default is EmulationStation). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing.
 
 ### So what then?
 You're done! The platform has been scraped and you can relaunch your frontend to enjoy the newly scraped data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *game list generation* phase. Always gather first, then generate the game list afterwards. *Always!*
