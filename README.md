@@ -7,10 +7,10 @@ Any exported artwork can be customized completely. Check the documentation for t
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
 #### Supported scraping modules (set with '-s')
-Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache for later use when generating game lists for your chosen frontend. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md).
+Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md).
 
 ##### Generating a game list with composited artwork
-Skyscraper can use all previously cached resources to generate a game list and composite artwork as described in `~/.skyscraper/artwork.xml`. Enable the *game list generator* by simply leaving out the `-s` option entirely. Read more about the resource cache [here](docs/CACHE.md).
+When you've cached some resources for any platform, Skyscraper can use this data to generate game lists for the supported frontends (default is EmulationStation). Enable the *game list generator* by simply leaving out the `-s` option. Read more about the resource cache [here](docs/CACHE.md).
 
 #### Supported frontends (set with '-f'):
 * EmulationStation
@@ -21,6 +21,8 @@ Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requiremen
 
 ## How to install Skyscraper
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with `$` signifies a command you need run in a terminal on the machine you wish to install it on.
+
+NOTE! If you are using the RetroPie distribution, you have the option to install Skyscraper directly from the RetroPie-Setup script. Read more about that [here](https://retropie.org.uk/docs/Scraper/#lars-muldjords-skyscraper). If not, read on.
 
 ### Install prerequisites
 #### Linux
@@ -100,18 +102,17 @@ $ Skyscraper --help
 ```
 This will give you a description of everything Skyscraper can do if you feel adventurous! For a thorough description of all available options, check [here](docs/CLIHELP.md).
 
-Let's go over the most important ones:
-
-* `-p <PLATFORM>`: This tells Skyscraper which platform you wish to scrape during this scraping run. Check the full list of platforms under the `-p` option with `--help`
-* `-s <SCRAPING MODULE>`: This tells Skyscraper where you would like to scrape and cache resources from. Read more about that [here](docs/CACHE.md)
-* `--cache refresh`: Whenever you scrape a platform with any scraping module Skyscraper caches all of that data locally. When you rescrape a platform it will fetch the data from the cache instead of hammering the online servers. Using the `--cache refresh` option allows you to override this and tells Skyscraper to refresh the cached data directly from the online source. Please only use this option if you know the data you want to scrape has changed at the source
-* `--videos`: If you wish to scrape videos for the scraping modules that support it, you need to add the `--videos` option. This is disabled by default because of the significant space requirements needed to save them
-* `--unattend`: This just bypasses any questions at the beginning of a scraping run. Setting `--unattend` will then always answer yes to overwriting an existing game list and not skip existing entries
+The most important ones are probably:
+* `-p <PLATFORM>`
+* `-s <SCRAPING MODULE>`
+* `--cache refresh`
+* `--videos`
+* `--unattend`
 
 If you have your roms in a non-default location (default is `/home/<user>/RetroPie/roms/<platform>`) or wish to export the game list or artwork to non-default locations, you will also need these:
-* `-i <PATH>`: Sets a non-default rom input folder
-* `-g <PATH>`: Sets a non-default game list export folder (defaults to the same as rom input folder if scraping for EmulationStation)
-* `-o <PATH>`: Sets a non-default artwork export folder (defaults to the same as game list export folder + `/media` if scraping for EmulationStation)
+* `-i <PATH>`
+* `-g <PATH>`
+* `-o <PATH>`
 
 For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` file as described [here](#docs/CONFIGINI.md). This will make the options permanent so you don't need to type them in all the time.
 
