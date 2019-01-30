@@ -128,7 +128,7 @@ For a full description of all availabe config options, check [here](docs/CONFIGI
 One of Skyscraper's most powerful features is the resource cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](docs/CACHE.md).
 
 ### Custom data import
-I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the resource cache with the `-s import` scraping module which in turn allows you to scrape your roms with the data. Read more about how this works [here](docs/IMPORT.md).
+I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the resource cache with the `-s import` scraping module. Read more about how this works [here](docs/IMPORT.md).
 
 ### Artwork look and effects
 Check the full artwork documentation [here](docs/ARTWORK.md)
