@@ -3,7 +3,7 @@ Look below to find a thorough description of all options and sections available 
 
 Please take note that almost all of these options are set at a useful default (and can therefore be left out) and should only be set if your use case requires it.
 
-If you've installed Skyscraper through the RetroPie-Setup the executable is instead located at `/opt/retropie/supplementary/skyscraper/Skyscraper`. In that case I recommend creating a symbolic link to the executable. Do this by running `$ sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper` (without the `$`). This will enable you to just type `Skyscraper` when running it from command line.
+If you've installed Skyscraper through the RetroPie-Setup the executable is instead located at `/opt/retropie/supplementary/skyscraper/Skyscraper`. In that case I recommend creating a symbolic link to the executable. Do this by running `$ sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper` (without the `$`). This will allow you to just type `Skyscraper` when running it from command line.
 
 Many options can be set on two levels; either `[main]` or `[<PLATFORM>]`. `<PLATFORM>` can be any of the supported platforms (check list with `--help` under the `-p` option), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform. Setting an option in a `[<PLATFORM>]` section will override any similar option set in `[main]`.
 
