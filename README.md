@@ -3,6 +3,8 @@ A powerful and versatile yet easy to use game scraper written in C++ for use wit
 
 Any exported artwork can be customized completely. Check the documentation for that [here](docs/ARTWORK.md).
 
+A short note on user support for Skyscraper. As the project is growing it is becoming increasingly difficult for me to handle the support requests I get from many different sources. The result is simply that I have less time to focus on developing Skyscraper. So before asking questions, please read *all* of [the documentation](https://github.com/muldjord/skyscraper/tree/master/docs) thoroughly. I have simply stopped answering some requests due to lack of time, so please consider asking on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum).
+
 #### Supported platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
