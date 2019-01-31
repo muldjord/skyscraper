@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "PLATFORM", "");
   QCommandLineOption fOption("f", "Frontend to scrape for.\n(Currently supports 'emulationstation' and 'attractmode'. Default is 'emulationstation')", "FRONTEND", "");
   QCommandLineOption eOption("e", "Set emulator. This is only required by the 'attractmode' frontend.\n(Default is none)", "EMULATOR", "");
-  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '~/RetroPie/roms/[platform]')", "PATH", "");
+  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '~/RetroPie/roms/<PLATFORM>')", "PATH", "");
   QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "PATH", "");
   QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "PATH", "");
   QCommandLineOption sOption("s", "Choose scraping module to gather resources from for selected platform.\n(WEB: 'arcadedb', 'igdb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'esgamelist' and 'import'. Leave '-s' out to generate game list from cached resources)", "MODULE", "");
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
   QCommandLineOption tOption("t", "Number of scraper threads to use. This might change depending on the scraping module limits.\n(default is 4)", "1-8", "");
   QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '~/.skyscraper/config.ini')", "FILENAME", "");
   QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '~/.skyscraper/artwork.xml')", "FILENAME", "");
-  QCommandLineOption dOption("d", "Set custom resource cache folder.\n(default is '~/.skyscraper/cache/[platform]')", "FOLDER", "");
+  QCommandLineOption dOption("d", "Set custom resource cache folder.\n(default is '~/.skyscraper/cache/<PLATFORM>')", "FOLDER", "");
   QCommandLineOption videosOption("videos", "Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!");
   QCommandLineOption symlinkOption("symlink", "Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!");
   QCommandLineOption nocoversOption("nocovers", "Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");
