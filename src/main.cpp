@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
   QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
   QCommandLineOption interactiveOption("interactive", "Always ask user to choose best result.");
   QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=<CHECKSUM>', 'md5=<CHECKSUM>' or 'romnom=<FILENAME>' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line aswell, otherwise it will be ignored.", "QUERY", "");
-  QCommandLineOption regionOption("region", "Set preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' in that order)", "CODE", "eu");
+  QCommandLineOption regionOption("region", "Add preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' + others in that order)", "CODE", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "CODE", "en");
   QCommandLineOption nohintsOption("nohints", "Disables the 'DID YOU KNOW:' hints when running Skyscraper.");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
