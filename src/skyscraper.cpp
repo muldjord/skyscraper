@@ -934,6 +934,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("cacheMarquees")) {
     config.cacheMarquees = settings.value("cacheMarquees").toBool();
   }
+  if(settings.contains("videos")) {
+    config.videos = settings.value("videos").toBool();
+  }
   settings.endGroup();
 
   // Command line configs, overrides main, platform, module and defaults
