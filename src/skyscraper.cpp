@@ -922,6 +922,18 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("interactive")) {
     config.interactive = settings.value("interactive").toBool();
   }
+  if(settings.contains("cacheCovers")) {
+    config.cacheCovers = settings.value("cacheCovers").toBool();
+  }
+  if(settings.contains("cacheScreenshots")) {
+    config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
+  }
+  if(settings.contains("cacheWheels")) {
+    config.cacheWheels = settings.value("cacheWheels").toBool();
+  }
+  if(settings.contains("cacheMarquees")) {
+    config.cacheMarquees = settings.value("cacheMarquees").toBool();
+  }
   settings.endGroup();
 
   // Command line configs, overrides main, platform, module and defaults
