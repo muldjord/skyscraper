@@ -104,3 +104,7 @@
 #minMatch="0"
 #maxLength="10000"
 #interactive="false"
+#cacheCovers="true"
+#cacheScreenshots="true"
+#cacheWheels="true"
+#cacheMarquees="true"
