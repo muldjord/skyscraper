@@ -143,6 +143,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option to edit cached data for any game
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
+* Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
+* Add Sharp X1 platform as 'x1'
 
 #### Version 3.0.2 (In progress, unreleased)
 * Upped the rom limit from 5 to 250 for the "igdb" module
