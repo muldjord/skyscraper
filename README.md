@@ -146,6 +146,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.0.2 (In progress, unreleased)
 * Upped the rom limit from 5 to 250 for the "igdb" module
+* Added media cache config options to module section
 
 #### Version 3.0.1 (27th January 2019)
 * Added note for '--query' option when user forgets to add a file name on command line
