@@ -50,6 +50,7 @@
 * Sega Master System
 * Sega Saturn
 * Sega SG-1000
+* Sharp X1
 * Sharp X68000
 * Super Nintendo
 * TI-99/4A
