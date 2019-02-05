@@ -108,6 +108,7 @@ QStringList Platform::getPlatforms()
   platforms.append("wonderswan");
   platforms.append("wonderswancolor");
   platforms.append("x68000");
+  platforms.append("x1");
   platforms.append("zmachine");
   platforms.append("zxspectrum");
 
@@ -259,6 +260,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "wonderswancolor") {
     scrapers.append("screenscraper");
   } else if(platform  == "x68000") {
+    scrapers.append("screenscraper");
+  } else if(platform  == "x1") {
     scrapers.append("screenscraper");
   } else if(platform  == "zmachine") {
     scrapers.append("thegamesdb");
@@ -420,6 +423,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.wsc");
   } else if(platform == "x68000") {
     formats.append("*.dim *.m3u");
+  } else if(platform == "x1") {
+    formats.append("*.dx1 *.zip *.2d *.2hd *.tfd *.d88 *.88d *.hdm *.xdf *.dup *.cmd");
   } else if(platform == "zmachine") {
     formats.append("*.dat *.z1 *.z2 *.z3 *.z4 *.z5 *.z6 *.z7 *.z8");
   } else if(platform == "zxspectrum") {
@@ -565,6 +570,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "wonderswancolor") {
     scraper = "cache";
   } else if(platform == "x68000") {
+    scraper = "cache";
+  } else if(platform == "x1") {
     scraper = "cache";
   } else if(platform == "zmachine") {
     scraper = "cache";
@@ -1133,6 +1140,8 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "x68000") {
     aliases.append("sharp x68000");
   } else if(platform == "zmachine") {
+    aliases.append("x1");
+  } else if(platform == "sharp x1") {
     aliases.append("z-machine");
   } else if(platform == "zxspectrum") {
     aliases.append("sinclair zx spectrum");
