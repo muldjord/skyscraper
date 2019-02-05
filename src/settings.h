@@ -84,6 +84,7 @@ struct Settings {
   QString addExtensions = "";
   bool unpack = false;
   bool preserveOldGameList = true;
+  bool spaceCheck = true;
   
   int romLimit = -1;
 
