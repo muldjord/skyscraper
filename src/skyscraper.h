@@ -75,6 +75,8 @@ private:
 
   QSharedPointer<Cache> cache;
   
+  QList<ScraperWorker*> workerList;
+  
   QList<GameEntry> gameEntries;
   QList<QString> cliFiles;
   QMutex entryMutex;

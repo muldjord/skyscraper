@@ -58,8 +58,6 @@ ScraperWorker::~ScraperWorker()
 
 void ScraperWorker::run()
 {
-  AbstractScraper *scraper;
-
   if(config.scraper == "openretro") {
     scraper = new OpenRetro(&config);
   } else if(config.scraper == "thegamesdb") {
@@ -175,7 +173,8 @@ void ScraperWorker::run()
     if(game.found == false) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
       game.resetMedia();
-      bool forceEnd = limitReached(scraper, output);
+      if(!forceEnd)
+	forceEnd = limitReached(output);
       emit entryReady(game, output, debug);
       if(forceEnd) {
 	break;
@@ -190,7 +189,8 @@ void ScraperWorker::run()
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' match too low :| ----\033[0m\n\n");
       game.found = false;
       game.resetMedia();
-      bool forceEnd = limitReached(scraper, output);
+      if(!forceEnd)
+	forceEnd = limitReached(output);
       emit entryReady(game, output, debug);
       if(forceEnd) {
 	break;
@@ -302,7 +302,8 @@ void ScraperWorker::run()
     }
     output.append("\nDescription: (" + game.descriptionSrc + ")\n" + game.description.left(config.maxLength) + "\n");
 
-    bool forceEnd = limitReached(scraper, output);
+    if(!forceEnd)
+      forceEnd = limitReached(output);
     emit entryReady(game, output, debug);
     if(forceEnd) {
       break;
@@ -313,11 +314,12 @@ void ScraperWorker::run()
   emit allDone();
 }
 
-bool ScraperWorker::limitReached(AbstractScraper *scraper, QString &output)
+bool ScraperWorker::limitReached(QString &output)
 {
   if(scraper->reqRemaining != -1) { // -1 means there is no limit
+    if(scraper->reqRemaining > 0) {
     output.append("\n\033[1;33m'" + config.scraper + "' requests remaining: " + QString::number(scraper->reqRemaining) + "\033[0m\n");
-    if(scraper->reqRemaining < 1) {
+    } else {
       output.append("\033[1;31mForcing thread " + threadId + " to stop...\033[0m\n");
       return true;
     }

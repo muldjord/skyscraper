@@ -44,19 +44,22 @@ public:
 		Settings config, QString threadId);
   ~ScraperWorker();
   void run();
+  bool forceEnd = false;
   
 signals:
   void allDone();
   void entryReady(GameEntry entry, QString output, QString debug);
-
+  
 private:
+  AbstractScraper *scraper;
+
   QSharedPointer<Cache> cache;
   QSharedPointer<Queue> queue;
   
   Settings config;
   QString platformOrig;
   QString threadId;
-  
+
   unsigned int editDistance(const std::string& s1, const std::string& s2);
 
   GameEntry getBestEntry(const QList<GameEntry> &gameEntries, QString compareTitle,
@@ -65,7 +68,7 @@ private:
 			     const QString &compareTitle, int &lowestDistance);
   int getSearchMatch(const QString &title, const QString &compareTitle, const int &lowestDistance);
 
-  bool limitReached(AbstractScraper *scraper, QString &output);
+  bool limitReached(QString &output);
 };
 
 #endif // SCRAPERWORKER_H

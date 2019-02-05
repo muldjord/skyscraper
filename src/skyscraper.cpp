@@ -335,6 +335,7 @@ void Skyscraper::run()
   for(int curThread = 1; curThread <= config.threads; ++curThread) {
     QThread *thread = new QThread;
     ScraperWorker *worker = new ScraperWorker(queue, cache, config, QString::number(curThread));
+    workerList.append(worker);
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::entryReady, this, &Skyscraper::entryReady);
@@ -443,12 +444,17 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
   }
   currentFile++;
 
-  if(QStorageInfo(QDir(config.mediaFolder)).bytesFree() < 209715200 ||
-     QStorageInfo(QDir::current()).bytesFree() < 209715200) {
-    printf("\033[1;31mYou have very little disk space left, please free up some space and try again. Now aborting...\033[0m\n\n");
-    doneThreads = config.threads - 1;
-    checkThreads();
-    exit(0);
+  qint64 spaceLimit = 209715200;
+  if(config.spaceCheck && (QStorageInfo(QDir(config.mediaFolder)).bytesFree() < spaceLimit ||
+			   QStorageInfo(QDir::current()).bytesFree() < spaceLimit)) {
+    printf("\033[1;31mYou have very little disk space left either on the Skyscraper resource cache drive or on the game list and media export drive, please free up some space and try again. Now aborting...\033[0m\n\nNote! You can disable this check by setting 'spaceCheck=\"false\"' in the '[main]' section of config.ini.\n\n");
+    // Clean up and exit
+    if(config.scraper == "cache") {
+      config.pretend = true;
+    }
+    foreach(ScraperWorker *worker, workerList) {
+      worker->forceEnd = true;
+    }
   }
 }
 
@@ -771,6 +777,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("importFolder")) {
     config.importFolder = settings.value("importFolder").toString();
+  }
+  if(settings.contains("spaceCheck")) {
+    config.spaceCheck = settings.value("spaceCheck").toBool();
   }
   settings.endGroup();
 
@@ -1264,7 +1273,7 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
     printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
     config.threads = 1;
-    config.romLimit = 250;
+    config.romLimit = 35;
     printf("Fetching key status, just a sec...\n");
     manager.request("https://api-v3.igdb.com/api_status", "", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
     q.exec();
@@ -1299,7 +1308,7 @@ void Skyscraper::doPrescrapeJobs()
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
     config.threads = 1;
-    config.romLimit = 25;
+    config.romLimit = 35;
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
       if(config.threads > 1) {
