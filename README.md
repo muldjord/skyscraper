@@ -24,7 +24,7 @@ Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requiremen
 ## How to install Skyscraper
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with `$` signifies a command you need run in a terminal on the machine you wish to install it on.
 
-NOTE! If you are using the RetroPie distribution, you have the option to install Skyscraper directly from the RetroPie-Setup script. Read more about that [here](https://retropie.org.uk/docs/Scraper/#lars-muldjords-skyscraper). If not, read on.
+NOTE! If you are using the RetroPie distribution, you have the option to install Skyscraper directly from the RetroPie-Setup script (*you need to update the script before installing it!*). Read more about all of that [here](https://retropie.org.uk/docs/Scraper/#lars-muldjords-skyscraper). If not, read on.
 
 ### Install prerequisites
 #### Linux
