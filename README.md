@@ -150,6 +150,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Upped the rom limit from 25 to 35 for the "mobygames" module
 * Added media cache config options to module section
 * Add Sharp X1 platform as "x1"
+* Now exits nicely when running low on disk space
+* Added 'spaceCheck=<BOOL>' to config.ini
 
 #### Version 3.0.1 (27th January 2019)
 * Added note for '--query' option when user forgets to add a file name on command line
