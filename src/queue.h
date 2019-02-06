@@ -36,7 +36,8 @@ public:
   Queue();
   bool hasEntry();
   QFileInfo takeEntry();
-
+  void clearAll();
+  
 private:
   QMutex queueMutex;
 

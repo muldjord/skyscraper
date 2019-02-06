@@ -46,3 +46,10 @@ QFileInfo Queue::takeEntry()
   queueMutex.unlock();
   return info;
 }
+
+void Queue::clearAll()
+{
+  queueMutex.lock();
+  clear();
+  queueMutex.unlock();
+}

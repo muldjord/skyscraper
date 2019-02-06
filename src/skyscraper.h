@@ -74,9 +74,8 @@ private:
   AbstractFrontend *frontend;
 
   QSharedPointer<Cache> cache;
-  
-  QList<ScraperWorker*> workerList;
-  
+  QSharedPointer<Queue> queue;  
+
   QList<GameEntry> gameEntries;
   QList<QString> cliFiles;
   QMutex entryMutex;

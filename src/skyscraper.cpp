@@ -234,7 +234,7 @@ void Skyscraper::run()
   skippedFile.close();
 
   // Create shared queue with files to process
-  QSharedPointer<Queue> queue = QSharedPointer<Queue>(new Queue());
+  queue = QSharedPointer<Queue>(new Queue());
   QList<QFileInfo> infoList = inputDir.entryInfoList();
   if(config.startAt != "" && !infoList.isEmpty()) {
     QFileInfo startAt(config.startAt);
@@ -335,7 +335,6 @@ void Skyscraper::run()
   for(int curThread = 1; curThread <= config.threads; ++curThread) {
     QThread *thread = new QThread;
     ScraperWorker *worker = new ScraperWorker(queue, cache, config, QString::number(curThread));
-    workerList.append(worker);
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::entryReady, this, &Skyscraper::entryReady);
@@ -452,9 +451,8 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     if(config.scraper == "cache") {
       config.pretend = true;
     }
-    foreach(ScraperWorker *worker, workerList) {
-      worker->forceEnd = true;
-    }
+    // By clearing the queue here we basically tell Skyscraper to stop and quit nicely
+    queue->clearAll();
   }
 }
 
@@ -466,19 +464,13 @@ void Skyscraper::checkThreads()
   if(doneThreads != config.threads)
     return;
 
-  printf("\033[1;34m---- Scraping run completed! YAY! ----\033[0m\n");
-  if(!config.cacheFolder.isEmpty()) {
-    cache->write();
-  }
-
-  frontend->sortEntries(gameEntries);
-
-  QString finalOutput;
-  printf("Assembling game list...");
-  frontend->assembleList(finalOutput, gameEntries);
-  printf(" \033[1;32mDone!!!\033[0m\n");
-    
   if(!config.pretend && config.scraper == "cache") {
+    printf("\033[1;34m---- Game list generation run completed! YAY! ----\033[0m\n");
+    QString finalOutput;
+    frontend->sortEntries(gameEntries);
+    printf("Assembling game list...");
+    frontend->assembleList(finalOutput, gameEntries);
+    printf(" \033[1;32mDone!!!\033[0m\n");
     QFile gameListFile(gameListFileString);
     printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
     fflush(stdout);
@@ -489,8 +481,13 @@ void Skyscraper::checkThreads()
     } else {
       printf("\033[1;31mCouldn't open file for writing!!!\nAll that work for nothing... :(\033[0m\n");
     }
+  } else {
+    printf("\033[1;34m---- Resource gathering run completed! YAY! ----\033[0m\n");
+    if(!config.cacheFolder.isEmpty()) {
+      cache->write();
+    }
   }
-
+  
   printf("\033[1;34m---- And here are some neat stats :) ----\033[0m\n");
   printf("Total completion time: \033[1;33m%s\033[0m\n\n", secsToString(timer.elapsed()).toStdString().c_str());
   if(found > 0) {
@@ -500,7 +497,7 @@ void Skyscraper::checkThreads()
 	   (int)((double)avgCompleteness / (double)found));
   }
   printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
-  printf("\033[1;32mSuccessfully scraped games: %d\033[0m\n", found);
+  printf("\033[1;32mSuccessfully processed games: %d\033[0m\n", found);
   printf("\033[1;33mSkipped games: %d (Filenames saved to '~/.skyscraper/%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
 
   // All done, now clean up and exit to terminal
