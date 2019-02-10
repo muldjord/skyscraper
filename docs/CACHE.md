@@ -25,13 +25,13 @@ Normally Skyscraper uses a default resource cache folder for each platform. But 
 MOST FILES AND FOLDERS INSIDE THE `~/.skyscraper/cache` FOLDER ARE NOT MEANT TO BE MANIPULATED BY HAND!!! It can be done, but don't complain to me about the format of the database. It is NOT meant to be understood by humans. It is meant to be efficient for reading and parsing by Skyscraper itself. Same goes for the media files that reside in the subfolders.
 
 #### Don't leave custom files in here
-If you decide to add your own files to the subfolders, you risk them being deleted by Skyscraper later on if it is run with one of the database cleanup command line options. You've been warned!
+If you decide to add your own files to the subfolders, you risk them being deleted by Skyscraper later on if it is run with one of the cache cleanup command line options. You've been warned!
 
 #### Other cool stuff you CAN DO
 Each subfolder in the `~/.skyscraper/cache/` folder is self-contained and can be copied to other Skyscraper installations at your convenience. Just copy the folder itself over to some other computer that has Skyscraper 1.6.0 or later installed, and you can make use of the data when generating game lists. If you add it at a non-default location, set the custom folder with `-d <FOLDER>`.
 
-#### To those who live the thug life
-If you absolutely insist on editing the databases by hand, here's a description of the format. It's really, really simple.
+#### Resource cache format
+I do not recommend editing the `db.xml` resource cache files manually. But the format is simple, so you certainly can if you want to.
 
 ##### Sha1 primary key
 The database consists of resource entries connected to a sha1 checksum. The sha1 is calculated from the rom data or, in special cases, the filename (in cases where the file data is a script or similar). An entry can look like this:
