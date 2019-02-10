@@ -8,7 +8,7 @@ To import videos or images into the resource cache, use the following procedure:
 * Name your image or video file with the *exact* base name of the rom you wish to connect it to. Example: `Bubble Bobble.nes` will import images with a filename of `Bubble Bobble.jpg` or `Bubble Bobble.png` or other well-known image formats. As long as the base name is an *exact* match. Same goes for video files. I recommend only making use of well-known video formats since Skyscraper imports them directly without conversion, so they need to be supported directly by the frontend you plan to use.
 * Place all of your images or videos in the `~/.skyscraper/import/screenshots`, `covers`, `wheels`, `marquees` or `videos` folders.
 * Now run Skyscraper with `Skyscraper -p <PLATFORM> -s import`. If you named your files correctly, they will now be imported. Look for the green 'YES' in the output at the rom(s) you've placed files for. This will tell you if it succeeded or not.
-* The data is now imported. To now make use of the data, read [here](#how-to-actually-use-the-data).
+* The data is now imported into the resource cache. To make use of if read [here](#how-to-actually-use-the-data).
 
 ### Special note for videos
 If you are importing videos, you also need to add the command line option `--videos` for this to work. Videos aren't imported or scraped by default, since it is considered a huge disk space hog. So keep this in mind if you want to import videos into the cache. If you plan on always using videos, consider adding this option to the [config.ini](CONFIGINI.md) instead.
