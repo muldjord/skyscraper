@@ -21,11 +21,6 @@ When you've updated information in the resource cache, always remember to re-gen
 #### User-defined databases
 Normally Skyscraper uses a default resource cache folder for each platform. But a friend might have send you a copy of his folders, and you wish to scrape from his or her data. In this case Skyscraper allows you to force the use of a custom resource cache with the `-d <FOLDER>` command line option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
-#### Tiny words of warning
-If you start copying your resource cache to and from friends, or you accumulate some really big databases, ALWAYS remember to back these up from time to time! Skyscraper is software. Software has bugs. And even though I do quite a bit of testing and feel confident in my code, bugs are inevitable from time to time.
-
-Basically what I'm trying to say is that it is entirely your own fault if you've spent 6 months creating a bunch of cache folders and suddenly you overwrite them unintentionally or Skyscraper corrupts the data for some i-have-no-idea-how reason. It could happen. So... PLAN YOUR BACKUPS! And don't come crying to me. :D
-
 ## The resource cache folder and file structures
 MOST FILES AND FOLDERS INSIDE THE `~/.skyscraper/cache` FOLDER ARE NOT MEANT TO BE MANIPULATED BY HAND!!! It can be done, but don't complain to me about the format of the database. It is NOT meant to be understood by humans. It is meant to be efficient for reading and parsing by Skyscraper itself. Same goes for the media files that reside in the subfolders.
 
