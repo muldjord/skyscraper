@@ -87,7 +87,7 @@ The database also supports many non-Amiga platforms, but there's no doubt that A
 * Type: *File name search based*
 * User credential support: *None required*
 * API request limit: *1 request per 10 seconds*
-* Rom limit per run: *25*
+* Rom limit per run: *35*
 * Thread limit: *1*
 * Platform support: *[List](https://www.mobygames.com/browse/games)*
 * Media support: *`cover`, `screenshot`*
@@ -109,7 +109,7 @@ Please use this module sparingly. And only ever use it to scrape those last few 
 * Type: *File name search based*
 * User credential support: *None required*
 * API request limit: *50000 requests per month shared among ALL Skyscraper users*
-* Rom limit per run: *5*
+* Rom limit per run: *35*
 * Thread limit: *1*
 * Platform support: *[List](https://www.igdb.com/platforms)*
 * Media support: *None*
