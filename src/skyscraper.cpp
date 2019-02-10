@@ -236,7 +236,7 @@ void Skyscraper::run()
   // Create shared queue with files to process
   queue = QSharedPointer<Queue>(new Queue());
   QList<QFileInfo> infoList = inputDir.entryInfoList();
-  if(config.startAt != "" && !infoList.isEmpty()) {
+  if(!config.startAt.isEmpty() && !infoList.isEmpty()) {
     QFileInfo startAt(config.startAt);
     if(!startAt.exists()) {
       startAt.setFile(config.currentDir + "/" + config.startAt);
@@ -245,12 +245,12 @@ void Skyscraper::run()
       startAt.setFile(inputDir.absolutePath() + "/" + config.startAt);
     }
     if(startAt.exists()) {
-      while(infoList.first().fileName() != startAt.fileName()) {
+      while(infoList.first().fileName() != startAt.fileName() && !infoList.isEmpty()) {
 	infoList.removeFirst();
       }
     }
   }
-  if(config.endAt != "" && !infoList.isEmpty()) {
+  if(!config.endAt.isEmpty() && !infoList.isEmpty()) {
     QFileInfo endAt(config.endAt);
     if(!endAt.exists()) {
       endAt.setFile(config.currentDir + "/" + config.endAt);
@@ -259,7 +259,7 @@ void Skyscraper::run()
       endAt.setFile(inputDir.absolutePath() + "/" + config.endAt);
     }
     if(endAt.exists()) {
-      while(infoList.last().fileName() != endAt.fileName()) {
+      while(infoList.last().fileName() != endAt.fileName() && !infoList.isEmpty()) {
 	infoList.removeLast();
       }
     }
