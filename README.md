@@ -152,6 +152,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add Sharp X1 platform as "x1"
 * Now exits nicely when running low on disk space
 * Added 'spaceCheck=<BOOL>' to config.ini
+* Fixed crash when using '--startat' and '--endat' where the '--endat' file name came before the '--startat' file name. Note! What 'ls' reports in alphabetical order is not always what Skyscraper see as it it locale specific. So be aware of this. A huge thanks to 'Gemba' for taking the time to investigate this bug thoroughly.
 
 #### Version 3.0.1 (27th January 2019)
 * Added note for '--query' option when user forgets to add a file name on command line
