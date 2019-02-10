@@ -263,3 +263,8 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
 
 *Allowed in section(s): `[<SCRAPING MODULE>]`*
+
+#### spaceCheck="false"
+Skyscraper will continuously check if you are running low on disk space. If you go below 200 MB in either the game list export folder or the resource cache folder, it will quit to make sure your system doesn't become unstable. Some types of file systems provide a faulty result to Skyscraper when it comes to these checks and thus it can be necessary to disable it altogether. You can use this option to do just that.
+
+*Allowed in section(s): `[main]`*
