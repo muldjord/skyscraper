@@ -37,6 +37,7 @@ public:
   ~XmlReader();
   bool setFile(QString filename);
   QList<GameEntry> getEntries();
+  void addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntries);
 
 };
 

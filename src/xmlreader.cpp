@@ -55,35 +55,43 @@ QList<GameEntry> XmlReader::getEntries()
   QList<GameEntry> gameEntries;
 
   QDomNodeList gameNodes = elementsByTagName("game");
+  QDomNodeList pathNodes = elementsByTagName("folder");
 
-  for(int a = 0; a < gameNodes.length(); ++a) {
+  addEntries(gameNodes, gameEntries);
+  addEntries(pathNodes, gameEntries);
+
+  return gameEntries;
+}
+
+void XmlReader::addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntries)
+{
+  for(int a = 0; a < nodes.length(); ++a) {
     GameEntry entry;
-    entry.path = gameNodes.at(a).firstChildElement("path").text();
-    QString title = gameNodes.at(a).firstChildElement("name").text();
+    entry.path = nodes.at(a).firstChildElement("path").text();
+    QString title = nodes.at(a).firstChildElement("name").text();
     entry.sqrNotes = NameTools::getSqrNotes(title);
     entry.parNotes = NameTools::getParNotes(title);
     entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
-    entry.coverFile = gameNodes.at(a).firstChildElement("cover").text();
-    entry.screenshotFile = gameNodes.at(a).firstChildElement("image").text();
-    entry.marqueeFile = gameNodes.at(a).firstChildElement("marquee").text();
-    entry.videoFile = gameNodes.at(a).firstChildElement("video").text();
+    entry.coverFile = nodes.at(a).firstChildElement("cover").text();
+    entry.screenshotFile = nodes.at(a).firstChildElement("image").text();
+    entry.marqueeFile = nodes.at(a).firstChildElement("marquee").text();
+    entry.videoFile = nodes.at(a).firstChildElement("video").text();
     if(!entry.videoFile.isEmpty()) {
       entry.videoFormat = "fromxml";
     }
-    entry.description = gameNodes.at(a).firstChildElement("desc").text();
-    entry.releaseDate = gameNodes.at(a).firstChildElement("releasedate").text();
-    entry.developer = gameNodes.at(a).firstChildElement("developer").text();
-    entry.publisher = gameNodes.at(a).firstChildElement("publisher").text();
-    entry.tags = gameNodes.at(a).firstChildElement("genre").text();
-    entry.rating = gameNodes.at(a).firstChildElement("rating").text();
-    entry.players = gameNodes.at(a).firstChildElement("players").text();
-    entry.eSFavorite = gameNodes.at(a).firstChildElement("favorite").text();
-    entry.eSHidden = gameNodes.at(a).firstChildElement("hidden").text();
-    entry.eSPlayCount = gameNodes.at(a).firstChildElement("playcount").text();
-    entry.eSLastPlayed = gameNodes.at(a).firstChildElement("lastplayed").text();
-    entry.eSKidGame = gameNodes.at(a).firstChildElement("kidgame").text();
-    entry.eSSortName = gameNodes.at(a).firstChildElement("sortname").text();
+    entry.description = nodes.at(a).firstChildElement("desc").text();
+    entry.releaseDate = nodes.at(a).firstChildElement("releasedate").text();
+    entry.developer = nodes.at(a).firstChildElement("developer").text();
+    entry.publisher = nodes.at(a).firstChildElement("publisher").text();
+    entry.tags = nodes.at(a).firstChildElement("genre").text();
+    entry.rating = nodes.at(a).firstChildElement("rating").text();
+    entry.players = nodes.at(a).firstChildElement("players").text();
+    entry.eSFavorite = nodes.at(a).firstChildElement("favorite").text();
+    entry.eSHidden = nodes.at(a).firstChildElement("hidden").text();
+    entry.eSPlayCount = nodes.at(a).firstChildElement("playcount").text();
+    entry.eSLastPlayed = nodes.at(a).firstChildElement("lastplayed").text();
+    entry.eSKidGame = nodes.at(a).firstChildElement("kidgame").text();
+    entry.eSSortName = nodes.at(a).firstChildElement("sortname").text();
     gameEntries.append(entry);
   }
-  return gameEntries;
 }
