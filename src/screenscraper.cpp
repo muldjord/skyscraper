@@ -390,7 +390,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 
   QList<QString> searchNames;
   if(info.size() != 0) {
-    searchNames.append("romnom=" + hashList.at(0) + "&crc=" + hashList.at(1) + "&md5=" + hashList.at(2) + "&romtaille=" + QString::number(info.size()));
+    searchNames.append("romnom=" + hashList.at(0) + "&crc=" + hashList.at(1) + "&md5=" + hashList.at(2) + "&sha1=" + hashList.at(3) + "&romtaille=" + QString::number(info.size()));
   } else {
     searchNames.append("romnom=" + hashList.at(0));
   }
