@@ -23,6 +23,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <signal.h>
+
 #include <QCoreApplication>
 #include <QDir>
 #include <QtDebug>
@@ -38,6 +40,8 @@
 #include "skyscraper.h"
 #include "scripter.h"
 #include "platform.h"
+
+Skyscraper *x;
 
 void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QString &msg)
 {
@@ -67,8 +71,23 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QStri
   fflush(stdout);
 }
 
+void sigHandler(int signal) {
+  if(signal == 2) {
+    printf("User wants to quit, trying to exit nicely...\n");
+    x->queue->clearAll();
+  }
+}
+
 int main(int argc, char *argv[])
 {
+  struct sigaction sigIntHandler;
+  
+  sigIntHandler.sa_handler = sigHandler;
+  sigemptyset(&sigIntHandler.sa_mask);
+  sigIntHandler.sa_flags = 0;
+  
+  sigaction(SIGINT, &sigIntHandler, NULL);
+  
   QCoreApplication app(argc, argv);
   app.setApplicationVersion(VERSION);
   
@@ -216,7 +235,7 @@ int main(int argc, char *argv[])
     if(parser.isSet("help") || parser.isSet("h")) {
       parser.showHelp();
     } else {
-      Skyscraper *x = new Skyscraper(parser, currentDir);
+      x = new Skyscraper(parser, currentDir);
       QObject::connect(x, &Skyscraper::finished, &app, &QCoreApplication::quit);
       QTimer::singleShot(0, x, SLOT(run()));
     }

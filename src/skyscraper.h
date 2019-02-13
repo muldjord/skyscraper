@@ -45,6 +45,7 @@ class Skyscraper : public QObject
 public:
   Skyscraper(const QCommandLineParser &parser, const QString &currentDir);
   ~Skyscraper();
+  QSharedPointer<Queue> queue;  
 
 public slots:
   void run();
@@ -74,7 +75,6 @@ private:
   AbstractFrontend *frontend;
 
   QSharedPointer<Cache> cache;
-  QSharedPointer<Queue> queue;  
 
   QList<GameEntry> gameEntries;
   QList<QString> cliFiles;
