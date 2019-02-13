@@ -154,6 +154,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added 'spaceCheck=<BOOL>' to config.ini
 * Fixed crash when using '--startat' and '--endat' where the '--endat' file name came before the '--startat' file name. Note! What 'ls' reports in alphabetical order is not always what Skyscraper see as it it locale specific. So be aware of this. A huge thanks to 'Gemba' for taking the time to investigate this bug thoroughly.
 * Fixed bug in game list metadata preservation when using relativePaths and '<folder>' entries (thank you to 'HumanRob' for reporting this)
+* Skyscraper now saves the cache and exits nicely on ctrl+c (SIGINT) (thanks to 'krcroft' for pointing this out)
+* The 'screenscraper' module now includes 'systemeid' in the query for better results
 
 #### Version 3.0.1 (27th January 2019)
 * Added note for '--query' option when user forgets to add a file name on command line
