@@ -35,7 +35,7 @@ ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
   connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);
-  limitTimer.setInterval(10000); // 10 second request limit
+  limitTimer.setInterval(1000); // 1 second request limit
   limitTimer.setSingleShot(false);
   limitTimer.start();
 
