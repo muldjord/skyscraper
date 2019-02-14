@@ -57,12 +57,26 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
       printf(".");
       fflush(stdout);
     }
-    QFileInfo current(gameEntries.at(a).path);
+    QString filePath = gameEntries.at(a).path;
+    // Make sure we readd the input path if the 'path' is relative
+    if(filePath.left(1) == "." && !queue->isEmpty()) {
+      filePath.remove(0, 1);
+      filePath.prepend(queue->first().absolutePath());
+    }
+    QFileInfo current(filePath);
     for(int b = 0; b < queue->length(); ++b) {
-      if(current.fileName() == queue->at(b).fileName()) {
-	queue->removeAt(b);
-	// We assume filename is unique, so break after getting first hit
-	break;
+      if(current.isFile()) {
+	if(current.fileName() == queue->at(b).fileName()) {
+	  queue->removeAt(b);
+	  // We assume filename is unique, so break after getting first hit
+	  break;
+	}
+      } else if(current.isDir()) {
+	if(current.absolutePath() == queue->at(b).absolutePath()) {
+	  queue->removeAt(b);
+	  // We assume filename is unique, so break after getting first hit
+	  break;
+	}
       }
     }
   }
