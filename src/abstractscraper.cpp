@@ -490,7 +490,7 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
   QRegularExpressionMatch match;
   match = QRegularExpression(", [Tt]he").match(baseName);
   if(match.hasMatch()) {
-    baseName = baseName.replace(match.captured(0), "").prepend(match.captured(0).right(3));
+    baseName = baseName.replace(match.captured(0), "").prepend(match.captured(0).right(3) + " ");
   }
   
   return baseName;
