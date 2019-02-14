@@ -34,6 +34,11 @@ ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
+  connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);
+  limitTimer.setInterval(10000); // 10 second request limit
+  limitTimer.setSingleShot(false);
+  limitTimer.start();
+
   baseUrl = "http://www.screenscraper.fr";
 
   fetchOrder.append(PUBLISHER);
@@ -54,6 +59,7 @@ ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 				     QString searchName, QString platform)
 {
+  limiter.exec();
   QString platformId = getPlatformId(config->platform);
   if(platformId == "na") {
     reqRemaining = 0;

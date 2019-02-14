@@ -27,6 +27,8 @@
 #define SCREENSCRAPER_H
 
 #include <QDomDocument>
+#include <QTimer>
+#include <QEventLoop>
 
 #include "abstractscraper.h"
 
@@ -42,6 +44,8 @@ public:
   ScreenScraper(Settings *config);
 
 private:
+  QTimer limitTimer;
+  QEventLoop limiter;
   QList<QString> getSearchNames(const QFileInfo &info) override;
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform) override;
   void getGameData(GameEntry &game) override;
