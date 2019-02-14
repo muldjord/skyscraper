@@ -303,7 +303,7 @@ void Skyscraper::run()
 	    getline(std::cin, userInput);
 	  }
 	  if((userInput == "y" || userInput == "Y") && frontend->canSkip()) {
-	    frontend->skipExisting(gameEntries, queue);
+	    frontend->skipExisting(gameEntries, queue, config.inputFolder);
 	  }
 	}
       }
