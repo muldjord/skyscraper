@@ -32,8 +32,10 @@ FxSharpen::FxSharpen()
 {
 }
 
-QImage FxSharpen::applyEffect(const QImage &src, const Layer &layer)
+QImage FxSharpen::applyEffect(const QImage &src, const Layer &)
 {
+  QImage buffer1 = src;
+  /*
   double strength = 5.0;
   if(layer.value >= 0 && layer.value <= 100) {
     strength = layer.value * 0.1;
@@ -43,7 +45,6 @@ QImage FxSharpen::applyEffect(const QImage &src, const Layer &layer)
 		     -strength, 1.0 + 4.0 * strength, -strength,
 		     0.0, -strength, 0.0};
 
-  QImage buffer1 = src;
   QRgb *buffer1Bits = (QRgb *)buffer1.bits();
 
   QImage buffer2(buffer1.width(), buffer1.height(), QImage::Format_ARGB32_Premultiplied);
@@ -58,8 +59,8 @@ QImage FxSharpen::applyEffect(const QImage &src, const Layer &layer)
       }
     }
   }
-  
-  return buffer2;
+  */  
+  return buffer1;
 }
 
 /*
