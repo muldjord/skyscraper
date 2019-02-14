@@ -45,7 +45,7 @@ bool EmulationStation::loadOldGameList(const QString &gameListFileString)
   return false;
 }
 
-bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) 
+bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue, const QString inputFolder) 
 {
   gameEntries = oldEntries;
 
@@ -59,9 +59,9 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
     }
     QString filePath = gameEntries.at(a).path;
     // Make sure we readd the input path if the 'path' is relative
-    if(filePath.left(1) == "." && !queue->isEmpty()) {
+    if(filePath.left(1) == ".") {
       filePath.remove(0, 1);
-      filePath.prepend(queue->first().absolutePath());
+      filePath.prepend(inputFolder);
     }
     QFileInfo current(filePath);
     for(int b = 0; b < queue->length(); ++b) {
@@ -139,14 +139,13 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
 
     QString entryType = "game";
 
-    QString filePath = entry.path;
     // Make sure we readd the input path if the 'path' is relative. This happens when user
     // skips entries.
-    if(filePath.left(1) == ".") {
-      filePath.remove(0, 1);
-      filePath.prepend(config->inputFolder);
+    if(entry.path.left(1) == ".") {
+      entry.path.remove(0, 1);
+      entry.path.prepend(config->inputFolder);
     }
-    QFileInfo entryInfo(filePath);
+    QFileInfo entryInfo(entry.path);
     
     if(entryInfo.isFile()) {
       // Check if game is in subfolder and if it's a .cue or .m3u file.

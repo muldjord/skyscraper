@@ -35,7 +35,8 @@ class EmulationStation : public AbstractFrontend
 public:
   EmulationStation();
   void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries) override;
-  bool skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) override;
+  bool skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue,
+		    const QString inputFolder) override;
   bool canSkip() override;
   bool loadOldGameList(const QString &gameListFileString) override;
   void preserveFromOld(GameEntry &entry) override;
