@@ -73,7 +73,7 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QStri
 
 void sigHandler(int signal) {
   if(signal == 2) {
-    printf("User wants to quit, trying to exit nicely...\n");
+    printf("User wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads you have running...\n");
     if(!x->queue.isNull()) {
       x->queue->clearAll();
     } else {
