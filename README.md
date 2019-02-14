@@ -145,7 +145,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 * Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
 
-#### Version 3.0.2 (In progress, unreleased)
+#### Version 3.0.2 (14th February 2019)
 * Upped the rom limit from 5 to 35 for the "igdb" module
 * Upped the rom limit from 25 to 35 for the "mobygames" module
 * Added media cache config options to module section
@@ -154,8 +154,12 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added 'spaceCheck=<BOOL>' to config.ini
 * Fixed crash when using '--startat' and '--endat' where the '--endat' file name came before the '--startat' file name. Note! What 'ls' reports in alphabetical order is not always what Skyscraper see as it it locale specific. So be aware of this. A huge thanks to 'Gemba' for taking the time to investigate this bug thoroughly.
 * Fixed bug in game list metadata preservation when using relativePaths and '<folder>' entries (thank you to 'HumanRob' for reporting this)
+* Fixed game list entries skipping for 'relativePaths' and '<folder>' instances
 * Skyscraper now saves the cache and exits nicely on ctrl+c (SIGINT) (thanks to 'krcroft' for pointing this out)
 * The 'screenscraper' module now includes 'systemeid' in the query for better results
+* Now skips the game list assembling when in gathering mode
+* Now skips cache saving when in game list generation mode
+* Output now says whether it was a gathering run or a game list generation run
 
 #### Version 3.0.1 (27th January 2019)
 * Added note for '--query' option when user forgets to add a file name on command line
