@@ -72,7 +72,9 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
 	  break;
 	}
       } else if(current.isDir()) {
-	if(current.absolutePath() == queue->at(b).absolutePath()) {
+	// Use current.absoluteFilePath here since it is already a path. Otherwise it will use
+	// the parent folder
+	if(current.absoluteFilePath() == queue->at(b).absolutePath()) {
 	  queue->removeAt(b);
 	  // We assume filename is unique, so break after getting first hit
 	  break;
@@ -137,18 +139,30 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
 
     QString entryType = "game";
 
-    // Check if game is in subfolder and if it's a .cue or .m3u file.
-    // If so, change entry to <folder> type.
-    QFileInfo entryInfo(entry.path);
-    QString entryAbsolutePath = entryInfo.absolutePath();
-    if(entryAbsolutePath.count("/") == config->inputFolder.count("/") + 1) {
-      QString entrySuffix = entryInfo.suffix();
-      if((entrySuffix == "cue" ||
-	  entrySuffix == "m3u") &&
-	 QDir(entryAbsolutePath, "*.cue *.m3u").count() == 1) {
-	entryType = "folder";
-	entry.path = entryAbsolutePath;
+    QString filePath = entry.path;
+    // Make sure we readd the input path if the 'path' is relative. This happens when user
+    // skips entries.
+    if(filePath.left(1) == ".") {
+      filePath.remove(0, 1);
+      filePath.prepend(config->inputFolder);
+    }
+    QFileInfo entryInfo(filePath);
+    
+    if(entryInfo.isFile()) {
+      // Check if game is in subfolder and if it's a .cue or .m3u file.
+      // If so, change entry to <folder> type.
+      QString entryAbsolutePath = entryInfo.absolutePath();
+      if(entryAbsolutePath.count("/") == config->inputFolder.count("/") + 1) {
+	QString entrySuffix = entryInfo.suffix();
+	if((entrySuffix == "cue" ||
+	    entrySuffix == "m3u") &&
+	   QDir(entryAbsolutePath, "*.cue *.m3u").count() == 1) {
+	  entryType = "folder";
+	  entry.path = entryAbsolutePath;
+	}
       }
+    } else if(entryInfo.isDir()) {
+      entryType = "folder";
     }
 
     // Preserve certain data from old game list entry, but only for empty data
