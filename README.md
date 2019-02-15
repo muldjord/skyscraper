@@ -145,6 +145,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 * Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
 
+#### Version 3.0.2 (15th February 2019)
+* Worked around a flaw in the returned screenscraper xml results which caused many games to not be recognized due to invalid xml being returned (Thank you to 'Brunnis' for reporting this)
+
 #### Version 3.0.2 (14th February 2019)
 * Upped the rom limit from 5 to 35 for the "igdb" module
 * Upped the rom limit from 25 to 35 for the "mobygames" module
