@@ -292,7 +292,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   if(platform == "3do") {
     formats.append("*.iso");
   } else if(platform == "amiga") {
-    formats.append("*.uae *.adf *.dms *.adz *.rp9 *.lha *.cue");
+    formats.append("*.uae *.adf *.dms *.adz *.rp9 *.lha *.cue *.img *.iso");
   } else if(platform == "amstradcpc") {
     formats.append("*.dsk *.cpc");
   } else if(platform == "apple2") {
