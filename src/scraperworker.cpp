@@ -103,10 +103,11 @@ void ScraperWorker::run()
 
     // For Amiga platform, change subplatforms from filename and add brackets if needed
     if(config.platform == "amiga") {
-      if(info.completeBaseName().toLower().indexOf("cd32") != -1) {
-	debug.append("Platform change: 'amiga'->'cd32', filename contains 'cd32'\n");
+      if(info.completeBaseName().toLower().contains("cd32") ||
+	 info.suffix() == "cue" || info.suffix() == "iso" || info.suffix() == "img") {
+	debug.append("Platform change: 'amiga'->'cd32'\n");
 	config.platform = "cd32";
-      } else if(info.completeBaseName().toLower().indexOf("cdtv") != -1) {
+      } else if(info.completeBaseName().toLower().contains("cdtv")) {
 	debug.append("Platform change: 'amiga'->'cdtv', filename contains 'cdtv'\n");
 	config.platform = "cdtv";
       }
