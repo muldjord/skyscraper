@@ -350,6 +350,7 @@ void Skyscraper::run()
   // Ready, set, GO!!! Start all threads
   foreach(QThread *thread, threadList) {
     thread->start();
+    threadsRunning = true;
   }
 }
 
