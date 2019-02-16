@@ -42,6 +42,7 @@
 #include "platform.h"
 
 Skyscraper *x;
+int sigIntRequests = 0;
 
 void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QString &msg)
 {
@@ -73,10 +74,16 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QStri
 
 void sigHandler(int signal) {
   if(signal == 2) {
-    printf("User wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads you have running...\n");
-    if(!x->queue.isNull()) {
-      x->queue->clearAll();
+    sigIntRequests++;
+    if(sigIntRequests <= 2) {
+      if(x->threadsRunning) {
+	printf("User wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads you have running...\n");
+	x->queue->clearAll();
+      } else {
+	exit(1);
+      }
     } else {
+      printf("User REALLY wants to quit NOW, forcing unclean exit...\n");
       exit(1);
     }
   }
