@@ -470,7 +470,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "apple2") {
     return "86";
   } else if(platform == "arcade") {
-    return "";
+    return "75";
   } else if(platform == "atari800") {
     return "43";
   } else if(platform == "atari2600") {
@@ -502,7 +502,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "dreamcast") {
     return "23";
   } else if(platform == "fba") {
-    return "";
+    return "75";
   } else if(platform == "fds") {
     return "106";
   } else if(platform == "gameandwatch") {
@@ -522,11 +522,11 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "intellivision") {
     return "115";
   } else if(platform == "mame-advmame") {
-    return "";
+    return "75";
   } else if(platform == "mame-libretro") {
-    return "";
+    return "75";
   } else if(platform == "mame-mame4all") {
-    return "";
+    return "75";
   } else if(platform == "mastersystem") {
     return "2";
   } else if(platform == "megacd") {
@@ -534,7 +534,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "megadrive") {
     return "1";
   } else if(platform == "msx") {
-    return "";
+    return "113";
   } else if(platform == "n64") {
     return "14";
   } else if(platform == "nds") {
@@ -550,15 +550,15 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "oric") {
     return "131";
   } else if(platform == "pc") {
-    return "";
+    return "135";
   } else if(platform == "pc88") {
-    return "";
+    return "na";
   } else if(platform == "pcfx") {
     return "72";
   } else if(platform == "pcengine") {
     return "31";
   } else if(platform == "ports") {
-    return "";
+    return "na";
   } else if(platform == "psp") {
     return "61";
   } else if(platform == "psx") {
@@ -566,7 +566,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "saturn") {
     return "22";
   } else if(platform == "scummvm") {
-    return "";
+    return "123";
   } else if(platform == "sega32x") {
     return "19";
   } else if(platform == "segacd") {
