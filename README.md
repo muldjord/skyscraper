@@ -145,6 +145,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 * Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
 
+#### Version 3.0.4 (In progress, unreleased)
+* Improved Amiga CD32 disc image support to prep for the upcoming support in Amiberry (Thank you to 'HoraceAndTheSpider' for the heads up)
+
 #### Version 3.0.3 (16th February 2019)
 * Worked around a flaw in the returned screenscraper xml results which caused many games to not be recognized due to invalid xml being returned (Thank you to 'Brunnis' for reporting this)
 * Improved SIGINT handler to now allow unclean exit if user is VERY adament about it
