@@ -70,7 +70,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(gameUrl);
   q.exec();
   data = manager.getData();
-  data.replace(" & ", " &amp; ");
+  //data.replace(" & ", " &amp; ");
   if(data.contains("Erreur")) {
     return;
   }
@@ -79,6 +79,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
   // Check if xml is valid. If not, skip
   if(!xmlDoc.setContent(data)) {
+    printf("\033[1;31mScreenScraper APIv2 returned invalid XML for the following query:\033[0m\n%s\n", searchName.toStdString().c_str());
     return;
   }
 
