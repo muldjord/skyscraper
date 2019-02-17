@@ -70,7 +70,8 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(gameUrl);
   q.exec();
   data = manager.getData();
-  data.replace(" & ", " &amp; ");
+  data.replace("&amp;", "&");
+  data.replace("&", "&amp;");
   if(data.contains("Erreur")) {
     return;
   }
