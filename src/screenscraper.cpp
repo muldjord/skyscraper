@@ -71,7 +71,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   q.exec();
   data = manager.getData();
   data.replace(" & ", " &amp; ");
-  if(data.indexOf("Erreur") != -1) {
+  if(data.contains("Erreur")) {
     return;
   }
   
