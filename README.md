@@ -147,7 +147,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.0.4 (In progress, unreleased)
 * Improved Amiga CD32 disc image support to prep for the upcoming support in Amiberry (Thank you to 'HoraceAndTheSpider' for the heads up)
-* Improved the workaround for the flaw in the returned screenscraper xml results
+* Added check for Qt5.4.0 and ignores QStorageInfo include if requirement not met (Thank you to 'ByteThis' for reporting this issue)
+* Improved work around to fix invalid XML returned by ScreenScraper
 
 #### Version 3.0.3 (16th February 2019)
 * Worked around a flaw in the returned screenscraper xml results which caused many games to not be recognized due to invalid xml being returned (Thank you to 'Brunnis' for reporting this)
