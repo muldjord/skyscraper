@@ -24,6 +24,7 @@
  */
 
 #include <iostream>
+#include <sys/statvfs.h>
 
 #include <QThread>
 #include <QSettings>
@@ -35,7 +36,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#if QT_VERSION >= 0x050400
 #include <QStorageInfo>
+#endif
 
 #include "skyscraper.h"
 #include "strtools.h"
@@ -444,7 +447,8 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
   }
   currentFile++;
 
-  qint64 spaceLimit = 209715200;
+#if QT_VERSION >= 0x050400
+  qint64 spaceLimit = 20971520000000;
   if(config.spaceCheck && (QStorageInfo(QDir(config.mediaFolder)).bytesFree() < spaceLimit ||
 			   QStorageInfo(QDir::current()).bytesFree() < spaceLimit)) {
     printf("\033[1;31mYou have very little disk space left either on the Skyscraper resource cache drive or on the game list and media export drive, please free up some space and try again. Now aborting...\033[0m\n\nNote! You can disable this check by setting 'spaceCheck=\"false\"' in the '[main]' section of config.ini.\n\n");
@@ -455,6 +459,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     // By clearing the queue here we basically tell Skyscraper to stop and quit nicely
     queue->clearAll();
   }
+#endif
 }
 
 void Skyscraper::checkThreads()
