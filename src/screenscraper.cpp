@@ -71,6 +71,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   q.exec();
   data = manager.getData();
   data.replace(" & ", " &amp; ");
+  if(data.contains("<roms>") && data.contains("</roms>")) {
+    data.remove(data.indexOf("<roms>") + 6, data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
+  }
+  printf("DATA:\n%s\n", data.data());
   if(data.contains("Erreur")) {
     return;
   }
