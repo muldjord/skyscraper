@@ -95,7 +95,7 @@ Skyscraper -p snes -s thegamesdb -t 5
 ```
 
 #### -f &lt;FRONTEND&gt;
-Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported aswell. If exporting for the `attractmode` frontend, please also take note of the required `-e` option that goes along with using the `attractmode` frontend. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported as well. If exporting for the `attractmode` frontend, please also take note of the required `-e` option that goes along with using the `attractmode` frontend. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -f attractmode -e snes

@@ -70,7 +70,7 @@ This module also supports videos for many games.
 * User credential support: *None required*
 * API request limit: *None*
 * Thread limit: *1*
-* Platform support: *Primarily Amiga, but supports others aswell. [Check list to the right](https://openretro.org/browse/amiga/a)*
+* Platform support: *Primarily Amiga, but supports others as well. [Check list to the right](https://openretro.org/browse/amiga/a)*
 * Media support: *`cover`, `screenshot`, `marquee`*
 * Example use: `Skyscraper -p amiga -s openretro`
 
