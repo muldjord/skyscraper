@@ -66,7 +66,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     printf("\033[0;31mPlatform not supported by ScreenScraper or it hasn't yet been included in Skyscraper for this module...\033[0m\n");
     return;
   }
-  QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&ssid=" + config->user + "&sspassword=" + config->password + (platformId.isEmpty()?"":"&systemeid=" + platformId) + "&output=xml&" + searchName;
+  QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION + (config->user.isEmpty()?"":"&ssid=" + config->user) + (config->password.isEmpty()?"":"&sspassword=" + config->password) + (platformId.isEmpty()?"":"&systemeid=" + platformId) + "&output=xml&" + searchName;
   manager.request(gameUrl);
   q.exec();
   data = manager.getData();
@@ -82,6 +82,8 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
   // Check if xml is valid. If not, skip
   if(!xmlDoc.setContent(data)) {
+    if(config->verbosity > 2)
+      printf("ScreenScraper returned:\n%s\n", data.data());
     printf("\033[1;31mScreenScraper APIv2 returned invalid XML for the following query:\033[0m\n%s\n", searchName.toStdString().c_str());
     return;
   }
