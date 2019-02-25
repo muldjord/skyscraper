@@ -88,8 +88,8 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
 void EmulationStation::preserveFromOld(GameEntry &entry)
 {
   foreach(GameEntry oldEntry, oldEntries) {
-    QString oldFileName = oldEntry.path.mid(oldEntry.path.indexOf("/"), oldEntry.path.length());
-    QString fileName = entry.path.mid(entry.path.indexOf("/"), entry.path.length());
+    QString oldFileName = oldEntry.path.mid(oldEntry.path.lastIndexOf("/"), oldEntry.path.length());
+    QString fileName = entry.path.mid(entry.path.lastIndexOf("/"), entry.path.length());
     if(oldFileName == fileName) {
       if(entry.eSFavorite.isEmpty())
 	entry.eSFavorite = oldEntry.eSFavorite;
