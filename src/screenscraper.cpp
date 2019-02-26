@@ -77,6 +77,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   if(data.contains("Erreur")) {
     return;
   }
+  if(data.contains("Il manque des champs")) {
+    printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered users. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+    return;
+  }
   
   GameEntry game;
 
