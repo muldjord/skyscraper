@@ -50,32 +50,33 @@ bool XmlReader::setFile(QString filename)
   return result;
 }
 
-QList<GameEntry> XmlReader::getEntries()
+QList<GameEntry> XmlReader::getEntries(QString inputFolder)
 {
   QList<GameEntry> gameEntries;
 
   QDomNodeList gameNodes = elementsByTagName("game");
   QDomNodeList pathNodes = elementsByTagName("folder");
 
-  addEntries(gameNodes, gameEntries);
-  addEntries(pathNodes, gameEntries);
+  addEntries(gameNodes, gameEntries, inputFolder);
+  addEntries(pathNodes, gameEntries, inputFolder);
 
   return gameEntries;
 }
 
-void XmlReader::addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntries)
+void XmlReader::addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntries,
+			   const QString &inputFolder)
 {
   for(int a = 0; a < nodes.length(); ++a) {
     GameEntry entry;
-    entry.path = nodes.at(a).firstChildElement("path").text();
+    entry.path = makeAbsolute(nodes.at(a).firstChildElement("path").text(), inputFolder);
     QString title = nodes.at(a).firstChildElement("name").text();
     entry.sqrNotes = NameTools::getSqrNotes(title);
     entry.parNotes = NameTools::getParNotes(title);
     entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
-    entry.coverFile = nodes.at(a).firstChildElement("cover").text();
-    entry.screenshotFile = nodes.at(a).firstChildElement("image").text();
-    entry.marqueeFile = nodes.at(a).firstChildElement("marquee").text();
-    entry.videoFile = nodes.at(a).firstChildElement("video").text();
+    entry.coverFile = makeAbsolute(nodes.at(a).firstChildElement("cover").text(), inputFolder);
+    entry.screenshotFile = makeAbsolute(nodes.at(a).firstChildElement("image").text(), inputFolder);
+    entry.marqueeFile = makeAbsolute(nodes.at(a).firstChildElement("marquee").text(), inputFolder);
+    entry.videoFile = makeAbsolute(nodes.at(a).firstChildElement("video").text(), inputFolder);
     if(!entry.videoFile.isEmpty()) {
       entry.videoFormat = "fromxml";
     }
@@ -94,4 +95,13 @@ void XmlReader::addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntr
     entry.eSSortName = nodes.at(a).firstChildElement("sortname").text();
     gameEntries.append(entry);
   }
+}
+
+QString XmlReader::makeAbsolute(QString filePath, const QString &inputFolder)
+{
+  if(filePath.left(1) == ".") {
+    filePath.remove(0, 1);
+    filePath.prepend(inputFolder);
+  }
+  return filePath;
 }

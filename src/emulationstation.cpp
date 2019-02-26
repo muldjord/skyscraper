@@ -38,14 +38,14 @@ bool EmulationStation::loadOldGameList(const QString &gameListFileString)
   // Load old game list entries so we can preserve metadata later when assembling xml
   XmlReader gameListReader;
   if(gameListReader.setFile(gameListFileString)) {
-    oldEntries = gameListReader.getEntries();
+    oldEntries = gameListReader.getEntries(config->inputFolder);
     return true;
   }
 
   return false;
 }
 
-bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue, const QString inputFolder) 
+bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) 
 {
   gameEntries = oldEntries;
 
@@ -57,13 +57,7 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
       printf(".");
       fflush(stdout);
     }
-    QString filePath = gameEntries.at(a).path;
-    // Make sure we readd the input path if the 'path' is relative
-    if(filePath.left(1) == ".") {
-      filePath.remove(0, 1);
-      filePath.prepend(inputFolder);
-    }
-    QFileInfo current(filePath);
+    QFileInfo current(gameEntries.at(a).path);
     for(int b = 0; b < queue->length(); ++b) {
       if(current.isFile()) {
 	if(current.fileName() == queue->at(b).fileName()) {
@@ -139,14 +133,7 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
 
     QString entryType = "game";
 
-    // Make sure we readd the input path if the 'path' is relative. This happens when user
-    // skips entries.
-    if(entry.path.left(1) == ".") {
-      entry.path.remove(0, 1);
-      entry.path.prepend(config->inputFolder);
-    }
     QFileInfo entryInfo(entry.path);
-    
     if(entryInfo.isFile()) {
       // Check if game is in subfolder and if it's a .cue or .m3u file.
       // If so, change entry to <folder> type.
@@ -181,6 +168,7 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
     if(entry.coverFile.isEmpty()) {
       finalOutput.append("    <cover />\n");
     } else {
+      // The replace here IS supposed to be 'inputFolder' and not 'mediaFolder' because we only want the path to be relative if '-o' hasn't been set. So this will only make it relative if the path is equal to inputFolder which is what we want.
       finalOutput.append("    <cover>" + (config->relativePaths?StrTools::xmlEscape(entry.coverFile).replace(config->inputFolder, "."):StrTools::xmlEscape(entry.coverFile)) + "</cover>\n");
     }
     if(entry.screenshotFile.isEmpty()) {

@@ -36,8 +36,12 @@ public:
   XmlReader();
   ~XmlReader();
   bool setFile(QString filename);
-  QList<GameEntry> getEntries();
-  void addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntries);
+  QList<GameEntry> getEntries(QString inputFolder);
+  void addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntries,
+		  const QString &inputFolder);
+
+private:
+  QString makeAbsolute(QString filePath, const QString &inputFolder);
 
 };
 
