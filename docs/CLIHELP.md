@@ -22,7 +22,7 @@ Sets the platform you wish to scrape. Supported platforms can be seen using the 
 
 Running the following commands will scrape from all cached resources and generate a game list and composite artwork using the recipe in `~/.skyscraper/artwork.xml` (check the artwork documentation for more info on this [here](ARTWORK.md).
 
-Before running these commands you need to first gather some data into the cache. Please read the description of `-s <module>` below.
+Before running these commands you need to first gather some data into the cache. Please read the description of `-s <MODULE>` below.
 ###### Example(s)
 ```
 Skyscraper -p amiga
@@ -31,7 +31,7 @@ Skyscraper -p snes
 ```
 
 #### -s &lt;MODULE&gt;
-Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <platform>` description above.
+Sets which scraping module you wish to gather data from. All data scraped from any of the modules will be cached in the resource cache and can then later be used to generate a game list for your frontend. Read more about this in the `-p <PLATFORM>` description above.
 
 To generate a game list from the resource cache, just leave out the `-s` option entirely.
 ###### Example(s)
@@ -51,7 +51,7 @@ Skyscraper -p snes -s screenscraper -u <userid:password>
 ```
 
 #### -i &lt;PATH&gt;
-Sets the rom input folder. By default Skyscraper will look for roms in the `/home/<user>/RetroPie/roms/<platform>` folder. If your roms are located in a non-default location, you can set the input path using this option. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Sets the rom input folder. By default Skyscraper will look for roms in the `/home/<user>/RetroPie/roms/<PLATFORM>` folder. If your roms are located in a non-default location, you can set the input path using this option. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -i "/path/to/your/snes/roms"
@@ -240,28 +240,28 @@ Skyscraper -p snes --videos --symlink
 ```
 
 #### --nocovers
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachecoverstrue) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nocovers
 ```
 
 #### --noscreenshots
-Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachescreenshotstrue) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --noscreenshots
 ```
 
 #### --nowheels
-Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachewheelstrue) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nowheels
 ```
 
 #### --nomarquees
-Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md) instead.
+Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachemarqueestrue) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --nomarquees
