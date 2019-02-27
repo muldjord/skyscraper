@@ -145,6 +145,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 * Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
 
+#### Version 3.0.6 (In progress, unreleased)
+* Added 'zx81' platform. The only module that supports it is the 'screenscraper' module
+
 #### Version 3.0.5 (26th February 2019)
 * Fixed and improved ES metadata preservation code
 
