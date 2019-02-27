@@ -62,6 +62,7 @@
 * WonderSwan
 * WonderSwan Color
 * Z-Machine
+* ZX81
 * ZX Spectrum
 
 ... More platforms will be added in future releases!

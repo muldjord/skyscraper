@@ -110,6 +110,7 @@ QStringList Platform::getPlatforms()
   platforms.append("x68000");
   platforms.append("x1");
   platforms.append("zmachine");
+  platforms.append("zx81");
   platforms.append("zxspectrum");
 
   return platforms;
@@ -265,6 +266,8 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   } else if(platform  == "zmachine") {
     scrapers.append("thegamesdb");
+  } else if(platform  == "zx81") {
+    scrapers.append("screenscraper");
   } else if(platform  == "zxspectrum") {
     scrapers.append("worldofspectrum");
     scrapers.append("screenscraper");
@@ -427,6 +430,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.dx1 *.zip *.2d *.2hd *.tfd *.d88 *.88d *.hdm *.xdf *.dup *.cmd");
   } else if(platform == "zmachine") {
     formats.append("*.dat *.z1 *.z2 *.z3 *.z4 *.z5 *.z6 *.z7 *.z8");
+  } else if(platform == "zx81") {
+    formats.append("*.p *.tzx *.t81");
   } else if(platform == "zxspectrum") {
     formats.append("*.sna *.szx *.z80 *.tap *.tzx *.gz *.udi *.mgt *.img *.trd *.scl *.dsk");
   }
@@ -574,6 +579,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "x1") {
     scraper = "cache";
   } else if(platform == "zmachine") {
+    scraper = "cache";
+  } else if(platform == "zx81") {
     scraper = "cache";
   } else if(platform == "zxspectrum") {
     scraper = "cache";

@@ -609,6 +609,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "na";
   } else if(platform == "zmachine") {
     return "na";
+  } else if(platform == "zx81") {
+    return "77";
   } else if(platform == "zxspectrum") {
     return "76";
   }
