@@ -134,7 +134,7 @@ bool Cache::read()
 
 void Cache::editResources(QSharedPointer<Queue> queue)
 {
-  printf("Entering resource cache editing mode! Note that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\n\nWarning! All changes are done in memory. If you Ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\n\n");
+  printf("\033[1;33mEntering resource cache editing mode! Note that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n\033[1;33mNote!\033[0m All changes are done in memory. If you ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\n\n");
   while(queue->hasEntry()) {
     QFileInfo info = queue->takeEntry();
     QString sha1 = NameTools::getSha1(info);
@@ -708,6 +708,8 @@ void Cache::readPriorities()
     }
     QString type = orderElem.attribute("type");
     QList<QString> sources;
+    // ALWAYS prioritize 'user' resources highest (added with edit mode)
+    sources.append("user");
     QDomNodeList sourceNodes = orderNodes.at(a).childNodes();
     if(sourceNodes.isEmpty()) {
       printf("'source' node(s) missing for type '%s' in priorities.xml, skipping...\n",
@@ -722,7 +724,7 @@ void Cache::readPriorities()
   }
   printf("Priorities loaded successfully");
   if(errors != 0) {
-    printf(", but %d errors encountered, please check this", errors);
+    printf(", but %d error(s) encountered, please correct this", errors);
   }
   printf("!\n\n");
 }
