@@ -204,38 +204,6 @@ void Skyscraper::run()
 
   QFile gameListFile(gameListFileString);
 
-  if(!config.pretend && config.scraper == "cache" &&
-     !config.unattend && !config.unattendSkip &&
-     gameListFile.exists()) {
-    std::string userInput = "";
-    printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
-    getline(std::cin, userInput);
-    if(userInput == "y" || userInput == "Y") {
-    } else {
-      printf("User chose not to overwrite, now exiting...\n");
-      exit(0);
-    }
-    
-    printf("Checking if '\033[1;32m%s\033[0m' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
-    
-    if(gameListFile.open(QIODevice::Append)) {
-      printf("\033[1;32mIt is! :)\033[0m\n");
-      gameListFile.close();
-    } else {
-      printf("\033[1;31mIt isn't! :(\nPlease check path and permissions and try again.\033[0m\n");
-      exit(1);
-    }
-    printf("\n");
-  }
-  if(config.pretend && config.scraper == "cache") {
-    printf("Pretend set! Not changing any files, just showing output.\n\n");
-  }
-
-  QFile skippedFile(skippedFileString);
-  skippedFile.open(QIODevice::WriteOnly);
-  skippedFile.write("--- The following is a list of skipped games ---\n");
-  skippedFile.close();
-
   // Create shared queue with files to process
   queue = QSharedPointer<Queue>(new Queue());
   QList<QFileInfo> infoList = inputDir.entryInfoList();
@@ -291,6 +259,45 @@ void Skyscraper::run()
     }
   } 
 
+  if(config.cacheOptions == "edit") {
+    cache->editResources(queue);
+    printf("Done editing resources!\n");
+    cache->write();
+    exit(0);
+  }
+
+  if(!config.pretend && config.scraper == "cache" &&
+     !config.unattend && !config.unattendSkip &&
+     gameListFile.exists()) {
+    std::string userInput = "";
+    printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
+    getline(std::cin, userInput);
+    if(userInput == "y" || userInput == "Y") {
+    } else {
+      printf("User chose not to overwrite, now exiting...\n");
+      exit(0);
+    }
+
+    printf("Checking if '\033[1;32m%s\033[0m' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
+
+    if(gameListFile.open(QIODevice::Append)) {
+      printf("\033[1;32mIt is! :)\033[0m\n");
+      gameListFile.close();
+    } else {
+      printf("\033[1;31mIt isn't! :(\nPlease check path and permissions and try again.\033[0m\n");
+      exit(1);
+    }
+    printf("\n");
+  }
+  if(config.pretend && config.scraper == "cache") {
+    printf("Pretend set! Not changing any files, just showing output.\n\n");
+  }
+
+  QFile skippedFile(skippedFileString);
+  skippedFile.open(QIODevice::WriteOnly);
+  skippedFile.write("--- The following is a list of skipped games ---\n");
+  skippedFile.close();
+
   if(gameListFile.exists()) {
     printf("Trying to parse and load existing game list metadata... ");
     fflush(stdout);
@@ -316,20 +323,17 @@ void Skyscraper::run()
   }
 
   totalFiles = queue->length();
-  if(totalFiles == 0) {
-    // A bit of a hack to let the scraping process take place. We want it to rewrite the gamelist
-    printf("No entries to scrape...\n\n");
-    doneThreads = config.threads - 1;
-    checkThreads();
-    exit(0);
-  }
   
   if(config.romLimit != -1 && totalFiles > config.romLimit) {
     printf("\n\033[1;33mRestriction overrun!\033[0m This scraping module only allows for scraping up to %d roms at a time. You can either supply a few rom filenames on command line, or make use of the '--startat' and / or '--endat' command line options to adhere to this. Please check '--help' for more info.\n\nNow quitting...\n", config.romLimit);
     exit(0);
   }
 
-  printf("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
+  if(totalFiles > 0) {
+    printf("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
+  } else {
+    printf("\nNo entries to scrape...\n\n");
+  }
 
   timer.start();
   currentFile = 1;
