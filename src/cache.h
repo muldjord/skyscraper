@@ -31,8 +31,10 @@
 #include <QMutex>
 #include <QDirIterator>
 #include <QMap>
+#include <QSharedPointer>
 
 #include "gameentry.h"
+#include "queue.h"
 #include "settings.h"
 
 struct Resource {
@@ -68,6 +70,7 @@ public:
   bool createFolders(const QString &scraper);
   bool read();
   void purgeResources(QString purgeStr);
+  void editResources(QSharedPointer<Queue> queue);
   void purgeAll(const bool unattend = false);
   void vacuumResources(const QString inputFolder, const QString filters,
 		       const bool unattend = false);
