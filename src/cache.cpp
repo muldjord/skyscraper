@@ -158,13 +158,18 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	continue;
       } else if(userInput == "s") {
 	printf("\033[1;34mResources connected to this rom:\033[0m\n");
+	bool found = false;
 	foreach(Resource res, resources) {
 	  if(res.sha1 == sha1) {
-	    printf("\033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n", res.type.toStdString().c_str(),
+	    printf("\033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n",
+		   res.type.toStdString().c_str(),
 		   res.source.toStdString().c_str(),
 		   res.value.toStdString().c_str());
+	    found = true;
 	  }
 	}
+	if(!found)
+	  printf("None\n");
 	printf("\n");
       } else if(userInput == "n") {
 	std::string typeInput = "";
@@ -260,6 +265,10 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    b++;
 	  }
 	}
+	if(b == 1) {
+	  printf("No resources found, cancelling...\n\n");
+	  continue;
+	}
 	printf("> ");
 	std::string typeInput = "";
 	getline(std::cin, typeInput);
@@ -277,6 +286,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	}
       } else if(userInput == "D") {
 	QMutableListIterator<Resource> it(resources);
+	bool found = false;
 	while(it.hasNext()) {
 	  Resource res = it.next();
 	  if(res.sha1 == sha1) {
@@ -284,8 +294,11 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 		   res.source.toStdString().c_str(),
 		   res.value.toStdString().c_str());
 	    it.remove();
+	    found = true;
 	  }
 	}
+	if(!found)
+	  printf("No resources found for this rom...\n");
 	printf("\n");
       } else if(userInput == "m") {
 	printf("\033[1;34mResources from which module would you like to remove?\033[0m (Enter to cancel)\n");
@@ -297,7 +310,11 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	}
 	QMap<QString, int>::iterator it;
 	for(it = modules.begin(); it != modules.end(); ++it) {
-	  printf("'\033[1;33m%s\033[0m': %d resources found\n", it.key().toStdString().c_str(), it.value());
+	  printf("'\033[1;33m%s\033[0m': %d resource(s) found\n", it.key().toStdString().c_str(), it.value());
+	}
+	if(modules.isEmpty()) {
+	  printf("No resources found, cancelling...\n\n");
+	  continue;
 	}
 	printf("> ");
 	std::string typeInput = "";
@@ -315,7 +332,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	      removed++;
 	    }
 	  }
-	  printf("<<< Removed %d resources connected to rom from module '\033[1;32m%s\033[0m'\n\n", removed,
+	  printf("<<< Removed %d resource(s) connected to rom from module '\033[1;32m%s\033[0m'\n\n", removed,
 		 typeInput.c_str());
 	} else {
 	  printf("No resources from module '\033[1;32m%s\033[0m' found, cancelling...\n\n", typeInput.c_str());
@@ -330,7 +347,11 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	}
 	QMap<QString, int>::iterator it;
 	for(it = types.begin(); it != types.end(); ++it) {
-	  printf("'\033[1;33m%s\033[0m': %d resources found\n", it.key().toStdString().c_str(), it.value());
+	  printf("'\033[1;33m%s\033[0m': %d resource(s) found\n", it.key().toStdString().c_str(), it.value());
+	}
+	if(types.isEmpty()) {
+	  printf("No resources found, cancelling...\n\n");
+	  continue;
 	}
 	printf("> ");
 	std::string typeInput = "";
@@ -348,7 +369,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	      removed++;
 	    }
 	  }
-	  printf("<<< Removed %d resources connected to rom of type '\033[1;32m%s\033[0m'\n\n", removed, typeInput.c_str());
+	  printf("<<< Removed %d resource(s) connected to rom of type '\033[1;32m%s\033[0m'\n\n", removed, typeInput.c_str());
 	} else {
 	  printf("No resources of type '\033[1;32m%s\033[0m' found, cancelling...\n\n", typeInput.c_str());
  	}
