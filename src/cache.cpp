@@ -143,6 +143,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
       printf("\033[1;32m---- '%s' ----\033[0m\n", info.fileName().toStdString().c_str());
       printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
       printf("\033[1;33ms\033[0m) Show all cached resources for this rom\n");
+      printf("\033[1;33mS\033[0m) Show current resource priorities for this rom\n");
       printf("\033[1;33mn\033[0m) Create new prioritized resource for this rom\n");
       printf("\033[1;33md\033[0m) Remove specific resource connected to this rom\n");
       printf("\033[1;33mD\033[0m) Remove ALL resources connected to this rom\n");
@@ -170,6 +171,89 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	}
 	if(!found)
 	  printf("None\n");
+	printf("\n");
+      } else if(userInput == "S") {
+	GameEntry game;
+	game.sha1 = sha1;
+	fillBlanks(game);
+	printf("\033[1;34mCurrent resource priorities for this rom:\033[0m\n");
+	printf("Title:          '\033[1;32m%s\033[0m' (%s)\n",
+	       game.title.toStdString().c_str(),
+	       game.titleSrc.toStdString().c_str());
+	printf("Platform:       '\033[1;32m%s\033[0m' (%s)\n",
+	       game.platform.toStdString().c_str(),
+	       game.platformSrc.toStdString().c_str());
+	printf("Release Date:   '\033[1;32m");
+	if(game.releaseDate.isEmpty()) {
+	  printf("\033[0m' ()\n");
+	} else {
+	  printf("%s\033[0m' (%s)\n",
+		 game.releaseDate.toStdString().c_str(),
+		 game.releaseDateSrc.toStdString().c_str());
+	}
+	printf("Developer:      '\033[1;32m%s\033[0m' (%s)\n",
+	       game.developer.toStdString().c_str(),
+	       game.developerSrc.toStdString().c_str());
+	printf("Publisher:      '\033[1;32m%s\033[0m' (%s)\n",
+	       game.publisher.toStdString().c_str(),
+	       game.publisherSrc.toStdString().c_str());
+	printf("Players:        '\033[1;32m%s\033[0m' (%s)\n",
+	       game.players.toStdString().c_str(),
+	       game.playersSrc.toStdString().c_str());
+	printf("Ages:           '\033[1;32m%s\033[0m' (%s)\n",
+	       game.ages.toStdString().c_str(),
+	       game.agesSrc.toStdString().c_str());
+	printf("Tags:           '\033[1;32m%s\033[0m' (%s)\n",
+	       game.tags.toStdString().c_str(),
+	       game.tagsSrc.toStdString().c_str());
+	printf("Rating:         '\033[1;32m%s\033[0m' (%s)\n",
+	       game.rating.toStdString().c_str(),
+	       game.ratingSrc.toStdString().c_str());
+	printf("Cover:          '");
+	if(game.coverSrc.isEmpty()) {
+	  printf("\033[1;31mNO\033[0m' ()\n");
+	} else {
+	  printf("\033[1;32mYES\033[0m' (%s)\n", game.coverSrc.toStdString().c_str());
+	}
+	printf("Screenshot:     '");
+	if(game.screenshotSrc.isEmpty()) {
+	  printf("\033[1;31mNO\033[0m' ()\n");
+	} else {
+	  printf("\033[1;32mYES\033[0m' (%s)\n", game.screenshotSrc.toStdString().c_str());
+	}
+	printf("Wheel:          '");
+	if(game.wheelSrc.isEmpty()) {
+	  printf("\033[1;31mNO\033[0m' ()\n");
+	} else {
+	  printf("\033[1;32mYES\033[0m' (%s)\n", game.wheelSrc.toStdString().c_str());
+	}
+	printf("Marquee:        '");
+	if(game.marqueeSrc.isEmpty()) {
+	  printf("\033[1;31mNO\033[0m' ()\n");
+	} else {
+	  printf("\033[1;32mYES\033[0m' (%s)\n", game.marqueeSrc.toStdString().c_str());
+	}
+	printf("Video:          '");
+	if(game.videoSrc.isEmpty()) {
+	  printf("\033[1;31mNO\033[0m' ()\n");
+	} else {
+	  printf("\033[1;32mYES\033[0m' (%s)\n", game.videoSrc.toStdString().c_str());
+	}
+	/*
+	printf("Publisher:      '\033[1;32m" + game.publisher + "\033[0m' (" + game.publisherSrc + ")\n");
+	printf("Players:        '\033[1;32m" + game.players + "\033[0m' (" + game.playersSrc + ")\n");
+	printf("Ages:           '\033[1;32m" + game.ages + (game.ages.toInt() != 0?"+":"") + "\033[0m' (" + game.agesSrc + ")\n");
+	printf("Tags:           '\033[1;32m" + game.tags + "\033[0m' (" + game.tagsSrc + ")\n");
+	printf("Rating (0-1):   '\033[1;32m" + game.rating + "\033[0m' (" + game.ratingSrc + ")\n");
+	printf("Cover:          " + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers?"":" (uncached)")) + " (" + game.coverSrc + ")\n");
+	printf("Screenshot:     " + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheScreenshots?"":" (uncached)")) + " (" + game.screenshotSrc + ")\n");
+	printf("Wheel:          " + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheWheels?"":" (uncached)")) + " (" + game.wheelSrc + ")\n");
+	printf("Marquee:        " + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheMarquees?"":" (uncached)")) + " (" + game.marqueeSrc + ")\n");
+	if(config.videos) {
+	  printf("Video:          " + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m (" + game.videoSrc + ")\n");
+	}
+	printf("\nDescription: (" + game.descriptionSrc + ")\n" + game.description.left(config.maxLength) + "\n");
+	*/
 	printf("\n");
       } else if(userInput == "n") {
 	std::string typeInput = "";
