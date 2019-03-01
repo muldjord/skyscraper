@@ -134,21 +134,21 @@ bool Cache::read()
 
 void Cache::editResources(QSharedPointer<Queue> queue)
 {
-  printf("Editing cached resources. Note that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\n\nWarning! All changes are done in memory. If you Ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\n\n");
+  printf("Entering resource cache editing mode! Note that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\n\nWarning! All changes are done in memory. If you Ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\n\n");
   while(queue->hasEntry()) {
     QFileInfo info = queue->takeEntry();
     QString sha1 = NameTools::getSha1(info);
     bool doneEdit = false;
     while(!doneEdit) {
-      printf("Editing resources for file: '%s'\n", info.fileName().toStdString().c_str());
-      printf("What would you like to do? (Press enter to continue to next rom in queue)\n");
-      printf("s) Show all cached resources for this rom\n");
-      printf("n) Create new prioritized resource for this rom\n");
-      printf("d) Delete specific resource connected to this rom\n");
-      printf("D) Delete ALL resources connected to this rom\n");
-      printf("m) Delete ALL resources connected to this rom from a specific module\n");
-      printf("t) Delete ALL resources connected to this rom of a specific type\n");
-      printf("q) Save all changes so far back to disk and exit\n");
+      printf("\033[1;32m---- '%s' ----\033[0m\n", info.fileName().toStdString().c_str());
+      printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
+      printf("\033[1;33ms\033[0m) Show all cached resources for this rom\n");
+      printf("\033[1;33mn\033[0m) Create new prioritized resource for this rom\n");
+      printf("\033[1;33md\033[0m) Remove specific resource connected to this rom\n");
+      printf("\033[1;33mD\033[0m) Remove ALL resources connected to this rom\n");
+      printf("\033[1;33mm\033[0m) Remove ALL resources connected to this rom from a specific module\n");
+      printf("\033[1;33mt\033[0m) Remove ALL resources connected to this rom of a specific type\n");
+      printf("\033[1;33mq\033[0m) Save all changes so far back to disk and exit\n");
       printf("> ");
       std::string userInput = "";
       getline(std::cin, userInput);
@@ -157,10 +157,10 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	doneEdit = true;
 	continue;
       } else if(userInput == "s") {
-	printf("Resources connected to this rom:\n");
+	printf("\033[1;34mResources connected to this rom:\033[0m\n");
 	foreach(Resource res, resources) {
 	  if(res.sha1 == sha1) {
-	    printf("  %s (%s): '%s'\n", res.type.toStdString().c_str(),
+	    printf("\033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n", res.type.toStdString().c_str(),
 		   res.source.toStdString().c_str(),
 		   res.value.toStdString().c_str());
 	  }
@@ -168,22 +168,23 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	printf("\n");
       } else if(userInput == "n") {
 	std::string typeInput = "";
-	printf("Which resource type would you like to create? (Enter to cancel)\n");
-	printf("0) Title\n");
-	printf("1) Platform\n");
-	printf("2) Publisher\n");
-	printf("3) Developer\n");
-	printf("4) Number of players\n");
-	printf("5) Genres\n");
-	printf("6) Game rating\n");
-	printf("7) Age rating\n");
-	printf("8) Release date\n");
-	printf("9) Description\n");
+	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
+	printf("\033[1;33m0\033[0m) Title\n");
+	printf("\033[1;33m1\033[0m) Platform\n");
+	printf("\033[1;33m2\033[0m) Publisher\n");
+	printf("\033[1;33m3\033[0m) Developer\n");
+	printf("\033[1;33m4\033[0m) Number of players\n");
+	printf("\033[1;33m5\033[0m) Genres\n");
+	printf("\033[1;33m6\033[0m) Game rating\n");
+	printf("\033[1;33m7\033[0m) Age rating\n");
+	printf("\033[1;33m8\033[0m) Release date\n");
+	printf("\033[1;33m9\033[0m) Description\n");
 	printf("> ");
 	getline(std::cin, typeInput);
 	printf("\n");
 	if(typeInput == "") {
-	  continue;
+	    printf("Resource creation cancelled...\n\n");
+	    continue;
 	} else {
 	  Resource newRes;
 	  newRes.sha1 = sha1;
@@ -192,43 +193,43 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  std::string valueInput = "";
 	  if(typeInput == "0") {
 	    newRes.type = "title";
-	    printf("Please enter title: (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter title:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "1") {
 	    newRes.type = "platform";
-	    printf("Please enter platform: (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter platform:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "2") {
 	    newRes.type = "publisher";
-	    printf("Please enter publisher: (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter publisher:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "3") {
 	    newRes.type = "developer";
-	    printf("Please enter developer: (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter developer:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "4") {
 	    newRes.type = "players";
-	    printf("Please enter highest number of players such as '4': (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter highest number of players such as '4':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "5") {
 	    newRes.type = "tags";
-	    printf("Please enter comma-separated genres in the format 'Platformer, Sidescrolling': (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter comma-separated genres in the format 'Platformer, Sidescrolling':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "6") {
 	    newRes.type = "rating";
-	    printf("Please enter game rating from 0.0 to 5.0: (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter game rating from 0.0 to 5.0:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "7") {
 	    newRes.type = "ages";
-	    printf("Please enter lowest age this should be played at such as '10' which means 10+: (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter lowest age this should be played at such as '10' which means 10+:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "8") {
 	    newRes.type = "releasedate";
-	    printf("Please enter a release date in the format 'yyyy-MM-dd': (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter a release date in the format 'yyyy-MM-dd':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  } else if(typeInput == "9") {
 	    newRes.type = "description";
-	    printf("Please enter game description. Type '\n' for newlines: (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter game description. Type '\n' for newlines:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  }
 	  printf("\n");
@@ -237,15 +238,14 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  if(!value.isEmpty()) {
 	    newRes.value = value;
 	    resources.append(newRes);
-	    printf("Added resource with value '%s'\n", value.toStdString().c_str());
+	    printf(">>> Added resource with value '\033[1;32m%s\033[0m'\n\n", value.toStdString().c_str());
 	    continue;
-	  } else {
 	  }
 	}
-	} else if(userInput == "d") {
+      } else if(userInput == "d") {
 	int b = 1;
 	QList<int> resIds;
-	printf("Which resource id would you like to delete? (Enter to cancel)\n");
+	printf("\033[1;34mWhich resource id would you like to remove?\033[0m (Enter to cancel)\n");
 	for(int a = 0; a < resources.length(); ++a) {
 	  if(resources.at(a).sha1 == sha1 &&
 	     resources.at(a).type != "screenshot" &&
@@ -253,7 +253,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	     resources.at(a).type != "wheel" &&
 	     resources.at(a).type != "marquee" &&
 	     resources.at(a).type != "video") {
-	    printf("%d) %s (%s): '%s'\n", b, resources.at(a).type.toStdString().c_str(),
+	    printf("\033[1;33m%d\033[0m) \033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n", b, resources.at(a).type.toStdString().c_str(),
 		   resources.at(a).source.toStdString().c_str(),
 		   resources.at(a).value.toStdString().c_str());
 	    resIds.append(a);
@@ -270,26 +270,25 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  int chosen = atoi(typeInput.c_str());
 	  if(chosen >= 1 && chosen <= resIds.length()) {
 	    resources.removeAt(resIds.at(chosen - 1)); // -1 because lists start at 0
-	    printf("Removed resource id %d...\n\n", chosen);
+	    printf("<<< Removed resource id %d...\n\n", chosen);
 	  } else {
 	    printf("Incorrect resource id, cancelling...\n\n");
 	  }
 	}
       } else if(userInput == "D") {
-	printf("Removing all resources connected to this rom...\n");
 	QMutableListIterator<Resource> it(resources);
 	while(it.hasNext()) {
 	  Resource res = it.next();
 	  if(res.sha1 == sha1) {
-	    printf("  Removing '%s (%s)' with value '%s'\n", res.type.toStdString().c_str(),
+	    printf("<<< Removed \033[1;33m%s\033[0m (%s) with value '\033[1;32m%s\033[0m'\n", res.type.toStdString().c_str(),
 		   res.source.toStdString().c_str(),
 		   res.value.toStdString().c_str());
 	    it.remove();
 	  }
 	}
-	printf("Done!\n\n");
+	printf("\n");
       } else if(userInput == "m") {
-	printf("Resources from which module would you like to delete? (Enter to cancel)\n");
+	printf("\033[1;34mResources from which module would you like to remove?\033[0m (Enter to cancel)\n");
 	QMap<QString, int> modules;
 	foreach(Resource res, resources) {
 	  if(res.sha1 == sha1) {
@@ -298,7 +297,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	}
 	QMap<QString, int>::iterator it;
 	for(it = modules.begin(); it != modules.end(); ++it) {
-	  printf("'%s': %d resources found\n", it.key().toStdString().c_str(), it.value());
+	  printf("'\033[1;33m%s\033[0m': %d resources found\n", it.key().toStdString().c_str(), it.value());
 	}
 	printf("> ");
 	std::string typeInput = "";
@@ -316,13 +315,13 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	      removed++;
 	    }
 	  }
-	  printf("Removed %d resources connected to rom from module '%s'\n\n", removed,
+	  printf("<<< Removed %d resources connected to rom from module '\033[1;32m%s\033[0m'\n\n", removed,
 		 typeInput.c_str());
 	} else {
-	  printf("No resources from module '%s' found, cancelling...\n\n", typeInput.c_str());
+	  printf("No resources from module '\033[1;32m%s\033[0m' found, cancelling...\n\n", typeInput.c_str());
  	}
       } else if(userInput == "t") {
-	printf("Resources from which type would you like to delete? (Enter to cancel)\n");
+	printf("\033[1;34mResources from which type would you like to remove?\033[0m (Enter to cancel)\n");
 	QMap<QString, int> types;
 	foreach(Resource res, resources) {
 	  if(res.sha1 == sha1) {
@@ -331,7 +330,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	}
 	QMap<QString, int>::iterator it;
 	for(it = types.begin(); it != types.end(); ++it) {
-	  printf("'%s': %d resources found\n", it.key().toStdString().c_str(), it.value());
+	  printf("'\033[1;33m%s\033[0m': %d resources found\n", it.key().toStdString().c_str(), it.value());
 	}
 	printf("> ");
 	std::string typeInput = "";
@@ -349,10 +348,9 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	      removed++;
 	    }
 	  }
-	  printf("Removed %d resources connected to rom of type '%s'\n\n", removed,
-		 typeInput.c_str());
+	  printf("<<< Removed %d resources connected to rom of type '\033[1;32m%s\033[0m'\n\n", removed, typeInput.c_str());
 	} else {
-	  printf("No resources of type '%s' found, cancelling...\n\n", typeInput.c_str());
+	  printf("No resources of type '\033[1;32m%s\033[0m' found, cancelling...\n\n", typeInput.c_str());
  	}
       } else if(userInput == "q") {
 	queue->clear();
@@ -377,7 +375,7 @@ void Cache::purgeResources(QString purgeStr)
       module = definition.remove(0,2);
       printf("Module: '%s'\n", module.toStdString().c_str());
     }
-	if(definition.left(2) == "t=") {
+    if(definition.left(2) == "t=") {
       type = definition.remove(0,2);
       printf("Type: '%s'\n", type.toStdString().c_str());
     }
@@ -980,7 +978,7 @@ void Cache::addResources(GameEntry &entry, const Settings &config)
 }
 
 void Cache::addResource(const Resource &resource, GameEntry &entry,
-			  const QString &cacheAbsolutePath, const Settings &config)
+			const QString &cacheAbsolutePath, const Settings &config)
 {
   QMutexLocker locker(&cacheMutex);
   bool notFound = true;
@@ -1232,7 +1230,7 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
 }
 
 bool Cache::fillType(QString &type, QList<Resource> &matchingResources,
-		       QString &result, QString &source)
+		     QString &result, QString &source)
 {
   QList<Resource> typeResources;
   foreach(Resource resource, matchingResources) {
