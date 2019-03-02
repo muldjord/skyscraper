@@ -137,14 +137,14 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 ## Release notes
 
-#### Version x.x.x (still unimplemented)
+#### Version x.x.x (Still unimplemented)
 * Add "sharpen" effect which sharpens the image
 * Improved "blur" and "shadow" effect to be true gaussian
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 * Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
 
-#### Version 3.1.0 (In progress, unreleased)
+#### Version 3.1.0 (2th March 2019)
 * MAJOR: Added '--cache edit' command line option which allows viewing, editing and deleting cached resources for the roms in the queue. Narrow the queue down by providing file names on command line or by using '--startat <FILENAME>' and '--endat <FILENAME>'
 * Added 'zx81' platform. Note! The only module that supports it is the 'screenscraper' module
 
