@@ -31,6 +31,7 @@
 #include <QXmlStreamAttributes>
 #include <QDateTime>
 #include <QDomDocument>
+#include <QRegularExpression>
 
 #include "cache.h"
 #include "nametools.h"
@@ -239,21 +240,6 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	} else {
 	  printf("\033[1;32mYES\033[0m' (%s)\n", game.videoSrc.toStdString().c_str());
 	}
-	/*
-	printf("Publisher:      '\033[1;32m" + game.publisher + "\033[0m' (" + game.publisherSrc + ")\n");
-	printf("Players:        '\033[1;32m" + game.players + "\033[0m' (" + game.playersSrc + ")\n");
-	printf("Ages:           '\033[1;32m" + game.ages + (game.ages.toInt() != 0?"+":"") + "\033[0m' (" + game.agesSrc + ")\n");
-	printf("Tags:           '\033[1;32m" + game.tags + "\033[0m' (" + game.tagsSrc + ")\n");
-	printf("Rating (0-1):   '\033[1;32m" + game.rating + "\033[0m' (" + game.ratingSrc + ")\n");
-	printf("Cover:          " + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers?"":" (uncached)")) + " (" + game.coverSrc + ")\n");
-	printf("Screenshot:     " + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheScreenshots?"":" (uncached)")) + " (" + game.screenshotSrc + ")\n");
-	printf("Wheel:          " + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheWheels?"":" (uncached)")) + " (" + game.wheelSrc + ")\n");
-	printf("Marquee:        " + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheMarquees?"":" (uncached)")) + " (" + game.marqueeSrc + ")\n");
-	if(config.videos) {
-	  printf("Video:          " + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m (" + game.videoSrc + ")\n");
-	}
-	printf("\nDescription: (" + game.descriptionSrc + ")\n" + game.description.left(config.maxLength) + "\n");
-	*/
 	printf("\n");
       } else if(userInput == "n") {
 	std::string typeInput = "";
@@ -280,6 +266,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  newRes.source = "user";
 	  newRes.timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch();
 	  std::string valueInput = "";
+	  QString expression = ".+"; // Default, matches everything except empty
 	  if(typeInput == "0") {
 	    newRes.type = "title";
 	    printf("\033[1;34mPlease enter title:\033[0m (Enter to cancel)\n> ");
@@ -300,6 +287,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    newRes.type = "players";
 	    printf("\033[1;34mPlease enter highest number of players such as '4':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
+	    expression = "^[0-9]{1,2}$";
 	  } else if(typeInput == "5") {
 	    newRes.type = "tags";
 	    printf("\033[1;34mPlease enter comma-separated genres in the format 'Platformer, Sidescrolling':\033[0m (Enter to cancel)\n> ");
@@ -308,6 +296,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    newRes.type = "rating";
 	    printf("\033[1;34mPlease enter game rating from 0.0 to 5.0:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
+	    expression = "^[0-9]{1}\\.{1}[0-9]{1}$";
 	  } else if(typeInput == "7") {
 	    newRes.type = "ages";
 	    printf("\033[1;34mPlease enter lowest age this should be played at such as '10' which means 10+:\033[0m (Enter to cancel)\n> ");
@@ -321,11 +310,24 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    printf("\033[1;34mPlease enter game description. Type '\n' for newlines:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, typeInput);
 	  }
-	  printf("\n");
 	  QString value = typeInput.c_str();
+	  if(!QRegularExpression(expression).match(value).hasMatch()) {
+	    printf("\033[1;31mWrong format, resource hasn't been added...\033[0m\n\n");
+	    continue;
+	  }
+	  printf("\n");
 	  value.replace("\\n", "\n");
 	  if(!value.isEmpty()) {
 	    newRes.value = value;
+	    QMutableListIterator<Resource> it(resources);
+	    while(it.hasNext()) {
+	      Resource res = it.next();
+	      if(res.sha1 == newRes.sha1 &&
+		 res.type == newRes.type &&
+		 res.source == newRes.source) {
+		it.remove();
+	      }
+	    }
 	    resources.append(newRes);
 	    printf(">>> Added resource with value '\033[1;32m%s\033[0m'\n\n", value.toStdString().c_str());
 	    continue;
