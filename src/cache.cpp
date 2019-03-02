@@ -316,13 +316,9 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    continue;
 	  }
 	  QString value = valueInput.c_str();
-	  if(!QRegularExpression(expression).match(value).hasMatch()) {
-	    printf("\033[1;31mWrong format, resource hasn't been added...\033[0m\n\n");
-	    continue;
-	  }
 	  printf("\n");
 	  value.replace("\\n", "\n");
-	  if(!value.isEmpty()) {
+	  if(!value.isEmpty() && QRegularExpression(expression).match(value).hasMatch()) {
 	    newRes.value = value;
 	    QMutableListIterator<Resource> it(resources);
 	    while(it.hasNext()) {
@@ -335,6 +331,9 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    }
 	    resources.append(newRes);
 	    printf(">>> Added resource with value '\033[1;32m%s\033[0m'\n\n", value.toStdString().c_str());
+	    continue;
+	  } else {
+	    printf("\033[1;31mWrong format, resource hasn't been added...\033[0m\n\n");
 	    continue;
 	  }
 	}
