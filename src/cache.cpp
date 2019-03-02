@@ -318,7 +318,10 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  QString value = valueInput.c_str();
 	  printf("\n");
 	  value.replace("\\n", "\n");
-	  if(!value.isEmpty() && QRegularExpression(expression).match(value).hasMatch()) {
+	  if(valueInput == "") {
+	    printf("Resource creation cancelled...\n\n");
+	    continue;
+	  } else if(!value.isEmpty() && QRegularExpression(expression).match(value).hasMatch()) {
 	    newRes.value = value;
 	    QMutableListIterator<Resource> it(resources);
 	    while(it.hasNext()) {
