@@ -109,7 +109,7 @@ Skyscraper -p snes -f attractmode -e snes
 ```
 
 #### -m &lt;0-100&gt;
-Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground. Consider setting this in [`config.ini`](CONFIGINI.md#minmatch65) instead.
+Some scraping modules are based on a filename or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground. Consider setting this in [`config.ini`](CONFIGINI.md#minmatch65) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb -m 50
@@ -175,6 +175,17 @@ Same as [--refresh](#--refresh).
 ###### Example(s)
 ```
 Skyscraper -p snes -s screenscraper --cache refresh
+```
+
+##### --cache edit
+Allows editing of any cached resources connected to your roms. The editing mode will go through each of the files in the queue one by one, allowing you to add and remove resources as needed. Any resource you add manually will be prioritized above all others.
+
+You can provide one or more filenames to the end of the command line to edit the resources for just those few files. Or you can use the '--startat' and '--endat' options to edit a span of roms. If none of those options are used, it will edit all of the roms in the input folder one by one.
+###### Example(s)
+```
+Skyscraper -p snes --cache edit <FILENAME 1> <FILENAME 2>
+Skyscraper -p snes --cache edit --startat <FILENAME> --endat <FILENAME>
+Skyscraper -p snes --cache edit
 ```
 
 ##### --cache vacuum
@@ -370,7 +381,7 @@ $ Skyscraper -p snes -s screenscraper --query "sha1=[checksum]&romnom=file%20nam
 ```
 
 #### --forcefilename
-This option forces Skyscraper to use the file name (excluding extension) instead of the cached titles when generating a game list. Consider setting this in [`config.ini`](CONFIGINI.md#forcefilenamefalse) instead.
+This option forces Skyscraper to use the filename (excluding extension) instead of the cached titles when generating a game list. Consider setting this in [`config.ini`](CONFIGINI.md#forcefilenamefalse) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes --forcefilename
