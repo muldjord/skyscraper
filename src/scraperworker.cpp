@@ -271,8 +271,8 @@ void ScraperWorker::run()
     // Make sure we have the correct format of 'ages'
     game.ages = StrTools::conformAges(game.ages);
 
+    output.append("Scraper:        " + config.scraper + "\n");
     if(config.scraper != "cache" && config.scraper != "import") {
-      output.append("Scraper:        " + config.scraper + "\n");
       output.append("From cache:     " + QString((fromCache?"YES (refresh from source with '--cache refresh')":"NO")) + "\n");
       output.append("Search match:   " + QString::number(searchMatch) + " %\n");
       output.append("Compare title:  '\033[1;32m" + compareTitle + "\033[0m'\n");
