@@ -312,7 +312,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    expression = "^[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}$";
 	  } else if(typeInput == "9") {
 	    newRes.type = "description";
-	    printf("\033[1;34mPlease enter game description. Type '\n' for newlines:\033[0m (Enter to cancel)\n> ");
+	    printf("\033[1;34mPlease enter game description. Type '\\n' for newlines:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else {
 	    printf("Invalid input, resource creation cancelled...\n\n");
@@ -326,6 +326,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    continue;
 	  } else if(!value.isEmpty() && QRegularExpression(expression).match(value).hasMatch()) {
 	    newRes.value = value;
+	    bool updated = false;
 	    QMutableListIterator<Resource> it(resources);
 	    while(it.hasNext()) {
 	      Resource res = it.next();
@@ -333,10 +334,16 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 		 res.type == newRes.type &&
 		 res.source == newRes.source) {
 		it.remove();
+		updated = true;
 	      }
 	    }
 	    resources.append(newRes);
-	    printf(">>> Added resource with value '\033[1;32m%s\033[0m'\n\n", value.toStdString().c_str());
+	    if(updated) {
+	      printf(">>> Updated existing ");
+	    } else {
+	      printf(">>> Added ");
+	    }
+	    printf("resource with value '\033[1;32m%s\033[0m'\n\n", value.toStdString().c_str());
 	    continue;
 	  } else {
 	    printf("\033[1;31mWrong format, resource hasn't been added...\033[0m\n\n");
