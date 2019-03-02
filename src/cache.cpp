@@ -143,8 +143,8 @@ void Cache::editResources(QSharedPointer<Queue> queue)
     while(!doneEdit) {
       printf("\033[1;33mCURRENT FILE: \033[0m\033[1;32m%s\033[0m\033[1;33m\033[0m\n", info.fileName().toStdString().c_str());
       printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
-      printf("\033[1;33ms\033[0m) Show all cached resources for this rom\n");
-      printf("\033[1;33mS\033[0m) Show current resource priorities for this rom\n");
+      printf("\033[1;33ms\033[0m) Show current resource priorities for this rom\n");
+      printf("\033[1;33mS\033[0m) Show all cached resources for this rom\n");
       printf("\033[1;33mn\033[0m) Create new prioritized resource for this rom\n");
       printf("\033[1;33md\033[0m) Remove specific resource connected to this rom\n");
       printf("\033[1;33mD\033[0m) Remove ALL resources connected to this rom\n");
@@ -159,21 +159,6 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	doneEdit = true;
 	continue;
       } else if(userInput == "s") {
-	printf("\033[1;34mResources connected to this rom:\033[0m\n");
-	bool found = false;
-	foreach(Resource res, resources) {
-	  if(res.sha1 == sha1) {
-	    printf("\033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n",
-		   res.type.toStdString().c_str(),
-		   res.source.toStdString().c_str(),
-		   res.value.toStdString().c_str());
-	    found = true;
-	  }
-	}
-	if(!found)
-	  printf("None\n");
-	printf("\n");
-      } else if(userInput == "S") {
 	GameEntry game;
 	game.sha1 = sha1;
 	fillBlanks(game);
@@ -244,6 +229,21 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	       game.descriptionSrc.toStdString().c_str(),
 	       game.description.toStdString().c_str());
 	printf("\n\n");
+      } else if(userInput == "S") {
+	printf("\033[1;34mResources connected to this rom:\033[0m\n");
+	bool found = false;
+	foreach(Resource res, resources) {
+	  if(res.sha1 == sha1) {
+	    printf("\033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n",
+		   res.type.toStdString().c_str(),
+		   res.source.toStdString().c_str(),
+		   res.value.toStdString().c_str());
+	    found = true;
+	  }
+	}
+	if(!found)
+	  printf("None\n");
+	printf("\n");
       } else if(userInput == "n") {
 	std::string typeInput = "";
 	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
