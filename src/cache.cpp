@@ -383,7 +383,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  int chosen = atoi(typeInput.c_str());
 	  if(chosen >= 1 && chosen <= resIds.length()) {
 	    resources.removeAt(resIds.at(chosen - 1)); // -1 because lists start at 0
-	    printf("<<< Removed resource id %d...\n\n", chosen);
+	    printf("<<< Removed resource id %d\n\n", chosen);
 	  } else {
 	    printf("Incorrect resource id, cancelling...\n\n");
 	  }
