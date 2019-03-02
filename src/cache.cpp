@@ -367,6 +367,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	getline(std::cin, typeInput);
 	printf("\n");
 	if(typeInput == "") {
+	  printf("Resource removal cancelled...\n\n");
 	  continue;
 	} else {
 	  int chosen = atoi(typeInput.c_str());
@@ -414,6 +415,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	getline(std::cin, typeInput);
 	printf("\n");
 	if(typeInput == "") {
+	  printf("Resource removal cancelled...\n\n");
 	  continue;
 	} else if(modules.contains(QString(typeInput.c_str()))) {
 	  QMutableListIterator<Resource> it(resources);
@@ -451,6 +453,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	getline(std::cin, typeInput);
 	printf("\n");
 	if(typeInput == "") {
+	  printf("Resource removal cancelled...\n\n");
 	  continue;
 	} else if(types.contains(QString(typeInput.c_str()))) {
 	  QMutableListIterator<Resource> it(resources);
