@@ -141,7 +141,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
     QString sha1 = NameTools::getSha1(info);
     bool doneEdit = false;
     while(!doneEdit) {
-      printf("\033[1;32m---- '%s' ----\033[0m\n", info.fileName().toStdString().c_str());
+      printf("\033[1;33mCURRENT FILE: \033[0m\033[1;32m%s\033[0m\033[1;33m\033[0m\n", info.fileName().toStdString().c_str());
       printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
       printf("\033[1;33ms\033[0m) Show all cached resources for this rom\n");
       printf("\033[1;33mS\033[0m) Show current resource priorities for this rom\n");
