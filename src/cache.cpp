@@ -270,47 +270,52 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  if(typeInput == "0") {
 	    newRes.type = "title";
 	    printf("\033[1;34mPlease enter title:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
 	  } else if(typeInput == "1") {
 	    newRes.type = "platform";
 	    printf("\033[1;34mPlease enter platform:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
 	  } else if(typeInput == "2") {
 	    newRes.type = "publisher";
 	    printf("\033[1;34mPlease enter publisher:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
 	  } else if(typeInput == "3") {
 	    newRes.type = "developer";
 	    printf("\033[1;34mPlease enter developer:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
 	  } else if(typeInput == "4") {
 	    newRes.type = "players";
 	    printf("\033[1;34mPlease enter highest number of players such as '4':\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
 	    expression = "^[0-9]{1,2}$";
 	  } else if(typeInput == "5") {
 	    newRes.type = "tags";
 	    printf("\033[1;34mPlease enter comma-separated genres in the format 'Platformer, Sidescrolling':\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
 	  } else if(typeInput == "6") {
 	    newRes.type = "rating";
-	    printf("\033[1;34mPlease enter game rating from 0.0 to 5.0:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
-	    expression = "^[0-9]{1}\\.{1}[0-9]{1}$";
+	    printf("\033[1;34mPlease enter game rating from 0.0 to 1.0:\033[0m (Enter to cancel)\n> ");
+	    getline(std::cin, valueInput);
+	    expression = "^[0-1]{1}\\.{1}[0-9]{1}$";
 	  } else if(typeInput == "7") {
 	    newRes.type = "ages";
 	    printf("\033[1;34mPlease enter lowest age this should be played at such as '10' which means 10+:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
+	    expression = "^[0-9]{1}[0-9]{0,1}$";
 	  } else if(typeInput == "8") {
 	    newRes.type = "releasedate";
 	    printf("\033[1;34mPlease enter a release date in the format 'yyyy-MM-dd':\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
+	    expression = "^[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}$";
 	  } else if(typeInput == "9") {
 	    newRes.type = "description";
 	    printf("\033[1;34mPlease enter game description. Type '\n' for newlines:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, typeInput);
+	    getline(std::cin, valueInput);
+	  } else {
+	    printf("Invalid input, resource creation cancelled...\n\n");
+	    continue;
 	  }
-	  QString value = typeInput.c_str();
+	  QString value = valueInput.c_str();
 	  if(!QRegularExpression(expression).match(value).hasMatch()) {
 	    printf("\033[1;31mWrong format, resource hasn't been added...\033[0m\n\n");
 	    continue;
