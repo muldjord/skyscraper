@@ -150,7 +150,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
       printf("\033[1;33mD\033[0m) Remove ALL resources connected to this rom\n");
       printf("\033[1;33mm\033[0m) Remove ALL resources connected to this rom from a specific module\n");
       printf("\033[1;33mt\033[0m) Remove ALL resources connected to this rom of a specific type\n");
-      printf("\033[1;33mq\033[0m) Save all changes so far back to disk and exit\n");
+      printf("\033[1;33mq\033[0m) Save all cache changes back to disk and exit\n");
       printf("> ");
       std::string userInput = "";
       getline(std::cin, userInput);
