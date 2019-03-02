@@ -296,7 +296,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    newRes.type = "rating";
 	    printf("\033[1;34mPlease enter game rating from 0.0 to 1.0:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
-	    expression = "^[0-1]{1}\\.{1}[0-9]{1}$";
+	    expression = "^[0-1]{1}\\.{1}[0-9]{1}[0-9]{0,1}$";
 	  } else if(typeInput == "7") {
 	    newRes.type = "ages";
 	    printf("\033[1;34mPlease enter lowest age this should be played at such as '10' which means 10+:\033[0m (Enter to cancel)\n> ");
