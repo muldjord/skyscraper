@@ -240,7 +240,10 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	} else {
 	  printf("\033[1;32mYES\033[0m' (%s)\n", game.videoSrc.toStdString().c_str());
 	}
-	printf("\n");
+	printf("Description: (%s)\n'\033[1;32m%s\033[0m'",
+	       game.descriptionSrc.toStdString().c_str(),
+	       game.description.toStdString().c_str());
+	printf("\n\n");
       } else if(userInput == "n") {
 	std::string typeInput = "";
 	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
