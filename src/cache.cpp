@@ -249,13 +249,13 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
 	printf("\033[1;33m0\033[0m) Title\n");
 	printf("\033[1;33m1\033[0m) Platform\n");
-	printf("\033[1;33m2\033[0m) Publisher\n");
+	printf("\033[1;33m2\033[0m) Release date\n");
 	printf("\033[1;33m3\033[0m) Developer\n");
-	printf("\033[1;33m4\033[0m) Number of players\n");
-	printf("\033[1;33m5\033[0m) Genres\n");
-	printf("\033[1;33m6\033[0m) Game rating\n");
-	printf("\033[1;33m7\033[0m) Age rating\n");
-	printf("\033[1;33m8\033[0m) Release date\n");
+	printf("\033[1;33m4\033[0m) Publisher\n");
+	printf("\033[1;33m5\033[0m) Number of players\n");
+	printf("\033[1;33m6\033[0m) Age rating\n");
+	printf("\033[1;33m7\033[0m) Genres\n");
+	printf("\033[1;33m8\033[0m) Game rating\n");
 	printf("\033[1;33m9\033[0m) Description\n");
 	printf("> ");
 	getline(std::cin, typeInput);
@@ -279,37 +279,37 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    printf("\033[1;34mPlease enter platform:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else if(typeInput == "2") {
-	    newRes.type = "publisher";
-	    printf("\033[1;34mPlease enter publisher:\033[0m (Enter to cancel)\n> ");
+	    newRes.type = "releasedate";
+	    printf("\033[1;34mPlease enter a release date in the format 'yyyy-MM-dd':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
+	    expression = "^[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}$";
 	  } else if(typeInput == "3") {
 	    newRes.type = "developer";
 	    printf("\033[1;34mPlease enter developer:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else if(typeInput == "4") {
+	    newRes.type = "publisher";
+	    printf("\033[1;34mPlease enter publisher:\033[0m (Enter to cancel)\n> ");
+	    getline(std::cin, valueInput);
+	  } else if(typeInput == "5") {
 	    newRes.type = "players";
 	    printf("\033[1;34mPlease enter highest number of players such as '4':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	    expression = "^[0-9]{1,2}$";
-	  } else if(typeInput == "5") {
-	    newRes.type = "tags";
-	    printf("\033[1;34mPlease enter comma-separated genres in the format 'Platformer, Sidescrolling':\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, valueInput);
 	  } else if(typeInput == "6") {
-	    newRes.type = "rating";
-	    printf("\033[1;34mPlease enter game rating from 0.0 to 1.0:\033[0m (Enter to cancel)\n> ");
-	    getline(std::cin, valueInput);
-	    expression = "^[0-1]{1}\\.{1}[0-9]{1}[0-9]{0,1}$";
-	  } else if(typeInput == "7") {
 	    newRes.type = "ages";
 	    printf("\033[1;34mPlease enter lowest age this should be played at such as '10' which means 10+:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	    expression = "^[0-9]{1}[0-9]{0,1}$";
-	  } else if(typeInput == "8") {
-	    newRes.type = "releasedate";
-	    printf("\033[1;34mPlease enter a release date in the format 'yyyy-MM-dd':\033[0m (Enter to cancel)\n> ");
+	  } else if(typeInput == "7") {
+	    newRes.type = "tags";
+	    printf("\033[1;34mPlease enter comma-separated genres in the format 'Platformer, Sidescrolling':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
-	    expression = "^[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}$";
+	  } else if(typeInput == "8") {
+	    newRes.type = "rating";
+	    printf("\033[1;34mPlease enter game rating from 0.0 to 1.0:\033[0m (Enter to cancel)\n> ");
+	    getline(std::cin, valueInput);
+	    expression = "^[0-1]{1}\\.{1}[0-9]{1}[0-9]{0,1}$";
 	  } else if(typeInput == "9") {
 	    newRes.type = "description";
 	    printf("\033[1;34mPlease enter game description. Type '\\n' for newlines:\033[0m (Enter to cancel)\n> ");
@@ -443,7 +443,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  printf("No resources from module '\033[1;32m%s\033[0m' found, cancelling...\n\n", typeInput.c_str());
  	}
       } else if(userInput == "t") {
-	printf("\033[1;34mResources from which type would you like to remove?\033[0m (Enter to cancel)\n");
+	printf("\033[1;34mResources of which type would you like to remove?\033[0m (Enter to cancel)\n");
 	QMap<QString, int> types;
 	foreach(Resource res, resources) {
 	  if(res.sha1 == sha1) {
