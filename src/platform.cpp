@@ -381,7 +381,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "oric") {
     formats.append(" *.dsk *.tap");
   } else if(platform == "pc") {
-    formats.append("*.com *.sh *.bat *.exe");
+    formats.append("*.com *.sh *.bat *.exe *.conf");
   } else if(platform == "pc88") {
     formats.append("*.d88 *.88d *.cmt *.t88");
   } else if(platform == "pcfx") {
@@ -389,7 +389,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "pcengine") {
     formats.append("*.pce *.chd *.cue");
   } else if(platform == "ports") {
-    formats.append("*.sh");
+    formats.append("*.com *.sh *.bat *.exe *.conf");
   } else if(platform == "psp") {
     formats.append("*.cso *.iso *.pbp");
   } else if(platform == "psx") {
