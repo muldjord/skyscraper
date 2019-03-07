@@ -59,39 +59,46 @@ ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 				     QString searchName, QString platform)
 {
-  limiter.exec();
   QString platformId = getPlatformId(config->platform);
   if(platformId == "na") {
     reqRemaining = 0;
     printf("\033[0;31mPlatform not supported by ScreenScraper or it hasn't yet been included in Skyscraper for this module...\033[0m\n");
     return;
   }
+
   QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION + (config->user.isEmpty()?"":"&ssid=" + config->user) + (config->password.isEmpty()?"":"&sspassword=" + config->password) + (platformId.isEmpty()?"":"&systemeid=" + platformId) + "&output=xml&" + searchName;
-  manager.request(gameUrl);
-  q.exec();
-  data = manager.getData();
-  data.replace(" & ", " &amp; ");
-  if(data.contains("<roms>") && data.contains("</roms>")) {
-    data.remove(data.indexOf("<roms>") + 6, data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
+  bool moveOn = true;
+  for(int retries = 0; retries < 4; ++retries) {
+    limiter.exec();
+    manager.request(gameUrl);
+    q.exec();
+    data = manager.getData();
+    data.replace(" & ", " &amp; ");
+    data.replace("Champ crc, md5 ou sha1 erroné", "");
+    if(data.contains("<roms>") && data.contains("</roms>")) {
+      data.remove(data.indexOf("<roms>") + 6, data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
+    }
+    if(data.contains("Erreur")) {
+      return;
+    }
+    if(data.contains("Il manque des champs")) {
+      printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered users. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+      moveOn = false;
+    }
+    // Check if xml is valid
+    if(!xmlDoc.setContent(data)) {
+      printf("\033[1;31mScreenScraper APIv2 returned invalid XML\033[0m\n");
+      if(config->verbosity > 2)
+	printf("Entire answer was:\n%s\n", data.data());
+      else
+	printf("First 100 characters of answer was:\n%s\n", data.left(100).data());
+      moveOn = false;
+    }
+    if(moveOn)
+      break;
   }
-  if(data.contains("Erreur")) {
-    return;
-  }
-  if(data.contains("Il manque des champs")) {
-    printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered users. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
-    return;
-  }
-  
+
   GameEntry game;
-
-  // Check if xml is valid. If not, skip
-  if(!xmlDoc.setContent(data)) {
-    if(config->verbosity > 2)
-      printf("ScreenScraper returned:\n%s\n", data.data());
-    printf("\033[1;31mScreenScraper APIv2 returned invalid XML for the following query:\033[0m\n%s\n", searchName.toStdString().c_str());
-    return;
-  }
-
   game.title = getXmlText("nom", REGION);
   
   // 'screenscraper' sometimes returns a faulty result with the following name. If we get this
@@ -261,11 +268,20 @@ void ScreenScraper::getCover(GameEntry &game)
 {
   QString url = getXmlText("media", REGION, "box-2D");
   if(!url.isEmpty()) {
-    manager.request(url);
-    q.exec();
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.coverData = image;
+    bool moveOn = true;
+    for(int retries = 0; retries < 4; ++retries) {
+      limiter.exec();
+      manager.request(url);
+      q.exec();
+      QImage image;
+      if(image.loadFromData(manager.getData())) {
+	game.coverData = image;
+      } else {
+	if(manager.getData().size() < 1000)
+	  moveOn = false;
+      }
+      if(moveOn)
+	break;
     }
   }
 }
@@ -274,11 +290,20 @@ void ScreenScraper::getScreenshot(GameEntry &game)
 {
   QString url = getXmlText("media", NONE, "ss");
   if(!url.isEmpty()) {
-    manager.request(url);
-    q.exec();
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.screenshotData = image;
+    bool moveOn = true;
+    for(int retries = 0; retries < 4; ++retries) {
+      limiter.exec();
+      manager.request(url);
+      q.exec();
+      QImage image;
+      if(image.loadFromData(manager.getData())) {
+	game.screenshotData = image;
+      } else {
+	if(manager.getData().size() < 1000)
+	  moveOn = false;
+      }
+      if(moveOn)
+	break;
     }
   }
 }
@@ -287,11 +312,20 @@ void ScreenScraper::getWheel(GameEntry &game)
 {
   QString url = getXmlText("media", REGION, "wheel;wheel-hd");
   if(!url.isEmpty()) {
-    manager.request(url);
-    q.exec();
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.wheelData = image;
+    bool moveOn = true;
+    for(int retries = 0; retries < 4; ++retries) {
+      limiter.exec();
+      manager.request(url);
+      q.exec();
+      QImage image;
+      if(image.loadFromData(manager.getData())) {
+	game.wheelData = image;
+      } else {
+	if(manager.getData().size() < 1000)
+	  moveOn = false;
+      }
+      if(moveOn)
+	break;
     }
   }
 }
@@ -300,11 +334,20 @@ void ScreenScraper::getMarquee(GameEntry &game)
 {
   QString url = getXmlText("media", REGION, "screenmarquee");
   if(!url.isEmpty()) {
-    manager.request(url);
-    q.exec();
-    QImage image;
-    if(image.loadFromData(manager.getData())) {
-      game.marqueeData = image;
+    bool moveOn = true;
+    for(int retries = 0; retries < 4; ++retries) {
+      limiter.exec();
+      manager.request(url);
+      q.exec();
+      QImage image;
+      if(image.loadFromData(manager.getData())) {
+	game.marqueeData = image;
+      } else {
+	if(manager.getData().size() < 1000)
+	  moveOn = false;
+      }
+      if(moveOn)
+	break;
     }
   }
 }
@@ -313,17 +356,24 @@ void ScreenScraper::getVideo(GameEntry &game)
 {
   QString url = getXmlText("media", NONE, "video");
   if(!url.isEmpty()) {
-    manager.request(url);
-    q.exec();
-    game.videoData = manager.getData();
-    // Make sure recieved data is actually a video file
-    QByteArray contentType = manager.getContentType();
-    if(contentType.indexOf("video/") != -1 && game.videoData.size() > 4096) {
-      game.videoFormat = contentType.mid(contentType.indexOf("/") + 1,
-					 contentType.length() - contentType.indexOf("/") + 1);
-    } else {
-      game.videoData = "";
-    } 
+    bool moveOn = true;
+    for(int retries = 0; retries < 4; ++retries) {
+      limiter.exec();
+      manager.request(url);
+      q.exec();
+      game.videoData = manager.getData();
+      // Make sure received data is actually a video file
+      QByteArray contentType = manager.getContentType();
+      if(contentType.contains("video/") && game.videoData.size() > 4096) {
+	game.videoFormat = contentType.mid(contentType.indexOf("/") + 1,
+					   contentType.length() - contentType.indexOf("/") + 1);
+      } else {
+	game.videoData = "";
+	moveOn = false;
+      }
+      if(moveOn)
+	break;
+    }
   }
 }
 
