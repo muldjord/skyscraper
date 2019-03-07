@@ -3,6 +3,7 @@ TARGET = Skyscraper
 DEPENDPATH += .
 INCLUDEPATH += .
 CONFIG += release
+win32:CONFIG += console
 QT += core network xml
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -21,7 +22,7 @@ unix:impexamples.files=docs/IMPORT.md import/definitions.dat.example1 import/def
 unix:resexamples.path=/usr/local/etc/skyscraper/resources
 unix:resexamples.files=resources/maskexample.png resources/frameexample.png resources/boxfront.png resources/boxside.png resources/scanlines1.png resources/scanlines2.png
 
-INSTALLS += target examples cacheexamples impexamples resexamples
+unix:INSTALLS += target examples cacheexamples impexamples resexamples
 
 include(./VERSION)
 DEFINES+=VERSION=\\\"$$VERSION\\\"
