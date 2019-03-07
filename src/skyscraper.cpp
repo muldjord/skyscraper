@@ -24,7 +24,6 @@
  */
 
 #include <iostream>
-#include <sys/statvfs.h>
 
 #include <QThread>
 #include <QSettings>

@@ -23,7 +23,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include <QtGlobal>
+
+// Includes for Linux and MacOS
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS)
 #include <signal.h>
+#endif
+
+// Includes for Windows
+#if defined(Q_OS_WIN)
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 #include <QCoreApplication>
 #include <QDir>
@@ -72,9 +83,21 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QStri
   fflush(stdout);
 }
 
-void sigHandler(int signal) {
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS)
+void sigHandler(int signal)
+#endif
+#if defined(Q_OS_WIN)
+BOOL WINAPI ConsoleHandler(DWORD dwType)
+#endif
+{
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS)
   if(signal == 2) {
     sigIntRequests++;
+#endif
+#if defined(Q_OS_WIN)
+  if(dwType == CTRL_C_EVENT) {
+    sigIntRequests++;
+#endif
     if(sigIntRequests <= 2) {
       if(x->threadsRunning) {
 	printf("User wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads you have running...\n");
@@ -87,10 +110,14 @@ void sigHandler(int signal) {
       exit(1);
     }
   }
+#if defined(Q_OS_WIN)
+  return TRUE;
+#endif
 }
 
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS)
   struct sigaction sigIntHandler;
   
   sigIntHandler.sa_handler = sigHandler;
@@ -98,6 +125,11 @@ int main(int argc, char *argv[])
   sigIntHandler.sa_flags = 0;
   
   sigaction(SIGINT, &sigIntHandler, NULL);
+#endif
+
+#if defined(Q_OS_WIN)
+  SetConsoleCtrlHandler((PHANDLER_ROUTINE)ConsoleHandler, TRUE);
+#endif
   
   QCoreApplication app(argc, argv);
   app.setApplicationVersion(VERSION);
