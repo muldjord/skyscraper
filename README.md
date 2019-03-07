@@ -146,6 +146,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Make all artwork types custom meaning that their type can be whatever the user wants. The sources will create ones with known types such as 'screenshot' and 'cover', but the user can import other types they define themselves, such as 'cabinet' or whatever else. Internally artwork is then handled by a list of artwork instead of 4 hardcoded types in GameEntry
 * Introduce the ability to use <BASENAME> in the 'file="somefolder/<BASENAME>.png"' in artwork.xml which would then look for a file in 'resources' with the game basename.png allowing users to use their own custom artwork data as a workaround to adding new types to import (Thank you to 'jueank' for suggesting this)
 
+#### Version 3.1.1 (In preogress, unreleased)
+* Worked around a bug in the 'screenscraper' xml output
+
 #### Version 3.1.0 (2th March 2019)
 * MAJOR: Added '--cache edit' command line option which allows viewing, editing and deleting cached resources for the roms in the queue. Narrow the queue down by providing file names on command line or by using '--startat <FILENAME>' and '--endat <FILENAME>'
 * Added 'zx81' platform. Note! The only module that supports it is the 'screenscraper' module
