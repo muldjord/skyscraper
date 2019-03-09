@@ -41,6 +41,7 @@
 * PC-Engine / TurboGrafx-16
 * PC-FX
 * Playstation
+* Playstation 2
 * Playstation Portable
 * Ports (For games ported to RaspBerry Pi)
 * ScummVM (looks for PC or Amiga matches)
@@ -52,6 +53,7 @@
 * Sega SG-1000
 * Sharp X1
 * Sharp X68000
+* Steam (through Moonlight streaming)
 * Super Nintendo
 * TI-99/4A
 * TRS-80
