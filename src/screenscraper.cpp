@@ -619,6 +619,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "31";
   } else if(platform == "ports") {
     return "135";
+  } else if(platform == "ps2") {
+    return "58";
   } else if(platform == "psp") {
     return "61";
   } else if(platform == "psx") {
