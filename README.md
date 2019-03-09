@@ -146,6 +146,11 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Make all artwork types custom meaning that their type can be whatever the user wants. The sources will create ones with known types such as 'screenshot' and 'cover', but the user can import other types they define themselves, such as 'cabinet' or whatever else. Internally artwork is then handled by a list of artwork instead of 4 hardcoded types in GameEntry
 * Introduce the ability to use <BASENAME> in the 'file="somefolder/<BASENAME>.png"' in artwork.xml which would then look for a file in 'resources' with the game basename.png allowing users to use their own custom artwork data as a workaround to adding new types to import (Thank you to 'jueank' for suggesting this)
 
+#### Version 3.1.2 (In progress, unreleased)
+* Added support for Moonlight '*.ml' extension for all platforms
+* Added 'ps2' platform for use with Moonlight and all other supported Ps2 extensions
+* Added 'steam' platform for use with Moonlight '*.ml' files
+
 #### Version 3.1.1 (8th March 2019)
 * Worked around a bug in the 'screenscraper' xml output improving stability
 * Added limiter to media getter functions for 'screenscraper' which should improve stability
