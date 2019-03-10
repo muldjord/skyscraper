@@ -73,25 +73,28 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     manager.request(gameUrl);
     q.exec();
     data = manager.getData();
+
+    // Workarounds to fix invalid XML returned from ScreenScraper
     data.replace(" & ", " &amp; ");
     data.replace("Champ crc, md5 ou sha1 erroné", "");
     if(data.contains("<roms>") && data.contains("</roms>")) {
       data.remove(data.indexOf("<roms>") + 6, data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
     }
-    if(data.contains("Erreur")) {
-      return;
-    }
-    if(data.contains("Il manque des champs")) {
+    // The following fixes any mysql warnings that have been prepended to the XML
+    if(data.indexOf("<?xml version=") > 0)
+      data.remove(0, data.indexOf("<?xml version="));
+    // Workarounds end
+
+    if(data.contains("API closed for non-registered members")) {
       printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered users. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
       moveOn = false;
     }
     // Check if xml is valid
     if(!xmlDoc.setContent(data)) {
       printf("\033[1;31mScreenScraper APIv2 returned invalid XML\033[0m\n");
-      if(config->verbosity > 2)
-	printf("Entire answer was:\n%s\n", data.data());
-      else
-	printf("First 100 characters of answer was:\n%s\n", data.left(100).data());
+      if(config->verbosity > 2) {
+	printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
+      }
       moveOn = false;
     }
     if(moveOn)
@@ -450,10 +453,23 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
     romFile.close();
   }
 
+  QString crcResult = QString::number(crc.releaseInstance(1), 16);
+  for(int a = 0; a < 8 - crcResult.length(); ++a) {
+    crcResult.prepend("0");
+  }
+  QString md5Result = md5.result().toHex();
+  for(int a = 0; a < 32 - md5Result.length(); ++a) {
+    md5Result.prepend("0");
+  }
+  QString sha1Result = sha1.result().toHex();
+  for(int a = 0; a < 40 - sha1Result.length(); ++a) {
+    sha1Result.prepend("0");
+  }
+
   hashList.append(QUrl::toPercentEncoding(info.fileName()));
-  hashList.append(QString::number(crc.releaseInstance(1), 16).toUpper());
-  hashList.append(md5.result().toHex().toUpper());
-  hashList.append(sha1.result().toHex().toUpper());
+  hashList.append(crcResult.toUpper());
+  hashList.append(md5Result.toUpper());
+  hashList.append(sha1Result.toUpper());
 
   QList<QString> searchNames;
   if(info.size() != 0) {
