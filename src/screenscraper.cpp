@@ -461,15 +461,15 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
   }
 
   QString crcResult = QString::number(crc.releaseInstance(1), 16);
-  for(int a = 0; a < 8 - crcResult.length(); ++a) {
+  while(crcResult.length() < 8) {
     crcResult.prepend("0");
   }
   QString md5Result = md5.result().toHex();
-  for(int a = 0; a < 32 - md5Result.length(); ++a) {
+  while(md5Result.length() < 32) {
     md5Result.prepend("0");
   }
   QString sha1Result = sha1.result().toHex();
-  for(int a = 0; a < 40 - sha1Result.length(); ++a) {
+  while(sha1Result.length() < 40) {
     sha1Result.prepend("0");
   }
 
