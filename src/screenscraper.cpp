@@ -74,15 +74,22 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     q.exec();
     data = manager.getData();
 
-    // Workarounds to fix invalid XML returned from ScreenScraper
-    data.replace(" & ", " &amp; ");
-    data.replace("Champ crc, md5 ou sha1 erroné", "");
-    if(data.contains("<roms>") && data.contains("</roms>")) {
-      data.remove(data.indexOf("<roms>") + 6, data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
+    // Workarounds to fix potential invalid XML returned from ScreenScraper
+    QByteArray xmlBegin = "<?xml version=";
+    QByteArray xmlEnd = "</Data>";
+    if(data.contains(xmlBegin) && data.contains(xmlEnd)) {
+      data.replace(" & ", " &amp; ");
+      if(data.contains("<roms>") && data.contains("</roms>")) {
+	data.remove(data.indexOf("<roms>") + 6, data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
+      }
+      // Remove messages that may have been prepended to the XML
+      if(!data.startsWith(xmlBegin))
+	data.remove(0, data.indexOf(xmlBegin));
+      // Remove messages that may have been appended to the XML
+      if(!data.endsWith(xmlEnd))
+	data.remove(data.indexOf(xmlEnd) + xmlEnd.length(),
+		    data.length() - data.indexOf(xmlEnd) + xmlEnd.length());
     }
-    // The following fixes any mysql warnings that have been prepended to the XML
-    if(data.indexOf("<?xml version=") > 0)
-      data.remove(0, data.indexOf("<?xml version="));
     // Workarounds end
 
     if(data.contains("API closed for non-registered members")) {
