@@ -1083,6 +1083,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc dos");
     aliases.append("dos");
     aliases.append("windows");
+    aliases.append("windows apps");
     aliases.append("pc (microsoft windows");
     aliases.append("steamos");
   } else if(platform == "pc88") {
@@ -1124,6 +1125,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("cd32");
     aliases.append("pc (microsoft windows");
     aliases.append("windows");
+    aliases.append("windows apps");
   } else if(platform == "sega32x") {
     aliases.append("sega 32x");
     aliases.append("megadrive 32x");
@@ -1142,6 +1144,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc dos");
     aliases.append("dos");
     aliases.append("windows");
+    aliases.append("windows apps");
     aliases.append("pc (microsoft windows");
     aliases.append("steamos");
   } else if(platform == "ti99") {
