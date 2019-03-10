@@ -92,12 +92,14 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     }
     // Workarounds end
 
-    if(data.contains("API closed for non-registered members")) {
+    if(data.contains("Votre quota de scrape est")) {
+      printf("\033[1;31mYour screenscraper quota has been reached, exiting nicely...\n");
+      reqRemaining = 0;
+      return;
+    } else if(data.contains("API closed for non-registered members")) {
       printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered users. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
       moveOn = false;
-    }
-    // Check if xml is valid
-    if(!xmlDoc.setContent(data)) {
+    } else if(!xmlDoc.setContent(data)) {
       printf("\033[1;31mScreenScraper APIv2 returned invalid XML\033[0m\n");
       if(config->verbosity > 2) {
 	printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
