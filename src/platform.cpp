@@ -1147,6 +1147,9 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("windows apps");
     aliases.append("pc (microsoft windows");
     aliases.append("steamos");
+    // Adding these consoles because 'thegamesdb' often only return these instead of PC versions
+    aliases.append("microsoft xbox one");
+    aliases.append("sony playstation 4");
   } else if(platform == "ti99") {
     aliases.append("ti-99/4a");
     aliases.append("texas instruments ti-99");
