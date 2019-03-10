@@ -447,7 +447,7 @@ QString NameTools::getSha1(const QFileInfo &info)
      info.suffix() == "sh" || info.suffix() == "svm" ||
      info.suffix() == "scummvm" || info.suffix() == "mds" ||
      info.suffix() == "zip" || info.suffix() == "7z" ||
-     info.suffix() == "gdi") {
+     info.suffix() == "gdi" || info.suffix() == "ml") {
     sha1FromData = false;
   }
   // If file is larger than 50 MBs, use filename for sha1
