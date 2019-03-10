@@ -57,7 +57,7 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(searchUrlPre + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&name="+ searchName);
   q.exec();
   data = manager.getData();
-
+  
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
@@ -296,7 +296,7 @@ void TheGamesDb::loadMaps()
   platformMap[4932] = "FM Towns Marty";
   platformMap[4978] = "Fujitsu FM-7";
   platformMap[4962] = "Gakken Compact Vision";
-  platformMap[4950] = "Game &amp";
+  platformMap[4950] = "Game & Watch";
   platformMap[4940] = "Game.com";
   platformMap[4951] = "Handheld Electronic Games (LCD)";
   platformMap[32] = "Intellivision";
@@ -323,6 +323,7 @@ void TheGamesDb::loadMaps()
   platformMap[5] = "Nintendo Game Boy Advance";
   platformMap[41] = "Nintendo Game Boy Color";
   platformMap[2] = "Nintendo GameCube";
+  platformMap[4957] = "Nintendo Pok\u00e9mon Mini";
   platformMap[4971] = "Nintendo Switch";
   platformMap[4918] = "Nintendo Virtual Boy";
   platformMap[9] = "Nintendo Wii";
@@ -336,6 +337,7 @@ void TheGamesDb::loadMaps()
   platformMap[4917] = "Philips CD-i";
   platformMap[4975] = "Pioneer LaserActive";
   platformMap[4967] = "RCA Studio II";
+  platformMap[4979] = "SAM Coup\u00e9";
   platformMap[33] = "Sega 32X";
   platformMap[21] = "Sega CD";
   platformMap[16] = "Sega Dreamcast";
