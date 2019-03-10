@@ -150,6 +150,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added support for Moonlight '*.ml' extension for all platforms
 * Added 'ps2' platform for use with Moonlight and all other supported Ps2 extensions
 * Added 'steam' platform for use with Moonlight '*.ml' files
+* Fixed minor bug in CRC checksum calculator
 
 #### Version 3.1.1 (8th March 2019)
 * Worked around a bug in the 'screenscraper' xml output improving stability
