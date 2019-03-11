@@ -99,7 +99,7 @@
 #addExtensions="*.zst *.rom"
 #subdirs="true"
 
-#[<scraping module, eg 'screenscaper'>]
+#[<scraping module, eg 'screenscraper'>]
 #userCreds="user:password"
 #threads="1"
 #minMatch="0"
