@@ -61,7 +61,7 @@
 #subdirs="true"
 #spaceCheck="false"
 
-#[<platform, eg 'amiga'>]
+#[<PLATFORM, eg 'amiga'>]
 #inputFolder="/home/pi/RetroPie/roms/amiga"
 #gamelistFolder="/home/pi/RetroPie/roms/amiga"
 #mediaFolder="/home/pi/RetroPie/roms/amiga/media"
@@ -99,7 +99,7 @@
 #addExtensions="*.zst *.rom"
 #subdirs="true"
 
-#[<scraping module, eg 'screenscraper'>]
+#[<SCRAPING MODULE, eg 'screenscraper'>]
 #userCreds="user:password"
 #threads="1"
 #minMatch="0"
