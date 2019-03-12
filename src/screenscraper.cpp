@@ -112,7 +112,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   if(!xmlDoc.setContent(data)) {
     printf("\033[1;31mScreenScraper APIv2 returned invalid XML\033[0m\n");
     printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
-    continue;
+    return;
   }
 
   GameEntry game;
