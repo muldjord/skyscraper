@@ -67,30 +67,12 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   }
 
   QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION + (config->user.isEmpty()?"":"&ssid=" + config->user) + (config->password.isEmpty()?"":"&sspassword=" + config->password) + (platformId.isEmpty()?"":"&systemeid=" + platformId) + "&output=xml&" + searchName;
-  bool moveOn = true;
+
   for(int retries = 0; retries < 4; ++retries) {
     limiter.exec();
     manager.request(gameUrl);
     q.exec();
     data = manager.getData();
-
-    // Workarounds to fix potential invalid XML returned from ScreenScraper
-    QByteArray xmlBegin = "<?xml version=";
-    QByteArray xmlEnd = "</Data>";
-    if(data.contains(xmlBegin) && data.contains(xmlEnd)) {
-      data.replace(" & ", " &amp; ");
-      if(data.contains("<roms>") && data.contains("</roms>")) {
-	data.remove(data.indexOf("<roms>") + 6, data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
-      }
-      // Remove messages that may have been prepended to the XML
-      if(!data.startsWith(xmlBegin))
-	data.remove(0, data.indexOf(xmlBegin));
-      // Remove messages that may have been appended to the XML
-      if(!data.endsWith(xmlEnd))
-	data.remove(data.indexOf(xmlEnd) + xmlEnd.length(),
-		    data.length() - data.indexOf(xmlEnd) + xmlEnd.length());
-    }
-    // Workarounds end
 
     if(data.contains("Erreur : Rom/Iso/Dossier non")) {
       return;
@@ -100,18 +82,36 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
       return;
     } else if(data.contains("API closed for non-registered members")) {
       printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered users. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
-      moveOn = false;
-    } else if(!xmlDoc.setContent(data)) {
-      printf("\033[1;31mScreenScraper APIv2 returned invalid XML\033[0m\n");
-      if(config->verbosity > 2) {
-	printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
-      }
-      moveOn = false;
+      continue;
     }
-    if(moveOn)
-      break;
+    break;
   }
 
+  // Workarounds to fix potential invalid XML returned from ScreenScraper
+  QByteArray xmlBegin = "<?xml version=";
+  QByteArray xmlEnd = "</Data>";
+  if(data.contains(xmlBegin) && data.contains(xmlEnd)) {
+    data.replace(" & ", " &amp; ");
+    if(data.contains("<roms>") && data.contains("</roms>")) {
+      data.remove(data.indexOf("<roms>") + 6,
+		  data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
+    }
+    // Remove messages that may have been prepended to the XML
+    if(!data.startsWith(xmlBegin))
+      data.remove(0, data.indexOf(xmlBegin));
+    // Remove messages that may have been appended to the XML
+    if(!data.endsWith(xmlEnd))
+      data.remove(data.indexOf(xmlEnd) + xmlEnd.length(),
+		  data.length() - data.indexOf(xmlEnd) + xmlEnd.length());
+  }
+  // Workarounds end
+
+  if(!xmlDoc.setContent(data)) {
+    printf("\033[1;31mScreenScraper APIv2 returned invalid XML\033[0m\n");
+    printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
+    return;
+  }
+  
   GameEntry game;
   game.title = getXmlText("nom", REGION);
   
