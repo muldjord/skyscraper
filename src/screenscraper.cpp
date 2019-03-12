@@ -92,7 +92,9 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     }
     // Workarounds end
 
-    if(data.contains("Votre quota de scrape est")) {
+    if(data.contains("Erreur : Rom/Iso/Dossier non")) {
+      return;
+    } else if(data.contains("Votre quota de scrape est")) {
       printf("\033[1;31mYour screenscraper quota has been reached, exiting nicely...\033[0m\n\n");
       reqRemaining = 0;
       return;
