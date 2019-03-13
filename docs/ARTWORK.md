@@ -3,7 +3,7 @@ Skyscraper allows you to fully customize how you want the final frontend artwork
 
 NOTE 1!!! Some users seem to have a habbit of editing the `~/skysource/artwork.xml` file. THIS IS NOT THE CORRECT FILE! Please read the above. :)
 
-NOTE 2! Once you've changed the artwork configuration, please remember to regenerate the game list. It won't take effect until you do so. You do this by simply scraping the platform with `Skyscraper -p <PLATFORM>`.
+NOTE 2! Every time you change the artwork configuration, please remember to regenerate the game list. Your changes won't take effect until you do so. Read more about this [here](https://github.com/muldjord/skyscraper/blob/master/docs/USECASE.md#the-game-list-generation-phase).
 
 Watch a video demonstrating [the features here](https://youtu.be/TIDD8EFSz50)
 
