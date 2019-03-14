@@ -462,6 +462,8 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
       memInfo = memInfo.trimmed();
       bool ok = false;
       long memLeft = memInfo.toLong(&ok);
+      if(config.verbosity > 1)
+	printf("System memory available: %ld\n", memLeft);
       if(ok && memLeft < 51200) {
 	printf("\033[1;31mSystem is running out of memory!!! You only have %ld kB's of memory left. This can happen if you are running several Skyscraper threads and each thread tries to fetch large pieces of artwork and / or video at the same time. Running out of memory will cause Skyscraper to get killed off by the system, thus loosing all data cached up to this point. To avoid this Skyscraper will now exit nicely, to make sure the data isn't lost.\n\nNote! You can disable this check by setting 'memCheck=\"false\"' in the '[main]' section of config.ini.\033[0m\n\n", memLeft);
 	queue->clearAll();
