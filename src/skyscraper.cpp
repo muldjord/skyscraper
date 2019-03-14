@@ -450,33 +450,6 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
   }
   currentFile++;
 
-#if defined(Q_OS_LINUX)
-  // Check for low memory and exit nicely if we're running out
-  if(config.memCheck) {
-    QFile memInfoFile("/proc/meminfo");
-    if(memInfoFile.open(QIODevice::ReadOnly)) {
-      QByteArray memInfo = memInfoFile.readAll();
-      memInfoFile.close();
-      if(memInfo.contains("MemAvailable")) {
-	memInfo.remove(0, memInfo.indexOf("MemAvailable:") + 13);
-	memInfo = memInfo.trimmed();
-	if(memInfo.indexOf("kB") <= 16) {
-	  memInfo = memInfo.left(memInfo.indexOf("kB"));
-	  memInfo = memInfo.trimmed();
-	  bool ok = false;
-	  long memLeft = memInfo.toLong(&ok);
-	  if(config.verbosity > 1)
-	    printf("System memory available: %ld kB\n", memLeft);
-	  if(ok && memLeft < 100000) {
-	    printf("\033[1;31mSystem is running low on memory (%ld kB)!!! Writing cache back to disk as a safety measure. Low memory can happen if the API's are bugging out and sending too much data or if you are running several Skyscraper threads and each thread tries to fetch large pieces of artwork and / or video at the same time. Running out of memory will cause Skyscraper to get killed off by the system.\n\nNote! You can disable this check by setting 'memCheck=\"false\"' in the '[main]' section of config.ini.\033[0m\n\n", memLeft);
-	    cache->write();
-	  }
-	}
-      }
-    }
-  }
-#endif
-
 #if QT_VERSION >= 0x050400
   qint64 spaceLimit = 209715200;
   if(config.spaceCheck && (QStorageInfo(QDir(config.mediaFolder)).bytesFree() < spaceLimit ||
@@ -814,9 +787,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("spaceCheck")) {
     config.spaceCheck = settings.value("spaceCheck").toBool();
-  }
-  if(settings.contains("memCheck")) {
-    config.memCheck = settings.value("memCheck").toBool();
   }
   settings.endGroup();
 
