@@ -1,4 +1,4 @@
-/***************************************************************************
+***************************************************************************
  *            skyscraper.cpp
  *
  *  Wed Jun 7 12:00:00 CEST 2017
@@ -468,9 +468,8 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
 	  if(config.verbosity > 1)
 	    printf("System memory available: %ld kB\n", memLeft);
 	  if(ok && memLeft < 100000) {
-	    printf("\033[1;31mSystem is running low on memory!!! You only have %ld kB's of memory left. This can happen if you are running several Skyscraper threads and each thread tries to fetch large pieces of artwork and / or video at the same time. Running out of memory will cause Skyscraper to get killed off by the system, thus loosing all data cached up to this point. To avoid this Skyscraper will now exit nicely, to make sure the data isn't lost.\n\nNote! You can disable this check by setting 'memCheck=\"false\"' in the '[main]' section of config.ini.\033[0m\n\n", memLeft);
+	    printf("\033[1;31mSystem is running low on memory!!! Writing cache back to disk as a safety measure. Low memory can happen if the API's are bugging out and sending too much data or if you are running several Skyscraper threads and each thread tries to fetch large pieces of artwork and / or video at the same time. Running out of memory will cause Skyscraper to get killed off by the system.\n\nNote! You can disable this check by setting 'memCheck=\"false\"' in the '[main]' section of config.ini.\033[0m\n\n", memLeft);
 	    cache->write();
-	    queue->clearAll();
 	  }
 	}
       }
