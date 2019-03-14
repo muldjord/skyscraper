@@ -51,6 +51,7 @@ struct Settings {
   QString importFolder = "import";
   int doneThreads = 0;
   int threads = 4;
+  bool threadsSet = false;
   int minMatch = 65;
   bool minMatchSet = false;
   int notFound = 0;
@@ -85,6 +86,7 @@ struct Settings {
   bool unpack = false;
   bool preserveOldGameList = true;
   bool spaceCheck = true;
+  bool memCheck = true;
   
   int romLimit = -1;
 

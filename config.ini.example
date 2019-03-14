@@ -60,6 +60,7 @@
 #hints="false"
 #subdirs="true"
 #spaceCheck="false"
+#memCheck="false"
 
 #[<PLATFORM, eg 'amiga'>]
 #inputFolder="/home/pi/RetroPie/roms/amiga"

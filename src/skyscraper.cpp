@@ -450,6 +450,26 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
   }
   currentFile++;
 
+#if defined(Q_OS_LINUX)
+  // Check for low memory and exit nicely if we're running out
+  if(config.memCheck) {
+    QFile memInfoFile("/proc/meminfo");
+    if(memInfoFile.open(QIODevice::ReadOnly)) {
+      QByteArray memInfo = memInfoFile.readAll();
+      memInfoFile.close();
+      memInfo.remove(0, memInfo.indexOf("MemAvailable:") + 13);
+      memInfo = memInfo.left(memInfo.indexOf("kB"));
+      memInfo = memInfo.trimmed();
+      bool ok = false;
+      long memLeft = memInfo.toLong(&ok);
+      if(ok && memLeft < 51200) {
+	printf("\033[1;31mSystem is running out of memory!!! You only have %ld kB's of memory left. This can happen if you are running several Skyscraper threads and each thread tries to fetch large pieces of artwork and / or video at the same time. Running out of memory will cause Skyscraper to get killed off by the system, thus loosing all data cached up to this point. To avoid this Skyscraper will now exit nicely, to make sure the data isn't lost.\033[0m\n\n", memLeft);
+	queue->clearAll();
+      }
+    }
+  }
+#endif
+
 #if QT_VERSION >= 0x050400
   qint64 spaceLimit = 209715200;
   if(config.spaceCheck && (QStorageInfo(QDir(config.mediaFolder)).bytesFree() < spaceLimit ||
@@ -706,6 +726,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
+    config.threadsSet = true;
   }
   if(settings.contains("emulator")) {
     config.emulator = settings.value("emulator").toString();
@@ -787,6 +808,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("spaceCheck")) {
     config.spaceCheck = settings.value("spaceCheck").toBool();
   }
+  if(settings.contains("memCheck")) {
+    config.memCheck = settings.value("memCheck").toBool();
+  }
   settings.endGroup();
 
   // Platform specific configs, overrides main and defaults
@@ -863,6 +887,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
+    config.threadsSet = true;
   }
   if(settings.contains("videos")) {
     config.videos = settings.value("videos").toBool();
@@ -926,6 +951,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("threads")) {
     config.threads = settings.value("threads").toInt();
+    config.threadsSet = true;
   }
   if(settings.contains("minMatch")) {
     config.minMatch = settings.value("minMatch").toInt();
@@ -960,6 +986,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("t") && parser.value("t").toInt() <= 8) {
     config.threads = parser.value("t").toInt();
+    config.threadsSet = true;
   }
   if(parser.isSet("e")) {
     config.emulator = parser.value("e");
@@ -1330,8 +1357,12 @@ void Skyscraper::doPrescrapeJobs()
       QByteArray nodeEnd = "</maxthreads>";
       int allowedThreads = QString(data.mid(data.indexOf(nodeBegin) + nodeBegin.length(), data.indexOf(nodeEnd) - (data.indexOf(nodeBegin) + nodeBegin.length()))).toInt();
       if(allowedThreads != 0) {
-	config.threads = (allowedThreads <= 8?allowedThreads:8);
-	printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
+	if(config.threadsSet && config.threads <= allowedThreads) {
+	  printf("User is allowed %d threads, but user has set it lower manually, so ignoring.\n\n", allowedThreads);
+	} else {
+	  config.threads = (allowedThreads <= 8?allowedThreads:8);
+	  printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
+	}
       }
     }
   }
