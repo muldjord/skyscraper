@@ -146,6 +146,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Make all artwork types custom meaning that their type can be whatever the user wants. The sources will create ones with known types such as 'screenshot' and 'cover', but the user can import other types they define themselves, such as 'cabinet' or whatever else. Internally artwork is then handled by a list of artwork instead of 4 hardcoded types in GameEntry
 * Introduce the ability to use <BASENAME> in the 'file="somefolder/<BASENAME>.png"' in artwork.xml which would then look for a file in 'resources' with the game basename.png allowing users to use their own custom artwork data as a workaround to adding new types to import (Thank you to 'jueank' for suggesting this)
 
+#### Version 3.1.4 (In progress, unreleased)
+* Added low memory check to exit nicely, so cached resources up until this point aren't lost
+
 #### Version 3.1.3 (12th March 2019)
 * Improved 'screenscraper' error handling
 
