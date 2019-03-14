@@ -28,6 +28,8 @@
 #include <QUrl>
 #include <QNetworkRequest>
 
+#define MAXSIZE 42000000
+
 NetComm::NetComm()
 {
   //connect(this, &NetComm::finished, this, &NetComm::replyFinished);
@@ -62,7 +64,14 @@ void NetComm::replyReady()
   requestTimer.stop();
   contentType = reply->rawHeader("Content-Type");
   redirUrl = reply->rawHeader("Location");
-  data = reply->readAll();
+  while(!reply->atEnd()) {
+    data.append(reply->read(1024));
+    if(data.length() >= MAXSIZE) {
+      printf("Too much data returned, API is buggy, cancelling request...\n");
+      data.clear();
+      break;
+    }
+  }
   reply->deleteLater();
   emit dataReady();
 }
