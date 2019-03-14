@@ -837,6 +837,7 @@ void Cache::readPriorities()
 
 bool Cache::write()
 {
+  QMutexLocker locker(&cacheMutex);
   bool result = false;
 
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
