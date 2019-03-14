@@ -268,3 +268,8 @@ Some scraping modules require a user key or a user id + password to work. Check 
 Skyscraper will continuously check if you are running low on disk space. If you go below 200 MB in either the game list export folder or the resource cache folder, it will quit to make sure your system doesn't become unstable. Some types of file systems provide a faulty result to Skyscraper when it comes to these checks and thus it can be necessary to disable it altogether. You can use this option to do just that.
 
 *Allowed in section(s): `[main]`*
+
+#### memCheck="false"
+Skyscraper will continuously check if you are running low on memory. If you go below 50 MB available memory, it will exit nicely to make sure any cached data up until that point isn't lost. You might have reasons to disable this check. You can use this option to do just that.
+
+*Allowed in section(s): `[main]`*
