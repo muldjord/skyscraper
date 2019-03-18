@@ -44,6 +44,7 @@ public:
 
 private slots:
   void replyReady();
+  void dataDownloaded(qint64, qint64 bytesTotal);
   void cancelRequest();
 
 signals:

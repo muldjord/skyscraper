@@ -55,6 +55,7 @@ void NetComm::request(QString query, QString postData, QString headerKey, QStrin
     reply = post(request, postData.toUtf8());
   }
   connect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
+  connect(reply, &QNetworkReply::downloadProgress, this, &NetComm::dataDownloaded);
   requestTimer.start();
 }
 
@@ -64,14 +65,7 @@ void NetComm::replyReady()
   requestTimer.stop();
   contentType = reply->rawHeader("Content-Type");
   redirUrl = reply->rawHeader("Location");
-  while(!reply->atEnd()) {
-    data.append(reply->read(1024));
-    if(data.length() >= MAXSIZE) {
-      printf("Too much data returned, API is buggy, cancelling request...\n");
-      data.clear();
-      break;
-    }
-  }
+  data = reply->readAll();
   reply->deleteLater();
   emit dataReady();
 }
@@ -89,6 +83,14 @@ QByteArray NetComm::getContentType()
 QByteArray NetComm::getRedirUrl()
 {
   return redirUrl;
+}
+
+void NetComm::dataDownloaded(qint64, qint64 bytesTotal)
+{
+  if(bytesTotal >= MAXSIZE) {
+    printf("Too much data! API is buggy, cancelling network request...\n");
+    cancelRequest();
+  }
 }
 
 void NetComm::cancelRequest()
