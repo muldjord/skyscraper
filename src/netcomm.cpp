@@ -54,7 +54,7 @@ void NetComm::request(QString query, QString postData, QString headerKey, QStrin
   } else {
     reply = post(request, postData.toUtf8());
   }
-  reply->setReadBufferSize(1024000);
+  //reply->setReadBufferSize(1024000);
   connect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
   connect(reply, &QNetworkReply::downloadProgress, this, &NetComm::dataDownloaded);
   requestTimer.start();
