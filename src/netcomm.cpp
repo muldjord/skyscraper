@@ -32,15 +32,13 @@
 
 NetComm::NetComm()
 {
-  //connect(this, &NetComm::finished, this, &NetComm::replyFinished);
   requestTimer.setSingleShot(true);
   requestTimer.setInterval(60000);
-  connect(&requestTimer, &QTimer::timeout, this, &NetComm::cancelRequest);
+  connect(&requestTimer, &QTimer::timeout, this, &NetComm::requestTimeout);
 }
 
 void NetComm::request(QString query, QString postData, QString headerKey, QString headerValue)
 {
-  clearAll();
   QUrl url(query);
   QNetworkRequest request(url);
   request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
@@ -61,11 +59,10 @@ void NetComm::request(QString query, QString postData, QString headerKey, QStrin
 
 void NetComm::replyReady()
 {
-  disconnect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
   requestTimer.stop();
-  contentType = reply->rawHeader("Content-Type");
-  redirUrl = reply->rawHeader("Location");
   data = reply->readAll();
+  contentType = reply->rawHeader("Content-Type");;
+  redirUrl = reply->rawHeader("Location");
   reply->deleteLater();
   emit dataReady();
 }
@@ -89,24 +86,12 @@ void NetComm::dataDownloaded(qint64 bytesReceived, qint64)
 {
   if(bytesReceived >= MAXSIZE) {
     printf("Too much data! API is buggy, cancelling network request...\n");
-    cancelRequest();
+    reply->abort();
   }
 }
 
-void NetComm::cancelRequest()
-{
-  disconnect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
+void NetComm::requestTimeout()
+{ 
+  printf("Request timed out, aborting request...\n");
   reply->abort();
-  reply->deleteLater();
-  clearAll();
-
-  emit dataReady();
-}
-
-void NetComm::clearAll()
-{
-  //clearAccessCache();
-  redirUrl.clear();
-  contentType.clear();
-  data.clear();
 }
