@@ -84,7 +84,7 @@ QByteArray NetComm::getRedirUrl()
 
 void NetComm::dataDownloaded(qint64 bytesReceived, qint64)
 {
-  if(bytesReceived >= MAXSIZE) {
+  if(bytesReceived > MAXSIZE) {
     printf("Too much data! API is buggy, cancelling network request...\n");
     reply->abort();
   }
