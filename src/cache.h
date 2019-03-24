@@ -70,6 +70,7 @@ public:
   bool createFolders(const QString &scraper);
   bool read();
   void purgeResources(QString purgeStr);
+  void printPriorities(QString sha1);
   void editResources(QSharedPointer<Queue> queue);
   void purgeAll(const bool unattend = false);
   void vacuumResources(const QString inputFolder, const QString filters,

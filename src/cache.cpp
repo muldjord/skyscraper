@@ -133,15 +133,91 @@ bool Cache::read()
   return false;
 }
 
+void Cache::printPriorities(QString sha1)
+{
+  GameEntry game;
+  game.sha1 = sha1;
+  fillBlanks(game);
+  printf("\033[1;34mCurrent resource priorities for this rom:\033[0m\n");
+  printf("Title:          '\033[1;32m%s\033[0m' (%s)\n",
+	 game.title.toStdString().c_str(),
+	 game.titleSrc.toStdString().c_str());
+  printf("Platform:       '\033[1;32m%s\033[0m' (%s)\n",
+	 game.platform.toStdString().c_str(),
+	 game.platformSrc.toStdString().c_str());
+  printf("Release Date:   '\033[1;32m");
+  if(game.releaseDate.isEmpty()) {
+    printf("\033[0m' ()\n");
+  } else {
+    printf("%s\033[0m' (%s)\n",
+	   game.releaseDate.toStdString().c_str(),
+	   game.releaseDateSrc.toStdString().c_str());
+  }
+  printf("Developer:      '\033[1;32m%s\033[0m' (%s)\n",
+	 game.developer.toStdString().c_str(),
+	 game.developerSrc.toStdString().c_str());
+  printf("Publisher:      '\033[1;32m%s\033[0m' (%s)\n",
+	 game.publisher.toStdString().c_str(),
+	 game.publisherSrc.toStdString().c_str());
+  printf("Players:        '\033[1;32m%s\033[0m' (%s)\n",
+	 game.players.toStdString().c_str(),
+	 game.playersSrc.toStdString().c_str());
+  printf("Ages:           '\033[1;32m%s\033[0m' (%s)\n",
+	 game.ages.toStdString().c_str(),
+	 game.agesSrc.toStdString().c_str());
+  printf("Tags:           '\033[1;32m%s\033[0m' (%s)\n",
+	 game.tags.toStdString().c_str(),
+	 game.tagsSrc.toStdString().c_str());
+  printf("Rating:         '\033[1;32m%s\033[0m' (%s)\n",
+	 game.rating.toStdString().c_str(),
+	 game.ratingSrc.toStdString().c_str());
+  printf("Cover:          '");
+  if(game.coverSrc.isEmpty()) {
+    printf("\033[1;31mNO\033[0m' ()\n");
+  } else {
+    printf("\033[1;32mYES\033[0m' (%s)\n", game.coverSrc.toStdString().c_str());
+  }
+  printf("Screenshot:     '");
+  if(game.screenshotSrc.isEmpty()) {
+    printf("\033[1;31mNO\033[0m' ()\n");
+  } else {
+    printf("\033[1;32mYES\033[0m' (%s)\n", game.screenshotSrc.toStdString().c_str());
+  }
+  printf("Wheel:          '");
+  if(game.wheelSrc.isEmpty()) {
+    printf("\033[1;31mNO\033[0m' ()\n");
+  } else {
+    printf("\033[1;32mYES\033[0m' (%s)\n", game.wheelSrc.toStdString().c_str());
+  }
+  printf("Marquee:        '");
+  if(game.marqueeSrc.isEmpty()) {
+    printf("\033[1;31mNO\033[0m' ()\n");
+  } else {
+    printf("\033[1;32mYES\033[0m' (%s)\n", game.marqueeSrc.toStdString().c_str());
+  }
+  printf("Video:          '");
+  if(game.videoSrc.isEmpty()) {
+    printf("\033[1;31mNO\033[0m' ()\n");
+  } else {
+    printf("\033[1;32mYES\033[0m' (%s)\n", game.videoSrc.toStdString().c_str());
+  }
+  printf("Description: (%s)\n'\033[1;32m%s\033[0m'",
+	 game.descriptionSrc.toStdString().c_str(),
+	 game.description.toStdString().c_str());
+  printf("\n\n");
+}
+
 void Cache::editResources(QSharedPointer<Queue> queue)
 {
-  printf("\033[1;33mEntering resource cache editing mode! Note that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n\033[1;33mNote!\033[0m All changes are done in memory. If you ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\n\n");
+  int queueLength = queue->length();
+  printf("\033[1;33mEntering resource cache editing mode! This mode allows you to edit textual resources for your files. To add media resources use the 'import' scraping module instead.\nNote that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n\033[1;31mNote! All changes are done in memory. If you ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\033[0m\n\n");
   while(queue->hasEntry()) {
     QFileInfo info = queue->takeEntry();
     QString sha1 = NameTools::getSha1(info);
     bool doneEdit = false;
+    printPriorities(sha1);
     while(!doneEdit) {
-      printf("\033[1;33mCURRENT FILE: \033[0m\033[1;32m%s\033[0m\033[1;33m\033[0m\n", info.fileName().toStdString().c_str());
+      printf("\033[0;32m#%d/%d\033[0m \033[1;33m\nCURRENT FILE: \033[0m\033[1;32m%s\033[0m\033[1;33m\033[0m\n", queueLength - queue->length(), queueLength, info.fileName().toStdString().c_str());
       printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
       printf("\033[1;33ms\033[0m) Show current resource priorities for this rom\n");
       printf("\033[1;33mS\033[0m) Show all cached resources for this rom\n");
@@ -159,76 +235,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	doneEdit = true;
 	continue;
       } else if(userInput == "s") {
-	GameEntry game;
-	game.sha1 = sha1;
-	fillBlanks(game);
-	printf("\033[1;34mCurrent resource priorities for this rom:\033[0m\n");
-	printf("Title:          '\033[1;32m%s\033[0m' (%s)\n",
-	       game.title.toStdString().c_str(),
-	       game.titleSrc.toStdString().c_str());
-	printf("Platform:       '\033[1;32m%s\033[0m' (%s)\n",
-	       game.platform.toStdString().c_str(),
-	       game.platformSrc.toStdString().c_str());
-	printf("Release Date:   '\033[1;32m");
-	if(game.releaseDate.isEmpty()) {
-	  printf("\033[0m' ()\n");
-	} else {
-	  printf("%s\033[0m' (%s)\n",
-		 game.releaseDate.toStdString().c_str(),
-		 game.releaseDateSrc.toStdString().c_str());
-	}
-	printf("Developer:      '\033[1;32m%s\033[0m' (%s)\n",
-	       game.developer.toStdString().c_str(),
-	       game.developerSrc.toStdString().c_str());
-	printf("Publisher:      '\033[1;32m%s\033[0m' (%s)\n",
-	       game.publisher.toStdString().c_str(),
-	       game.publisherSrc.toStdString().c_str());
-	printf("Players:        '\033[1;32m%s\033[0m' (%s)\n",
-	       game.players.toStdString().c_str(),
-	       game.playersSrc.toStdString().c_str());
-	printf("Ages:           '\033[1;32m%s\033[0m' (%s)\n",
-	       game.ages.toStdString().c_str(),
-	       game.agesSrc.toStdString().c_str());
-	printf("Tags:           '\033[1;32m%s\033[0m' (%s)\n",
-	       game.tags.toStdString().c_str(),
-	       game.tagsSrc.toStdString().c_str());
-	printf("Rating:         '\033[1;32m%s\033[0m' (%s)\n",
-	       game.rating.toStdString().c_str(),
-	       game.ratingSrc.toStdString().c_str());
-	printf("Cover:          '");
-	if(game.coverSrc.isEmpty()) {
-	  printf("\033[1;31mNO\033[0m' ()\n");
-	} else {
-	  printf("\033[1;32mYES\033[0m' (%s)\n", game.coverSrc.toStdString().c_str());
-	}
-	printf("Screenshot:     '");
-	if(game.screenshotSrc.isEmpty()) {
-	  printf("\033[1;31mNO\033[0m' ()\n");
-	} else {
-	  printf("\033[1;32mYES\033[0m' (%s)\n", game.screenshotSrc.toStdString().c_str());
-	}
-	printf("Wheel:          '");
-	if(game.wheelSrc.isEmpty()) {
-	  printf("\033[1;31mNO\033[0m' ()\n");
-	} else {
-	  printf("\033[1;32mYES\033[0m' (%s)\n", game.wheelSrc.toStdString().c_str());
-	}
-	printf("Marquee:        '");
-	if(game.marqueeSrc.isEmpty()) {
-	  printf("\033[1;31mNO\033[0m' ()\n");
-	} else {
-	  printf("\033[1;32mYES\033[0m' (%s)\n", game.marqueeSrc.toStdString().c_str());
-	}
-	printf("Video:          '");
-	if(game.videoSrc.isEmpty()) {
-	  printf("\033[1;31mNO\033[0m' ()\n");
-	} else {
-	  printf("\033[1;32mYES\033[0m' (%s)\n", game.videoSrc.toStdString().c_str());
-	}
-	printf("Description: (%s)\n'\033[1;32m%s\033[0m'",
-	       game.descriptionSrc.toStdString().c_str(),
-	       game.description.toStdString().c_str());
-	printf("\n\n");
+	printPriorities(sha1);
       } else if(userInput == "S") {
 	printf("\033[1;34mResources connected to this rom:\033[0m\n");
 	bool found = false;
