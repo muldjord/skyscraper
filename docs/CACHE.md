@@ -14,9 +14,9 @@ Skyscraper provides the example file `~/.skyscraper/cache/priorities.xml.example
 #### Update locally cached data
 If you wish to update / refresh the locally cached resources for a particular platform and scraping module, Skyscraper provides the `--refresh` option. If this flag is set on the command line, any data in the resource cache will be updated with the new incoming data.
 
-If you wish to just refresh the data for a single rom simply scrape it with `-p <PLATFORM> -s <SCRAPING MODULE> --refresh <RELATIVE OR FULL ROM PATH AND FILENAME>` and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`.
+If you wish to just refresh the data for a single rom simply scrape it with `-p <PLATFORM> -s <SCRAPING MODULE> <RELATIVE OR FULL ROM PATH AND FILENAME>` and the locally cached data for that particular rom will be updated / refreshed. You can add more filenames one after the other if you like. If any filename or paths has spaces in it, remember to double-quote it like so `"relative path/to rom/rom filename.sfc"`. You don't need the `--refresh` option when updating single files - it is implicit.
 
-When you've updated information in the resource cache, always remember to re-generate the game list by simply running `Skyscraper -p <PLATFORM>`.
+When you've updated information in the resource cache, always remember to re-generate the game list by simply running `Skyscraper -p <PLATFORM>` when you're done. The updated resources won't be visible in your frontend until you do.
 
 #### User-defined databases
 Normally Skyscraper uses a default resource cache folder for each platform. But a friend might have send you a copy of his folders, and you wish to scrape from his or her data. In this case Skyscraper allows you to force the use of a custom resource cache with the `-d <FOLDER>` command line option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
