@@ -252,18 +252,31 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  printf("None\n");
 	printf("\n");
       } else if(userInput == "n") {
+	GameEntry game;
+	game.sha1 = sha1;
+	fillBlanks(game);
 	std::string typeInput = "";
 	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
-	printf("\033[1;33m0\033[0m) Title\n");
-	printf("\033[1;33m1\033[0m) Platform\n");
-	printf("\033[1;33m2\033[0m) Release date\n");
-	printf("\033[1;33m3\033[0m) Developer\n");
-	printf("\033[1;33m4\033[0m) Publisher\n");
-	printf("\033[1;33m5\033[0m) Number of players\n");
-	printf("\033[1;33m6\033[0m) Age rating\n");
-	printf("\033[1;33m7\033[0m) Genres\n");
-	printf("\033[1;33m8\033[0m) Game rating\n");
-	printf("\033[1;33m9\033[0m) Description\n");
+	printf("\033[1;33m0\033[0m) Title %s\n",
+	       QString((game.titleSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m1\033[0m) Platform %s\n",
+	       QString((game.platformSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m2\033[0m) Release date %s\n",
+	       QString((game.releaseDateSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m3\033[0m) Developer %s\n",
+	       QString((game.developerSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m4\033[0m) Publisher %s\n",
+	       QString((game.publisherSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m5\033[0m) Number of players %s\n",
+	       QString((game.playersSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m6\033[0m) Age rating %s\n",
+	       QString((game.agesSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m7\033[0m) Genres %s\n",
+	       QString((game.tagsSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m8\033[0m) Game rating %s\n",
+	       QString((game.ratingSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	printf("\033[1;33m9\033[0m) Description %s\n",
+	       QString((game.descriptionSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
 	printf("> ");
 	getline(std::cin, typeInput);
 	printf("\n");
