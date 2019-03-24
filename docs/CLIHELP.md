@@ -363,7 +363,7 @@ Skyscraper -p snes -s thegamesdb --interactive
 #### --query &lt;STRING&gt;
 For most modules a search query is sent to the scraping module in an URL format. This means that a filename such as "Rick Dangerous.lha" becomes "rick+dangerous". The '+' here means a space. You could probably also use the URL encoded space "rick%20dangerous" but my tests show that most modules expect spaces as '+'. And it is the "rick+dangerous" part that you, as the user, can pass as the query, like so:
 ```
-$ Skyscraper -p [platform] -s [module] --query "rick+dangerous" [filename]
+$ Skyscraper -p <PLATFORM> -s <MODULE> --query "rick+dangerous" <FILENAME>
 ```
 Remember to also add a filename that you wish to use the override with. Otherwise the query will be ignored.
 
