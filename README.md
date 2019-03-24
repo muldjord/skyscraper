@@ -148,6 +148,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.1.5 (In progress, unreleased)
 * Improved output of edit mode to show queue size and initial prioritized resources
+* Now clearly shows missing resources when adding resources in editing mode
 
 #### Version 3.1.4 (23rd March 2019)
 * Refactored network communication class
