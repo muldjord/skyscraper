@@ -197,8 +197,8 @@ void Cache::printPriorities(QString sha1)
     printf("\033[1;32mYES\033[0m' (%s)\n", game.videoSrc.toStdString().c_str());
   }
   printf("Description: (%s)\n'\033[1;32m%s\033[0m'",
-	 game.descriptionSrc.toStdString().c_str(),
-	 (game.descriptionSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.descriptionSrc).toStdString().c_str());
+	 (game.descriptionSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.descriptionSrc).toStdString().c_str(),
+	 game.description.toStdString().c_str());
   printf("\n\n");
 }
 
