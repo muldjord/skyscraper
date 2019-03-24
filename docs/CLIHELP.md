@@ -369,7 +369,7 @@ Remember to also add a filename that you wish to use the override with. Otherwis
 
 But not all of the scraping modules are search name based. For instance, the `screenscraper` module can use a variety of different search methods. So for screenscraper you also have the option of overriding the checksums it uses to search for a game. This is especially convenient in cases where a filename exists multiple times in their database and your own local file doesn't match with any of the connected checksums (maybe you've compressed the rom yourself). In this case you can look up one of the working checksums on the Screenscraper website (screenscraper.fr) and override the checksum.
 
-You can use any combination of `crc=<CHECKSUM>`, `md5=<CHECKSUM>`, `sha1=<CHECKSUM>` and `romnom=<FILENAME>` ("ronmon" is "rom name" in French - Screenscraper is French). Most times you only need one of these, but you can combine them by separating them with a `&`.
+You can use any combination of `crc=<CHECKSUM>`, `md5=<CHECKSUM>`, `sha1=<CHECKSUM>` and `romnom=<FILENAME>` ("romnom" is "rom name" in French - Screenscraper is French). Most times you only need one of these, but you can combine them by separating them with a `&`.
 
 The `--query` option is an *experts only* option, but it's very useful to get results for those last difficult roms.
 ###### Example(s)
