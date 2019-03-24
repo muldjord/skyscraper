@@ -141,36 +141,31 @@ void Cache::printPriorities(QString sha1)
   printf("\033[1;34mCurrent resource priorities for this rom:\033[0m\n");
   printf("Title:          '\033[1;32m%s\033[0m' (%s)\n",
 	 game.title.toStdString().c_str(),
-	 game.titleSrc.toStdString().c_str());
+	 (game.titleSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.titleSrc).toStdString().c_str());
   printf("Platform:       '\033[1;32m%s\033[0m' (%s)\n",
 	 game.platform.toStdString().c_str(),
-	 game.platformSrc.toStdString().c_str());
-  printf("Release Date:   '\033[1;32m");
-  if(game.releaseDate.isEmpty()) {
-    printf("\033[0m' ()\n");
-  } else {
-    printf("%s\033[0m' (%s)\n",
-	   game.releaseDate.toStdString().c_str(),
-	   game.releaseDateSrc.toStdString().c_str());
-  }
+	 (game.platformSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.platformSrc).toStdString().c_str());
+  printf("Release Date:   '\033[1;32m%s\033[0m' (%s)\n",
+	 game.releaseDate.toStdString().c_str(),
+	 (game.releaseDateSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.releaseDateSrc).toStdString().c_str());
   printf("Developer:      '\033[1;32m%s\033[0m' (%s)\n",
 	 game.developer.toStdString().c_str(),
-	 game.developerSrc.toStdString().c_str());
+	 (game.developerSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.developerSrc).toStdString().c_str());
   printf("Publisher:      '\033[1;32m%s\033[0m' (%s)\n",
 	 game.publisher.toStdString().c_str(),
-	 game.publisherSrc.toStdString().c_str());
+	 (game.publisherSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.publisherSrc).toStdString().c_str());
   printf("Players:        '\033[1;32m%s\033[0m' (%s)\n",
 	 game.players.toStdString().c_str(),
-	 game.playersSrc.toStdString().c_str());
+	 (game.playersSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.playersSrc).toStdString().c_str());
   printf("Ages:           '\033[1;32m%s\033[0m' (%s)\n",
 	 game.ages.toStdString().c_str(),
-	 game.agesSrc.toStdString().c_str());
+	 (game.agesSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.agesSrc).toStdString().c_str());
   printf("Tags:           '\033[1;32m%s\033[0m' (%s)\n",
 	 game.tags.toStdString().c_str(),
-	 game.tagsSrc.toStdString().c_str());
+	 (game.tagsSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.tagsSrc).toStdString().c_str());
   printf("Rating:         '\033[1;32m%s\033[0m' (%s)\n",
 	 game.rating.toStdString().c_str(),
-	 game.ratingSrc.toStdString().c_str());
+	 (game.ratingSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.ratingSrc).toStdString().c_str());
   printf("Cover:          '");
   if(game.coverSrc.isEmpty()) {
     printf("\033[1;31mNO\033[0m' ()\n");
@@ -203,7 +198,7 @@ void Cache::printPriorities(QString sha1)
   }
   printf("Description: (%s)\n'\033[1;32m%s\033[0m'",
 	 game.descriptionSrc.toStdString().c_str(),
-	 game.description.toStdString().c_str());
+	 (game.descriptionSrc.isEmpty()?QString("\033[1;31mmissing\033[0m"):game.descriptionSrc).toStdString().c_str());
   printf("\n\n");
 }
 
@@ -258,25 +253,25 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	std::string typeInput = "";
 	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
 	printf("\033[1;33m0\033[0m) Title %s\n",
-	       QString((game.titleSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.titleSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m1\033[0m) Platform %s\n",
-	       QString((game.platformSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.platformSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m2\033[0m) Release date %s\n",
-	       QString((game.releaseDateSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.releaseDateSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m3\033[0m) Developer %s\n",
-	       QString((game.developerSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.developerSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m4\033[0m) Publisher %s\n",
-	       QString((game.publisherSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.publisherSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m5\033[0m) Number of players %s\n",
-	       QString((game.playersSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.playersSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m6\033[0m) Age rating %s\n",
-	       QString((game.agesSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.agesSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m7\033[0m) Genres %s\n",
-	       QString((game.tagsSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.tagsSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m8\033[0m) Game rating %s\n",
-	       QString((game.ratingSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.ratingSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("\033[1;33m9\033[0m) Description %s\n",
-	       QString((game.descriptionSrc.isEmpty()?"\033[1;31m(missing)\033[0m":"")).toStdString().c_str());
+	       QString((game.descriptionSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
 	printf("> ");
 	getline(std::cin, typeInput);
 	printf("\n");
