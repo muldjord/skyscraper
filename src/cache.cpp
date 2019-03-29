@@ -600,7 +600,8 @@ void Cache::purgeAll(const bool unattend)
   printf("\n");
 }
 
-void Cache::vacuumResources(const QString inputFolder, const QString filter, const bool unattend)
+void Cache::vacuumResources(const QString inputFolder, const QString filter,
+			    const int verbosity, const bool unattend)
 {
   if(!unattend) {
     std::string userInput = "";
@@ -677,6 +678,9 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter, con
 	    continue;
 	  }
 	}
+	if(verbosity > 1)
+	  printf("Purged resource for '%s' with value '%s'...\n", res.sha1.toStdString().c_str(),
+		 res.value.toStdString().c_str());
 	it.remove();
 	vacuumed++;
       }

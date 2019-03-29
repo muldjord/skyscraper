@@ -74,7 +74,7 @@ public:
   void editResources(QSharedPointer<Queue> queue);
   void purgeAll(const bool unattend = false);
   void vacuumResources(const QString inputFolder, const QString filters,
-		       const bool unattend = false);
+		       const int verbosity, const bool unattend = false);
   void showStats(int verbosity);
   void readPriorities();
   bool write();
