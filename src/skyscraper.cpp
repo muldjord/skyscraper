@@ -134,7 +134,7 @@ void Skyscraper::run()
     if(config.cacheOptions == "purge:all") {
       cache->purgeAll(config.unattend || config.unattendSkip);
     } else if(config.cacheOptions == "vacuum") {
-      cache->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), config.unattend || config.unattendSkip);
+      cache->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), config.verbosity, config.unattend || config.unattendSkip);
     } else if(config.cacheOptions.contains("purge:m=") ||
 	      config.cacheOptions.contains("purge:t=")) {
       cache->purgeResources(config.cacheOptions);
