@@ -1071,6 +1071,7 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "nes") {
     aliases.append("nintendo entertainment system (nes)");
     aliases.append("nintendo");
+    aliases.append("nintendo power");
   } else if(platform == "ngp") {
     aliases.append("neo geo pocket");
     aliases.append("neo-geo pocket");
@@ -1081,6 +1082,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("oric 1 / atmos");
   } else if(platform == "pc") {
     aliases.append("pc dos");
+    aliases.append("pc win3.xx");
     aliases.append("dos");
     aliases.append("windows");
     aliases.append("windows apps");
@@ -1102,6 +1104,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc engine supergrafx");
   } else if(platform == "ports") {
     aliases.append("pc dos");
+    aliases.append("pc win3.xx");
     aliases.append("dos");
     aliases.append("windows");
     aliases.append("pc (microsoft windows");
@@ -1118,6 +1121,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("sega saturn");
   } else if(platform == "scummvm") {
     aliases.append("pc dos");
+    aliases.append("pc win3.xx");
     aliases.append("pc");
     aliases.append("amiga");
     aliases.append("amiga cd32");
@@ -1140,8 +1144,16 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("super nintendo entertainment system (snes)");
     aliases.append("super nintendo");
     aliases.append("super famicom");
+    // The following are for screenscraper, but the platform check is currently disabled for
+    // that module, so they don't really do anything.
+    aliases.append("nintendo power");
+    aliases.append("satellaview");
+    aliases.append("sufami turbo");
+    aliases.append("snes - super mario world hacks");
+    aliases.append("super nintendo msu-1");
   } else if(platform == "steam") {
     aliases.append("pc dos");
+    aliases.append("pc win3.xx");
     aliases.append("dos");
     aliases.append("windows");
     aliases.append("windows apps");
