@@ -47,7 +47,7 @@ private:
   QTimer limitTimer;
   QEventLoop limiter;
   QList<QString> getSearchNames(const QFileInfo &info) override;
-  void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString platform) override;
+  void getSearchResults(QList<GameEntry> &gameEntries, QString searchName, QString) override;
   void getGameData(GameEntry &game) override;
   void getReleaseDate(GameEntry &game) override;
   void getDeveloper(GameEntry &game) override;

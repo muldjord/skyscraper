@@ -57,7 +57,7 @@ ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 }
 
 void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
-				     QString searchName, QString platform)
+				     QString searchName, QString)
 {
   QString platformId = getPlatformId(config->platform);
   if(platformId == "na") {
@@ -132,9 +132,9 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   game.url = gameUrl;
   game.platform = xmlDoc.elementsByTagName("systeme").at(0).toElement().text();
   
-  if(platformMatch(game.platform, platform)) {
+  // Only check if platform is empty, it's always correct when using ScreenScraper
+  if(!game.platform.isEmpty())
     gameEntries.append(game);
-  }
 }
 
 void ScreenScraper::getGameData(GameEntry &game)
