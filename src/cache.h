@@ -73,8 +73,11 @@ public:
   void printPriorities(QString sha1);
   void editResources(QSharedPointer<Queue> queue);
   void purgeAll(const bool unattend = false);
+  QList<QFileInfo> getFileInfos(const QString &inputFolder, const QString &filter);
+  QList<QString> getSha1List(const QList<QFileInfo> &fileInfos);
   void vacuumResources(const QString inputFolder, const QString filters,
 		       const int verbosity, const bool unattend = false);
+  void assembleReport(const QString inputFolder, const QString filters, QString reportStr = "");
   void showStats(int verbosity);
   void readPriorities();
   bool write();

@@ -600,6 +600,56 @@ void Cache::purgeAll(const bool unattend)
   printf("\n");
 }
 
+QList<QFileInfo> Cache::getFileInfos(const QString &inputFolder, const QString &filter)
+{
+  QList<QFileInfo> fileInfos;
+  QStringList filters = filter.split(" ");
+  if(filter.size() >= 2) {
+    QDirIterator dirIt(inputFolder,
+		       filters,
+		       QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+		       QDirIterator::Subdirectories);
+    while(dirIt.hasNext()) {
+      dirIt.next();
+      fileInfos.append(dirIt.fileInfo());
+    }
+    if(fileInfos.isEmpty()) {
+      printf("\nInput folder returned no entries...\n\n");
+    }
+  } else {
+    printf("Found less than 2 suffix filters. Something is wrong...\n");
+  }
+  return fileInfos;
+}
+
+QList<QString> Cache::getSha1List(const QList<QFileInfo> &fileInfos)
+{
+  QList<QString> sha1List;
+  int dots = 0;
+  // Always make dotMod at least 1 or it will give "floating point exception" when modulo
+  int dotMod = fileInfos.size() * 0.1 + 1;
+  foreach(QFileInfo info, fileInfos) {
+    if(dots % dotMod == 0) {
+      printf(".");
+      fflush(stdout);
+    }
+    dots++;
+    sha1List.append(NameTools::getSha1(info));
+  }
+  return sha1List;
+}
+
+void Cache::assembleReport(const QString inputFolder, const QString filter, QString reportStr)
+{
+  //reportStr.replace("report:missing=", "");
+  printf("Assembling report, this can take several minutes, please wait...");
+  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
+  QList<QString> sha1List = getSha1List(fileInfos);
+  if(sha1List.isEmpty()) {
+    return;
+  }
+}
+
 void Cache::vacuumResources(const QString inputFolder, const QString filter,
 			    const int verbosity, const bool unattend)
 {
@@ -613,39 +663,12 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
       return;
     }
   }
-  
-  QList<QString> sha1List;
-  QStringList filters = filter.split(" ");
-  if(filter.size() < 2) {
-    printf("Found less than 2 suffix filters. Something is wrong, cancelling vacuum...\n");
-    return;
-  }
+
   printf("Vacuuming resources from cache, this can take several minutes, please wait...");
-  QList<QFileInfo> fileInfos;
-  QDirIterator dirIt(inputFolder,
-		     filters,
-		     QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
-		     QDirIterator::Subdirectories);
-  while(dirIt.hasNext()) {
-    dirIt.next();
-    fileInfos.append(dirIt.fileInfo());
-  }
-  if(fileInfos.isEmpty()) {
-    printf("\nInput folder returned no entries, cancelling vacuum...\n\n");
+  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
+  QList<QString> sha1List = getSha1List(fileInfos);
+  if(sha1List.isEmpty()) {
     return;
-  }
-  {
-    int dots = 0;
-    // Always make dotMod at least 1 or it will give "floating point exception" when modulo
-    int dotMod = fileInfos.size() * 0.1 + 1;
-    foreach(QFileInfo info, fileInfos) {
-      if(dots % dotMod == 0) {
-	printf(".");
-	fflush(stdout);
-      }
-      dots++;
-      sha1List.append(NameTools::getSha1(info));
-    }
   }
   
   int vacuumed = 0;
