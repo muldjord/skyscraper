@@ -138,18 +138,19 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 ## Release notes
 
 #### Version x.x.x (Still unimplemented)
-* Add "sharpen" effect which sharpens the image
-* Improved "blur" and "shadow" effect to be true gaussian
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
 * Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
 * Make all artwork types custom meaning that their type can be whatever the user wants. The sources will create ones with known types such as 'screenshot' and 'cover', but the user can import other types they define themselves, such as 'cabinet' or whatever else. Internally artwork is then handled by a list of artwork instead of 4 hardcoded types in GameEntry
 * Introduce the ability to use <BASENAME> in the 'file="somefolder/<BASENAME>.png"' in artwork.xml which would then look for a file in 'resources' with the game basename.png allowing users to use their own custom artwork data as a workaround to adding new types to import (Thank you to 'jueank' for suggesting this)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
+* Check for double bracket notes, and only add each note once. Remember to do toLower on them before checking as some of them are similar but have differing capitalization
 
 #### Version 3.1.5 (In progress, unreleased)
 * Improved output of edit mode to show queue size and initial prioritized resources
 * Now clearly shows missing resources when adding resources in editing mode
+* Made '--cache vacuum' more verbose at verbosity level 2 or higher
+* Removed platform check for screenscraper module as it wasn't really necessary
 
 #### Version 3.1.4 (23rd March 2019)
 * Refactored network communication class
