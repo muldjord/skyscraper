@@ -45,7 +45,6 @@
 #define T_COLORIZE 16
 #define T_ROTATE 17
 #define T_SCANLINES 18
-#define T_SHARPEN 19
 
 #include <QImage>
 #include <QPainter>
