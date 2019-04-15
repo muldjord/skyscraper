@@ -97,7 +97,7 @@ The database also supports many non-Amiga platforms, but there's no doubt that A
 
 MobyGames. What can I say. If you haven't heard about this database before you've been missing out. It's one of the best and oldest games databases on the internet. You'll probably come across references to MobyGames on other sites when searching for retro games. There's a reason for that - it's that good.
 
-There's a caveat to the module as it has quite strong restrictions for the number of requests that are allowed at any given time. This restriction is global for the entire Skyscraper user base, which means that it might quit on you if other users are currently scraping from it. For this reason it has been strongly limited inside of Skyscraper by forcing a maximum number of rom scrapings per run to 25.
+There's a caveat to the module as it has quite strong restrictions for the number of requests that are allowed at any given time. This restriction is global for the entire Skyscraper user base, which means that it might quit on you if other users are currently scraping from it. For this reason it has been strongly limited inside of Skyscraper by forcing a maximum number of rom scrapings per run.
 
 Please use this module sparingly. And only ever use it to scrape those last few roms you can't get any data for using any of the other sources.
 
