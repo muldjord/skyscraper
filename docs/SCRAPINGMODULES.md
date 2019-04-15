@@ -11,7 +11,7 @@ Below follows a description of all scraping modules.
 * Website: *[www.screenscraper.fr](https://www.screenscraper.fr)*
 * Type: *Rom checksum based, Exact file name based*
 * User credential support: *Yes (`userid:passwd`), but not required*
-* API request limit: *None*
+* API request limit: *20k per day for registered users*
 * Thread limit: *1 or more depending on user credentials*
 * Platform support: *[Check list under "Systémes"](https://www.screenscraper.fr)*
 * Media support: *`cover`, `screenshot`, `wheel`, `marquee`, `video`*

@@ -172,6 +172,8 @@ When gathering data from any of the scraping modules many potential entries will
 #### forceFilename="false"
 Enable this option to force Skyscraper to use the file name (excluding extension) instead of the cached scraping module titles when generating a game list.
 
+NOTE! If you set `forceFilename="true"` and your filenames contain bracket notes such as `(this)` or `[that]` at the end, these will be combined with whatever bracket notes are at the end of the titles returned from the sources. This can cause some confusion. For instance, if you have the filename `Gran Turismo 2 (USA) (Arcade Mode)` and the cached title is `Gran Turismo 2 (Arcade Mode)`, then the gamelist name will become `Gran Turismo 2 (Arcade Mode)(USA)(Arcade Mode)`. You can disable them altogether with the `brackets="no"` option.
+
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`*
 
 #### verbosity="1"
