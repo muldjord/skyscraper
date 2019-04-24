@@ -61,8 +61,34 @@ region="de"
 ```
 
 ## Other notes
-When a region is specified by the user, this region will be prioritized. However, if a resource can't be found with that specific region, it will fall back to the following list of regions and look for a resource with the topmost region first, then the next and so on:
+### Region autodetection
+Skyscraper will try to autodetect the region from the file name. It will look for designations such as `(Europe)` or `(e)` and set the region accordingly. This currently only works for Europe, Usa, World and Japan regions.
+
+### Default region prioritization
+When a region is specified by the user, this region will be prioritized. However, if a resource can't be found with that specific region, it will fall back to the default list of regions and look for a resource with the topmost region first, then the next and so on:
 * eu
 * us
+* ss
+* uk
 * wor
 * jp
+* au
+* ame
+* de
+* cus
+* cn
+* kr
+* asi
+* br
+* sp
+* fr
+* gr
+* it
+* no
+* dk
+* nz
+* nl
+* pl
+* ru
+* se
+* tw
