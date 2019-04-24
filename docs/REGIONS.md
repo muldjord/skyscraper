@@ -92,3 +92,18 @@ When a region is specified by the user, this region will be prioritized. However
 * ru
 * se
 * tw
+
+### Override default region prioritization list
+It is also possible to completely override the default prioritization list with the `regionPrios="<COMMASEPARATED REGION LIST>"` config.ini option. This can *not* be done on command-line.
+
+#### Examples
+##### ~/.skyscraper/config.ini
+```
+[main]
+regionPrios="de,us,jp"
+```
+or
+```
+[any platform]
+regionPrios="de,us,jp"
+```
