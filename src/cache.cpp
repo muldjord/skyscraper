@@ -1205,10 +1205,14 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
 	okToAppend = false;
       }
     } else if(resource.type == "video") {
-      QFile videoFile(cacheAbsolutePath + "/" + resource.value);
-      if(videoFile.open(QIODevice::WriteOnly)) {
-	videoFile.write(entry.videoData);
-	videoFile.close();
+      if(entry.videoData.size() <= config.videoSizeLimit) {
+	QFile videoFile(cacheAbsolutePath + "/" + resource.value);
+	if(videoFile.open(QIODevice::WriteOnly)) {
+	  videoFile.write(entry.videoData);
+	  videoFile.close();
+	} else {
+	  okToAppend = false;
+	}
       } else {
 	okToAppend = false;
       }
