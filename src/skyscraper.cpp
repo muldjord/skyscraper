@@ -128,9 +128,8 @@ void Skyscraper::run()
     if(config.cacheOptions == "show")
       exit(0);
   }
-  if(!config.cacheOptions.isEmpty() &&
-     (config.cacheOptions.contains("purge:") ||
-      config.cacheOptions.contains("vacuum"))) {
+  if(config.cacheOptions.contains("purge:") ||
+     config.cacheOptions.contains("vacuum")) {
     if(config.cacheOptions == "purge:all") {
       cache->purgeAll(config.unattend || config.unattendSkip);
     } else if(config.cacheOptions == "vacuum") {
@@ -142,13 +141,19 @@ void Skyscraper::run()
     cache->write();
     exit(0);
   }
+  if(config.cacheOptions.contains("report:")) {
+    cache->assembleReport(config.inputFolder, Platform::getFormats(config.platform,
+								   config.extensions,
+								   config.addExtensions),
+			  config.cacheOptions);
+    exit(0);
+  }
   if(config.cacheOptions == "validate") {
     cache->validate();
     cache->write();
     exit(0);
   }
-  if(!config.cacheOptions.isEmpty() &&
-     config.cacheOptions.contains("merge:")) {
+  if(config.cacheOptions.contains("merge:")) {
     QFileInfo mergeCacheInfo(config.cacheOptions.replace("merge:", ""));
     if(mergeCacheInfo.exists()) {
       Cache mergeCache(mergeCacheInfo.absoluteFilePath());
@@ -714,6 +719,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("videos")) {
     config.videos = settings.value("videos").toBool();
   }
+  if(settings.contains("videoSizeLimit")) {
+    config.videoSizeLimit = settings.value("videoSizeLimit").toInt() * 1000 * 1000;
+  }
   if(settings.contains("symlink")) {
     config.symlink = settings.value("symlink").toBool();
   }
@@ -869,6 +877,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("videos")) {
     config.videos = settings.value("videos").toBool();
   }
+  if(settings.contains("videoSizeLimit")) {
+    config.videoSizeLimit = settings.value("videoSizeLimit").toInt() * 1000 * 1000;
+  }
   if(settings.contains("symlink")) {
     config.symlink = settings.value("symlink").toBool();
   }
@@ -954,6 +965,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("videos")) {
     config.videos = settings.value("videos").toBool();
+  }
+  if(settings.contains("videoSizeLimit")) {
+    config.videoSizeLimit = settings.value("videoSizeLimit").toInt() * 1000 * 1000;
   }
   settings.endGroup();
 
