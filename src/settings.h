@@ -60,6 +60,7 @@ struct Settings {
   int totalFiles = 0;
   int maxLength = 2500;
   bool videos = false;
+  int videoSizeLimit = 42000000;
   bool symlink = false;
   bool brackets = true;
   bool refresh = false;
