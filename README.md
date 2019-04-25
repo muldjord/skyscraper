@@ -151,6 +151,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Now clearly shows missing resources when adding resources in editing mode
 * Made '--cache vacuum' more verbose at verbosity level 2 or higher
 * Removed platform check for screenscraper module as it wasn't really necessary
+* Added 'videoSizeLimit' config variable (Thank you to 'silverfr0st' for suggesting this)
 
 #### Version 3.1.4 (23rd March 2019)
 * Refactored network communication class
