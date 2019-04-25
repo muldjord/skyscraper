@@ -124,6 +124,11 @@ By default Skyscraper doesn't scrape and cache video resources because of the si
 
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`*
 
+#### videoSizeLimit="42"
+If video scraping is enabled you can set the maximum allowed video file size with this variable. The size is in Megabytes. If this size is exceeded the video file won't be saved to the cache.
+
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<MODULE>]`*
+
 #### symlink="false"
 Enabling this option is only relevant while also setting the `videos="true"` option. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
 
