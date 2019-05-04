@@ -56,6 +56,7 @@ QStringList Platform::getPlatforms()
   platforms.append("c16");
   platforms.append("c64");
   platforms.append("c128");
+  platforms.append("channelf");
   platforms.append("coco");
   platforms.append("coleco");
   platforms.append("daphne");
@@ -152,6 +153,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "c64") {
     scrapers.append("screenscraper");
   } else if(platform == "c128") {
+    scrapers.append("screenscraper");
+  } else if(platform == "channelf") {
     scrapers.append("screenscraper");
   } else if(platform == "coco") {
     scrapers.append("screenscraper");
@@ -329,6 +332,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.crt *.d64 *.prg *.tap *.t64 *.g64 *.x64 *.vsf");
   } else if(platform == "c128") {
     formats.append("*.crt *.d64 *.prg *.tap *.t64 *.g64 *.x64 *.vsf");
+  } else if(platform == "channelf") {
+    formats.append("*.bin");
   } else if(platform == "coco") {
     formats.append("*.cas *.wav *.bas *.asc *.dmk *.jvc *.os9 *.dsk *.vdk *.rom *.ccc *.sna");
   } else if(platform == "coleco") {
@@ -480,6 +485,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "c64") {
     scraper = "cache";
   } else if(platform == "c128") {
+    scraper = "cache";
+  } else if(platform == "channelf") {
     scraper = "cache";
   } else if(platform == "coco") {
     scraper = "cache";
@@ -724,6 +731,8 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("amiga cd32 (hack)");
   } else if(platform == "cdtv") {
     aliases.append("amiga cdtv");
+  } else if(platform == "channelf") {
+    aliases.append("channel f");
   } else if(platform == "coco") {
     aliases.append("trs-80 color computer");
     aliases.append("trs-80 coco");
