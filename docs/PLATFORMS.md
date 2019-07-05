@@ -4,6 +4,7 @@
 * Amstrad CPC
 * Apple 2
 * Arcade
+* AstroCade
 * Atari800
 * Atari2600
 * Atari5200
@@ -18,6 +19,7 @@
 * Daphne
 * Dragon 32/64
 * Dreamcast
+* Emerson Arcadia 2001
 * Famicom Disk System
 * FB Alpha
 * Game Boy

@@ -561,6 +561,10 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "86";
   } else if(platform == "arcade") {
     return "75";
+  } else if(platform == "arcadia") {
+    return "94";
+  } else if(platform == "astrocde") {
+    return "44";
   } else if(platform == "atari800") {
     return "43";
   } else if(platform == "atari2600") {

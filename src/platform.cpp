@@ -46,6 +46,8 @@ QStringList Platform::getPlatforms()
   platforms.append("amstradcpc");
   platforms.append("apple2");
   platforms.append("arcade");
+  platforms.append("arcadia");
+  platforms.append("astrocde");
   platforms.append("atari800");
   platforms.append("atari2600");
   platforms.append("atari5200");
@@ -132,6 +134,10 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   } else if(platform == "arcade") {
     scrapers.append("arcadedb");
+    scrapers.append("screenscraper");
+  } else if(platform == "arcadia") {
+    scrapers.append("screenscraper");
+  } else if(platform == "astrocde") {
     scrapers.append("screenscraper");
   } else if(platform == "atari800") {
     scrapers.append("screenscraper");
@@ -309,6 +315,10 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.dsk");
   } else if(platform == "arcade") {
     formats.append("");
+  } else if(platform == "arcadia") {
+    formats.append("");
+  } else if(platform == "astrocde") {
+    formats.append("");
   } else if(platform == "atari800") {
     formats.append("*.a52 *.bas *.bin *.car *.xex *.atr *.xfd *.dcm *.atr.gz *.xfd.gz");
   } else if(platform == "atari2600") {
@@ -458,6 +468,10 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "amstradcpc") {
     scraper = "cache";
   } else if(platform == "arcade") {
+    scraper = "cache";
+  } else if(platform == "arcadia") {
+    scraper = "cache";
+  } else if(platform == "astrocde") {
     scraper = "cache";
   } else if(platform == "apple2") {
     scraper = "cache";
@@ -688,6 +702,11 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("gaelco");
     aliases.append("mega-tech");
     aliases.append("mega-play");
+  } else if(platform == "arcadia") {
+    aliases.append("arcadia 2001");
+    aliases.append("emerson arcadia 2001");
+  } else if(platform == "astrocde") {
+    aliases.append("astrocade");
   } else if(platform == "atari800") {
     aliases.append("atari 800");
     aliases.append("atari 8-bit");
