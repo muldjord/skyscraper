@@ -153,6 +153,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Removed platform check for screenscraper module as it wasn't really necessary
 * Added 'videoSizeLimit' config variable (Thank you to 'silverfr0st' for suggesting this)
 * Now also processes brackets for skipped games (Thanks to 'hexive' for pointing this out)
+* Added 'arcadia' and 'astrocde' MESS platforms (Thank you to 'raphkoster' for suggesting these)
 * Added '--cache report:missing=<RESOURCE>' option (Thank you to JaymesRS for suggesting this)
 
 #### Version 3.1.4 (23rd March 2019)
