@@ -77,7 +77,7 @@ public:
   QList<QString> getSha1List(const QList<QFileInfo> &fileInfos);
   void vacuumResources(const QString inputFolder, const QString filters,
 		       const int verbosity, const bool unattend = false);
-  void assembleReport(const QString inputFolder, const QString filters, QString reportStr = "");
+  void assembleReport(const QString inputFolder, const QString filters, QString platform, QString reportStr = "");
   void showStats(int verbosity);
   void readPriorities();
   bool write();

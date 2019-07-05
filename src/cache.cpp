@@ -639,14 +639,52 @@ QList<QString> Cache::getSha1List(const QList<QFileInfo> &fileInfos)
   return sha1List;
 }
 
-void Cache::assembleReport(const QString inputFolder, const QString filter, QString reportStr)
+void Cache::assembleReport(const QString inputFolder, const QString filter, QString platform, QString reportStr)
 {
-  //reportStr.replace("report:missing=", "");
-  printf("Assembling report, this can take several minutes, please wait...");
-  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
-  QList<QString> sha1List = getSha1List(fileInfos);
-  if(sha1List.isEmpty()) {
+  if(!reportStr.contains("report:missing=")) {
+    printf("Don't understand report option, please check '--help' for more info.\n");
     return;
+  }
+  reportStr.replace("report:missing=", "");
+
+  QString resType = reportStr.simplified();
+  
+  QFile reportFile("report-" + platform + "-missing_" + resType + "-" + QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss") + ".txt");
+
+  printf("Assembling report into file '\033[1;32m%s\033[0m'.\nThis can take several minutes, please be patient...", reportFile.fileName().toStdString().c_str());
+  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
+  if(reportFile.open(QIODevice::WriteOnly)) {
+    int missing = 0;
+    int dots = 0;
+    // Always make dotMod at least 1 or it will give "floating point exception" when modulo
+    int dotMod = fileInfos.size() * 0.1 + 1;
+
+    foreach(QFileInfo info, fileInfos) {
+      if(dots % dotMod == 0) {
+	printf(".");
+	fflush(stdout);
+      }
+      dots++;
+      QString sha1 = NameTools::getSha1(info);
+      bool found = false;
+      foreach(Resource res, resources) {
+	if(res.sha1 == sha1) {
+	  if(res.type == resType) {
+	    found = true;
+	    break;
+	  }
+	}
+      }
+      if(!found) {
+	missing++;
+	reportFile.write(info.absoluteFilePath().toUtf8() + "\n");
+      }
+    }
+    printf("\n");
+    reportFile.close();
+    printf("\n\033[1;32mReport succesfully generated!\033[0m\n%d files are missing '%s' resource.\n\n", missing, resType.toStdString().c_str());
+  } else {
+    printf("Report file could not be opened for writing, please check permissions of folder '~/.skyscraper' then try again...\n");
   }
 }
 

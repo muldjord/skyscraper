@@ -145,7 +145,7 @@ void Skyscraper::run()
     cache->assembleReport(config.inputFolder, Platform::getFormats(config.platform,
 								   config.extensions,
 								   config.addExtensions),
-			  config.cacheOptions);
+			  config.platform, config.cacheOptions);
     exit(0);
   }
   if(config.cacheOptions == "validate") {
