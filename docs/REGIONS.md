@@ -1,16 +1,16 @@
 ## List of supported regions
 ### Scraping modules that support regions
-* screenscraper (pretty much all resources where available)
+* screenscraper (pretty much all resources)
 * igdb (only release date)
-* mobygames (only cover artwork and only by specific country, not region)
+* mobygames (only cover artwork)
 
-Please note that not all regions are supported by all modules (support is noted inside the `()` for each country or region). And only certain resources from those modules can be extracted with a specific country or region.
+Please note that not all regions are supported by all modules (support is noted inside the `()` for each country or region). And only certain resources from those modules can be extracted with a specific country or region (see above).
 
 When setting the country or region use the short-name as shown. Check the examples further down.
 
 ### Regions
 * de: Germany (screenscraper, mobygames)
-* asi: Asia (screenscraper, igdb, mobygames)
+* asi: Asia (screenscraper, igdb)
 * au: Australia (screenscraper, igdb, mobygames)
 * br: Brazil (screenscraper, mobygames)
 * bg: Bulgaria (screenscraper, mobygames)
@@ -19,10 +19,10 @@ When setting the country or region use the short-name as shown. Check the exampl
 * cn: China (screenscraper, igdb, mobygames)
 * ame: American continent (screenscraper)
 * kr: Korea (screenscraper, mobygames)
-* cus: Custom (screenscraper, mobygames)
+* cus: Custom (screenscraper)
 * dk: Denmark (screenscraper, mobygames)
 * sp: Spain (screenscraper, mobygames)
-* eu: Europe (screenscraper, igdb, mobygames)
+* eu: Europe (screenscraper, igdb)
 * fi: Finland (screenscraper, mobygames)
 * fr: France (screenscraper, mobygames)
 * gr: Greece (screenscraper, mobygames)
@@ -30,14 +30,14 @@ When setting the country or region use the short-name as shown. Check the exampl
 * il: Israel (screenscraper, mobygames)
 * it: Italy (screenscraper, mobygames)
 * jp: Japan (screenscraper, igdb, mobygames)
-* kw: Kuwait (screenscraper, mobygames)
+* kw: Kuwait (screenscraper)
 * wor: World (screenscraper, igdb, mobygames)
-* mor: Middle East (screenscraper, mobygames)
+* mor: Middle East (screenscraper)
 * no: Norway (screenscraper, mobygames)
 * nz: New Zealand (screenscraper, igdb, mobygames)
-* oce: Oceania (screenscraper, mobygames)
+* oce: Oceania (screenscraper)
 * nl: Netherlands (screenscraper, mobygames)
-* pe: Peru (screenscraper, mobygames)
+* pe: Peru (screenscraper)
 * pl: Poland (screenscraper, mobygames)
 * pt: Portugal (screenscraper, mobygames)
 * cz: Czech republic (screenscraper, mobygames)
@@ -65,7 +65,25 @@ region="de"
 
 ## Other notes
 ### Region autodetection
-Skyscraper will try to autodetect the region from the file name. It will look for designations such as `(Europe)` or `(e)` and set the region accordingly. This currently only works for Europe, Usa, World and Japan regions.
+Skyscraper will try to autodetect the region from the file name. It will look for designations such as `(Europe)` or `(e)` and set the region accordingly. This currently works for the following regions and / or countries:
+* eu
+* us
+* wor
+* jp
+* br
+* kr
+* tw
+* fr
+* de
+* it
+* sp
+* cn
+* au
+* se
+* ca
+* nl
+* dk
+* asi
 
 ### Default region prioritization
 When a region is specified by the user, this region will be prioritized. However, if a resource can't be found with that specific region, it will fall back to the default list of regions and look for a resource with the topmost region first, then the next and so on:
