@@ -146,7 +146,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Check for double bracket notes, and only add each note once. Remember to do toLower on them before checking as some of them are similar but have differing capitalization
 
-#### Version 3.1.5 (In progress, unreleased)
+#### Version 3.1.5 (7th July 2019)
 * Improved output of edit mode to show queue size and initial prioritized resources
 * Now clearly shows missing resources when adding resources in editing mode
 * Made '--cache vacuum' more verbose at verbosity level 2 or higher
@@ -155,6 +155,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Now also processes brackets for skipped games (Thanks to 'hexive' for pointing this out)
 * Added 'arcadia' and 'astrocde' MESS platforms (Thank you to 'raphkoster' for suggesting these)
 * Added '--cache report:missing=<RESOURCE>' option (Thank you to JaymesRS for suggesting this)
+* MobyGames module now includes 'platform' id query when relevant. Should improve result accuracy
 
 #### Version 3.1.4 (23rd March 2019)
 * Refactored network communication class
