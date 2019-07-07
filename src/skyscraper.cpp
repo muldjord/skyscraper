@@ -175,28 +175,34 @@ void Skyscraper::run()
   config.inputFolder = inputDir.absolutePath();
 
   QDir gameListDir(config.gameListFolder);
-  checkForFolder(gameListDir);
+  if(config.scraper == "cache" && !config.pretend)
+    checkForFolder(gameListDir);
   config.gameListFolder = gameListDir.absolutePath();
   
   QDir coversDir(config.coversFolder);
-  checkForFolder(coversDir);
+  if(config.scraper == "cache" && !config.pretend)
+    checkForFolder(coversDir);
   config.coversFolder = coversDir.absolutePath();
 
   QDir screenshotsDir(config.screenshotsFolder);
-  checkForFolder(screenshotsDir);
+  if(config.scraper == "cache" && !config.pretend)
+    checkForFolder(screenshotsDir);
   config.screenshotsFolder = screenshotsDir.absolutePath();
 
   QDir wheelsDir(config.wheelsFolder);
-  checkForFolder(wheelsDir);
+  if(config.scraper == "cache" && !config.pretend)
+    checkForFolder(wheelsDir);
   config.wheelsFolder = wheelsDir.absolutePath();
 
   QDir marqueesDir(config.marqueesFolder);
-  checkForFolder(marqueesDir);
+  if(config.scraper == "cache" && !config.pretend)
+    checkForFolder(marqueesDir);
   config.marqueesFolder = marqueesDir.absolutePath();
 
   if(config.videos) {
     QDir videosDir(config.videosFolder);
-    checkForFolder(videosDir);
+    if(config.scraper == "cache" && !config.pretend)
+      checkForFolder(videosDir);
     config.videosFolder = videosDir.absolutePath();
   }
 
@@ -457,13 +463,15 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
 
 #if QT_VERSION >= 0x050400
   qint64 spaceLimit = 209715200;
-  if(config.spaceCheck && (QStorageInfo(QDir(config.mediaFolder)).bytesFree() < spaceLimit ||
-			   QStorageInfo(QDir::current()).bytesFree() < spaceLimit)) {
-    printf("\033[1;31mYou have very little disk space left either on the Skyscraper resource cache drive or on the game list and media export drive, please free up some space and try again. Now aborting...\033[0m\n\nNote! You can disable this check by setting 'spaceCheck=\"false\"' in the '[main]' section of config.ini.\n\n");
-    // Clean up and exit
-    if(config.scraper == "cache") {
+  if(config.spaceCheck) {
+    if(config.scraper == "cache" && !config.pretend &&
+       QStorageInfo(QDir(config.mediaFolder)).bytesFree() < spaceLimit) {
+      printf("\033[1;31mYou have very little disk space left on the Skyscraper media export drive, please free up some space and try again. Now aborting...\033[0m\n\n");
       config.pretend = true;
+    } else if(QStorageInfo(QDir::current()).bytesFree() < spaceLimit) {
+      printf("\033[1;31mYou have very little disk space left on the Skyscraper resource cache drive, please free up some space and try again. Now aborting...\033[0m\n\n");
     }
+    printf("Note! You can disable this check by setting 'spaceCheck=\"false\"' in the '[main]' section of config.ini.\n\n");
     // By clearing the queue here we basically tell Skyscraper to stop and quit nicely
     queue->clearAll();
   }
