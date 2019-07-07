@@ -189,7 +189,7 @@ You can purge *all* resources from the cache for the chosen platform using the k
 
 You can purge specific resources from a certain module with `m=<MODULE>` or of a certain type with `t=<TYPE>` or a combination of the two separated by a `,`.
 
-Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
+Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshot`, `wheel`, `marquee`, `video`.
 
 Warning! Purging anything from the cache cannot be undone, so please consider making a backup.
 ###### Example(s)
@@ -207,14 +207,23 @@ Same as [--refresh](#--refresh).
 Skyscraper -p snes -s screenscraper --cache refresh
 ```
 
-##### --cache report:missing=&lt;RESOURCE&gt;
-Will create a report containing all filenames of games missing the entered resource type. File will be exported to '~/.skyscraper/report-<PLATFORM>-missing_<RESOURCE>-yyyymmdd_hhmmss.txt
+##### --cache report:missing=&lt;all, textual, artwork, media or RESOURCE1,RESOURCE2,...&gt;
+Will create report(s) containing all filenames of games missing the selected resource type(s). File(s) will be exported to '~/.skyscraper/reports/report-<PLATFORM>-missing_<RESOURCE>-yyyymmdd_hhmmss.txt
 
-Supported resource types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
+You can use any of the following:
+* all: Creates reports for all resource types
+* textual: Creates reports for all textual resource types
+* artwork: Creates reports for all artwork related resource types excluding 'video'
+* media: Creates reports for all media resource types including 'video'
+* type1,type2,type3,...:
+
+Supported resource types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshot`, `wheel`, `marquee`, `video`.
 ###### Example(s)
 ```
+Skyscraper -p snes --cache report:missing=textual
+Skyscraper -p snes --cache report:missing=artwork
 Skyscraper -p snes --cache report:missing=developer
-Skyscraper -p snes --cache report:missing=screenshot
+Skyscraper -p snes --cache report:missing=publisher,screenshot
 ```
 
 ##### --cache show
