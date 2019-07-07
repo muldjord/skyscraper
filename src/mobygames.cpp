@@ -57,9 +57,11 @@ MobyGames::MobyGames(Settings *config) : AbstractScraper(config)
 void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
+  QString platformId = getPlatformId(config->platform);
+
   printf("Waiting as advised by MobyGames api restrictions...\n");
   limiter.exec();
-  manager.request(searchUrlPre + "?api_key=" + StrTools::unMagic("175;229;170;189;188;202;211;117;164;165;185;209;164;234;180;155;199;209;224;231;193;190;173;175") + "&title=" + searchName);
+  manager.request(searchUrlPre + "?api_key=" + StrTools::unMagic("175;229;170;189;188;202;211;117;164;165;185;209;164;234;180;155;199;209;224;231;193;190;173;175") + "&title=" + searchName + (platformId == "na"?"":"&platform=" + platformId));
   q.exec();
   data = manager.getData();
 
@@ -359,4 +361,164 @@ void MobyGames::getScreenshot(GameEntry &game)
   if(image.loadFromData(manager.getData())) {
     game.screenshotData = image;
   }
+}
+
+QString MobyGames::getPlatformId(const QString platform)
+{
+  if(platform == "3do") {
+    return "35";
+  } else if(platform == "amiga") {
+    return "19";
+  } else if(platform == "aga") {
+    return "19";
+  } else if(platform == "cd32") {
+    return "56";
+  } else if(platform == "cdtv") {
+    return "83";
+  } else if(platform == "amstradcpc") {
+    return "60";
+  } else if(platform == "apple2") {
+    return "31";
+  } else if(platform == "arcade") {
+    return "na";
+  } else if(platform == "arcadia") {
+    return "162";
+  } else if(platform == "astrocde") {
+    return "160";
+  } else if(platform == "atari800") {
+    return "39";
+  } else if(platform == "atari2600") {
+    return "28";
+  } else if(platform == "atari5200") {
+    return "33";
+  } else if(platform == "atari7800") {
+    return "34";
+  } else if(platform == "atarijaguar") {
+    return "17";
+  } else if(platform == "atarilynx") {
+    return "18";
+  } else if(platform == "atarist") {
+    return "24";
+  } else if(platform == "c16") {
+    return "115";
+  } else if(platform == "c64") {
+    return "27";
+  } else if(platform == "c128") {
+    return "61";
+  } else if(platform == "coco") {
+    return "62";
+  } else if(platform == "coleco") {
+    return "29";
+  } else if(platform == "daphne") {
+    return "na";
+  } else if(platform == "dragon32") {
+    return "79";
+  } else if(platform == "dreamcast") {
+    return "8";
+  } else if(platform == "fba") {
+    return "na";
+  } else if(platform == "fds") {
+    return "22";
+  } else if(platform == "gameandwatch") {
+    return "na";
+  } else if(platform == "gamegear") {
+    return "25";
+  } else if(platform == "gb") {
+    return "10";
+  } else if(platform == "gba") {
+    return "12";
+  } else if(platform == "gbc") {
+    return "11";
+  } else if(platform == "gc") {
+    return "14";
+  } else if(platform == "genesis") {
+    return "16";
+  } else if(platform == "intellivision") {
+    return "30";
+  } else if(platform == "mame-advmame") {
+    return "na";
+  } else if(platform == "mame-libretro") {
+    return "na";
+  } else if(platform == "mame-mame4all") {
+    return "na";
+  } else if(platform == "mastersystem") {
+    return "26";
+  } else if(platform == "megacd") {
+    return "20";
+  } else if(platform == "megadrive") {
+    return "16";
+  } else if(platform == "msx") {
+    return "57";
+  } else if(platform == "n64") {
+    return "9";
+  } else if(platform == "nds") {
+    return "44";
+  } else if(platform == "neogeo") {
+    return "36";
+  } else if(platform == "nes") {
+    return "22";
+  } else if(platform == "ngp") {
+    return "52";
+  } else if(platform == "ngpc") {
+    return "53";
+  } else if(platform == "oric") {
+    return "111";
+  } else if(platform == "pc") {
+    return "na";
+  } else if(platform == "pc88") {
+    return "94";
+  } else if(platform == "pcfx") {
+    return "59";
+  } else if(platform == "pcengine") {
+    return "na";
+  } else if(platform == "ports") {
+    return "na";
+  } else if(platform == "ps2") {
+    return "7";
+  } else if(platform == "psp") {
+    return "46";
+  } else if(platform == "psx") {
+    return "6";
+  } else if(platform == "saturn") {
+    return "23";
+  } else if(platform == "scummvm") {
+    return "na";
+  } else if(platform == "sega32x") {
+    return "21";
+  } else if(platform == "segacd") {
+    return "20";
+  } else if(platform == "sg-1000") {
+    return "114";
+  } else if(platform == "snes") {
+    return "15";
+  } else if(platform == "ti99") {
+    return "47";
+  } else if(platform == "trs-80") {
+    return "58";
+  } else if(platform == "vectrex") {
+    return "37";
+  } else if(platform == "vic20") {
+    return "43";
+  } else if(platform == "videopac") {
+    return "128";
+  } else if(platform == "virtualboy") {
+    return "38";
+  } else if(platform == "wii") {
+    return "82";
+  } else if(platform == "wonderswan") {
+    return "48";
+  } else if(platform == "wonderswancolor") {
+    return "49";
+  } else if(platform == "x68000") {
+    return "106";
+  } else if(platform == "x1") {
+    return "121";
+  } else if(platform == "zmachine") {
+    return "169";
+  } else if(platform == "zx81") {
+    return "119";
+  } else if(platform == "zxspectrum") {
+    return "41";
+  }
+  return "na";
 }

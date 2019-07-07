@@ -65,7 +65,8 @@ private:
   void getVideo(GameEntry &game) override;
 
   QString getXmlText(QString node, int attr, QString type = "");
-  QString getPlatformId(const QString platform);
+
+  QString getPlatformId(const QString platform) override;
   
   QString region;
   QString lang;

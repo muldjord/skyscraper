@@ -55,6 +55,8 @@ private:
   void getCover(GameEntry &game) override;
   void getScreenshot(GameEntry &game) override;
 
+  QString getPlatformId(const QString platform) override;
+  
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
   
