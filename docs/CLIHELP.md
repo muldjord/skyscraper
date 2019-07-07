@@ -163,20 +163,6 @@ NOTE! For any of these commands you can set a non-default resource cache folder 
 
 Read more about the resource cache [here](CACHE.md).
 
-##### --cache show
-Shows the cache stats for the chosen platform. It will list how many resources of each type you currently have cached for each scraping module.
-###### Example(s)
-```
-Skyscraper -p snes --cache show
-```
-
-##### --cache refresh
-Same as [--refresh](#--refresh).
-###### Example(s)
-```
-Skyscraper -p snes -s screenscraper --cache refresh
-```
-
 ##### --cache edit
 Allows editing of any cached resources connected to your roms. The editing mode will go through each of the files in the queue one by one, allowing you to add and remove resources as needed. Any resource you add manually will be prioritized above all others.
 
@@ -186,6 +172,56 @@ You can provide one or more filenames to the end of the command line to edit the
 Skyscraper -p snes --cache edit <FILENAME 1> <FILENAME 2>
 Skyscraper -p snes --cache edit --startat <FILENAME> --endat <FILENAME>
 Skyscraper -p snes --cache edit
+```
+
+##### --cache merge:&lt;FOLDER&gt;
+This option allows you to merge two resource caches together. It will merge the cache located at the `<FOLDER>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option.
+###### Example(s)
+```
+Skyscraper -p snes --cache "merge:path/to/source/cache/folder"
+Skyscraper -p snes --cache "merge:path/to/source/cache/folder" -d "/path/to/nondefault/destination/cache/folder"
+```
+
+##### --cache purge:&lt;KEYWORD|MODULE and/or TYPE&gt;
+This is a powerful option that allows you to purge the requested resources from the resource cache connected to the selected platform.
+
+You can purge *all* resources from the cache for the chosen platform using the keyword `all`.
+
+You can purge specific resources from a certain module with `m=<MODULE>` or of a certain type with `t=<TYPE>` or a combination of the two separated by a `,`.
+
+Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
+
+Warning! Purging anything from the cache cannot be undone, so please consider making a backup.
+###### Example(s)
+```
+Skyscraper -p snes --cache purge:all
+Skyscraper -p snes --cache purge:m=thegamesdb
+Skyscraper -p snes --cache purge:t=cover
+Skyscraper -p snes --cache purge:m=thegamesdb,t=cover
+```
+
+##### --cache refresh
+Same as [--refresh](#--refresh).
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --cache refresh
+```
+
+##### --cache report:missing=&lt;RESOURCE&gt;
+Will create a report containing all filenames of games missing the entered resource type. File will be exported to '~/.skyscraper/report-<PLATFORM>-missing_<RESOURCE>-yyyymmdd_hhmmss.txt
+
+Supported resource types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
+###### Example(s)
+```
+Skyscraper -p snes --cache report:missing=developer
+Skyscraper -p snes --cache report:missing=screenshot
+```
+
+##### --cache show
+Shows the cache stats for the chosen platform. It will list how many resources of each type you currently have cached for each scraping module.
+###### Example(s)
+```
+Skyscraper -p snes --cache show
 ```
 
 ##### --cache vacuum
@@ -204,32 +240,6 @@ NOTE! This option doesn't clean up your game list media folders. You will need t
 ###### Example(s)
 ```
 Skyscraper -p snes --cache validate
-```
-
-##### --cache merge:&lt;FOLDER&gt;
-This option allows you to merge two resource caches together. It will merge the cache located at the `<FOLDER>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option.
-###### Example(s)
-```
-Skyscraper -p snes --cache "merge:path/to/source/cache/folder"
-Skyscraper -p snes --cache "merge:path/to/source/cache/folder" -d "/path/to/nondefault/destination/cache/folder"
-```
-
-##### --cache purge:<KEYWORD|MODULE and/or TYPE>
-This is a powerful option that allows you to purge the requested resources from the resource cache connected to the selected platform.
-
-You can purge *all* resources from the cache for the chosen platform using the keyword `all`.
-
-You can purge specific resources from a certain module with `m=<MODULE>` or of a certain type with `t=<TYPE>` or a combination of the two separated by a `,`.
-
-Supported modules can be seen under `-s` when using the `--help` option. Supported types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshots`, `wheel`, `marquee`, `video`.
-
-Warning! Purging anything from the cache cannot be undone, so please consider making a backup.
-###### Example(s)
-```
-Skyscraper -p snes --cache purge:all
-Skyscraper -p snes --cache purge:m=thegamesdb
-Skyscraper -p snes --cache purge:t=cover
-Skyscraper -p snes --cache purge:m=thegamesdb,t=cover
 ```
 
 #### --videos
