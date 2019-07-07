@@ -682,7 +682,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
     }
     printf("\n");
     reportFile.close();
-    printf("\n\033[1;32mReport succesfully generated!\033[0m\n%d files are missing '%s' resource.\n\n", missing, resType.toStdString().c_str());
+    printf("\n\033[1;32mReport succesfully generated!\033[0m\n%d file(s) is/are missing the '%s' resource. Consider using the '--cache edit' or the '-s import' option to add them. Check '--help' for more information.\n\n", missing, resType.toStdString().c_str());
   } else {
     printf("Report file could not be opened for writing, please check permissions of folder '~/.skyscraper' then try again...\n");
   }
