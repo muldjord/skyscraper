@@ -154,8 +154,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added 'videoSizeLimit' config variable (Thank you to 'silverfr0st' for suggesting this)
 * Now also processes brackets for skipped games (Thanks to 'hexive' for pointing this out)
 * Added 'arcadia' and 'astrocde' MESS platforms (Thank you to 'raphkoster' for suggesting these)
-* Added '--cache report:missing=<RESOURCE>' option (Thank you to JaymesRS for suggesting this)
+* Added '--cache report:missing=<GROUP or RESOURCE1,2,...>' option (Thank you to JaymesRS for suggesting this)
 * MobyGames module now includes 'platform' id query when relevant. Should improve result accuracy
+* Now no longer creates media folders when in resource gathering mode
 
 #### Version 3.1.4 (23rd March 2019)
 * Refactored network communication class
