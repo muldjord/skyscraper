@@ -145,8 +145,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Introduce the ability to use <BASENAME> in the 'file="somefolder/<BASENAME>.png"' in artwork.xml which would then look for a file in 'resources' with the game basename.png allowing users to use their own custom artwork data as a workaround to adding new types to import (Thank you to 'jueank' for suggesting this)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Check for double bracket notes, and only add each note once. Remember to do toLower on them before checking as some of them are similar but have differing capitalization
+* Make use the '--cache edit' function with files created using the '--cache report' option. For instance with a '--from-file' option
 
-#### Version 3.2.0 (7th July 2019)
+#### Version 3.2.0 (8th July 2019)
 * Improved output of edit mode to show queue size and initial prioritized resources
 * Now clearly shows missing resources when adding resources in editing mode
 * Made '--cache vacuum' more verbose at verbosity level 2 or higher
@@ -156,7 +157,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added 'arcadia' and 'astrocde' MESS platforms (Thank you to 'raphkoster' for suggesting these)
 * Added '--cache report:missing=<GROUP or RESOURCE1,2,...>' option (Thank you to JaymesRS for suggesting this)
 * MobyGames module now includes 'platform' id query when relevant. Should improve result accuracy
+* Added region support for MobyGames cover artwork
 * Now no longer creates media folders when in resource gathering mode
+* Added A LOT of regions to region autodetection
 
 #### Version 3.1.4 (23rd March 2019)
 * Refactored network communication class
