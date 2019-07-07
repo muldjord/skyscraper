@@ -707,6 +707,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("emerson arcadia 2001");
   } else if(platform == "astrocde") {
     aliases.append("astrocade");
+    aliases.append("bally astrocade");
   } else if(platform == "atari800") {
     aliases.append("atari 800");
     aliases.append("atari 8-bit");
