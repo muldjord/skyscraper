@@ -515,6 +515,48 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
     if(regionString.contains("japan") || regionString.contains("(j)")) {
       regionPrios.prepend("jp");
     }
+    if(regionString.contains("brazil")) {
+      regionPrios.prepend("br");
+    }
+    if(regionString.contains("korea")) {
+      regionPrios.prepend("kr");
+    }
+    if(regionString.contains("taiwan")) {
+      regionPrios.prepend("tw");
+    }
+    if(regionString.contains("france")) {
+      regionPrios.prepend("fr");
+    }
+    if(regionString.contains("germany")) {
+      regionPrios.prepend("de");
+    }
+    if(regionString.contains("italy")) {
+      regionPrios.prepend("it");
+    }
+    if(regionString.contains("spain")) {
+      regionPrios.prepend("sp");
+    }
+    if(regionString.contains("china")) {
+      regionPrios.prepend("cn");
+    }
+    if(regionString.contains("australia")) {
+      regionPrios.prepend("au");
+    }
+    if(regionString.contains("sweden")) {
+      regionPrios.prepend("se");
+    }
+    if(regionString.contains("canada")) {
+      regionPrios.prepend("ca");
+    }
+    if(regionString.contains("netherlands")) {
+      regionPrios.prepend("nl");
+    }
+    if(regionString.contains("denmark")) {
+      regionPrios.prepend("dk");
+    }
+    if(regionString.contains("asia")) {
+      regionPrios.prepend("asi");
+    }
   }
   
   QList<QString> searchNames;
