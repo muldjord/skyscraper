@@ -647,45 +647,164 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
   }
   reportStr.replace("report:missing=", "");
 
-  QString resType = reportStr.simplified();
-  
-  QFile reportFile("report-" + platform + "-missing_" + resType + "-" + QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss") + ".txt");
-
-  printf("Assembling report into file '\033[1;32m%s\033[0m'.\nThis can take several minutes, please be patient...", reportFile.fileName().toStdString().c_str());
-  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
-  if(reportFile.open(QIODevice::WriteOnly)) {
-    int missing = 0;
-    int dots = 0;
-    // Always make dotMod at least 1 or it will give "floating point exception" when modulo
-    int dotMod = fileInfos.size() * 0.1 + 1;
-
-    foreach(QFileInfo info, fileInfos) {
-      if(dots % dotMod == 0) {
-	printf(".");
-	fflush(stdout);
+  QString missingOption = reportStr.simplified();
+  QList<QString> resTypeList;
+  if(missingOption.contains(",")) {
+    resTypeList = missingOption.split(",");
+  } else {
+    if(missingOption == "all") {
+      resTypeList.append("title");
+      resTypeList.append("platform");
+      resTypeList.append("description");
+      resTypeList.append("publisher");
+      resTypeList.append("developer");
+      resTypeList.append("ages");
+      resTypeList.append("tags");
+      resTypeList.append("rating");
+      resTypeList.append("releasedate");
+      resTypeList.append("cover");
+      resTypeList.append("screenshot");
+      resTypeList.append("wheel");
+      resTypeList.append("marquee");
+      resTypeList.append("video");
+    } else if(missingOption == "textual") {
+      resTypeList.append("title");
+      resTypeList.append("platform");
+      resTypeList.append("description");
+      resTypeList.append("publisher");
+      resTypeList.append("developer");
+      resTypeList.append("ages");
+      resTypeList.append("tags");
+      resTypeList.append("rating");
+      resTypeList.append("releasedate");
+    } else if(missingOption == "artwork") {
+      resTypeList.append("cover");
+      resTypeList.append("screenshot");
+      resTypeList.append("wheel");
+      resTypeList.append("marquee");
+    } else if(missingOption == "media") {
+      resTypeList.append("cover");
+      resTypeList.append("screenshot");
+      resTypeList.append("wheel");
+      resTypeList.append("marquee");
+      resTypeList.append("video");
+    } else {
+      resTypeList.append(missingOption); // If a single type is given
+    }
+  }
+  foreach(QString resType, resTypeList) {
+    if(resType != "title" &&
+       resType != "platform" &&
+       resType != "description" &&
+       resType != "publisher" &&
+       resType != "developer" &&
+       resType != "ages" &&
+       resType != "tags" &&
+       resType != "rating" &&
+       resType != "releasedate" &&
+       resType != "cover" &&
+       resType != "screenshot" &&
+       resType != "wheel" &&
+       resType != "marquee" &&
+       resType != "video") {
+      if(resType != "help") {
+	printf("\033[1;31mUnknown resource type '%s'!\033[0m\n", resType.toStdString().c_str());
       }
-      dots++;
-      QString sha1 = NameTools::getSha1(info);
-      bool found = false;
-      foreach(Resource res, resources) {
-	if(res.sha1 == sha1) {
-	  if(res.type == resType) {
-	    found = true;
-	    break;
-	  }
-	}
-      }
-      if(!found) {
-	missing++;
-	reportFile.write(info.absoluteFilePath().toUtf8() + "\n");
-      }
+      printf("Please use one of the following:\n");
+      printf("  \033[1;32mhelp\033[0m: Shows this help message\n");
+      printf("  \033[1;32mall\033[0m: Creates reports for all resource types\n");
+      printf("  \033[1;32mtextual\033[0m: Creates reports for all textual resource types\n");
+      printf("  \033[1;32martwork\033[0m: Creates reports for all artwork related resource types excluding 'video'\n");
+      printf("  \033[1;32mmedia\033[0m: Creates reports for all media resource types including 'video'\n");
+      printf("  \033[1;32mtype1,type2,type3,...\033[0m: Creates reports for selected types. Example: 'developer,screenshot,rating'\n");
+      printf("\nAvailable resource types:\n");
+      printf("  \033[1;32mtitle\033[0m\n");
+      printf("  \033[1;32mplatform\033[0m\n");
+      printf("  \033[1;32mdescription\033[0m\n");
+      printf("  \033[1;32mpublisher\033[0m\n");
+      printf("  \033[1;32mdeveloper\033[0m\n");
+      printf("  \033[1;32mages\033[0m\n");
+      printf("  \033[1;32mtags\033[0m\n");
+      printf("  \033[1;32mrating\033[0m\n");
+      printf("  \033[1;32mreleasedate\033[0m\n");
+      printf("  \033[1;32mcover\033[0m\n");
+      printf("  \033[1;32mscreenshot\033[0m\n");
+      printf("  \033[1;32mwheel\033[0m\n");
+      printf("  \033[1;32mmarquee\033[0m\n");
+      printf("  \033[1;32mvideo\033[0m\n");
+      printf("\n");
+      return;
+    }
+  }
+  if(resTypeList.isEmpty()) {
+    printf("Resource type list is empty, cancelling...\n");
+    return;
+  } else {
+    printf("Creating report(s) for resource type(s):\n");
+    foreach(QString resType, resTypeList) {
+      printf("  %s\n", resType.toStdString().c_str());
     }
     printf("\n");
-    reportFile.close();
-    printf("\n\033[1;32mReport succesfully generated!\033[0m\n%d file(s) is/are missing the '%s' resource. Consider using the '--cache edit' or the '-s import' option to add them. Check '--help' for more information.\n\n", missing, resType.toStdString().c_str());
-  } else {
-    printf("Report file could not be opened for writing, please check permissions of folder '~/.skyscraper' then try again...\n");
   }
+
+  // Create the reports folder
+  QDir reportsDir(QDir::currentPath() + "/reports");
+  if(!reportsDir.exists()) {
+    if(!reportsDir.mkpath(".")) {
+      printf("Couldn't create reports folder '%s'. Please check permissions then try again...\n", reportsDir.absolutePath().toStdString().c_str());
+      return;
+    }
+  }
+  
+  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
+  printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), platform.toStdString().c_str());
+  printf("Creating file id list for all files, please wait...");
+  QList<QString> sha1List = getSha1List(fileInfos);
+  printf("\n\n");
+
+  if(fileInfos.length() != sha1List.length()) {
+    printf("Length of sha1 list mismatch the number of files, something is wrong! Please report this. Can't continue...\n");
+    return;
+  }
+  
+  QString dateTime = QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss");
+  foreach(QString resType, resTypeList) {
+    QFile reportFile(reportsDir.absolutePath() + "/report-" + platform + "-missing_" + resType + "-" + dateTime + ".txt");
+    printf("Report filename: '\033[1;32m%s\033[0m'\nAssembling report, please wait...", reportFile.fileName().toStdString().c_str());
+    if(reportFile.open(QIODevice::WriteOnly)) {
+      int missing = 0;
+      int dots = 0;
+      // Always make dotMod at least 1 or it will give "floating point exception" when modulo
+      int dotMod = fileInfos.size() * 0.1 + 1;
+      
+      for(int a = 0; a < fileInfos.length(); ++a) {
+	if(dots % dotMod == 0) {
+	  printf(".");
+	  fflush(stdout);
+	}
+	dots++;
+	bool found = false;
+	foreach(Resource res, resources) {
+	  if(res.sha1 == sha1List.at(a)) {
+	    if(res.type == resType) {
+	      found = true;
+	      break;
+	    }
+	  }
+	}
+	if(!found) {
+	  missing++;
+	  reportFile.write(fileInfos.at(a).absoluteFilePath().toUtf8() + "\n");
+	}
+      }
+      reportFile.close();
+      printf("\033[1;32m Done!\033[0m\n%d file(s) is/are missing the '%s' resource.\n\n", missing, resType.toStdString().c_str());
+    } else {
+      printf("Report file could not be opened for writing, please check permissions of folder '~/.skyscraper', then try again...\n");
+      return;
+    }
+  }
+  printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit\033[0m' or the '\033[1;33m-s import\033[0m' option to add the missing resources. Check '\033[1;33m--help\033[0m' for more information.\n\n");
 }
 
 void Cache::vacuumResources(const QString inputFolder, const QString filter,
