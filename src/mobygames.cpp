@@ -557,16 +557,12 @@ QString MobyGames::getRegionShort(const QString &region)
     return "cl";
   } else if(region == "China") {
     return "cn";
-  } else if(region == "Korea") {
+  } else if(region == "South Korea") {
     return "kr";
-  } else if(region == "Other") {
-    return "cus";
   } else if(region == "Denmark") {
     return "dk";
   } else if(region == "Spain") {
     return "sp";
-  } else if(region == "Europe") {
-    return "eu";
   } else if(region == "Finland") {
     return "fi";
   } else if(region == "France") {
@@ -581,22 +577,14 @@ QString MobyGames::getRegionShort(const QString &region)
     return "it";
   } else if(region == "Japan") {
     return "jp";
-  } else if(region == "Kuwait") {
-    return "kw";
-  } else if(region == "World") {
+  } else if(region == "Worldwide") {
     return "wor";
-  } else if(region == "Middle East") {
-    return "mor";
   } else if(region == "Norway") {
     return "no";
   } else if(region == "New Zealand") {
     return "nz";
-  } else if(region == "Oceania") {
-    return "oce";
   } else if(region == "Netherlands") {
     return "nl";
-  } else if(region == "Peru") {
-    return "pe";
   } else if(region == "Poland") {
     return "pl";
   } else if(region == "Portugal") {
