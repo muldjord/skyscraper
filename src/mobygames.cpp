@@ -303,27 +303,45 @@ void MobyGames::getCover(GameEntry &game)
   QString coverUrl = "";
   bool found = false;
 
-  QJsonArray jsonCoverGroups = jsonDoc.object().value("cover_groups").toArray();
-  while(!jsonCoverGroups.isEmpty()) {
-    QJsonArray jsonCovers = jsonCoverGroups.first().toObject().value("covers").toArray();
-    while(!jsonCovers.isEmpty()) {
-      QJsonObject jsonCover = jsonCovers.first().toObject();
-
-      if(jsonCover.value("scan_of").toString().toLower() == "front cover") {
-	coverUrl = jsonCover.value("image").toString();
-	found = true;
+  foreach(QString region, regionPrios) {
+    QJsonArray jsonCoverGroups = jsonDoc.object().value("cover_groups").toArray();
+    while(!jsonCoverGroups.isEmpty()) {
+      QJsonArray jsonCountries = jsonCoverGroups.first().toObject().value("countries").toArray();
+      while(!jsonCountries.isEmpty()) {
+	if(getRegionShort(jsonCountries.first().toString()) == region) {
+	  found = true;
+	  break;
+	}
+	jsonCountries.removeFirst();
+      }
+      if(!found) {
+	jsonCoverGroups.removeFirst();
+	continue;
+      }
+      found = false;
+      QJsonArray jsonCovers = jsonCoverGroups.first().toObject().value("covers").toArray();
+      while(!jsonCovers.isEmpty()) {
+	QJsonObject jsonCover = jsonCovers.first().toObject();
+	if(jsonCover.value("scan_of").toString().toLower().contains("front")) {
+	  coverUrl = jsonCover.value("image").toString();
+	  found = true;
+	  break;
+	}
+	jsonCovers.removeFirst();
+      }
+      if(found) {
 	break;
       }
-      jsonCovers.removeFirst();
     }
     if(found) {
       break;
     }
-    jsonCoverGroups.removeFirst();
   }
+
+  coverUrl.replace("http://", "https://"); // For some reason the links are http but they are always redirected to https
   
   if(!coverUrl.isEmpty()) {
-    manager.request(coverUrl.replace("http://", "https://"));
+    manager.request(coverUrl);
     q.exec();
     QImage image;
     if(image.loadFromData(manager.getData())) {
@@ -519,6 +537,86 @@ QString MobyGames::getPlatformId(const QString platform)
     return "119";
   } else if(platform == "zxspectrum") {
     return "41";
+  }
+  return "na";
+}
+
+QString MobyGames::getRegionShort(const QString &region)
+{
+  if(region == "Germany") {
+    return "de";
+  } else if(region == "Australia") {
+    return "au";
+  } else if(region == "Brazil") {
+    return "br";
+  } else if(region == "Bulgaria") {
+    return "bg";
+  } else if(region == "Canada") {
+    return "ca";
+  } else if(region == "Chile") {
+    return "cl";
+  } else if(region == "China") {
+    return "cn";
+  } else if(region == "Korea") {
+    return "kr";
+  } else if(region == "Other") {
+    return "cus";
+  } else if(region == "Denmark") {
+    return "dk";
+  } else if(region == "Spain") {
+    return "sp";
+  } else if(region == "Europe") {
+    return "eu";
+  } else if(region == "Finland") {
+    return "fi";
+  } else if(region == "France") {
+    return "fr";
+  } else if(region == "Greece") {
+    return "gr";
+  } else if(region == "Hungary") {
+    return "hu";
+  } else if(region == "Israel") {
+    return "il";
+  } else if(region == "Italy") {
+    return "it";
+  } else if(region == "Japan") {
+    return "jp";
+  } else if(region == "Kuwait") {
+    return "kw";
+  } else if(region == "World") {
+    return "wor";
+  } else if(region == "Middle East") {
+    return "mor";
+  } else if(region == "Norway") {
+    return "no";
+  } else if(region == "New Zealand") {
+    return "nz";
+  } else if(region == "Oceania") {
+    return "oce";
+  } else if(region == "Netherlands") {
+    return "nl";
+  } else if(region == "Peru") {
+    return "pe";
+  } else if(region == "Poland") {
+    return "pl";
+  } else if(region == "Portugal") {
+    return "pt";
+  } else if(region == "Czech Republic") {
+    return "cz";
+  } else if(region == "United Kingdom") {
+    return "uk";
+  } else if(region == "Russia") {
+    return "ru";
+  } else if(region == "Slovakia") {
+    return "sk";
+  } else if(region == "Sweden") {
+    return "se";
+  } else if(region == "Taiwan") {
+    return "tw";
+  } else if(region == "Turkey") {
+    return "tr";
+  } else if(region == "United States") {
+    return "us";
   }
   return "na";
 }
