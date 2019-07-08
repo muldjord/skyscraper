@@ -767,7 +767,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
     return;
   }
   
-  QString dateTime = QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss");
+  QString dateTime = QDateTime::currentDateTime().toString("yyyyMMdd");
   foreach(QString resType, resTypeList) {
     QFile reportFile(reportsDir.absolutePath() + "/report-" + platform + "-missing_" + resType + "-" + dateTime + ".txt");
     printf("Report filename: '\033[1;32m%s\033[0m'\nAssembling report, please wait...", reportFile.fileName().toStdString().c_str());
