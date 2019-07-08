@@ -320,8 +320,8 @@ NOTE! This is not related to the artwork compositing that happens when generatin
 Skyscraper -p amiga -s openretro --noresize
 ```
 
-#### --startat &lt;FILENAME&gt;
-If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and onwards. Use it in conjunction with the `--endat` option described below to further narrow the subset of files you wish to gather resources for.
+#### --from-file &lt;FILENAME&gt;
+If you wish to workgather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and onwards. Use it in conjunction with the `--endat` option described below to further narrow the subset of files you wish to gather resources for.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
 
@@ -332,12 +332,24 @@ Skyscraper -p snes -s thegamesdb --startat "rom name.zip"
 Skyscraper -p snes -s thegamesdb --startat "partial/path/to/rom name.zip"
 ```
 
-#### --endat &lt;FILENAME&gt;
-If you wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrape alphabetically until it reaches this rom, then stop. Use it in conjunction with the `--startat` option described above to further narrow the subset of files you wish to gather resources for.
+#### --startat &lt;FILENAME&gt;
+If you wish to work on a subset of your roms you can use this option to set the starting rom. Use it in conjunction with the `--endat` option described below to further narrow the subset of files.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
 
-NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb /full/or/partial/path/to/rom.zip`.
+NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb "/full/or/partial/path/to/rom.zip"`. You can also use the '--from-file' option.
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --startat "rom name.zip"
+Skyscraper -p snes -s thegamesdb --startat "partial/path/to/rom name.zip"
+```
+
+#### --endat &lt;FILENAME&gt;
+If you wish to work on a subset of your roms you can use this option to set the rom to end at. Use it in conjunction with the `--startat` option described above to further narrow the subset of files.
+
+NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
+
+NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb "/full/or/partial/path/to/rom.zip"`. You can also use the '--from-file' option.
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb --endat "rom name.zip"
