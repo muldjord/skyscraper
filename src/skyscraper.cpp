@@ -1149,24 +1149,38 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   skippedFileString = "skipped-" + config.scraper + ".txt";
 
-  // If user has set specific files to scrape on command line set them internally
-  foreach(QString cliArgument, parser.positionalArguments()) {
-    QFileInfo cliFile(cliArgument);
-    if(!cliFile.exists()) {
-      cliFile.setFile(config.currentDir + "/" + cliArgument);
+  // Grab all requested files from cli, if any
+  QList<QString> requestedFiles = parser.positionalArguments();
+  
+  // Add files from '--fromfile', if any
+  if(parser.isSet("fromfile") && QFileInfo::exists(parser.value("fromfile"))) {
+    QFile fromFile(parser.value("fromfile"));
+    if(fromFile.open(QIODevice::ReadOnly)) {
+      while(!fromFile.atEnd()) {
+	requestedFiles.append(QString(fromFile.readLine().simplified()));
+      }
+      fromFile.close();
     }
-    if(!cliFile.exists()) {
-      cliFile.setFile(config.inputFolder + "/" + cliArgument);
+  }
+
+  // Verify requested files and add the ones that exist
+  foreach(QString requestedFile, requestedFiles) {
+    QFileInfo requestedFileInfo(requestedFile);
+    if(!requestedFileInfo.exists()) {
+      requestedFileInfo.setFile(config.currentDir + "/" + requestedFile);
     }
-    if(cliFile.exists()) {
-      cliFiles.append(cliFile.absoluteFilePath());
+    if(!requestedFileInfo.exists()) {
+      requestedFileInfo.setFile(config.inputFolder + "/" + requestedFile);
+    }
+    if(requestedFileInfo.exists()) {
+      cliFiles.append(requestedFileInfo.absoluteFilePath());
       // Always set refresh and unattend true if user has supplied filenames on
       // command line. That way they are cached, but game list is not changed and user isn't
       // asked about skipping and overwriting.
       config.refresh = true;
       config.unattend = true;
     } else {
-      printf("Filename: '%s' not found!\n\nNow quitting...\n", cliArgument.toStdString().c_str());
+      printf("Filename: '%s' requested either on command line or with '--fromfile' not found!\n\nPlease verify the filename and try again...\n", requestedFile.toStdString().c_str());
       exit(1);
     }
   }
@@ -1176,7 +1190,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     if(cliFiles.length() == 1) {
       config.searchName = parser.value("query");
     } else {
-      printf("'--query' was set but no filename was provided on command line. Please provide a single rom file name you wish to scrape using the query, now quitting...\n");
+      printf("'--query' was set but more than one filename was provided on command line or using the '--fromfile' option. Please provide only a single rom file name you wish to scrape using the query, now quitting...\n");
       exit(1);
     }
   }
