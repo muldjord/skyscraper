@@ -169,12 +169,13 @@ Outputs a description of all available `--cache` functions.
 ##### --cache edit
 Allows editing of any cached resources connected to your roms. The editing mode will go through each of the files in the queue one by one, allowing you to add and remove resources as needed. Any resource you add manually will be prioritized above all others.
 
-You can provide one or more filenames to the end of the command line to edit the resources for just those few files. Or you can use the '--startat' and '--endat' options to edit a span of roms. If none of those options are used, it will edit all of the roms in the input folder one by one.
+You can provide one or more filenames to the end of the command line or use the `--fromfile` option to edit the resources for just those files. You can use the `--startat` and `--endat` options to edit a span of roms. If none of those options are used, it will edit all of the roms in the input folder one by one.
 ###### Example(s)
 ```
 Skyscraper -p snes --cache edit <FILENAME 1> <FILENAME 2>
 Skyscraper -p snes --cache edit --startat <FILENAME> --endat <FILENAME>
 Skyscraper -p snes --cache edit
+Skyscraper -p snes --cache edit --fromfile "/home/pi/.skyscraper/reports/report-snes-missing_developer-20190708.txt"
 ```
 
 ##### --cache merge:&lt;FOLDER&gt;
