@@ -182,8 +182,8 @@ Skyscraper -p snes --cache edit --fromfile "/home/pi/.skyscraper/reports/report-
 This option allows you to merge two resource caches together. It will merge the cache located at the `<FOLDER>` location into the default cache for the chosen platform. You can also set a non-default destination to merge to with the `-d` option.
 ###### Example(s)
 ```
-Skyscraper -p snes --cache "merge:path/to/source/cache/folder"
-Skyscraper -p snes --cache "merge:path/to/source/cache/folder" -d "/path/to/nondefault/destination/cache/folder"
+Skyscraper -p snes --cache merge:"path to/source/cache/folder"
+Skyscraper -p snes --cache merge:"path to/source/cache/folder" -d "/path to/nondefault/destination/cache/folder"
 ```
 
 ##### --cache purge:&lt;KEYWORD|MODULE and/or TYPE&gt;
