@@ -320,7 +320,7 @@ NOTE! This is not related to the artwork compositing that happens when generatin
 Skyscraper -p amiga -s openretro --noresize
 ```
 
-#### --from-file &lt;FILENAME&gt;
+#### --fromfile &lt;FILENAME&gt;
 If you wish to workgather data for a subset of your roms from the scraping modules you can use this option to set the starting rom. It will then scrape alphabetically from that rom and onwards. Use it in conjunction with the `--endat` option described below to further narrow the subset of files you wish to gather resources for.
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
