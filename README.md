@@ -160,6 +160,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added region support for MobyGames cover artwork
 * Added A LOT of regions to region autodetection in general
 * Now no longer creates media folders when in resource gathering mode
+* Moved help texts for '--cache' options to '--cache help'
 
 #### Version 3.1.4 (23rd March 2019)
 * Refactored network communication class
