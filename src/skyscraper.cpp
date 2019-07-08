@@ -1057,8 +1057,22 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("cache")) {
     config.cacheOptions = parser.value("cache");
-    if(config.cacheOptions == "refresh")
+    if(config.cacheOptions == "refresh") {
       config.refresh = true;
+    } else if(config.cacheOptions == "help") {
+      printf("Showing '\033[1;33m--cache\033[0m' help\n");
+      printf("  \033[1;33m--cache show\033[0m: Prints a status of all cached resources for the selected platform.\n");
+      printf("  \033[1;33m--cache validate\033[0m: Checks the consistency of the cache for the selected platform.\n");
+      printf("  \033[1;33m--cache edit\033[0m: Let's you edit cached resources for the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--fromfile' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
+      printf("  \033[1;33m--cache vacuum\033[0m: Compares your romset to any cached resource and removes the resources that you no longer have roms for.\n");
+      printf("  \033[1;33m--cache report:missing=<OPTION>\033[0m: Generates reports with all files that are missing the specified resources. Check '--cache report:missing=help' for more info.\n");
+      printf("  \033[1;33m--cache merge:<PATH>\033[0m: Merges two resource caches together.\n");
+      printf("  \033[1;33m--cache purge:all\033[0m: Removes ALL cached resources for the selected platform.\n");
+      printf("  \033[1;33m--cache purge:m=<MODULE>,t=<TYPE>\033[0m: Removes cached resources related to the selected module(m) and / or type(t). Either one can be left out in which case ALL resources from the selected module or ALL resources from the selected type will be removed.\n");
+      printf("  \033[1;33m--cache refresh\033[0m: Forces a refresh of existing cached resources for any scraping module. Requires a scraping module set with '-s'.\n");
+      printf("\n");
+      exit(0);
+    }
   }
   if(parser.isSet("noresize")) {
     config.noResize = true;
