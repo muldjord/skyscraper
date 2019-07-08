@@ -212,7 +212,7 @@ Skyscraper -p snes -s screenscraper --cache refresh
 ```
 
 ##### --cache report:missing=&lt;all, textual, artwork, media or RESOURCE1,RESOURCE2,...&gt;
-Will create report(s) containing all filenames of games missing the selected resource type(s). File(s) will be exported to '~/.skyscraper/reports/report-<PLATFORM>-missing_<RESOURCE>-yyyymmdd_hhmmss.txt
+Will create report(s) containing all filenames of games missing the selected resource type(s). File(s) will be exported to '~/.skyscraper/reports/report-<PLATFORM>-missing_<RESOURCE>-yyyymmdd.txt
 
 You can use any of the following:
 * all: Creates reports for all resource types
