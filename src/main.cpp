@@ -218,6 +218,7 @@ int main(int argc, char *argv[])
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
+  QCommandLineOption fromfileOption("from-file", "Tells Skyscraper to load the list of filenames to work on from a file. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
   QCommandLineOption pretendOption("pretend", "Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.");
   QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
@@ -258,6 +259,7 @@ int main(int argc, char *argv[])
   parser.addOption(noresizeOption);
   parser.addOption(startatOption);
   parser.addOption(endatOption);
+  parser.addOption(fromfileOption);
   parser.addOption(maxfailsOption);
   parser.addOption(pretendOption);
   parser.addOption(unattendOption);
