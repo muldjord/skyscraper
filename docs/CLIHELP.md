@@ -164,7 +164,7 @@ NOTE! For any of these commands you can set a non-default resource cache folder 
 Read more about the resource cache [here](CACHE.md).
 
 ##### --cache help
-Outputs a description of all `--cache` available functions.
+Outputs a description of all available `--cache` functions.
 
 ##### --cache edit
 Allows editing of any cached resources connected to your roms. The editing mode will go through each of the files in the queue one by one, allowing you to add and remove resources as needed. Any resource you add manually will be prioritized above all others.
