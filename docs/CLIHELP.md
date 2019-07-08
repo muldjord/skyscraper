@@ -321,7 +321,7 @@ Skyscraper -p amiga -s openretro --noresize
 ```
 
 #### --fromfile &lt;FILENAME&gt;
-Using this option is the equivalent to adding a bunch of filenames to work on directly on the commandline. It reads one line at a time from <FILENAME>, and adds them to the queue of files to work on. This is very useful in conjunction with the '--cache edit' option or if you want to regather data just for those files using '-s <SCRAPING MODULE>'.
+Using this option is the equivalent to adding a bunch of filenames to work on directly on the commandline. It reads one line at a time from `<FILENAME>`, and adds them to the queue of files to work on. This is very useful in conjunction with the `--cache edit` option or if you want to regather data just for those files using `-s <SCRAPING MODULE>`.
 
 ###### Example(s)
 ```
@@ -334,7 +334,7 @@ If you wish to work on a subset of your roms you can use this option to set the 
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
 
-NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb "/full/or/partial/path/to/rom.zip"`. You can also use the '--from-file' option.
+NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb "/full/or/partial/path/to/rom.zip"`. You can also use the `--fromfile` option.
 ###### Example(s)
 ```
 Skyscraper -p snes --cache edit --startat "rom name.zip"
@@ -346,7 +346,7 @@ If you wish to work on a subset of your roms you can use this option to set the 
 
 NOTE 1! Enabling this option automatically sets the `--refresh` and `--nosubdirs` options.
 
-NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb "/full/or/partial/path/to/rom.zip"`. You can also use the '--from-file' option.
+NOTE 2! Instead of using this option, if you just want to gather resources for 1 or 2 roms, you can provide the filename(s) directly on the command like so: `$ Skyscraper -p snes -s thegamesdb "/full/or/partial/path/to/rom.zip"`. You can also use the `--fromfile` option.
 ###### Example(s)
 ```
 Skyscraper -p snes --cache edit --endat "rom name.zip"
