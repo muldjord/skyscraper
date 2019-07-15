@@ -322,7 +322,7 @@ void MobyGames::getCover(GameEntry &game)
       QJsonArray jsonCovers = jsonCoverGroups.first().toObject().value("covers").toArray();
       while(!jsonCovers.isEmpty()) {
 	QJsonObject jsonCover = jsonCovers.first().toObject();
-	if(jsonCover.value("scan_of").toString().toLower().contains("front")) {
+	if(jsonCover.value("scan_of").toString().toLower().simplified().contains("front cover")) {
 	  coverUrl = jsonCover.value("image").toString();
 	  foundFrontCover= true;
 	  break;
