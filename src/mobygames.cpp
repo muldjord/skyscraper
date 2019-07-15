@@ -301,39 +301,40 @@ void MobyGames::getCover(GameEntry &game)
   }
 
   QString coverUrl = "";
-  bool found = false;
+  bool foundFrontCover= false;
 
   foreach(QString region, regionPrios) {
     QJsonArray jsonCoverGroups = jsonDoc.object().value("cover_groups").toArray();
     while(!jsonCoverGroups.isEmpty()) {
+      bool foundRegion = false;
       QJsonArray jsonCountries = jsonCoverGroups.first().toObject().value("countries").toArray();
       while(!jsonCountries.isEmpty()) {
-	if(getRegionShort(jsonCountries.first().toString()) == region) {
-	  found = true;
+	if(getRegionShort(jsonCountries.first().toString().simplified()) == region) {
+	  foundRegion = true;
 	  break;
 	}
 	jsonCountries.removeFirst();
       }
-      if(!found) {
+      if(!foundRegion) {
 	jsonCoverGroups.removeFirst();
 	continue;
       }
-      found = false;
       QJsonArray jsonCovers = jsonCoverGroups.first().toObject().value("covers").toArray();
       while(!jsonCovers.isEmpty()) {
 	QJsonObject jsonCover = jsonCovers.first().toObject();
 	if(jsonCover.value("scan_of").toString().toLower().contains("front")) {
 	  coverUrl = jsonCover.value("image").toString();
-	  found = true;
+	  foundFrontCover= true;
 	  break;
 	}
 	jsonCovers.removeFirst();
       }
-      if(found) {
+      if(foundFrontCover) {
 	break;
       }
+      jsonCoverGroups.removeFirst();
     }
-    if(found) {
+    if(foundFrontCover) {
       break;
     }
   }
