@@ -340,7 +340,7 @@ void Skyscraper::run()
   }
 
   if(totalFiles > 0) {
-    printf("\nStarting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
+    printf("Starting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
   } else {
     printf("\nNo entries to scrape...\n\n");
   }
