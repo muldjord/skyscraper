@@ -1,7 +1,7 @@
 ## Command line options
 Look below to find a thorough description of all command line options available when using Skyscraper. These options should be used with the `Skyscraper` command.
 
-Please take note that almost all of these options are set at a useful default (and can therefore be left out) and should only be used / changed if your use case requires it.
+Also consider that almost all of these options are set at a useful default (and can therefore be left out) and should only be used / changed if your use case requires it.
 
 NOTE! If you've installed Skyscraper through the RetroPie-Setup script, it is recommended to create a symbolic link to the executable. Do this by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. This will allow you to just type `Skyscraper` when running it from command line.
 
