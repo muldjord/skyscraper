@@ -30,6 +30,8 @@
 #include "strtools.h"
 #include "crc32.h"
 
+#define RETRIESMAX 4
+
 ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
@@ -68,7 +70,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
   QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION + (config->user.isEmpty()?"":"&ssid=" + config->user) + (config->password.isEmpty()?"":"&sspassword=" + config->password) + (platformId.isEmpty()?"":"&systemeid=" + platformId) + "&output=xml&" + searchName;
 
-  for(int retries = 0; retries < 4; ++retries) {
+  for(int retries = 0; retries < RETRIESMAX; ++retries) {
     limiter.exec();
     manager.request(gameUrl);
     q.exec();
@@ -286,7 +288,7 @@ void ScreenScraper::getCover(GameEntry &game)
   QString url = getXmlText("media", REGION, "box-2D");
   if(!url.isEmpty()) {
     bool moveOn = true;
-    for(int retries = 0; retries < 4; ++retries) {
+    for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
       manager.request(url);
       q.exec();
@@ -308,7 +310,7 @@ void ScreenScraper::getScreenshot(GameEntry &game)
   QString url = getXmlText("media", NONE, "ss");
   if(!url.isEmpty()) {
     bool moveOn = true;
-    for(int retries = 0; retries < 4; ++retries) {
+    for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
       manager.request(url);
       q.exec();
@@ -330,7 +332,7 @@ void ScreenScraper::getWheel(GameEntry &game)
   QString url = getXmlText("media", REGION, "wheel;wheel-hd");
   if(!url.isEmpty()) {
     bool moveOn = true;
-    for(int retries = 0; retries < 4; ++retries) {
+    for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
       manager.request(url);
       q.exec();
@@ -352,7 +354,7 @@ void ScreenScraper::getMarquee(GameEntry &game)
   QString url = getXmlText("media", REGION, "screenmarquee");
   if(!url.isEmpty()) {
     bool moveOn = true;
-    for(int retries = 0; retries < 4; ++retries) {
+    for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
       manager.request(url);
       q.exec();
@@ -374,7 +376,7 @@ void ScreenScraper::getVideo(GameEntry &game)
   QString url = getXmlText("media", NONE, "video");
   if(!url.isEmpty()) {
     bool moveOn = true;
-    for(int retries = 0; retries < 4; ++retries) {
+    for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
       manager.request(url);
       q.exec();
