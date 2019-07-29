@@ -140,12 +140,16 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 #### Version x.x.x (Features under consideration, all unimplemented)
 * Add the option to scrape from cached data purely originating from certain scraping modules
 * Consider making aliasMap the global baseName instead of just the search term base name. This will fix missing brackets in alias names being ignored later on
-* Make it more clear when Skyscraper is in gathering and game list generation mode. In gathering mode, consider only showing output for game that aren't loaded from cache
 * Make all artwork types custom meaning that their type can be whatever the user wants. The sources will create ones with known types such as 'screenshot' and 'cover', but the user can import other types they define themselves, such as 'cabinet' or whatever else. Internally artwork is then handled by a list of artwork instead of 4 hardcoded types in GameEntry
 * Introduce the ability to use <BASENAME> in the 'file="somefolder/<BASENAME>.png"' in artwork.xml which would then look for a file in 'resources' with the game basename.png allowing users to use their own custom artwork data as a workaround to adding new types to import (Thank you to 'jueank' for suggesting this)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Check for double bracket notes, and only add each note once. Remember to do toLower on them before checking as some of them are similar but have differing capitalization
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
+* Make location of scummvm.ini configurable
+* Fix double-quote issue when reading titles from scummvm.ini
+
+#### Version 3.2.2 (In progress, unreleased)
+* Added 'bat' scripts to sha1 special handling list
 
 #### Version 3.2.1 (15th July 2019)
 * Fixed bug in 'mobygames' module that could cause an endless loop while getting cover
