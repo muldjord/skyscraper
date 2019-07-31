@@ -499,12 +499,12 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
 
     // If only one title has a subtitle (eg. has ":" or similar in name), remove subtitle from
     // the other if length differs more than 4 in order to have a better chance of a match.
-    bool compareHasSub = (compareTitle.indexOf(":") != -1 ||
-			  compareTitle.indexOf(" - ") != -1  ||
-			  compareTitle.indexOf("~") != -1 );
-    bool entryHasSub = (entryTitle.indexOf(":") != -1  ||
-			entryTitle.indexOf(" - ") != -1  ||
-			entryTitle.indexOf("~") != -1 );
+    bool compareHasSub = (compareTitle.contains(":") ||
+			  compareTitle.contains(" - ") ||
+			  compareTitle.contains("~"));
+    bool entryHasSub = (entryTitle.contains(":") ||
+			entryTitle.contains(" - ") ||
+			entryTitle.contains("~"));
     int lengthDiff = abs(entryTitle.length() - compareTitle.length());
     if(lengthDiff > 4) {
       QString comLower = compareTitle.toLower().simplified();
