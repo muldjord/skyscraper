@@ -294,7 +294,7 @@ QList<QString> Igdb::getSearchNames(const QFileInfo &info)
       baseName = nameWithSpaces;
     }
   } else if(config->platform == "scummvm") {
-    baseName = NameTools::getScummName(baseName);
+    baseName = NameTools::getScummName(baseName, config->scummIni);
   } else if((config->platform == "neogeo" ||
 	     config->platform == "arcade" ||
 	     config->platform == "mame-advmame" ||
