@@ -87,7 +87,7 @@ struct Settings {
   bool unpack = false;
   bool preserveOldGameList = true;
   bool spaceCheck = true;
-  bool memCheck = true;
+  QString scummIni = "";
   
   int romLimit = -1;
 
