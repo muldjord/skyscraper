@@ -31,7 +31,7 @@
 
 #include "nametools.h"
 
-QString NameTools::getScummName(const QString baseName)
+QString NameTools::getScummName(const QString baseName, const QString scummIni)
 {
   // Set to global for RetroPie
   QString scummIniStr = "/opt/retropie/configs/scummvm/scummvm.ini";
@@ -41,9 +41,28 @@ QString NameTools::getScummName(const QString baseName)
     scummIniStr = QDir::homePath() + "/.scummvmrc";
   }
 
-  QSettings scummIni(scummIniStr, QSettings::IniFormat);
-  if(scummIni.contains(baseName + "/description")) {
-    return scummIni.value(baseName + "/description").toString();
+  // If set in config, use that one instead
+  if(!scummIni.isEmpty()) {
+    scummIniStr = scummIni;
+  }
+
+
+  QFile scummIniFile(scummIniStr);
+  if(scummIniFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    int state = 0;
+    while(!scummIniFile.atEnd()) {
+      QByteArray line = scummIniFile.readLine();
+      if(line.contains("[")) {
+	state = 0; // Always reset if traversing into a new game
+      }
+      if(state == 0 && line.contains("[" + baseName.toUtf8() + "]")) {
+	state = 1;
+      }
+      if(state == 1 && line.contains("description=")) {
+	return line.split('=').last();
+      }
+    }
+    scummIniFile.close();
   }
   return baseName;
 }

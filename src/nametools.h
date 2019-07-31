@@ -32,7 +32,7 @@
 class NameTools : public QObject
 {
 public:
-  static QString getScummName(const QString baseName);
+  static QString getScummName(const QString baseName, const QString scummIni);
   static QString getNameWithSpaces(const QString baseName);
   static QString getUrlQueryName(const QString baseName,
 				 const int words = -1,
