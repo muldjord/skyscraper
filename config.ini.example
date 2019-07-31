@@ -60,7 +60,8 @@
 #addExtensions="*.zst"
 #hints="false"
 #subdirs="true"
-#spaceCheck="false"
+#spaceCheck="true"
+#scummIni="/full/path/to/scummvm.ini"
 
 #[<PLATFORM, eg 'amiga'>]
 #inputFolder="/home/pi/RetroPie/roms/amiga"
