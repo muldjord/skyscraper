@@ -151,6 +151,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Now discards 'ZZZ(notgame)' results from ScreenScraper
 * Fixed double-quote issue when reading titles from scummvm.ini
 * Made location of scummvm.ini configurable in config.ini
+* Fixed bug in roman and integer numeral conversion functions
 
 #### Version 3.2.1 (15th July 2019)
 * Fixed bug in 'mobygames' module that could cause an endless loop while getting cover
