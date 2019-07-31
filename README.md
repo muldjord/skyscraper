@@ -145,11 +145,12 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Check for double bracket notes, and only add each note once. Remember to do toLower on them before checking as some of them are similar but have differing capitalization
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
-* Make location of scummvm.ini configurable
-* Fix double-quote issue when reading titles from scummvm.ini
 
 #### Version 3.2.2 (In progress, unreleased)
-* Added 'bat' scripts to sha1 special handling list
+* Added 'bat' scripts to sha1 special handling list (please purge platforms using 'bat' files and rescrape)
+* Now discards 'ZZZ(notgame)' results from ScreenScraper
+* Fixed double-quote issue when reading titles from scummvm.ini
+* Made location of scummvm.ini configurable in config.ini
 
 #### Version 3.2.1 (15th July 2019)
 * Fixed bug in 'mobygames' module that could cause an endless loop while getting cover
