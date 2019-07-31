@@ -276,7 +276,7 @@ Skyscraper will continuously check if you are running low on disk space. If you 
 
 *Allowed in section(s): `[main]`*
 
-#### memCheck="false"
-Skyscraper will continuously check if you are running low on memory. If you go below 50 MB available memory, it will exit nicely to make sure any cached data up until that point isn't lost. You might have reasons to disable this check. You can use this option to do just that.
+#### scummIni="/full/path/to/scummvm.ini"
+Allows you to set a non-default location of the scummvm.ini file. This file is used whenever scraping the `scummvm` platform. It converts the shortname such as `monkey2` to the more search-friendly name `Monkey Island 2: LeChuck's Revenge` whenever using one of the file name search based scraping modules.
 
 *Allowed in section(s): `[main]`*
