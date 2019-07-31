@@ -776,6 +776,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("cacheMarquees")) {
     config.cacheMarquees = settings.value("cacheMarquees").toBool();
   }
+  if(settings.contains("scummIni")) {
+    config.scummIni = settings.value("scummIni").toString();
+  }
   // Check for command line platform here, since we need it for 'platform' config.ini entries
   if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
     config.platform = parser.value("p");
