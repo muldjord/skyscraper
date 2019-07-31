@@ -216,8 +216,14 @@ QString NameTools::convertToRomanNumeral(const QString baseName)
   QString newName = baseName;
   
   match = QRegularExpression(" [0-9]{1,2}([: ]+|$)").match(baseName);
+  // Match is either " 2" or " 2: yada yada"
   if(match.hasMatch()) {
-    QString integer = match.captured(0).replace(":", "").replace(" ", "").simplified();
+    QString integer = match.captured(0);
+    if(integer.contains(":")) {
+      integer = integer.left(integer.indexOf(":")).simplified();
+    } else {
+      integer = integer.simplified();
+    }
     if(integer == "1") {
       return newName.replace(match.captured(0), match.captured(0).replace(integer, "I"));
     } else if(integer == "2") {
@@ -268,9 +274,15 @@ QString NameTools::convertToIntegerNumeral(const QString baseName)
   QRegularExpressionMatch match;
   QString newName = baseName;
   
-  match = QRegularExpression(" [0-9]{1,2}([: ]+|$)").match(baseName);
+  match = QRegularExpression(" [IVX]{1,5}([: ]+|$)").match(baseName);
+  // Match is either " X" or " X: yada yada"
   if(match.hasMatch()) {
-    QString roman = match.captured(0).replace(":", "").replace(" ", "").simplified();
+    QString roman = match.captured(0);
+    if(roman.contains(":")) {
+      roman = roman.left(roman.indexOf(":")).simplified();
+    } else {
+      roman = roman.simplified();
+    }
     if(roman == "I") {
       return newName.replace(match.captured(0), match.captured(0).replace(roman, "1"));
     } else if(roman == "II") {
