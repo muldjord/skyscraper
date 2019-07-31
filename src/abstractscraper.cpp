@@ -442,17 +442,28 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
 
   if(baseName.contains(":") || baseName.contains(" - ")) {
     QString noSubtitle = baseName.left(baseName.indexOf(":")).simplified();
-    noSubtitle = noSubtitle.left(noSubtitle.indexOf("-")).simplified();
+    noSubtitle = noSubtitle.left(noSubtitle.indexOf(" - ")).simplified();
     // Only add if longer than 3. We don't want to search for "the" for instance
     if(noSubtitle.length() > 3)
       searchNames.append(NameTools::getUrlQueryName(noSubtitle));
   }
+  
+  if(NameTools::hasRomanNumeral(baseName) || NameTools::hasIntegerNumeral(baseName)) {
+    if(NameTools::hasRomanNumeral(baseName)) {
+      baseName = NameTools::convertToIntegerNumeral(baseName);
+    } else if(NameTools::hasIntegerNumeral(baseName)) {
+      baseName = NameTools::convertToRomanNumeral(baseName);
+    }
+    searchNames.append(NameTools::getUrlQueryName(baseName));
 
-  if(NameTools::hasRomanNumeral(baseName))
-    searchNames.append(NameTools::getUrlQueryName(NameTools::convertToIntegerNumeral(baseName)));
-
-  if(NameTools::hasIntegerNumeral(baseName))
-    searchNames.append(NameTools::getUrlQueryName(NameTools::convertToRomanNumeral(baseName)));
+    if(baseName.contains(":") || baseName.contains(" - ")) {
+      QString noSubtitle = baseName.left(baseName.indexOf(":")).simplified();
+      noSubtitle = noSubtitle.left(noSubtitle.indexOf(" - ")).simplified();
+      // Only add if longer than 3. We don't want to search for "the" for instance
+      if(noSubtitle.length() > 3)
+	searchNames.append(NameTools::getUrlQueryName(noSubtitle));
+    }
+  }
 
   return searchNames;
 }
