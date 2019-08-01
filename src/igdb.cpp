@@ -65,7 +65,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
     return;
   }
 
-  if(jsonDoc.array().first().toObject().value("status").toInt() == 403) {
+  if(jsonDoc.array().first().toObject()["status"].toInt() == 403) {
     printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
   }
@@ -75,13 +75,13 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   foreach(const QJsonValue &jsonGame, jsonGames) {
     GameEntry game;
     
-    game.title = jsonGame.toObject().value("game").toObject().value("name").toString();
-    game.id = QString::number(jsonGame.toObject().value("game").toObject().value("id").toInt());
+    game.title = jsonGame.toObject()["game"].toObject()["name"].toString();
+    game.id = QString::number(jsonGame.toObject()["game"].toObject()["id"].toInt());
 
-    QJsonArray jsonPlatforms = jsonGame.toObject().value("game").toObject().value("platforms").toArray();
+    QJsonArray jsonPlatforms = jsonGame.toObject()["game"].toObject()["platforms"].toArray();
     foreach(const QJsonValue &jsonPlatform, jsonPlatforms) {
-      game.id.append(";" + QString::number(jsonPlatform.toObject().value("id").toInt()));
-      game.platform = jsonPlatform.toObject().value("name").toString();
+      game.id.append(";" + QString::number(jsonPlatform.toObject()["id"].toInt()));
+      game.platform = jsonPlatform.toObject()["name"].toString();
       if(platformMatch(game.platform, platform)) {
 	gameEntries.append(game);
       }
@@ -146,11 +146,11 @@ void Igdb::getGameData(GameEntry &game)
 
 void Igdb::getReleaseDate(GameEntry &game)
 {
-  QJsonArray jsonDates = jsonObj.value("release_dates").toArray();
+  QJsonArray jsonDates = jsonObj["release_dates"].toArray();
   bool regionMatch = false;
   foreach(QString region, regionPrios) {
     foreach(const QJsonValue &jsonDate, jsonDates) {
-      int regionEnum = jsonDate.toObject().value("region").toInt();
+      int regionEnum = jsonDate.toObject()["region"].toInt();
       QString curRegion = "";
       if(regionEnum == 1)
 	curRegion = "eu";
@@ -168,10 +168,10 @@ void Igdb::getReleaseDate(GameEntry &game)
 	curRegion = "asi";
       else if(regionEnum == 8)
 	curRegion = "wor";
-      if(QString::number(jsonDate.toObject().value("platform").toInt()) ==
+      if(QString::number(jsonDate.toObject()["platform"].toInt()) ==
 	 game.id.split(";").last() &&
 	 region == curRegion) {
-	game.releaseDate = QDateTime::fromMSecsSinceEpoch((qint64)jsonDate.toObject().value("date").toInt() * 1000).toString("yyyyMMdd");
+	game.releaseDate = QDateTime::fromMSecsSinceEpoch((qint64)jsonDate.toObject()["date"].toInt() * 1000).toString("yyyyMMdd");
 	regionMatch = true;
 	break;
       }
@@ -191,9 +191,9 @@ void Igdb::getPlayers(GameEntry &game)
   // 5 = MMO
   // So basically if != 1 it's at least 2 players. That's all we can gather from this
   game.players = "1";
-  QJsonArray jsonPlayers = jsonObj.value("game_modes").toArray();
+  QJsonArray jsonPlayers = jsonObj["game_modes"].toArray();
   foreach(const QJsonValue &jsonPlayer, jsonPlayers) {
-    if(jsonPlayer.toObject().value("id").toInt() != 1) {
+    if(jsonPlayer.toObject()["id"].toInt() != 1) {
       game.players = "2";
       break;
     }
@@ -202,16 +202,16 @@ void Igdb::getPlayers(GameEntry &game)
 
 void Igdb::getTags(GameEntry &game)
 {
-  QJsonArray jsonGenres = jsonObj.value("genres").toArray();
+  QJsonArray jsonGenres = jsonObj["genres"].toArray();
   foreach(const QJsonValue &jsonGenre, jsonGenres) {
-    game.tags.append(jsonGenre.toObject().value("name").toString() + ", ");
+    game.tags.append(jsonGenre.toObject()["name"].toString() + ", ");
   }
   game.tags = game.tags.left(game.tags.length() - 2);
 }
 
 void Igdb::getAges(GameEntry &game)
 {
-  int agesEnum = jsonObj.value("age_ratings").toArray().first().toObject().value("rating").toInt();
+  int agesEnum = jsonObj["age_ratings"].toArray().first().toObject()["rating"].toInt();
   if(agesEnum == 1) {
     game.ages = "3";
   } else if(agesEnum == 2) {
@@ -241,10 +241,10 @@ void Igdb::getAges(GameEntry &game)
 
 void Igdb::getPublisher(GameEntry &game)
 {
-  QJsonArray jsonCompanies = jsonObj.value("involved_companies").toArray();
+  QJsonArray jsonCompanies = jsonObj["involved_companies"].toArray();
   foreach(const QJsonValue &jsonCompany, jsonCompanies) {
-    if(jsonCompany.toObject().value("publisher").toBool() == true) {
-      game.publisher = jsonCompany.toObject().value("company").toObject().value("name").toString();
+    if(jsonCompany.toObject()["publisher"].toBool() == true) {
+      game.publisher = jsonCompany.toObject()["company"].toObject()["name"].toString();
       return;
     }
   }  
@@ -252,10 +252,10 @@ void Igdb::getPublisher(GameEntry &game)
 
 void Igdb::getDeveloper(GameEntry &game)
 {
-  QJsonArray jsonCompanies = jsonObj.value("involved_companies").toArray();
+  QJsonArray jsonCompanies = jsonObj["involved_companies"].toArray();
   foreach(const QJsonValue &jsonCompany, jsonCompanies) {
-    if(jsonCompany.toObject().value("developer").toBool() == true) {
-      game.developer = jsonCompany.toObject().value("company").toObject().value("name").toString();
+    if(jsonCompany.toObject()["developer"].toBool() == true) {
+      game.developer = jsonCompany.toObject()["company"].toObject()["name"].toString();
       return;
     }
   }  
@@ -263,7 +263,7 @@ void Igdb::getDeveloper(GameEntry &game)
 
 void Igdb::getDescription(GameEntry &game)
 {
-  QJsonValue jsonValue = jsonObj.value("summary");
+  QJsonValue jsonValue = jsonObj["summary"];
   if(jsonValue != QJsonValue::Undefined) {
     game.description = StrTools::stripHtmlTags(jsonValue.toString());
   }
@@ -271,7 +271,7 @@ void Igdb::getDescription(GameEntry &game)
 
 void Igdb::getRating(GameEntry &game)
 {
-  QJsonValue jsonValue = jsonObj.value("total_rating");
+  QJsonValue jsonValue = jsonObj["total_rating"];
   if(jsonValue != QJsonValue::Undefined) {
     double rating = jsonValue.toDouble();
     if(rating != 0.0) {

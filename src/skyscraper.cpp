@@ -1350,17 +1350,17 @@ void Skyscraper::doPrescrapeJobs()
       printf("Recieved invalid IGDB server response, maybe their server is having issues, please try again later...\n");
       exitNow = true;
     }
-    if(jsonObj.value("authorized").toBool()) {
-      QString plan = jsonObj.value("plan").toString();
-      jsonObj = jsonObj.value("usage_reports").toObject().value("usage_report").toObject();
-      QString limit = QString::number(jsonObj.value("max_value").toInt());
-      QString requests = QString::number(jsonObj.value("current_value").toInt());
-      QString resetDate = jsonObj.value("period_end").toString();
+    if(jsonObj["authorized"].toBool()) {
+      QString plan = jsonObj["plan"].toString();
+      jsonObj = jsonObj["usage_reports"].toObject()["usage_report"].toObject();
+      QString limit = QString::number(jsonObj["max_value"].toInt());
+      QString requests = QString::number(jsonObj["current_value"].toInt());
+      QString resetDate = jsonObj["period_end"].toString();
       printf("Plan       : %s\n", plan.toStdString().c_str());
       printf("Requests   : %s / %s\n", requests.toStdString().c_str(), limit.toStdString().c_str());
       printf("Period ends: %s\n", resetDate.toStdString().c_str());
     } else {
-      if(jsonObj.value("status").toInt() == 403) {
+      if(jsonObj["status"].toInt() == 403) {
 	printf("IGDB monthly request limit has been reached, can't continue with this module...\n");
       } else {
 	printf("IGDB says key is unauthorized, can't continue with this module...\n");

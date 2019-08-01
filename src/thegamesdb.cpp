@@ -63,29 +63,31 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
     return;
   }
 
-  reqRemaining = jsonDoc.object().value("remaining_monthly_allowance").toInt();
-
-  if(jsonDoc.object().value("status").toString() != "Success") {
+  reqRemaining = jsonDoc.object()["remaining_monthly_allowance"].toInt();
+  if(reqRemaining <= 0)
+    printf("\033[1;31mYou've reached TheGamesdDb's request limit for this month.\033[0m\n");
+  
+  if(jsonDoc.object()["status"].toString() != "Success") {
     return;
   }
-  if(jsonDoc.object().value("data").toObject().value("count").toInt() < 1) {
+  if(jsonDoc.object()["data"].toObject()["count"].toInt() < 1) {
     return;
   }
 
-  QJsonArray jsonGames = jsonDoc.object().value("data").toObject().value("games").toArray();
+  QJsonArray jsonGames = jsonDoc.object()["data"].toObject()["games"].toArray();
 
   while(!jsonGames.isEmpty()) {
     QJsonObject jsonGame = jsonGames.first().toObject();
     
     GameEntry game;
     // https://api.thegamesdb.net/Games/ByGameID?id=88&apikey=XXX&fields=game_title,players,release_date,developer,publisher,genres,overview,rating,platform
-    game.id = QString::number(jsonGame.value("id").toInt());
+    game.id = QString::number(jsonGame["id"].toInt());
     game.url = "https://api.thegamesdb.net/Games/ByGameID?id=" + game.id + "&apikey=" + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&fields=game_title,players,release_date,developers,publishers,genres,overview,rating";
-    game.title = jsonGame.value("game_title").toString();
+    game.title = jsonGame["game_title"].toString();
     // Remove anything at the end with a parentheses. 'thegamesdb' has a habit of adding
     // for instance '(1993)' to the name.
     game.title = game.title.left(game.title.indexOf("(")).simplified();
-    game.platform = platformMap[jsonGame.value("platform").toInt()];
+    game.platform = platformMap[jsonGame["platform"].toInt()];
     if(platformMatch(game.platform, platform)) {
       gameEntries.append(game);
     }
@@ -104,14 +106,14 @@ void TheGamesDb::getGameData(GameEntry &game)
     reqRemaining = 0;
   }
 
-  reqRemaining = jsonDoc.object().value("remaining_monthly_allowance").toInt();
+  reqRemaining = jsonDoc.object()["remaining_monthly_allowance"].toInt();
 
-  if(jsonDoc.object().value("data").toObject().value("count").toInt() < 1) {
+  if(jsonDoc.object()["data"].toObject()["count"].toInt() < 1) {
     printf("No returned json game document, is 'thegamesdb' down?\n");
     reqRemaining = 0;
   }
   
-  jsonObj = jsonDoc.object().value("data").toObject().value("games").toArray().first().toObject();
+  jsonObj = jsonDoc.object()["data"].toObject()["games"].toArray().first().toObject();
 
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
@@ -164,45 +166,45 @@ void TheGamesDb::getGameData(GameEntry &game)
 
 void TheGamesDb::getReleaseDate(GameEntry &game)
 {
-  if(jsonObj.value("release_date") != QJsonValue::Undefined)
-    game.releaseDate = jsonObj.value("release_date").toString();
+  if(jsonObj["release_date"] != QJsonValue::Undefined)
+    game.releaseDate = jsonObj["release_date"].toString();
 }
 
 void TheGamesDb::getDeveloper(GameEntry &game)
 {
-  QJsonArray developers = jsonObj.value("developers").toArray();
+  QJsonArray developers = jsonObj["developers"].toArray();
   if(developers.count() != 0)
     game.developer = developerMap[developers.first().toInt()];
 }
 
 void TheGamesDb::getPublisher(GameEntry &game)
 {
-  QJsonArray publishers = jsonObj.value("publishers").toArray();
+  QJsonArray publishers = jsonObj["publishers"].toArray();
   if(publishers.count() != 0)
     game.publisher = publisherMap[publishers.first().toInt()];
 }
 
 void TheGamesDb::getDescription(GameEntry &game)
 {
-  game.description = jsonObj.value("overview").toString();
+  game.description = jsonObj["overview"].toString();
 }
 
 void TheGamesDb::getPlayers(GameEntry &game)
 {
-  int players = jsonObj.value("players").toInt();
+  int players = jsonObj["players"].toInt();
   if(players != 0)
     game.players = QString::number(players);
 }
 
 void TheGamesDb::getAges(GameEntry &game)
 {
-  if(jsonObj.value("rating") != QJsonValue::Undefined)
-    game.ages = jsonObj.value("rating").toString();
+  if(jsonObj["rating"] != QJsonValue::Undefined)
+    game.ages = jsonObj["rating"].toString();
 }
 
 void TheGamesDb::getTags(GameEntry &game)
 {
-  QJsonArray genres = jsonObj.value("genres").toArray();
+  QJsonArray genres = jsonObj["genres"].toArray();
   if(genres.count() != 0) {
     while(!genres.isEmpty()) {
       game.tags.append(genreMap[genres.first().toInt()] + ", ");
@@ -371,9 +373,9 @@ void TheGamesDb::loadMaps()
   {
     QFile jsonFile("tgdb_developers.json");
     if(jsonFile.open(QIODevice::ReadOnly)) {
-      QJsonObject jsonDevs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("developers").toObject();
+      QJsonObject jsonDevs = QJsonDocument::fromJson(jsonFile.readAll()).object()["data"].toObject()["developers"].toObject();
       for(QJsonObject::iterator it = jsonDevs.begin(); it != jsonDevs.end(); ++it) {
-	developerMap[it.value().toObject().value("id").toInt()] = it.value().toObject().value("name").toString();
+	developerMap[it.value().toObject()["id"].toInt()] = it.value().toObject()["name"].toString();
       }
       jsonFile.close();
     }
@@ -381,9 +383,9 @@ void TheGamesDb::loadMaps()
   {
     QFile jsonFile("tgdb_publishers.json");
     if(jsonFile.open(QIODevice::ReadOnly)) {
-      QJsonObject jsonPubs = QJsonDocument::fromJson(jsonFile.readAll()).object().value("data").toObject().value("publishers").toObject();
+      QJsonObject jsonPubs = QJsonDocument::fromJson(jsonFile.readAll()).object()["data"].toObject()["publishers"].toObject();
       for(QJsonObject::iterator it = jsonPubs.begin(); it != jsonPubs.end(); ++it) {
-	publisherMap[it.value().toObject().value("id").toInt()] = it.value().toObject().value("name").toString();
+	publisherMap[it.value().toObject()["id"].toInt()] = it.value().toObject()["name"].toString();
       }
       jsonFile.close();
     }
