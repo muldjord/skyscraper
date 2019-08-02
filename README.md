@@ -152,6 +152,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Fixed double-quote issue when reading titles from scummvm.ini
 * Made location of scummvm.ini configurable in config.ini
 * Fixed bug in roman and integer numeral conversion functions
+* Rewrote the entire 'screenscraper' module to use Json instead of Xml. Please report any bugs you might encounter while using it!
 
 #### Version 3.2.1 (15th July 2019)
 * Fixed bug in 'mobygames' module that could cause an endless loop while getting cover
