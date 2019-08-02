@@ -27,6 +27,7 @@
 #define SCREENSCRAPER_H
 
 #include <QDomDocument>
+#include <QJsonObject>
 #include <QTimer>
 #include <QEventLoop>
 
@@ -64,13 +65,14 @@ private:
   void getMarquee(GameEntry &game) override;
   void getVideo(GameEntry &game) override;
 
-  QString getXmlText(QString node, int attr, QString type = "");
+  QString getJsonText(QJsonArray array, int attr, QString type = "");
 
   QString getPlatformId(const QString platform) override;
   
   QString region;
   QString lang;
   QDomDocument xmlDoc;  
+  QJsonObject jsonObj;
   
 };
 

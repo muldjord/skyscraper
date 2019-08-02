@@ -25,6 +25,7 @@
 
 #include <QFileInfo>
 #include <QProcess>
+#include <QJsonDocument>
 
 #include "screenscraper.h"
 #include "strtools.h"
@@ -68,7 +69,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     return;
   }
 
-  QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION + (config->user.isEmpty()?"":"&ssid=" + config->user) + (config->password.isEmpty()?"":"&sspassword=" + config->password) + (platformId.isEmpty()?"":"&systemeid=" + platformId) + "&output=xml&" + searchName;
+  QString gameUrl = "https://www.screenscraper.fr/api2/jeuInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION + (config->user.isEmpty()?"":"&ssid=" + config->user) + (config->password.isEmpty()?"":"&sspassword=" + config->password) + (platformId.isEmpty()?"":"&systemeid=" + platformId) + "&output=json&" + searchName;
 
   for(int retries = 0; retries < RETRIESMAX; ++retries) {
     limiter.exec();
@@ -76,49 +77,44 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     q.exec();
     data = manager.getData();
 
-    if(data.contains("<jeu")) {
-      break;
-    } else {
-      if(data.contains("Erreur : Rom/Iso/Dossier non")) {
-	return;
-      } else if(data.contains("Votre quota de scrape est")) {
-	printf("\033[1;31mYour screenscraper quota has been reached, exiting nicely...\033[0m\n\n");
-	reqRemaining = 0;
-	return;
-      } else if(data.contains("API closed for non-registered members")) {
-	printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered users. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
-	continue;
+    jsonObj = QJsonDocument::fromJson(data).object();
+
+    // Check if we got a valid Json document back
+    if(jsonObj.isEmpty()) {
+      printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json\033[0m\n");
+      printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
+      // In this case, try again. We should always get a valid Json document
+      continue;
+    }
+
+    // Check if the request was successful
+    if(jsonObj["header"].toObject()["success"].toString() != "true") {
+      printf("Request returned a success state of '%s'. Error was:\n%s\n",
+	     jsonObj["header"].toObject()["success"].toString().toStdString().c_str(),
+	     jsonObj["header"].toObject()["error"].toString().toStdString().c_str());
+      // Don't try again. We got a valid response, so something went wrong
+      return;
+    }
+    
+    // Check if user has exceeded daily request limit
+    if(!jsonObj["response"].toObject()["ssuser"].toObject()["requeststoday"].toString().isEmpty() && !jsonObj["response"].toObject()["ssuser"].toObject()["maxrequestsperday"].toString().isEmpty()) {
+      reqRemaining = jsonObj["response"].toObject()["ssuser"].toObject()["maxrequestsperday"].toString().toInt() - jsonObj["response"].toObject()["ssuser"].toObject()["requeststoday"].toString().toInt();
+      if(reqRemaining <= 0) {
+	printf("\033[1;31mYour daily screenscraper request limit has been reached, exiting nicely...\033[0m\n\n");
       }
     }
+
+    // Check if we got a game entry back
+    if(!jsonObj["response"].toObject().contains("jeu")) {
+      // Don't try again, no game was found
+      return;
+    }
   }
 
-  // Workarounds to fix potential invalid XML returned from ScreenScraper
-  QByteArray xmlBegin = "<?xml version=";
-  QByteArray xmlEnd = "</Data>";
-  if(data.contains(xmlBegin) && data.contains(xmlEnd)) {
-    data.replace(" & ", " &amp; ");
-    if(data.contains("<roms>") && data.contains("</roms>")) {
-      data.remove(data.indexOf("<roms>") + 6,
-		  data.indexOf("</roms>") - data.indexOf("<roms>") - 6);
-    }
-    // Remove messages that may have been prepended to the XML
-    if(!data.startsWith(xmlBegin))
-      data.remove(0, data.indexOf(xmlBegin));
-    // Remove messages that may have been appended to the XML
-    if(!data.endsWith(xmlEnd))
-      data.remove(data.indexOf(xmlEnd) + xmlEnd.length(),
-		  data.length() - data.indexOf(xmlEnd) + xmlEnd.length());
-  }
-  // Workarounds end
-  
-  if(!xmlDoc.setContent(data)) {
-    printf("\033[1;31mScreenScraper APIv2 returned invalid XML\033[0m\n");
-    printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
-    return;
-  }
+  jsonObj = jsonObj["response"].toObject()["jeu"].toObject();
 
   GameEntry game;
-  game.title = getXmlText("nom", REGION);
+  game.title = getJsonText(jsonObj["noms"].toArray(), REGION);
 
   // 'screenscraper' sometimes returns a faulty result with the following names. If we get either
   // result DON'T use it. It will provide faulty data for the cache
@@ -131,9 +127,9 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   if(game.title.isNull()) {
     return;
   }
-
+  
   game.url = gameUrl;
-  game.platform = xmlDoc.elementsByTagName("systeme").at(0).toElement().text();
+  game.platform = jsonObj["systemenom"].toString();
   
   // Only check if platform is empty, it's always correct when using ScreenScraper
   if(!game.platform.isEmpty())
@@ -193,57 +189,54 @@ void ScreenScraper::getGameData(GameEntry &game)
 
 void ScreenScraper::getReleaseDate(GameEntry &game)
 {
-  game.releaseDate = getXmlText("date", REGION);
+  game.releaseDate = getJsonText(jsonObj["dates"].toArray(), REGION);
 }
 
 void ScreenScraper::getDeveloper(GameEntry &game)
 {
-  game.developer = xmlDoc.elementsByTagName("developpeur").at(0).toElement().text();
+  game.developer = jsonObj["developpeur"].toObject()["text"].toString();
 }
 
 void ScreenScraper::getPublisher(GameEntry &game)
 {
-  game.publisher = xmlDoc.elementsByTagName("editeur").at(0).toElement().text();
+  game.publisher = jsonObj["editeur"].toObject()["text"].toString();
 }
 
 void ScreenScraper::getDescription(GameEntry &game)
 {
-  game.description = getXmlText("synopsis", LANGUE);
+  game.description = getJsonText(jsonObj["synopsis"].toArray(), LANGUE);
 }
 
 void ScreenScraper::getPlayers(GameEntry &game)
 {
-  game.players = xmlDoc.elementsByTagName("joueurs").at(0).toElement().text();
+  game.players = jsonObj["joueurs"].toObject()["text"].toString();
 }
 
 void ScreenScraper::getAges(GameEntry &game)
 {
-  QDomNodeList xmlNodes = xmlDoc.elementsByTagName("classification");
-
-  if(xmlNodes.isEmpty())
+  if(!jsonObj["classifications"].isArray())
     return;
   
+  QJsonArray jsonAges = jsonObj["classifications"].toArray();
+
   // First look for PEGI
-  for(int a = 0; a < xmlNodes.length(); ++a) {
-    QDomElement elem = xmlNodes.at(a).toElement();
-    if(elem.attribute("type") == "PEGI") {
-      game.ages = xmlNodes.at(a).toElement().text();
+  for(int a = 0; a < jsonAges.size(); ++a) {
+    if(jsonAges.at(a).toObject()["type"].toString() == "PEGI") {
+      game.ages = jsonAges.at(a).toObject()["text"].toString();
       return;
     }
   }
   // Then look for ESRB
-  for(int a = 0; a < xmlNodes.length(); ++a) {
-    QDomElement elem = xmlNodes.at(a).toElement();
-    if(elem.attribute("type") == "ESRB") {
-      game.ages = xmlNodes.at(a).toElement().text();
+  for(int a = 0; a < jsonAges.size(); ++a) {
+    if(jsonAges.at(a).toObject()["type"].toString() == "ESRB") {
+      game.ages = jsonAges.at(a).toObject()["text"].toString();
       return;
     }
   }
   // Then look for SS
-  for(int a = 0; a < xmlNodes.length(); ++a) {
-    QDomElement elem = xmlNodes.at(a).toElement();
-    if(elem.attribute("type") == "SS") {
-      game.ages = xmlNodes.at(a).toElement().text();
+  for(int a = 0; a < jsonAges.size(); ++a) {
+    if(jsonAges.at(a).toObject()["type"].toString() == "SS") {
+      game.ages = jsonAges.at(a).toObject()["text"].toString();
       return;
     }
   }
@@ -251,7 +244,7 @@ void ScreenScraper::getAges(GameEntry &game)
 
 void ScreenScraper::getRating(GameEntry &game)
 {
-  game.rating = xmlDoc.elementsByTagName("note").at(0).toElement().text();
+  game.rating = jsonObj["note"].toObject()["text"].toString();
   bool toDoubleOk = false;
   double rating = game.rating.toDouble(&toDoubleOk);
   if(toDoubleOk) {
@@ -263,30 +256,24 @@ void ScreenScraper::getRating(GameEntry &game)
 
 void ScreenScraper::getTags(GameEntry &game)
 {
-  QDomNodeList xmlNodes = xmlDoc.elementsByTagName("genre");
-
-  if(xmlNodes.isEmpty())
+  if(!jsonObj["genres"].isArray())
     return;
   
-  bool foundLang = false;
-  foreach(QString lang, config->langPrios) {
-    for(int a = 0; a < xmlNodes.length(); ++a) {
-      QDomElement elem = xmlNodes.at(a).toElement();
-      if(elem.attribute("langue") == lang) {
-	game.tags.append(xmlNodes.at(a).toElement().text() + ", ");
-	foundLang = true;
-      }
-    }
-    if(foundLang)
-      break;
-  }
+  QJsonArray jsonTags = jsonObj["genres"].toArray();
   
+  for(int a = 0; a < jsonTags.size(); ++a) {
+    QString tag = getJsonText(jsonTags.at(a).toObject()["noms"].toArray(), LANGUE);
+    if(!tag.isEmpty()) {
+      game.tags.append(tag + ", ");
+    }
+  }
+
   game.tags = game.tags.left(game.tags.length() - 2);
 }
 
 void ScreenScraper::getCover(GameEntry &game)
 {
-  QString url = getXmlText("media", REGION, "box-2D");
+  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, "box-2D");
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -308,7 +295,7 @@ void ScreenScraper::getCover(GameEntry &game)
 
 void ScreenScraper::getScreenshot(GameEntry &game)
 {
-  QString url = getXmlText("media", NONE, "ss");
+  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, "ss");
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -330,7 +317,7 @@ void ScreenScraper::getScreenshot(GameEntry &game)
 
 void ScreenScraper::getWheel(GameEntry &game)
 {
-  QString url = getXmlText("media", REGION, "wheel;wheel-hd");
+  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, "wheel;wheel-hd");
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -352,7 +339,7 @@ void ScreenScraper::getWheel(GameEntry &game)
 
 void ScreenScraper::getMarquee(GameEntry &game)
 {
-  QString url = getXmlText("media", REGION, "screenmarquee");
+  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, "screenmarquee");
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -374,7 +361,7 @@ void ScreenScraper::getMarquee(GameEntry &game)
 
 void ScreenScraper::getVideo(GameEntry &game)
 {
-  QString url = getXmlText("media", NONE, "video");
+  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, "video");
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -498,27 +485,24 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
   return searchNames;
 }
 
-QString ScreenScraper::getXmlText(QString node, int attr, QString type)
+QString ScreenScraper::getJsonText(QJsonArray jsonArr, int attr, QString type)
 {
-  QDomNodeList xmlNodes = xmlDoc.elementsByTagName(node);
   if(attr == NONE) {
-    for(int a = 0; a < xmlNodes.length(); ++a) {
-      QDomElement elem = xmlNodes.at(a).toElement();
-      if(type != "" && elem.attribute("type") == type) {
-	return elem.text();
+    for(int a = 0; a < jsonArr.size(); ++a) {
+      if(!type.isEmpty() && jsonArr.at(a).toObject()["type"].toString() == type) {
+	return jsonArr.at(a).toObject()["url"].toString();
       }
     }
   } else if(attr == REGION) {
     QList<QString> types = type.split(";");
     foreach(QString region, regionPrios) {
-      for(int a = 0; a < xmlNodes.length(); ++a) {
-	QDomElement elem = xmlNodes.at(a).toElement();
+      for(int a = 0; a < jsonArr.size(); ++a) {
 	bool typeMatch = false;
 	if(type.isEmpty()) {
 	  typeMatch = true;
 	} else {
 	  foreach(QString currentType, types) {
-	    if(elem.attribute("type") == currentType) {
+	    if(jsonArr.at(a).toObject()["type"].toString() == currentType) {
 	      typeMatch = true;
 	      break;
 	    }
@@ -526,19 +510,23 @@ QString ScreenScraper::getXmlText(QString node, int attr, QString type)
 	}
 	if(!typeMatch)
 	  continue;
-	if(elem.attribute("region") == region) {
-	  return elem.text();
+	if(jsonArr.at(a).toObject()["region"].toString() == region) {
+	  if(jsonArr.at(a).toObject()["url"].isString()) {
+	    return jsonArr.at(a).toObject()["url"].toString();
+	  } else {
+	    return jsonArr.at(a).toObject()["text"].toString();
+	  }
 	}
       }
     }
   } else if(attr == LANGUE) {
     foreach(QString lang, config->langPrios) {
-      for(int a = 0; a < xmlNodes.length(); ++a) {
-	QDomElement elem = xmlNodes.at(a).toElement();
-	if(type != "" && elem.attribute("type") != type)
+      for(int a = 0; a < jsonArr.size(); ++a) {
+	if(!type.isEmpty() && jsonArr.at(a).toObject()["type"].toString() != type) {
 	  continue;
-	if(elem.attribute("langue") == lang) {
-	  return elem.text();
+	}
+	if(jsonArr.at(a).toObject()["langue"].toString() == lang) {
+	  return jsonArr.at(a).toObject()["text"].toString();
 	}
       }
     }
