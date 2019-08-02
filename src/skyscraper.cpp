@@ -1384,12 +1384,10 @@ void Skyscraper::doPrescrapeJobs()
       }
     } else {
       printf("Fetching limits for user '%s', just a sec...\n", config.user.toStdString().c_str());
-      manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=xml&ssid=" + config.user + "&sspassword=" + config.password);
+      manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=json&ssid=" + config.user + "&sspassword=" + config.password);
       q.exec();
-      QByteArray data = manager.getData();
-      QByteArray nodeBegin = "<maxthreads>";
-      QByteArray nodeEnd = "</maxthreads>";
-      int allowedThreads = QString(data.mid(data.indexOf(nodeBegin) + nodeBegin.length(), data.indexOf(nodeEnd) - (data.indexOf(nodeBegin) + nodeBegin.length()))).toInt();
+      QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
+      int allowedThreads = jsonObj["response"].toObject()["ssuser"].toObject()["maxthreads"].toString().toInt();
       if(allowedThreads != 0) {
 	if(config.threadsSet && config.threads <= allowedThreads) {
 	  printf("User is allowed %d threads, but user has set it lower manually, so ignoring.\n\n", allowedThreads);
