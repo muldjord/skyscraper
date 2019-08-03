@@ -495,7 +495,7 @@ QString ScreenScraper::getJsonText(QJsonArray jsonArr, int attr, QString type)
     }
   } else if(attr == REGION) {
     QList<QString> types = type.split(";");
-    foreach(QString region, regionPrios) {
+    foreach(QString region, regionPrios) { // Not using the config->regionPrios since they might have changed due to region autodetection. So using temporary internal one instead.
       for(int a = 0; a < jsonArr.size(); ++a) {
 	bool typeMatch = false;
 	if(type.isEmpty()) {
