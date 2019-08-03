@@ -236,30 +236,22 @@ void ScreenScraper::getPlayers(GameEntry &game)
 
 void ScreenScraper::getAges(GameEntry &game)
 {
+  QList<QString> ageBoards;
+  ageBoards.append("PEGI");
+  ageBoards.append("ESRB");
+  ageBoards.append("SS");
+
   if(!jsonObj["classifications"].isArray())
     return;
   
   QJsonArray jsonAges = jsonObj["classifications"].toArray();
 
-  // First look for PEGI
-  for(int a = 0; a < jsonAges.size(); ++a) {
-    if(jsonAges.at(a).toObject()["type"].toString() == "PEGI") {
-      game.ages = jsonAges.at(a).toObject()["text"].toString();
-      return;
-    }
-  }
-  // Then look for ESRB
-  for(int a = 0; a < jsonAges.size(); ++a) {
-    if(jsonAges.at(a).toObject()["type"].toString() == "ESRB") {
-      game.ages = jsonAges.at(a).toObject()["text"].toString();
-      return;
-    }
-  }
-  // Then look for SS
-  for(int a = 0; a < jsonAges.size(); ++a) {
-    if(jsonAges.at(a).toObject()["type"].toString() == "SS") {
-      game.ages = jsonAges.at(a).toObject()["text"].toString();
-      return;
+  foreach(QString ageBoard, ageBoards) {
+    for(int a = 0; a < jsonAges.size(); ++a) {
+      if(jsonAges.at(a).toObject()["type"].toString() == "ESRB") {
+	game.ages = jsonAges.at(a).toObject()["text"].toString();
+	return;
+      }
     }
   }
 }
@@ -555,7 +547,7 @@ QString ScreenScraper::getJsonText(QJsonArray jsonArr, int attr, QString type)
   }
   return QString();
 }
-  
+
 QString ScreenScraper::getPlatformId(const QString platform)
 {
   if(platform == "3do") {

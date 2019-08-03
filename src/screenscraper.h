@@ -26,7 +26,6 @@
 #ifndef SCREENSCRAPER_H
 #define SCREENSCRAPER_H
 
-#include <QDomDocument>
 #include <QJsonObject>
 #include <QTimer>
 #include <QEventLoop>
@@ -71,7 +70,6 @@ private:
   
   QString region;
   QString lang;
-  QDomDocument xmlDoc;  
   QJsonObject jsonObj;
   
 };
