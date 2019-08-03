@@ -146,13 +146,13 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Check for double bracket notes, and only add each note once. Remember to do toLower on them before checking as some of them are similar but have differing capitalization
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 
-#### Version 3.2.2 (In progress, unreleased)
+#### Version 3.2.2 (3rd August 2019)
 * Added 'bat' scripts to sha1 special handling list (please purge platforms using 'bat' files and rescrape)
 * Now discards 'ZZZ(notgame)' results from ScreenScraper
 * Fixed double-quote issue when reading titles from scummvm.ini
 * Made location of scummvm.ini configurable in config.ini
 * Fixed bug in roman and integer numeral conversion functions
-* Rewrote the entire 'screenscraper' module to use JSON instead of XML. Please report any bugs you might encounter while using it!
+* Rewrote the entire 'screenscraper' module to use JSON instead of XML
 
 #### Version 3.2.1 (15th July 2019)
 * Fixed bug in 'mobygames' module that could cause an endless loop while getting cover
