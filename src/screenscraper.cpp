@@ -77,13 +77,35 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     q.exec();
     data = manager.getData();
 
+    QByteArray headerData = data.left(1024); // Minor optimization with minimal more RAM usage
+    // Do error checks on headerData. It's more stable than checking the potentially faulty JSON
+    if(headerData.contains("non trouvée")) {
+      return;
+    } else if(headerData.contains("API totalement fermé")) {
+      printf("\033[1;31mThe ScreenScraper API is currently closed, exiting nicely...\033[0m\n\n");
+      reqRemaining = 0;
+      return;
+    } else if(headerData.contains("Le logiciel de scrape utilisé a été blacklisté")) {
+      printf("\033[1;31mSkyscraper has apparently been blacklisted at ScreenScraper, exiting nicely...\033[0m\n\n");
+      reqRemaining = 0;
+      return;
+    } else if(headerData.contains("Votre quota de scrape est")) {
+      printf("\033[1;31mYour daily ScreenScraper request limit has been reached, exiting nicely...\033[0m\n\n");
+      reqRemaining = 0;
+      return;
+    } else if(headerData.contains("API fermé pour les non membres") ||
+	      headerData.contains("API closed for non-registered members")) {
+      printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to the database to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+      continue;
+    }
+    
     jsonObj = QJsonDocument::fromJson(data).object();
 
-    // Check if we got a valid Json document back
+    // Check if we got a valid JSON document back
     if(jsonObj.isEmpty()) {
       printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json\033[0m\n");
       printf("First 256 characters of answer was:\n%s\n", data.left(256).data());
-      // In this case, try again. We should always get a valid Json document
+      // In this case, try again. We should always get a valid JSON document
       continue;
     }
 
@@ -92,8 +114,8 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
       printf("Request returned a success state of '%s'. Error was:\n%s\n",
 	     jsonObj["header"].toObject()["success"].toString().toStdString().c_str(),
 	     jsonObj["header"].toObject()["error"].toString().toStdString().c_str());
-      // Don't try again. We got a valid response, so something went wrong
-      return;
+      // Try again. We handle important errors above, so something weird is going on here
+      continue;
     }
     
     // Check if user has exceeded daily request limit
