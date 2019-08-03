@@ -100,7 +100,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     if(!jsonObj["response"].toObject()["ssuser"].toObject()["requeststoday"].toString().isEmpty() && !jsonObj["response"].toObject()["ssuser"].toObject()["maxrequestsperday"].toString().isEmpty()) {
       reqRemaining = jsonObj["response"].toObject()["ssuser"].toObject()["maxrequestsperday"].toString().toInt() - jsonObj["response"].toObject()["ssuser"].toObject()["requeststoday"].toString().toInt();
       if(reqRemaining <= 0) {
-	printf("\033[1;31mYour daily screenscraper request limit has been reached, exiting nicely...\033[0m\n\n");
+	printf("\033[1;31mYour daily ScreenScraper request limit has been reached, exiting nicely...\033[0m\n\n");
       }
     }
 
