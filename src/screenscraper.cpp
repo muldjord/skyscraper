@@ -96,7 +96,12 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     } else if(headerData.contains("API fermé pour les non membres") ||
 	      headerData.contains("API closed for non-registered members")) {
       printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to the database to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
-      continue;
+      if(retries == RETRIESMAX - 1) {
+	reqRemaining = 0;
+	return;
+      } else {
+	continue;
+      }
     }
     
     jsonObj = QJsonDocument::fromJson(data).object();
