@@ -280,7 +280,7 @@ void Skyscraper::run()
      !config.unattend && !config.unattendSkip &&
      gameListFile.exists()) {
     std::string userInput = "";
-    printf("\033[1;34m'\033[1;32m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
+    printf("\033[1;34m'\033[0m\033[1;33m%s\033[0m\033[1;34m' already exists, do you want to overwrite it\033[0m (y/N)? ", frontend->getGameListFileName().toStdString().c_str());
     getline(std::cin, userInput);
     if(userInput == "y" || userInput == "Y") {
     } else {
@@ -498,7 +498,7 @@ void Skyscraper::checkThreads()
     frontend->assembleList(finalOutput, gameEntries);
     printf(" \033[1;32mDone!!!\033[0m\n");
     QFile gameListFile(gameListFileString);
-    printf("Now writing '%s'... ", gameListFileString.toStdString().c_str());
+    printf("Now writing '\033[1;33m%s\033[0m'... ", gameListFileString.toStdString().c_str());
     fflush(stdout);
     if(gameListFile.open(QIODevice::WriteOnly)) {
       gameListFile.write(finalOutput.toUtf8());
@@ -524,7 +524,7 @@ void Skyscraper::checkThreads()
   }
   printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
   printf("\033[1;32mSuccessfully processed games: %d\033[0m\n", found);
-  printf("\033[1;33mSkipped games: %d (Filenames saved to '~/.skyscraper/%s')\033[0m\n\n", notFound, skippedFileString.toStdString().c_str());
+  printf("\033[1;33mSkipped games: %d\033[0m (Filenames saved to '\033[1;33m~/.skyscraper/%s\033[0m')\n\n", notFound, skippedFileString.toStdString().c_str());
 
   // All done, now clean up and exit to terminal
   emit finished();
@@ -1336,7 +1336,6 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1;
   } else if(config.scraper == "igdb") {
-    bool exitNow = false;
     printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
     printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
     config.threads = 1;
@@ -1344,11 +1343,10 @@ void Skyscraper::doPrescrapeJobs()
     printf("Fetching key status, just a sec...\n");
     manager.request("https://api-v3.igdb.com/api_status", "", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
     q.exec();
-    QByteArray data = manager.getData();
-    QJsonObject jsonObj = QJsonDocument::fromJson(data).array().first().toObject();
+    QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).array().first().toObject();
     if(jsonObj.isEmpty()) {
       printf("Recieved invalid IGDB server response, maybe their server is having issues, please try again later...\n");
-      exitNow = true;
+      exit(1);
     }
     if(jsonObj["authorized"].toBool()) {
       QString plan = jsonObj["plan"].toString();
@@ -1365,12 +1363,8 @@ void Skyscraper::doPrescrapeJobs()
       } else {
 	printf("IGDB says key is unauthorized, can't continue with this module...\n");
       }
-      exitNow = true;
-    }
-    if(config.verbosity >= 1)
-      printf("Answer was:\n%s\n", data.data());
-    if(exitNow)
       exit(1);
+    }
     printf("\n");
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
@@ -1383,17 +1377,22 @@ void Skyscraper::doPrescrapeJobs()
 	config.threads = 1;
       }
     } else {
-      printf("Fetching limits for user '%s', just a sec...\n", config.user.toStdString().c_str());
+      printf("Fetching limits for user '\033[1;33m%s\033[0m', just a sec...\n", config.user.toStdString().c_str());
       manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=json&ssid=" + config.user + "&sspassword=" + config.password);
       q.exec();
       QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
-      int allowedThreads = jsonObj["response"].toObject()["ssuser"].toObject()["maxthreads"].toString().toInt();
-      if(allowedThreads != 0) {
-	if(config.threadsSet && config.threads <= allowedThreads) {
-	  printf("User is allowed %d threads, but user has set it lower manually, so ignoring.\n\n", allowedThreads);
-	} else {
-	  config.threads = (allowedThreads <= 8?allowedThreads:8);
-	  printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
+      if(jsonObj.isEmpty()) {
+	printf("Recieved invalid ScreenScraper server response, maybe their server is having issues, forcing 1 thread...\n");
+	config.threads = 1;
+      } else {
+	int allowedThreads = jsonObj["response"].toObject()["ssuser"].toObject()["maxthreads"].toString().toInt();
+	if(allowedThreads != 0) {
+	  if(config.threadsSet && config.threads <= allowedThreads) {
+	    printf("User is allowed %d threads, but user has set it manually, so ignoring.\n\n", allowedThreads);
+	  } else {
+	    config.threads = (allowedThreads <= 8?allowedThreads:8);
+	    printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
+	  }
 	}
       }
     }
