@@ -112,6 +112,8 @@ NOTE! Only enable this option if you are having problems getting the roms identi
 #### frontend="emulationstation"
 Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported as well. If exporting for the `attractmode` frontend, please also take note of the required `emulator=""` option that goes along with using the `attractmode` frontend.
 
+Check all supported frontends with '--help'
+
 *Allowed in section(s): `[main]`*
 
 #### emulator=""
