@@ -44,6 +44,7 @@
 
 #include "emulationstation.h"
 #include "attractmode.h"
+#include "pegasus.h"
 
 Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentDir)
 {
@@ -659,13 +660,16 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   settings.endGroup();
   if(parser.isSet("f") && (parser.value("f") == "emulationstation" ||
-			   parser.value("f") == "attractmode")) {
+			   parser.value("f") == "attractmode" ||
+			   parser.value("f") == "pegasus")) {
     config.frontend = parser.value("f");
   }
   if(config.frontend == "emulationstation") {
     frontend = new EmulationStation;
   } else if(config.frontend == "attractmode") {
     frontend = new AttractMode;
+  } else if(config.frontend == "pegasus") {
+    frontend = new Pegasus;
   }
 
   frontend->setConfig(&config);

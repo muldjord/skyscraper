@@ -44,6 +44,7 @@ HEADERS += src/skyscraper.h \
            src/abstractfrontend.h \
            src/emulationstation.h \
            src/attractmode.h \
+           src/pegasus.h \
            src/openretro.h \
            src/thegamesdb.h \
            src/worldofspectrum.h \
@@ -91,6 +92,7 @@ SOURCES += src/main.cpp \
            src/abstractfrontend.cpp \
            src/emulationstation.cpp \
            src/attractmode.cpp \
+           src/pegasus.cpp \
            src/openretro.cpp \
            src/thegamesdb.cpp \
            src/worldofspectrum.cpp \

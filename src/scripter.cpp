@@ -51,13 +51,19 @@ Scripter::Scripter()
     exit(0);
   }
 
-  std::string frontendStr = "";
+  std::string frontendStr = "na";
   printf("\n");
   printf("Available frontends:\n");
   printf("* \033[1;33memulationstation\033[0m\n");
   printf("* \033[1;33mattractmode\033[0m\n");
-  printf("\033[1;34mPlease enter the frontend you wish to scrape for\033[0m (enter for 'emulationstation'):\033[0m ");
-  getline(std::cin, frontendStr);
+  printf("* \033[1;33mpegasus\033[0m\n");
+  while(frontendStr != "emulationstation" ||
+	frontendStr != "attractmode" ||
+	frontendStr != "pegasus" ||
+	frontendStr != "") {
+    printf("\033[1;34mPlease enter the frontend you wish to scrape for\033[0m (enter for 'emulationstation'):\033[0m ");
+    getline(std::cin, frontendStr);
+  }
 
   if(frontendStr == "")
     frontendStr = "emulationstation";
@@ -149,9 +155,9 @@ Scripter::Scripter()
     generateStr += " -g " + gamelistFolderStr;
   if(artworkFolderStr != "")
     generateStr += " -o " + artworkFolderStr;
-  if(frontendStr == "attractmode") {
+  if(frontendStr != "emulationstation") {
     generateStr += " -f " + frontendStr;
-    if(emulatorStr != "")
+    if(frontendStr == "attractmode" && emulatorStr != "")
       generateStr += " -e " + emulatorStr;
   }
   if(minMatchStr != "")
