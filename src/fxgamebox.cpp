@@ -40,7 +40,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   QTransform trans;
   double borderFactor = 0.029;
 
-  QImage front(src.width(), src.height() + src.height() * borderFactor,
+  QImage front(src.width() - src.width() * borderFactor, src.height(),
 	       QImage::Format_ARGB32_Premultiplied);
   front.fill(Qt::black);
   QImage overlayFront(config->resources["boxfront.png"]);
@@ -48,7 +48,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
 				     Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   
   painter.begin(&front);
-  painter.drawImage(0, front.height() * borderFactor / 2, src);
+  painter.drawImage(0, front.height() * borderFactor / 2, src.scaledToHeight(front.height() - front.height() * borderFactor));
   painter.drawImage(0, 0, overlayFront);
   painter.end();
 
