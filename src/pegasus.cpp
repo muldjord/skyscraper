@@ -35,8 +35,30 @@ Pegasus::Pegasus()
 
 void Pegasus::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries)
 {
+  QList<QString> extensionsList;
+  foreach(GameEntry entry, gameEntries) {
+    QString entryExtension = entry.path.split(".").last();
+    bool extFound = false;
+    foreach(QString extension, extensionsList) {
+      if(entryExtension == extension) {
+	extFound = true;
+	break;
+      }
+    }
+    if(!extFound) {
+      extensionsList.append(entryExtension);
+    }
+  }
+  QString extensions = "";
+  foreach(QString extension, extensionsList) {
+    extensions.append(extension + ", ");
+  }
+  extensions = extensions.left(extensions.length() - 2);
+
   if(!gameEntries.isEmpty()) {
     finalOutput.append("collection: " + gameEntries.first().platform + "\n");
+    finalOutput.append("shortname: " + config->platform + "\n");
+    finalOutput.append("extensions: " + extensions + "\n");
     finalOutput.append("command: /opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ " + config->platform + " \"{file.path}\"\n");
     finalOutput.append("\n\n");
   }
