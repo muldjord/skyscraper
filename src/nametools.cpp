@@ -464,6 +464,28 @@ QString NameTools::getParNotes(QString baseName)
   return parNotes;
 }
 
+QString NameTools::getUniqueNotes(const QString &notes, QChar delim)
+{
+  QList<QString> notesList = notes.split(delim, QString::SkipEmptyParts);
+  QList<QString> uniqueList;
+  foreach(QString note, notesList) {
+    bool found = false;
+    foreach(QString unique, uniqueList) {
+      if(note.toLower() == unique.toLower()) {
+	found = true;
+      }
+    }
+    if(!found) {
+      uniqueList.append(delim + note);
+    }
+  }
+  QString uniqueNotes;
+  foreach(QString note, uniqueList) {
+    uniqueNotes.append(note);
+  }
+  return uniqueNotes;
+}
+
 QString NameTools::getSha1(const QFileInfo &info)
 {
   QCryptographicHash sha1(QCryptographicHash::Sha1);

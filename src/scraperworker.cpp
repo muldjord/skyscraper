@@ -101,7 +101,7 @@ void ScraperWorker::run()
 
     QString compareTitle = scraper->getCompareTitle(info);
 
-    // For Amiga platform, change subplatforms from filename and add brackets if needed
+    // For Amiga platform, change to subplatforms if detected as such
     if(config.platform == "amiga") {
       if(info.completeBaseName().toLower().contains("cd32") ||
 	 info.suffix() == "cue" || info.suffix() == "iso" || info.suffix() == "img") {
@@ -176,7 +176,9 @@ void ScraperWorker::run()
     game.parNotes = NameTools::getParNotes(game.title);
     game.sqrNotes.append(NameTools::getSqrNotes(info.completeBaseName()));
     game.parNotes.append(NameTools::getParNotes(info.completeBaseName()));
-
+    game.sqrNotes = NameTools::getUniqueNotes(game.sqrNotes, '[');
+    game.parNotes = NameTools::getUniqueNotes(game.parNotes, '(');
+    
     if(game.found == false) {
       output.append("\033[1;33m---- Game '" + info.completeBaseName() + "' not found :( ----\033[0m\n\n");
       game.resetMedia();

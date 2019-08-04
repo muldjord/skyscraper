@@ -44,6 +44,7 @@ public:
   static int getNumeral(const QString baseName);
   static QString getSqrNotes(QString baseName);
   static QString getParNotes(QString baseName);
+  static QString getUniqueNotes(const QString &notes, QChar delim);
   static QString getSha1(const QFileInfo &info);
 
 };
