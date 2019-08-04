@@ -35,6 +35,11 @@ Pegasus::Pegasus()
 
 void Pegasus::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries)
 {
+  if(!gameEntries.isEmpty()) {
+    finalOutput.append("collection: " + gameEntries.first().platform + "\n");
+    finalOutput.append("command: /opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ " + config->platform + " \"{file.path}\"\n");
+    finalOutput.append("\n\n");
+  }
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
   int dotMod = gameEntries.length() * 0.1 + 1;
