@@ -17,6 +17,7 @@ When you've cached some resources for any platform, Skyscraper can use this data
 #### Supported frontends (set with '-f'):
 * EmulationStation
 * AttractMode
+* Pegasus
 
 ## Patreon
 Yes, [I have one](https://www.patreon.com/muldjord). Absolutely NOT a requirement if you want to use Skyscraper! But there it is. And please understand that becoming a patron does in no way give you any special say in what features I work on or how I develop Skyscraper in the future. It will be seen as an appreciative gesture, nothing else. :)
