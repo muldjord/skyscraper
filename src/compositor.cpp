@@ -296,6 +296,8 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
   foreach(Layer output, outputs.getLayers()) {
+    bool blank = false;
+
     if(output.resource == "cover") {
       output.setCanvas(game.coverData);
     } else if(output.resource == "screenshot") {
@@ -304,6 +306,10 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       output.setCanvas(game.wheelData);
     } else if(output.resource == "marquee") {
       output.setCanvas(game.marqueeData);
+    }
+
+    if(output.canvas.isNull()) {
+      blank = true;
     }
 
     if(output.canvas.isNull() && output.hasLayers()) {
@@ -318,7 +324,12 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       // Reset output.canvas since composite layers exist
       output.makeTransparent();
       // Initiate recursive compositing
-      processChildLayers(game, output);
+      processChildLayers(game, output, blank);
+    }
+
+    // don't save empty images
+    if(blank) {
+      continue;
     }
 
     if(output.resType == "cover") {
@@ -345,7 +356,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
   }
 }
 
-void Compositor::processChildLayers(GameEntry &game, Layer &layer)
+void Compositor::processChildLayers(GameEntry &game, Layer &layer, bool &blank)
 {
   for(int a = 0; a < layer.getLayers().length(); ++a) {
     // Create new layer and set canvas to relevant resource (or empty if left out in xml)
@@ -372,6 +383,8 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
 	continue;
       }
       
+      blank = false;
+
       thisLayer.premultiply();
       if(thisLayer.resource == "screenshot") {
 	// Crop away transparency and black borders around screenshots
@@ -387,7 +400,7 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
 
       // Continue concurrency if this layer has children
       if(thisLayer.hasLayers()) {
-	processChildLayers(game, thisLayer);
+	processChildLayers(game, thisLayer, blank);
       }
 
       // Composite image on canvas (which is the parent canvas at this point)

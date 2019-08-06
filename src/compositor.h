@@ -44,7 +44,7 @@ public:
 
 private:
   void addChildLayers(Layer &layer, QXmlStreamReader &xml);
-  void processChildLayers(GameEntry &game, Layer &layer);
+  void processChildLayers(GameEntry &game, Layer &layer, bool &blank);
   Settings *config;
   Layer outputs;
   
