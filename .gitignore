@@ -1,0 +1,7 @@
+.qmake.stash
+Makefile
+Skyscraper
+*.o
+moc_*.o
+moc_*.cpp
+moc_*.h
