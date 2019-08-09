@@ -151,6 +151,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * MAJOR: Added support for the 'Pegasus' frontend (set with '-f pegasus')
 * Now checks for, and removes, double bracket notes in final game list title
 * Fixed minor bug in the 3D gamebox effect renderer
+* Completely transparent images are no longer saved when compositing (Thank you to metallkopf for getting me to finally fix this)
 
 #### Version 3.2.2 (3rd August 2019)
 * Added 'bat' scripts to sha1 special handling list (please purge platforms using 'bat' files and rescrape)
