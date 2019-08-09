@@ -243,6 +243,20 @@ bool Layer::hasLayers()
 
 bool Layer::save(QString filename)
 {
+  // Check if canvas is largely transparent. If so, don't save it
+  const QRgb *canvasBits = (QRgb *)canvas.constBits();
+  int noOfPixels = canvas.width() * canvas.height();
+  bool transparent = true;
+  for(int a = 0; a < noOfPixels; a = a + 10) {
+    if(qAlpha(canvasBits[a]) != 0) {
+      transparent = false;
+      break;
+    }
+  }
+  if(transparent) {
+    return false;
+  }
+
   canvas = canvas.convertToFormat(QImage::Format_ARGB6666_Premultiplied);
 
   if(canvas.isNull())
