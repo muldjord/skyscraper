@@ -324,7 +324,7 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
     if(output.resType == "cover") {
       QString filename = config->coversFolder + "/" + completeBaseName + ".png";
       if(output.save(filename)) {
-	game.coverFile = StrTools::xmlUnescape(filename);
+	game.coverFile = filename;
       }
     } else if(output.resType == "screenshot") {
       QString filename = config->screenshotsFolder + "/" + completeBaseName + ".png";
