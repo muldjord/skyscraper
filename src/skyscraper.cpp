@@ -1544,7 +1544,7 @@ void Skyscraper::setLangPrios()
 
 void Skyscraper::migrate(QString filename)
 {
-  if(QFileInfo::exists(filename + ".old"))
+  if(!QFileInfo::exists(filename) || QFileInfo::exists(filename + ".old"))
     return;
 
   QByteArray data;
