@@ -808,7 +808,7 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
 {
   if(!unattend) {
     std::string userInput = "";
-    printf("\033[1;31mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories matching the suffixes supported by the platform and any extension(s) you might have added manually). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Cache folder' further up and is usually located under '~/.skyscraper/' unless you've set it manually.\033[0m\n\n", inputFolder.toStdString().c_str());
+    printf("\033[1;33mWARNING!!! Vacuuming your Skyscraper cache removes all resources that don't match your current romset (files located at '%s' or any of its subdirectories matching the suffixes supported by the platform and any extension(s) you might have added manually). Please consider making a backup of your Skyscraper cache before performing this action. The cache for this platform is listed under 'Cache folder' further up and is usually located under '~/.skyscraper/' unless you've set it manually.\033[0m\n\n", inputFolder.toStdString().c_str());
     printf("\033[1;34mDo you wish to continue\033[0m (y/N)? ");
     getline(std::cin, userInput);
     if(userInput != "y") {
@@ -926,7 +926,7 @@ void Cache::showStats(int verbosity)
   } else if(verbosity > 1) {
     for(QMap<QString, ResCounts>::iterator it = resCountsMap.begin();
 	it != resCountsMap.end(); ++it) {
-      printf("'%s' module\n", it.key().toStdString().c_str());
+      printf("'\033[1;32m%s\033[0m' module\n", it.key().toStdString().c_str());
       printf("  Titles       : %d\n", it.value().titles);
       printf("  Platforms    : %d\n", it.value().platforms);
       printf("  Descriptions : %d\n", it.value().descriptions);
