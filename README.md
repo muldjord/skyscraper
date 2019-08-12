@@ -152,6 +152,10 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Now checks for, and removes, double bracket notes in final game list title
 * Fixed minor bug in the 3D gamebox effect renderer
 * Completely transparent images are no longer saved when compositing (Thank you to metallkopf for getting me to finally fix this)
+* Optimized the final game list assembling code to use game entry references instead of copies
+* Optimized all cache resource iterations to use const references instead of copies
+* Optimized the entire codebase by removing all Qt-centric foreach iterate-by-copy to use references instead
+* Fixed bug where 'screenscraper' would only look for ESRB age classification
 
 #### Version 3.2.2 (3rd August 2019)
 * Added 'bat' scripts to sha1 special handling list (please purge platforms using 'bat' files and rescrape)
