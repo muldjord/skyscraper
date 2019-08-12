@@ -339,7 +339,7 @@ void Skyscraper::run()
     printf("\n\033[1;33mRestriction overrun!\033[0m This scraping module only allows for scraping up to %d roms at a time. You can either supply a few rom filenames on command line, or make use of the '--startat' and / or '--endat' command line options to adhere to this. Please check '--help' for more info.\n\nNow quitting...\n", config.romLimit);
     exit(0);
   }
-
+  printf("\n");
   if(totalFiles > 0) {
     printf("Starting scraping run on \033[1;32m%d\033[0m files using \033[1;32m%d\033[0m threads.\nSit back, relax and let me do the work! :)\n\n", totalFiles, config.threads);
   } else {
