@@ -391,7 +391,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   
   int compareNumeral = NameTools::getNumeral(compareTitle);
   // Start by applying rules we are certain are needed. Add the ones that pass to potentials
-  foreach(GameEntry entry, gameEntries) {
+  for(auto entry: gameEntries) {
     entry.title = StrTools::xmlUnescape(entry.title);
     
     int entryNumeral = NameTools::getNumeral(entry.title);
@@ -399,13 +399,12 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     // Numeral defaults to 1, even for games without a numeral.
     if(compareNumeral != entryNumeral) {
       // Special cases
-      if(compareTitle.toLower().indexOf("day of the tentacle") == -1 &&
-	 compareTitle.toLower().indexOf("curse of monkey island") == -1) {
+      if(!compareTitle.toLower().contains("day of the tentacle") &&
+	 !compareTitle.toLower().contains("curse of monkey island")) {
 	continue;
       }
     }
-    // Remove all brackets from name, since we pretty much NEVER want these and they fuck up
-    // our listings when using mamenames for 'arcade' (everything becomes double)
+    // Remove all brackets from name, since we pretty much NEVER want these
     if(config.scraper != "openretro") {
       entry.title = entry.title.left(entry.title.indexOf("(")).simplified();
       entry.title = entry.title.left(entry.title.indexOf("[")).simplified();
@@ -467,8 +466,8 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     // Only perform check if there's 3 or more words in compareTitle
     if(compareWords.size() >= 3) {
       int wordsFound = 0;
-      foreach(QString compareWord, compareWords) {
-	foreach(QString entryWord, entryWords) {
+      for(const auto &compareWord: compareWords) {
+	for(const auto &entryWord: entryWords) {
 	  if(entryWord == compareWord) {
 	    wordsFound++;
 	    break;
@@ -484,8 +483,8 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     // Only perform check if there's 3 or more words in entryTitle
     if(entryWords.size() >= 3) {
       int wordsFound = 0;
-      foreach(QString entryWord, entryWords) {
-	foreach(QString compareWord, compareWords) {
+      for(const auto &entryWord: entryWords) {
+	for(const auto &compareWord: compareWords) {
 	  if(compareWord == entryWord) {
 	    wordsFound++;
 	    break;

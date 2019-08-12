@@ -101,7 +101,7 @@ bool AttractMode::skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Que
 
 void AttractMode::preserveFromOld(GameEntry &entry)
 {
-  foreach(GameEntry oldEntry, oldEntries) {
+  for(const auto &oldEntry: oldEntries) {
     if(oldEntry.baseName == entry.baseName) {
       if(entry.developer.isEmpty())
 	entry.developer = oldEntry.developer;
@@ -142,7 +142,7 @@ void AttractMode::preserveFromOld(GameEntry &entry)
   }
 }
 
-void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries)
+void AttractMode::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
 {
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
@@ -157,7 +157,7 @@ void AttractMode::assembleList(QString &finalOutput, const QList<GameEntry> &gam
     saveDescFile = false;
   }
   finalOutput.append("#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n");
-  foreach(GameEntry entry, gameEntries) {
+  for(auto &entry: gameEntries) {
     if(dots % dotMod == 0) {
       printf(".");
       fflush(stdout);
@@ -336,10 +336,9 @@ QString AttractMode::getMediaTypeFolder(QString type)
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
       QList<QByteArray> snippets = emulatorFile.readLine().simplified().split(' ');
-      foreach(QByteArray snippet, snippets) {
-      }
       if(snippets.length() == 3 && snippets.at(0) == "artwork" && snippets.at(1) == type) {
 	mediaTypeFolder = snippets.at(2);
+	break;
       }
     }
     emulatorFile.close();

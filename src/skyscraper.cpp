@@ -265,7 +265,7 @@ void Skyscraper::run()
 
   if(!cliFiles.isEmpty()) {
     queue->clear();
-    foreach(QString cliFile, cliFiles) {
+    for(const auto &cliFile: cliFiles) {
       queue->append(QFileInfo(cliFile));
     }
   } 
@@ -366,7 +366,7 @@ void Skyscraper::run()
     }
   }
   // Ready, set, GO!!! Start all threads
-  foreach(QThread *thread, threadList) {
+  for(const auto thread: threadList) {
     thread->start();
     threadsRunning = true;
   }
@@ -1185,7 +1185,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
 
   // Verify requested files and add the ones that exist
-  foreach(QString requestedFile, requestedFiles) {
+  for(const auto &requestedFile: requestedFiles) {
     QFileInfo requestedFileInfo(requestedFile);
     if(!requestedFileInfo.exists()) {
       requestedFileInfo.setFile(config.currentDir + "/" + requestedFile);
@@ -1492,7 +1492,7 @@ void Skyscraper::setRegionPrios()
   
   // Load custom region prioritizations
   if(!config.regionPriosStr.isEmpty()) {
-    foreach(QString region, config.regionPriosStr.split(",")) {
+    for(const auto &region: config.regionPriosStr.split(",")) {
       config.regionPrios.append(region);
     }
   } else {
@@ -1534,7 +1534,7 @@ void Skyscraper::setLangPrios()
   
   // Load custom lang prioritizations
   if(!config.langPriosStr.isEmpty()) {
-    foreach(QString lang, config.langPriosStr.split(",")) {
+    for(const auto &lang: config.langPriosStr.split(",")) {
       config.langPrios.append(lang);
     }
   } else {

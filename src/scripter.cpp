@@ -80,7 +80,7 @@ Scripter::Scripter()
   printf("\n");
   printf("Available platforms:\n");
   QStringList platforms = Platform::getPlatforms();
-  foreach(QString platform, platforms) {
+  for(const auto &platform: platforms) {
     printf("* \033[1;33m%s\033[0m\n", platform.toStdString().c_str());
   }
   while(platformStr == "") {
@@ -178,7 +178,7 @@ Scripter::Scripter()
   baseStr += " --unattend";
   
   scriptFile.write("#!/bin/bash\n");
-  foreach(QString scraper, Platform::getScrapers(QString(platformStr.c_str()))) {
+  for(const auto &scraper: Platform::getScrapers(QString(platformStr.c_str()))) {
     if(scraper != "cache") {
       scriptFile.write((baseStr + gatherStr + " -s " + scraper.toStdString() + "\n").c_str());
     } else {

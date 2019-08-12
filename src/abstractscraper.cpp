@@ -53,19 +53,19 @@ void AbstractScraper::getSearchResults(QList<GameEntry> &gameEntries,
     nomNom(searchResultPre);
 
     // Digest until url
-    foreach(QString nom, urlPre) {
+    for(const auto &nom: urlPre) {
       nomNom(nom);
     }
     game.url = baseUrl + "/" + data.left(data.indexOf(urlPost));
 
     // Digest until title
-    foreach(QString nom, titlePre) {
+    for(const auto &nom: titlePre) {
       nomNom(nom);
     }
     game.title = data.left(data.indexOf(titlePost));
 
     // Digest until platform
-    foreach(QString nom, platformPre) {
+    for(const auto &nom: platformPre) {
       nomNom(nom);
     }
     game.platform = data.left(data.indexOf(platformPost));
@@ -138,12 +138,12 @@ void AbstractScraper::getDescription(GameEntry &game)
   if(descriptionPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, descriptionPre) {
+  for(const auto &nom: descriptionPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, descriptionPre) {
+  for(const auto &nom: descriptionPre) {
     nomNom(nom);
   }
 
@@ -156,12 +156,12 @@ void AbstractScraper::getDescription(GameEntry &game)
 
 void AbstractScraper::getDeveloper(GameEntry &game)
 {
-  foreach(QString nom, developerPre) {
+  for(const auto &nom: developerPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, developerPre) {
+  for(const auto &nom: developerPre) {
     nomNom(nom);
   }
   game.developer = data.left(data.indexOf(developerPost));
@@ -172,12 +172,12 @@ void AbstractScraper::getPublisher(GameEntry &game)
   if(publisherPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, publisherPre) {
+  for(const auto &nom: publisherPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, publisherPre) {
+  for(const auto &nom: publisherPre) {
     nomNom(nom);
   }
   game.publisher = data.left(data.indexOf(publisherPost));
@@ -188,12 +188,12 @@ void AbstractScraper::getPlayers(GameEntry &game)
   if(playersPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, playersPre) {
+  for(const auto &nom: playersPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, playersPre) {
+  for(const auto &nom: playersPre) {
     nomNom(nom);
   }
   game.players = data.left(data.indexOf(playersPost));
@@ -204,12 +204,12 @@ void AbstractScraper::getAges(GameEntry &game)
   if(agesPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, agesPre) {
+  for(const auto &nom: agesPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, agesPre) {
+  for(const auto &nom: agesPre) {
     nomNom(nom);
   }
   game.ages = data.left(data.indexOf(agesPost));
@@ -220,12 +220,12 @@ void AbstractScraper::getTags(GameEntry &game)
   if(tagsPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, tagsPre) {
+  for(const auto &nom: tagsPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, tagsPre) {
+  for(const auto &nom: tagsPre) {
     nomNom(nom);
   }
   game.tags = data.left(data.indexOf(tagsPost));
@@ -236,12 +236,12 @@ void AbstractScraper::getRating(GameEntry &game)
   if(ratingPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, ratingPre) {
+  for(const auto &nom: ratingPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, ratingPre) {
+  for(const auto &nom: ratingPre) {
     nomNom(nom);
   }
   game.rating = data.left(data.indexOf(ratingPost));
@@ -259,12 +259,12 @@ void AbstractScraper::getReleaseDate(GameEntry &game)
   if(releaseDatePre.isEmpty()) {
     return;
   }
-  foreach(QString nom, releaseDatePre) {
+  for(const auto &nom: releaseDatePre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, releaseDatePre) {
+  for(const auto &nom: releaseDatePre) {
     nomNom(nom);
   }
   game.releaseDate = data.left(data.indexOf(releaseDatePost)).simplified();
@@ -275,12 +275,12 @@ void AbstractScraper::getCover(GameEntry &game)
   if(coverPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, coverPre) {
+  for(const auto &nom: coverPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, coverPre) {
+  for(const auto &nom: coverPre) {
     nomNom(nom);
   }
   QString coverUrl = data.left(data.indexOf(coverPost)).replace("&amp;", "&");
@@ -304,7 +304,7 @@ void AbstractScraper::getScreenshot(GameEntry &game)
   int screens = data.count(screenshotCounter.toUtf8());
   if(screens >= 1) {
     for(int a = 0; a < screens - (screens / 2); a++) {
-      foreach(QString nom, screenshotPre) {
+      for(const auto &nom: screenshotPre) {
 	nomNom(nom);
       }
     }
@@ -326,12 +326,12 @@ void AbstractScraper::getWheel(GameEntry &game)
   if(wheelPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, wheelPre) {
+  for(const auto &nom: wheelPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, wheelPre) {
+  for(const auto &nom: wheelPre) {
     nomNom(nom);
   }
   QString wheelUrl = data.left(data.indexOf(wheelPost)).replace("&amp;", "&");
@@ -351,12 +351,12 @@ void AbstractScraper::getMarquee(GameEntry &game)
   if(marqueePre.isEmpty()) {
     return;
   }
-  foreach(QString nom, marqueePre) {
+  for(const auto &nom: marqueePre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, marqueePre) {
+  for(const auto &nom: marqueePre) {
     nomNom(nom);
   }
   QString marqueeUrl = data.left(data.indexOf(marqueePost)).replace("&amp;", "&");
@@ -376,12 +376,12 @@ void AbstractScraper::getVideo(GameEntry &game)
   if(videoPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, videoPre) {
+  for(const auto &nom: videoPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, videoPre) {
+  for(const auto &nom: videoPre) {
     nomNom(nom);
   }
   QString videoUrl = data.left(data.indexOf(videoPost)).replace("&amp;", "&");
@@ -594,7 +594,7 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
 }
 
 bool AbstractScraper::platformMatch(QString found, QString platform) {
-  foreach(QString p, Platform::getAliases(platform)) {
+  for(const auto &p: Platform::getAliases(platform)) {
     if(found.toLower() == p) {
       return true;
     }

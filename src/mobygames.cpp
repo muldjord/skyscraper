@@ -303,7 +303,7 @@ void MobyGames::getCover(GameEntry &game)
   QString coverUrl = "";
   bool foundFrontCover= false;
 
-  foreach(QString region, regionPrios) {
+  for(const auto &region: regionPrios) {
     QJsonArray jsonCoverGroups = jsonDoc.object()["cover_groups"].toArray();
     while(!jsonCoverGroups.isEmpty()) {
       bool foundRegion = false;

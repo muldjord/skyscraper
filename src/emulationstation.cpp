@@ -81,7 +81,7 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
 
 void EmulationStation::preserveFromOld(GameEntry &entry)
 {
-  foreach(GameEntry oldEntry, oldEntries) {
+  for(const auto &oldEntry: oldEntries) {
     QString oldFileName = oldEntry.path.mid(oldEntry.path.lastIndexOf("/"), oldEntry.path.length());
     QString fileName = entry.path.mid(entry.path.lastIndexOf("/"), entry.path.length());
     if(oldFileName == fileName) {
@@ -116,7 +116,7 @@ void EmulationStation::preserveFromOld(GameEntry &entry)
   }
 }
 
-void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries)
+void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
 {
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
@@ -124,7 +124,7 @@ void EmulationStation::assembleList(QString &finalOutput, const QList<GameEntry>
   if(dotMod == 0)
     dotMod = 1;
   finalOutput.append("<?xml version=\"1.0\"?>\n<gameList>\n");
-  foreach(GameEntry entry, gameEntries) {
+  for(auto &entry: gameEntries) {
     if(dots % dotMod == 0) {
       printf(".");
       fflush(stdout);

@@ -72,14 +72,14 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
   QJsonArray jsonGames = jsonDoc.array();
 
-  foreach(const QJsonValue &jsonGame, jsonGames) {
+  for(const auto &jsonGame: jsonGames) {
     GameEntry game;
     
     game.title = jsonGame.toObject()["game"].toObject()["name"].toString();
     game.id = QString::number(jsonGame.toObject()["game"].toObject()["id"].toInt());
 
     QJsonArray jsonPlatforms = jsonGame.toObject()["game"].toObject()["platforms"].toArray();
-    foreach(const QJsonValue &jsonPlatform, jsonPlatforms) {
+    for(const auto &jsonPlatform: jsonPlatforms) {
       game.id.append(";" + QString::number(jsonPlatform.toObject()["id"].toInt()));
       game.platform = jsonPlatform.toObject()["name"].toString();
       if(platformMatch(game.platform, platform)) {
@@ -148,8 +148,8 @@ void Igdb::getReleaseDate(GameEntry &game)
 {
   QJsonArray jsonDates = jsonObj["release_dates"].toArray();
   bool regionMatch = false;
-  foreach(QString region, regionPrios) {
-    foreach(const QJsonValue &jsonDate, jsonDates) {
+  for(const auto &region: regionPrios) {
+    for(const auto &jsonDate: jsonDates) {
       int regionEnum = jsonDate.toObject()["region"].toInt();
       QString curRegion = "";
       if(regionEnum == 1)
@@ -192,7 +192,7 @@ void Igdb::getPlayers(GameEntry &game)
   // So basically if != 1 it's at least 2 players. That's all we can gather from this
   game.players = "1";
   QJsonArray jsonPlayers = jsonObj["game_modes"].toArray();
-  foreach(const QJsonValue &jsonPlayer, jsonPlayers) {
+  for(const auto &jsonPlayer: jsonPlayers) {
     if(jsonPlayer.toObject()["id"].toInt() != 1) {
       game.players = "2";
       break;
@@ -203,7 +203,7 @@ void Igdb::getPlayers(GameEntry &game)
 void Igdb::getTags(GameEntry &game)
 {
   QJsonArray jsonGenres = jsonObj["genres"].toArray();
-  foreach(const QJsonValue &jsonGenre, jsonGenres) {
+  for(const auto &jsonGenre: jsonGenres) {
     game.tags.append(jsonGenre.toObject()["name"].toString() + ", ");
   }
   game.tags = game.tags.left(game.tags.length() - 2);
@@ -242,7 +242,7 @@ void Igdb::getAges(GameEntry &game)
 void Igdb::getPublisher(GameEntry &game)
 {
   QJsonArray jsonCompanies = jsonObj["involved_companies"].toArray();
-  foreach(const QJsonValue &jsonCompany, jsonCompanies) {
+  for(const auto &jsonCompany: jsonCompanies) {
     if(jsonCompany.toObject()["publisher"].toBool() == true) {
       game.publisher = jsonCompany.toObject()["company"].toObject()["name"].toString();
       return;
@@ -253,7 +253,7 @@ void Igdb::getPublisher(GameEntry &game)
 void Igdb::getDeveloper(GameEntry &game)
 {
   QJsonArray jsonCompanies = jsonObj["involved_companies"].toArray();
-  foreach(const QJsonValue &jsonCompany, jsonCompanies) {
+  for(const auto &jsonCompany: jsonCompanies) {
     if(jsonCompany.toObject()["developer"].toBool() == true) {
       game.developer = jsonCompany.toObject()["company"].toObject()["name"].toString();
       return;

@@ -126,20 +126,20 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
       nomNom(searchResultPre);
       
       // Digest until url
-      foreach(QString nom, urlPre) {
+      for(const auto &nom: urlPre) {
 	nomNom(nom);
       }
       game.url = baseUrl + "/" + data.left(data.indexOf(urlPost)) + "/edit";
       
       // Digest until title
-      foreach(QString nom, titlePre) {
+      for(const auto &nom: titlePre) {
 	nomNom(nom);
       }
       // Remove AGA, we already add this automatically in StrTools::addSqrBrackets
       game.title = data.left(data.indexOf(titlePost)).replace("[AGA]", "").simplified();
       
       // Digest until platform
-      foreach(QString nom, platformPre) {
+      for(const auto &nom: platformPre) {
 	nomNom(nom);
       }
       game.platform = data.left(data.indexOf(platformPost)).replace("&nbsp;", " ");
@@ -237,12 +237,12 @@ void OpenRetro::getDescription(GameEntry &game)
 
 void OpenRetro::getTags(GameEntry &game)
 {
-  foreach(QString nom, tagsPre) {
+  for(const auto &nom: tagsPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, tagsPre) {
+  for(const auto &nom: tagsPre) {
     nomNom(nom);
   }
   QString tags = "";
@@ -264,12 +264,12 @@ void OpenRetro::getCover(GameEntry &game)
   if(coverPre.isEmpty()) {
     return;
   }
-  foreach(QString nom, coverPre) {
+  for(const auto &nom: coverPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, coverPre) {
+  for(const auto &nom: coverPre) {
     nomNom(nom);
   }
   QString coverUrl = data.left(data.indexOf(coverPost)).replace("&amp;", "&") + "?s=512";
@@ -289,12 +289,12 @@ void OpenRetro::getMarquee(GameEntry &game)
   if(marqueePre.isEmpty()) {
     return;
   }
-  foreach(QString nom, marqueePre) {
+  for(const auto &nom: marqueePre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, marqueePre) {
+  for(const auto &nom: marqueePre) {
     nomNom(nom);
   }
   QString marqueeUrl = data.left(data.indexOf(marqueePost)).replace("&amp;", "&") + "?s=512";

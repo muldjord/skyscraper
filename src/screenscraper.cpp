@@ -252,9 +252,9 @@ void ScreenScraper::getAges(GameEntry &game)
   
   QJsonArray jsonAges = jsonObj["classifications"].toArray();
 
-  foreach(QString ageBoard, ageBoards) {
+  for(const auto &ageBoard: ageBoards) {
     for(int a = 0; a < jsonAges.size(); ++a) {
-      if(jsonAges.at(a).toObject()["type"].toString() == "ESRB") {
+      if(jsonAges.at(a).toObject()["type"].toString() == ageBoard) {
 	game.ages = jsonAges.at(a).toObject()["text"].toString();
 	return;
       }
@@ -515,13 +515,13 @@ QString ScreenScraper::getJsonText(QJsonArray jsonArr, int attr, QString type)
     }
   } else if(attr == REGION) {
     QList<QString> types = type.split(";");
-    foreach(QString region, regionPrios) { // Not using the config->regionPrios since they might have changed due to region autodetection. So using temporary internal one instead.
+    for(const auto &region: regionPrios) { // Not using the config->regionPrios since they might have changed due to region autodetection. So using temporary internal one instead.
       for(int a = 0; a < jsonArr.size(); ++a) {
 	bool typeMatch = false;
 	if(type.isEmpty()) {
 	  typeMatch = true;
 	} else {
-	  foreach(QString currentType, types) {
+	  for(const auto &currentType: types) {
 	    if(jsonArr.at(a).toObject()["type"].toString() == currentType) {
 	      typeMatch = true;
 	      break;
@@ -540,7 +540,7 @@ QString ScreenScraper::getJsonText(QJsonArray jsonArr, int attr, QString type)
       }
     }
   } else if(attr == LANGUE) {
-    foreach(QString lang, config->langPrios) {
+    for(const auto &lang: config->langPrios) {
       for(int a = 0; a < jsonArr.size(); ++a) {
 	if(!type.isEmpty() && jsonArr.at(a).toObject()["type"].toString() != type) {
 	  continue;

@@ -214,12 +214,12 @@ void ImportScraper::getTitle(GameEntry &game)
   if(titlePre.isEmpty()) {
     return;
   }
-  foreach(QString nom, titlePre) {
+  for(const auto &nom: titlePre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, titlePre) {
+  for(const auto &nom: titlePre) {
     nomNom(nom);
   }
   game.title = data.left(data.indexOf(titlePost)).simplified();
@@ -274,7 +274,7 @@ void ImportScraper::checkForTag(QList<QString> &pre, QString &post, QString &tag
 
 bool ImportScraper::checkType(QString baseName, QList<QFileInfo> &infos, QString &inputFile)
 {
-  foreach(QFileInfo i, infos) {
+  for(const auto &i: infos) {
     if(i.completeBaseName() == baseName) {
       inputFile = i.absoluteFilePath();
       return true;

@@ -234,7 +234,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
       } else if(userInput == "S") {
 	printf("\033[1;34mResources connected to this rom:\033[0m\n");
 	bool found = false;
-	foreach(Resource res, resources) {
+	for(const auto &res: resources) {
 	  if(res.sha1 == sha1) {
 	    printf("\033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n",
 		   res.type.toStdString().c_str(),
@@ -422,7 +422,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
       } else if(userInput == "m") {
 	printf("\033[1;34mResources from which module would you like to remove?\033[0m (Enter to cancel)\n");
 	QMap<QString, int> modules;
-	foreach(Resource res, resources) {
+	for(const auto &res: resources) {
 	  if(res.sha1 == sha1) {
 	    modules[res.source] += 1;
 	  }
@@ -460,7 +460,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
       } else if(userInput == "t") {
 	printf("\033[1;34mResources of which type would you like to remove?\033[0m (Enter to cancel)\n");
 	QMap<QString, int> types;
-	foreach(Resource res, resources) {
+	for(const auto &res: resources) {
 	  if(res.sha1 == sha1) {
 	    types[res.type] += 1;
 	  }
@@ -512,13 +512,13 @@ void Cache::purgeResources(QString purgeStr)
   QString type = "";
 
   QList<QString> definitions = purgeStr.split(",");
-  foreach(QString definition, definitions) {
+  for(const auto &definition: definitions) {
     if(definition.left(2) == "m=") {
-      module = definition.remove(0,2);
+      module = definition.split("=").at(1).simplified();
       printf("Module: '%s'\n", module.toStdString().c_str());
     }
     if(definition.left(2) == "t=") {
-      type = definition.remove(0,2);
+      type = definition.split("=").at(1).simplified();
       printf("Type: '%s'\n", type.toStdString().c_str());
     }
   }
@@ -529,11 +529,7 @@ void Cache::purgeResources(QString purgeStr)
   while(it.hasNext()) {
     Resource res = it.next();
     bool remove = false;
-    if(module.isEmpty() && res.type == type) {
-      remove = true;
-    } else if(type.isEmpty() && res.source == module) {
-      remove = true;
-    } else if(res.source == module && res.type == type) {
+    if(res.source == module || res.type == type) {
       remove = true;
     }
     if(remove) {
@@ -628,7 +624,7 @@ QList<QString> Cache::getSha1List(const QList<QFileInfo> &fileInfos)
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
   int dotMod = fileInfos.size() * 0.1 + 1;
-  foreach(QFileInfo info, fileInfos) {
+  for(const auto &info: fileInfos) {
     if(dots % dotMod == 0) {
       printf(".");
       fflush(stdout);
@@ -692,7 +688,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
       resTypeList.append(missingOption); // If a single type is given
     }
   }
-  foreach(QString resType, resTypeList) {
+  for(const auto &resType: resTypeList) {
     if(resType != "title" &&
        resType != "platform" &&
        resType != "description" &&
@@ -741,7 +737,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
     return;
   } else {
     printf("Creating report(s) for resource type(s):\n");
-    foreach(QString resType, resTypeList) {
+    for(const auto &resType: resTypeList) {
       printf("  %s\n", resType.toStdString().c_str());
     }
     printf("\n");
@@ -768,7 +764,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
   }
   
   QString dateTime = QDateTime::currentDateTime().toString("yyyyMMdd");
-  foreach(QString resType, resTypeList) {
+  for(const auto &resType: resTypeList) {
     QFile reportFile(reportsDir.absolutePath() + "/report-" + platform + "-missing_" + resType + "-" + dateTime + ".txt");
     printf("Report filename: '\033[1;32m%s\033[0m'\nAssembling report, please wait...", reportFile.fileName().toStdString().c_str());
     if(reportFile.open(QIODevice::WriteOnly)) {
@@ -784,7 +780,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
 	}
 	dots++;
 	bool found = false;
-	foreach(Resource res, resources) {
+	for(const auto &res: resources) {
 	  if(res.sha1 == sha1List.at(a)) {
 	    if(res.type == resType) {
 	      found = true;
@@ -843,7 +839,7 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
       dots++;
       Resource res = it.next();
       bool remove = true;
-      foreach(QString sha1, sha1List) {
+      for(const auto &sha1: sha1List) {
 	if(res.sha1 == sha1) {
 	  remove = false;
 	  break;
@@ -1048,7 +1044,7 @@ bool Cache::write()
     xml.setAutoFormatting(true);
     xml.writeStartDocument();
     xml.writeStartElement("resources");
-    foreach(Resource resource, resources) {
+    for(const auto &resource: resources) {
       xml.writeStartElement("resource");
       xml.writeAttribute("sha1", resource.sha1);
       xml.writeAttribute("type", resource.type);
@@ -1126,7 +1122,7 @@ void Cache::validate()
 void Cache::verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &filesNoDelete, QString resType)
 {
   QList<QString> resFileNames;
-  foreach(Resource resource, resources) {
+  for(const auto &resource: resources) {
     if(resource.type == resType) {
       QFileInfo resInfo(cacheDir.absolutePath() + "/" + resource.value);
       resFileNames.append(resInfo.absoluteFilePath());
@@ -1159,7 +1155,7 @@ void Cache::merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFo
   int resUpdated = 0;
   int resMerged = 0;
 
-  foreach(Resource mergeResource, mergeResources) {
+  for(const auto &mergeResource: mergeResources) {
     bool resExists = false;
     // This type of iterator ensures we can delete items while iterating
     QMutableListIterator<Resource> it(resources);
@@ -1387,7 +1383,7 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
 bool Cache::hasEntries(const QString &sha1, const QString scraper)
 {
   QMutexLocker locker(&cacheMutex);
-  foreach(Resource res, resources) {
+  for(const auto &res: resources) {
     if(scraper.isEmpty()) {
       if(res.sha1 == sha1) {
 	return true;
@@ -1406,7 +1402,7 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
   QMutexLocker locker(&cacheMutex);
   QList<Resource> matchingResources;
   // Find all resources related to this particular rom
-  foreach(Resource resource, resources) {
+  for(const auto &resource: resources) {
     if(scraper.isEmpty()) {
       if(entry.sha1 == resource.sha1) {
 	matchingResources.append(resource);
@@ -1566,7 +1562,7 @@ bool Cache::fillType(QString &type, QList<Resource> &matchingResources,
 		     QString &result, QString &source)
 {
   QList<Resource> typeResources;
-  foreach(Resource resource, matchingResources) {
+  for(const auto &resource: matchingResources) {
     if(resource.type == type) {
       typeResources.append(resource);
     }
@@ -1576,7 +1572,7 @@ bool Cache::fillType(QString &type, QList<Resource> &matchingResources,
   }
   if(prioMap.contains(type)) {
     for(int a = 0; a < prioMap.value(type).length(); ++a) {
-      foreach(Resource resource, typeResources) {
+      for(const auto &resource: typeResources) {
 	if(resource.source == prioMap.value(type).at(a)) {
 	  result = resource.value;
 	  source = resource.source;
@@ -1586,7 +1582,7 @@ bool Cache::fillType(QString &type, QList<Resource> &matchingResources,
     }
   }
   qint64 newest = 0;
-  foreach(Resource resource, typeResources) {
+  for(const auto &resource: typeResources) {
     if(resource.timestamp >= newest) {
       newest = resource.timestamp;
       result = resource.value;

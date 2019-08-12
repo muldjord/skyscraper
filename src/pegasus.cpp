@@ -33,13 +33,13 @@ Pegasus::Pegasus()
 {
 }
 
-void Pegasus::assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries)
+void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
 {
   QList<QString> extensionsList;
-  foreach(GameEntry entry, gameEntries) {
+  for(const auto &entry: gameEntries) {
     QString entryExtension = entry.path.split(".").last();
     bool extFound = false;
-    foreach(QString extension, extensionsList) {
+    for(const auto &extension: extensionsList) {
       if(entryExtension == extension) {
 	extFound = true;
 	break;
@@ -50,7 +50,7 @@ void Pegasus::assembleList(QString &finalOutput, const QList<GameEntry> &gameEnt
     }
   }
   QString extensions = "";
-  foreach(QString extension, extensionsList) {
+  for(const auto &extension: extensionsList) {
     extensions.append(extension + ", ");
   }
   extensions = extensions.left(extensions.length() - 2);
@@ -67,7 +67,7 @@ void Pegasus::assembleList(QString &finalOutput, const QList<GameEntry> &gameEnt
   int dotMod = gameEntries.length() * 0.1 + 1;
   if(dotMod == 0)
     dotMod = 1;
-  foreach(GameEntry entry, gameEntries) {
+  for(auto &entry: gameEntries) {
     if(dots % dotMod == 0) {
       printf(".");
       fflush(stdout);

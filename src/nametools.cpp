@@ -468,9 +468,9 @@ QString NameTools::getUniqueNotes(const QString &notes, QChar delim)
 {
   QList<QString> notesList = notes.split(delim, QString::SkipEmptyParts);
   QList<QString> uniqueList;
-  foreach(QString note, notesList) {
+  for(const auto &note: notesList) {
     bool found = false;
-    foreach(QString unique, uniqueList) {
+    for(const auto &unique: uniqueList) {
       if(note.toLower() == unique.toLower()) {
 	found = true;
       }
@@ -480,7 +480,7 @@ QString NameTools::getUniqueNotes(const QString &notes, QChar delim)
     }
   }
   QString uniqueNotes;
-  foreach(QString note, uniqueList) {
+  for(const auto &note: uniqueList) {
     uniqueNotes.append(note);
   }
   return uniqueNotes;

@@ -295,7 +295,7 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
-  foreach(Layer output, outputs.getLayers()) {
+  for(auto &output: outputs.getLayers()) {
     if(output.resource == "cover") {
       output.setCanvas(game.coverData);
     } else if(output.resource == "screenshot") {

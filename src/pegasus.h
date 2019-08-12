@@ -34,7 +34,7 @@ class Pegasus : public AbstractFrontend
 
 public:
   Pegasus();
-  void assembleList(QString &finalOutput, const QList<GameEntry> &gameEntries) override;
+  void assembleList(QString &finalOutput, QList<GameEntry> &gameEntries) override;
   bool canSkip() override;
   QString getGameListFileName() override;
   QString getInputFolder() override;

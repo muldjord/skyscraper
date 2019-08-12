@@ -307,7 +307,7 @@ QString StrTools::conformTags(const QString str)
 {
   QString tags = "";
   QList<QString> tagList = str.split(',', QString::SkipEmptyParts);
-  foreach(QString tag, tagList) {
+  for(auto &tag: tagList) {
     tag = tag.simplified();
     tag = tag.left(1).toUpper() + tag.mid(1, tag.length() - 1);
     tags += tag.simplified() + ", ";

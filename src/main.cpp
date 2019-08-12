@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
   qInstallMessageHandler(customMessageHandler);
 
   QString platforms;
-  foreach(QString platform, Platform::getPlatforms()) {
+  for(const auto &platform: Platform::getPlatforms()) {
     platforms.append("'" + platform + "', ");
   }
   // Remove the last ', '

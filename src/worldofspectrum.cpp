@@ -87,13 +87,13 @@ void WorldOfSpectrum::getSearchResults(QList<GameEntry> &gameEntries,
     nomNom(searchResultPre);
 
     // Digest until url
-    foreach(QString nom, urlPre) {
+    for(const auto &nom: urlPre) {
       nomNom(nom);
     }
     game.url = baseUrl + data.left(data.indexOf(urlPost)) + "&loadpics=3&allowadult=on";
 
     // Digest until title
-    foreach(QString nom, titlePre) {
+    for(const auto &nom: titlePre) {
       nomNom(nom);
     }
     game.title = data.left(data.indexOf(titlePost));
@@ -111,12 +111,12 @@ void WorldOfSpectrum::getSearchResults(QList<GameEntry> &gameEntries,
 
 void WorldOfSpectrum::getDescription(GameEntry &game)
 {
-  foreach(QString nom, descriptionPre) {
+  for(const auto &nom: descriptionPre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, descriptionPre) {
+  for(const auto &nom: descriptionPre) {
     nomNom(nom);
   }
   game.description = data.left(data.indexOf(descriptionPost));
@@ -126,7 +126,7 @@ void WorldOfSpectrum::getDescription(GameEntry &game)
 
 void WorldOfSpectrum::getCover(GameEntry &game)
 {
-  foreach(QString nom, coverPre) {
+  for(const auto &nom: coverPre) {
     nomNom(nom);
   }
   if(data.left(2) != "<A") {
@@ -168,12 +168,12 @@ void WorldOfSpectrum::getScreenshot(GameEntry &game)
 
 void WorldOfSpectrum::getReleaseDate(GameEntry &game)
 {
-  foreach(QString nom, releaseDatePre) {
+  for(const auto &nom: releaseDatePre) {
     if(!checkNom(nom)) {
       return;
     }
   }
-  foreach(QString nom, releaseDatePre) {
+  for(const auto &nom: releaseDatePre) {
     nomNom(nom);
   }
   game.releaseDate = data.left(data.indexOf(releaseDatePost));
