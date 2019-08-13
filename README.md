@@ -147,7 +147,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
-#### Version 3.2.3 (In progress, unreleased)
+#### Version 3.2.3 (13th August 2019)
 * MAJOR: Added support for the 'Pegasus' frontend (set with '-f pegasus')
 * Now checks for, and removes, double bracket notes in final game list title
 * Fixed minor bug in the 3D gamebox effect renderer
@@ -156,6 +156,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Optimized all cache resource iterations to use const references instead of copies
 * Optimized the entire codebase by removing all Qt-centric foreach iterate-by-copy to use references instead
 * Fixed bug where 'screenscraper' would only look for ESRB age classification
+* Potential faulty JSON replies from Screenscraper are now saved to '~/.skyscraper/screenscraper_error.json' for easier debugging
 
 #### Version 3.2.2 (3rd August 2019)
 * Added 'bat' scripts to sha1 special handling list (please purge platforms using 'bat' files and rescrape)
