@@ -109,14 +109,16 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     // Check if we got a valid JSON document back
     if(jsonObj.isEmpty()) {
       printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json\033[0m\n");
-      data.remove(data.indexOf("sspassword") + 10, 10);
-      data.remove(data.indexOf("devpassword") + 11, 10);
+      data.remove(data.indexOf("devpassword") + 12,
+		  data.indexOf("&softname") - data.indexOf("devpassword") - 12);
+      data.remove(data.indexOf("sspassword") + 11,
+		  data.indexOf("&systemeid") - data.indexOf("sspassword") - 11);
       QFile jsonErrorFile("./screenscraper_error.json");
       if(jsonErrorFile.open(QIODevice::WriteOnly)) {
 	jsonErrorFile.write(data);
 	jsonErrorFile.close();
       }
-      printf("The erroneous answer was written to '~/.skyscraper/screenscraper_error.json'. Please create a bug report at 'https://github.com/muldjord/skyscraper/issues' and attach the file.\n");
+      printf("The erroneous answer was written to '~/.skyscraper/screenscraper_error.json'. Please create a bug report at 'https://github.com/muldjord/skyscraper/issues' and attach that file.\n");
       // In this case, try again. We should always get a valid JSON document
       continue;
     }
