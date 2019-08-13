@@ -109,7 +109,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     // Check if we got a valid JSON document back
     if(jsonObj.isEmpty()) {
       printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json\033[0m\n");
-      printf("First 512 characters of answer was:\n%s\n", data.left(512).data());
+      printf("The entire answer was:\n%s\n", data.data());
       // In this case, try again. We should always get a valid JSON document
       continue;
     }
