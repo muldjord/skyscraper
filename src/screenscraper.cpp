@@ -109,10 +109,8 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     // Check if we got a valid JSON document back
     if(jsonObj.isEmpty()) {
       printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json\033[0m\n");
-      data.remove(data.indexOf("devpassword") + 12,
-		  data.indexOf("&softname") - data.indexOf("devpassword") - 12);
-      data.remove(data.indexOf("sspassword") + 11,
-		  data.indexOf("&systemeid") - data.indexOf("sspassword") - 11);
+      data.replace(StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156"), "****");
+      data.replace(config->password, "****");
       QFile jsonErrorFile("./screenscraper_error.json");
       if(jsonErrorFile.open(QIODevice::WriteOnly)) {
 	jsonErrorFile.write(data);
