@@ -1,9 +1,7 @@
 # Skyscraper by Lars Muldjord
 A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system. It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to generate a game list and artwork for the chosen frontend by combining all of the cached resources.
 
-Any exported artwork can be customized completely. Check the documentation for that [here](docs/ARTWORK.md).
-
-A short note on user support for Skyscraper. As the project is growing it is becoming increasingly difficult for me to handle the support requests I get from many different sources. So before asking questions, please read *all* of [the documentation](https://github.com/muldjord/skyscraper/tree/master/docs) thoroughly. If you still have questions, ask it on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum). The community might be able to help you, and I might pop in to answer it myself. Thanks!
+All Skyscraper features are [well-documented](https://github.com/muldjord/skyscraper/tree/master/docs). If you still have questions after reading the documentation, please consider asking them on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum). The `Issues` page here on Github is for bug reports and feature requests only. Thanks!
 
 #### Supported platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
