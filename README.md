@@ -9,10 +9,7 @@ A short note on user support for Skyscraper. As the project is growing it is bec
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
 #### Supported scraping modules (set with '-s')
-Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md).
-
-##### Generating a game list with composited artwork
-When you've cached some resources for any platform, Skyscraper can use this data to generate game lists for the supported frontends (default is EmulationStation). Enable the *game list generator* by simply leaving out the `-s` option. Read more about the resource cache [here](docs/CACHE.md).
+Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md) and read more about the resource cache [here](docs/CACHE.md).
 
 #### Supported frontends (set with '-f'):
 * EmulationStation
