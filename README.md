@@ -142,6 +142,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
+#### Version 3.2.4 (19th August 2019)
+* Implemented JSON flaw workaround for the ScreenScraper module
+
 #### Version 3.2.3 (13th August 2019)
 * MAJOR: Added support for the 'Pegasus' frontend (set with '-f pegasus')
 * Now checks for, and removes, double bracket notes in final game list title
