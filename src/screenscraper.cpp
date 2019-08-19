@@ -104,6 +104,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
       }
     }
     
+    // Fix faulty JSON that is sometimes received back from ScreenScraper
+    data.replace("],\n\t\t}", "]\n\t\t}");
+
+    // Now parse the JSON
     jsonObj = QJsonDocument::fromJson(data).object();
 
     // Check if we got a valid JSON document back
