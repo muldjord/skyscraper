@@ -408,7 +408,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "ports") {
     formats.append("*.com *.sh *.bat *.exe *.conf");
   } else if(platform == "ps2") {
-    formats.append("*.iso *.img *.bin *.mdf *.z *.z2 *.bz2 *.dump *.cso *.ima *.gz");
+    formats.append("*.iso *.cue *.img *.mdf *.z *.z2 *.bz2 *.dump *.cso *.ima *.gz");
   } else if(platform == "psp") {
     formats.append("*.cso *.iso *.pbp");
   } else if(platform == "psx") {
