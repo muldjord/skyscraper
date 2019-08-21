@@ -141,9 +141,17 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
       QString entryAbsolutePath = entryInfo.absolutePath();
       // Check if path is exactly one subfolder beneath root platform folder (has one more '/')
       if(entryAbsolutePath.count("/") == config->inputFolder.count("/") + 1) {
-	if(QDir(entryAbsolutePath, Platform::getFormats(config->platform,
-							config->extensions,
-							config->addExtensions)).count() == 1) {
+	QString extensions = Platform::getFormats(config->platform,
+						  config->extensions,
+						  config->addExtensions);
+	// Check if the platform has both cue and bin extensions. Remove bin if it does to avoid count() below to be 2
+	// I thought about removing bin extensions entirely from platform.cpp, but I assume I've added them per user request at some point.
+	if(extensions.contains("*.cue") &&
+	   extensions.contains("*.bin")) {
+	  extensions.replace("*.bin", "");
+	  extensions = extensions.simplified();
+	}
+	if(QDir(entryAbsolutePath, extensions).count() == 1) {
 	  entryType = "folder";
 	  entry.path = entryAbsolutePath;
 	}
