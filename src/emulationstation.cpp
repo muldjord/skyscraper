@@ -26,6 +26,7 @@
 #include "emulationstation.h"
 #include "xmlreader.h"
 #include "strtools.h"
+#include "platform.h"
 
 #include <QDir>
 
@@ -138,11 +139,11 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
       // Check if game is in subfolder and if it's a .cue or .m3u file.
       // If so, change entry to <folder> type.
       QString entryAbsolutePath = entryInfo.absolutePath();
+      // Check if path is exactly one subfolder beneath root platform folder (has one more '/')
       if(entryAbsolutePath.count("/") == config->inputFolder.count("/") + 1) {
-	QString entrySuffix = entryInfo.suffix();
-	if((entrySuffix == "cue" ||
-	    entrySuffix == "m3u") &&
-	   QDir(entryAbsolutePath, "*.cue *.m3u").count() == 1) {
+	if(QDir(entryAbsolutePath, Platform::getFormats(config->platform,
+							config->extensions,
+							config->addExtensions)).count() == 1) {
 	  entryType = "folder";
 	  entry.path = entryAbsolutePath;
 	}
