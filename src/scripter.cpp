@@ -57,9 +57,9 @@ Scripter::Scripter()
   printf("* \033[1;33memulationstation\033[0m\n");
   printf("* \033[1;33mattractmode\033[0m\n");
   printf("* \033[1;33mpegasus\033[0m\n");
-  while(frontendStr != "emulationstation" ||
-	frontendStr != "attractmode" ||
-	frontendStr != "pegasus" ||
+  while(frontendStr != "emulationstation" &&
+	frontendStr != "attractmode" &&
+	frontendStr != "pegasus" &&
 	frontendStr != "") {
     printf("\033[1;34mPlease enter the frontend you wish to scrape for\033[0m (enter for 'emulationstation'):\033[0m ");
     getline(std::cin, frontendStr);
