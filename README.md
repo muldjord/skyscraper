@@ -142,6 +142,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
+#### Version 3.2.7 (31st August 2019)
+* The '--cache report' option now adhere to the '--nosubdirs' option (Thank you to 'vanativo' for reporting this)
+
 #### Version 3.2.6 (24th August 2019)
 * Fixed bug where entering a correct fronted in simple mode would loop the question (Thank you to 'thadboyd' for reporting this)
 
