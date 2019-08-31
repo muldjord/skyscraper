@@ -596,7 +596,7 @@ void Cache::purgeAll(const bool unattend)
   printf("\n");
 }
 
-QList<QFileInfo> Cache::getFileInfos(const QString &inputFolder, const QString &filter)
+QList<QFileInfo> Cache::getFileInfos(const QString &inputFolder, const QString &filter, const bool subdirs)
 {
   QList<QFileInfo> fileInfos;
   QStringList filters = filter.split(" ");
@@ -604,7 +604,7 @@ QList<QFileInfo> Cache::getFileInfos(const QString &inputFolder, const QString &
     QDirIterator dirIt(inputFolder,
 		       filters,
 		       QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
-		       QDirIterator::Subdirectories);
+		       (subdirs?QDirIterator::Subdirectories:QDirIterator::NoIteratorFlags));
     while(dirIt.hasNext()) {
       dirIt.next();
       fileInfos.append(dirIt.fileInfo());
@@ -635,10 +635,10 @@ QList<QString> Cache::getSha1List(const QList<QFileInfo> &fileInfos)
   return sha1List;
 }
 
-void Cache::assembleReport(const QString inputFolder, const QString filter, QString platform, QString reportStr)
+void Cache::assembleReport(const QString inputFolder, const QString filter, QString platform, bool subdirs, QString reportStr)
 {
   if(!reportStr.contains("report:missing=")) {
-    printf("Don't understand report option, please check '--help' for more info.\n");
+    printf("Don't understand report option, please check '--cache help' for more info.\n");
     return;
   }
   reportStr.replace("report:missing=", "");
@@ -752,7 +752,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
     }
   }
   
-  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
+  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter, subdirs);
   printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), platform.toStdString().c_str());
   printf("Creating file id list for all files, please wait...");
   QList<QString> sha1List = getSha1List(fileInfos);
@@ -800,7 +800,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
       return;
     }
   }
-  printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit --fromfile <FILENAME>\033[0m' or the '\033[1;33m-s import\033[0m' module to add the missing resources. Check '\033[1;33m--help\033[0m' for more information.\n\n");
+  printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit --fromfile <FILENAME>\033[0m' or the '\033[1;33m-s import\033[0m' module to add the missing resources. Check '\033[1;33m--cache help\033[0m' for more information.\n\n");
 }
 
 void Cache::vacuumResources(const QString inputFolder, const QString filter,

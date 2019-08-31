@@ -73,11 +73,9 @@ public:
   void printPriorities(QString sha1);
   void editResources(QSharedPointer<Queue> queue);
   void purgeAll(const bool unattend = false);
-  QList<QFileInfo> getFileInfos(const QString &inputFolder, const QString &filter);
-  QList<QString> getSha1List(const QList<QFileInfo> &fileInfos);
   void vacuumResources(const QString inputFolder, const QString filters,
 		       const int verbosity, const bool unattend = false);
-  void assembleReport(const QString inputFolder, const QString filters, QString platform, QString reportStr = "");
+  void assembleReport(const QString inputFolder, const QString filters, QString platform, bool subdirs = true, QString reportStr = "");
   void showStats(int verbosity);
   void readPriorities();
   bool write();
@@ -97,6 +95,10 @@ public:
   QMap<QString, ResCounts> resCountsMap;
   
   QList<Resource> resources;
+
+  QList<QFileInfo> getFileInfos(const QString &inputFolder, const QString &filter, const bool subdirs = true);
+  QList<QString> getSha1List(const QList<QFileInfo> &fileInfos);
+
   void addToResCounts(const QString source, const QString type);
   void addResource(const Resource &resource, GameEntry &entry, const QString &cacheAbsolutePath,
 		   const Settings &config);
