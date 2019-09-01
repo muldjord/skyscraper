@@ -603,7 +603,7 @@ QList<QFileInfo> Cache::getFileInfos(const QString &inputFolder, const QString &
   if(filter.size() >= 2) {
     QDirIterator dirIt(inputFolder,
 		       filters,
-		       QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+		       QDir::Files | QDir::NoDotAndDotDot,
 		       (subdirs?QDirIterator::Subdirectories:QDirIterator::NoIteratorFlags));
     while(dirIt.hasNext()) {
       dirIt.next();
