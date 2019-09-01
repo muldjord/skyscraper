@@ -800,7 +800,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
       return;
     }
   }
-  printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit --fromfile <FILENAME>\033[0m' or the '\033[1;33m-s import\033[0m' module to add the missing resources. Check '\033[1;33m--cache help\033[0m' for more information.\n\n");
+  printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit --fromfile <FILENAME>\033[0m' or the '\033[1;33m-s import\033[0m' module to add the missing resources. Check '\033[1;33m--help\033[0m' and '\033[1;33m--cache help\033[0m' for more information.\n\n");
 }
 
 void Cache::vacuumResources(const QString inputFolder, const QString filter,
