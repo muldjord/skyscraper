@@ -26,25 +26,25 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-#define T_NONE 0
-#define T_OUTPUT 1
-#define T_LAYER 2
-#define T_SHADOW 3
-#define T_MASK 4
-#define T_FRAME 5
-#define T_STROKE 6
-#define T_ROUNDED 7
-#define T_BRIGHTNESS 8
-#define T_CONTRAST 9
-#define T_BALANCE 10
-#define T_OPACITY 11
-#define T_BLUR 12
-#define T_GAMEBOX 13
-#define T_HUE 14
-#define T_SATURATION 15
-#define T_COLORIZE 16
-#define T_ROTATE 17
-#define T_SCANLINES 18
+constexpr int T_NONE = 0;
+constexpr int T_OUTPUT = 1;
+constexpr int T_LAYER = 2;
+constexpr int T_SHADOW = 3;
+constexpr int T_MASK = 4;
+constexpr int T_FRAME = 5;
+constexpr int T_STROKE = 6;
+constexpr int T_ROUNDED = 7;
+constexpr int T_BRIGHTNESS = 8;
+constexpr int T_CONTRAST = 9;
+constexpr int T_BALANCE = 10;
+constexpr int T_OPACITY = 11;
+constexpr int T_BLUR = 12;
+constexpr int T_GAMEBOX = 13;
+constexpr int T_HUE = 14;
+constexpr int T_SATURATION = 15;
+constexpr int T_COLORIZE = 16;
+constexpr int T_ROTATE = 17;
+constexpr int T_SCANLINES = 18;
 
 #include <QImage>
 #include <QPainter>

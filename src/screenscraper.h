@@ -32,9 +32,9 @@
 
 #include "abstractscraper.h"
 
-#define REGION 0
-#define LANGUE 1
-#define NONE 42
+constexpr int REGION = 0;
+constexpr int LANGUE = 1;
+constexpr int NONE = 42;
 
 class ScreenScraper : public AbstractScraper
 {
