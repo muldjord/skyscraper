@@ -142,6 +142,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
+#### Version 3.2.9 (In progress, unreleased)
+* Changed relevant defines to constexpr
+
 #### Version 3.2.8 (31st August 2019)
 * `--cache report` now supports symlinks (Thank you to 'vanativo' for reporting this)
 
