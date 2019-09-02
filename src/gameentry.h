@@ -26,20 +26,20 @@
 #ifndef GAMEENTRY_H
 #define GAMEENTRY_H
 
-#define DESCRIPTION 0
-#define DEVELOPER 1
-#define PUBLISHER 2
-#define PLAYERS 3
-#define TAGS 4
-#define RELEASEDATE 5
-#define COVER 6
-#define SCREENSHOT 7
-#define VIDEO 8
-#define RATING 9
-#define WHEEL 10
-#define MARQUEE 11
-#define AGES 12
-#define TITLE 13
+constexpr int DESCRIPTION = 0;
+constexpr int DEVELOPER = 1;
+constexpr int PUBLISHER = 2;
+constexpr int PLAYERS = 3;
+constexpr int TAGS = 4;
+constexpr int RELEASEDATE = 5;
+constexpr int COVER = 6;
+constexpr int SCREENSHOT = 7;
+constexpr int VIDEO = 8;
+constexpr int RATING = 9;
+constexpr int WHEEL = 10;
+constexpr int MARQUEE = 11;
+constexpr int AGES = 12;
+constexpr int TITLE = 13;
 
 #include <QImage>
 
