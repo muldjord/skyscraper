@@ -486,6 +486,8 @@ QString MobyGames::getPlatformId(const QString platform)
     return "na";
   } else if(platform == "pc88") {
     return "94";
+  } else if(platform == "pc98") {
+    return "95";
   } else if(platform == "pcfx") {
     return "59";
   } else if(platform == "pcengine") {
