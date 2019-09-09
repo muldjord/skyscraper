@@ -40,6 +40,7 @@
 * Oric (Oric-1, Oric Atmos)
 * PC
 * PC-8800
+* PC-9800
 * PC-Engine / TurboGrafx-16
 * PC-FX
 * Playstation

@@ -669,6 +669,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "135";
   } else if(platform == "pc88") {
     return "na";
+  } else if(platform == "pc98") {
+    return "208";
   } else if(platform == "pcfx") {
     return "72";
   } else if(platform == "pcengine") {

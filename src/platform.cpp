@@ -89,6 +89,7 @@ QStringList Platform::getPlatforms()
   platforms.append("oric");
   platforms.append("pc");
   platforms.append("pc88");
+  platforms.append("pc98");
   platforms.append("pcfx");
   platforms.append("pcengine");
   platforms.append("ports");
@@ -225,6 +226,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "pc") {
     scrapers.append("thegamesdb");
   } else if(platform == "pc88") {
+    scrapers.append("thegamesdb");
+  } else if(platform == "pc98") {
     scrapers.append("thegamesdb");
   } else if(platform == "pcfx") {
     scrapers.append("screenscraper");
@@ -401,6 +404,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.com *.sh *.bat *.exe *.conf");
   } else if(platform == "pc88") {
     formats.append("*.d88 *.88d *.cmt *.t88");
+  } else if(platform == "pc98") {
+    formats.append("*.d88 *.d98 *.88d *.98d *.fdi *.xdf *.hdm *.dup *.2hd *.tfd *.hdi *.thd *.nhd *.hdd *.fdd *.cmd *.hdn");
   } else if(platform == "pcfx") {
     formats.append("*.img *.iso *.ccd *.cue");
   } else if(platform == "pcengine") {
@@ -1111,6 +1116,9 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "pc88") {
     aliases.append("pc-88");
     aliases.append("pc-8801");
+  } else if(platform == "pc98") {
+    aliases.append("pc-98");
+    aliases.append("nec pc-9801");
   } else if(platform == "pcfx") {
     aliases.append("pc-fx");
   } else if(platform == "pcengine") {
