@@ -144,6 +144,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.2.9 (In progress, unreleased)
 * Changed relevant defines to constexpr
+* Added 'pc98' platform (Thank you to 'leosmeira' for suggesting it)
 
 #### Version 3.2.8 (31st August 2019)
 * `--cache report` now supports symlinks (Thank you to 'vanativo' for reporting this)
