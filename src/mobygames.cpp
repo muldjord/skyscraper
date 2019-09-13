@@ -492,6 +492,8 @@ QString MobyGames::getPlatformId(const QString platform)
     return "59";
   } else if(platform == "pcengine") {
     return "na";
+  } else if(platform == "pokemini") {
+    return "152";
   } else if(platform == "ports") {
     return "na";
   } else if(platform == "ps2") {

@@ -92,6 +92,7 @@ QStringList Platform::getPlatforms()
   platforms.append("pc98");
   platforms.append("pcfx");
   platforms.append("pcengine");
+  platforms.append("pokemini");
   platforms.append("ports");
   platforms.append("ps2");
   platforms.append("psp");
@@ -232,6 +233,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "pcfx") {
     scrapers.append("screenscraper");
   } else if(platform == "pcengine") {
+    scrapers.append("screenscraper");
+  } else if(platform == "pokemini") {
     scrapers.append("screenscraper");
   } else if(platform == "ports") {
     scrapers.append("thegamesdb");
@@ -410,6 +413,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.img *.iso *.ccd *.cue");
   } else if(platform == "pcengine") {
     formats.append("*.pce *.chd *.cue");
+  } else if(platform == "pokemini") {
+    formats.append("*.min");
   } else if(platform == "ports") {
     formats.append("*.com *.sh *.bat *.exe *.conf");
   } else if(platform == "ps2") {
@@ -562,9 +567,13 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "cache";
   } else if(platform == "pc88") {
     scraper = "cache";
+  } else if(platform == "pc98") {
+    scraper = "cache";
   } else if(platform == "pcfx") {
     scraper = "cache";
   } else if(platform == "pcengine") {
+    scraper = "cache";
+  } else if(platform == "pokemini") {
     scraper = "cache";
   } else if(platform == "ports") {
     scraper = "cache";
@@ -1130,6 +1139,9 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc engine");
     aliases.append("pc engine cd-rom");
     aliases.append("pc engine supergrafx");
+  } else if(platform == "pokemini") {
+    aliases.append("nintendo pokémon mini");
+    aliases.append("pokémon mini");
   } else if(platform == "ports") {
     aliases.append("pc dos");
     aliases.append("pc win3.xx");
