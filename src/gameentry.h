@@ -90,7 +90,7 @@ public:
   QString videoSrc = "";
 
   int searchMatch = 0;
-  QString sha1 = "";
+  QString cacheId = "";
   QString source = "";
   QString url = "";
   QString sqrNotes = "";
