@@ -1063,10 +1063,9 @@ void Cache::readPriorities()
   printf("!\n\n");
 }
 
-bool Cache::write()
+bool Cache::write(const bool onlyQuickId)
 {
   QMutexLocker locker(&cacheMutex);
-  bool result = false;
 
   QFile quickIdFile(cacheDir.absolutePath() + "/quickid.xml");
   if(quickIdFile.open(QIODevice::WriteOnly)) {
@@ -1087,7 +1086,12 @@ bool Cache::write()
     xml.writeEndDocument();
     printf("\033[1;32mDone!\033[0m\n");
     quickIdFile.close();
+    if(onlyQuickId) {
+      return true;
+    }
   }
+
+  bool result = false;
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::WriteOnly)) {
     printf("Writing %d (%d new) resources to cache, please wait... ",

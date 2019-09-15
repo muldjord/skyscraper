@@ -79,7 +79,7 @@ public:
   void assembleReport(const QString inputFolder, const QString filters, QString platform, bool subdirs = true, QString reportStr = "");
   void showStats(int verbosity);
   void readPriorities();
-  bool write();
+  bool write(const bool onlyQuickId = false);
   void validate();
   void addResources(GameEntry &entry, const Settings &config);
   void fillBlanks(GameEntry &entry, const QString scraper = "");

@@ -493,6 +493,9 @@ void Skyscraper::checkThreads()
 
   if(!config.pretend && config.scraper == "cache") {
     printf("\033[1;34m---- Game list generation run completed! YAY! ----\033[0m\n");
+    if(!config.cacheFolder.isEmpty()) {
+      cache->write(true);
+    }
     QString finalOutput;
     frontend->sortEntries(gameEntries);
     printf("Assembling game list...");
