@@ -141,9 +141,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
-* Migrate to an optimized rom id lookup system that uses a checksum cache (if files haven't changed since last time) instead of always doing the checksum on the files themselves
 
-#### Version 3.2.9 (In progress, unreleased)
+#### Version 3.3.0 (In progress, unreleased)
+* MAJOR: Added quick id functionality to allow for quicker file identification routines overall (Thank you to 'langest' for finally making me look into this)
 * Changed relevant defines to constexpr
 * Added 'pc98' platform (Thank you to 'leosmeira' for suggesting it)
 * Added 'pokemini' platform (Thank you to 'leosmeira' for suggesting it)
