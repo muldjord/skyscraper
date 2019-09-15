@@ -97,8 +97,11 @@ void ScraperWorker::run()
     config.platform = platformOrig;
     QString output = "\033[1;33m(T" + threadId + ")\033[0m ";
     QString debug = "";
-    QString sha1 = NameTools::getSha1(info);
-
+    QString cacheId = cache->getQuickId(info);
+    if(cacheId.isEmpty()) {
+      cacheId = NameTools::getCacheId(info);
+      cache->addQuickId(info, cacheId);
+    }
     QString compareTitle = scraper->getCompareTitle(info);
 
     // For Amiga platform, change to subplatforms if detected as such
@@ -116,10 +119,10 @@ void ScraperWorker::run()
     QList<GameEntry> gameEntries;
 
     bool fromCache = false;
-    if(config.scraper == "cache" && cache->hasEntries(sha1)) {
+    if(config.scraper == "cache" && cache->hasEntries(cacheId)) {
       fromCache = true;
       GameEntry localGame;
-      localGame.sha1 = sha1;
+      localGame.cacheId = cacheId;
       cache->fillBlanks(localGame);
       if(localGame.title.isEmpty()) {
 	localGame.title = compareTitle;
@@ -130,10 +133,10 @@ void ScraperWorker::run()
       gameEntries.append(localGame);
     } else {
       if(config.scraper != "cache" &&
-	 cache->hasEntries(sha1, config.scraper) && !config.refresh) {
+	 cache->hasEntries(cacheId, config.scraper) && !config.refresh) {
 	fromCache = true;
 	GameEntry localGame;
-	localGame.sha1 = sha1;
+	localGame.cacheId = cacheId;
 	cache->fillBlanks(localGame, config.scraper);
 	if(localGame.title.isEmpty()) {
 	  localGame.title = compareTitle;
@@ -169,7 +172,7 @@ void ScraperWorker::run()
     // Fill it with additional needed data
     game.path = info.absoluteFilePath();
     game.baseName = info.completeBaseName();
-    game.sha1 = sha1;
+    game.cacheId = cacheId;
 
     // Sort out brackets here prior to not found checks, in case user has 'skipped="true"' set
     game.sqrNotes = NameTools::getSqrNotes(game.title);

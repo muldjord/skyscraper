@@ -72,6 +72,31 @@ bool Cache::createFolders(const QString &scraper)
 
 bool Cache::read()
 {
+  QFile quickIdFile(cacheDir.absolutePath() + "/quickid.xml");
+  if(quickIdFile.open(QIODevice::ReadOnly)) {
+    printf("Reading and parsing quick id xml, please wait...\n");
+    QXmlStreamReader xml(&quickIdFile);
+    while(!xml.atEnd()) {
+      if(xml.readNext() != QXmlStreamReader::StartElement) {
+	continue;
+      }
+      if(xml.name() != "quickid") {
+	continue;
+      }
+      QXmlStreamAttributes attribs = xml.attributes();
+      if(!attribs.hasAttribute("filepath") ||
+	 !attribs.hasAttribute("timestamp") ||
+	 !attribs.hasAttribute("id")) {
+	continue;
+      }
+
+      QPair<qint64, QString> pair;
+      pair.first = attribs.value("timestamp").toULongLong();
+      pair.second = attribs.value("id").toString();
+      quickIds[attribs.value("filepath").toString()] = pair;
+    }
+  }
+
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::ReadOnly)) {
     printf("Reading and parsing resource cache, please wait...\n");
@@ -84,13 +109,17 @@ bool Cache::read()
 	continue;
       }
       QXmlStreamAttributes attribs = xml.attributes();
-      if(!attribs.hasAttribute("sha1")) {
-	printf("Resource is missing 'sha1' attribute, skipping...\n");
+      if(!attribs.hasAttribute("sha1") && !attribs.hasAttribute("id")) {
+	printf("Resource is missing unique id, skipping...\n");
 	continue;
       }
 
       Resource resource;
-      resource.sha1 = attribs.value("sha1").toString();
+      if(attribs.hasAttribute("sha1")) { // Obsolete, but needed for backwards compat
+	resource.cacheId = attribs.value("sha1").toString();
+      } else {
+	resource.cacheId = attribs.value("id").toString();
+      }
 
       if(attribs.hasAttribute("source")) {
 	resource.source = attribs.value("source").toString();
@@ -101,15 +130,15 @@ bool Cache::read()
 	resource.type = attribs.value("type").toString();
 	addToResCounts(resource.source, resource.type);
       } else {
-	printf("Resource with sha1 '%s' is missing 'type' attribute, skipping...\n",
-	       resource.sha1.toStdString().c_str());
+	printf("Resource with cache id '%s' is missing 'type' attribute, skipping...\n",
+	       resource.cacheId.toStdString().c_str());
 	continue;
       }
       if(attribs.hasAttribute("timestamp")) {
 	resource.timestamp = attribs.value("timestamp").toULongLong();
       } else {
-	printf("Resource with sha1 '%s' is missing 'timestamp' attribute, skipping...\n",
-	       resource.sha1.toStdString().c_str());
+	printf("Resource with cache id '%s' is missing 'timestamp' attribute, skipping...\n",
+	       resource.cacheId.toStdString().c_str());
 	continue;
       }
       resource.value = xml.readElementText();
@@ -133,10 +162,10 @@ bool Cache::read()
   return false;
 }
 
-void Cache::printPriorities(QString sha1)
+void Cache::printPriorities(QString cacheId)
 {
   GameEntry game;
-  game.sha1 = sha1;
+  game.cacheId = cacheId;
   fillBlanks(game);
   printf("\033[1;34mCurrent resource priorities for this rom:\033[0m\n");
   printf("Title:          '\033[1;32m%s\033[0m' (%s)\n",
@@ -208,9 +237,9 @@ void Cache::editResources(QSharedPointer<Queue> queue)
   printf("\033[1;33mEntering resource cache editing mode! This mode allows you to edit textual resources for your files. To add media resources use the 'import' scraping module instead.\nNote that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n\033[1;31mNote! All changes are done in memory. If you ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\033[0m\n\n");
   while(queue->hasEntry()) {
     QFileInfo info = queue->takeEntry();
-    QString sha1 = NameTools::getSha1(info);
+    QString cacheId = NameTools::getCacheId(info);
     bool doneEdit = false;
-    printPriorities(sha1);
+    printPriorities(cacheId);
     while(!doneEdit) {
       printf("\033[0;32m#%d/%d\033[0m \033[1;33m\nCURRENT FILE: \033[0m\033[1;32m%s\033[0m\033[1;33m\033[0m\n", queueLength - queue->length(), queueLength, info.fileName().toStdString().c_str());
       printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
@@ -230,12 +259,12 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	doneEdit = true;
 	continue;
       } else if(userInput == "s") {
-	printPriorities(sha1);
+	printPriorities(cacheId);
       } else if(userInput == "S") {
 	printf("\033[1;34mResources connected to this rom:\033[0m\n");
 	bool found = false;
 	for(const auto &res: resources) {
-	  if(res.sha1 == sha1) {
+	  if(res.cacheId == cacheId) {
 	    printf("\033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n",
 		   res.type.toStdString().c_str(),
 		   res.source.toStdString().c_str(),
@@ -248,7 +277,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	printf("\n");
       } else if(userInput == "n") {
 	GameEntry game;
-	game.sha1 = sha1;
+	game.cacheId = cacheId;
 	fillBlanks(game);
 	std::string typeInput = "";
 	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
@@ -280,7 +309,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    continue;
 	} else {
 	  Resource newRes;
-	  newRes.sha1 = sha1;
+	  newRes.cacheId = cacheId;
 	  newRes.source = "user";
 	  newRes.timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch();
 	  std::string valueInput = "";
@@ -345,7 +374,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	    QMutableListIterator<Resource> it(resources);
 	    while(it.hasNext()) {
 	      Resource res = it.next();
-	      if(res.sha1 == newRes.sha1 &&
+	      if(res.cacheId == newRes.cacheId &&
 		 res.type == newRes.type &&
 		 res.source == newRes.source) {
 		it.remove();
@@ -370,7 +399,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	QList<int> resIds;
 	printf("\033[1;34mWhich resource id would you like to remove?\033[0m (Enter to cancel)\n");
 	for(int a = 0; a < resources.length(); ++a) {
-	  if(resources.at(a).sha1 == sha1 &&
+	  if(resources.at(a).cacheId == cacheId &&
 	     resources.at(a).type != "screenshot" &&
 	     resources.at(a).type != "cover" &&
 	     resources.at(a).type != "wheel" &&
@@ -408,7 +437,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	bool found = false;
 	while(it.hasNext()) {
 	  Resource res = it.next();
-	  if(res.sha1 == sha1) {
+	  if(res.cacheId == cacheId) {
 	    printf("<<< Removed \033[1;33m%s\033[0m (%s) with value '\033[1;32m%s\033[0m'\n", res.type.toStdString().c_str(),
 		   res.source.toStdString().c_str(),
 		   res.value.toStdString().c_str());
@@ -423,7 +452,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	printf("\033[1;34mResources from which module would you like to remove?\033[0m (Enter to cancel)\n");
 	QMap<QString, int> modules;
 	for(const auto &res: resources) {
-	  if(res.sha1 == sha1) {
+	  if(res.cacheId == cacheId) {
 	    modules[res.source] += 1;
 	  }
 	}
@@ -447,7 +476,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  int removed = 0;
 	  while(it.hasNext()) {
 	    Resource res = it.next();
-	    if(res.sha1 == sha1 && res.source == QString(typeInput.c_str())) {
+	    if(res.cacheId == cacheId && res.source == QString(typeInput.c_str())) {
 	      it.remove();
 	      removed++;
 	    }
@@ -461,7 +490,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	printf("\033[1;34mResources of which type would you like to remove?\033[0m (Enter to cancel)\n");
 	QMap<QString, int> types;
 	for(const auto &res: resources) {
-	  if(res.sha1 == sha1) {
+	  if(res.cacheId == cacheId) {
 	    types[res.type] += 1;
 	  }
 	}
@@ -485,7 +514,7 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	  int removed = 0;
 	  while(it.hasNext()) {
 	    Resource res = it.next();
-	    if(res.sha1 == sha1 && res.type == QString(typeInput.c_str())) {
+	    if(res.cacheId == cacheId && res.type == QString(typeInput.c_str())) {
 	      it.remove();
 	      removed++;
 	    }
@@ -618,9 +647,9 @@ QList<QFileInfo> Cache::getFileInfos(const QString &inputFolder, const QString &
   return fileInfos;
 }
 
-QList<QString> Cache::getSha1List(const QList<QFileInfo> &fileInfos)
+QList<QString> Cache::getCacheIdList(const QList<QFileInfo> &fileInfos)
 {
-  QList<QString> sha1List;
+  QList<QString> cacheIdList;
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
   int dotMod = fileInfos.size() * 0.1 + 1;
@@ -630,9 +659,13 @@ QList<QString> Cache::getSha1List(const QList<QFileInfo> &fileInfos)
       fflush(stdout);
     }
     dots++;
-    sha1List.append(NameTools::getSha1(info));
+    QString cacheId = getQuickId(info);
+    if(cacheId.isEmpty()) {
+      cacheId = NameTools::getCacheId(info);
+    }
+    cacheIdList.append(cacheId);
   }
-  return sha1List;
+  return cacheIdList;
 }
 
 void Cache::assembleReport(const QString inputFolder, const QString filter, QString platform, bool subdirs, QString reportStr)
@@ -755,11 +788,11 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
   QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter, subdirs);
   printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), platform.toStdString().c_str());
   printf("Creating file id list for all files, please wait...");
-  QList<QString> sha1List = getSha1List(fileInfos);
+  QList<QString> cacheIdList = getCacheIdList(fileInfos);
   printf("\n\n");
 
-  if(fileInfos.length() != sha1List.length()) {
-    printf("Length of sha1 list mismatch the number of files, something is wrong! Please report this. Can't continue...\n");
+  if(fileInfos.length() != cacheIdList.length()) {
+    printf("Length of cache id list mismatch the number of files, something is wrong! Please report this. Can't continue...\n");
     return;
   }
   
@@ -781,7 +814,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
 	dots++;
 	bool found = false;
 	for(const auto &res: resources) {
-	  if(res.sha1 == sha1List.at(a)) {
+	  if(res.cacheId == cacheIdList.at(a)) {
 	    if(res.type == resType) {
 	      found = true;
 	      break;
@@ -819,8 +852,8 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
 
   printf("Vacuuming resources from cache, this can take several minutes, please wait...");
   QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
-  QList<QString> sha1List = getSha1List(fileInfos);
-  if(sha1List.isEmpty()) {
+  QList<QString> cacheIdList = getCacheIdList(fileInfos);
+  if(cacheIdList.isEmpty()) {
     return;
   }
   
@@ -839,8 +872,8 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
       dots++;
       Resource res = it.next();
       bool remove = true;
-      for(const auto &sha1: sha1List) {
-	if(res.sha1 == sha1) {
+      for(const auto &cacheId: cacheIdList) {
+	if(res.cacheId == cacheId) {
 	  remove = false;
 	  break;
 	}
@@ -855,7 +888,7 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
 	  }
 	}
 	if(verbosity > 1)
-	  printf("Purged resource for '%s' with value '%s'...\n", res.sha1.toStdString().c_str(),
+	  printf("Purged resource for '%s' with value '%s'...\n", res.cacheId.toStdString().c_str(),
 		 res.value.toStdString().c_str());
 	it.remove();
 	vacuumed++;
@@ -1035,6 +1068,26 @@ bool Cache::write()
   QMutexLocker locker(&cacheMutex);
   bool result = false;
 
+  QFile quickIdFile(cacheDir.absolutePath() + "/quickid.xml");
+  if(quickIdFile.open(QIODevice::WriteOnly)) {
+    printf("Writing quick id xml, please wait... ");
+    fflush(stdout);
+    QXmlStreamWriter xml(&quickIdFile);
+    xml.setAutoFormatting(true);
+    xml.writeStartDocument();
+    xml.writeStartElement("quickids");
+    for(const auto &key: quickIds.keys()) {
+      xml.writeStartElement("quickid");
+      xml.writeAttribute("filepath", key);
+      xml.writeAttribute("timestamp", QString::number(quickIds[key].first));
+      xml.writeAttribute("id", quickIds[key].second);
+      xml.writeEndElement();
+    }
+    xml.writeEndElement();
+    xml.writeEndDocument();
+    printf("\033[1;32mDone!\033[0m\n");
+    quickIdFile.close();
+  }
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::WriteOnly)) {
     printf("Writing %d (%d new) resources to cache, please wait... ",
@@ -1046,13 +1099,14 @@ bool Cache::write()
     xml.writeStartElement("resources");
     for(const auto &resource: resources) {
       xml.writeStartElement("resource");
-      xml.writeAttribute("sha1", resource.sha1);
+      xml.writeAttribute("id", resource.cacheId);
       xml.writeAttribute("type", resource.type);
       xml.writeAttribute("source", resource.source);
       xml.writeAttribute("timestamp", QString::number(resource.timestamp));
       xml.writeCharacters(resource.value);
       xml.writeEndElement();
     }
+    xml.writeEndElement();
     xml.writeEndDocument();
     result = true;
     printf("\033[1;32mSuccess!\033[0m\n\n");
@@ -1161,7 +1215,7 @@ void Cache::merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFo
     QMutableListIterator<Resource> it(resources);
     while(it.hasNext()) {
       Resource res = it.next();
-      if(res.sha1 == mergeResource.sha1 &&
+      if(res.cacheId == mergeResource.cacheId &&
 	 res.type == mergeResource.type &&
 	 res.source == mergeResource.source) {
 	if(overwrite) {
@@ -1214,14 +1268,14 @@ void Cache::addResources(GameEntry &entry, const Settings &config)
   QString cacheAbsolutePath = cacheDir.absolutePath();
 
   if(entry.source.isEmpty()) {
-    printf("Something is wrong, resource with sha1 '%s' has no source, exiting...\n",
-	   entry.sha1.toStdString().c_str());
+    printf("Something is wrong, resource with cache id '%s' has no source, exiting...\n",
+	   entry.cacheId.toStdString().c_str());
     exit(1);
   }
-  
-  if(entry.sha1 != "") {
+
+  if(entry.cacheId != "") {
     Resource resource;
-    resource.sha1 = entry.sha1;
+    resource.cacheId = entry.cacheId;
     resource.source = entry.source;
     resource.timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch();
     if(entry.title != "") {
@@ -1276,27 +1330,27 @@ void Cache::addResources(GameEntry &entry, const Settings &config)
     }
     if(entry.videoData != "" && entry.videoFormat != "") {
       resource.type = "video";
-      resource.value = "videos/" + entry.source + "/"  + entry.sha1 + "." + entry.videoFormat;
+      resource.value = "videos/" + entry.source + "/"  + entry.cacheId + "." + entry.videoFormat;
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.coverData.isNull() && config.cacheCovers) {
       resource.type = "cover";
-      resource.value = "covers/" + entry.source + "/" + entry.sha1 + ".png";
+      resource.value = "covers/" + entry.source + "/" + entry.cacheId + ".png";
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.screenshotData.isNull() && config.cacheScreenshots) {
       resource.type = "screenshot";
-      resource.value = "screenshots/" + entry.source + "/"  + entry.sha1 + ".png";
+      resource.value = "screenshots/" + entry.source + "/"  + entry.cacheId + ".png";
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.wheelData.isNull() && config.cacheWheels) {
       resource.type = "wheel";
-      resource.value = "wheels/" + entry.source + "/"  + entry.sha1 + ".png";
+      resource.value = "wheels/" + entry.source + "/"  + entry.cacheId + ".png";
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.marqueeData.isNull() && config.cacheMarquees) {
       resource.type = "marquee";
-      resource.value = "marquees/" + entry.source + "/"  + entry.sha1 + ".png";
+      resource.value = "marquees/" + entry.source + "/"  + entry.cacheId + ".png";
       addResource(resource, entry, cacheAbsolutePath, config);
     }
   }
@@ -1311,7 +1365,7 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
   QMutableListIterator<Resource> it(resources);
   while(it.hasNext()) {
     Resource res = it.next();
-    if(res.sha1 == resource.sha1 &&
+    if(res.cacheId == resource.cacheId &&
        res.type == resource.type &&
        res.source == resource.source) {
       if(config.refresh) {
@@ -1380,16 +1434,33 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
   }
 }
 
-bool Cache::hasEntries(const QString &sha1, const QString scraper)
+void Cache::addQuickId(const QFileInfo &info, const QString &cacheId) {
+  QMutexLocker locker(&quickIdMutex);
+  QPair<qint64, QString> pair; // Quick id pair
+  pair.first = info.lastModified().toMSecsSinceEpoch();
+  pair.second = cacheId;
+  quickIds[info.absoluteFilePath()] = pair;
+}
+
+QString Cache::getQuickId(const QFileInfo &info) {
+  QMutexLocker locker(&quickIdMutex);
+  if(quickIds.contains(info.absoluteFilePath()) &&
+     info.lastModified().toMSecsSinceEpoch() <= quickIds[info.absoluteFilePath()].first) {
+    return quickIds[info.absoluteFilePath()].second;
+  }
+  return QString();
+}
+
+bool Cache::hasEntries(const QString &cacheId, const QString scraper)
 {
   QMutexLocker locker(&cacheMutex);
   for(const auto &res: resources) {
     if(scraper.isEmpty()) {
-      if(res.sha1 == sha1) {
+      if(res.cacheId == cacheId) {
 	return true;
       }
     } else {
-      if(res.sha1 == sha1 && res.source == scraper) {
+      if(res.cacheId == cacheId && res.source == scraper) {
 	return true;
       }
     }
@@ -1404,11 +1475,11 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
   // Find all resources related to this particular rom
   for(const auto &resource: resources) {
     if(scraper.isEmpty()) {
-      if(entry.sha1 == resource.sha1) {
+      if(entry.cacheId == resource.cacheId) {
 	matchingResources.append(resource);
       }
     } else {
-      if(entry.sha1 == resource.sha1 && resource.source == scraper) {
+      if(entry.cacheId == resource.cacheId && resource.source == scraper) {
 	matchingResources.append(resource);
       }
     }

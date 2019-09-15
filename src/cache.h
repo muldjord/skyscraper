@@ -38,7 +38,8 @@
 #include "settings.h"
 
 struct Resource {
-  QString sha1 = "";
+  QString cacheId = "";
+  int version = 1;
   QString type = "";
   QString source = "";
   QString value = "";
@@ -70,7 +71,7 @@ public:
   bool createFolders(const QString &scraper);
   bool read();
   void purgeResources(QString purgeStr);
-  void printPriorities(QString sha1);
+  void printPriorities(QString cacheId);
   void editResources(QSharedPointer<Queue> queue);
   void purgeAll(const bool unattend = false);
   void vacuumResources(const QString inputFolder, const QString filters,
@@ -82,22 +83,26 @@ public:
   void validate();
   void addResources(GameEntry &entry, const Settings &config);
   void fillBlanks(GameEntry &entry, const QString scraper = "");
-  bool hasEntries(const QString &sha1, const QString scraper = "");
+  bool hasEntries(const QString &cacheId, const QString scraper = "");
+  void addQuickId(const QFileInfo &info, const QString &cacheId);
+  QString getQuickId(const QFileInfo &info);
   void merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFolder);
   QList<Resource> getResources();
 
  private:
   QDir cacheDir;
   QMutex cacheMutex;
+  QMutex quickIdMutex;
 
   QMap<QString, QList<QString> > prioMap;
 
   QMap<QString, ResCounts> resCountsMap;
   
   QList<Resource> resources;
-
+  QMap<QString, QPair<qint64, QString> > quickIds; // filePath, timestamp + cacheId for quick lookup
+  
   QList<QFileInfo> getFileInfos(const QString &inputFolder, const QString &filter, const bool subdirs = true);
-  QList<QString> getSha1List(const QList<QFileInfo> &fileInfos);
+  QList<QString> getCacheIdList(const QList<QFileInfo> &fileInfos);
 
   void addToResCounts(const QString source, const QString type);
   void addResource(const Resource &resource, GameEntry &entry, const QString &cacheAbsolutePath,
