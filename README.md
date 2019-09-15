@@ -148,6 +148,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added 'pokemini' platform (Thank you to 'leosmeira' for suggesting it)
 * Renamed all 'sha1' file id's to 'id' as sha1 was misleading
 * Changed relevant defines to constexpr
+* ScreenScraper now always prioritizes the 'video-normalized' above 'video'
 
 #### Version 3.2.8 (31st August 2019)
 * `--cache report` now supports symlinks (Thank you to 'vanativo' for reporting this)
