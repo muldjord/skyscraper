@@ -43,7 +43,7 @@ $ brew link qt5 --force
 If that went well, proceed to the default installation instructions below. It should work and give you a working installation of Skyscraper.
 
 #### Windows
-Windows is not officially supported at this time! But I did compile Skyscraper 3.2.9 for Windows 64-bit, and it seemingly works just fine. Be sure to read the included README before using it. And just to be clear: You are on your own if you use this version - please don't ask me questions about it. Get it [here](http://www.muldjord.com/downloads/Skyscraper_3.2.9_unsupported_win_version.zip).
+Windows is not officially supported at this time! But I did compile Skyscraper 3.3.0 for Windows 64-bit, and it seemingly works just fine. Be sure to read the included README before using it. And just to be clear: You are on your own if you use this version - please don't ask me questions about it. Get it [here](http://www.muldjord.com/downloads/Skyscraper_3.3.0_unsupported_win_version.zip).
 
 ### Download, compile and install
 When you've installed the prerequisites as described above, you can install Skyscraper by typing in the following commands:
