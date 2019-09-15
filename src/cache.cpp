@@ -662,6 +662,7 @@ QList<QString> Cache::getCacheIdList(const QList<QFileInfo> &fileInfos)
     QString cacheId = getQuickId(info);
     if(cacheId.isEmpty()) {
       cacheId = NameTools::getCacheId(info);
+      addQuickId(info, cacheId);
     }
     cacheIdList.append(cacheId);
   }
@@ -850,8 +851,17 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
     }
   }
 
-  printf("Vacuuming resources from cache, this can take several minutes, please wait...");
+  printf("Vacuuming cache, this can take several minutes, please wait...");
   QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter);
+  // Clean the quick id's aswell
+  QMap<QString, QPair<qint64, QString> > quickIdsCleaned;
+  for(const auto &info: fileInfos) {
+    QString filePath = info.absoluteFilePath();
+    if(quickIds.contains(filePath)) {
+      quickIdsCleaned[filePath] = quickIds[filePath];
+    }
+  }
+  quickIds = quickIdsCleaned;
   QList<QString> cacheIdList = getCacheIdList(fileInfos);
   if(cacheIdList.isEmpty()) {
     return;
