@@ -76,7 +76,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     manager.request(gameUrl);
     q.exec();
     data = manager.getData();
-
+    
     QByteArray headerData = data.left(1024); // Minor optimization with minimal more RAM usage
     // Do error checks on headerData. It's more stable than checking the potentially faulty JSON
     if(headerData.contains("non trouvée")) {
@@ -143,9 +143,9 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     }
 
     // Check if we got a game entry back
-    if(!jsonObj["response"].toObject().contains("jeu")) {
-      // Don't try again, no game was found
-      return;
+    if(jsonObj["response"].toObject().contains("jeu")) {
+      // Game found, stop retrying
+      break;
     }
   }
 
@@ -304,7 +304,7 @@ void ScreenScraper::getTags(GameEntry &game)
 
 void ScreenScraper::getCover(GameEntry &game)
 {
-  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, "box-2D");
+  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"box-2D"}));
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -326,7 +326,7 @@ void ScreenScraper::getCover(GameEntry &game)
 
 void ScreenScraper::getScreenshot(GameEntry &game)
 {
-  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, "ss");
+  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, QList<QString>({"ss"}));
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -348,7 +348,7 @@ void ScreenScraper::getScreenshot(GameEntry &game)
 
 void ScreenScraper::getWheel(GameEntry &game)
 {
-  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, "wheel;wheel-hd");
+  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"wheel", "wheel-hd"}));
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -370,7 +370,7 @@ void ScreenScraper::getWheel(GameEntry &game)
 
 void ScreenScraper::getMarquee(GameEntry &game)
 {
-  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, "screenmarquee");
+  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"screenmarquee"}));
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -392,7 +392,7 @@ void ScreenScraper::getMarquee(GameEntry &game)
 
 void ScreenScraper::getVideo(GameEntry &game)
 {
-  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, "video-normalized;video");
+  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, QList<QString>({"video-normalized", "video"}));
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
@@ -516,48 +516,72 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
   return searchNames;
 }
 
-QString ScreenScraper::getJsonText(QJsonArray jsonArr, int attr, QString type)
+QString ScreenScraper::getJsonText(QJsonArray jsonArr, int attr, QList<QString> types)
 {
-  if(attr == NONE) {
-    for(int a = 0; a < jsonArr.size(); ++a) {
-      if(!type.isEmpty() && jsonArr.at(a).toObject()["type"].toString() == type) {
-	return jsonArr.at(a).toObject()["url"].toString();
+  if(attr == NONE && !types.isEmpty()) {
+    for(const auto &type: types) {
+      for(const auto &jsonVal: jsonArr) {
+	if(jsonVal.toObject()["type"].toString() == type) {
+	  if(jsonVal.toObject()["url"].isString()) {
+	    return jsonVal.toObject()["url"].toString();
+	  } else {
+	    return jsonVal.toObject()["text"].toString();
+	  }
+	}
       }
     }
   } else if(attr == REGION) {
-    QList<QString> types = type.split(";");
-    for(const auto &region: regionPrios) { // Not using the config->regionPrios since they might have changed due to region autodetection. So using temporary internal one instead.
-      for(int a = 0; a < jsonArr.size(); ++a) {
-	bool typeMatch = false;
-	if(type.isEmpty()) {
-	  typeMatch = true;
-	} else {
-	  for(const auto &currentType: types) {
-	    if(jsonArr.at(a).toObject()["type"].toString() == currentType) {
-	      typeMatch = true;
-	      break;
+    // Not using the config->regionPrios since they might have changed due to region autodetection. So using temporary internal one instead.
+    for(const auto &region: regionPrios) {
+      if(types.isEmpty()) {
+	for(const auto &jsonVal: jsonArr) {
+	  if(jsonVal.toObject()["region"].toString() == region) {
+	    if(jsonVal.toObject()["url"].isString()) {
+	      return jsonVal.toObject()["url"].toString();
+	    } else {
+	      return jsonVal.toObject()["text"].toString();
 	    }
 	  }
 	}
-	if(!typeMatch)
-	  continue;
-	if(jsonArr.at(a).toObject()["region"].toString() == region) {
-	  if(jsonArr.at(a).toObject()["url"].isString()) {
-	    return jsonArr.at(a).toObject()["url"].toString();
-	  } else {
-	    return jsonArr.at(a).toObject()["text"].toString();
+      } else {
+	for(const auto &type: types) {
+	  for(const auto &jsonVal: jsonArr) {
+	    if(jsonVal.toObject()["region"].toString() == region &&
+	       jsonVal.toObject()["type"].toString() == type) {
+	      if(jsonVal.toObject()["url"].isString()) {
+		return jsonVal.toObject()["url"].toString();
+	      } else {
+		return jsonVal.toObject()["text"].toString();
+	      }
+	    }
 	  }
 	}
       }
     }
   } else if(attr == LANGUE) {
     for(const auto &lang: config->langPrios) {
-      for(int a = 0; a < jsonArr.size(); ++a) {
-	if(!type.isEmpty() && jsonArr.at(a).toObject()["type"].toString() != type) {
-	  continue;
+      if(types.isEmpty()) {
+	for(const auto &jsonVal: jsonArr) {
+	  if(jsonVal.toObject()["langue"].toString() == lang) {
+	    if(jsonVal.toObject()["url"].isString()) {
+	      return jsonVal.toObject()["url"].toString();
+	    } else {
+	      return jsonVal.toObject()["text"].toString();
+	    }
+	  }
 	}
-	if(jsonArr.at(a).toObject()["langue"].toString() == lang) {
-	  return jsonArr.at(a).toObject()["text"].toString();
+      } else {
+	for(const auto &type: types) {
+	  for(const auto &jsonVal: jsonArr) {
+	    if(jsonVal.toObject()["langue"].toString() == lang &&
+	       jsonVal.toObject()["type"].toString() == type) {
+	      if(jsonVal.toObject()["url"].isString()) {
+		return jsonVal.toObject()["url"].toString();
+	      } else {
+		return jsonVal.toObject()["text"].toString();
+	      }
+	    }
+	  }
 	}
       }
     }
