@@ -1113,7 +1113,7 @@ bool Cache::write(const bool onlyQuickId)
     xml.writeEndElement();
     xml.writeEndDocument();
     result = true;
-    printf("\033[1;32mSuccess!\033[0m\n\n");
+    printf("\033[1;32mDone!\033[0m\n\n");
     cacheFile.close();
   }
   return result;
