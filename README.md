@@ -146,6 +146,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * MAJOR: File identification now uses new quick id method for up to 75% faster processing (Thank you to 'langest' for finally making me look into this)
 * Added 'pc98' platform (Thank you to 'leosmeira' for suggesting it)
 * Added 'pokemini' platform (Thank you to 'leosmeira' for suggesting it)
+* Renamed all 'sha1' file id's to 'id' as sha1 was misleading
 * Changed relevant defines to constexpr
 
 #### Version 3.2.8 (31st August 2019)
