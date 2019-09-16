@@ -141,7 +141,9 @@ void Skyscraper::run()
       success = cache->purgeResources(config.cacheOptions);
     }
     if(success) {
+      state = 1; // Ignore ctrl+c
       cache->write();
+      state = 0;
     }
     exit(0);
   }
@@ -154,7 +156,9 @@ void Skyscraper::run()
   }
   if(config.cacheOptions == "validate") {
     cache->validate();
+    state = 1; // Ignore ctrl+c
     cache->write();
+    state = 0;
     exit(0);
   }
   if(config.cacheOptions.contains("merge:")) {
@@ -163,7 +167,9 @@ void Skyscraper::run()
       Cache mergeCache(mergeCacheInfo.absoluteFilePath());
       mergeCache.read();
       cache->merge(mergeCache, config.refresh, mergeCacheInfo.absoluteFilePath());
+      state = 1; // Ignore ctrl+c
       cache->write();
+      state = 0;
     } else {
       printf("Folder to merge from doesn't seem to exist, can't continue...\n");
     }
@@ -273,7 +279,7 @@ void Skyscraper::run()
     }
   } 
 
-  state = 1;
+  state = 2; // Clear queue on ctrl+c
   if(config.cacheOptions.left(4) == "edit") {
     QString editCommand = "";
     QString editType = "";
@@ -286,9 +292,12 @@ void Skyscraper::run()
     }
     cache->editResources(queue, editCommand, editType);
     printf("Done editing resources!\n");
+    state = 1; // Ignore ctrl+c
     cache->write();
+    state = 0;
     exit(0);
   }
+  state = 0;
 
   if(!config.pretend && config.scraper == "cache" &&
      !config.unattend && !config.unattendSkip &&
@@ -322,7 +331,6 @@ void Skyscraper::run()
   skippedFile.write("--- The following is a list of skipped games ---\n");
   skippedFile.close();
 
-  state = 0;
   if(gameListFile.exists()) {
     printf("Trying to parse and load existing game list metadata... ");
     fflush(stdout);
@@ -382,7 +390,7 @@ void Skyscraper::run()
   // Ready, set, GO!!! Start all threads
   for(const auto thread: threadList) {
     thread->start();
-    state = 2;
+    state = 3;
   }
 }
 
@@ -508,7 +516,9 @@ void Skyscraper::checkThreads()
   if(!config.pretend && config.scraper == "cache") {
     printf("\033[1;34m---- Game list generation run completed! YAY! ----\033[0m\n");
     if(!config.cacheFolder.isEmpty()) {
+      state = 1; // Ignore ctrl+c
       cache->write(true);
+      state = 0;
     }
     QString finalOutput;
     frontend->sortEntries(gameEntries);
@@ -519,7 +529,9 @@ void Skyscraper::checkThreads()
     printf("Now writing '\033[1;33m%s\033[0m'... ", gameListFileString.toStdString().c_str());
     fflush(stdout);
     if(gameListFile.open(QIODevice::WriteOnly)) {
+      state = 1; // Ignore ctrl+c
       gameListFile.write(finalOutput.toUtf8());
+      state = 0;
       gameListFile.close();
       printf("\033[1;32mSuccess!!!\033[0m\n\n");
     } else {
@@ -528,7 +540,9 @@ void Skyscraper::checkThreads()
   } else {
     printf("\033[1;34m---- Resource gathering run completed! YAY! ----\033[0m\n");
     if(!config.cacheFolder.isEmpty()) {
+      state = 1; // Ignore ctrl+c
       cache->write();
+      state = 0;
     }
   }
   
