@@ -104,11 +104,11 @@ BOOL WINAPI ConsoleHandler(DWORD dwType)
       } else if(x->state == 1) {
 	x->queue->clearAll();
       } else if(x->state == 2) {
-	printf("User wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads you have running...\n");
+	printf("\033[1;33mUser wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads are running...\033[0m\n");
 	x->queue->clearAll();
       }
     } else {
-      printf("User REALLY wants to quit NOW, forcing unclean exit...\n");
+      printf("\033[1;31mUser REALLY wants to quit NOW, forcing unclean exit...\033[0m\n");
       exit(1);
     }
   }
