@@ -131,15 +131,18 @@ void Skyscraper::run()
   }
   if(config.cacheOptions.contains("purge:") ||
      config.cacheOptions.contains("vacuum")) {
+    bool success = true;
     if(config.cacheOptions == "purge:all") {
-      cache->purgeAll(config.unattend || config.unattendSkip);
+      success = cache->purgeAll(config.unattend || config.unattendSkip);
     } else if(config.cacheOptions == "vacuum") {
-      cache->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), config.verbosity, config.unattend || config.unattendSkip);
+      success = cache->vacuumResources(config.inputFolder, Platform::getFormats(config.platform, config.extensions, config.addExtensions), config.verbosity, config.unattend || config.unattendSkip);
     } else if(config.cacheOptions.contains("purge:m=") ||
 	      config.cacheOptions.contains("purge:t=")) {
-      cache->purgeResources(config.cacheOptions);
+      success = cache->purgeResources(config.cacheOptions);
     }
-    cache->write();
+    if(success) {
+      cache->write();
+    }
     exit(0);
   }
   if(config.cacheOptions.contains("report:")) {
@@ -217,6 +220,7 @@ void Skyscraper::run()
 
   // Create shared queue with files to process
   queue = QSharedPointer<Queue>(new Queue());
+  state = 1;
   QList<QFileInfo> infoList = inputDir.entryInfoList();
   if(!config.startAt.isEmpty() && !infoList.isEmpty()) {
     QFileInfo startAt(config.startAt);
@@ -377,7 +381,7 @@ void Skyscraper::run()
   // Ready, set, GO!!! Start all threads
   for(const auto thread: threadList) {
     thread->start();
-    threadsRunning = true;
+    state = 2;
   }
 }
 

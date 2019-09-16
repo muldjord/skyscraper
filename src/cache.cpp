@@ -74,7 +74,8 @@ bool Cache::read()
 {
   QFile quickIdFile(cacheDir.absolutePath() + "/quickid.xml");
   if(quickIdFile.open(QIODevice::ReadOnly)) {
-    printf("Reading and parsing quick id xml, please wait...\n");
+    printf("Reading and parsing quick id xml, please wait... ");
+    fflush(stdout);
     QXmlStreamReader xml(&quickIdFile);
     while(!xml.atEnd()) {
       if(xml.readNext() != QXmlStreamReader::StartElement) {
@@ -96,10 +97,12 @@ bool Cache::read()
       quickIds[attribs.value("filepath").toString()] = pair;
     }
   }
+  printf("\033[1;32mDone!\033[0m\n");
 
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::ReadOnly)) {
-    printf("Reading and parsing resource cache, please wait...\n");
+    printf("Reading and parsing resource cache, please wait... ");
+    fflush(stdout);
     QXmlStreamReader xml(&cacheFile);
     while(!xml.atEnd()) {
       if(xml.readNext() != QXmlStreamReader::StartElement) {
@@ -156,6 +159,7 @@ bool Cache::read()
     }
     cacheFile.close();
     resAtLoad = resources.length();
+    printf("\033[1;32mDone!\033[0m\n");
     printf("Successfully parsed %d resources!\n\n", resources.length());
     return true;
   }
@@ -261,7 +265,11 @@ void Cache::editResources(QSharedPointer<Queue> queue,
   printf("\033[1;33mEntering resource cache editing mode! This mode allows you to edit textual resources for your files. To add media resources use the 'import' scraping module instead.\nNote that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n\033[1;31mNote! All changes are done in memory. If you ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\033[0m\n\n");
   while(queue->hasEntry()) {
     QFileInfo info = queue->takeEntry();
-    QString cacheId = NameTools::getCacheId(info);
+    QString cacheId = getQuickId(info);
+    if(cacheId.isEmpty()) {
+      cacheId = NameTools::getCacheId(info);
+      addQuickId(info, cacheId);
+    }
     bool doneEdit = false;
     printPriorities(cacheId);
     while(!doneEdit) {
@@ -373,47 +381,47 @@ void Cache::editResources(QSharedPointer<Queue> queue,
 	  QString expression = ".+"; // Default, matches everything except empty
 	  if(typeInput == "0") {
 	    newRes.type = "title";
-	    printf("\033[1;34mPlease enter title:\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter title:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else if(typeInput == "1") {
 	    newRes.type = "platform";
-	    printf("\033[1;34mPlease enter platform:\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter platform:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else if(typeInput == "2") {
 	    newRes.type = "releasedate";
-	    printf("\033[1;34mPlease enter a release date in the format 'yyyy-MM-dd':\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter a release date in the format 'yyyy-MM-dd':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	    expression = "^[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}$";
 	  } else if(typeInput == "3") {
 	    newRes.type = "developer";
-	    printf("\033[1;34mPlease enter developer:\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter developer:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else if(typeInput == "4") {
 	    newRes.type = "publisher";
-	    printf("\033[1;34mPlease enter publisher:\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter publisher:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else if(typeInput == "5") {
 	    newRes.type = "players";
-	    printf("\033[1;34mPlease enter highest number of players such as '4':\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter highest number of players such as '4':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	    expression = "^[0-9]{1,2}$";
 	  } else if(typeInput == "6") {
 	    newRes.type = "ages";
-	    printf("\033[1;34mPlease enter lowest age this should be played at such as '10' which means 10+:\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter lowest age this should be played at such as '10' which means 10+:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	    expression = "^[0-9]{1}[0-9]{0,1}$";
 	  } else if(typeInput == "7") {
 	    newRes.type = "tags";
-	    printf("\033[1;34mPlease enter comma-separated genres in the format 'Platformer, Sidescrolling':\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter comma-separated genres in the format 'Platformer, Sidescrolling':\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else if(typeInput == "8") {
 	    newRes.type = "rating";
-	    printf("\033[1;34mPlease enter game rating from 0.0 to 1.0:\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter game rating from 0.0 to 1.0:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	    expression = "^[0-1]{1}\\.{1}[0-9]{1}[0-9]{0,1}$";
 	  } else if(typeInput == "9") {
 	    newRes.type = "description";
-	    printf("\033[1;34mPlease enter game description. Type '\\n' for newlines:\033[0m (Enter to cancel, 'q' to quit)\n> ");
+	    printf("\033[1;34mPlease enter game description. Type '\\n' for newlines:\033[0m (Enter to cancel)\n> ");
 	    getline(std::cin, valueInput);
 	  } else {
 	    printf("Invalid input, resource creation cancelled...\n\n");
@@ -424,10 +432,6 @@ void Cache::editResources(QSharedPointer<Queue> queue,
 	  value.replace("\\n", "\n");
 	  if(valueInput == "") {
 	    printf("Resource creation cancelled...\n\n");
-	    continue;
-	  } else if(valueInput == "q") {
-	    queue->clear();
-	    doneEdit = true;
 	    continue;
 	  } else if(!value.isEmpty() && QRegularExpression(expression).match(value).hasMatch()) {
 	    newRes.value = value;
@@ -593,7 +597,7 @@ void Cache::editResources(QSharedPointer<Queue> queue,
   }
 }
 
-void Cache::purgeResources(QString purgeStr)
+bool Cache::purgeResources(QString purgeStr)
 {
   purgeStr.replace("purge:", "");
   printf("Purging requested resources from cache, please wait...\n");
@@ -636,9 +640,10 @@ void Cache::purgeResources(QString purgeStr)
     }
   }
   printf("Successfully purged %d resources from the cache.\n", purged);
+  return true;
 }
 
-void Cache::purgeAll(const bool unattend)
+bool Cache::purgeAll(const bool unattend)
 {
   if(!unattend) {
     printf("\033[1;31mWARNING!!! You are about to purge / remove ALL resources from the Skyscaper cache connected to the currently selected platform. THIS CANNOT BE UNDONE!\033[0m\n\n");
@@ -647,7 +652,7 @@ void Cache::purgeAll(const bool unattend)
     getline(std::cin, userInput);
     if(userInput != "y") {
       printf("User chose not to continue, cancelling purge...\n\n");
-      return;
+      return false;
     }
   }
 
@@ -680,10 +685,12 @@ void Cache::purgeAll(const bool unattend)
   printf("\033[1;32m Done!\033[0m\n");
   if(purged == 0) {
     printf("No resources for the current platform found in the resource cache.\n");
+    return false;
   } else {
     printf("Successfully purged %d resources from the resource cache.\n", purged);
   }
   printf("\n");
+  return true;
 }
 
 QList<QFileInfo> Cache::getFileInfos(const QString &inputFolder, const QString &filter, const bool subdirs)
@@ -898,7 +905,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
   printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit --fromfile <FILENAME>\033[0m' or the '\033[1;33m-s import\033[0m' module to add the missing resources. Check '\033[1;33m--help\033[0m' and '\033[1;33m--cache help\033[0m' for more information.\n\n");
 }
 
-void Cache::vacuumResources(const QString inputFolder, const QString filter,
+bool Cache::vacuumResources(const QString inputFolder, const QString filter,
 			    const int verbosity, const bool unattend)
 {
   if(!unattend) {
@@ -908,7 +915,7 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
     getline(std::cin, userInput);
     if(userInput != "y") {
       printf("User chose not to continue, cancelling vacuum...\n\n");
-      return;
+      return false;
     }
   }
 
@@ -925,7 +932,8 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
   quickIds = quickIdsCleaned;
   QList<QString> cacheIdList = getCacheIdList(fileInfos);
   if(cacheIdList.isEmpty()) {
-    return;
+    printf("No cache id's found, something is wrong, cancelling...\n");
+    return false;
   }
   
   int vacuumed = 0;
@@ -969,10 +977,12 @@ void Cache::vacuumResources(const QString inputFolder, const QString filter,
   printf("\033[1;32m Done!\033[0m\n");
   if(vacuumed == 0) {
     printf("All resources match a file in your romset. No resources vacuumed.\n");
+    return false;
   } else {
     printf("Successfully vacuumed %d resources from the resource cache.\n", vacuumed);
   }
   printf("\n");
+  return true;
 }
 
 void Cache::showStats(int verbosity)

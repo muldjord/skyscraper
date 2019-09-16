@@ -99,11 +99,13 @@ BOOL WINAPI ConsoleHandler(DWORD dwType)
     sigIntRequests++;
 #endif
     if(sigIntRequests <= 2) {
-      if(x->threadsRunning) {
+      if(x->state == 0) {
+	exit(1);
+      } else if(x->state == 1) {
+	x->queue->clearAll();
+      } else if(x->state == 2) {
 	printf("User wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads you have running...\n");
 	x->queue->clearAll();
-      } else {
-	exit(1);
       }
     } else {
       printf("User REALLY wants to quit NOW, forcing unclean exit...\n");

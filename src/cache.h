@@ -70,13 +70,13 @@ public:
   Cache(const QString &cacheFolder);
   bool createFolders(const QString &scraper);
   bool read();
-  void purgeResources(QString purgeStr);
   void printPriorities(QString cacheId);
   void editResources(QSharedPointer<Queue> queue,
 		     const QString &command = "",
 		     const QString &type = "");
-  void purgeAll(const bool unattend = false);
-  void vacuumResources(const QString inputFolder, const QString filters,
+  bool purgeAll(const bool unattend = false);
+  bool purgeResources(QString purgeStr);
+  bool vacuumResources(const QString inputFolder, const QString filters,
 		       const int verbosity, const bool unattend = false);
   void assembleReport(const QString inputFolder, const QString filters, QString platform, bool subdirs = true, QString reportStr = "");
   void showStats(int verbosity);
