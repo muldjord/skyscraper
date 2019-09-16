@@ -168,16 +168,20 @@ Read more about the resource cache [here](CACHE.md).
 ##### --cache help
 Outputs a description of all available `--cache` functions.
 
-##### --cache edit
+##### --cache edit[:new=&lt;TYPE&gt;]
 Allows editing of any cached resources connected to your roms. The editing mode will go through each of the files in the queue one by one, allowing you to add and remove resources as needed. Any resource you add manually will be prioritized above all others.
 
 You can provide one or more filenames to the end of the command line or use the `--fromfile` option to edit the resources for just those files. You can use the `--startat` and `--endat` options to edit a span of roms. If none of those options are used, it will edit all of the roms in the input folder one by one.
+
+For efficiency, when adding a lot of resources of the same type, you can also add the optional 'new=<TYPE>' which will make it very easy to batch insert resources of the defined type to all the files you are editing. TYPE can be any of the known textual resources: title, platform, releasedate, developer, publisher, players, ages, genres, rating, description.
 ###### Example(s)
 ```
 Skyscraper -p snes --cache edit <FILENAME 1> <FILENAME 2>
 Skyscraper -p snes --cache edit --startat <FILENAME> --endat <FILENAME>
+Skyscraper -p snes --cache edit:new=developer --startat <FILENAME> --endat <FILENAME>
 Skyscraper -p snes --cache edit
 Skyscraper -p snes --cache edit --fromfile "/home/pi/.skyscraper/reports/report-snes-missing_developer-20190708.txt"
+Skyscraper -p snes --cache edit:new=ages --fromfile "/home/pi/.skyscraper/reports/report-snes-missing_ages-20190708.txt"
 ```
 
 ##### --cache merge:&lt;FOLDER&gt;
