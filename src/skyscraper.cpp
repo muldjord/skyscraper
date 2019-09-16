@@ -220,7 +220,6 @@ void Skyscraper::run()
 
   // Create shared queue with files to process
   queue = QSharedPointer<Queue>(new Queue());
-  state = 1;
   QList<QFileInfo> infoList = inputDir.entryInfoList();
   if(!config.startAt.isEmpty() && !infoList.isEmpty()) {
     QFileInfo startAt(config.startAt);
@@ -274,6 +273,7 @@ void Skyscraper::run()
     }
   } 
 
+  state = 1;
   if(config.cacheOptions.left(4) == "edit") {
     QString editCommand = "";
     QString editType = "";
@@ -322,6 +322,7 @@ void Skyscraper::run()
   skippedFile.write("--- The following is a list of skipped games ---\n");
   skippedFile.close();
 
+  state = 0;
   if(gameListFile.exists()) {
     printf("Trying to parse and load existing game list metadata... ");
     fflush(stdout);
