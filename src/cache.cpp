@@ -231,8 +231,32 @@ void Cache::printPriorities(QString cacheId)
   printf("\n\n");
 }
 
-void Cache::editResources(QSharedPointer<Queue> queue)
+void Cache::editResources(QSharedPointer<Queue> queue,
+			  const QString &command,
+			  const QString &type)
 {
+  // Check sanity of command and parameters, if any
+  if(!command.isEmpty()) {
+    if(command == "new") {
+      if(type != "title" &&
+	 type != "platform" &&
+	 type != "releasedate" &&
+	 type != "developer" &&
+	 type != "publisher" &&
+	 type != "players" &&
+	 type != "ages" &&
+	 type != "genres" &&
+	 type != "rating" &&
+	 type != "description") {
+	printf("Unknown resource type '%s', please specify any of the following: 'title', 'platform', 'releasedate', 'developer', 'publisher', 'players', 'ages', 'genres', 'rating', 'description'.\n", type.toStdString().c_str());
+	return;
+      }
+    } else {
+      printf("Unknown command '%s', please specify one of the following: 'new'.\n", command.toStdString().c_str());
+      return;
+    }
+  }
+  
   int queueLength = queue->length();
   printf("\033[1;33mEntering resource cache editing mode! This mode allows you to edit textual resources for your files. To add media resources use the 'import' scraping module instead.\nNote that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n\033[1;31mNote! All changes are done in memory. If you ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\033[0m\n\n");
   while(queue->hasEntry()) {
@@ -242,19 +266,28 @@ void Cache::editResources(QSharedPointer<Queue> queue)
     printPriorities(cacheId);
     while(!doneEdit) {
       printf("\033[0;32m#%d/%d\033[0m \033[1;33m\nCURRENT FILE: \033[0m\033[1;32m%s\033[0m\033[1;33m\033[0m\n", queueLength - queue->length(), queueLength, info.fileName().toStdString().c_str());
-      printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
-      printf("\033[1;33ms\033[0m) Show current resource priorities for this rom\n");
-      printf("\033[1;33mS\033[0m) Show all cached resources for this rom\n");
-      printf("\033[1;33mn\033[0m) Create new prioritized resource for this rom\n");
-      printf("\033[1;33md\033[0m) Remove specific resource connected to this rom\n");
-      printf("\033[1;33mD\033[0m) Remove ALL resources connected to this rom\n");
-      printf("\033[1;33mm\033[0m) Remove ALL resources connected to this rom from a specific module\n");
-      printf("\033[1;33mt\033[0m) Remove ALL resources connected to this rom of a specific type\n");
-      printf("\033[1;33mq\033[0m) Save all cache changes back to disk and exit\n");
-      printf("> ");
       std::string userInput = "";
-      getline(std::cin, userInput);
-      printf("\n");
+      if(command.isEmpty()) {
+	printf("\033[1;34mWhat would you like to do?\033[0m (Press enter to continue to next rom in queue)\n");
+	printf("\033[1;33ms\033[0m) Show current resource priorities for this rom\n");
+	printf("\033[1;33mS\033[0m) Show all cached resources for this rom\n");
+	printf("\033[1;33mn\033[0m) Create new prioritized resource for this rom\n");
+	printf("\033[1;33md\033[0m) Remove specific resource connected to this rom\n");
+	printf("\033[1;33mD\033[0m) Remove ALL resources connected to this rom\n");
+	printf("\033[1;33mm\033[0m) Remove ALL resources connected to this rom from a specific module\n");
+	printf("\033[1;33mt\033[0m) Remove ALL resources connected to this rom of a specific type\n");
+	printf("\033[1;33mq\033[0m) Save all cache changes back to disk and exit\n");
+	printf("> ");
+	getline(std::cin, userInput);
+	printf("\n");
+      } else {
+	if(command == "new") {
+	  userInput = "n";
+	  doneEdit = true;
+	} else if(command == "quit") {
+	  userInput = "q";
+	}
+      }
       if(userInput == "") {
 	doneEdit = true;
 	continue;
@@ -280,30 +313,54 @@ void Cache::editResources(QSharedPointer<Queue> queue)
 	game.cacheId = cacheId;
 	fillBlanks(game);
 	std::string typeInput = "";
-	printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
-	printf("\033[1;33m0\033[0m) Title %s\n",
-	       QString((game.titleSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m1\033[0m) Platform %s\n",
-	       QString((game.platformSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m2\033[0m) Release date %s\n",
-	       QString((game.releaseDateSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m3\033[0m) Developer %s\n",
-	       QString((game.developerSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m4\033[0m) Publisher %s\n",
-	       QString((game.publisherSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m5\033[0m) Number of players %s\n",
-	       QString((game.playersSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m6\033[0m) Age rating %s\n",
-	       QString((game.agesSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m7\033[0m) Genres %s\n",
-	       QString((game.tagsSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m8\033[0m) Game rating %s\n",
-	       QString((game.ratingSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("\033[1;33m9\033[0m) Description %s\n",
-	       QString((game.descriptionSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
-	printf("> ");
-	getline(std::cin, typeInput);
-	printf("\n");
+	if(type.isEmpty()) {
+	  printf("\033[1;34mWhich resource type would you like to create?\033[0m (Enter to cancel)\n");
+	  printf("\033[1;33m0\033[0m) Title %s\n",
+		 QString((game.titleSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m1\033[0m) Platform %s\n",
+		 QString((game.platformSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m2\033[0m) Release date %s\n",
+		 QString((game.releaseDateSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m3\033[0m) Developer %s\n",
+		 QString((game.developerSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m4\033[0m) Publisher %s\n",
+		 QString((game.publisherSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m5\033[0m) Number of players %s\n",
+		 QString((game.playersSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m6\033[0m) Age rating %s\n",
+		 QString((game.agesSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m7\033[0m) Genres %s\n",
+		 QString((game.tagsSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m8\033[0m) Game rating %s\n",
+		 QString((game.ratingSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("\033[1;33m9\033[0m) Description %s\n",
+		 QString((game.descriptionSrc.isEmpty()?"(\033[1;31mmissing\033[0m)":"")).toStdString().c_str());
+	  printf("> ");
+	  getline(std::cin, typeInput);
+	  printf("\n");
+	} else {
+	  if(type == "title") {
+	    typeInput = "0";
+	  } else if(type == "platform") {
+	    typeInput = "1";
+	  } else if(type == "releasedate") {
+	    typeInput = "2";
+	  } else if(type == "developer") {
+	    typeInput = "3";
+	  } else if(type == "publisher") {
+	    typeInput = "4";
+	  } else if(type == "players") {
+	    typeInput = "5";
+	  } else if(type == "ages") {
+	    typeInput = "6";
+	  } else if(type == "genres") {
+	    typeInput = "7";
+	  } else if(type == "rating") {
+	    typeInput = "8";
+	  } else if(type == "description") {
+	    typeInput = "9";
+	  }
+	}
 	if(typeInput == "") {
 	    printf("Resource creation cancelled...\n\n");
 	    continue;

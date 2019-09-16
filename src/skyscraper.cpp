@@ -270,8 +270,17 @@ void Skyscraper::run()
     }
   } 
 
-  if(config.cacheOptions == "edit") {
-    cache->editResources(queue);
+  if(config.cacheOptions.left(4) == "edit") {
+    QString editCommand = "";
+    QString editType = "";
+    if(config.cacheOptions.contains(":") && config.cacheOptions.contains("=")) {
+      config.cacheOptions.remove(0, config.cacheOptions.indexOf(":") + 1);
+      if(config.cacheOptions.split("=").size() == 2) {
+	editCommand = config.cacheOptions.split("=").at(0);
+	editType = config.cacheOptions.split("=").at(1);
+      }
+    }
+    cache->editResources(queue, editCommand, editType);
     printf("Done editing resources!\n");
     cache->write();
     exit(0);
@@ -1073,7 +1082,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       printf("Showing '\033[1;33m--cache\033[0m' help\n");
       printf("  \033[1;33m--cache show\033[0m: Prints a status of all cached resources for the selected platform.\n");
       printf("  \033[1;33m--cache validate\033[0m: Checks the consistency of the cache for the selected platform.\n");
-      printf("  \033[1;33m--cache edit\033[0m: Let's you edit cached resources for the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--fromfile' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
+      printf("  \033[1;33m--cache edit\033[0m: Let's you edit resources for the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--fromfile' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
+      printf("  \033[1;33m--cache edit:new=<TYPE>\033[0m: Let's you batch add resources of <TYPE> to the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--fromfile' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
       printf("  \033[1;33m--cache vacuum\033[0m: Compares your romset to any cached resource and removes the resources that you no longer have roms for.\n");
       printf("  \033[1;33m--cache report:missing=<OPTION>\033[0m: Generates reports with all files that are missing the specified resources. Check '--cache report:missing=help' for more info.\n");
       printf("  \033[1;33m--cache merge:<PATH>\033[0m: Merges two resource caches together. It will merge the resource cache specified by <PATH> into the local resource cache by default. To merge into a non-default destination cache folder set it with '-d <PATH>'. Both should point to folders with the 'db.xml' inside.\n");

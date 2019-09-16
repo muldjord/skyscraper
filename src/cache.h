@@ -72,7 +72,9 @@ public:
   bool read();
   void purgeResources(QString purgeStr);
   void printPriorities(QString cacheId);
-  void editResources(QSharedPointer<Queue> queue);
+  void editResources(QSharedPointer<Queue> queue,
+		     const QString &command = "",
+		     const QString &type = "");
   void purgeAll(const bool unattend = false);
   void vacuumResources(const QString inputFolder, const QString filters,
 		       const int verbosity, const bool unattend = false);
