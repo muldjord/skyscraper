@@ -142,6 +142,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
+#### Version 3.3.1 (In progress, unreleased)
+* Added new '--cache edit:new=<TYPE>' option for efficient batch adding of a resource of a certain type
+
 #### Version 3.3.0 (15th September 2019)
 * MAJOR: File identification now uses new quick id method for up to 75% faster processing (Thank you to 'langest' for finally making me look into this)
 * Added 'pc98' platform (Thank you to 'leosmeira' for suggesting it)
