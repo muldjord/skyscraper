@@ -262,7 +262,7 @@ void Cache::editResources(QSharedPointer<Queue> queue,
   }
   
   int queueLength = queue->length();
-  printf("\033[1;33mEntering resource cache editing mode! This mode allows you to edit textual resources for your files. To add media resources use the 'import' scraping module instead.\nNote that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n\033[1;31mNote! All changes are done in memory. If you ctrl+c the process at ANY time, all of your changes will be undone! Instead, use the 'q' option as shown, which will save all of your changes back to disk before exiting.\033[0m\n\n");
+  printf("\033[1;33mEntering resource cache editing mode! This mode allows you to edit textual resources for your files. To add media resources use the 'import' scraping module instead.\nNote that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n");
   while(queue->hasEntry()) {
     QFileInfo info = queue->takeEntry();
     QString cacheId = getQuickId(info);
@@ -284,7 +284,8 @@ void Cache::editResources(QSharedPointer<Queue> queue,
 	printf("\033[1;33mD\033[0m) Remove ALL resources connected to this rom\n");
 	printf("\033[1;33mm\033[0m) Remove ALL resources connected to this rom from a specific module\n");
 	printf("\033[1;33mt\033[0m) Remove ALL resources connected to this rom of a specific type\n");
-	printf("\033[1;33mq\033[0m) Save all cache changes back to disk and exit\n");
+	printf("\033[1;33mc\033[0m) Cancel all cache changes and exit\n");
+	printf("\033[1;33mq\033[0m) Save all cache changes and exit\n");
 	printf("> ");
 	getline(std::cin, userInput);
 	printf("\n");
@@ -588,6 +589,9 @@ void Cache::editResources(QSharedPointer<Queue> queue,
 	} else {
 	  printf("No resources of type '\033[1;32m%s\033[0m' found, cancelling...\n\n", typeInput.c_str());
  	}
+      } else if(userInput == "c") {
+	printf("Exiting without saving changes.\n");
+	exit(0);
       } else if(userInput == "q") {
 	queue->clear();
 	doneEdit = true;

@@ -52,7 +52,7 @@
 #include "scripter.h"
 #include "platform.h"
 
-Skyscraper *x;
+Skyscraper *x = nullptr;
 int sigIntRequests = 0;
 
 void customMessageHandler(QtMsgType type, const QMessageLogContext&, const QString &msg)
@@ -99,18 +99,22 @@ BOOL WINAPI ConsoleHandler(DWORD dwType)
     sigIntRequests++;
 #endif
     if(sigIntRequests <= 2) {
-      if(x->state == 0) {
-	// Nothing important going on, just exit
+      if(x != nullptr) {
+	if(x->state == 0) {
+	  // Nothing important going on, just exit
+	  exit(1);
+	} else if(x->state == 1) {
+	  // Ignore signal, something important is going on that needs to finish!
+	} else if(x->state == 2) {
+	  // Cache being edited, clear the queue to quit nicely
+	  x->queue->clearAll();
+	} else if(x->state == 3) {
+	  // Threads are running, clear queue for a nice exit
+	  printf("\033[1;33mUser wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads are running...\033[0m\n");
+	  x->queue->clearAll();
+	}
+      } else {
 	exit(1);
-      } else if(x->state == 1) {
-	// Ignore signal, something important is going on that needs to finish!
-      } else if(x->state == 2) {
-	// Cache being edited, clear the queue to quit nicely
-	x->queue->clearAll();
-      } else if(x->state == 3) {
-	// Threads are running, clear queue for a nice exit
-	printf("\033[1;33mUser wants to quit, trying to exit nicely. This can take a few seconds depending on how many threads are running...\033[0m\n");
-	x->queue->clearAll();
       }
     } else {
       printf("\033[1;31mUser REALLY wants to quit NOW, forcing unclean exit...\033[0m\n");
