@@ -144,6 +144,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.3.1 (In progress, unreleased)
 * Added new '--cache edit:new=<TYPE>' option for efficient batch adding of a resource of a certain type
+* Improved ctrl+c handling
+* Protected cache write calls from ctrl+c obstruction
 
 #### Version 3.3.0 (15th September 2019)
 * MAJOR: File identification now uses new quick id method for up to 75% faster processing (Thank you to 'langest' for finally making me look into this)
