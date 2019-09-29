@@ -121,8 +121,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 	jsonErrorFile.close();
       }
       printf("The erroneous answer was written to '~/.skyscraper/screenscraper_error.json'. Please create a bug report at 'https://github.com/muldjord/skyscraper/issues' and attach that file.\n");
-      // In this case, try again. We should always get a valid JSON document
-      continue;
+      break; // DON'T try again! If we don't get a valid JSON document, something is very wrong with the API
     }
 
     // Check if the request was successful
