@@ -110,7 +110,11 @@ NOTE! Only enable this option if you are having problems getting the roms identi
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`*
 
 #### frontend="emulationstation"
-Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported as well. If exporting for the `attractmode` frontend, please also take note of the required `emulator=""` option that goes along with using the `attractmode` frontend.
+Sets the frontend you wish to export a game list for. By default Skyscraper will export an EmulationStation game list, but other frontends are supported as well.
+
+If exporting for the `attractmode` frontend, please also take note of the required `emulator=""` option that goes along with using the `attractmode` frontend.
+
+If exporting for the `pegasus` frontend, please also take note of the optional `launch=""` option that that allows you to set the launch parameter used by Pegasus.
 
 Check all supported frontends with '--help'
 
@@ -118,6 +122,11 @@ Check all supported frontends with '--help'
 
 #### emulator=""
 NOTE! This option is *only* applicable when also setting the `frontend="attractmode"` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform.
+
+*Allowed in section(s): `[main]`*
+
+#### launch=""
+NOTE! This option is *only* applicable when also setting the `frontend="pegasus"` option. It sets the *launch command* to be used when generating the `pegasus` game list. This is optional. It defaults to the RetroPie launch options which works on RetroPie.
 
 *Allowed in section(s): `[main]`*
 

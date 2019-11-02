@@ -36,7 +36,7 @@ struct Settings {
   QString skippedFileString = "";
   QString configFile = "";
   QString frontend = "emulationstation";
-  QString emulator = "";
+  QString frontendExtra = ""; // For use with 'emulator' with Attractmode and 'command' for Pegasus
   QString platform = "";
   QString scraper = "";
   QString userCreds = "";

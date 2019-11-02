@@ -68,8 +68,8 @@ void Skyscraper::run()
 {
   printf("Platform:           '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
   printf("Scraping module:    '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
-  if(!config.emulator.isEmpty()) {
-    printf("Emulator:           '\033[1;32m%s\033[0m'\n", config.emulator.toStdString().c_str());
+  if(!config.frontendExtra.isEmpty()) {
+    printf("Extra:              '\033[1;32m%s\033[0m'\n", config.frontendExtra.toStdString().c_str());
   }
   printf("Input folder:       '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
   printf("Game list folder:   '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
@@ -761,7 +761,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.threadsSet = true;
   }
   if(settings.contains("emulator")) {
-    config.emulator = settings.value("emulator").toString();
+    config.frontendExtra = settings.value("emulator").toString();
+  }
+  if(settings.contains("launch")) {
+    config.frontendExtra = settings.value("launch").toString();
   }
   if(settings.contains("videos")) {
     config.videos = settings.value("videos").toBool();
@@ -851,7 +854,10 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   // Platform specific configs, overrides main and defaults
   settings.beginGroup(config.platform);
   if(settings.contains("emulator")) {
-    config.emulator = settings.value("emulator").toString();
+    config.frontendExtra = settings.value("emulator").toString();
+  }
+  if(settings.contains("launch")) {
+    config.frontendExtra = settings.value("launch").toString();
   }
   if(settings.contains("inputFolder")) {
     config.inputFolder = settings.value("inputFolder").toString();
@@ -1030,7 +1036,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.threadsSet = true;
   }
   if(parser.isSet("e")) {
-    config.emulator = parser.value("e");
+    config.frontendExtra = parser.value("e");
   }
   if(parser.isSet("i")) {
     config.inputFolder = parser.value("i");

@@ -150,7 +150,7 @@ void AttractMode::assembleList(QString &finalOutput, QList<GameEntry> &gameEntri
   if(dotMod == 0)
     dotMod = 1;
 
-  QFileInfo emuInfo(config->emulator);
+  QFileInfo emuInfo(config->frontendExtra);
   bool saveDescFile = true;
   QDir descDir(config->gameListFolder + "/" + emuInfo.completeBaseName());
   if(!descDir.exists() && !descDir.mkpath(descDir.absolutePath())) {
@@ -234,25 +234,25 @@ void AttractMode::setCfgLine(QString filename, QByteArray key, QByteArray conten
 
 void AttractMode::checkReqs()
 {
-  if(config->emulator.isEmpty()) {
+  if(config->frontendExtra.isEmpty()) {
     printf("Frontend 'attractmode' requires emulator set with '-e'. Check '--help' for more information.\n");
     exit(0);
   }
-  if(config->emulator.indexOf(".cfg") == -1) {
-    config->emulator.append(".cfg");
+  if(config->frontendExtra.indexOf(".cfg") == -1) {
+    config->frontendExtra.append(".cfg");
   }
   
   printf("Looking for emulator cfg file:\n");
 
-  if(checkEmulatorFile(config->emulator)) {
+  if(checkEmulatorFile(config->frontendExtra)) {
     return;
   }
 
-  if(checkEmulatorFile(QDir::homePath() + "/.attract/emulators/" + config->emulator)) {
+  if(checkEmulatorFile(QDir::homePath() + "/.attract/emulators/" + config->frontendExtra)) {
     return;
   }
 
-  if(checkEmulatorFile("/opt/retropie/configs/all/attractmode/emulators/" + config->emulator)) {
+  if(checkEmulatorFile("/opt/retropie/configs/all/attractmode/emulators/" + config->frontendExtra)) {
     return;
   }
 
@@ -266,7 +266,7 @@ bool AttractMode::checkEmulatorFile(QString fileName)
   printf("Trying '%s'... ", info.absoluteFilePath().toStdString().c_str());
 
   if(info.exists() && info.isFile()) {
-    config->emulator = info.absoluteFilePath();
+    config->frontendExtra = info.absoluteFilePath();
     printf("\033[1;32mFound!\033[0m\n\n");
     return true;
   } else {
@@ -282,7 +282,7 @@ bool AttractMode::canSkip()
 
 QString AttractMode::getGameListFileName()
 {
-  QFileInfo info(config->emulator);
+  QFileInfo info(config->frontendExtra);
   return QString(info.completeBaseName() + ".txt");
 }
 
@@ -330,7 +330,7 @@ QString AttractMode::getVideosFolder()
 
 QString AttractMode::getMediaTypeFolder(QString type)
 {
-  QFile emulatorFile(config->emulator);
+  QFile emulatorFile(config->frontendExtra);
   QString mediaTypeFolder = config->mediaFolder + "/" + type;
   
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
