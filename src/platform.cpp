@@ -370,7 +370,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "gbc") {
     formats.append("*.gbc");
   } else if(platform == "gc") {
-    formats.append("*.iso *.cso *.gcz");
+    formats.append("*.iso *.cso *.gcz *.gcm");
   } else if(platform == "genesis") {
     formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "intellivision") {
