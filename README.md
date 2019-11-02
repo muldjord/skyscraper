@@ -142,6 +142,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
+#### Version 3.3.2 (In progress, unreleased)
+* Added '.gcm' file extension to Gamecube platform
+
 #### Version 3.3.1 (17th October 2019)
 * Added new '--cache edit:new=<TYPE>' option for efficient batch adding of a resource of a certain type
 * Improved ctrl+c handling
