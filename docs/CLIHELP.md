@@ -103,15 +103,22 @@ Skyscraper -p snes -f pegasus
 Skyscraper -p snes -f attractmode -e snes
 ```
 
-#### -e &lt;EMULATOR&gt;
-NOTE! This option is *only* applicable when using the `-f attractmode` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform. Consider setting this in [`config.ini`](CONFIGINI.md#emulator) instead.
+#### -e &lt;STRING&gt;
+NOTE! This option is applicable *only* when using the `-f attractmode` or the `-f pegasus` option.
+
+When using `-f attractmode` it is required to set the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform. Consider setting this in [`config.ini`](CONFIGINI.md#emulator) instead.
+
+It can *optionally* be used with `-f pegasus` to set the launch command used by the Pegasus game list. On RetroPie this defaults to the RetroPie launch command which works with RetroPie. Consider setting this in [`config.ini`](CONFIGINI.md#launch) instead.
+
 ###### Example(s)
 ```
 Skyscraper -p snes -f attractmode -e snes
+Skyscraper -p snes -f pegasus -e "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ snes"
 ```
 
 #### -m &lt;0-100&gt;
 Some scraping modules are based on a filename or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground. Consider setting this in [`config.ini`](CONFIGINI.md#minmatch65) instead.
+
 ###### Example(s)
 ```
 Skyscraper -p snes -s thegamesdb -m 50
