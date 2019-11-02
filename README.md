@@ -143,7 +143,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
 #### Version 3.3.2 (In progress, unreleased)
-* Added '.gcm' file extension to Gamecube platform
+* Added '.gcm' file extension to Gamecube platform (Thank you to 'mrsilver76' for suggesting this)
 
 #### Version 3.3.1 (17th October 2019)
 * Added new '--cache edit:new=<TYPE>' option for efficient batch adding of a resource of a certain type
