@@ -144,6 +144,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.3.2 (In progress, unreleased)
 * Added '.gcm' file extension to Gamecube platform (Thank you to 'mrsilver76' for suggesting this)
+* The '-e' option can now be used to optionally set the Pegasus launch command (Thank you to Sixdd6' for suggesting this)
 
 #### Version 3.3.1 (17th October 2019)
 * Added new '--cache edit:new=<TYPE>' option for efficient batch adding of a resource of a certain type
