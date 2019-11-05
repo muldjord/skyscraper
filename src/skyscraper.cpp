@@ -469,7 +469,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     }
   }
   
-  printf("\033[1;32m%d\033[0m/\033[1;33m%d\033[0m/\033[1;34m%d\033[0m\n", found, notFound, currentFile);
+  printf("\033[1;34m#%d/%d\033[0m, (\033[1;32m%d\033[0m/\033[1;33m%d\033[0m)\n", currentFile, totalFiles, found, notFound);
   int elapsed = timer.elapsed();
   int estTime = (elapsed / currentFile * totalFiles) - elapsed;
   if(estTime < 0)
