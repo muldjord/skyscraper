@@ -386,6 +386,8 @@ QString MobyGames::getPlatformId(const QString platform)
 {
   if(platform == "3do") {
     return "35";
+  } else if(platform == "3ds") {
+    return "101";
   } else if(platform == "amiga") {
     return "19";
   } else if(platform == "aga") {

@@ -592,6 +592,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
 {
   if(platform == "3do") {
     return "29";
+  } else if(platform == "3ds") {
+    return "17";
   } else if(platform == "amiga") {
     return "64";
   } else if(platform == "aga") {
