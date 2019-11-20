@@ -1,0 +1,17 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: sudo apt-get install build-essential qt5-default
+      run: sudo apt-get install build-essential qt5-default
+    - name: qmake
+      run: qmake
+    - name: make
+      run: make
