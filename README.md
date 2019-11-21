@@ -142,8 +142,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
-#### Version 3.3.3 (In progress, unreleased)
+#### Version 3.3.3 (21st November 2019)
 * Added support for the Nintendo 3DS platform as '3ds' (Thank you to 'barolo' for suggesting this)
+* Fixed system id for 'coleco' platform when using the 'screenscraper' module causing roms not to be recognized (Thank you to 'DMahlon' for reporting this)
 
 #### Version 3.3.2 (4th November 2019)
 * Added '.gcm' file extension to Gamecube platform (Thank you to 'mrsilver76' for suggesting this)
