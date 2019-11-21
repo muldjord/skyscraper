@@ -635,7 +635,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "coco") {
     return "144";
   } else if(platform == "coleco") {
-    return "75";
+    return "48";
   } else if(platform == "daphne") {
     return "49";
   } else if(platform == "dragon32") {
