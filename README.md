@@ -145,6 +145,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Update 'attractmode' to support their latest changes (Thanks to 'barolo' for letting me know)
 
+#### Version 3.3.4 (In progress, unreleased)
+* Added global support for 'rar' extension, but DON'T expect good results with checksum based sources (Suggested by 'teeedubb')
+
 #### Version 3.3.3 (21st November 2019)
 * Added support for the Nintendo 3DS platform as '3ds' (Thank you to 'barolo' for suggesting this)
 * Fixed system id for 'coleco' platform when using the 'screenscraper' module causing roms not to be recognized (Thank you to 'DMahlon' for reporting this)
