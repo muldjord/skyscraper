@@ -307,7 +307,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     return extensions;
   }
 
-  QString formats = "*.zip *.7z *.ml ";
+  QString formats = "*.zip *.7z *.ml *.rar";
   if(!addExtensions.isEmpty() && addExtensions.contains("*.")) {
     formats.append(addExtensions);
   }
@@ -461,7 +461,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "x68000") {
     formats.append("*.dim *.m3u");
   } else if(platform == "x1") {
-    formats.append("*.dx1 *.zip *.2d *.2hd *.tfd *.d88 *.88d *.hdm *.xdf *.dup *.cmd");
+    formats.append("*.dx1 *.2d *.2hd *.tfd *.d88 *.88d *.hdm *.xdf *.dup *.cmd");
   } else if(platform == "zmachine") {
     formats.append("*.dat *.z1 *.z2 *.z3 *.z4 *.z5 *.z6 *.z7 *.z8");
   } else if(platform == "zx81") {
