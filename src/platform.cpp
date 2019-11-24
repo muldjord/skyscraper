@@ -307,7 +307,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     return extensions;
   }
 
-  QString formats = "*.zip *.7z *.ml *.rar";
+  QString formats = "*.zip *.7z *.ml";
   if(!addExtensions.isEmpty() && addExtensions.contains("*.")) {
     formats.append(addExtensions);
   }

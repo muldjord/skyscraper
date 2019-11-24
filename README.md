@@ -146,7 +146,6 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Update 'attractmode' to support their latest changes (Thanks to 'barolo' for letting me know)
 
 #### Version 3.3.4 (In progress, unreleased)
-* Added global support for 'rar' extension, but DON'T expect good results with checksum based sources (Suggested by 'teeedubb')
 
 #### Version 3.3.3 (21st November 2019)
 * Added support for the Nintendo 3DS platform as '3ds' (Thank you to 'barolo' for suggesting this)
