@@ -1282,7 +1282,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     // minMatch set to 0 further up
   }
 
-  if(!config.userCreds.isEmpty() && config.userCreds.indexOf(":") != -1) {
+  if(!config.userCreds.isEmpty() && config.userCreds.contains(":")) {
     QList<QString> userCreds = config.userCreds.split(":");
     if(userCreds.length() == 2) {
       config.user = userCreds.at(0);
@@ -1382,8 +1382,12 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
     config.threads = 1;
     config.romLimit = 35;
+    if(config.userCreds.isEmpty()) {
+      printf("\033[1;31mThe IGDB module requires a free personal API key to work. Get one at https://api.igdb.com and set it either with '-u <KEY>' or by adding the following to '~/.skyscraper/config.ini':\n[igdb]\nuserCreds=\"<KEY>\"\n\nSkyscraper can't continue, now exiting...\n");
+      exit(1);
+    }
     printf("Fetching key status, just a sec...\n");
-    manager.request("https://api-v3.igdb.com/api_status", "", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+    manager.request("https://api-v3.igdb.com/api_status", "", "user-key", config.userCreds);
     q.exec();
     QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).array().first().toObject();
     if(jsonObj.isEmpty()) {

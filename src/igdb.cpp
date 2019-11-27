@@ -51,12 +51,12 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
   // Request list of games but don't allow re-releases ("game.version_parent = null")
-  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", config->userCreds);
   q.exec();
   data = manager.getData();
 
   if(data.contains("Limits exceeded")) {
-    printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
+    printf("\033[1;31mYour monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
   }
 
@@ -66,7 +66,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   }
 
   if(jsonDoc.array().first().toObject()["status"].toInt() == 403) {
-    printf("\033[1;31mThe global monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
+    printf("\033[1;31mYour monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
   }
 
