@@ -146,6 +146,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Update 'attractmode' to support their latest changes (Thanks to 'barolo' for letting me know)
 
 #### Version 3.3.4 (In progress, unreleased)
+* 'igdb' module global key has been removed from Skyscraper. They have moved to free personal keys instead (this is good news!). To get one, register at https://api.igdb.com (Thank you to 'stlbluesfan' for letting me know)
 
 #### Version 3.3.3 (21st November 2019)
 * Added support for the Nintendo 3DS platform as '3ds' (Thank you to 'barolo' for suggesting this)
