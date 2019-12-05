@@ -202,8 +202,12 @@ void AttractMode::checkReqs()
   emuInfo.setFile(config->frontendExtra);
   descDir.setPath(QDir::homePath() + "/.attract/scraper/" +
 		  emuInfo.completeBaseName() + "/overview");
-  if(!descDir.exists() && !descDir.mkpath(descDir.absolutePath())) {
-    saveDescFile = false;
+  if(descDir.exists()) {
+    saveDescFile = true;
+  } else {
+    if(descDir.mkpath(descDir.absolutePath())) {
+      saveDescFile = true;
+    }
   }
 
   printf("Looking for emulator cfg file:\n");

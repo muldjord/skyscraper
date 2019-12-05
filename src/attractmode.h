@@ -52,7 +52,7 @@ public:
   QString getVideosFolder() override;
 
 private:
-  bool saveDescFile = true;
+  bool saveDescFile = false;
   QFileInfo emuInfo;
   QDir descDir;
   
