@@ -488,7 +488,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
   qint64 spaceLimit = 209715200;
   if(config.spaceCheck) {
     if(config.scraper == "cache" && !config.pretend &&
-       QStorageInfo(QDir(config.mediaFolder)).bytesFree() < spaceLimit) {
+       QStorageInfo(QDir(config.screenshotsFolder)).bytesFree() < spaceLimit) {
       printf("\033[1;31mYou have very little disk space left on the Skyscraper media export drive, please free up some space and try again. Now aborting...\033[0m\n\n");
       printf("Note! You can disable this check by setting 'spaceCheck=\"false\"' in the '[main]' section of config.ini.\n\n");
       // By clearing the queue here we basically tell Skyscraper to stop and quit nicely
