@@ -147,8 +147,6 @@ void AttractMode::assembleList(QString &finalOutput, QList<GameEntry> &gameEntri
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
   int dotMod = gameEntries.length() * 0.1 + 1;
-  if(dotMod == 0)
-    dotMod = 1;
 
   QFileInfo emuInfo(config->frontendExtra);
   bool saveDescFile = true;
