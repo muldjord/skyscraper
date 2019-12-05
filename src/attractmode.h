@@ -28,6 +28,8 @@
 
 #include "abstractfrontend.h"
 
+#include <QDir>
+
 class AttractMode : public AbstractFrontend
 {
   Q_OBJECT
@@ -50,9 +52,12 @@ public:
   QString getVideosFolder() override;
 
 private:
+  bool saveDescFile = true;
+  QFileInfo emuInfo;
+  QDir descDir;
+  
   QString getMediaTypeFolder(QString type);
   bool checkEmulatorFile(QString fileName);
-  void setCfgLine(QString filename, QByteArray key, QByteArray content);
 
 };
 

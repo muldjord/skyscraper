@@ -27,7 +27,6 @@
 #include "strtools.h"
 #include "nametools.h"
 
-#include <QDir>
 #include <QDate>
 
 AttractMode::AttractMode()
@@ -148,12 +147,6 @@ void AttractMode::assembleList(QString &finalOutput, QList<GameEntry> &gameEntri
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
   int dotMod = gameEntries.length() * 0.1 + 1;
 
-  QFileInfo emuInfo(config->frontendExtra);
-  bool saveDescFile = true;
-  QDir descDir(config->gameListFolder + "/" + emuInfo.completeBaseName());
-  if(!descDir.exists() && !descDir.mkpath(descDir.absolutePath())) {
-    saveDescFile = false;
-  }
   finalOutput.append("#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n");
   for(auto &entry: gameEntries) {
     if(dots % dotMod == 0) {
@@ -186,46 +179,11 @@ void AttractMode::assembleList(QString &finalOutput, QList<GameEntry> &gameEntri
 		       entry.aMExtra + ";" +
 		       entry.aMButtons + ";\n");
     if(!entry.description.isEmpty() && saveDescFile) {
-      QByteArray desc = QByteArray("overview " + entry.description.toUtf8()).replace("\n", " ").simplified().left(config->maxLength);
-      setCfgLine(descDir.absolutePath() + "/" + entry.baseName + ".cfg", "overview", desc);
-    }
-  }
-}
-
-void AttractMode::setCfgLine(QString filename, QByteArray key, QByteArray content)
-{
-  QFile cfgFile(filename);
-  if(cfgFile.exists()) {
-    QList<QByteArray> lines;
-    if(cfgFile.open(QIODevice::ReadOnly)) {
-      while(!cfgFile.atEnd()) {
-	lines.append(cfgFile.readLine());
+      QFile descFile(descDir.absolutePath() + "/" + entry.baseName + ".txt");
+      if(descFile.open(QIODevice::WriteOnly)) {
+	descFile.write(entry.description.trimmed().toUtf8().left(config->maxLength));
+	descFile.close();
       }
-      cfgFile.close();
-    }
-    bool descFound = false;
-    for(int a = 0; a < lines.length(); ++a) {
-      if(lines.at(a).left(key.length()) == key) {
-	lines.removeAt(a);
-	lines.insert(a, content);
-	descFound = true;
-	break;
-      }
-    }
-    if(!descFound) {
-      lines.append(content);
-    }
-    if(cfgFile.open(QIODevice::WriteOnly)) {
-      for(int a = 0; a < lines.length(); ++a) {
-	QByteArray line = lines.at(a) + (lines.at(a).right(1) == "\n"?"":"\n");
-	cfgFile.write(line);
-      }
-      cfgFile.close();
-    }
-  } else {
-    if(cfgFile.open(QIODevice::WriteOnly)) {
-      cfgFile.write(content);
-      cfgFile.close();
     }
   }
 }
@@ -236,21 +194,26 @@ void AttractMode::checkReqs()
     printf("Frontend 'attractmode' requires emulator set with '-e'. Check '--help' for more information.\n");
     exit(0);
   }
-  if(config->frontendExtra.indexOf(".cfg") == -1) {
+  if(!config->frontendExtra.contains(".cfg")) {
     config->frontendExtra.append(".cfg");
   }
   
+  
+  emuInfo.setFile(config->frontendExtra);
+  descDir.setPath(QDir::homePath() + "/.attract/scraper/" +
+		  emuInfo.completeBaseName() + "/overview");
+  if(!descDir.exists() && !descDir.mkpath(descDir.absolutePath())) {
+    saveDescFile = false;
+  }
+
   printf("Looking for emulator cfg file:\n");
 
   if(checkEmulatorFile(config->frontendExtra)) {
     return;
   }
 
+  // For RetroPie this is linked directly to /opt/retropie/configs/all/attractmode/emulators/
   if(checkEmulatorFile(QDir::homePath() + "/.attract/emulators/" + config->frontendExtra)) {
-    return;
-  }
-
-  if(checkEmulatorFile("/opt/retropie/configs/all/attractmode/emulators/" + config->frontendExtra)) {
     return;
   }
 
@@ -291,11 +254,9 @@ QString AttractMode::getInputFolder()
 
 QString AttractMode::getGameListFolder()
 {
+  // For RetroPie this is linked directly to /opt/retropie/configs/all/attractmode/romlists/
   if(QFileInfo::exists(QDir::homePath() + "/.attract/romlists")) {
     return QString(QDir::homePath() + "/.attract/romlists");
-  }
-  if(QFileInfo::exists("/opt/retropie/configs/all/attractmode/romlists")) {
-    return QString("/opt/retropie/configs/all/attractmode/romlists");
   }
   
   return config->inputFolder;
