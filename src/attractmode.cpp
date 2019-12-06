@@ -299,15 +299,16 @@ QString AttractMode::getMediaTypeFolder(QString type, bool videos)
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
       QByteArray line = emulatorFile.readLine();
+      line.replace("~", QDir::homePath().toUtf8());
       QList<QByteArray> snippets = line.simplified().split(' ');
       if(snippets.length() >= 3) {
 	if(snippets.takeFirst() == "artwork") {
 	  if(snippets.takeFirst() == type) {
+	    line.replace("\"", "");
 	    line.remove(0, 7);
 	    line = line.trimmed(); // Line now begins with the type
 	    line.remove(0, type.length());
 	    line = line.trimmed(); // This leaves us just with the path(s)
-	    printf("LINE IS: '%s'\n", line.data());
 	    QList<QByteArray> paths = line.split(';');
 	    if(paths.count() > 1 && videos) {
 	      for(const auto &path: paths) {
