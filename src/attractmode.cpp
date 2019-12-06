@@ -288,10 +288,10 @@ QString AttractMode::getMarqueesFolder()
 
 QString AttractMode::getVideosFolder()
 {
-  return getMediaTypeFolder("snap");
+  return getMediaTypeFolder("snap", true);
 }
 
-QString AttractMode::getMediaTypeFolder(QString type)
+QString AttractMode::getMediaTypeFolder(QString type, bool videos)
 {
   QFile emulatorFile(config->frontendExtra);
   QString mediaTypeFolder = config->mediaFolder + "/" + type;
@@ -300,7 +300,17 @@ QString AttractMode::getMediaTypeFolder(QString type)
     while(!emulatorFile.atEnd()) {
       QList<QByteArray> snippets = emulatorFile.readLine().simplified().split(' ');
       if(snippets.length() == 3 && snippets.at(0) == "artwork" && snippets.at(1) == type) {
-	mediaTypeFolder = snippets.at(2);
+	if(snippets.at(2).contains(";") && videos) {
+	  QList<QByteArray> snapFolders = snippets.at(2).split(';');
+	  mediaTypeFolder = snapFolders.first();
+	  for(const auto &snapFolder: snapFolders) {
+	    if(snapFolder.contains("video")) {
+	      mediaTypeFolder = snapFolder;
+	    }
+	  }
+	} else {
+	  mediaTypeFolder = snippets.at(2);
+	}
 	break;
       }
     }
