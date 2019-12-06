@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
   QCommandLineOption skippedOption("skipped", "Include skipped entries when writing final gamelist.");
   QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
   QCommandLineOption relativeOption("relative", "Forces all gamelist paths to be relative to rom location.");
-  QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext)", "EXTENSION(S)", "");
+  QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext')", "EXTENSION(S)", "");
   QCommandLineOption cacheOption("cache", "This option is the master option for all options related to the resource cache. It must be followed by 'COMMAND[:OPTIONS]'.\nType '--cache help' for a full description of all functions.", "COMMAND[:OPTIONS]", "");
   QCommandLineOption refreshOption("refresh", "Same as '--cache refresh'.");
   QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the resource cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
