@@ -300,12 +300,15 @@ QString AttractMode::getMediaTypeFolder(QString type, bool videos)
     while(!emulatorFile.atEnd()) {
       QList<QByteArray> snippets = emulatorFile.readLine().simplified().split(' ');
       if(snippets.length() == 3 && snippets.at(0) == "artwork" && snippets.at(1) == type) {
-	if(snippets.at(2).contains(";") && videos) {
+	if(type == "snaps" && snippets.at(2).contains(";")) {
 	  QList<QByteArray> snapFolders = snippets.at(2).split(';');
 	  mediaTypeFolder = snapFolders.first();
-	  for(const auto &snapFolder: snapFolders) {
-	    if(snapFolder.contains("video")) {
-	      mediaTypeFolder = snapFolder;
+	  if(videos) {
+	    for(const auto &snapFolder: snapFolders) {
+	      if(snapFolder.contains("video")) {
+		mediaTypeFolder = snapFolder;
+		break;
+	      }
 	    }
 	  }
 	} else {
