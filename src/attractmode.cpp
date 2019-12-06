@@ -298,23 +298,27 @@ QString AttractMode::getMediaTypeFolder(QString type, bool videos)
   
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
-      QList<QByteArray> snippets = emulatorFile.readLine().simplified().split(' ');
-      if(snippets.length() == 3 && snippets.at(0) == "artwork" && snippets.at(1) == type) {
-	if(type == "snap" && snippets.at(2).contains(";")) {
-	  QList<QByteArray> snapFolders = snippets.at(2).split(';');
-	  mediaTypeFolder = snapFolders.first();
-	  if(videos) {
-	    for(const auto &snapFolder: snapFolders) {
-	      if(snapFolder.contains("video")) {
-		mediaTypeFolder = snapFolder;
-		break;
+      QByteArray line = emulatorFile.readLine();
+      QList<QByteArray> snippets = line.simplified().split(' ');
+      if(snippets.length() >= 3) {
+	if(snippets.takeFirst() == "artwork") {
+	  if(snippets.takeFirst() == type) {
+	    line.replace("artwork", "");
+	    line.replace(type, "");
+	    line = line.trimmed(); // This leaves us just with the path(s)
+	    QList<QByteArray> paths = line.split(';');
+	    if(paths.count() > 1 && videos) {
+	      for(const auto &path: paths) {
+		if(path.contains("video")) {
+		  mediaTypeFolder = path;
+		  break;
+		}
 	      }
+	    } else {
+	      mediaTypeFolder = paths.first();
 	    }
 	  }
-	} else {
-	  mediaTypeFolder = snippets.at(2);
 	}
-	break;
       }
     }
     emulatorFile.close();
