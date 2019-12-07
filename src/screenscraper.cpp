@@ -311,10 +311,10 @@ void ScreenScraper::getCover(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
 	game.coverData = image;
       } else {
-	if(manager.getData().size() < 1000)
+	if(manager.getData().size() < 1024)
 	  moveOn = false;
       }
       if(moveOn)
@@ -333,10 +333,10 @@ void ScreenScraper::getScreenshot(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
 	game.screenshotData = image;
       } else {
-	if(manager.getData().size() < 1000)
+	if(manager.getData().size() < 1024)
 	  moveOn = false;
       }
       if(moveOn)
@@ -355,10 +355,10 @@ void ScreenScraper::getWheel(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
 	game.wheelData = image;
       } else {
-	if(manager.getData().size() < 1000)
+	if(manager.getData().size() < 1024)
 	  moveOn = false;
       }
       if(moveOn)
@@ -377,10 +377,10 @@ void ScreenScraper::getMarquee(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
 	game.marqueeData = image;
       } else {
-	if(manager.getData().size() < 1000)
+	if(manager.getData().size() < 1024)
 	  moveOn = false;
       }
       if(moveOn)
