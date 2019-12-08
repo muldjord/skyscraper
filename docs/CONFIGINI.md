@@ -277,7 +277,7 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 
 *Allowed in section(s): `[<PLATFORM>]`*
 
-#### userCreds="<CREDENTIALS or KEY>"
+#### userCreds="&lt;CREDENTIALS or KEY&gt;"
 Some scraping modules require a `key` or `user:password` to work. You can create a `[<SCRAPING MODULE>]` section and add a `userCreds="user:pass"` or `userCreds="key"` line beneath it. Doing this will always use these credentials when scraping from the module in question. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
 
 ###### Example(s)
