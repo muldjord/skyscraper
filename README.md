@@ -144,14 +144,12 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
-#### Version 3.3.4a (8th December 2019)
-* Removed rom limit on 'igdb' module
-
 #### Version 3.3.4 (8th December 2019)
 * 'igdb' module global key has been removed from Skyscraper. They have moved to free personal keys instead (this is good news!). To get one, register at https://api.igdb.com (Thank you to 'stlbluesfan' for letting me know)
 * Fixed disk space check so it also works for 'attractmode' frontend
 * Updated 'attractmode' to save overviews in correct location and format (Thanks to 'barolo' for letting me know, thanks to 'teeedubb' and 'barolo' for testing)
 * For 'attractmode' added semicolon detection for 'snaps'/'video' parsing for determining resource folders (Thanks to 'barolo' for pointing this out)
+* Removed rom limit on 'igdb' module
 
 #### Version 3.3.3 (21st November 2019)
 * Added support for the Nintendo 3DS platform as '3ds' (Thank you to 'barolo' for suggesting this)
