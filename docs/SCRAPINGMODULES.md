@@ -116,7 +116,7 @@ Please use this module sparingly. And only ever use it to scrape those last few 
   * `Skyscraper -p fba -s igdb <SINGLE FILE TO SCRAPE>`
   * `Skyscraper -p fba -s igdb --startat <FILE TO START AT> --endat <FILE TO END AT>`
 
-IGDB is a relatively new database on the market. But absolutely not a bad one at that. It has a couple caveats though, as the database doesn't distinguish between platform versions of the same game when it comes to any artwork resources (they are working to implement at some point). This makes it less usable in a retro game scraping context as many of the games differ drastically visually between the old platforms. For that reason alone, this module will only provide textual data for your roms for the time being.
+IGDB is a relatively new database on the market. But absolutely not a bad one at that. It has a couple caveats though, as the database doesn't distinguish between platform versions of the same game when it comes to any artwork resources (they are working to implement this at some point). This makes it less usable in a retro game scraping context as many of the games differ drastically visually between the old platforms. For that reason alone, this module will only provide textual data for your roms for the time being.
 
 The module requires a free private API key to work. Get one [here](https://api.igdb.com).
 
