@@ -277,8 +277,19 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 
 *Allowed in section(s): `[<PLATFORM>]`*
 
-#### userCreds="user:password" or userCreds="key"
-Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
+#### userCreds="<CREDENTIALS or KEY>"
+Some scraping modules require a `key` or `user:password` to work. You can create a `[<SCRAPING MODULE>]` section and add a `userCreds="user:pass"` or `userCreds="key"` line beneath it. Doing this will always use these credentials when scraping from the module in question. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
+
+###### Example(s)
+```
+[screenscraper]
+userCreds="user:password"
+```
+or
+```
+[igdb]
+userCreds="key"
+```
 
 *Allowed in section(s): `[<SCRAPING MODULE>]`*
 
