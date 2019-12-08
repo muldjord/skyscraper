@@ -33,7 +33,7 @@ maxLength="200"
 artworkXml="artwork-amiga.xml"
 
 [screenscraper]
-userCreds="muldjord:666fff"
+userCreds="user:passwd"
 maxLength="10000"
 ```
 #### inputFolder="/home/pi/RetroPie/roms"
@@ -277,7 +277,7 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 
 *Allowed in section(s): `[<PLATFORM>]`*
 
-#### userCreds="user:password"
+#### userCreds="user:password" or userCreds="key"
 Some scraping modules require a user key or a user id + password to work. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
 
 *Allowed in section(s): `[<SCRAPING MODULE>]`*

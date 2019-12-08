@@ -3,6 +3,8 @@ Skyscraper supports several online and local sources when scraping data for your
 
 Choosing a scraping module is as simply as setting the `-s <MODULE>` option when running Skyscraper on the command line. It also requires a platform to be set with `-p <PLATFORM>`. If you leave out the `-s` option Skyscraper goes into *game list generation* mode and combines your cached data into a game list for the chosen platform and frontend. Read more about the resource cache [here](CACHE.md).
 
+For scraping modules that support or require user credentials you have the option of either setting it on commandline with `-u <USER:PASSWD>` or `-u <KEY>` or better yet, by adding it permanently to the Skyscraper configuration at `~/.skyscraper/config.ini` as described in the first few paragraphs [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#configini-options). Be sure to read about the `userCreds` option [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#usercredsuserpassword)
+
 Below follows a description of all scraping modules.
 
 #### ScreenScraper
@@ -10,7 +12,7 @@ Below follows a description of all scraping modules.
 * Type: *Online*
 * Website: *[www.screenscraper.fr](https://www.screenscraper.fr)*
 * Type: *Rom checksum based, Exact file name based*
-* User credential support: *Yes (`userid:passwd`), but not required*
+* User credential support: *Yes, and strongly recommended, but not required*
 * API request limit: *20k per day for registered users*
 * Thread limit: *1 or more depending on user credentials*
 * Platform support: *[Check list under "Systémes"](https://www.screenscraper.fr)*
