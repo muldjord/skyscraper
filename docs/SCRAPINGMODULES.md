@@ -107,9 +107,8 @@ Please use this module sparingly. And only ever use it to scrape those last few 
 * Type: *Online*
 * Website: *[www.igdb.com](https://www.igdb.com)*
 * Type: *File name search based*
-* User credential support: *None required*
-* API request limit: *50000 requests per month shared among ALL Skyscraper users*
-* Rom limit per run: *35*
+* User credential support: *Free private API key required*
+* API request limit: *50000 requests per month per private key*
 * Thread limit: *1*
 * Platform support: *[List](https://www.igdb.com/platforms)*
 * Media support: *None*
@@ -117,11 +116,9 @@ Please use this module sparingly. And only ever use it to scrape those last few 
   * `Skyscraper -p fba -s igdb <SINGLE FILE TO SCRAPE>`
   * `Skyscraper -p fba -s igdb --startat <FILE TO START AT> --endat <FILE TO END AT>`
 
-IGDB is a relatively new database on the market. But absolutely not a bad one at that. It has a couple caveats though, as the database doesn't distinguish between platform versions of the same game when it comes to any artwork resources (they are working to implement this in the API during 2019). This makes it less usable in a retro game scraping context as many of the games differ drastically between the old platforms. For that reason alone, this module will only provide textual data for your roms for the time being.
+IGDB is a relatively new database on the market. But absolutely not a bad one at that. It has a couple caveats though, as the database doesn't distinguish between platform versions of the same game when it comes to any artwork resources (they are working to implement at some point). This makes it less usable in a retro game scraping context as many of the games differ drastically visually between the old platforms. For that reason alone, this module will only provide textual data for your roms for the time being.
 
-Please take note of the request limit per month. This is a global request limit for the entire Skyscraper user base. When these run out, no one can use it with Skyscraper until the next month when the requests are reset. For that reason alone, it is restricted to a limited number of rom scrapings per run.
-
-Please use this module sparingly. And only ever use it to scrape those last few roms you can't get any textual data for using any of the other sources.
+The module requires a free private API key to work. Get one [here](https://api.igdb.com).
 
 #### World of Spectrum
 * Shortname: *`worldofspectrum`*
