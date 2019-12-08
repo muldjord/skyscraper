@@ -3,7 +3,7 @@ Skyscraper supports several online and local sources when scraping data for your
 
 Choosing a scraping module is as simply as setting the `-s <MODULE>` option when running Skyscraper on the command line. It also requires a platform to be set with `-p <PLATFORM>`. If you leave out the `-s` option Skyscraper goes into *game list generation* mode and combines your cached data into a game list for the chosen platform and frontend. Read more about the resource cache [here](CACHE.md).
 
-For scraping modules that support or require user credentials you have the option of either setting it on commandline with `-u <USER:PASSWD>` or `-u <KEY>` or better yet, by adding it permanently to the Skyscraper configuration at `~/.skyscraper/config.ini` as described in the first few paragraphs [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#configini-options). Be sure to read about the `userCreds` option [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#usercredsuserpassword-or-usercredskey)
+For scraping modules that support or require user credentials you have the option of either setting it on commandline with `-u <USER:PASSWD>` or `-u <KEY>` or better yet, by adding it permanently to the Skyscraper configuration at `~/.skyscraper/config.ini` as described in the first few paragraphs [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#configini-options). Be sure to read about the `userCreds` option [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#usercredscredentials-or-key)
 
 Below follows a description of all scraping modules.
 
