@@ -1381,7 +1381,6 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
     printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
     config.threads = 1;
-    config.romLimit = 35;
     if(config.userCreds.isEmpty()) {
       printf("\033[1;31mThe IGDB module requires a free personal API key to work. Get one at https://api.igdb.com and set it either with '-u <KEY>' or by adding the following to '~/.skyscraper/config.ini':\n[igdb]\nuserCreds=\"<KEY>\"\n\nSkyscraper can't continue, now exiting...\n");
       exit(1);
