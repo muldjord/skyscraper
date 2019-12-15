@@ -167,7 +167,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   }
   
   game.url = gameUrl;
-  game.platform = jsonObj["systemenom"].toString();
+  game.platform = jsonObj["systeme"].toObject()["text"].toString();
   
   // Only check if platform is empty, it's always correct when using ScreenScraper
   if(!game.platform.isEmpty())
