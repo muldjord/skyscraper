@@ -1206,7 +1206,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.minMatch = 0;
   }
 
-  skippedFileString = "skipped-" + config.scraper + ".txt";
+  skippedFileString = "skipped-" + config.platform + "-" + config.scraper + ".txt";
 
   // Grab all requested files from cli, if any
   QList<QString> requestedFiles = parser.positionalArguments();
