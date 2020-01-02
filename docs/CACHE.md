@@ -18,9 +18,6 @@ If you wish to just refresh the data for a single rom simply scrape it with `-p 
 
 When you've updated information in the resource cache, always remember to re-generate the game list by simply running `Skyscraper -p <PLATFORM>` when you're done. The updated resources won't be visible in your frontend until you do.
 
-#### User-defined databases
-Normally Skyscraper uses a default resource cache folder for each platform. But a friend might have send you a copy of his folders, and you wish to scrape from his or her data. In this case Skyscraper allows you to force the use of a custom resource cache with the `-d <FOLDER>` command line option. The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
-
 ## The resource cache folder and file structures
 MOST FILES AND FOLDERS INSIDE THE `~/.skyscraper/cache` FOLDER ARE NOT MEANT TO BE MANIPULATED BY HAND!!! It can be done, but don't complain to me about the format of the database. It is NOT meant to be understood by humans. It is meant to be efficient for reading and parsing by Skyscraper itself. Same goes for the media files that reside in the subfolders.
 
