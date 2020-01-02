@@ -30,11 +30,13 @@ Each subfolder in the `~/.skyscraper/cache/` folder is self-contained and can be
 #### Resource cache format
 I do not recommend editing the `db.xml` resource cache files manually. But the format is simple, so you certainly can if you want to.
 
-##### Sha1 primary key
-The database consists of resource entries connected to a sha1 checksum. The sha1 is calculated from the rom data or, in special cases, the filename (in cases where the file data is a script or similar). An entry can look like this:
+##### Resource id
+The database consists of resource entries connected to a unique id. The id is calculated from the rom data or, in special cases, the filename (in cases where the file data is a script or similar). An entry can look like this:
+
+NOTE! Pre-3.3.0 versions of Skyscraper used `sha1` as the name of the unique id key. Later versions use `id`.
 
 ```xml
-<resource sha1="<SHA1 CHECKSUM>" type="<RESOURCE TYPE>" source="<SCRAPING SOURCE>" timestamp="<UNIX TIMESTAMP IN MSECS>">Resource data</resource>
+<resource id="<ID KEY>" type="<RESOURCE TYPE>" source="<SCRAPING SOURCE>" timestamp="<UNIX TIMESTAMP IN MSECS>">Resource data</resource>
 ```
 
 #### Resource types
