@@ -94,8 +94,9 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
       reqRemaining = 0;
       return;
     } else if(headerData.contains("API fermé pour les non membres") ||
-	      headerData.contains("API closed for non-registered members")) {
-      printf("\033[1;31mThe screenscraper service is currently too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to the database to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+	      headerData.contains("API closed for non-registered members") ||
+	      headerData.contains("****T****h****e**** ****m****a****x****i****m****u****m**** ****t****h****r****e****a****d****s**** ****a****l****l****o****w****e****d**** ****t****o**** ****l****e****e****c****h****e****r**** ****u****s****e****r****s**** ****i****s**** ****a****l****r****e****a****d****y**** ****u****s****e****d****")) {
+      printf("\033[1;31mThe screenscraper service is currently closed or too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to the database to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
       if(retries == RETRIESMAX - 1) {
 	reqRemaining = 0;
 	return;
