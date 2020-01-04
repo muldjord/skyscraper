@@ -146,6 +146,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.3.6 (In progress, unreleased)
 * Skipped file now includes platform in the filename (Thanks to 'parker-hemphill' for suggesting this)
+* Now handles the '****' error message from ScreenScraper (Thank you to 'GiulioCentorame' for reporting this)
 
 #### Version 3.3.5 (15th December 2019)
 * Updated 'screenscraper' API to support new system name json format (Thank you to 'Micket' for letting me know)
