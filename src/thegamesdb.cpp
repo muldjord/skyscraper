@@ -34,9 +34,9 @@ TheGamesDb::TheGamesDb(Settings *config) : AbstractScraper(config)
 
   loadMaps();
   
-  baseUrl = "https://api.thegamesdb.net";
+  baseUrl = "https://api.thegamesdb.net/v1";
 
-  searchUrlPre = "https://api.thegamesdb.net/Games/ByGameName?apikey=";
+  searchUrlPre = "https://api.thegamesdb.net/v1/Games/ByGameName?apikey=";
   
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(DESCRIPTION);
@@ -80,9 +80,9 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
     QJsonObject jsonGame = jsonGames.first().toObject();
     
     GameEntry game;
-    // https://api.thegamesdb.net/Games/ByGameID?id=88&apikey=XXX&fields=game_title,players,release_date,developer,publisher,genres,overview,rating,platform
+    // https://api.thegamesdb.net/v1/Games/ByGameID?id=88&apikey=XXX&fields=game_title,players,release_date,developer,publisher,genres,overview,rating,platform
     game.id = QString::number(jsonGame["id"].toInt());
-    game.url = "https://api.thegamesdb.net/Games/ByGameID?id=" + game.id + "&apikey=" + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&fields=game_title,players,release_date,developers,publishers,genres,overview,rating";
+    game.url = "https://api.thegamesdb.net/v1/Games/ByGameID?id=" + game.id + "&apikey=" + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&fields=game_title,players,release_date,developers,publishers,genres,overview,rating";
     game.title = jsonGame["game_title"].toString();
     // Remove anything at the end with a parentheses. 'thegamesdb' has a habit of adding
     // for instance '(1993)' to the name.
@@ -216,7 +216,7 @@ void TheGamesDb::getTags(GameEntry &game)
 
 void TheGamesDb::getCover(GameEntry &game)
 {
-  // https://api.thegamesdb.net/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
+  // https://api.thegamesdb.net/v1/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
   // https://cdn.thegamesdb.net/images/original/boxart/front/[gameid]-1.jpg
   manager.request("https://cdn.thegamesdb.net/images/original/boxart/front/" + game.id + "-1.jpg");
   q.exec();
@@ -228,7 +228,7 @@ void TheGamesDb::getCover(GameEntry &game)
 
 void TheGamesDb::getScreenshot(GameEntry &game)
 {
-  // https://api.thegamesdb.net/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
+  // https://api.thegamesdb.net/v1/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
   // https://cdn.thegamesdb.net/images/original/screenshots/[gameid]-1.jpg
   manager.request("https://cdn.thegamesdb.net/images/original/screenshots/" + game.id + "-1.jpg");
   q.exec();
