@@ -144,9 +144,10 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
-#### Version 3.3.6 (In progress, unreleased)
+#### Version 3.3.6 (5th January 2020)
 * Skipped file now includes platform in the filename (Thanks to 'parker-hemphill' for suggesting this)
 * Now handles the '****' error message from ScreenScraper (Thank you to 'GiulioCentorame' for reporting this)
+* Updated 'thegamesdb' to include the 'v1' prefix (Thank you to 'Clyde' for letting me know)
 
 #### Version 3.3.5 (15th December 2019)
 * Updated 'screenscraper' API to support new system name json format (Thank you to 'Micket' for letting me know)
