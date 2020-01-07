@@ -988,6 +988,60 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.scraper = parser.value("s");
   }
 
+  // Frontend specific configs, overrides main, platform, module and defaults
+  settings.beginGroup(config.frontend);
+  if(settings.contains("artworkXml")) {
+    config.artworkConfig = settings.value("artworkXml").toString();
+  }
+  if(settings.contains("emulator")) {
+    config.frontendExtra = settings.value("emulator").toString();
+  }
+  if(settings.contains("launch")) {
+    config.frontendExtra = settings.value("launch").toString();
+  }
+  if(settings.contains("gamelistFolder")) {
+    config.gameListFolder = settings.value("gamelistFolder").toString();
+    gameListFolderSet = true;
+  }
+  if(settings.contains("mediaFolder")) {
+    config.mediaFolder = settings.value("mediaFolder").toString();
+    mediaFolderSet = true;
+  }
+  if(settings.contains("skipped")) {
+    config.skipped = settings.value("skipped").toBool();
+  }
+  if(settings.contains("brackets")) {
+    config.brackets = settings.value("brackets").toBool();
+  }
+  if(settings.contains("videos")) {
+    config.videos = settings.value("videos").toBool();
+  }
+  if(settings.contains("symlink")) {
+    config.symlink = settings.value("symlink").toBool();
+  }
+  if(settings.contains("startAt")) {
+    config.startAt = settings.value("startAt").toString();
+  }
+  if(settings.contains("endAt")) {
+    config.endAt = settings.value("endAt").toString();
+  }
+  if(settings.contains("unattend")) {
+    config.unattend = settings.value("unattend").toBool();
+  }
+  if(settings.contains("unattendSkip")) {
+    config.unattendSkip = settings.value("unattendSkip").toBool();
+  }
+  if(settings.contains("forceFilename")) {
+    config.forceFilename = settings.value("forceFilename").toBool();
+  }
+  if(settings.contains("verbosity")) {
+    config.verbosity = settings.value("verbosity").toInt();
+  }
+  if(settings.contains("maxLength")) {
+    config.maxLength = settings.value("maxLength").toInt();
+  }
+  settings.endGroup();
+
   // Scraping module specific configs, overrides main, platform and defaults
   settings.beginGroup(config.scraper);
   if(settings.contains("userCreds")) {
