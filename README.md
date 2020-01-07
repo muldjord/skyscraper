@@ -144,6 +144,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
+#### Version 3.3.7 (In progress, unreleased)
+* Added the option to add frontend specific config sections to set artwork xml and other relevant configuration parameters per frontend
+
 #### Version 3.3.6 (5th January 2020)
 * Skipped file now includes platform in the filename (Thanks to 'parker-hemphill' for suggesting this)
 * Now handles the '****' error message from ScreenScraper (Thank you to 'GiulioCentorame' for reporting this)
