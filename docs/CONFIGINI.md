@@ -5,9 +5,17 @@ Please take note that almost all of these options are set at a useful default (a
 
 If you've installed Skyscraper through the RetroPie-Setup the executable is instead located at `/opt/retropie/supplementary/skyscraper/Skyscraper`. In that case I recommend creating a symbolic link to the executable. Do this by running `$ sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper` (without the `$`). This will allow you to just type `Skyscraper` when running it from command line.
 
-Many options can be set on two levels; either `[main]` or `[<PLATFORM>]`. `<PLATFORM>` can be any of the supported platforms (check list with `--help` under the `-p` option), in which case the settings will only be applied while scraping that particular platform. Settings in the `[main]` section will be used while scraping any platform. Setting an option in a `[<PLATFORM>]` section will override any similar option set in `[main]`.
+Options can be set on three levels; either `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]` or `[<MODULE>]`.
 
-For options dedicated to a single scraping module you can create sections for each of them. For instance, you can create a `[screenscraper]` section and add a `userCreds="user:pass"` line. Doing this will always use these credentials when scraping from the `screenscraper` scraping module.
+Settings in the `[main]` section will always be set regardless of selected platform, frontend and module.
+
+`<PLATFORM>` can be any of the supported platforms (check list with `--help` under the `-p` option), in which case the settings will only be applied while scraping that particular platform.
+
+`<FRONTEND>` can be any of the supported frontends (check list with `--help` under the `-f` option), in which case the settings will only be applied while scraping for that particular frontend.
+
+`<MODULE>` can be any of the supported scraping modules (check list with `--help` under the `-s` option), in which case the settings will only be applied while scraping with that particular scraping module.
+
+Each section can have overlapping parameters. In case where a certain option exists in several sections they are prioritized as scraping module first, then frontend, then platform and lastly main.
 
 You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables. Remember to also uncomment the section the option relates to such as `[main]` or `[amiga]`.
 
@@ -30,12 +38,16 @@ inputFolder="/specific/path/just/for/amiga/roms"
 cacheFolder="/specific/path/just/for/amiga/cache"
 minMatch="50"
 maxLength="200"
-artworkXml="artwork-amiga.xml"
+
+[pegasus]
+artworkXml="artwork-pegasus.xml"
+maxLength="10000"
 
 [screenscraper]
 userCreds="user:passwd"
-maxLength="10000"
+
 ```
+
 #### inputFolder="/home/pi/RetroPie/roms"
 Sets the rom input folder. By default Skyscraper will look for roms in the `/home/<USER>/RetroPie/roms/<PLATFORM>` folder. If your roms are located in a non-default location, you can set the input path using this option.
 
@@ -48,7 +60,7 @@ Sets the game list export folder. By default Skyscraper exports the game list to
 
 NOTE! If this is set in the `[main]` section it will automatically add `/<PLATFORM>` to the end of the path. If you want better control consider adding it to a `[<PLATFORM>]` section instead where it will be used as is.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### mediaFolder="/home/pi/RetroPie/roms"
 Sets the artwork / media output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location.
@@ -57,7 +69,7 @@ Read more about the artwork compositing [here](ARTWORK.md).
 
 NOTE! If this is set in the `[main]` section it will automatically add `/<PLATFORM>` to the end of the path. If you want better control consider adding it to a `[<PLAFORM>]` section instead where it will be used as is.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### cacheFolder="/home/pi/.skyscraper/cache"
 Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/<PLATFORM>`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive).
@@ -78,22 +90,22 @@ To read about artwork compositing go [here](ARTWORK.md) instead.
 #### cacheCovers="true"
 Enables/disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
 #### cacheScreenshots="true"
 Enables/disables the caching of the resource type `screenshot` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
 #### cacheWheels="true"
 Enables/disables the caching of the resource type `wheel` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
 #### cacheMarquees="true"
 Enables/disables the caching of the resource type `marquee` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
 #### importFolder="/home/pi/.skyscraper/import"
 Sets a non-default folder when scraping using the `-s import` module. By default this is set to `~/.skyscraper/import` and will also look for a `/<PLATFORM>` inside of the chosen folder.
@@ -123,37 +135,37 @@ Check all supported frontends with '--help'
 #### emulator=""
 NOTE! This option is *only* applicable when also setting the `frontend="attractmode"` option. It sets the *emulator* to be used when generating the `attractmode` game list. On RetroPie the emulator name is mostly the same as the platform.
 
-*Allowed in section(s): `[main]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### launch=""
 NOTE! This option is *only* applicable when also setting the `frontend="pegasus"` option. It sets the *launch command* to be used when generating the `pegasus` game list. This is optional. It defaults to the RetroPie launch options which works on RetroPie.
 
-*Allowed in section(s): `[main]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### videos="false"
 By default Skyscraper doesn't scrape and cache video resources because of the significant disk space required to save them. You can enable videos using this option.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`, `[<SCRAPING MODULE>]`*
 
 #### videoSizeLimit="42"
 If video scraping is enabled you can set the maximum allowed video file size with this variable. The size is in Megabytes. If this size is exceeded the video file won't be saved to the cache.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<MODULE>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<MODULE>]`, `[<SCRAPING MODULE>]`*
 
 #### symlink="false"
 Enabling this option is only relevant while also setting the `videos="true"` option. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### brackets="true"
 Disable this option to remove any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the resource cache.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### maxLength="10000"
 Sets the maximum length of returned game descriptions. This is a convenience option if you feel like game descriptions are too long. By default it is set to 2500.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`, `[<SCRAPING MODULE>]`*
 
 #### minMatch="65"
 Some scraping modules are based on a file name or title based search. This option sets the minimum percentage any returned results need to match with in order for it to be accepted. For instance, the game `Wonderboy in Monsterland` might return the title `Wonder Boy in Monster Land` which is clearly a match. But it's not a 100% match. So it needs to be set relatively high, while still ignoring bad matches. By default it is set to 65 which has been tested to be a good middle-ground.
@@ -173,12 +185,12 @@ This option is *only* relevant when generating a game list (by leaving out the `
 #### unattend="true"
 When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By enabling this option Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### unattendSkip="false"
 When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By enabling this option Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### interactive="false"
 When gathering data from any of the scraping modules many potential entries will be returned. Normally Skyscraper chooses the best entry for you. But should you wish to choose the best entry yourself, you can enable this option. Skyscraper will then list the returned entries and let you choose which one is the best one. It is recommended to use the command line option `--interactive` instead in the (hopefully) rare cases where this mode is necessary.
@@ -190,17 +202,17 @@ Enable this option to force Skyscraper to use the file name (excluding extension
 
 NOTE! If you set `forceFilename="true"` and your filenames contain bracket notes such as `(this)` or `[that]` at the end, these will be combined with whatever bracket notes are at the end of the titles returned from the sources. This can cause some confusion. For instance, if you have the filename `Gran Turismo 2 (USA) (Arcade Mode)` and the cached title is `Gran Turismo 2 (Arcade Mode)`, then the gamelist name will become `Gran Turismo 2 (Arcade Mode)(USA)(Arcade Mode)`. You can disable them altogether with the `brackets="no"` option.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### verbosity="1"
 Sets how verbose Skyscraper should be when running. Default level is 0. The higher the value, the more info Skyscraper will output to the terminal while running.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### skipped="false"
 If a rom has no resources attached to it in the cache, it will be left out when generating a game list file. It will still show up in the frontend (at least it does for EmulationStation) but it won't exist in the game list file. You can safely leave out / disable this option unless you need the empty entries for some reason.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### maxFails="30"
 Not all scraping modules support all platforms. This means that you can potentially start a scraping run with a module and a platform that is incompatible. This will hammer the servers for potentially hundreds of roms but provide 0 results for any of them. To avoid this Skyscraper has a builtin limit for initially allowed failed rom lookups. If this is reached it will quit. Setting this option allows you to set this limit yourself, but not above a maximum of 200. The default limit is 42. Don't change this unless you have a very good reason to do so.
@@ -230,9 +242,9 @@ Completely overrides the internal region priority list inside of Skyscraper. Thi
 #### artworkXml="artwork.xml"
 Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md).
 
-NOTE! It can be *very* useful to set this in any platform section where you want to a specific artwork setup / look. You can then have separate artwork xml files for each of them which will be used when compositing the artwork during game list generation.
+NOTE! It can be *very* useful to set this in any platform section or frontend section where you want a specific artwork setup / look.
 
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### relativePaths="false"
 Currently only relevant when generating an EmulationStation game list (which is the default frontend when the `-f` option is left out). Enabling this forces the rom and any media paths inside the game list to be relative to the rom input folder.
@@ -268,14 +280,14 @@ If you only ever wish to gather data for a subset of your roms from the scraping
 
 NOTE! Please consider using the command line option `--startat <FILENAME>` instead. It makes little sense to set this permanently in your configuration unless you *always* want it to only ever scrape from a certain file and onward. But you can if you absolutely want to.
 
-*Allowed in section(s): `[<PLATFORM>]`*
+*Allowed in section(s): `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### endAt="filename"
 If you only ever wish to gather data for a subset of your roms from the scraping modules you can use this option to set the rom to end at. It will then scrape alphabetically until it reaches this rom, then stop.
 
 NOTE! Please consider using the command line option `--endat <FILENAME>` instead. It makes little sense to set this permanently in your configuration unless you *always* want it to only ever scrape up until it reaches a certain file. But you can if you absolutely want to.
 
-*Allowed in section(s): `[<PLATFORM>]`*
+*Allowed in section(s): `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### userCreds="&lt;CREDENTIALS or KEY&gt;"
 Some scraping modules require a `key` or `user:password` to work. You can create a `[<SCRAPING MODULE>]` section and add a `userCreds="user:pass"` or `userCreds="key"` line beneath it. Doing this will always use these credentials when scraping from the module in question. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
