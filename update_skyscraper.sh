@@ -34,7 +34,7 @@ then
 	exit
     fi
     echo "--- Building Skyscraper v.${LATEST} ---"
-    make
+    make -j4
     if [ $? != 0 ]
     then
 	rm VERSION
