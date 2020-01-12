@@ -144,6 +144,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 
+#### Version 3.3.8 (12th January 2020)
+* Fixed bug in platform alias for 'pc (microsoft windows)' which was missing the last ')' bracket (Thank you to 'o0alucard0o' for reporting this)
+
 #### Version 3.3.7 (8th January 2020)
 * Added the option to add frontend specific config sections to set artwork xml and other relevant configuration parameters per frontend
 
