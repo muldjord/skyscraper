@@ -1129,7 +1129,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("dos");
     aliases.append("windows");
     aliases.append("windows apps");
-    aliases.append("pc (microsoft windows");
+    aliases.append("pc (microsoft windows)");
     aliases.append("steamos");
   } else if(platform == "pc88") {
     aliases.append("pc-88");
@@ -1156,7 +1156,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc win3.xx");
     aliases.append("dos");
     aliases.append("windows");
-    aliases.append("pc (microsoft windows");
+    aliases.append("pc (microsoft windows)");
   } else if(platform == "psx") {
     aliases.append("sony playstation");
     aliases.append("playstation");
@@ -1176,7 +1176,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("amiga cd32");
     aliases.append("dos");
     aliases.append("cd32");
-    aliases.append("pc (microsoft windows");
+    aliases.append("pc (microsoft windows)");
     aliases.append("windows");
     aliases.append("windows apps");
   } else if(platform == "sega32x") {
@@ -1206,7 +1206,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("dos");
     aliases.append("windows");
     aliases.append("windows apps");
-    aliases.append("pc (microsoft windows");
+    aliases.append("pc (microsoft windows)");
     aliases.append("steamos");
     // Adding these consoles because 'thegamesdb' often only return these instead of PC versions
     aliases.append("microsoft xbox one");
