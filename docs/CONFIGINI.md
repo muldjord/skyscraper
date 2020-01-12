@@ -126,7 +126,7 @@ Sets the frontend you wish to export a game list for. By default Skyscraper will
 
 If exporting for the `attractmode` frontend, please also take note of the required `emulator=""` option that goes along with using the `attractmode` frontend.
 
-If exporting for the `pegasus` frontend, please also take note of the optional `launch=""` option that that allows you to set the launch parameter used by Pegasus.
+If exporting for the `pegasus` frontend, please also take note of the optional `launch=""` option that allows you to set the launch parameter used by Pegasus.
 
 Check all supported frontends with '--help'
 
