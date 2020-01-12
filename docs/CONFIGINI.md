@@ -93,17 +93,17 @@ Enables/disables the caching of the resource type `cover` when scraping with any
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
 #### cacheScreenshots="true"
-Enables/disables the caching of the resource type `screenshot` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
+Enables/disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, setting this to `"false"` can save you some space.
 
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
 #### cacheWheels="true"
-Enables/disables the caching of the resource type `wheel` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
+Enables/disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, setting this to `"false"` can save you some space.
 
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
 #### cacheMarquees="true"
-Enables/disables the caching of the resource type `marquee` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
+Enables/disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, setting this to `"false"` can save you some space.
 
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
