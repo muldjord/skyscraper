@@ -3,7 +3,7 @@ The following describes how to import your own custom textual, artwork and / or 
 
 NOTE 1: For any path in the following description, you can also add a platform subfolder. Skyscraper will auto-detect this and use it instead of the base import folder. For instance, you can create the folder `~/.skyscraper/import/amiga` and it will use that as base instead of `~/.skyscraper/import/` when importing for the `amiga` platform.
 
-NOTE 2: Be sure to also check the `--cache edit` option [here](CLIHELP.md#--cache-edit).
+NOTE 2: Be sure to also check the `--cache edit` option [here](CLIHELP.md#--cache-editnewtype).
 
 ## Images and videos
 To import videos or images into the resource cache, use the following procedure:
