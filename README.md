@@ -89,13 +89,15 @@ Remember, you can completely customize the artwork Skyscraper exports. Check out
 For first-time users I recommend reading the short and to-the-point [use case](docs/USECASE.md). Please read it and if it catches your interest check out the advanced options [here](#manual-mode-for-advanced-users). If you just want to scrape a platform and be done with it check [Simple mode](#simple-mode).
 
 ### Simple mode
-When you have completed the installation you can start Skyscraper in *Simple mode* by running Skyscraper with no command line options by typing:
+Skyscraper includes a *Simple mode* invoked simply by running Skyscraper with no command line options like so:
 ```
 $ Skyscraper
 ```
-Skyscraper will then ask you a bunch of questions, create an optimized script based on your answers, and finally run the script which scrapes the chosen platform in an optimal way. This is very useful for first time scrapings, as it will give you the best possible initial result for any given platform. If you're curious you can check out the generated script afterwards. It's located in `~/.skyscraper/skyscript.sh`.
+In simple mode Skyscraper will ask you a bunch of questions, create a script based on your answers and finally run the script which scrapes the chosen platform using those options. This can be useful for first-time users, since it gives a bit of an overview of many of the things you can configure Skyscraper to do. If you're curious you can check out the generated script afterwards. It's located at `~/.skyscraper/skyscript.sh`.
 
-### Manual mode (for advanced users)
+NOTE: If you choose to use this mode, please be aware that many of the scraping modules have limits and user requirements that need to be considered when scraping any number of files. You should familiarize yourself [with these](hdocs/SCRAPINGMODULES.md) before using Skyscraper.
+
+### Manual mode (recommended)
 Skyscraper is a command line tool, and has many, many options for you to fiddle around with. I recommend taking a look at all of them to familiarize yourself with the possibilites:
 ```
 $ Skyscraper --help
@@ -105,6 +107,7 @@ This will give you a description of everything Skyscraper can do if you feel adv
 The most important ones are probably:
 * `-p <PLATFORM>`
 * `-s <SCRAPING MODULE>`
+* `-u <USER:PASS>` or `-u <KEY>`
 * `--cache refresh`
 * `--videos`
 * `--unattend`
