@@ -20,10 +20,10 @@ This should have given you a lot of data for your games. But some of it might st
 ```
 $ Skyscraper -p snes -s thegamesdb
 ```
-For each of those two commands, all of the data that was gathered is now cached inside Skyscraper. For each game it will contain information from both of those sources.
+Each time you scrape your roms with a new scraping module, all of the data that was gathered will be cached inside Skyscraper's internal resource cache. The cache can contain one of each resource for each of the scraping modules.
 
 #### The game list generation phase
-And here comes the clever part. By having gathered data from both sources (`screenscraper` *and* `thegamesdb`) there's a good chance that you will get a complete result if the data from both is combined. And that's *exactly* what Skyscraper can do for you.
+By having gathered data from both sources (`screenscraper` *and* `thegamesdb`) there's a good chance that you will get a complete result if the data from both is combined. And that's *exactly* what Skyscraper can do for you.
 ```
 $ Skyscraper -p snes
 ```
