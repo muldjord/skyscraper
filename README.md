@@ -127,8 +127,10 @@ For a full description of all availabe config options, check [here](docs/CONFIGI
 ### Resource cache
 One of Skyscraper's most powerful features is the resource cache. It's important to understand how this works in order to use Skyscraper to its full potential. Read more about it [here](docs/CACHE.md).
 
-### Custom data import
-I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the resource cache with the `-s import` scraping module. Read more about how this works [here](docs/IMPORT.md).
+### Custom data
+I addition to allowing scraping from locally cached resources, Skyscraper also allows you to import your own data into the resource cache with the `-s import` scraping module. You can also edit existing resources in the cache or add individual `user` resources with the `--cache edit` command. Lastly, you also have the option of importing existing EmulationStation game list data into the Skyscraper resource cache if you need it. You can do this with the `-s esgamelist` scraping module.
+
+To read more about any of the features described above, please check out all of the documentation [here](https://github.com/muldjord/skyscraper/tree/master/docs).
 
 ### Artwork look and effects
 Check the full artwork documentation [here](docs/ARTWORK.md)
