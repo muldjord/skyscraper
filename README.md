@@ -65,7 +65,7 @@ $ ./update_skyscraper.sh
 ```
 You might be asked for your sudo password during the update. On RetroPie the default password is `raspberry`. If your version is older than 2.3.2 (check with `--help`) you need to follow the [installation instructions](#download-compile-and-install) instead.
 
-## How to uninstall Skyscraper
+### How to uninstall Skyscraper
 If you've installed Skyscraper using the instructions in this readme, you can uninstall it using the following commands:
 ```
 $ cd
@@ -77,7 +77,7 @@ $ rm -Rf .skyscraper
 ```
 You might be asked for your sudo password during the processs. On RetroPie the default password is `raspberry`.
 
-## Windows
+### Windows
 Windows is not officially supported at this time! But I do semi-regularly compile and release an unsupported Windows 64-bit version that works just fine. Be sure to read the included README from the downloaded file before using it! And just to be clear: You are on your own if you use this version - please don't ask me questions about it. Get the Windows version [here](http://www.muldjord.com/downloads/Skyscraper_3.3.8_unsupported_win_version.zip).
 
 ## How to use Skyscraper
