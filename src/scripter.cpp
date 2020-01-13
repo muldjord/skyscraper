@@ -189,7 +189,7 @@ Scripter::Scripter()
   
   std::string runScriptStr = "";
   printf("\n");
-  printf("The script '\033[1;32m~/.skyscraper/skyscript.sh\033[0m' has been created. Running this script will do multiple scraping runs for the chosen platform for the most optimal result. \033[1;34mDo you wish to run it now?\033[0m (Y/n)? ");
+  printf("The script '\033[1;32m~/.skyscraper/skyscript.sh\033[0m' has been created. \033[1;34mDo you wish to run it now?\033[0m (Y/n)? ");
   getline(std::cin, runScriptStr);
   if(runScriptStr == "y" || runScriptStr == "Y" || runScriptStr == "") {
     printf("\nRunning script...\n");
