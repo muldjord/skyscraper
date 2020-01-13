@@ -24,7 +24,7 @@ NOTE! If you are using the RetroPie distribution, you have the option to install
 
 ### Install prerequisites
 #### Linux
-Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install it using the following commands:
+Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install Qt5 using the following commands:
 ```
 $ sudo apt-get update
 $ sudo apt-get install build-essential qt5-default
