@@ -89,7 +89,7 @@ Remember, you can completely customize the artwork Skyscraper exports. Check out
 For first-time users I recommend reading the short and to-the-point [use case](docs/USECASE.md). Please read it and if it catches your interest check out the advanced options [here](#manual-mode-for-advanced-users). If you just want to scrape a platform and be done with it check [Simple mode](#simple-mode).
 
 ### Simple mode
-Skyscraper includes a *Simple mode* invoked simply by running Skyscraper with no command line options like so:
+Skyscraper includes a *Simple mode* invoked simply by running Skyscraper with no command-line options like so:
 ```
 $ Skyscraper
 ```
