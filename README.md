@@ -148,6 +148,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
+* Add all further useful new options to 'simple mode'
+* Add 'launcher' option to 'simple mode' when using 'pegasus' frontend
 
 #### Version 3.3.8 (12th January 2020)
 * Fixed bug in platform alias for 'pc (microsoft windows)' which was missing the last ')' bracket (Thank you to 'o0alucard0o' for reporting this)
