@@ -29,12 +29,12 @@ By having gathered data from both sources (`screenscraper` *and* `thegamesdb`) t
 ```
 $ Skyscraper -p snes
 ```
-Running that command will generate a game list for the chosen frontend (default is EmulationStation). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing.
+Running that command will generate a game list for the chosen frontend (default is EmulationStation). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing. If you use a non-default frontend, you can configure this in Skyscraper's configuration as described [here](CONFIGINI.md#frontendemulationstation). Or you can set it on command-line as described [here](CLIHELP.md#-f-frontend)
 
 The source priority for each resource is defined per-platform and can be changed at any time. Read more about that [here](CACHE.md#resource-and-scraping-module-priorities).
 
 ### So what then?
-You're done! The platform has been scraped and you can relaunch your frontend to enjoy the newly scraped data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *game list generation* phase. Always gather first, then generate the game list afterwards. *Always!*
+You're done! The game list has been generated and you can relaunch your frontend to enjoy the game data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *game list generation* phase. Always gather first, then generate the game list afterwards. *Always!*
 
 NOTE! You can always regenerate a game list if you changed the artwork configuration or gathered new data for any of your roms. Simply rerun the above command again and the game list will be regenerated with your new settings using all of the previously cached data.
 
