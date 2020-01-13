@@ -95,7 +95,7 @@ $ Skyscraper
 ```
 In simple mode Skyscraper will ask you a bunch of questions, create a script based on your answers and finally run the script which scrapes the chosen platform using those options. This can be useful for first-time users, since it gives a bit of an overview of many of the things you can configure Skyscraper to do. If you're curious you can check out the generated script afterwards. It's located at `~/.skyscraper/skyscript.sh`.
 
-NOTE: If you choose to use this mode, please be aware that many of the scraping modules have limits and user requirements that need to be considered when scraping any number of files. You should familiarize yourself [with these](hdocs/SCRAPINGMODULES.md) before using Skyscraper.
+NOTE: If you choose to use this mode, please be aware that many of the scraping modules have limits and user requirements that need to be considered when scraping any number of files. You should familiarize yourself [with these](docs/SCRAPINGMODULES.md) before using Skyscraper.
 
 ### Manual mode (recommended)
 Skyscraper is a command line tool, and has many, many options for you to fiddle around with. I recommend taking a look at all of them to familiarize yourself with the possibilites:
