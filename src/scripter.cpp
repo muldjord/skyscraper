@@ -68,10 +68,14 @@ Scripter::Scripter()
   if(frontendStr == "")
     frontendStr = "emulationstation";
 
-  std::string emulatorStr = "";
-  while(frontendStr == "attractmode" && emulatorStr == "") {
+  std::string extrasStr = "";
+  while(frontendStr == "attractmode" && extrasStr == "") {
     printf("\033[1;34mPlease enter AttractMode emulator:\033[0m ");
-    getline(std::cin, emulatorStr);
+    getline(std::cin, extrasStr);
+  }
+  if(frontendStr == "pegasus") {
+    printf("\033[1;34mPlease enter optional Pegasus launch command\033[0m (enter for none): ");
+    getline(std::cin, extrasStr);
   }
 
   printf("User chose: '\033[1;32m%s\033[0m'\n", frontendStr.c_str());
@@ -157,8 +161,8 @@ Scripter::Scripter()
     generateStr += " -o " + artworkFolderStr;
   if(frontendStr != "emulationstation") {
     generateStr += " -f " + frontendStr;
-    if(frontendStr == "attractmode" && emulatorStr != "")
-      generateStr += " -e " + emulatorStr;
+    if((frontendStr == "attractmode" || frontendStr == "pegasus") && extrasStr != "")
+      generateStr += " -e " + extrasStr;
   }
   if(minMatchStr != "")
     baseStr += " -m " + minMatchStr;
