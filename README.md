@@ -149,9 +149,10 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
+* Add a way to ignore certain filenames when scraping such as those containing '[BIOS]*' (Thank you to 'timothybrown' for suggesting this)
 
-#### Version 3.3.8 (12th January 2020)
-* Add 'launcher' option to 'simple mode' when using 'pegasus' frontend
+#### Version 3.3.9 (In progress, unreleased)
+* Added 'launcher' option to 'simple mode' when using 'pegasus' frontend
 
 #### Version 3.3.8 (12th January 2020)
 * Fixed bug in platform alias for 'pc (microsoft windows)' which was missing the last ')' bracket (Thank you to 'o0alucard0o' for reporting this)
