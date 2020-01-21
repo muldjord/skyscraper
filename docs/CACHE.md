@@ -1,7 +1,7 @@
 # Resource cache
 Whenever you scrape any platform with any scraping module, Skyscraper caches each resource internally. A resource can, for instance, be a game `description` or a game `screenshot`. Each game can have several versions of each resource cached locally. One of each type per scraping module. This comes in handy when generating the game list and artwork compositions.
 
-Think of the resource cache as the cache in an internet browser. Most of the data on webpages don't change much. By caching some of the data locally, it can load parts of a webpage from that data instead of loading it from the remote server. This is exactly how the Skyscraper cache works.
+Think of the resource cache as the cache in an internet browser. Most of the data on webpages don't change much. By caching some of the data locally, it can load parts of a webpage from that data instead of loading it from the remote server. This is exactly how the Skyscraper cache works. It helps keep the online servers healthy by not hammering then whenever you need data you already downloaded once, and it allows you to re-generate the frontend game lists whenever you add new games or perhaps want to change the style of the exported artwork.
 
 #### Default resource cache folder
 The default base folder for all of Skyscrapers' locally cached data is in the `~/.skyscraper/cache` folder. In this folder you'll find individual platform subfolders. Any of these are selfcontained and contains all of the cached data for that particular platform.
