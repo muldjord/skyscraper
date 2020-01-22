@@ -229,14 +229,14 @@ int main(int argc, char *argv[])
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
-  QCommandLineOption excludeFilesOption("excludefiles", "Tells Skyscraper to always exclude the files matching the provided asterisk mask. (Mask example: '*[BIOS]*')", "MASK", "");
-  QCommandLineOption includeFilesOption("includefiles", "Tells Skyscraper to only include the files matching the provided asterisk mask. (Mask example: 'Super*')", "MASK", "");
+  QCommandLineOption excludeFilesOption("excludefiles", "Tells Skyscraper to always exclude the files matching the provided asterisk mask. Remember to double-quote the mask to avoid weird behaviour. (Mask example: '\"*[BIOS]*\"')", "MASK", "");
+  QCommandLineOption includeFilesOption("includefiles", "Tells Skyscraper to only include the files matching the provided asterisk mask. Remember to double-quote the mask to avoid weird behaviour. (Mask example: '\"Super*\"')", "MASK", "");
   QCommandLineOption fromfileOption("fromfile", "Tells Skyscraper to load the list of filenames to work on from a file. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
   QCommandLineOption pretendOption("pretend", "Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.");
   QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
   QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
-  QCommandLineOption interactiveOption("interactive", "Always ask user to choose best result.");
+  QCommandLineOption interactiveOption("interactive", "Always ask user to choose best returned result from the scraping modules.");
   QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=<CHECKSUM>', 'md5=<CHECKSUM>' or 'romnom=<FILENAME>' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line as well, otherwise it will be ignored.", "QUERY", "");
   QCommandLineOption regionOption("region", "Add preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' + others in that order)", "CODE", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "CODE", "en");
