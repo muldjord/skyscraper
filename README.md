@@ -153,6 +153,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.3.9 (In progress, unreleased)
 * Added 'launcher' option to 'simple mode' when using 'pegasus' frontend
+* Added 'ignoreFiles' config option that allows masking / ignoring certain files when scraping (Thank you to 'timothybrown' for suggesting this)
 
 #### Version 3.3.8 (12th January 2020)
 * Fixed bug in platform alias for 'pc (microsoft windows)' which was missing the last ')' bracket (Thank you to 'o0alucard0o' for reporting this)
