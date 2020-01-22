@@ -37,6 +37,8 @@ public:
   bool hasEntry();
   QFileInfo takeEntry();
   void clearAll();
+  void excludeFiles(const QString &mask);
+  void includeFiles(const QString &mask);
   
 private:
   QMutex queueMutex;

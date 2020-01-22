@@ -229,6 +229,8 @@ int main(int argc, char *argv[])
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
+  QCommandLineOption excludeFilesOption("excludefiles", "Tells Skyscraper to always exclude the files matching the provided asterisk mask. (Mask example: '*[BIOS]*')", "MASK", "");
+  QCommandLineOption includeFilesOption("includefiles", "Tells Skyscraper to only include the files matching the provided asterisk mask. (Mask example: 'Super*')", "MASK", "");
   QCommandLineOption fromfileOption("fromfile", "Tells Skyscraper to load the list of filenames to work on from a file. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
   QCommandLineOption pretendOption("pretend", "Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.");
@@ -270,6 +272,8 @@ int main(int argc, char *argv[])
   parser.addOption(noresizeOption);
   parser.addOption(startatOption);
   parser.addOption(endatOption);
+  parser.addOption(excludeFilesOption);
+  parser.addOption(includeFilesOption);
   parser.addOption(fromfileOption);
   parser.addOption(maxfailsOption);
   parser.addOption(pretendOption);

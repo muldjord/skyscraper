@@ -81,6 +81,8 @@ struct Settings {
   bool skipped = false;
   QString artworkConfig = "artwork.xml";
   QByteArray artworkXml = "";
+  QString excludeFiles = "";
+  QString includeFiles = "";
   bool relativePaths = false;
   QString extensions = "";
   QString addExtensions = "";

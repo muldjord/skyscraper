@@ -25,6 +25,8 @@
 
 #include "queue.h"
 
+#include <QRegularExpression>
+
 Queue::Queue()
 {
 }
@@ -51,5 +53,37 @@ void Queue::clearAll()
 {
   queueMutex.lock();
   clear();
+  queueMutex.unlock();
+}
+
+void Queue::excludeFiles(const QString &mask)
+{
+  QString escapedMask = QRegularExpression::escape(mask);
+  escapedMask.replace("\\*", ".*");
+
+  queueMutex.lock();
+  QMutableListIterator<QFileInfo> it(*this);
+  while(it.hasNext()) {
+    QFileInfo info = it.next();
+    if(QRegularExpression(escapedMask).match(info.baseName()).hasMatch()) {
+      it.remove();
+    }
+  }
+  queueMutex.unlock();
+}
+
+void Queue::includeFiles(const QString &mask)
+{
+  QString escapedMask = QRegularExpression::escape(mask);
+  escapedMask.replace("\\*", ".*");
+
+  queueMutex.lock();
+  QMutableListIterator<QFileInfo> it(*this);
+  while(it.hasNext()) {
+    QFileInfo info = it.next();
+    if(!QRegularExpression(escapedMask).match(info.baseName()).hasMatch()) {
+      it.remove();
+    }
+  }
   queueMutex.unlock();
 }

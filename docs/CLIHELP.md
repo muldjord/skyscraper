@@ -370,6 +370,32 @@ Skyscraper -p snes --cache edit --endat "rom name.zip"
 Skyscraper -p snes -s thegamesdb --endat "partial/path/to/rom name.zip"
 ```
 
+#### --excludefiles &lt;MASK&gt;
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+
+IMPORTANT! Remember to double-quote the mask as seen in the examples to avoid odd behaviour.
+
+NOTE! You might also want to check out the file extension options.
+
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --excludefiles "*[BIOS]*"
+Skyscraper -p amiga --excludefiles "AGA*"
+```
+
+#### --includefiles &lt;MASK&gt;
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+
+IMPORTANT! Remember to double-quote the mask as seen in the examples to avoid odd behaviour.
+
+NOTE! You might also want to check out the file extension options.
+
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --includefiles "Super*"
+Skyscraper -p amiga --includefiles "*AGA*"
+```
+
 #### --maxfails &lt;1-200&gt;
 Not all scraping modules support all platforms. This means that you can potentially start a scraping run with a module and a platform that is incompatible. This will hammer the servers for potentially hundreds of roms but provide 0 results for any of them. To avoid this Skyscraper has a builtin limit for initially allowed failed rom lookups. If this is reached it will quit. Setting this option allows you to set this limit yourself, but not above a maximum of 200. The default limit is 42. Don't change this unless you have a very good reason to do so.
 ###### Example(s)

@@ -271,6 +271,12 @@ void Skyscraper::run()
     if(config.verbosity > 0)
       printf("\n");
   }
+  if(!config.excludeFiles.isEmpty()) {
+    queue->excludeFiles(config.excludeFiles);
+  }
+  if(!config.includeFiles.isEmpty()) {
+    queue->includeFiles(config.includeFiles);
+  }
 
   if(!cliFiles.isEmpty()) {
     queue->clear();
@@ -799,6 +805,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
+  if(settings.contains("excludefiles")) {
+    config.excludeFiles = settings.value("excludefiles").toString();
+  }
+  if(settings.contains("includeFiles")) {
+    config.includeFiles = settings.value("includeFiles").toString();
+  }
   if(settings.contains("cacheResize")) {
     config.noResize = !settings.value("cacheResize").toBool();
   }
@@ -972,6 +984,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
+  if(settings.contains("excludefiles")) {
+    config.excludeFiles = settings.value("excludefiles").toString();
+  }
+  if(settings.contains("includeFiles")) {
+    config.includeFiles = settings.value("includeFiles").toString();
+  }
   settings.endGroup();
 
   // Check for command line scraping module here
@@ -992,6 +1010,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   settings.beginGroup(config.frontend);
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
+  }
+  if(settings.contains("excludefiles")) {
+    config.excludeFiles = settings.value("excludefiles").toString();
+  }
+  if(settings.contains("includeFiles")) {
+    config.includeFiles = settings.value("includeFiles").toString();
   }
   if(settings.contains("emulator")) {
     config.frontendExtra = settings.value("emulator").toString();
@@ -1187,6 +1211,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("endat")) {
     config.endAt = parser.value("endat");
+  }
+  if(parser.isSet("excludefiles")) {
+    config.excludeFiles = parser.value("excludefiles");
+  }
+  if(parser.isSet("includefiles")) {
+    config.includeFiles = parser.value("includefiles");
   }
   if(parser.isSet("maxfails") &&
      parser.value("maxfails").toInt() >= 1 &&

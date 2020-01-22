@@ -289,6 +289,20 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 
 *Allowed in section(s): `[<PLATFORM>]`, `[<FRONTEND>]`*
 
+#### excludeFiles="&lt;MASK&gt;"
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+
+NOTE! You might also want to check out the file extension options.
+
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
+
+#### includeFiles="&lt;MASK&gt;"
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+
+NOTE! You might also want to check out the file extension options.
+
+*Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
+
 #### userCreds="&lt;CREDENTIALS or KEY&gt;"
 Some scraping modules require a `key` or `user:password` to work. You can create a `[<SCRAPING MODULE>]` section and add a `userCreds="user:pass"` or `userCreds="key"` line beneath it. Doing this will always use these credentials when scraping from the module in question. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).
 
