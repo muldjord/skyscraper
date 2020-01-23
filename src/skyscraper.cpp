@@ -272,10 +272,10 @@ void Skyscraper::run()
       printf("\n");
   }
   if(!config.excludeFiles.isEmpty()) {
-    queue->excludeFiles(config.excludeFiles);
+    queue->filterFiles(config.excludeFiles);
   }
   if(!config.includeFiles.isEmpty()) {
-    queue->includeFiles(config.includeFiles);
+    queue->filterFiles(config.includeFiles, true);
   }
 
   if(!cliFiles.isEmpty()) {

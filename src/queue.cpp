@@ -56,41 +56,38 @@ void Queue::clearAll()
   queueMutex.unlock();
 }
 
-void Queue::excludeFiles(const QString &mask)
+void Queue::filterFiles(const QString &patterns, const bool &include)
 {
-  QString escapedMask = getEscapedMask(mask);
+  QList<QString> regExpPatterns = getRegExpPatterns(patterns);
 
   queueMutex.lock();
   QMutableListIterator<QFileInfo> it(*this);
   while(it.hasNext()) {
     QFileInfo info = it.next();
-    if(QRegularExpression(escapedMask).match(info.fileName()).hasMatch()) {
-      it.remove();
+    for(const auto &regExpPattern: regExpPatterns) {
+      if(QRegularExpression(regExpPattern).match(info.fileName()).hasMatch() != include) {
+	it.remove();
+      }
     }
   }
   queueMutex.unlock();
 }
 
-void Queue::includeFiles(const QString &mask)
+QList<QString> Queue::getRegExpPatterns(QString patterns)
 {
-  QString escapedMask = getEscapedMask(mask);
+  patterns.replace("\\,", "###COMMA###");
+  patterns.replace(",", ";");
 
-  queueMutex.lock();
-  QMutableListIterator<QFileInfo> it(*this);
-  while(it.hasNext()) {
-    QFileInfo info = it.next();
-    if(!QRegularExpression(escapedMask).match(info.fileName()).hasMatch()) {
-      it.remove();
-    }
+  QList<QString> regExpPatterns;
+
+  for(auto regExpPattern: patterns.split(";")) {
+    regExpPattern.replace("###COMMA###", ",");
+    regExpPattern = QRegularExpression::escape(regExpPattern);
+    regExpPattern.replace("\\*", ".*");
+    regExpPattern.prepend("^");
+    regExpPattern.append("$");
+    regExpPatterns.append(regExpPattern);
   }
-  queueMutex.unlock();
-}
 
-QString Queue::getEscapedMask(const QString &mask)
-{
-  QString escapedMask = QRegularExpression::escape(mask);
-  escapedMask.replace("\\*", ".*");
-  escapedMask.prepend("^");
-  escapedMask.append("$");
-  return escapedMask;
+  return regExpPatterns;
 }

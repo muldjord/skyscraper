@@ -37,12 +37,11 @@ public:
   bool hasEntry();
   QFileInfo takeEntry();
   void clearAll();
-  void excludeFiles(const QString &mask);
-  void includeFiles(const QString &mask);
+  void filterFiles(const QString &patterns, const bool &include = false);
   
 private:
   QMutex queueMutex;
-  QString getEscapedMask(const QString &mask);
+  QList<QString> getRegExpPatterns(QString patterns);
 
 };
 
