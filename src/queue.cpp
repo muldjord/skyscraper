@@ -65,7 +65,7 @@ void Queue::excludeFiles(const QString &mask)
   QMutableListIterator<QFileInfo> it(*this);
   while(it.hasNext()) {
     QFileInfo info = it.next();
-    if(QRegularExpression(escapedMask).match(info.baseName()).hasMatch()) {
+    if(QRegularExpression(escapedMask).match(info.fileName()).hasMatch()) {
       it.remove();
     }
   }
@@ -81,7 +81,7 @@ void Queue::includeFiles(const QString &mask)
   QMutableListIterator<QFileInfo> it(*this);
   while(it.hasNext()) {
     QFileInfo info = it.next();
-    if(!QRegularExpression(escapedMask).match(info.baseName()).hasMatch()) {
+    if(!QRegularExpression(escapedMask).match(info.fileName()).hasMatch()) {
       it.remove();
     }
   }

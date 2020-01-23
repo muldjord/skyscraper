@@ -371,7 +371,7 @@ Skyscraper -p snes -s thegamesdb --endat "partial/path/to/rom name.zip"
 ```
 
 #### --excludefiles &lt;MASK&gt;
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask.
 
 IMPORTANT! Remember to double-quote the mask as seen in the examples to avoid odd behaviour.
 
@@ -384,7 +384,7 @@ Skyscraper -p amiga --excludefiles "AGA*"
 ```
 
 #### --includefiles &lt;MASK&gt;
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The mask is a simple asterisk type mask.
 
 IMPORTANT! Remember to double-quote the mask as seen in the examples to avoid odd behaviour.
 

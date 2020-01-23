@@ -290,7 +290,7 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 *Allowed in section(s): `[<PLATFORM>]`, `[<FRONTEND>]`*
 
 #### excludeFiles="&lt;MASK&gt;"
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask.
 
 NOTE! You might also want to check out the file extension options.
 
