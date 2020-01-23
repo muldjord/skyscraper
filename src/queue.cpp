@@ -64,10 +64,16 @@ void Queue::filterFiles(const QString &patterns, const bool &include)
   QMutableListIterator<QFileInfo> it(*this);
   while(it.hasNext()) {
     QFileInfo info = it.next();
+    bool match = false;
     for(const auto &regExpPattern: regExpPatterns) {
-      if(QRegularExpression(regExpPattern).match(info.fileName()).hasMatch() != include) {
-	it.remove();
+      if(QRegularExpression(regExpPattern).match(info.fileName()).hasMatch()) {
+	match = true;
       }
+    }
+    if(match && !include) {
+      it.remove();
+    } else if(!match && include) {
+      it.remove();
     }
   }
   queueMutex.unlock();
