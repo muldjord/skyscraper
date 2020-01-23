@@ -42,6 +42,7 @@ public:
   
 private:
   QMutex queueMutex;
+  QString getEscapedMask(const QString &mask);
 
 };
 

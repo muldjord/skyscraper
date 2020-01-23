@@ -58,8 +58,7 @@ void Queue::clearAll()
 
 void Queue::excludeFiles(const QString &mask)
 {
-  QString escapedMask = QRegularExpression::escape(mask);
-  escapedMask.replace("\\*", ".*");
+  QString escapedMask = getEscapedMask(mask);
 
   queueMutex.lock();
   QMutableListIterator<QFileInfo> it(*this);
@@ -74,8 +73,7 @@ void Queue::excludeFiles(const QString &mask)
 
 void Queue::includeFiles(const QString &mask)
 {
-  QString escapedMask = QRegularExpression::escape(mask);
-  escapedMask.replace("\\*", ".*");
+  QString escapedMask = getEscapedMask(mask);
 
   queueMutex.lock();
   QMutableListIterator<QFileInfo> it(*this);
@@ -86,4 +84,13 @@ void Queue::includeFiles(const QString &mask)
     }
   }
   queueMutex.unlock();
+}
+
+QString Queue::getEscapedMask(const QString &mask)
+{
+  QString escapedMask = QRegularExpression::escape(mask);
+  escapedMask.replace("\\*", ".*");
+  escapedMask.prepend("^");
+  escapedMask.append("$");
+  return escapedMask;
 }
