@@ -96,8 +96,8 @@ bool Cache::read()
       pair.second = attribs.value("id").toString();
       quickIds[attribs.value("filepath").toString()] = pair;
     }
+    printf("\033[1;32mDone!\033[0m\n");
   }
-  printf("\033[1;32mDone!\033[0m\n");
 
   QFile cacheFile(cacheDir.absolutePath() + "/db.xml");
   if(cacheFile.open(QIODevice::ReadOnly)) {
