@@ -370,10 +370,10 @@ Skyscraper -p snes --cache edit --endat "rom name.zip"
 Skyscraper -p snes -s thegamesdb --endat "partial/path/to/rom name.zip"
 ```
 
-#### --excludefiles &lt;MASK&gt;
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask.
+#### --excludefiles &lt;PATTERN1, PATTERN 2&gt;
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The pattern is a simple asterisk type pattern. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\,' (see last example).
 
-IMPORTANT! Remember to double-quote the mask as seen in the examples to avoid odd behaviour.
+IMPORTANT! Remember to double-quote the pattern as seen in the examples to avoid odd behaviour.
 
 NOTE! You might also want to check out the file extension options.
 
@@ -381,12 +381,14 @@ NOTE! You might also want to check out the file extension options.
 ```
 Skyscraper -p snes -s screenscraper --excludefiles "*[BIOS]*"
 Skyscraper -p amiga --excludefiles "AGA*"
+Skyscraper -p amiga --excludefiles "*AGA*,Super*"
+Skyscraper -p amiga --excludefiles "*AGA*,Super*,*\, The"
 ```
 
-#### --includefiles &lt;MASK&gt;
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The mask is a simple asterisk type mask.
+#### --includefiles &lt;PATTERN 1,PATTERN 2&gt;
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The pattern is a simple asterisk type pattern. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\,' (see last example).
 
-IMPORTANT! Remember to double-quote the mask as seen in the examples to avoid odd behaviour.
+IMPORTANT! Remember to double-quote the pattern as seen in the examples to avoid odd behaviour.
 
 NOTE! You might also want to check out the file extension options.
 
@@ -394,6 +396,8 @@ NOTE! You might also want to check out the file extension options.
 ```
 Skyscraper -p snes -s screenscraper --includefiles "Super*"
 Skyscraper -p amiga --includefiles "*AGA*"
+Skyscraper -p amiga --includefiles "*AGA*,Super*"
+Skyscraper -p amiga --includefiles "*AGA*,Super*,*\, The"
 ```
 
 #### --maxfails &lt;1-200&gt;

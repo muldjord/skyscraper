@@ -289,15 +289,15 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 
 *Allowed in section(s): `[<PLATFORM>]`, `[<FRONTEND>]`*
 
-#### excludeFiles="&lt;MASK&gt;"
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The mask is a simple asterisk type mask.
+#### excludeFiles="&lt;PATTERN 1,PATTERN 2&gt;"
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The pattern is a simple asterisk type pattern. In cases where you need to match for a comma you need to escape it as '\,'.
 
 NOTE! You might also want to check out the file extension options.
 
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`*
 
-#### includeFiles="&lt;MASK&gt;"
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The mask is a simple asterisk type mask. It will apply this mask to the basename of the filename, so if you have a file called `game name.zip` it will apply the mask only to the `game name` part.
+#### includeFiles="&lt;PATTERN1,PATTERN2&gt;"
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The pattern is a simple asterisk type pattern. In cases where you need to match for a comma you need to escape it as '\,'.
 
 NOTE! You might also want to check out the file extension options.
 
