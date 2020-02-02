@@ -476,6 +476,8 @@ QString MobyGames::getPlatformId(const QString platform)
     return "44";
   } else if(platform == "neogeo") {
     return "36";
+  } else if(platform == "neogeocd") {
+    return "54";
   } else if(platform == "nes") {
     return "22";
   } else if(platform == "ngp") {

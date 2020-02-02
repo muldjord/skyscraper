@@ -84,6 +84,7 @@ QStringList Platform::getPlatforms()
   platforms.append("n64");
   platforms.append("nds");
   platforms.append("neogeo");
+  platforms.append("neogeocd");
   platforms.append("nes");
   platforms.append("ngp");
   platforms.append("ngpc");
@@ -218,6 +219,8 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   } else if(platform == "neogeo") {
     scrapers.append("arcadedb");
+    scrapers.append("screenscraper");
+  } else if(platform == "neogeocd") {
     scrapers.append("screenscraper");
   } else if(platform == "nes") {
     scrapers.append("screenscraper");
@@ -400,6 +403,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.nds");
   } else if(platform == "neogeo") {
     formats.append("");
+  } else if(platform == "neogeocd") {
+    formats.append("*.cue *.chd");
   } else if(platform == "nes") {
     formats.append("*.nes *.smc *.sfc *.fig *.swc *.mgd");
   } else if(platform == "ngp") {
@@ -561,6 +566,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "nds") {
     scraper = "cache";
   } else if(platform == "neogeo") {
+    scraper = "cache";
+  } else if(platform == "neogeocd") {
     scraper = "cache";
   } else if(platform == "nes") {
     scraper = "cache";
@@ -1109,8 +1116,9 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("neo geo");
     aliases.append("neo geo aes");
     aliases.append("neo geo mvs");
-    aliases.append("neo geo cd");
     aliases.append("arcade");
+  } else if(platform == "neogeocd") {
+    aliases.append("neo geo cd");
   } else if(platform == "nes") {
     aliases.append("nintendo entertainment system (nes)");
     aliases.append("nintendo");
