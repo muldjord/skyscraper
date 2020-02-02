@@ -1473,6 +1473,9 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
       if(f.open(QIODevice::WriteOnly)) {
 	f.write(entry.coverData);
 	f.close();
+	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
+	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
+	}
       } else {
 	okToAppend = false;
       }
@@ -1481,6 +1484,9 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
       if(f.open(QIODevice::WriteOnly)) {
 	f.write(entry.screenshotData);
 	f.close();
+	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
+	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
+	}
       } else {
 	okToAppend = false;
       }
@@ -1489,6 +1495,9 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
       if(f.open(QIODevice::WriteOnly)) {
 	f.write(entry.wheelData);
 	f.close();
+	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
+	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
+	}
       } else {
 	okToAppend = false;
       }
@@ -1497,6 +1506,9 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
       if(f.open(QIODevice::WriteOnly)) {
 	f.write(entry.marqueeData);
 	f.close();
+	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
+	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
+	}
       } else {
 	okToAppend = false;
       }
