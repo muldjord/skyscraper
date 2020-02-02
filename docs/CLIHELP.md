@@ -328,15 +328,6 @@ If a rom has no resources attached to it in the cache, it will be left out when 
 Skyscraper -p snes --skipped
 ```
 
-#### --noresize
-By default, to save space, Skyscraper resizes large pieces of artwork before adding them to the resource cache. Adding this option will disable this and save the artwork files exactly as they are retrieved from the scraping module. Consider setting this in [`config.ini`](CONFIGINI.md#cacheresizefalse) instead.
-
-NOTE! This is not related to the artwork compositing that happens when generating a game list. This is *only* related to how Skyscraper handles artwork when adding it to the resource cache while gathering data from the scraping modules.
-###### Example(s)
-```
-Skyscraper -p amiga -s openretro --noresize
-```
-
 #### --fromfile &lt;FILENAME&gt;
 Using this option is the equivalent to adding a bunch of filenames to work on directly on the commandline. It reads one line at a time from `<FILENAME>` and adds them to the queue of files to work on. This is very useful in conjunction with the `--cache edit` option or if you want to regather data just for those files using `-s <SCRAPING MODULE>`.
 

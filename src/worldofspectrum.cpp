@@ -142,7 +142,7 @@ void WorldOfSpectrum::getCover(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.coverData = image;
+    game.coverData = manager.getData();
   }
 }
 
@@ -162,7 +162,7 @@ void WorldOfSpectrum::getScreenshot(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.screenshotData = image;
+    game.screenshotData = manager.getData();
   }
 }
 

@@ -280,7 +280,7 @@ void OpenRetro::getCover(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.coverData = image;
+    game.coverData = manager.getData();
   }
 }
 
@@ -305,7 +305,7 @@ void OpenRetro::getMarquee(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.marqueeData = image;
+    game.marqueeData = manager.getData();
   }
 }
 

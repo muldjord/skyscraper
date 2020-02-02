@@ -73,16 +73,16 @@ public:
   QString rating = "";
   QString ratingSrc = "";
 
-  QImage coverData = QImage();
+  QByteArray coverData = QByteArray();
   QString coverFile = "";
   QString coverSrc = "";
-  QImage screenshotData = QImage();
+  QByteArray screenshotData = QByteArray();
   QString screenshotFile = "";
   QString screenshotSrc = "";
-  QImage wheelData = QImage();
+  QByteArray wheelData = QByteArray();
   QString wheelFile = "";
   QString wheelSrc = "";
-  QImage marqueeData = QImage();
+  QByteArray marqueeData = QByteArray();
   QString marqueeFile = "";
   QString marqueeSrc = "";
   QByteArray videoData = "";

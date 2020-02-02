@@ -61,13 +61,13 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   
   QImage sideImage;
   if(layer.resource == "cover") {
-    sideImage = game.coverData;
+    sideImage = QImage::fromData(game.coverData);
   } else if(layer.resource == "screenshot") {
-    sideImage = game.screenshotData;
+    sideImage = QImage::fromData(game.screenshotData);
   } else if(layer.resource == "wheel") {
-    sideImage = game.wheelData;
+    sideImage = QImage::fromData(game.wheelData);
   } else if(layer.resource == "marquee") {
-    sideImage = game.marqueeData;
+    sideImage = QImage::fromData(game.marqueeData);
   } else {
     sideImage = QImage(config->resources[layer.resource]);
   }

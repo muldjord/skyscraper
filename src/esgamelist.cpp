@@ -83,13 +83,14 @@ void ESGameList::getGameData(GameEntry &game) {
   }
 }
 
-QImage ESGameList::loadImageData(const QString fileName) {
-  QString absoluteFileName = getAbsoluteFileName(fileName);
-  QImage image;
-  if(image.load(absoluteFileName)) {
-    return image;
+QByteArray ESGameList::loadImageData(const QString fileName) {
+  QFile imageFile(getAbsoluteFileName(fileName));
+  if(imageFile.open(QIODevice::ReadOnly)) {
+    QByteArray imageData = imageFile.readAll();
+    imageFile.close();
+    return imageData;
   }
-  return QImage();
+  return QByteArray();
 }
 
 void ESGameList::loadVideoData(GameEntry &game, const QString fileName) {

@@ -297,13 +297,13 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
   for(auto &output: outputs.getLayers()) {
     if(output.resource == "cover") {
-      output.setCanvas(game.coverData);
+      output.setCanvas(QImage::fromData(game.coverData));
     } else if(output.resource == "screenshot") {
-      output.setCanvas(game.screenshotData);
+	output.setCanvas(QImage::fromData(game.screenshotData));
     } else if(output.resource == "wheel") {
-      output.setCanvas(game.wheelData);
+	output.setCanvas(QImage::fromData(game.wheelData));
     } else if(output.resource == "marquee") {
-      output.setCanvas(game.marqueeData);
+	output.setCanvas(QImage::fromData(game.marqueeData));
     }
 
     if(output.canvas.isNull() && output.hasLayers()) {
@@ -356,13 +356,13 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
 	emptyCanvas.fill(Qt::transparent);
 	thisLayer.setCanvas(emptyCanvas);
       } else if(thisLayer.resource == "cover") {
-	thisLayer.setCanvas(game.coverData);
+	thisLayer.setCanvas(QImage::fromData(game.coverData));
       } else if(thisLayer.resource == "screenshot") {
-	thisLayer.setCanvas(game.screenshotData);
+	  thisLayer.setCanvas(QImage::fromData(game.screenshotData));
       } else if(thisLayer.resource == "wheel") {
-	thisLayer.setCanvas(game.wheelData);
+	  thisLayer.setCanvas(QImage::fromData(game.wheelData));
       } else if(thisLayer.resource == "marquee") {
-	thisLayer.setCanvas(game.marqueeData);
+	  thisLayer.setCanvas(QImage::fromData(game.marqueeData));
       } else {
 	thisLayer.setCanvas(config->resources[thisLayer.resource]);
       }

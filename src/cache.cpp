@@ -1424,22 +1424,22 @@ void Cache::addResources(GameEntry &entry, const Settings &config)
     }
     if(!entry.coverData.isNull() && config.cacheCovers) {
       resource.type = "cover";
-      resource.value = "covers/" + entry.source + "/" + entry.cacheId + ".png";
+      resource.value = "covers/" + entry.source + "/" + entry.cacheId;
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.screenshotData.isNull() && config.cacheScreenshots) {
       resource.type = "screenshot";
-      resource.value = "screenshots/" + entry.source + "/"  + entry.cacheId + ".png";
+      resource.value = "screenshots/" + entry.source + "/"  + entry.cacheId;
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.wheelData.isNull() && config.cacheWheels) {
       resource.type = "wheel";
-      resource.value = "wheels/" + entry.source + "/"  + entry.cacheId + ".png";
+      resource.value = "wheels/" + entry.source + "/"  + entry.cacheId;
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.marqueeData.isNull() && config.cacheMarquees) {
       resource.type = "marquee";
-      resource.value = "marquees/" + entry.source + "/"  + entry.cacheId + ".png";
+      resource.value = "marquees/" + entry.source + "/"  + entry.cacheId;
       addResource(resource, entry, cacheAbsolutePath, config);
     }
   }
@@ -1469,35 +1469,35 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
   if(notFound) {
     bool okToAppend = true;
     if(resource.type == "cover") {
-      // Restrict size of cover to save space
-      if(entry.coverData.height() >= 512 && !config.noResize) {
-	entry.coverData = entry.coverData.scaledToHeight(512, Qt::SmoothTransformation);
-      }
-      if(!entry.coverData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
+      QFile f(cacheAbsolutePath + "/" + resource.value);
+      if(f.open(QIODevice::WriteOnly)) {
+	f.write(entry.coverData);
+	f.close();
+      } else {
 	okToAppend = false;
       }
     } else if(resource.type == "screenshot") {
-      // Restrict size of screenshot to save space
-      if(entry.screenshotData.width() >= 640 && !config.noResize) {
-	entry.screenshotData = entry.screenshotData.scaledToWidth(640, Qt::SmoothTransformation);
-      }
-      if(!entry.screenshotData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
+      QFile f(cacheAbsolutePath + "/" + resource.value);
+      if(f.open(QIODevice::WriteOnly)) {
+	f.write(entry.screenshotData);
+	f.close();
+      } else {
 	okToAppend = false;
       }
     } else if(resource.type == "wheel") {
-      // Restrict size of wheel to save space
-      if(entry.wheelData.width() >= 640 && !config.noResize) {
-	entry.wheelData = entry.wheelData.scaledToWidth(640, Qt::SmoothTransformation);
-      }
-      if(!entry.wheelData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
+      QFile f(cacheAbsolutePath + "/" + resource.value);
+      if(f.open(QIODevice::WriteOnly)) {
+	f.write(entry.wheelData);
+	f.close();
+      } else {
 	okToAppend = false;
       }
     } else if(resource.type == "marquee") {
-      // Restrict size of marquee to save space
-      if(entry.marqueeData.width() >= 640 && !config.noResize) {
-	entry.marqueeData = entry.marqueeData.scaledToWidth(640, Qt::SmoothTransformation);
-      }
-      if(!entry.marqueeData.convertToFormat(QImage::Format_ARGB6666_Premultiplied).save(cacheAbsolutePath + "/" + resource.value)) {
+      QFile f(cacheAbsolutePath + "/" + resource.value);
+      if(f.open(QIODevice::WriteOnly)) {
+	f.write(entry.marqueeData);
+	f.close();
+      } else {
 	okToAppend = false;
       }
     } else if(resource.type == "video") {
@@ -1669,7 +1669,11 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.coverData = QImage(cacheDir.absolutePath() + "/" + result);
+      QFile f(cacheDir.absolutePath() + "/" + result);
+      if(f.open(QIODevice::ReadOnly)) {
+	entry.coverData = f.readAll();
+	f.close();
+      }
       entry.coverSrc = source;
     }
   }
@@ -1678,7 +1682,11 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.screenshotData = QImage(cacheDir.absolutePath() + "/" + result);
+      QFile f(cacheDir.absolutePath() + "/" + result);
+      if(f.open(QIODevice::ReadOnly)) {
+	entry.screenshotData = f.readAll();
+	f.close();
+      }
       entry.screenshotSrc = source;
     }
   }
@@ -1687,7 +1695,11 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.wheelData = QImage(cacheDir.absolutePath() + "/" + result);
+      QFile f(cacheDir.absolutePath() + "/" + result);
+      if(f.open(QIODevice::ReadOnly)) {
+	entry.wheelData = f.readAll();
+	f.close();
+      }
       entry.wheelSrc = source;
     }
   }
@@ -1696,7 +1708,11 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
     QString result = "";
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
-      entry.marqueeData = QImage(cacheDir.absolutePath() + "/" + result);
+      QFile f(cacheDir.absolutePath() + "/" + result);
+      if(f.open(QIODevice::ReadOnly)) {
+	entry.marqueeData = f.readAll();
+	f.close();
+      }
       entry.marqueeSrc = source;
     }
   }

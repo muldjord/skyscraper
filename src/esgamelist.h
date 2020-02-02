@@ -40,7 +40,7 @@ private:
   void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
 			QString platform) override;
   void getGameData(GameEntry &game) override;
-  QImage loadImageData(const QString fileName);
+  QByteArray loadImageData(const QString fileName);
   void loadVideoData(GameEntry &game, const QString fileName);
   QString getAbsoluteFileName(const QString fileName);
 

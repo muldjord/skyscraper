@@ -291,7 +291,7 @@ void AbstractScraper::getCover(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.coverData = image;
+    game.coverData = manager.getData();
   }
 }
 
@@ -316,7 +316,7 @@ void AbstractScraper::getScreenshot(GameEntry &game)
     q.exec();
     QImage image;
     if(image.loadFromData(manager.getData())) {
-      game.screenshotData = image;
+      game.screenshotData = manager.getData();
     }
   }
 }
@@ -342,7 +342,7 @@ void AbstractScraper::getWheel(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.wheelData = image;
+    game.wheelData = manager.getData();
   }
 }
 
@@ -367,7 +367,7 @@ void AbstractScraper::getMarquee(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.marqueeData = image;
+    game.marqueeData = manager.getData();
   }
 }
 

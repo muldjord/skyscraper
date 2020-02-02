@@ -157,7 +157,7 @@ void ArcadeDB::getCover(GameEntry &game)
   {
     QImage image;
     if(image.loadFromData(manager.getData())) {
-      game.coverData = image;
+      game.coverData = manager.getData();
       return;
     }
   }
@@ -166,7 +166,7 @@ void ArcadeDB::getCover(GameEntry &game)
   {
     QImage image;
     if(image.loadFromData(manager.getData())) {
-      game.coverData = image;
+      game.coverData = manager.getData();
       return;
     }
   }
@@ -178,7 +178,7 @@ void ArcadeDB::getScreenshot(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.screenshotData = image;
+    game.screenshotData = manager.getData();
   }
 }
 
@@ -188,7 +188,7 @@ void ArcadeDB::getMarquee(GameEntry &game)
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
-    game.marqueeData = image;
+    game.marqueeData = manager.getData();
   }
 }
 

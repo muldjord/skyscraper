@@ -146,17 +146,17 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Make all artwork types custom meaning that their type can be whatever the user wants. The sources will create ones with known types such as 'screenshot' and 'cover', but the user can import other types they define themselves, such as 'cabinet' or whatever else. Internally artwork is then handled by a list of artwork instead of 4 hardcoded types in GameEntry
 * Introduce the ability to use <BASENAME> in the 'file="somefolder/<BASENAME>.png"' in artwork.xml which would then look for a file in 'resources' with the game basename.png allowing users to use their own custom artwork data as a workaround to adding new types to import (Thank you to 'jueank' for suggesting this)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
-* Implement a '--noconvert' option that forces source artwork to be kept "as is" when saved to the cache
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
-* Add a way to ignore certain filenames when scraping such as those containing '[BIOS]*' (Thank you to 'timothybrown' for suggesting this)
 
-#### Version 3.3.9 (In progress, unreleased)
+#### Version 3.4.0 (In progress, unreleased)
 * Added 'launcher' option to 'simple mode' when using 'pegasus' frontend
 * Added 'excludeFiles' config option that allows excluding certain files when scraping (Thank you to 'timothybrown' for suggesting this)
 * Added 'includeFiles' config option that allows only including certain files when scraping
 * Added '--excludefiles' cli option that allows excluding certain files when scraping
 * Added '--includefiles' cli option that allows only including certain files when scraping
+* 'noresize' CLI option and 'cacheResize' config.ini option are now deprecated, see below
+* All images now saved to cache in their original format as received from the sources instead of converting them to PNG's. Should save space and be more efficient
 
 #### Version 3.3.8 (12th January 2020)
 * Fixed bug in platform alias for 'pc (microsoft windows)' which was missing the last ')' bracket (Thank you to 'o0alucard0o' for reporting this)

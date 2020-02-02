@@ -159,9 +159,10 @@ QString ImportScraper::getCompareTitle(QFileInfo info)
 void ImportScraper::getCover(GameEntry &game)
 {
   if(!coverFile.isEmpty()) {
-    QImage image(coverFile);
-    if(!image.isNull()) {
-      game.coverData = image;
+    QFile f(coverFile);
+    if(f.open(QIODevice::ReadOnly)) {
+      game.coverData = f.readAll();
+      f.close();
     }
   }
 }
@@ -169,9 +170,10 @@ void ImportScraper::getCover(GameEntry &game)
 void ImportScraper::getScreenshot(GameEntry &game)
 {
   if(!screenshotFile.isEmpty()) {
-    QImage image(screenshotFile);
-    if(!image.isNull()) {
-      game.screenshotData = image;
+    QFile f(screenshotFile);
+    if(f.open(QIODevice::ReadOnly)) {
+      game.screenshotData = f.readAll();
+      f.close();
     }
   }
 }
@@ -179,9 +181,10 @@ void ImportScraper::getScreenshot(GameEntry &game)
 void ImportScraper::getWheel(GameEntry &game)
 {
   if(!wheelFile.isEmpty()) {
-    QImage image(wheelFile);
-    if(!image.isNull()) {
-      game.wheelData = image;
+    QFile f(wheelFile);
+    if(f.open(QIODevice::ReadOnly)) {
+      game.wheelData = f.readAll();
+      f.close();
     }
   }
 }
@@ -189,9 +192,10 @@ void ImportScraper::getWheel(GameEntry &game)
 void ImportScraper::getMarquee(GameEntry &game)
 {
   if(!marqueeFile.isEmpty()) {
-    QImage image(marqueeFile);
-    if(!image.isNull()) {
-      game.marqueeData = image;
+    QFile f(marqueeFile);
+    if(f.open(QIODevice::ReadOnly)) {
+      game.marqueeData = f.readAll();
+      f.close();
     }
   }
 }

@@ -78,15 +78,6 @@ NOTE! If this is set in the `[main]` section (recommended) it will automatically
 
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`*
 
-#### cacheResize="false"
-By default, to save space, Skyscraper resizes large pieces of artwork before adding them to the resource cache. Setting this option to `"false"` will disable this and save the artwork files with their original resolution. Beware that Skyscraper converts all artwork resources to lossless PNG's when saving them. High resolution images such as covers will take up a lot of space! So set this to `"false"` with caution.
-
-NOTE! This is not related to the artwork compositing that happens when generating a game list. This is *only* related to how Skyscraper handles artwork when adding it to the resource cache while gathering data from the scraping modules.
-
-To read about artwork compositing go [here](ARTWORK.md) instead.
-
-*Allowed in section(s): `[main]`, `[<PLATFORM>]`*
-
 #### cacheCovers="true"
 Enables/disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, setting this to `"false"` can save you some space.
 
