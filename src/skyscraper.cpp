@@ -686,7 +686,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
      END updating files from distribution files
     ----- */
 
-  migrate(parser.isSet("c")?parser.value("c"):"config.ini");
+  //migrate(parser.isSet("c")?parser.value("c"):"config.ini");
 
   QSettings settings(parser.isSet("c")?parser.value("c"):"config.ini", QSettings::IniFormat);
 
@@ -811,6 +811,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("includeFiles")) {
     config.includeFiles = settings.value("includeFiles").toString();
   }
+  if(settings.contains("jpgQuality")) {
+    config.jpgQuality = settings.value("jpgQuality").toInt();
+  }
   if(settings.contains("cacheResize")) {
     config.noResize = !settings.value("cacheResize").toBool();
   }
@@ -885,6 +888,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("cacheFolder")) {
     config.cacheFolder = settings.value("cacheFolder").toString();
+  }
+  if(settings.contains("jpgQuality")) {
+    config.jpgQuality = settings.value("jpgQuality").toInt();
   }
   if(settings.contains("cacheResize")) {
     config.noResize = !settings.value("cacheResize").toBool();
@@ -1084,6 +1090,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("interactive")) {
     config.interactive = settings.value("interactive").toBool();
+  }
+  if(settings.contains("jpgQuality")) {
+    config.jpgQuality = settings.value("jpgQuality").toInt();
+  }
+  if(settings.contains("cacheResize")) {
+    config.noResize = !settings.value("cacheResize").toBool();
   }
   if(settings.contains("cacheCovers")) {
     config.cacheCovers = settings.value("cacheCovers").toBool();
@@ -1667,6 +1679,7 @@ void Skyscraper::setLangPrios()
   }
 }
 
+/*
 void Skyscraper::migrate(QString filename)
 {
   if(!QFileInfo::exists(filename) || QFileInfo::exists(filename + ".old"))
@@ -1711,6 +1724,7 @@ void Skyscraper::migrate(QString filename)
     settings.close();
   }
 }
+*/
 
 // --- Console colors ---
 // Black        0;30     Dark Gray     1;30
