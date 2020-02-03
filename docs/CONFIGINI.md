@@ -87,8 +87,8 @@ To read about artwork compositing go [here](ARTWORK.md) instead.
 
 *Allowed in section(s): `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`*
 
-#### jpgQuality="100"
-Sets the default jpg quality when saving image resources to the cache. This will be ignored if `--noresize` is set. Default is 100.
+#### jpgQuality="95"
+Sets the default jpg quality when saving image resources to the cache. This will be ignored if `--noresize` is set. Default is 95.
 
 NOTE! All screenshots and any image resource that uses transparency will always be saved as png images. In those cases this setting will be ignored as png's are lossless.
 
