@@ -156,8 +156,8 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Added 'includeFiles' config option that allows only including certain files when scraping
 * Added '--excludefiles' cli option that allows excluding certain files when scraping
 * Added '--includefiles' cli option that allows only including certain files when scraping
-* If 'noresize' is set all images are now saved to cache in their original format and size (requires quite a lot of space, so beware of those hi-res covers)
-* Added 'jpgQuality' config option that sets the default jpg quality (0-100) when jpg is used (any image resource besides screenshots unless they use transparency, then they will be saved as png's)
+* If 'noresize' is set all images are now saved to cache in their original format and size instead of always converting them to PNG's (Thank you to 'krkroft' for requesting this)
+* Added 'jpgQuality' config option that sets the default JPG quality (0-100) when '--noresize' is NOT set. Screenshots and images with transparency are still saved as PNG's.
 
 #### Version 3.3.8 (12th January 2020)
 * Fixed bug in platform alias for 'pc (microsoft windows)' which was missing the last ')' bracket (Thank you to 'o0alucard0o' for reporting this)
