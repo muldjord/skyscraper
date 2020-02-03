@@ -1554,7 +1554,7 @@ bool Cache::hasAlpha(const QImage &image)
 {
   QRgb* constBits = (QRgb *)image.constBits();
   for(int a = 0; a < image.width() * image.height(); ++a) {
-    if(qAlpha(constBits[a]) < 250) {
+    if(qAlpha(constBits[a]) < 127) {
       return true;
     }
   }
