@@ -113,7 +113,7 @@ public:
   void verifyResources(int &resourcesDeleted);
   bool fillType(QString &type, QList<Resource> &matchingResources,
 		QString &result, QString &source);
-
+  bool hasAlpha(const QImage &image);
   int resAtLoad = 0;
 };
 

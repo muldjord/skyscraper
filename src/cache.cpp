@@ -1468,56 +1468,62 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
   
   if(notFound) {
     bool okToAppend = true;
-    if(resource.type == "cover") {
-      QFile f(cacheAbsolutePath + "/" + resource.value);
-      if(f.open(QIODevice::WriteOnly)) {
-	f.write(entry.coverData);
-	f.close();
-	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
-	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
+    QString cacheFile = cacheAbsolutePath + "/" + resource.value;
+    if(resource.type == "cover" ||
+       resource.type == "screenshot" ||
+       resource.type == "wheel" ||
+       resource.type == "marquee") {
+      if(config.noResize) {
+	QFile f(cacheFile);
+	if(f.open(QIODevice::WriteOnly)) {
+	  if(resource.type == "cover") {
+	    f.write(entry.coverData);
+	  } else if(resource.type == "screenshot") {
+	    f.write(entry.screenshotData);
+	  } else if(resource.type == "wheel") {
+	    f.write(entry.wheelData);
+	  } else if(resource.type == "marquee") {
+	    f.write(entry.marqueeData);
+	  }
+	  f.close();
+	} else {
+	  okToAppend = false;
 	}
       } else {
-	okToAppend = false;
-      }
-    } else if(resource.type == "screenshot") {
-      QFile f(cacheAbsolutePath + "/" + resource.value);
-      if(f.open(QIODevice::WriteOnly)) {
-	f.write(entry.screenshotData);
-	f.close();
-	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
-	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
+	QImage image;
+	if(resource.type == "cover") {
+	  image.loadFromData(entry.coverData);
+	} else if(resource.type == "screenshot") {
+	  image.loadFromData(entry.screenshotData);
+	} else if(resource.type == "wheel") {
+	  image.loadFromData(entry.wheelData);
+	} else if(resource.type == "marquee") {
+	  image.loadFromData(entry.marqueeData);
 	}
-      } else {
-	okToAppend = false;
-      }
-    } else if(resource.type == "wheel") {
-      QFile f(cacheAbsolutePath + "/" + resource.value);
-      if(f.open(QIODevice::WriteOnly)) {
-	f.write(entry.wheelData);
-	f.close();
-	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
-	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
+	if(!image.isNull()) {
+	  int max = 800;
+	  if(image.width() > max || image.height() > max) {
+	    image = image.scaled(max, max, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	  }
+	  if((image.hasAlphaChannel() && hasAlpha(image)) || resource.type == "screenshot") {
+	    if(!image.save(cacheFile, "png")) {
+	      okToAppend = false;
+	    }
+	  } else {
+	    if(!image.save(cacheFile, "jpg", config.jpgQuality)) {
+	      okToAppend = false;
+	    }
+	  }
+	} else {
+	  okToAppend = false;
 	}
-      } else {
-	okToAppend = false;
-      }
-    } else if(resource.type == "marquee") {
-      QFile f(cacheAbsolutePath + "/" + resource.value);
-      if(f.open(QIODevice::WriteOnly)) {
-	f.write(entry.marqueeData);
-	f.close();
-	if(QFile::exists(cacheAbsolutePath + "/" + resource.value + ".png")) {
-	  QFile::remove(cacheAbsolutePath + "/" + resource.value + ".png");
-	}
-      } else {
-	okToAppend = false;
       }
     } else if(resource.type == "video") {
       if(entry.videoData.size() <= config.videoSizeLimit) {
-	QFile videoFile(cacheAbsolutePath + "/" + resource.value);
-	if(videoFile.open(QIODevice::WriteOnly)) {
-	  videoFile.write(entry.videoData);
-	  videoFile.close();
+	QFile f(cacheFile);
+	if(f.open(QIODevice::WriteOnly)) {
+	  f.write(entry.videoData);
+	  f.close();
 	} else {
 	  okToAppend = false;
 	}
@@ -1527,12 +1533,32 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
     }
 
     if(okToAppend) {
+      if(resource.type == "cover" ||
+	 resource.type == "screenshot" ||
+	 resource.type == "wheel" ||
+	 resource.type == "marquee") {
+	// Remove old style cache image if it exists
+	if(QFile::exists(cacheFile + ".png")) {
+	  QFile::remove(cacheFile + ".png");
+	}
+      }
       resources.append(resource);
     } else {
       printf("\033[1;33mWarning! Couldn't add resource to cache. Have you run out of disk space?\n\033[0m");
     }
     
   }
+}
+
+bool Cache::hasAlpha(const QImage &image)
+{
+  QRgb* constBits = (QRgb *)image.constBits();
+  for(int a = 0; a < image.width() * image.height(); ++a) {
+    if(qAlpha(constBits[a]) < 254) {
+      return true;
+    }
+  }
+  return false;
 }
 
 void Cache::addQuickId(const QFileInfo &info, const QString &cacheId) {
@@ -1734,13 +1760,13 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
     QString source = "";
     if(fillType(type, matchingResources, result, source)) {
       QFileInfo info(cacheDir.absolutePath() + "/" + result);
-      QFile videoFile(info.absoluteFilePath());
-      if(videoFile.open(QIODevice::ReadOnly)) {
-	entry.videoData = videoFile.readAll();
+      QFile f(info.absoluteFilePath());
+      if(f.open(QIODevice::ReadOnly)) {
+	entry.videoData = f.readAll();
+	f.close();
 	entry.videoFormat = info.suffix();
 	entry.videoFile = info.absoluteFilePath();
 	entry.videoSrc = source;
-	videoFile.close();
       }
     }
   }
