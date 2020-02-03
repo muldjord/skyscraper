@@ -150,13 +150,14 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 
 #### Version 3.4.0 (In progress, unreleased)
+* Disabled config.ini migration as most people should be migrated now
 * Added 'launcher' option to 'simple mode' when using 'pegasus' frontend
 * Added 'excludeFiles' config option that allows excluding certain files when scraping (Thank you to 'timothybrown' for suggesting this)
 * Added 'includeFiles' config option that allows only including certain files when scraping
 * Added '--excludefiles' cli option that allows excluding certain files when scraping
 * Added '--includefiles' cli option that allows only including certain files when scraping
-* 'noresize' CLI option and 'cacheResize' config.ini option are now deprecated, see below
-* All images now saved to cache in their original format as received from the sources instead of converting them to PNG's. Should save space and be more efficient
+* If 'noresize' is set all images are now saved to cache in their original format and size (requires quite a lot of space, so beware of those hi-res covers)
+* Added 'jpgQuality' config option that sets the default jpg quality (0-100) when jpg is used (any image resource besides screenshots unless they use transparency, then they will be saved as png's)
 
 #### Version 3.3.8 (12th January 2020)
 * Fixed bug in platform alias for 'pc (microsoft windows)' which was missing the last ')' bracket (Thank you to 'o0alucard0o' for reporting this)
