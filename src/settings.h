@@ -66,6 +66,7 @@ struct Settings {
   bool refresh = false;
   QString cacheOptions = "";
   bool noResize = false;
+  int jpgQuality = 100;
   bool subdirs = true;
   QString startAt = "";
   QString endAt = "";
