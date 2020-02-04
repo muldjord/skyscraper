@@ -805,8 +805,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
-  if(settings.contains("excludefiles")) {
-    config.excludeFiles = settings.value("excludefiles").toString();
+  if(settings.contains("excludeFiles")) {
+    config.excludeFiles = settings.value("excludeFiles").toString();
   }
   if(settings.contains("includeFiles")) {
     config.includeFiles = settings.value("includeFiles").toString();
@@ -990,8 +990,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
-  if(settings.contains("excludefiles")) {
-    config.excludeFiles = settings.value("excludefiles").toString();
+  if(settings.contains("excludeFiles")) {
+    config.excludeFiles = settings.value("excludeFiles").toString();
   }
   if(settings.contains("includeFiles")) {
     config.includeFiles = settings.value("includeFiles").toString();
@@ -1017,8 +1017,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
-  if(settings.contains("excludefiles")) {
-    config.excludeFiles = settings.value("excludefiles").toString();
+  if(settings.contains("excludeFiles")) {
+    config.excludeFiles = settings.value("excludeFiles").toString();
   }
   if(settings.contains("includeFiles")) {
     config.includeFiles = settings.value("includeFiles").toString();
