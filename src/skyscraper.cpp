@@ -815,7 +815,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.jpgQuality = settings.value("jpgQuality").toInt();
   }
   if(settings.contains("cacheResize")) {
-    config.noResize = !settings.value("cacheResize").toBool();
+    config.cacheResize = settings.value("cacheResize").toBool();
   }
   if(settings.contains("cacheCovers")) {
     config.cacheCovers = settings.value("cacheCovers").toBool();
@@ -893,7 +893,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.jpgQuality = settings.value("jpgQuality").toInt();
   }
   if(settings.contains("cacheResize")) {
-    config.noResize = !settings.value("cacheResize").toBool();
+    config.cacheResize = settings.value("cacheResize").toBool();
   }
   if(settings.contains("cacheCovers")) {
     config.cacheCovers = settings.value("cacheCovers").toBool();
@@ -1095,7 +1095,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.jpgQuality = settings.value("jpgQuality").toInt();
   }
   if(settings.contains("cacheResize")) {
-    config.noResize = !settings.value("cacheResize").toBool();
+    config.cacheResize = settings.value("cacheResize").toBool();
   }
   if(settings.contains("cacheCovers")) {
     config.cacheCovers = settings.value("cacheCovers").toBool();
@@ -1210,7 +1210,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     }
   }
   if(parser.isSet("noresize")) {
-    config.noResize = true;
+    config.cacheResize = false;
   }
   if(parser.isSet("nosubdirs")) {
     config.subdirs = false;
