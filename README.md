@@ -149,6 +149,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 
+#### Version 3.4.1 (In progress, unreleased)
+* Further optimized artwork space requirements. Now checks if original takes up less space than resized artwork, then forces use of original for those cases
+
 #### Version 3.4.0 (4th February 2020)
 * Disabled config.ini migration as most people should be migrated now
 * Added 'launcher' option to 'simple mode' when using 'pegasus' frontend
