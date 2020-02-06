@@ -32,6 +32,7 @@
 #include <QDateTime>
 #include <QDomDocument>
 #include <QRegularExpression>
+#include <QBuffer>
 
 #include "cache.h"
 #include "nametools.h"
@@ -1473,23 +1474,7 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
        resource.type == "screenshot" ||
        resource.type == "wheel" ||
        resource.type == "marquee") {
-      if(config.noResize) {
-	QFile f(cacheFile);
-	if(f.open(QIODevice::WriteOnly)) {
-	  if(resource.type == "cover") {
-	    f.write(entry.coverData);
-	  } else if(resource.type == "screenshot") {
-	    f.write(entry.screenshotData);
-	  } else if(resource.type == "wheel") {
-	    f.write(entry.wheelData);
-	  } else if(resource.type == "marquee") {
-	    f.write(entry.marqueeData);
-	  }
-	  f.close();
-	} else {
-	  okToAppend = false;
-	}
-      } else {
+      if(config.cacheResize) {
 	QImage image;
 	if(resource.type == "cover") {
 	  image.loadFromData(entry.coverData);
@@ -1505,15 +1490,57 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
 	  if(image.width() > max || image.height() > max) {
 	    image = image.scaled(max, max, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 	  }
+	  QByteArray imageBuffer;
+	  QBuffer buffer(&imageBuffer);
+	  buffer.open(QIODevice::WriteOnly);
 	  if((image.hasAlphaChannel() && hasAlpha(image)) || resource.type == "screenshot") {
-	    if(!image.save(cacheFile, "png")) {
-	      okToAppend = false;
-	    }
+	    image.save(&buffer, "png");
 	  } else {
-	    if(!image.save(cacheFile, "jpg", config.jpgQuality)) {
-	      okToAppend = false;
-	    }
+	    image.save(&buffer, "jpg", config.jpgQuality);
 	  }
+	  buffer.close();
+	  if(resource.type == "cover" &&
+	     entry.coverData.size() > imageBuffer.size()) {
+	    if(config.verbosity >= 3) {
+	      printf("COVER: '%d' > '%d', choosing resize for optimal result!\n", entry.coverData.size(), imageBuffer.size());
+	    }
+	    entry.coverData = imageBuffer;
+	  } else if(resource.type == "screenshot" &&
+		    entry.screenshotData.size() > imageBuffer.size()) {
+	    if(config.verbosity >= 3) {
+	      printf("SCREENSHOT: '%d' > '%d', choosing resize for optimal result!\n", entry.screenshotData.size(), imageBuffer.size());
+	    }
+	    entry.screenshotData = imageBuffer;
+	  } else if(resource.type == "wheel" &&
+		    entry.wheelData.size() > imageBuffer.size()) {
+	    if(config.verbosity >= 3) {
+	      printf("WHEEL: '%d' > '%d', choosing resize for optimal result!\n", entry.wheelData.size(), imageBuffer.size());
+	    }
+	    entry.wheelData = imageBuffer;
+	  } else if(resource.type == "marquee" &&
+		    entry.marqueeData.size() > imageBuffer.size()) {
+	    if(config.verbosity >= 3) {
+	      printf("MARQUEE: '%d' > '%d', choosing resize for optimal result!\n", entry.marqueeData.size(), imageBuffer.size());
+	    }
+	    entry.marqueeData = imageBuffer;
+	  }
+	} else {
+	  okToAppend = false;
+	}
+      }
+      if(okToAppend) {
+	QFile f(cacheFile);
+	if(f.open(QIODevice::WriteOnly)) {
+	  if(resource.type == "cover") {
+	    f.write(entry.coverData);
+	  } else if(resource.type == "screenshot") {
+	    f.write(entry.screenshotData);
+	  } else if(resource.type == "wheel") {
+	    f.write(entry.wheelData);
+	  } else if(resource.type == "marquee") {
+	    f.write(entry.marqueeData);
+	  }
+	  f.close();
 	} else {
 	  okToAppend = false;
 	}
