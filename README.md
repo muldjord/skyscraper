@@ -151,6 +151,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.4.1 (In progress, unreleased)
 * Further optimized artwork space requirements. Now checks if original takes up less space than resized artwork, then forces use of original for those cases
+* The 'thegamesdb' module now also supports wheel and marquee for the games that have them (Thank you to 'tv21' for pointing this out)
 
 #### Version 3.4.0 (4th February 2020)
 * Disabled config.ini migration as most people should be migrated now
