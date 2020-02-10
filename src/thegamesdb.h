@@ -52,6 +52,8 @@ private:
 
   void getCover(GameEntry &game) override;
   void getScreenshot(GameEntry &game) override;
+  void getWheel(GameEntry &game) override;
+  void getMarquee(GameEntry &game) override;
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;

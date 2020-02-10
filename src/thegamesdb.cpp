@@ -48,7 +48,8 @@ TheGamesDb::TheGamesDb(Settings *config) : AbstractScraper(config)
   //fetchOrder.append(RATING);
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
-  //fetchOrder.append(WHEEL);
+  fetchOrder.append(WHEEL);
+  fetchOrder.append(MARQUEE);
 }
 
 void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
@@ -216,8 +217,6 @@ void TheGamesDb::getTags(GameEntry &game)
 
 void TheGamesDb::getCover(GameEntry &game)
 {
-  // https://api.thegamesdb.net/v1/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
-  // https://cdn.thegamesdb.net/images/original/boxart/front/[gameid]-1.jpg
   manager.request("https://cdn.thegamesdb.net/images/original/boxart/front/" + game.id + "-1.jpg");
   q.exec();
   QImage image;
@@ -228,13 +227,31 @@ void TheGamesDb::getCover(GameEntry &game)
 
 void TheGamesDb::getScreenshot(GameEntry &game)
 {
-  // https://api.thegamesdb.net/v1/Games/Boxart?games_id=88&apikey=XXX&filter=boxart,screenshot
-  // https://cdn.thegamesdb.net/images/original/screenshots/[gameid]-1.jpg
   manager.request("https://cdn.thegamesdb.net/images/original/screenshots/" + game.id + "-1.jpg");
   q.exec();
   QImage image;
   if(image.loadFromData(manager.getData())) {
     game.screenshotData = manager.getData();
+  }
+}
+
+void TheGamesDb::getWheel(GameEntry &game)
+{
+  manager.request("https://cdn.thegamesdb.net/images/original/clearlogo/" + game.id + ".png");
+  q.exec();
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
+    game.wheelData = manager.getData();
+  }
+}
+
+void TheGamesDb::getMarquee(GameEntry &game)
+{
+  manager.request("https://cdn.thegamesdb.net/images/original/graphical/" + game.id + "-g.jpg");
+  q.exec();
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
+    game.marqueeData = manager.getData();
   }
 }
 
