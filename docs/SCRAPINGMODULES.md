@@ -33,15 +33,15 @@ I strongly recommend supporting them by contributing data to the database, or by
 * Website: *[www.thegamesdb.net](http://www.thegamesdb.net)*
 * Type: *File name search based*
 * User credential support: *Not required*
-* API request limit: *Limited to 2000 requests per IP per month*
+* API request limit: *Limited to 3000 requests per IP per month*
 * Thread limit: *None*
 * Platform support: *[Link to list](https://thegamesdb.net/list_platforms.php)*
-* Media support: *`cover`, `screenshot`*
+* Media support: *`cover`, `screenshot`, `wheel`, `marquee`*
 * Example use: `Skyscraper -p snes -s thegamesdb`
 
 For newer games there's no way around TheGamesDb. It recently had a huge redesign and their database remains one of the best out there. I would recommend scraping your roms with `screenscraper` first, and then use `thegamesdb` to fill out the gaps in your cache.
 
-There's a small caveat to this module, as it is restricted to 2000 requests per IP per month. But this should be plenty for most people.
+There's a small caveat to this module, as it has a monthly request limit (see above) per IP per month. But this should be plenty for most people.
 
 Their API is based on a file name search. This means that the returned results do have a chance of being faulty. Skyscraper does a lot internally to make sure accepted data is for the correct game. But it is impossible to ensure 100% correct results, so do keep that in mind when using it. Consider using the `--interactive` command line option if you want complete control of the accepted entries.
 
