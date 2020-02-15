@@ -89,7 +89,6 @@ Skyscraper will try to autodetect the region from the file name. It will look fo
 When a region is specified by the user, this region will be prioritized. However, if a resource can't be found with that specific region, it will fall back to the default list of regions and look for a resource with the topmost region first, then the next and so on:
 * eu
 * us
-* ss
 * uk
 * wor
 * jp
