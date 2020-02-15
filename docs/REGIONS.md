@@ -48,6 +48,7 @@ When setting the country or region use the short-name as shown. Check the exampl
 * tw: Taiwan (screenscraper, mobygames)
 * tr: Turkey (screenscraper, mobygames)
 * us: USA (screenscraper, igdb, mobygames)
+* ss: ScreenScraper (Know what defines this? Let me know) (screenscraper)
 
 ## Examples
 ### Command line
