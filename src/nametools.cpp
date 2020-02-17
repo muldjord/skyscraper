@@ -132,14 +132,14 @@ QString NameTools::getUrlQueryName(const QString baseName, const int words, cons
 
   QRegularExpressionMatch match;
   // Remove " rev.X" instances
-  match = QRegularExpression(" rev\\.(\\d.*\\d*|[IVX]{1,5})$").match(newName);
-  if(match.hasMatch()) {
-    newName = newName.left(newName.indexOf(match.captured(0))).simplified();
+  match = QRegularExpression(" rev[.]{0,1}([0-9]{1}[0-9]{0,2}[.]{0,1}[0-9]{1,4}|[IVX]{1,5})$").match(newName);
+  if(match.hasMatch() && match.capturedStart(0) != -1) {
+    newName = newName.left(match.capturedStart(0)).simplified();
   }
-  // Remove " v.X" instances
-  match = QRegularExpression(" v\\.(\\d.*\\d*|[IVX]{1,5})$").match(newName);
-  if(match.hasMatch()) {
-    newName = newName.left(newName.indexOf(match.captured(0))).simplified();
+  // Remove versioning instances
+  match = QRegularExpression(" v[.]{0,1}([0-9]{1}[0-9]{0,2}[.]{0,1}[0-9]{1,4}|[IVX]{1,5})$").match(newName);
+  if(match.hasMatch() && match.capturedStart(0) != -1) {
+    newName = newName.left(match.capturedStart(0)).simplified();
   }
 
   // If we have the first game in a series, remove the ' I' for more search results

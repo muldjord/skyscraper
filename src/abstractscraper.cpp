@@ -497,13 +497,20 @@ QString AbstractScraper::getCompareTitle(QFileInfo info)
   // Now create actual compareTitle
   baseName = baseName.replace("_", " ").left(baseName.indexOf("(")).left(baseName.indexOf("[")).simplified();
 
-  // Always move ", The" to the beginning of the name
   QRegularExpressionMatch match;
+
+  // Always move ", The" to the beginning of the name
   match = QRegularExpression(", [Tt]he").match(baseName);
   if(match.hasMatch()) {
     baseName = baseName.replace(match.captured(0), "").prepend(match.captured(0).right(3) + " ");
   }
-  
+
+  // Remove "vX.XXX" versioning string if one is found
+  match = QRegularExpression(" v[.]{0,1}([0-9]{1}[0-9]{0,2}[.]{0,1}[0-9]{1,4}|[IVX]{1,5})$").match(baseName);
+  if(match.hasMatch() && match.capturedStart(0) != -1) {
+    baseName = baseName.left(match.capturedStart(0)).simplified();
+  }
+    
   return baseName;
 }
 
