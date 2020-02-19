@@ -150,7 +150,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 
 #### Version 3.4.2 (In progress, unreleased)
-* Now removes versioning from filenames for optimal query generation
+* Improved filename versioning removal for optimal query generation
 
 #### Version 3.4.1 (11th February 2020)
 * Further optimized artwork space requirements. Now checks if original takes up less space than resized artwork, then forces use of original for those cases
