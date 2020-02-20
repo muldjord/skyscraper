@@ -109,7 +109,7 @@ The most important ones are probably:
 * `--videos`
 * `--unattend`
 
-If you have your roms in a non-default location (default is `/home/<USER>/RetroPie/roms/<PLATFORM>`) or wish to export the game list or artwork to non-default locations, you will also need these:
+If you have your roms in a non-default location (default for RetroPie users is `/home/<USER>/RetroPie/roms/<PLATFORM>`) or wish to export the game list or artwork to non-default locations, you will also need these:
 * `-i <PATH>`
 * `-g <PATH>`
 * `-o <PATH>`
