@@ -21,7 +21,7 @@
 * Dreamcast
 * Emerson Arcadia 2001
 * Famicom Disk System
-* FB Alpha
+* FB Neo (formerly FB Alpha)
 * Game Boy
 * Game Boy Advance
 * Game Boy Color
