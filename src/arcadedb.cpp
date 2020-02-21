@@ -134,7 +134,7 @@ void ArcadeDB::getPlayers(GameEntry &game)
 
 void ArcadeDB::getTags(GameEntry &game)
 {
-  game.tags = jsonObj.value("genre").toString();
+  game.tags = jsonObj.value("genre").toString().replace(" / ", ", ");
 }
 
 void ArcadeDB::getPublisher(GameEntry &game)
