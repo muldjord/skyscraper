@@ -148,6 +148,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.4.2 (In progress, unreleased)
 * Improved filename versioning removal for optimal query generation
+* Updated 'mameMap.csv' with latest Mame v0.218 listings
 
 #### Version 3.4.1 (11th February 2020)
 * Further optimized artwork space requirements. Now checks if original takes up less space than resized artwork, then forces use of original for those cases
