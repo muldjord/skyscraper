@@ -43,6 +43,7 @@ ArcadeDB::ArcadeDB(Settings *config) : AbstractScraper(config)
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(SCREENSHOT);
   fetchOrder.append(COVER);
+  fetchOrder.append(WHEEL);
   fetchOrder.append(MARQUEE);
   fetchOrder.append(VIDEO);
 }
@@ -145,7 +146,7 @@ void ArcadeDB::getPublisher(GameEntry &game)
 void ArcadeDB::getDescription(GameEntry &game)
 {
   game.description = jsonObj.value("history").toString();
-  if(game.description.indexOf("- TECHNICAL") != -1) {
+  if(game.description.contains("- TECHNICAL")) {
     game.description = game.description.left(game.description.indexOf("- TECHNICAL")).trimmed();
   }
 }
@@ -179,6 +180,16 @@ void ArcadeDB::getScreenshot(GameEntry &game)
   QImage image;
   if(image.loadFromData(manager.getData())) {
     game.screenshotData = manager.getData();
+  }
+}
+
+void ArcadeDB::getWheel(GameEntry &game)
+{
+  manager.request("http://adb.arcadeitalia.net/media/mame.current/decals/" + jsonObj["game_name"].toString() + ".png");
+  q.exec();
+  QImage image;
+  if(image.loadFromData(manager.getData())) {
+    game.wheelData = manager.getData();
   }
 }
 

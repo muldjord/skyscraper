@@ -50,6 +50,7 @@ private:
   void getDescription(GameEntry &game) override;
   void getCover(GameEntry &game) override;
   void getScreenshot(GameEntry &game) override;
+  void getWheel(GameEntry &game) override;
   void getMarquee(GameEntry &game) override;
   void getVideo(GameEntry &game) override;
 
