@@ -258,7 +258,7 @@ void Skyscraper::run()
   queue->append(infoList);
   if(config.subdirs) {
     QDirIterator dirIt(config.inputFolder,
-		       QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+		       QDir::Dirs | QDir::NoDotAndDotDot,
 		       QDirIterator::Subdirectories);
     while(dirIt.hasNext()) {
       QString subdir = dirIt.next();
@@ -1397,7 +1397,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   
   QDir resDir("./resources");
   QDirIterator resDirIt(resDir.absolutePath(),
-			QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			QDir::Files | QDir::NoDotAndDotDot,
 			QDirIterator::Subdirectories);
   while(resDirIt.hasNext()) {
     QString resFile = resDirIt.next();
