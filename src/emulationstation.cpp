@@ -136,8 +136,7 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
 
     QFileInfo entryInfo(entry.path);
     if(entryInfo.isFile()) {
-      // Check if game is in subfolder and if it's a .cue or .m3u file.
-      // If so, change entry to <folder> type.
+      // Check if game is in subfolder. If so, change entry to <folder> type.
       QString entryAbsolutePath = entryInfo.absolutePath();
       // Check if path is exactly one subfolder beneath root platform folder (has one more '/')
       if(entryAbsolutePath.count("/") == config->inputFolder.count("/") + 1) {
