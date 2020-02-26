@@ -150,6 +150,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Improved filename versioning removal for optimal query generation
 * Updated 'mameMap.csv' with latest Mame v0.218 listings
 * Added support for 'wheel' artwork type in 'arcadedb' scraping module
+* Now supports symlinked paths inside of the input folder (Thank you to rhunjadi for pointing this out)
 
 #### Version 3.4.1 (11th February 2020)
 * Further optimized artwork space requirements. Now checks if original takes up less space than resized artwork, then forces use of original for those cases
