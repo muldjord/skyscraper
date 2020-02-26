@@ -146,7 +146,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 
-#### Version 3.4.2 (In progress, unreleased)
+#### Version 3.4.2 (26th February 2020)
 * Improved filename versioning removal for optimal query generation
 * Updated 'mameMap.csv' with latest Mame v0.218 listings
 * Added support for 'wheel' artwork type in 'arcadedb' scraping module
