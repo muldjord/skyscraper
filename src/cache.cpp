@@ -1224,23 +1224,23 @@ void Cache::validate()
   QDir videosDir(cacheDir.absolutePath() + "/videos", "*.*", QDir::Name, QDir::Files);
 
   QDirIterator coversDirIt(coversDir.absolutePath(),
-			   QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			   QDir::Files | QDir::NoDotAndDotDot,
 			   QDirIterator::Subdirectories);
 
   QDirIterator screenshotsDirIt(screenshotsDir.absolutePath(),
-				QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+				QDir::Files | QDir::NoDotAndDotDot,
 				QDirIterator::Subdirectories);
 
   QDirIterator wheelsDirIt(wheelsDir.absolutePath(),
-			   QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			   QDir::Files | QDir::NoDotAndDotDot,
 			   QDirIterator::Subdirectories);
 
   QDirIterator marqueesDirIt(marqueesDir.absolutePath(),
-			     QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			     QDir::Files | QDir::NoDotAndDotDot,
 			     QDirIterator::Subdirectories);
   
   QDirIterator videosDirIt(videosDir.absolutePath(),
-			   QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+			   QDir::Files | QDir::NoDotAndDotDot,
 			   QDirIterator::Subdirectories);
 
   int filesDeleted = 0;
