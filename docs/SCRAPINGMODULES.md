@@ -55,7 +55,7 @@ Their API is based on a file name search. This means that the returned results d
 * API request limit: *None*
 * Thread limit: *1*
 * Platform support: *Exclusively arcade platforms using official MAME files*
-* Media support: *`cover`, `screenshot`, `marquee`, `video`*
+* Media support: *`cover`, `screenshot`, `wheel`, `marquee`, `video`*
 * Example use: `Skyscraper -p fba -s arcadedb`
 
 Several Arcade databases using the MAME file name id's have existed throughout the years. Currently the best one, in my opinion, is the ArcadeDB made by motoschifo. It goes without saying that this module is best used for arcade platforms such as `fba`, `arcade` and any of the mame sub-platforms.
