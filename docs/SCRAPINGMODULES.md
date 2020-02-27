@@ -78,8 +78,6 @@ This module also supports videos for many games.
 
 If you're looking to scrape the Amiga RetroPlay LHA files, there's no better way to do this than using the `openretro` module. It is by far the best WHDLoad Amiga database on the internet when it comes to data scraping, and maybe even the best Amiga game info database overall.
 
-It does have a caveat at the moment though. It has a search word limit of 2 words due to high server loads, which does make it slightly unreliable for any non-LHA files. But please try it out for any of your ADF files.
-
 The database also supports many non-Amiga platforms, but there's no doubt that Amiga is the strong point.
 
 #### MobyGames
