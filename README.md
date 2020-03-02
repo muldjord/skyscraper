@@ -75,7 +75,7 @@ $ rm -Rf .skyscraper
 You might be asked for your sudo password during the processs. On RetroPie the default password is `raspberry`.
 
 ### Windows
-Windows is not officially supported at this time! But I do semi-regularly compile and release an unsupported Windows 64-bit version that works just fine. Be sure to read the included README from the downloaded file before using it! And just to be clear: You are on your own if you use this version - please don't ask me questions about it. Get the Windows version [here](http://www.muldjord.com/downloads/Skyscraper_3.3.8_unsupported_win_version.zip).
+Windows is not officially supported at this time! But I do semi-regularly compile and release an unsupported Windows 64-bit version that works just fine. Be sure to read the included README from the downloaded file before using it! And just to be clear: You are on your own if you use this version - please don't ask me questions about it. Get the Windows version [here](http://www.muldjord.com/downloads/Skyscraper_3.4.2_unsupported_win_version.zip).
 
 ## How to use Skyscraper
 IMPORTANT!!! In order for Skyscraper to work properly, it is necessary to quit your frontend before running it! If you're running EmulationStation, you can quit it by pressing F4.
