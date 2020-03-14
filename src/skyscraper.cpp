@@ -1521,7 +1521,10 @@ void Skyscraper::doPrescrapeJobs()
       printf("Fetching limits for user '\033[1;33m%s\033[0m', just a sec...\n", config.user.toStdString().c_str());
       manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=json&ssid=" + config.user + "&sspassword=" + config.password);
       q.exec();
-      QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
+      // Fix faulty JSON that is sometimes received back from ScreenScraper
+      QByteArray jsonData = manager.getData();
+      jsonData.replace("},\n\t\t}", "}\n\t\t}");
+      QJsonObject jsonObj = QJsonDocument::fromJson(jsonData).object();
       if(jsonObj.isEmpty()) {
 	printf("Recieved invalid ScreenScraper server response, maybe their server is having issues, forcing 1 thread...\n");
 	config.threads = 1;
