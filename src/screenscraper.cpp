@@ -304,7 +304,17 @@ void ScreenScraper::getTags(GameEntry &game)
 
 void ScreenScraper::getCover(GameEntry &game)
 {
-  QString url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"box-2D"}));
+  QString url = "";
+  if(config->platform == "arcade" ||
+     config->platform == "fba" ||
+     config->platform == "mame-advmame" ||
+     config->platform == "mame-libretro" ||
+     config->platform == "mame-mame4all" ||
+     config->platform == "neogeo") {
+    url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"flyer"}));
+  } else {
+    url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"box-2D"}));
+  }
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
