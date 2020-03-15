@@ -148,7 +148,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.4.3 (14th March 2020)
 * Implemented workaround to incorrectly formatted JSON returned from 'screenscraper' when checking user credentials
-* All arcade platforms now use 'flyer' from 'screenscraper' for cover artwork instead of 'box-2D'
+* All arcade platforms now use 'flyer' from 'screenscraper' for cover artwork instead of 'box-2D' (Thank you to user 'aidy80s' for suggesting this)
 
 #### Version 3.4.2 (26th February 2020)
 * Improved filename versioning removal for optimal query generation
