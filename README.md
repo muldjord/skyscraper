@@ -148,6 +148,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.4.4 (In progress, unreleased)
 * Remove '*.bin' support for 'saturn' platform since '*.cue' is already in there. This caused double-entries in gamelists (Thank you to user 'joaoluizcarvalho' for pointing this out)
+* Now removes suffix from 'romnom' query when using 'screenscraper' for more optimal results (Thank you to user 'zcrowhti' for pointing this out)
 
 #### Version 3.4.3 (14th March 2020)
 * All arcade platforms now use 'flyer' from 'screenscraper' for cover artwork instead of 'box-2D' (Thank you to user 'aidy80s' for suggesting this)
