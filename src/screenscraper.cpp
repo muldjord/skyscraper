@@ -511,7 +511,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
     sha1Result.prepend("0");
   }
 
-  hashList.append(QUrl::toPercentEncoding(info.fileName()));
+  hashList.append(QUrl::toPercentEncoding(info.baseName()));
   hashList.append(crcResult.toUpper());
   hashList.append(md5Result.toUpper());
   hashList.append(sha1Result.toUpper());
