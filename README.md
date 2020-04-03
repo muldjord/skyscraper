@@ -145,10 +145,12 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
+* Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 
 #### Version 3.4.4 (In progress, unreleased)
 * Remove '*.bin' support for 'saturn' platform since '*.cue' is already in there. This caused double-entries in gamelists (Thank you to user 'joaoluizcarvalho' for pointing this out)
-* Now removes suffix from 'romnom' query when using 'screenscraper' for more optimal results (Thank you to user 'zcrowhti' for pointing this out)
+* Now removes file extension suffix from 'romnom' query when using 'screenscraper' for more optimal results (Thank you to user 'zcrowhti' for pointing this out)
+* Now handles faulty login (incorrectly entered in config.ini) better with 'screenscraper'
 
 #### Version 3.4.3 (14th March 2020)
 * All arcade platforms now use 'flyer' from 'screenscraper' for cover artwork instead of 'box-2D' (Thank you to user 'aidy80s' for suggesting this)
