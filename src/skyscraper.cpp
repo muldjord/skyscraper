@@ -1514,7 +1514,7 @@ void Skyscraper::doPrescrapeJobs()
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
       if(config.threads > 1) {
-	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u [user:password]' command line option or by setting 'userCreds=[user:password]' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u user:password' command line option or by setting 'userCreds=\"user:password\"' in '~/.skyscraper/config.ini'.\033[0m\n\n");
 	config.threads = 1;
       }
     } else {
@@ -1523,7 +1523,11 @@ void Skyscraper::doPrescrapeJobs()
       q.exec();
       QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
       if(jsonObj.isEmpty()) {
-	printf("Recieved invalid ScreenScraper server response, maybe their server is having issues, forcing 1 thread...\n");
+	if(manager.getData().contains("Erreur de login")) {
+	  printf("\033[0;31mScreenScraper login error! Please verify that you've entered your credentials correctly in '~/.skyscraper/config.ini'. It needs to look EXACTLY like this, but with your user and pass:\033[0m\n\033[1;33m[screenscraper]\nuserCreds=\"user:pass\"\033[0m\033[0;31m\nContinuing with unregistered user, forcing 1 thread...\033[0m\n\n");
+	} else {
+	  printf("\033[1;33mRecieved invalid ScreenScraper server response, maybe their server is having issues, forcing 1 thread...\033[0m\n\n");
+	}
 	config.threads = 1;
       } else {
 	int allowedThreads = jsonObj["response"].toObject()["ssuser"].toObject()["maxthreads"].toString().toInt();
