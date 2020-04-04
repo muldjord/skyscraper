@@ -59,7 +59,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
     finalOutput.append("collection: " + gameEntries.first().platform + "\n");
     finalOutput.append("shortname: " + config->platform + "\n");
     finalOutput.append("extensions: " + extensions + "\n");
-    if(!config->frontendExtra.isEmpty()) {
+    if(config->frontendExtra.isEmpty()) {
       finalOutput.append("command: /opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ " + config->platform + " \"{file.path}\"\n");
     } else {
       finalOutput.append("command: " + config->frontendExtra + "\n");
