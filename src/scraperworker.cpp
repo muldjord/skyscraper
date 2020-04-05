@@ -116,35 +116,50 @@ void ScraperWorker::run()
       }
     }
 
+    // Create the game entry we use for the rest of the process
+    GameEntry game;
+
+    // Create list for potential game entries that will come from the scraping source
     QList<GameEntry> gameEntries;
 
     bool fromCache = false;
     if(config.scraper == "cache" && cache->hasEntries(cacheId)) {
       fromCache = true;
-      GameEntry localGame;
-      localGame.cacheId = cacheId;
-      cache->fillBlanks(localGame);
-      if(localGame.title.isEmpty()) {
-	localGame.title = compareTitle;
+      GameEntry cachedGame;
+      cachedGame.cacheId = cacheId;
+      cache->fillBlanks(cachedGame);
+      if(cachedGame.title.isEmpty()) {
+	cachedGame.title = compareTitle;
       }
-      if(localGame.platform.isEmpty()) {
-	localGame.platform = config.platform;
+      if(cachedGame.platform.isEmpty()) {
+	cachedGame.platform = config.platform;
       }
-      gameEntries.append(localGame);
+      gameEntries.append(cachedGame);
+    } else if(config.onlyMissing && cache->hasEntries(cacheId)) {
+      // Skip this file. '--onlymissing' has been set.
+      game.found = false;
+      game.title = compareTitle;
+      output.append("\033[1;33m---- Skipping game '" + info.completeBaseName() + "' since '--onlymissing' has been set ----\033[0m\n\n");
+      emit entryReady(game, output, debug);
+      if(forceEnd) {
+	break;
+      } else {
+	continue;
+      }
     } else {
       if(config.scraper != "cache" &&
 	 cache->hasEntries(cacheId, config.scraper) && !config.refresh) {
 	fromCache = true;
-	GameEntry localGame;
-	localGame.cacheId = cacheId;
-	cache->fillBlanks(localGame, config.scraper);
-	if(localGame.title.isEmpty()) {
-	  localGame.title = compareTitle;
+	GameEntry cachedGame;
+	cachedGame.cacheId = cacheId;
+	cache->fillBlanks(cachedGame, config.scraper);
+	if(cachedGame.title.isEmpty()) {
+	  cachedGame.title = compareTitle;
 	}
-	if(localGame.platform.isEmpty()) {
-	  localGame.platform = config.platform;
+	if(cachedGame.platform.isEmpty()) {
+	  cachedGame.platform = config.platform;
 	}
-	gameEntries.append(localGame);
+	gameEntries.append(cachedGame);
       } else {
 	scraper->runPasses(gameEntries, info, output, debug);
       }
@@ -158,8 +173,6 @@ void ScraperWorker::run()
     */
 
     int lowestDistance = 666;
-    // Create the game entry we use for the rest of the process
-    GameEntry game;
     if(gameEntries.isEmpty()) {
       game.title = compareTitle;
       game.found = false;
