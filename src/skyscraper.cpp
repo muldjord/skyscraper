@@ -1218,6 +1218,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("unpack")) {
     config.unpack = true;
   }
+  if(parser.isSet("onlymissing")) {
+    config.onlyMissing = true;
+  }
   if(parser.isSet("startat")) {
     config.startAt = parser.value("startat");
   }

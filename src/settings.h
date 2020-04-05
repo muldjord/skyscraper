@@ -68,6 +68,7 @@ struct Settings {
   bool cacheResize = true;
   int jpgQuality = 95;
   bool subdirs = true;
+  bool onlyMissing = false;
   QString startAt = "";
   QString endAt = "";
   bool pretend = false;

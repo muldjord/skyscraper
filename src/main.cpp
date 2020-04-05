@@ -227,6 +227,7 @@ int main(int argc, char *argv[])
  QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption unpackOption("unpack", "Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.");
   QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list.");
+  QCommandLineOption onlymissingOption("onlymissing", "Tells Skyscraper to skip all files which already have any data from any source in the cache.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption excludeFilesOption("excludefiles", "Tells Skyscraper to always exclude the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"*[BIOS]*\"')", "PATTERN", "");
@@ -270,6 +271,7 @@ int main(int argc, char *argv[])
   parser.addOption(nobracketsOption);
   parser.addOption(skippedOption);
   parser.addOption(noresizeOption);
+  parser.addOption(onlymissingOption);
   parser.addOption(startatOption);
   parser.addOption(endatOption);
   parser.addOption(excludeFilesOption);

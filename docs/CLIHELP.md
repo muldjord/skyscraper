@@ -346,6 +346,14 @@ Skyscraper -p snes --cache edit --fromfile "/home/pi/.skyscraper/reports/report-
 Skyscraper -p snes -s screenscraper --fromfile "/home/pi/.skyscraper/reports/report-snes-missing_developer-20190708.txt"
 ```
 
+#### --onlymissing
+This option tells Skyscraper to skip all files which already have any piece of data from any source in the cache. This is useful if you just scraped almost all files from a platform succesfully with one source, and then want to only scrape the remaining games with a different source to fill in the holes. Normally Skyscraper will scrape all files again with the second source.
+
+###### Example(s)
+```
+Skyscraper -p snes -s thegamesdb --onlymissing
+```
+
 #### --startat &lt;FILENAME&gt;
 If you wish to work on a subset of your roms you can use this option to set the starting rom. Use it in conjunction with the `--endat` option described below to further narrow the subset of files.
 
