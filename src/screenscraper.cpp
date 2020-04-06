@@ -79,7 +79,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     
     QByteArray headerData = data.left(1024); // Minor optimization with minimal more RAM usage
     // Do error checks on headerData. It's more stable than checking the potentially faulty JSON
-    if(headerData.contains("non trouvée")) {
+    if(headerData.isEmpty()) {
+      printf("\033[1;33mRetrying request...\033[0m\n\n");
+      continue;
+    } else if(headerData.contains("non trouvée")) {
       return;
     } else if(headerData.contains("API totalement fermé")) {
       printf("\033[1;31mThe ScreenScraper API is currently closed, exiting nicely...\033[0m\n\n");
