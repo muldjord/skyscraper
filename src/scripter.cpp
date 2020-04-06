@@ -40,11 +40,11 @@ Scripter::Scripter()
   printf("\033[1;31mYou are running Skyscraper in 'simple mode' on a Windows machine. Windows is not currently supported in this mode. The generated script WILL NOT WORK!\033[0m\n\n");
 #endif
 
-  printf("\033[1;33mIMPORTANT!!!\033[0m You are running Skyscraper in 'simple mode'. This mode is meant for first-time scrapings only! For any subsequent scrapings of a platform consider scraping using '\033[1;32mSkyscraper -p <PLATFORM>\033[0m' which will make use of the resources you already have available in the resource cache.\n\nFor advanced users be sure be sure to check out all of the available command line options with '\033[1;32mSkyscraper --help\033[0m'. Complete documentation of all features can be found at: \033[1;32mhttps://github.com/muldjord/skyscraper\033[0m\n\nYou will now be asked a bunch of questions. Default for most of these questions will be optimal and can therefore be answered simply by pressing enter. Only change them if you know what you are doing.\033[0m\n");
+  printf("\033[1;33mIMPORTANT!\033[0m You are running Skyscraper in 'simple mode'. This mode is meant for first-time scrapings only! For any subsequent scrapings of a platform consider scraping using '\033[1;32mSkyscraper -p <PLATFORM>\033[0m' which will make use of the resources you already have available in the resource cache.\n\nFor advanced users be sure be sure to check out all of the available command line options with '\033[1;32mSkyscraper --help\033[0m'. Complete documentation of all features can be found at: \033[1;32mhttps://github.com/muldjord/skyscraper\033[0m\n\nYou will now be asked a bunch of questions. Default for most of these questions will be optimal and can therefore be answered simply by pressing enter. Only change them if you know what you are doing.\033[0m\n");
 
   std::string overwriteStr = "";
   printf("\n");
-  printf("\033[1;31mWARNING!!!\033[0m Continuing will overwrite your existing game list file. Any manual changes will be GONE! If you wish to keep your existing game list file, please manually create a backup before re-running Skyscraper.\n\n\033[1;34mAre you sure you wish to proceed\033[0m (y/N)? ");
+  printf("\033[1;31mWARNING!\033[0m Continuing will overwrite your existing game list file. Any manual changes will be GONE! If you wish to keep your existing game list file, please manually create a backup before re-running Skyscraper.\n\n\033[1;34mAre you sure you wish to proceed\033[0m (y/N)? ");
   getline(std::cin, overwriteStr);
   if(overwriteStr != "y") {
     printf("User chose not to continue, now exiting...\n");

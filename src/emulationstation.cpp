@@ -50,7 +50,7 @@ bool EmulationStation::skipExisting(QList<GameEntry> &gameEntries, QSharedPointe
 {
   gameEntries = oldEntries;
 
-  printf("Resolving missing entries...\n");
+  printf("Resolving missing entries...");
   int dots = 0;
   for(int a = 0; a < gameEntries.length(); ++a) {
     dots++;

@@ -51,5 +51,5 @@ void AbstractFrontend::sortEntries(QList<GameEntry> &gameEntries)
 	  dots++;
 	  return a.title.toLower() < b.title.toLower();
 	});
-  printf(" \033[1;32mDone!!!\033[0m\n");
+  printf(" \033[1;32mDone!\033[0m\n");
 }

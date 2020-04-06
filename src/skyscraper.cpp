@@ -393,7 +393,7 @@ void Skyscraper::run()
       break;
     }
   }
-  // Ready, set, GO!!! Start all threads
+  // Ready, set, GO! Start all threads
   for(const auto thread: threadList) {
     thread->start();
     state = 3;
@@ -530,7 +530,7 @@ void Skyscraper::checkThreads()
     frontend->sortEntries(gameEntries);
     printf("Assembling game list...");
     frontend->assembleList(finalOutput, gameEntries);
-    printf(" \033[1;32mDone!!!\033[0m\n");
+    printf(" \033[1;32mDone!\033[0m\n");
     QFile gameListFile(gameListFileString);
     printf("Now writing '\033[1;33m%s\033[0m'... ", gameListFileString.toStdString().c_str());
     fflush(stdout);
@@ -539,9 +539,9 @@ void Skyscraper::checkThreads()
       gameListFile.write(finalOutput.toUtf8());
       state = 0;
       gameListFile.close();
-      printf("\033[1;32mSuccess!!!\033[0m\n\n");
+      printf("\033[1;32mSuccess!\033[0m\n\n");
     } else {
-      printf("\033[1;31mCouldn't open file for writing!!!\nAll that work for nothing... :(\033[0m\n");
+      printf("\033[1;31mCouldn't open file for writing!\nAll that work for nothing... :(\033[0m\n");
     }
   } else {
     printf("\033[1;34m---- Resource gathering run completed! YAY! ----\033[0m\n");
