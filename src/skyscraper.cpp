@@ -1489,7 +1489,7 @@ void Skyscraper::doPrescrapeJobs()
     q.exec();
     QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).array().first().toObject();
     if(jsonObj.isEmpty()) {
-      printf("Recieved invalid IGDB server response, maybe their server is having issues, please try again later...\n");
+      printf("Received invalid IGDB server response, maybe their server is having issues, please try again later...\n");
       exit(1);
     }
     if(jsonObj["authorized"].toBool()) {
@@ -1529,7 +1529,7 @@ void Skyscraper::doPrescrapeJobs()
 	if(manager.getData().contains("Erreur de login")) {
 	  printf("\033[0;31mScreenScraper login error! Please verify that you've entered your credentials correctly in '~/.skyscraper/config.ini'. It needs to look EXACTLY like this, but with your user and pass:\033[0m\n\033[1;33m[screenscraper]\nuserCreds=\"user:pass\"\033[0m\033[0;31m\nContinuing with unregistered user, forcing 1 thread...\033[0m\n\n");
 	} else {
-	  printf("\033[1;33mRecieved invalid ScreenScraper server response, maybe their server is having issues, forcing 1 thread...\033[0m\n\n");
+	  printf("\033[1;33mReceived invalid / empty ScreenScraper server response, maybe their server is busy / overloaded. Forcing 1 thread...\033[0m\n\n");
 	}
 	config.threads = 1;
       } else {
@@ -1539,7 +1539,7 @@ void Skyscraper::doPrescrapeJobs()
 	    printf("User is allowed %d threads, but user has set it manually, so ignoring.\n\n", allowedThreads);
 	  } else {
 	    config.threads = (allowedThreads <= 8?allowedThreads:8);
-	    printf("Setting threads to %d as allowed for the supplied user credentials.\n\n", config.threads);
+	    printf("Setting threads to \033[1;32m%d\033[0m as allowed for the supplied user credentials.\n\n", config.threads);
 	  }
 	}
       }
