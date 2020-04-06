@@ -41,7 +41,7 @@ void NetComm::request(QString query, QString postData, QString headerKey, QStrin
 {
   QUrl url(query);
   QNetworkRequest request(url);
-  request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
+  request.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0");
   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
   if(!headerKey.isEmpty() && !headerValue.isEmpty()) {
     request.setRawHeader(headerKey.toUtf8(), headerValue.toUtf8());
@@ -92,6 +92,6 @@ void NetComm::dataDownloaded(qint64 bytesReceived, qint64)
 
 void NetComm::requestTimeout()
 { 
-  printf("Request timed out, aborting request...\n");
+  printf("\033[1;33mRequest timed out, server is probably busy / overloaded...\033[0m\n");
   reply->abort();
 }
