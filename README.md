@@ -153,6 +153,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Now handles faulty login (incorrectly entered in config.ini) better with 'screenscraper'
 * Fixed bug that caused 'pegasus' launch command to be entered incorrectly (Thank you to user 'Itetrel' for letting me know)
 * Added '--onlymissing' CLI option which allows users to skip files that already have any kind of data cached from any source
+* Now clearly states what happened when a request timed out when using 'screenscraper' (Thank you to 'seriema' for pointing this out)
 
 #### Version 3.4.3 (14th March 2020)
 * All arcade platforms now use 'flyer' from 'screenscraper' for cover artwork instead of 'box-2D' (Thank you to user 'aidy80s' for suggesting this)
