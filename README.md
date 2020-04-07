@@ -149,7 +149,6 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.4.4 (6th April 2020)
 * Remove '*.bin' support for 'saturn' platform since '*.cue' is already in there. This caused double-entries in gamelists (Thank you to user 'joaoluizcarvalho' for pointing this out)
-* Now removes file extension suffix from 'romnom' query when using 'screenscraper' for more optimal results (Thank you to user 'zcrowhti' for pointing this out)
 * Now handles faulty login (incorrectly entered in config.ini) better with 'screenscraper'
 * Fixed bug that caused 'pegasus' launch command to be entered incorrectly (Thank you to user 'Itetrel' for letting me know)
 * Added '--onlymissing' CLI option which allows users to skip files that already have any kind of data cached from any source
