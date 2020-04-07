@@ -147,6 +147,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 
+#### Version 3.4.5 (7th April 2020)
+* Minor fix to 'screenscraper' romnom query
+
 #### Version 3.4.4 (7th April 2020)
 * Remove '*.bin' support for 'saturn' platform since '*.cue' is already in there. This caused double-entries in gamelists (Thank you to user 'joaoluizcarvalho' for pointing this out)
 * Now handles faulty login (incorrectly entered in config.ini) better with 'screenscraper'
