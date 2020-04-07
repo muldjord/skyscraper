@@ -514,14 +514,16 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
     sha1Result.prepend("0");
   }
 
-  hashList.append(QUrl::toPercentEncoding(info.fileName()));
+  // For some reason the APIv2 example from their website does not url encode '(' and ')'
+  // so I've excluded them
+  hashList.append(QUrl::toPercentEncoding(info.fileName(), "()"));
   hashList.append(crcResult.toUpper());
   hashList.append(md5Result.toUpper());
   hashList.append(sha1Result.toUpper());
 
   QList<QString> searchNames;
   if(info.size() != 0) {
-    searchNames.append("romnom=" + hashList.at(0) + "&crc=" + hashList.at(1) + "&md5=" + hashList.at(2) + "&sha1=" + hashList.at(3) + "&romtaille=" + QString::number(info.size()));
+    searchNames.append("crc=" + hashList.at(1) + "&md5=" + hashList.at(2) + "&sha1=" + hashList.at(3) + "&romnom=" + hashList.at(0) + "&romtaille=" + QString::number(info.size()));
   } else {
     searchNames.append("romnom=" + hashList.at(0));
   }
