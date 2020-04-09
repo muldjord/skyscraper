@@ -97,8 +97,8 @@ By default Skyscraper uses just the title as the game name when generating gamel
 
 * `%t`: The game title as returned by the scraping sources without bracket information (see `%b` and `%B` below)
 * `%f`: The game filename without extension and bracket information (see `%b` and `%B` below)
-* `%b`: The game () bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. `(USA)` or `(en,fr,de)`)
-* `%B`: The game [] bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. `[disk 1 of 2]` or `[AGA]`)
+* `%b`: The game `()` bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. `(USA)` or `(en,fr,de)`)
+* `%B`: The game `[]` bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. `[disk 1 of 2]` or `[AGA]`)
 * `%a`: The age restriction as returned by the scraping sources (eg. `16+`)
 * `%d`: The game developer as returned by the scraping sources
 * `%p`: The game publisher as returned by the scraping sources
