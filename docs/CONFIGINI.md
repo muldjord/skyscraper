@@ -95,23 +95,22 @@ To read about artwork compositing go [here](ARTWORK.md) instead.
 #### nameTemplate="%t"
 By default Skyscraper uses just the title as the game name when generating gamelists for any frontend. You can change this to suit your personal preference by setting this option. It works by replacing certain tokens in the name template with the corresponding data. The valid tokens are:
 
-* %t: The game title as returned by the scraping sources without bracket information (see %b and %B below)
-* %f: The game filename without extension and bracket information (see %b and %B below)
-* %b: The game () bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. '(USA)' or '(en,fr,de)')
-* %B: The game [] bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. '[disk 1 of 2]' or '[AGA]')
-* %a: The age restriction as returned by the scraping sources (eg. '16+')
-* %d: The game developer as returned by the scraping sources
-* %p: The game publisher as returned by the scraping sources
-* %r: The game rating as returned by the scraping sources (0.0 to 5.0)
-* %P: The number of players as returned by the scraping sources
-* %D: The game release date with format yyyy-mm-dd
+* `%t`: The game title as returned by the scraping sources without bracket information (see `%b` and `%B` below)
+* `%f`: The game filename without extension and bracket information (see `%b` and `%B` below)
+* `%b`: The game () bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. `(USA)` or `(en,fr,de)`)
+* `%B`: The game [] bracket information. This information often comes from the filename, but can also come from the scraping source title (eg. `[disk 1 of 2]` or `[AGA]`)
+* `%a`: The age restriction as returned by the scraping sources (eg. `16+`)
+* `%d`: The game developer as returned by the scraping sources
+* `%p`: The game publisher as returned by the scraping sources
+* `%r`: The game rating as returned by the scraping sources (`0.0` to `5.0`)
+* `%P`: The number of players as returned by the scraping sources
+* `%D`: The game release date with format `yyyy-mm-dd`
 
 ###### Example(s)
 ```
 nameTemplate="%t [%f%], %P player(s)"
 ```
-Will result in: "1945k III [1945kiii], 2 player(s)"
-
+Will result in: `1945k III [1945kiii], 2 player(s)`
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
