@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
   QCommandLineOption nowheelsOption("nowheels", "Disable wheels from being cached locally. Only do this if you do not plan to use the wheel artwork in 'artwork.xml'");
   QCommandLineOption nomarqueesOption("nomarquees", "Disable marquees from being cached locally. Only do this if you do not plan to use the marquee artwork in 'artwork.xml'");
   QCommandLineOption skippedOption("skipped", "Include skipped entries when writing final gamelist.");
-  QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles.");
+  QCommandLineOption nobracketsOption("nobrackets", "Disables any [] and () tags in the frontend game titles. Consider using 'nameTemplate' config.ini option instead.");
   QCommandLineOption relativeOption("relative", "Forces all gamelist paths to be relative to rom location.");
   QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext')", "EXTENSION(S)", "");
   QCommandLineOption cacheOption("cache", "This option is the master option for all options related to the resource cache. It must be followed by 'COMMAND[:OPTIONS]'.\nType '--cache help' for a full description of all functions.", "COMMAND[:OPTIONS]", "");
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
   QCommandLineOption noresizeOption("noresize", "Disable resizing of artwork when saving it to the resource cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
  QCommandLineOption nosubdirsOption("nosubdirs", "Do not include input folder subdirectories when scraping.");
   QCommandLineOption unpackOption("unpack", "Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.");
-  QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list.");
+  QCommandLineOption forcefilenameOption("forcefilename", "Use filename as game name instead of the returned game title when generating a game list. Consider using 'nameTemplate' config.ini option instead.");
   QCommandLineOption onlymissingOption("onlymissing", "Tells Skyscraper to skip all files which already have any data from any source in the cache.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
