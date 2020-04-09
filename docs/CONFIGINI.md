@@ -106,9 +106,11 @@ By default Skyscraper uses just the title as the game name when generating gamel
 * `%P`: The number of players as returned by the scraping sources
 * `%D`: The game release date with format `yyyy-mm-dd`
 
+This option also support template groups separated by `;` within the template. The template parser will go over each group. If a group only has empty variables it will not be included in the final game name. So for a template such as `%t;, %P player(s)` where the `%P` is empty because no scraping source has provided the info, it will leave out the `, %P player(s)` part entirely resulting in the title `Game Name`. If this was not separated by `;` the resulting game name would end up being `Game Name, player(s)`.
+
 ###### Example(s)
 ```
-nameTemplate="%t [%f%], %P player(s)"
+nameTemplate="%t [%f%];, %P player(s)"
 ```
 Will result in: `1945k III [1945kiii], 2 player(s)`
 
