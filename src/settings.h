@@ -49,6 +49,7 @@ struct Settings {
   QString marqueesFolder = "";
   QString videosFolder = "";
   QString importFolder = "import";
+  QString nameTemplate = "";
   int doneThreads = 0;
   int threads = 4;
   bool threadsSet = false;

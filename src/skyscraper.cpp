@@ -864,6 +864,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("spaceCheck")) {
     config.spaceCheck = settings.value("spaceCheck").toBool();
   }
+  if(settings.contains("nameTemplate")) {
+    config.nameTemplate = settings.value("nameTemplate").toString();
+  }
   settings.endGroup();
 
   // Platform specific configs, overrides main and defaults
@@ -995,6 +998,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("includeFiles")) {
     config.includeFiles = settings.value("includeFiles").toString();
+  }
+  if(settings.contains("nameTemplate")) {
+    config.nameTemplate = settings.value("nameTemplate").toString();
   }
   settings.endGroup();
 
