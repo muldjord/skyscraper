@@ -316,6 +316,9 @@ Skyscraper -p snes -s thegamesdb --nomarquees
 
 #### --nobrackets
 Use this option to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the resource cache. Consider setting this in [`config.ini`](CONFIGINI.md#bracketstrue) instead.
+
+NOTE! If 'nameTemplate' is set in config.ini this option is ignored.
+
 ###### Example(s)
 ```
 Skyscraper -p snes --nobrackets
@@ -465,6 +468,9 @@ $ Skyscraper -p snes -s screenscraper --query "sha1=<CHECKSUM>&romnom=file%20nam
 
 #### --forcefilename
 This option forces Skyscraper to use the filename (excluding extension) instead of the cached titles when generating a game list. Consider setting this in [`config.ini`](CONFIGINI.md#forcefilenamefalse) instead.
+
+NOTE! If 'nameTemplate' is set in config.ini this option is ignored.
+
 ###### Example(s)
 ```
 Skyscraper -p snes --forcefilename
