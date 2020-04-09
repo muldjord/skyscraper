@@ -298,8 +298,27 @@ void ScraperWorker::run()
     } else {
       output.append("Title:          '\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
     }
-    if(config.forceFilename) {
-      game.title = StrTools::xmlUnescape(StrTools::stripBrackets(info.completeBaseName()));
+    if(!config.nameTemplate.isEmpty()) {
+      QString finalTitle = config.nameTemplate;
+      finalTitle.replace("%t", game.title);
+      finalTitle.replace("%f", StrTools::stripBrackets(info.completeBaseName()));
+      finalTitle.replace("%b", game.parNotes);
+      finalTitle.replace("%B", game.sqrNotes);
+      finalTitle.replace("%a", game.ages);
+      finalTitle.replace("%d", game.developer);
+      finalTitle.replace("%p", game.publisher);
+      finalTitle.replace("%r", game.rating);
+      finalTitle.replace("%P", game.players);
+      finalTitle.replace("%D", game.releaseDate);
+      game.title = StrTools::xmlUnescape(finalTitle);
+    } else {
+      game.title = StrTools::xmlUnescape(game.title);
+      if(config.forceFilename) {
+	game.title = StrTools::xmlUnescape(StrTools::stripBrackets(info.completeBaseName()));
+      }
+      if(config.brackets) {
+	game.title.append(StrTools::xmlUnescape((game.parNotes != ""?" " + game.parNotes:"") + (game.sqrNotes != ""?" " + game.sqrNotes:"")));
+      }
     }
     output.append("Platform:       '\033[1;32m" + game.platform + "\033[0m' (" + game.platformSrc + ")\n");
     output.append("Release Date:   '\033[1;32m");
