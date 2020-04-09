@@ -26,6 +26,8 @@
 #ifndef NAMETOOLS_H
 #define NAMETOOLS_H
 
+#include "gameentry.h"
+
 #include <QObject>
 #include <QFileInfo>
 
@@ -46,7 +48,7 @@ public:
   static QString getParNotes(QString baseName);
   static QString getUniqueNotes(const QString &notes, QChar delim);
   static QString getCacheId(const QFileInfo &info);
-
+  static QString getNameFromTemplate(const GameEntry &game, const QString &nameTemplate);
 };
 
 #endif // NAMETOOLS_H

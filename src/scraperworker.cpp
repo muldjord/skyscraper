@@ -299,18 +299,8 @@ void ScraperWorker::run()
       output.append("Title:          '\033[1;32m" + game.title + "\033[0m' (" + game.titleSrc + ")\n");
     }
     if(!config.nameTemplate.isEmpty()) {
-      QString finalTitle = config.nameTemplate;
-      finalTitle.replace("%t", game.title);
-      finalTitle.replace("%f", StrTools::stripBrackets(info.completeBaseName()));
-      finalTitle.replace("%b", game.parNotes);
-      finalTitle.replace("%B", game.sqrNotes);
-      finalTitle.replace("%a", game.ages);
-      finalTitle.replace("%d", game.developer);
-      finalTitle.replace("%p", game.publisher);
-      finalTitle.replace("%r", game.rating);
-      finalTitle.replace("%P", game.players);
-      finalTitle.replace("%D", game.releaseDate);
-      game.title = StrTools::xmlUnescape(finalTitle);
+      game.title = StrTools::xmlUnescape(NameTools::getNameFromTemplate(game,
+									config.nameTemplate));
     } else {
       game.title = StrTools::xmlUnescape(game.title);
       if(config.forceFilename) {

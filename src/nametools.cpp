@@ -23,13 +23,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
+#include "nametools.h"
+#include "strtools.h"
+
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
 #include <QRegularExpression>
 #include <QCryptographicHash>
-
-#include "nametools.h"
 
 QString NameTools::getScummName(const QString baseName, const QString scummIni)
 {
@@ -524,4 +525,54 @@ QString NameTools::getCacheId(const QFileInfo &info)
   }
 
   return cacheId.result().toHex();
+}
+
+QString NameTools::getNameFromTemplate(const GameEntry &game, const QString &nameTemplate)
+{
+  QList<QString> templateGroups = nameTemplate.split(";");
+  QString finalName;
+  for(auto &templateGroup: templateGroups) {
+    bool include = false;
+    if(templateGroup.contains("%t") && !game.title.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%f") && !game.baseName.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%b") && !game.parNotes.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%B") && !game.sqrNotes.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%a") && !game.ages.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%d") && !game.developer.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%p") && !game.publisher.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%P") && !game.players.isEmpty()) {
+      include = true;
+    }
+    if(templateGroup.contains("%D") && !game.releaseDate.isEmpty()) {
+      include = true;
+    }
+    if(include) {
+      templateGroup.replace("%t", game.title);
+      templateGroup.replace("%f", StrTools::stripBrackets(game.baseName));
+      templateGroup.replace("%b", game.parNotes);
+      templateGroup.replace("%B", game.sqrNotes);
+      templateGroup.replace("%a", game.ages);
+      templateGroup.replace("%d", game.developer);
+      templateGroup.replace("%p", game.publisher);
+      templateGroup.replace("%P", game.players);
+      templateGroup.replace("%D", game.releaseDate);
+      finalName.append(templateGroup);
+    }
+  }
+
+  return finalName;
 }
