@@ -82,11 +82,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
       entry.path.replace(config->inputFolder, ".");
     }
     
-    if(config->brackets) {
-      finalOutput.append("game: " + entry.title + (entry.parNotes != ""?" " + entry.parNotes:"") + (entry.sqrNotes != ""?" " + entry.sqrNotes:"") + "\n");
-    } else {
-      finalOutput.append("game: " + entry.title + "\n");
-    }
+    finalOutput.append("game: " + entry.title + "\n");
     finalOutput.append("file: " + entry.path + "\n");
     // The replace here IS supposed to be 'inputFolder' and not 'mediaFolder' because we only want the path to be relative if '-o' hasn't been set. So this will only make it relative if the path is equal to inputFolder which is what we want.
     if(!entry.rating.isEmpty()) {

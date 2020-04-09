@@ -159,9 +159,6 @@ void AttractMode::assembleList(QString &finalOutput, QList<GameEntry> &gameEntri
 
     finalOutput.append(entry.baseName + ";" +
 		       entry.title);
-    if(config->brackets) {
-      finalOutput.append((entry.parNotes != ""?" " + entry.parNotes:"") + (entry.sqrNotes != ""?" " + entry.sqrNotes:""));
-    }
     finalOutput.append(";" +		       
 		       emuInfo.completeBaseName() + ";" +
 		       entry.aMCloneOf + ";" +
