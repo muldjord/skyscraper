@@ -57,5 +57,5 @@ then
     echo "--- Skyscraper has been updated to v.$LATEST ---"
 else
     echo "--- Skyscraper is already the latest version, exiting ---"
-    echo "You can force a reinstall by removing the VERSION file by running 'rm VERSION'. Then rerun './update_skyscraper.sh' afterwards."
+    echo "You can force a reinstall by removing the VERSION file by running rm VERSION. Then rerun ./update_skyscraper.sh afterwards."
 fi
