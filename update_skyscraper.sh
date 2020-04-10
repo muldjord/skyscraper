@@ -8,52 +8,29 @@ then
 fi
 source VERSION
 
+handle_error () {
+    local EXITCODE=$?
+    local ACTION=$1
+    rm VERSION
+    echo "--- Failed to $ACTION Skyscraper v.${LATEST}, exiting with code $EXITCODE ---"
+    exit $EXITCODE
+}
+
 if [ $LATEST != $VERSION ]
 then
     echo "--- Fetching Skyscraper v.$LATEST ---"
-    wget -N https://github.com/muldjord/skyscraper/archive/${LATEST}.tar.gz
-    if [ $? != 0 ]
-    then
-	exit
-    fi
+    wget -N https://github.com/muldjord/skyscraper/archive/${LATEST}.tar.gz || handle_error "fetch"
     echo "--- Unpacking ---"
-    tar xvzf ${LATEST}.tar.gz --strip-components 1 --overwrite
-    EXITCODE=$?
-    if [ $? != 0 ]
-    then
-	rm VERSION
-	echo "--- Failed to unpack Skyscraper v.${LATEST}, exiting with code $EXITCODE ---"
-	exit $EXITCODE
-    fi
+    tar xvzf ${LATEST}.tar.gz --strip-components 1 --overwrite || handle_error "unpack"
     rm ${LATEST}.tar.gz
     echo "--- Cleaning out old build if one exists ---"
-    make clean
-    rm .qmake.stash
-    qmake
-    EXITCODE=$?
-    if [ $? != 0 ]
-    then
-	rm VERSION
-	exit $EXITCODE
-    fi
+    make --ignore-errors clean
+    rm --force .qmake.stash
+    qmake || handle_error "clean old"
     echo "--- Building Skyscraper v.$LATEST ---"
-    make -j$(nproc)
-    EXITCODE=$?
-    if [ $? != 0 ]
-    then
-	rm VERSION
-	echo "--- Failed to built Skyscraper v.${LATEST}, exiting with code $EXITCODE ---"
-	exit $EXITCODE
-    fi
+    make -j$(nproc) || handle_error "build"
     echo "--- Installing Skyscraper v.$LATEST ---"
-    sudo make install
-    EXITCODE=$?
-    if [ $? != 0 ]
-    then
-	rm VERSION
-	echo "--- Failed to install Skyscraper v.${LATEST}, exiting with code $EXITCODE ---"
-	exit $EXITCODE
-    fi
+    sudo make install || handle_error "install"
     echo "--- Skyscraper has been updated to v.$LATEST ---"
 else
     echo "--- Skyscraper is already the latest version, exiting ---"
