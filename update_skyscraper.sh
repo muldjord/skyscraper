@@ -11,7 +11,7 @@ source VERSION
 handle_error () {
     local EXITCODE=$?
     local ACTION=$1
-    rm VERSION
+    rm --force VERSION
     echo "--- Failed to $ACTION Skyscraper v.${LATEST}, exiting with code $EXITCODE ---"
     exit $EXITCODE
 }
