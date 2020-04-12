@@ -147,6 +147,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 
+#### Version 3.4.7 (12th April 2020)
+* If '--onlymissin' is set the initial first found rom check is ignored (Thank you to user 'Paul-Colucci' for reporting this)
+
 #### Version 3.4.6 (9th April 2020)
 * Implemented nameTemplate as config.ini option. See docs/CONFIGINI.md doc for explanation (Thank you to user 'vg8020' for suggesting this)
 
