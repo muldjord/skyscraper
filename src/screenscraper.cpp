@@ -31,7 +31,8 @@
 #include "strtools.h"
 #include "crc32.h"
 
-#define RETRIESMAX 4
+constexpr int RETRIESMAX = 4;
+constexpr int MINARTSIZE = 256;
 
 ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
 {
@@ -325,11 +326,10 @@ void ScreenScraper::getCover(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= MINARTSIZE && image.loadFromData(manager.getData())) {
 	game.coverData = manager.getData();
       } else {
-	if(manager.getData().size() < 1024)
-	  moveOn = false;
+	moveOn = false;
       }
       if(moveOn)
 	break;
@@ -347,11 +347,10 @@ void ScreenScraper::getScreenshot(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= MINARTSIZE && image.loadFromData(manager.getData())) {
 	game.screenshotData = manager.getData();
       } else {
-	if(manager.getData().size() < 1024)
-	  moveOn = false;
+	moveOn = false;
       }
       if(moveOn)
 	break;
@@ -369,11 +368,10 @@ void ScreenScraper::getWheel(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= MINARTSIZE && image.loadFromData(manager.getData())) {
 	game.wheelData = manager.getData();
       } else {
-	if(manager.getData().size() < 1024)
-	  moveOn = false;
+	moveOn = false;
       }
       if(moveOn)
 	break;
@@ -391,11 +389,10 @@ void ScreenScraper::getMarquee(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getData().size() >= 1024 && image.loadFromData(manager.getData())) {
+      if(manager.getData().size() >= MINARTSIZE && image.loadFromData(manager.getData())) {
 	game.marqueeData = manager.getData();
       } else {
-	if(manager.getData().size() < 1024)
-	  moveOn = false;
+	moveOn = false;
       }
       if(moveOn)
 	break;
