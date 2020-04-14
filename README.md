@@ -148,7 +148,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 
 #### Version 3.4.8 (14th April 2020)
-* Lowered sanity check limit of 1024 bytes for artwork from 'screenscraper' to 64 bytes (Thank you to user 'Paul-Colucci' for reporting this)
+* Lowered sanity check limit of 1024 bytes for artwork from 'screenscraper' to 256 bytes (Thank you to user 'Paul-Colucci' for reporting this)
 
 #### Version 3.4.7 (12th April 2020)
 * If '--onlymissing' is set the initial first found rom check is ignored (Thank you to user 'Paul-Colucci' for reporting this)
