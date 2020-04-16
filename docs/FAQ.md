@@ -2,14 +2,16 @@
 <details>
   <summary>Expand answer...</summary>
 
-**A:** Skyscraper has two modes. Game data gathering mode and gamelist generation mode. You need to run it in gamelist generation mode to generate the gamelist after you have gathered and cached all the data you want. You do this by running it without the `-s MODULE` command line option (eg. `Skyscraper -p snes`).
+**A:** You probably forgot to generate the gamelist. Skyscraper has two modes; resource gathering mode and gamelist generation mode. First you gather data into Skyscraper's resource cache by scraping the platform with any of the supported scraping modules with `Skyscraper -p PLATFORM -s MODULE`. When you feel like you have all the game resources cached that you need, you then generate the gamelist by simply leaving out the `-s MODULE` option with `Skyscraper -s PLATFORM`.
+
+Read more about the resource cache [here](https://github.com/muldjord/skyscraper/blob/master/docs/CACHE.md).
 </details>
   
 #### Q: Skyscraper keeps quitting on me with errors about request limits or similar. What's going on?
 <details>
   <summary>Expand answer...</summary>
 
-**A:** Almost all of the scraping modules such as ScreenScraper and TheGamesDb have restrictions applied to avoid users overloading their servers. These restrictions are set by them, not Skyscraper. Some modules even require you to log in to use them. Read more about the restrictions and how to deal with them [here](https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md). If you've created a user at ScreenScraper and want to use your credentials with Skyscraper, just add the following section to `/home/USER/.skyscraper/config.ini`. Type it *exactly* like this, but with your own user and pass.
+**A:** Almost all of the scraping modules, such as ScreenScraper and TheGamesDb, have restrictions applied to avoid users overloading their servers. These restrictions are set by them, not Skyscraper. Some modules even require you to log in to use them. Read more about the restrictions and how to deal with them [here](https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md). If you've created a user at ScreenScraper and want to use your credentials with Skyscraper, just add the following section to `/home/USER/.skyscraper/config.ini`. Type it *exactly* like this, but with your own user and pass.
 
 ```
 [screenscraper]
