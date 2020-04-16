@@ -30,3 +30,10 @@ A: Skyscraper includes a powerful artwork compositor you can set up any way you 
 
 A: Whenever you make any gamelist specific changes to Skyscraper's configurations, you need to regenerate the gamelists for your chosen frontend afterwards for the changes to take effect. This can be done simply by running Skyscraper with `Skyscraper -p PLATFORM`. This will regenerate the gamelist for that platform using your new configuration.
 </details>
+
+#### Q: I use Skyscraper to generate EmulationStation gamelists for one or more platforms, but when I restarted the system my gamelists hadn't changed. Why is that?
+<details>
+  <summary>Expand answer...</summary>
+
+A: When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before using Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting it in the menus.
+</details>
