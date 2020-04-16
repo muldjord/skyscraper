@@ -11,6 +11,8 @@ Also, please read the documentation (https://github.com/muldjord/skyscraper/tree
 
 If you've encountered a bug, please take your time to describe it well using the following template. Lackluster reports will be deleted without response.
 
+Please remove the text down to this point before proceeding.
+
 **Describe the bug**
 [Replace this text with a description of the bug. Be as specific as possible.]
 
