@@ -43,4 +43,4 @@ Yes, yes, yes. This is just the basics. You can customize the artwork completely
 
 The important thing to note is that the defaults for Skyscraper is set to work well for most users. So unless you see something you want to change, you don't have to. But it's equally important to know that you *can*.
 
-If this piqued your interest, please read the entire documentation thorougly. Everything is documented to the last detail. It can seem overwhelming. But it gives you some really powerful options to scrape just the way you want. Read more about the advanced features [here](https://github.com/muldjord/skyscraper/blob/master/README.md#manual-mode-for-advanced-users)
+If this piqued your interest, please read the entire documentation thorougly. Everything is documented to the last detail. It can seem overwhelming. But it gives you some really powerful options to scrape just the way you want. Read more about the advanced features [here](https://github.com/muldjord/skyscraper/blob/master/README.md#a-quick-run-down-of-skyscraper)
