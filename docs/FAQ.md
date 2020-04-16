@@ -2,7 +2,7 @@
 <details>
   <summary>Expand answer...</summary>
 
-**A:** You probably forgot to generate the gamelist. Skyscraper has two modes; resource gathering mode and gamelist generation mode. First you gather data into Skyscraper's resource cache by scraping the platform with any of the supported scraping modules with `Skyscraper -p PLATFORM -s MODULE`. When you feel like you have all the game resources cached that you need, you then generate the gamelist by simply leaving out the `-s MODULE` option with `Skyscraper -s PLATFORM`.
+**A:** You probably forgot to generate the gamelist. Skyscraper has two modes; resource gathering mode and gamelist generation mode. First you gather data into Skyscraper's resource cache by scraping the platform with any of the supported scraping modules (eg. `Skyscraper -p snes -s thegamesdb`). When you feel like you have gathered all the resources that you need, you then generate the gamelist by simply leaving out the `-s MODULE` option (eg. `Skyscraper -p snes`).
 
 Read more about the resource cache [here](https://github.com/muldjord/skyscraper/blob/master/docs/CACHE.md).
 </details>
