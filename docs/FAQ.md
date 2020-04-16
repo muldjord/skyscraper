@@ -1,3 +1,11 @@
+### The official Skyscraper F.A.Q (frequently asked questions)
+A quick note before I let you loose on the questions:
+* You can get a list of all available command-line options by running `Skyscraper --help`
+* For a more thorough description of the command-line options go [here](https://github.com/muldjord/skyscraper/blob/master/docs/CLIHELP.md)
+* You can read all about the available `config.ini` options [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md)
+
+And now for the questions (and answers)...
+
 #### Q: I ran Skyscraper and it scraped a lot of artwork and game data, but no gamelist was generated. What's going on?
 <details>
   <summary>Expand answer...</summary>
