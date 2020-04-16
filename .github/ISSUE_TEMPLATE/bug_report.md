@@ -1,33 +1,33 @@
 ---
 name: Bug report
-about: Create a report to help improve Skyscraper
+about: Create a bug report to help improve Skyscraper
 
 ---
 
 **READ BEFORE YOU POST**
-Do not ask questions on how to use Skyscraper here. This is for BUG / ERROR reports only. Skyscraper questions can be asked at the RetroPie forums (https://retropie.org.uk/forum) where other users might be able to help you out.
+This is for BUG / ERROR reports only. If you have questions about the general use of Skyscraper, please ask them at the RetroPie forums (https://retropie.org.uk/forum) or the RetroPie subreddit (https://www.reddit.com/r/RetroPie) where other users might be able to help you out.
 
-Before you do, please read the documentation (https://github.com/muldjord/skyscraper/tree/master/docs) thoroughtly. Every feature and option is documented down to the last detail.
+Also, please read the documentation (https://github.com/muldjord/skyscraper/tree/master/docs) thoroughtly. Every feature and option is documented down to the last detail.
 
-If you've encountered a bug, please take your time to describe it well using the following template. If not, it will be deleted without response.
+If you've encountered a bug, please take your time to describe it well using the following template. Lackluster reports will be deleted without response.
 
 **Describe the bug**
-A clear and concise description of what and where the bug is.
+[Replace this text with a description of the bug. Be as specific as possible.]
 
 **To Reproduce**
-Can you reproduce this behaviour? If so, how? What EXACT command did you run that gave the error?
+[Replace this text with a description of how to reliably reproduce this bug. Be as specific as possible.]
 
 **Special circumstances**
-Is your system set up in any special manner that could interfere with how Skyscraper works?
+[Replace this text with any special circumstances you might have set up on your system that could interfere with how Skyscraper works.]
 
 **Terminal output**
-If applicable, add terminal output to help visualize your problem.
+[Replace this text with any useful Skyscraper terminal output that might help clarify your issue.]
 
 **Technical information**
- - Skyscraper version: [e.g. 2.4.9]
- - Internet connection: [e.g. adsl, wifi, dialup]
- - OS: [e.g. RetroPie]
- - OS Version [e.g. 4.4]
+ - Skyscraper version: [Replace with the Skyscraper version you are running, e.g. 3.4.8]
+ - Internet connection: [Replace with the type of internet you have, e.g. adsl, wifi, dialup]
+ - OS: [Replace with the OS you are running Skyscraper on, e.g. RetroPie]
+ - OS Version [Replace with the OS version you are running, e.g. 4.5.2]
 
 **Additional context**
-Add any other context about the problem here.
+[Replace this text with any additional context that might help understand this issue better. Optional.]
