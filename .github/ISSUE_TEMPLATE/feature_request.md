@@ -11,6 +11,8 @@ Also, please read the documentation (https://github.com/muldjord/skyscraper/tree
 
 If you have a specific feature request please take your time to describe it well using the following template. Lackluster requests will be deleted without response.
 
+Please remove the text down to this point before proceeding.
+
 **Describe the feature**
 [Replace this text with a clear and concise description of what this feature would achieve and how you would like it to be implemented.]
 
