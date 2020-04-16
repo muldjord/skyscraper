@@ -37,3 +37,10 @@ A: Whenever you make any gamelist specific changes to Skyscraper's configuration
 
 A: When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before using Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting it in the menus.
 </details>
+
+#### Q: I installed Skyscraper from the RetroPie optional packages and want to run it from the terminal. But when I type `skyscraper` it says `Skyscraper: command not found`. Why is that?
+<details>
+  <summary>Expand answer...</summary>
+
+The RetroPie-Setup script installs the Skyscraper executable in a location that is not normally searched by the system when looking for executables. You can create a link to a location that is searched through to remedy this by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. You might have to type in your sudo password. For RetroPie default is `raspberry`. If that command was succesful you should now be able to run Skyscraper simply with `Skyscraper` followed by any options you need.
+</details>
