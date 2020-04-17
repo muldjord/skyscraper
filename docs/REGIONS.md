@@ -129,3 +129,4 @@ or
 [<PLATFORM>]
 regionPrios="de,us,jp"
 ```
+Substitute <PLATFORM> with the platform you want to use these priorities with (eg. 'snes').
