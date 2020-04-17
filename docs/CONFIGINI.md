@@ -1,5 +1,5 @@
 ## config.ini options
-Look below to find a thorough description of all options and sections available in the `~/.skyscraper/config.ini` configuration file. These options will then be applied whenever running Skyscraper with the `Skyscraper` command.
+Look below to find a thorough description of all options and sections available in the `/home/USER/.skyscraper/config.ini` configuration file. These options will then be applied whenever running Skyscraper with the `Skyscraper` command.
 
 Please take note that almost all of these options are set at a useful default (and can therefore be left out) and should only be set if your use case requires it.
 
@@ -17,7 +17,7 @@ Settings in the `[main]` section will always be set regardless of selected platf
 
 Each section can have overlapping parameters. In case where a certain option exists in several sections they are prioritized as scraping module first, then frontend, then platform and lastly main.
 
-You can find an example config file at `~/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables. Remember to also uncomment the section the option relates to such as `[main]` or `[amiga]`.
+You can find an example config file at `/home/USER/.skyscraper/config.ini.example`. This file contains all available options. Just copy the file to `config.ini` and uncomment and edit the ones you wish to use by removing the `#` in front of the variables. Remember to also uncomment the section the option relates to such as `[main]` or `[amiga]`.
 
 NOTE! You can set a custom configuration file with the `-c <FILENAME>` command line option. Read more about all available command line options [here](CLIHELP.md).
 
@@ -75,7 +75,7 @@ NOTE! If this is set in the `[main]` section it will automatically add `/<PLATFO
 `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
 
 #### cacheFolder="/home/pi/.skyscraper/cache"
-Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/<PLATFORM>`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive).
+Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `/home/USER/.skyscraper/cache/<PLATFORM>`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive).
 
 NOTE! If this is set in the `[main]` section (recommended) it will automatically add `/<PLATFORM>` to the end of the path. If you want better control consider adding it to a `[<PLAFORM>]` section instead where it will be used as is.
 
@@ -150,7 +150,7 @@ Enables/disables the caching of the resource type `marquee` when scraping with a
 `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
 
 #### importFolder="/home/pi/.skyscraper/import"
-Sets a non-default folder when scraping using the `-s import` module. By default this is set to `~/.skyscraper/import` and will also look for a `/<PLATFORM>` inside of the chosen folder.
+Sets a non-default folder when scraping using the `-s import` module. By default this is set to `/home/USER/.skyscraper/import` and will also look for a `/<PLATFORM>` inside of the chosen folder.
 
 Read more about the `-s import` module [here](IMPORT.md).
 
@@ -306,7 +306,7 @@ Completely overrides the internal region priority list inside of Skyscraper. Thi
 `[main]`, `[<PLATFORM>]`
 
 #### artworkXml="artwork.xml"
-Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md).
+Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `/home/USER/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md).
 
 NOTE! It can be *very* useful to set this in any platform section or frontend section where you want a specific artwork setup / look.
 

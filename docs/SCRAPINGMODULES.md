@@ -3,7 +3,7 @@ Skyscraper supports several online and local sources when scraping data for your
 
 Choosing a scraping module is as simply as setting the `-s <MODULE>` option when running Skyscraper on the command line. It also requires a platform to be set with `-p <PLATFORM>`. If you leave out the `-s` option Skyscraper goes into *game list generation* mode and combines your cached data into a game list for the chosen platform and frontend. Read more about the resource cache [here](CACHE.md).
 
-For scraping modules that support or require user credentials you have the option of either setting it on commandline with `-u <USER:PASSWD>` or `-u <KEY>` or better yet, by adding it permanently to the Skyscraper configuration at `~/.skyscraper/config.ini` as described [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#usercredscredentials-or-key)
+For scraping modules that support or require user credentials you have the option of either setting it on commandline with `-u <USER:PASSWD>` or `-u <KEY>` or better yet, by adding it permanently to the Skyscraper configuration at `/home/USER/.skyscraper/config.ini` as described [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md#usercredscredentials-or-key)
 
 Below follows a description of all scraping modules.
 
@@ -148,7 +148,7 @@ If you're looking specifically for ZX Spectrum data, this is the module to use. 
 
 This module allows you to import data from an existing EmulationStation game list into the Skyscraper cache. This is useful if you already have a lot of data and artwork in a gamelist.xml file and you wish to use it with Skyscraper.
 
-Skyscraper will search for the `gamelist.xml` file at `<INPUT FOLDER>/gamelist.xml` which by default is `/home/<USER>/RetroPie/roms/<PLATFORM>/gamelist.xml`. If that file isn't found it will look for it at `~/.skyscraper/import/<PLATFORM>/gamelist.xml`.
+Skyscraper will search for the `gamelist.xml` file at `<INPUT FOLDER>/gamelist.xml` which by default is `/home/<USER>/RetroPie/roms/<PLATFORM>/gamelist.xml`. If that file isn't found it will look for it at `/home/USER/.skyscraper/import/<PLATFORM>/gamelist.xml`.
 
 #### Custom resource import scraper
 * Shortname: *`import`*

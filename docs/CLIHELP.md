@@ -5,7 +5,7 @@ Also consider that almost all of these options are set at a useful default (and 
 
 NOTE! If you've installed Skyscraper through the RetroPie-Setup script, it is recommended to create a symbolic link to the executable. Do this by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. This will allow you to just type `Skyscraper` when running it from command line.
 
-IMPORTANT! Most of the options can also be set in the `~/.skyscraper/config.ini` file thus removing the need to type them on command line all the time. Check the config.ini doc [here](CONFIGINI.md) for more info on this.
+IMPORTANT! Most of the options can also be set in the `/home/USER/.skyscraper/config.ini` file thus removing the need to type them on command line all the time. Check the config.ini doc [here](CONFIGINI.md) for more info on this.
 
 #### -h, --help
 Outputs the help text for all command line options to the terminal.
@@ -18,7 +18,7 @@ Skyscraper -h
 #### -p &lt;PLATFORM&gt;
 Sets the platform you wish to scrape. Supported platforms can be seen using the `--help` option described above.
 
-Running the following commands will scrape from all cached resources and generate a game list and composite artwork using the recipe in `~/.skyscraper/artwork.xml` (check the artwork documentation for more info on this [here](ARTWORK.md).
+Running the following commands will scrape from all cached resources and generate a game list and composite artwork using the recipe in `/home/USER/.skyscraper/artwork.xml` (check the artwork documentation for more info on this [here](ARTWORK.md).
 
 Before running these commands you need to first gather some data into the cache. Please read the description of `-s <MODULE>` below.
 ###### Example(s)
@@ -132,21 +132,21 @@ Skyscraper -p snes -l 500
 ```
 
 #### -c &lt;FILENAME&gt;
-Sets a non-default config file. By default Skyscraper uses the file `~/.skyscraper/config.ini`.
+Sets a non-default config file. By default Skyscraper uses the file `/home/USER/.skyscraper/config.ini`.
 ###### Example(s)
 ```
 Skyscraper -p snes -c "/path/to/config.ini"
 ```
 
 #### -a &lt;FILENAME&gt;
-Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `~/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md). Consider setting this in [`config.ini`](CONFIGINI.md#artworkxmlartworkxml) instead.
+Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `/home/USER/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md). Consider setting this in [`config.ini`](CONFIGINI.md#artworkxmlartworkxml) instead.
 ###### Example(s)
 ```
 Skyscraper -p snes -a "/path/to/artwork.xml"
 ```
 
 #### -d &lt;FOLDER&gt;
-Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `~/.skyscraper/cache/<PLATFORM>`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
+Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `/home/USER/.skyscraper/cache/<PLATFORM>`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive). The folder pointed to should be a folder with a Skyscraper `db.xml` file and its required subfolders inside of it (`covers`, `screenshots` etc.).
 
 NOTE! If you wish to always use a certain location as base folder for your resource cache (for instance a folder on a USB drive), it is *strongly* recommended to set this in the config.ini file instead. Read more about the relevant config.ini option [here](CONFIGINI.md#cachefolderhomepiskyscrapercache).
 ###### Example(s)
@@ -225,7 +225,7 @@ Skyscraper -p snes -s screenscraper --cache refresh
 ```
 
 ##### --cache report:missing=&lt;all, textual, artwork, media or RESOURCE1,RESOURCE2,...&gt;
-Will create report(s) containing all filenames of games missing the selected resource type(s). File(s) will be exported to `~/.skyscraper/reports/report-<PLATFORM>-missing_<RESOURCE>-yyyymmdd.txt`
+Will create report(s) containing all filenames of games missing the selected resource type(s). File(s) will be exported to `/home/USER/.skyscraper/reports/report-<PLATFORM>-missing_<RESOURCE>-yyyymmdd.txt`
 
 You can use any of the following:
 * all: Creates reports for all resource types

@@ -1,5 +1,5 @@
 # Artwork look and effects
-Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file `~/.skyscraper/artwork.xml`. Each piece of artwork can be composited from one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
+Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file `/home/USER/.skyscraper/artwork.xml`. Each piece of artwork can be composited from one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
 
 NOTE 1!!! Some users seem to have a habbit of editing the `~/skysource/artwork.xml` file. THIS IS NOT THE CORRECT FILE! Please read the above. :)
 
@@ -32,7 +32,7 @@ Which results in a screenshot being exported to look like this:
 ![Artwork example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Sonic%20The%20Hedgehog%202.png)
 
 ## Xml definitions
-Read on for a full description of the xml format used in `~/.skyscraper/artwork.xml`. Click the following links to quickly go to a desired section:
+Read on for a full description of the xml format used in `/home/USER/.skyscraper/artwork.xml`. Click the following links to quickly go to a desired section:
 
 Nodes: [Xml node](#xml-node-not-optional), [Artwork node](#artwork-node-not-optional), [Output node](#output-nodes-optional), [Layer node](#layer-nodes-optional)
 
@@ -433,16 +433,16 @@ The blue color value for the outline. Can be 0-255. If left out it is set to 0.
 Provides the color to use hex-style. This can be used instead of the 'red', 'green' and 'blue' attributes described above. An example could be 'color="#ff0099"'.
 
 ## Custom image resources
-From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '`~/.skyscraper/resources`' folder and use it by adding the filename to the attribute.
+From Skyscraper version 2.3.0 you can use custom image resources wherever the documentation says so. Place your custom resources in the '`/home/USER/.skyscraper/resources`' folder and use it by adding the filename to the attribute.
 
 Example:
 ```
 <gamebox side="megadrive_logo.png" rotate="90"/>
 ```
-The file megadrive_logo.png will then be loaded from the '`~/.skyscraper/resources/megadrive_logo.png`' file. Feel free to create subfolders inside the resources folder. If you do, remember to add the partial path to the filename like so:
+The file megadrive_logo.png will then be loaded from the '`/home/USER/.skyscraper/resources/megadrive_logo.png`' file. Feel free to create subfolders inside the resources folder. If you do, remember to add the partial path to the filename like so:
 ```
 <gamebox side="platform_logos/megadrive_logo.png" rotate="90"/>
 ```
-This will look for the file at '`~/.skyscraper/resources/platform_logos/megadrive_logo.png`'.
+This will look for the file at '`/home/USER/.skyscraper/resources/platform_logos/megadrive_logo.png`'.
 
 Word of warning: All custom image resources are loaded into memory when Skyscraper starts. So please keep your resources to a minimum - otherwise it might exceed the total memory on the Pi which will cause Skyscraper to get killed by the kernel.

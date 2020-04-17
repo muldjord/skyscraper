@@ -53,7 +53,7 @@ When setting the country or region use the short-name as shown. Check the exampl
 ## Examples
 ### Command line
 `--region de`
-### ~/.skyscraper/config.ini
+### /home/USER/.skyscraper/config.ini
 ```
 [main]
 region="de"
@@ -119,13 +119,13 @@ When a region is specified by the user, this region will be prioritized. However
 It is also possible to completely override the default prioritization list with the `regionPrios="<COMMASEPARATED REGION LIST>"` config.ini option. This can *not* be done on command-line.
 
 #### Examples
-##### ~/.skyscraper/config.ini
+##### /home/USER/.skyscraper/config.ini
 ```
 [main]
 regionPrios="de,us,jp"
 ```
 or
 ```
-[any platform]
+[<PLATFORM>]
 regionPrios="de,us,jp"
 ```

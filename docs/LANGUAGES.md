@@ -29,16 +29,17 @@ Pretty much all resources from `screenscraper` have language support. Use the sh
 ## Examples
 ### Command line
 `--lang de`
-### ~/.skyscraper/config.ini
+### /home/USER/.skyscraper/config.ini
 ```
 [main]
 lang="de"
 ```
 or
 ```
-[any platform]
+[<PLATFORM>]
 lang="de"
 ```
+Substitute <PLATFORM> with the platform you want to use these priorities with (eg. 'snes').
 
 ## Other notes
 When a language is specified by the user, this language will be prioritized. However, if a resource can't be found with that specific language, it will fall back to `en` (English).
