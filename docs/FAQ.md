@@ -41,11 +41,11 @@ userCreds="USER:PASS"
 **A:** Whenever you make any gamelist specific changes to Skyscraper's configurations, you need to regenerate the gamelists for your chosen frontend afterwards for the changes to take effect. This can be done simply by running Skyscraper with `Skyscraper -p PLATFORM`. This will regenerate the gamelist for that platform using your new configuration.
 </details>
 
-#### Q: I used Skyscraper to generate EmulationStation gamelists for one or more platforms, but when I restarted the system my gamelists hadn't changed. Why is that?
+#### Q: I used Skyscraper to generate EmulationStation gamelists for one or more platforms, but when I restarted the system the gamelist hadn't changed. Why is that?
 <details>
   <summary>Expand answer...</summary>
 
-**A:** When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before using Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting it in the menus.
+**A:** When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before generating the gamelists with Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting it in the menus.
 </details>
 
 #### Q: I installed Skyscraper from the RetroPie optional packages and want to run it from the terminal. But when I type `Skyscraper` it says `Skyscraper: command not found`. Why is that?
@@ -53,4 +53,11 @@ userCreds="USER:PASS"
   <summary>Expand answer...</summary>
 
 **A:** The RetroPie-Setup script installs the Skyscraper executable in a location that is not normally searched by the system when looking for executables. For ease of use you can create a link to a location that is searched by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. You might be asked for your sudo password, for RetroPie default is `raspberry`. If that command was succesful you should now be able to run Skyscraper simply with `Skyscraper` followed by any options you need.
+</details>
+
+#### Q: I want to set up different options for different platforms. It's really tiresome setting it all on command-line. Can this be done easier?
+<details>
+  <summary>Expand answer...</summary>
+
+**A:** YES! Absolutely. In addition to taking options from the command-line, Skyscraper also reads the `/home/USER/.skyscraper/config.ini` file, which is where you should set everything up. This file allows you to configure things both globally, per-platform, per-frontend and per-scraping module. Read more about the available options and option priorities [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md)
 </details>
