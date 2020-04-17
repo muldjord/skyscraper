@@ -45,7 +45,7 @@ userCreds="USER:PASS"
 <details>
   <summary>Expand answer...</summary>
 
-**A:** When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before using Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting it in the menus.
+**A:** When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before generating the gamelists with Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting it in the menus.
 </details>
 
 #### Q: I installed Skyscraper from the RetroPie optional packages and want to run it from the terminal. But when I type `Skyscraper` it says `Skyscraper: command not found`. Why is that?
