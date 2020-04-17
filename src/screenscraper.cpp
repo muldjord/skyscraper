@@ -749,6 +749,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "11";
   } else if(platform == "wii") {
     return "16";
+  } else if(platform == "wiiu") {
+    return "18";
   } else if(platform == "wonderswan") {
     return "45";
   } else if(platform == "wonderswancolor") {
