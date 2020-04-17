@@ -145,7 +145,7 @@ Scripter::Scripter()
 
   QFile scriptFile(QDir::homePath() + "/.skyscraper/skyscript.sh");
   if(!scriptFile.open(QIODevice::WriteOnly)) {
-    printf("Couldn't open '~/.skyscraper/skyscript.sh' file for writing, please check permissions and rerun Skyscraper\nNow quitting...\n");
+    printf("Couldn't open '/home/USER/.skyscraper/skyscript.sh' file for writing, please check permissions and rerun Skyscraper\nNow quitting...\n");
     exit(1);
   }
 
@@ -193,7 +193,7 @@ Scripter::Scripter()
   
   std::string runScriptStr = "";
   printf("\n");
-  printf("The script '\033[1;32m~/.skyscraper/skyscript.sh\033[0m' has been created. \033[1;34mDo you wish to run it now?\033[0m (Y/n)? ");
+  printf("The script '\033[1;32m/home/USER/.skyscraper/skyscript.sh\033[0m' has been created. \033[1;34mDo you wish to run it now?\033[0m (Y/n)? ");
   getline(std::cin, runScriptStr);
   if(runScriptStr == "y" || runScriptStr == "Y" || runScriptStr == "") {
     printf("\nRunning script...\n");

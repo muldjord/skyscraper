@@ -564,7 +564,7 @@ void Skyscraper::checkThreads()
   }
   printf("\033[1;34mTotal number of games: %d\033[0m\n", totalFiles);
   printf("\033[1;32mSuccessfully processed games: %d\033[0m\n", found);
-  printf("\033[1;33mSkipped games: %d\033[0m (Filenames saved to '\033[1;33m~/.skyscraper/%s\033[0m')\n\n", notFound, skippedFileString.toStdString().c_str());
+  printf("\033[1;33mSkipped games: %d\033[0m (Filenames saved to '\033[1;33m/home/USER/.skyscraper/%s\033[0m')\n\n", notFound, skippedFileString.toStdString().c_str());
 
   // All done, now clean up and exit to terminal
   emit finished();
@@ -1489,7 +1489,7 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
     config.threads = 1;
     if(config.userCreds.isEmpty()) {
-      printf("\033[1;31mThe IGDB module requires a free personal API key to work. Get one at https://api.igdb.com and set it either with '-u <KEY>' or by adding the following to '~/.skyscraper/config.ini':\n[igdb]\nuserCreds=\"<KEY>\"\n\nSkyscraper can't continue, now exiting...\n");
+      printf("\033[1;31mThe IGDB module requires a free personal API key to work. Get one at https://api.igdb.com and set it either with '-u <KEY>' or by adding the following to '/home/USER/.skyscraper/config.ini':\n[igdb]\nuserCreds=\"<KEY>\"\n\nSkyscraper can't continue, now exiting...\n");
       exit(1);
     }
     printf("Fetching key status, just a sec...\n");
@@ -1525,7 +1525,7 @@ void Skyscraper::doPrescrapeJobs()
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
       if(config.threads > 1) {
-	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u user:password' command line option or by setting 'userCreds=\"user:password\"' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u user:password' command line option or by setting 'userCreds=\"user:password\"' in '/home/USER/.skyscraper/config.ini'.\033[0m\n\n");
 	config.threads = 1;
       }
     } else {
@@ -1535,7 +1535,7 @@ void Skyscraper::doPrescrapeJobs()
       QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
       if(jsonObj.isEmpty()) {
 	if(manager.getData().contains("Erreur de login")) {
-	  printf("\033[0;31mScreenScraper login error! Please verify that you've entered your credentials correctly in '~/.skyscraper/config.ini'. It needs to look EXACTLY like this, but with your user and pass:\033[0m\n\033[1;33m[screenscraper]\nuserCreds=\"user:pass\"\033[0m\033[0;31m\nContinuing with unregistered user, forcing 1 thread...\033[0m\n\n");
+	  printf("\033[0;31mScreenScraper login error! Please verify that you've entered your credentials correctly in '/home/USER/.skyscraper/config.ini'. It needs to look EXACTLY like this, but with your USER and PASS:\033[0m\n\033[1;33m[screenscraper]\nuserCreds=\"USER:PASS\"\033[0m\033[0;31m\nContinuing with unregistered user, forcing 1 thread...\033[0m\n\n");
 	} else {
 	  printf("\033[1;33mReceived invalid / empty ScreenScraper server response, maybe their server is busy / overloaded. Forcing 1 thread...\033[0m\n\n");
 	}

@@ -100,7 +100,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     } else if(headerData.contains("API fermé pour les non membres") ||
 	      headerData.contains("API closed for non-registered members") ||
 	      headerData.contains("****T****h****e**** ****m****a****x****i****m****u****m**** ****t****h****r****e****a****d****s**** ****a****l****l****o****w****e****d**** ****t****o**** ****l****e****e****c****h****e****r**** ****u****s****e****r****s**** ****i****s**** ****a****l****r****e****a****d****y**** ****u****s****e****d****")) {
-      printf("\033[1;31mThe screenscraper service is currently closed or too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to gain more threads. Then use the credentials with Skyscraper using the '-u user:pass' command line option or by setting 'userCreds=\"user:pass\"' in '~/.skyscraper/config.ini'.\033[0m\n\n");
+      printf("\033[1;31mThe screenscraper service is currently closed or too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to gain more threads. Then use the credentials with Skyscraper using the '-u user:pass' command line option or by setting 'userCreds=\"user:pass\"' in '/home/USER/.skyscraper/config.ini'.\033[0m\n\n");
       if(retries == RETRIESMAX - 1) {
 	reqRemaining = 0;
 	return;
@@ -125,7 +125,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 	jsonErrorFile.write(data);
 	jsonErrorFile.close();
       }
-      printf("The erroneous answer was written to '~/.skyscraper/screenscraper_error.json'. Please create a bug report at 'https://github.com/muldjord/skyscraper/issues' and attach that file.\n");
+      printf("The erroneous answer was written to '/home/USER/.skyscraper/screenscraper_error.json'. Please create a bug report at 'https://github.com/muldjord/skyscraper/issues' and attach that file.\n");
       break; // DON'T try again! If we don't get a valid JSON document, something is very wrong with the API
     }
 
