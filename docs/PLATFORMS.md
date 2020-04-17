@@ -65,6 +65,7 @@
 * Videopac (Oddysey 2)
 * Virtual Boy
 * Wii
+* Wii U
 * WonderSwan
 * WonderSwan Color
 * Z-Machine
