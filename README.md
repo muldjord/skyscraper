@@ -105,13 +105,13 @@ If you have your roms in a non-default location (default for RetroPie users is `
 * `-g <PATH>`
 * `-o <PATH>`
 
-For almost any command line option, consider setting them in the `~/.skyscraper/config.ini` file as described [here](docs/CONFIGINI.md). This will make the options permanent so you don't need to type them in all the time.
+For almost any command line option, consider setting them in the `/home/USER/.skyscraper/config.ini` file as described [here](docs/CONFIGINI.md). This will make the options permanent so you don't need to type them in all the time.
 
 #### Gathering data for a subset of roms
 Skyscraper offers several ways of gathering data for a subset of roms. If you just want to scrape the roms that have no data in the cache whatsoever, you can do so with the `--onlymissing` command-line option. You can also check out the `--startat FILENAME` and `--endat FILENAME` options. If you just want to gather data for a couple of roms you can simply add the filename(s) to the end of the command-line (eg. `Skyscraper -p amiga -s openretro "/path/to/rom name 1.lha" "/path/to/rom name 2.lha"`). And probably the most advanced (and quite handy) way to gather data for a subset of roms is to make use of the `--cache report:missing=RESOURCE` option. This can generate a report containing the filenames that are missing a certain resource. You can then feed the report back into Skyscraper with the `--fromfile REPORTFILE` afterwards. Skyscraper will then only scrape the files contained in the report.
 
 ### config.ini
-A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `~/.skyscraper/config.ini`. Any options set in this file will be used by default by Skyscraper. So if you always use, for example, `-i <SOME FOLDER>` on command line, you can set the matching option `inputFolder="<SOME FOLDER>"` in the config.
+A lesser known, but extremely useful, feature of Skyscraper is to add your desired config variables to `/home/USER/.skyscraper/config.ini`. Any options set in this file will be used by default by Skyscraper. So if you always use, for example, `-i <SOME FOLDER>` on command line, you can set the matching option `inputFolder="<SOME FOLDER>"` in the config.
 
 For a full description of all availabe config options, check [here](docs/CONFIGINI.md).
 
@@ -133,7 +133,7 @@ $ Skyscraper
 ```
 I do not recommend using this mode anymore as I consider it to be deprecated after Skyscraper was officially added to the RetroPie-Setup script.
 
-In simple mode Skyscraper will ask you a bunch of questions, create a script based on your answers and finally run the script which scrapes the chosen platform using those options. This can be useful for first-time users, since it gives a bit of an overview of many of the things you can configure Skyscraper to do. If you're curious you can check out the generated script afterwards. It's located at `~/.skyscraper/skyscript.sh`.
+In simple mode Skyscraper will ask you a bunch of questions, create a script based on your answers and finally run the script which scrapes the chosen platform using those options. This can be useful for first-time users, since it gives a bit of an overview of many of the things you can configure Skyscraper to do. If you're curious you can check out the generated script afterwards. It's located at `/home/USER/.skyscraper/skyscript.sh`.
 
 NOTE: If you choose to use this mode, please be aware that many of the scraping modules have limits and user requirements that need to be considered when scraping any number of files. You should familiarize yourself [with these](docs/SCRAPINGMODULES.md) before using Skyscraper in general.
 
@@ -264,7 +264,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Optimized all cache resource iterations to use const references instead of copies
 * Optimized the entire codebase by removing all Qt-centric foreach iterate-by-copy to use references instead
 * Fixed bug where 'screenscraper' would only look for ESRB age classification
-* Potential faulty JSON replies from Screenscraper are now saved to '~/.skyscraper/screenscraper_error.json' for easier debugging
+* Potential faulty JSON replies from Screenscraper are now saved to '/home/USER/.skyscraper/screenscraper_error.json' for easier debugging
 
 #### Version 3.2.2 (3rd August 2019)
 * Added 'bat' scripts to sha1 special handling list (please purge platforms using 'bat' files and rescrape)
