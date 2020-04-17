@@ -59,5 +59,5 @@ userCreds="USER:PASS"
 <details>
   <summary>Expand answer...</summary>
 
-**A:** YES! Absolutely. In addition to taking options from the command-line, Skyscraper also reads the `/home/USER/.skyscraper/config.ini` file, which is where you should set everything up. This file allows you to configure things both globally, per-platform and per-scraping module. Read more about the available options and option priorities [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md)
+**A:** YES! Absolutely. In addition to taking options from the command-line, Skyscraper also reads the `/home/USER/.skyscraper/config.ini` file, which is where you should set everything up. This file allows you to configure things both globally, per-platform, per-frontend and per-scraping module. Read more about the available options and option priorities [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md)
 </details>
