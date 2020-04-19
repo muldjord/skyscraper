@@ -1486,8 +1486,9 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
       }
       if(config.cacheResize) {
 	QImage image;
-	image.loadFromData(*imageData);
-	if(!image.isNull()) {
+	if(imageData->size() > 0 &&
+	   image.loadFromData(*imageData) &&
+	   !image.isNull()) {
 	  int max = 800;
 	  if(image.width() > max || image.height() > max) {
 	    image = image.scaled(max, max, Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -1496,9 +1497,9 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
 	  QBuffer b(&resizedData);
 	  b.open(QIODevice::WriteOnly);
 	  if((image.hasAlphaChannel() && hasAlpha(image)) || resource.type == "screenshot") {
-	    image.save(&b, "png");
+	    okToAppend = image.save(&b, "png");
 	  } else {
-	    image.save(&b, "jpg", config.jpgQuality);
+	    okToAppend = image.save(&b, "jpg", config.jpgQuality);
 	  }
 	  b.close();
 	  if(imageData->size() > resizedData.size()) {
@@ -1522,6 +1523,11 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
 	} else {
 	  okToAppend = false;
 	}
+      } else {
+	// Image was faulty and could not be saved to cache so we clear
+	// the QByteArray data in game entry to make sure we get a "NO"
+	// in the terminal output from scraperworker.cpp.
+	imageData->clear();
       }
     } else if(resource.type == "video") {
       if(entry.videoData.size() <= config.videoSizeLimit) {
