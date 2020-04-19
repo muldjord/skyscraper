@@ -149,6 +149,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 
+#### Version 3.4.10 (In progress, unreleased)
+* Re-implemented double-check when saving artwork to cache to avoid 0-byte files on systems with a broken libpng (Thank you to 'jacrify' for letting me know)
+
 #### Version 3.4.9 (17th April 2020)
 * Added 'wiiu' platform (Thank you to 'minilandl' for suggesting it)
 
