@@ -246,12 +246,16 @@ void ScraperWorker::run()
 	    if(QFile::exists(videoDst)) {
 	      QFile::remove(videoDst);
 	    }
-	    QFile::link(game.videoFile, videoDst);
+	    if(!QFile::link(game.videoFile, videoDst)) {
+	      game.videoFormat == "";
+	    }
 	  } else {
 	    QFile videoFile(videoDst);
 	    if(videoFile.open(QIODevice::WriteOnly)) {
 	      videoFile.write(game.videoData);
 	      videoFile.close();
+	    } else {
+	      game.videoFormat == "";
 	    }
 	  }
 	}
