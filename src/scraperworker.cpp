@@ -233,27 +233,31 @@ void ScraperWorker::run()
     if(!config.pretend && config.scraper == "cache") {
       // Process all artwork
       compositor.saveAll(game, info.completeBaseName());
-      if(config.videos && game.videoFormat != "") {
+      // Copy or symlink videos as requested
+      if(config.videos &&
+	 game.videoFormat != "" &&
+	 !game.videoFile.isEmpty() &&
+	 QFile::exists(game.videoFile)) {
 	QString videoDst = config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat;
-	QFile videoFileDst(videoDst);
-	if(videoFileDst.exists()) {
-	  // Try to remove existing video destination file first
-	  videoFileDst.remove();
-	}
-	if(config.symlink && config.scraper == "cache" && !game.videoFile.isEmpty()) {
-	  QFile videoFile(game.videoFile);
-	  if(videoFile.exists())
-	    videoFile.link(videoDst);
+	if(QFile::exists(videoDst) && config.skipExistingVideos) {
 	} else {
-	  QFile videoFile(videoDst);
-	  if(videoFile.open(QIODevice::WriteOnly)) {
-	    videoFile.write(game.videoData);
-	    videoFile.close();
+	  if(config.symlink) {
+	    // Try to remove existing video destination file before linking
+	    if(QFile::exists(videoDst)) {
+	      QFile::remove(videoDst);
+	    }
+	    QFile::link(game.videoFile, videoDst);
+	  } else {
+	    QFile videoFile(videoDst);
+	    if(videoFile.open(QIODevice::WriteOnly)) {
+	      videoFile.write(game.videoData);
+	      videoFile.close();
+	    }
 	  }
 	}
       }
     }
-
+    
     // Add all resources to the cache
     if(config.scraper != "cache" && game.found && !fromCache) {
       game.source = config.scraper;
