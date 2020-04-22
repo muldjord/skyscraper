@@ -239,7 +239,7 @@ void ScraperWorker::run()
 	 !game.videoFile.isEmpty() &&
 	 QFile::exists(game.videoFile)) {
 	QString videoDst = config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat;
-	if(QFile::exists(videoDst) && config.skipExistingVideos) {
+	if(config.skipExistingVideos && QFile::exists(videoDst)) {
 	} else {
 	  if(config.symlink) {
 	    // Try to remove existing video destination file before linking
