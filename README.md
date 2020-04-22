@@ -148,6 +148,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
+#
+#### Version 3.4.11 (In progress, unreleased)
+* For 'screenscraper', 'thegamesdb', 'mobygames' and 'arcadedb' Skyscraper will now no longer fetch the artworks if user has requested it to remain uncached (Thank you to user 'herbymachine' for the request)
 
 #### Version 3.4.10 (20th April 2020)
 * Re-implemented double-check when saving artwork to cache to avoid 0-byte files on systems with a broken libpng (Thank you to 'jacrify' for letting me know)
