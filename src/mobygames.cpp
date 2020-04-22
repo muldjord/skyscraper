@@ -49,7 +49,6 @@ MobyGames::MobyGames(Settings *config) : AbstractScraper(config)
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(AGES);
   fetchOrder.append(RATING);
-  // Cover and screenshot MUST be last and in this order!
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
 }

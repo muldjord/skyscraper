@@ -208,16 +208,24 @@ void ScreenScraper::getGameData(GameEntry &game)
       getReleaseDate(game);
       break;
     case COVER:
-      getCover(game);
+      if(config->cacheCovers) {
+	getCover(game);
+      }
       break;
     case SCREENSHOT:
-      getScreenshot(game);
+      if(config->cacheScreenshots) {
+	getScreenshot(game);
+      }
       break;
     case WHEEL:
-      getWheel(game);
+      if(config->cacheWheels) {
+	getWheel(game);
+      }
       break;
     case MARQUEE:
-      getMarquee(game);
+      if(config->cacheMarquees) {
+	getMarquee(game);
+      }
       break;
     case VIDEO:
       if(config->videos) {
