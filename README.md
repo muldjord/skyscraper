@@ -151,6 +151,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 #
 #### Version 3.4.11 (In progress, unreleased)
 * For 'screenscraper', 'thegamesdb', 'mobygames' and 'arcadedb' Skyscraper will now no longer fetch the artworks if user has requested it to remain uncached (Thank you to user 'herbymachine' for the request)
+* Added '--skipexistingmedia' option to allow for faster gamelist generation in cases where some artwork already exists in the gamelist media folder (Thank you to 'jacrify' for suggesting this)
 
 #### Version 3.4.10 (20th April 2020)
 * Re-implemented double-check when saving artwork to cache to avoid 0-byte files on systems with a broken libpng (Thank you to 'jacrify' for letting me know)
