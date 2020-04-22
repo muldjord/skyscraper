@@ -60,9 +60,6 @@ struct Settings {
   int currentFile = 0;
   int totalFiles = 0;
   int maxLength = 2500;
-  bool videos = false;
-  int videoSizeLimit = 42000000;
-  bool symlink = false;
   bool brackets = true;
   bool refresh = false;
   QString cacheOptions = "";
@@ -96,10 +93,18 @@ struct Settings {
   
   int romLimit = -1;
 
+  bool videos = false;
+  int videoSizeLimit = 42000000;
+  bool symlink = false;
+  bool skipExistingVideos = false;
   bool cacheCovers = true;
+  bool skipExistingCovers = false;
   bool cacheScreenshots = true;
+  bool skipExistingScreenshots= false;
   bool cacheWheels = true;
+  bool skipExistingWheels = false;
   bool cacheMarquees = true;
+  bool skipExistingMarquees = false;
   
   QString user = "";
   QString password = "";

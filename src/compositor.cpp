@@ -27,6 +27,7 @@
 #include <QSettings>
 #include <QPainter>
 #include <QDomDocument>
+#include <QFileInfo>
 
 #include "compositor.h"
 #include "strtools.h"
@@ -296,14 +297,41 @@ void Compositor::addChildLayers(Layer &layer, QXmlStreamReader &xml)
 void Compositor::saveAll(GameEntry &game, QString completeBaseName)
 {
   for(auto &output: outputs.getLayers()) {
+    QString filename = "/" + completeBaseName + ".png";
+    if(output.resType == "cover") {
+      filename.prepend(config->coversFolder);
+      if(config->skipExistingCovers && QFileInfo::exists(filename)) {
+	game.coverFile = filename;
+	continue;
+      }
+    } else if(output.resType == "screenshot") {
+      filename.prepend(config->screenshotsFolder);
+      if(config->skipExistingScreenshots && QFileInfo::exists(filename)) {
+	game.screenshotFile = filename;
+	continue;
+      }
+    } else if(output.resType == "wheel") {
+      filename.prepend(config->wheelsFolder);
+      if(config->skipExistingWheels && QFileInfo::exists(filename)) {
+	game.wheelFile = filename;
+	continue;
+      }
+    } else if(output.resType == "marquee") {
+      filename.prepend(config->marqueesFolder);
+      if(config->skipExistingMarquees && QFileInfo::exists(filename)) {
+	game.marqueeFile = filename;
+	continue;
+      }
+    }
+
     if(output.resource == "cover") {
       output.setCanvas(QImage::fromData(game.coverData));
     } else if(output.resource == "screenshot") {
-	output.setCanvas(QImage::fromData(game.screenshotData));
+      output.setCanvas(QImage::fromData(game.screenshotData));
     } else if(output.resource == "wheel") {
-	output.setCanvas(QImage::fromData(game.wheelData));
+      output.setCanvas(QImage::fromData(game.wheelData));
     } else if(output.resource == "marquee") {
-	output.setCanvas(QImage::fromData(game.marqueeData));
+      output.setCanvas(QImage::fromData(game.marqueeData));
     }
 
     if(output.canvas.isNull() && output.hasLayers()) {
@@ -321,26 +349,14 @@ void Compositor::saveAll(GameEntry &game, QString completeBaseName)
       processChildLayers(game, output);
     }
 
-    if(output.resType == "cover") {
-      QString filename = config->coversFolder + "/" + completeBaseName + ".png";
-      if(output.save(filename)) {
-	game.coverFile = filename;
-      }
-    } else if(output.resType == "screenshot") {
-      QString filename = config->screenshotsFolder + "/" + completeBaseName + ".png";
-      if(output.save(filename)) {
-	game.screenshotFile = filename;
-      }
-    } else if(output.resType == "wheel") {
-      QString filename = config->wheelsFolder + "/" + completeBaseName + ".png";
-      if(output.save(filename)) {
-	game.wheelFile = filename;
-      }
-    } else if(output.resType == "marquee") {
-      QString filename = config->marqueesFolder + "/" + completeBaseName + ".png";
-      if(output.save(filename)) {
-	game.marqueeFile = filename;
-      }
+    if(output.resType == "cover" && output.save(filename)) {
+      game.coverFile = filename;
+    } else if(output.resType == "screenshot" && output.save(filename)) {
+      game.screenshotFile = filename;
+    } else if(output.resType == "wheel" && output.save(filename)) {
+      game.wheelFile = filename;
+    } else if(output.resType == "marquee" && output.save(filename)) {
+      game.marqueeFile = filename;
     }
   }
 }

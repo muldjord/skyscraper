@@ -1170,6 +1170,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("symlink")) {
     config.symlink = true;
   }
+  if(parser.isSet("skipexistingvideos")) {
+    config.skipExistingVideos = true;
+  }
   if(parser.isSet("nocovers")) {
     config.cacheCovers = false;
   }
@@ -1181,6 +1184,18 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("nomarquees")) {
     config.cacheMarquees = false;
+  }
+  if(parser.isSet("skipexistingcovers")) {
+    config.skipExistingCovers = true;
+  }
+  if(parser.isSet("skipexistingscreenshots")) {
+    config.skipExistingScreenshots = true;
+  }
+  if(parser.isSet("skipexistingwheels")) {
+    config.skipExistingWheels = true;
+  }
+  if(parser.isSet("skipexistingmarquees")) {
+    config.skipExistingMarquees = true;
   }
   if(parser.isSet("skipped")) {
     config.skipped = true;
