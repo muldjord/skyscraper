@@ -323,10 +323,10 @@ void ScraperWorker::run()
     output.append("Ages:           '\033[1;32m" + game.ages + (game.ages.toInt() != 0?"+":"") + "\033[0m' (" + game.agesSrc + ")\n");
     output.append("Tags:           '\033[1;32m" + game.tags + "\033[0m' (" + game.tagsSrc + ")\n");
     output.append("Rating (0-1):   '\033[1;32m" + game.rating + "\033[0m' (" + game.ratingSrc + ")\n");
-    output.append("Cover:          " + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers?"":" (uncached)")) + " (" + game.coverSrc + ")\n");
-    output.append("Screenshot:     " + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheScreenshots?"":" (uncached)")) + " (" + game.screenshotSrc + ")\n");
-    output.append("Wheel:          " + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheWheels?"":" (uncached)")) + " (" + game.wheelSrc + ")\n");
-    output.append("Marquee:        " + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheMarquees?"":" (uncached)")) + " (" + game.marqueeSrc + ")\n");
+    output.append("Cover:          " + QString((game.coverData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheCovers || config.scraper == "cache"?"":" (uncached)")) + " (" + game.coverSrc + ")\n");
+    output.append("Screenshot:     " + QString((game.screenshotData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheScreenshots || config.scraper == "cache"?"":" (uncached)")) + " (" + game.screenshotSrc + ")\n");
+    output.append("Wheel:          " + QString((game.wheelData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheWheels || config.scraper == "cache"?"":" (uncached)")) + " (" + game.wheelSrc + ")\n");
+    output.append("Marquee:        " + QString((game.marqueeData.isNull()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((config.cacheMarquees || config.scraper == "cache"?"":" (uncached)")) + " (" + game.marqueeSrc + ")\n");
     if(config.videos) {
       output.append("Video:          " + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((game.videoData.size() <= config.videoSizeLimit?"":" (size exceeded, uncached)")) + " (" + game.videoSrc + ")\n");
     }
