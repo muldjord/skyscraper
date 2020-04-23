@@ -174,6 +174,8 @@ NOTE! The old options will continue to function for a while, but if you have scr
 
 ##### forcefilename
 Use filename as game name instead of the returned game title when generating a game list. Consider using 'nameTemplate' config.ini option instead.
+##### interactive
+Always ask user to choose best returned result from the scraping modules.
 ##### nobrackets
 Disables any [] and () tags in the frontend game titles. Consider using 'nameTemplate' config.ini option instead.
 ##### nocovers
@@ -192,6 +194,8 @@ Do not include input folder subdirectories when scraping.
 Disable wheels from being cached locally. Only do this if you do not plan to use the wheel artwork in 'artwork.xml'
 ##### onlymissing
 Tells Skyscraper to skip all files which already have any data from any source in the cache.
+##### pretend
+Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.
 ##### relative
 Forces all gamelist paths to be relative to rom location.
 ##### skipexistingcovers
@@ -208,8 +212,14 @@ When generating gamelists, skip processing wheels that already exist in the medi
 When generating a gamelist, also include games that do not have any cached data.
 ##### symlink
 Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!
+##### unattend
+Skip initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.
+##### unattendskip
+Skip initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.
 ##### unpack
 Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.
+##### videos
+Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!
 ###### Example(s)
 ```
 Skyscraper -p amiga --flags forcefilename,nosubdirs,skipexistingwheels
