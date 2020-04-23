@@ -241,13 +241,13 @@ void ScraperWorker::run()
 	QString videoDst = config.videosFolder + "/" + info.completeBaseName() + "." + game.videoFormat;
 	if(config.skipExistingVideos && QFile::exists(videoDst)) {
 	} else {
+	  if(QFile::exists(videoDst)) {
+	    QFile::remove(videoDst);
+	  }
 	  if(config.symlink) {
 	    // Try to remove existing video destination file before linking
-	    if(QFile::exists(videoDst)) {
-	      QFile::remove(videoDst);
-	    }
 	    if(!QFile::link(game.videoFile, videoDst)) {
-	      game.videoFormat == "";
+	      game.videoFormat = "";
 	    }
 	  } else {
 	    QFile videoFile(videoDst);
@@ -255,7 +255,7 @@ void ScraperWorker::run()
 	      videoFile.write(game.videoData);
 	      videoFile.close();
 	    } else {
-	      game.videoFormat == "";
+	      game.videoFormat = "";
 	    }
 	  }
 	}
@@ -340,8 +340,9 @@ void ScraperWorker::run()
     }
     output.append("\nDescription: (" + game.descriptionSrc + ")\n'\033[1;32m" + game.description.left(config.maxLength) + "\033[0m'\n");
 
-    if(!forceEnd)
+    if(!forceEnd) {
       forceEnd = limitReached(output);
+    }
     emit entryReady(game, output, debug);
     if(forceEnd) {
       break;
