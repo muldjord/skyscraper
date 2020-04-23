@@ -206,7 +206,7 @@ When generating gamelists, skip processing marquees that already exist in the me
 When generating gamelists, skip processing screenshots that already exist in the media output folder.
 ##### skipexistingvideos
 When generating gamelists, skip copying videos that already exist in the media output folder.
-##### skipexistinwheels
+##### skipexistingwheels
 When generating gamelists, skip processing wheels that already exist in the media output folder.
 ##### skipped
 When generating a gamelist, also include games that do not have any cached data.
