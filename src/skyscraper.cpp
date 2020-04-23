@@ -1188,7 +1188,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       printf("  \033[1;33mskipped\033[0m: When generating a gamelist, also include games that do not have any cached data.\n");
       printf("  \033[1;33msymlink\033[0m: Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!\n");
       printf("  \033[1;33munpack\033[0m: Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.\n");
-      printf("  \033[1;33mvideos\033[0m: Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!\n");
       printf("\n");
       exit(0);
     } else {
@@ -1232,8 +1231,6 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 	  config.symlink = true;
 	} else if(flag == "unpack") {
 	  config.unpack = true;
-	} else if(flag == "videos") {
-	  config.videos = true;
 	} else {
 	  printf("Unknown flag '%s', please check '--flags help' for list of all valid flags. Exiting...\n", flag.toStdString().c_str());
 	  exit(1);
