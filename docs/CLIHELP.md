@@ -56,7 +56,11 @@ Skyscraper -p snes -i "/path/to/your/snes/roms"
 ```
 
 #### --nosubdirs
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --unpack
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### -g &lt;PATH&gt;
 Sets the game list export folder. By default Skyscraper exports the game list to the same directory as the rom input folder. This enables you to change that to a non-default location. Consider setting this in [`config.ini`](CONFIGINI.md#gamelistfolderhomepiretropieroms) instead.
 ###### Example(s)
@@ -324,14 +328,32 @@ Skyscraper -p snes --cache validate
 ```
 
 #### --videos
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --symlink
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --nocovers
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --noscreenshots
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --nowheels
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --nomarquees
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --nobrackets
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --skipped
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --noresize
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --fromfile &lt;FILENAME&gt;
 Using this option is the equivalent to adding a bunch of filenames to work on directly on the commandline. It reads one line at a time from `<FILENAME>` and adds them to the queue of files to work on. This is very useful in conjunction with the `--cache edit` option or `--cache report` option or if you want to regather data just for those files using `-s <SCRAPING MODULE>`.
 
@@ -342,6 +364,8 @@ Skyscraper -p snes -s screenscraper --fromfile "/home/pi/.skyscraper/reports/rep
 ```
 
 #### --onlymissing
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --startat &lt;FILENAME&gt;
 If you wish to work on a subset of your roms you can use this option to set the starting rom. Use it in conjunction with the `--endat` option described below to further narrow the subset of files.
 
@@ -404,9 +428,16 @@ Skyscraper -p snes -s thegamesdb --maxfails 75
 ```
 
 #### --pretend
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --unattend
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --unattendskip
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --interactive
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
 
 #### --query &lt;STRING&gt;
 For most modules a search query is sent to the scraping module in an URL format. This means that a filename such as "Rick Dangerous.lha" becomes "rick+dangerous". The '+' here means a space. You could probably also use the URL encoded space "rick%20dangerous" but my tests show that most modules expect spaces as '+'. And it is the "rick+dangerous" part that you, as the user, can pass as the query, like so:
@@ -429,9 +460,11 @@ $ Skyscraper -p snes -s screenscraper --query "sha1=<CHECKSUM>&romnom=file%20nam
 ```
 
 #### --forcefilename
-This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate to the `--flags` option as soon as possible.
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
 
 #### --relative
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --addext &lt;EXTENSION&gt;
 If you have a rom that Skyscraper doesn't even try to gather data for, it might be because it has a file extension that isn't currently supported. This option allows you to temporarily add support for any file extension. If you feel like you are using a file extension that ought to be supported by default, please report it so it can be added in a later version of Skyscraper. Consider setting this in [`config.ini`](CONFIGINI.md#addextensionszst-smt) instead.
 ###### Example(s)
@@ -455,6 +488,8 @@ Skyscraper -p snes -s screenscraper --region jp
 ```
 
 #### --nohints
+This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
+
 #### --verbosity &lt;0-3&gt;
 Sets how verbose Skyscraper should be when running. Default level is 0. The higher the value, the more info Skyscraper will output to the terminal while running. Consider setting this in [`config.ini`](CONFIGINI.md#verbosity1) instead.
 ###### Example(s)
