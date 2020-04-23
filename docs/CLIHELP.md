@@ -165,6 +165,59 @@ NOTE! *Only* use this option if you know data has changed for several roms at th
 Skyscraper -p snes -s screenscraper --refresh
 ```
 
+#### --flags <FLAG1,FLAG2,...>
+From Skyscraper 3.5.0 all command-line options that change the scraping behaviour have been combined into this option. Check below for a complete list of all the available flags and what they do. You can also get this list by using `--flags help`.
+
+To enable multiple flags simply separate them by commas (eg. `--flags FLAG1,FLAG2`).
+
+NOTE! The old options will continue to function for a while, but if you have scripts using the old individual options, please update them to use this new `--flags FLAG1,FLAG2` format. The old options *will* be deprecated at some point in the future. To see which flags will be deprecated, check `--help`.
+
+##### forcefilename
+Use filename as game name instead of the returned game title when generating a game list. Consider using 'nameTemplate' config.ini option instead.
+##### nobrackets
+Disables any [] and () tags in the frontend game titles. Consider using 'nameTemplate' config.ini option instead.
+##### nocovers
+Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'
+##### nohints
+Disables the 'DID YOU KNOW:' hints when running Skyscraper.
+##### nomarquees
+Disable marquees from being cached locally. Only do this if you do not plan to use the marquee artwork in 'artwork.xml'
+##### noresize
+Disable resizing of artwork when saving it to the resource cache. Normally they are resized to save space.
+##### noscreenshots
+Disable screenshots/snaps from being cached locally. Only do this if you do not plan to use the screenshot artwork in 'artwork.xml'
+##### nosubdirs
+Do not include input folder subdirectories when scraping.
+##### nowheels
+Disable wheels from being cached locally. Only do this if you do not plan to use the wheel artwork in 'artwork.xml'
+##### onlymissing
+Tells Skyscraper to skip all files which already have any data from any source in the cache.
+##### relative
+Forces all gamelist paths to be relative to rom location.
+##### skipexistingcovers
+When generating gamelists, skip processing covers that already exist in the media output folder.
+##### skipexistingmarquees
+When generating gamelists, skip processing marquees that already exist in the media output folder.
+##### skipexistingscreenshots
+When generating gamelists, skip processing screenshots that already exist in the media output folder.
+##### skipexistingvideos
+When generating gamelists, skip copying videos that already exist in the media output folder.
+##### skipexistinwheels
+When generating gamelists, skip processing wheels that already exist in the media output folder.
+##### skipped
+When generating a gamelist, also include games that do not have any cached data.
+##### symlink
+Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!
+##### unpack
+Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.
+##### videos
+Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!
+###### Example(s)
+```
+Skyscraper -p amiga --flags forcefilename,nosubdirs,skipexistingwheels
+Skyscraper -p nes --flags videos,nomarquees
+```
+
 #### --cache <COMMAND[:OPTIONS]>
 This is the cache master option. It contains several subcommands that allows you to manipulate the cached data for the selected platform.
 
