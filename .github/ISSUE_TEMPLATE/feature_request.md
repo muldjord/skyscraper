@@ -13,7 +13,7 @@ If you have a specific feature request please take your time to describe it well
 
 Please remove the text down to this point before proceeding.
 
-**Describe the feature**
+**Describe the feature / request**
 [Replace this text with a clear and concise description of what this feature would achieve and how you would like it to be implemented.]
 
 **Additional context**
