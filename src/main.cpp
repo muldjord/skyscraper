@@ -214,6 +214,7 @@ int main(int argc, char *argv[])
   QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext')", "EXTENSION(S)", "");
   QCommandLineOption flagsOption("flags", "Allows setting flags that will impact the run in various ways. See '--flags help' for all available flags and what they do", "FLAG1,FLAG2,...", "");
   QCommandLineOption cacheOption("cache", "This option is the master option for all options related to the resource cache. It must be followed by 'COMMAND[:OPTIONS]'.\nSee '--cache help' for a full description of all functions.", "COMMAND[:OPTIONS]", "");
+  QCommandLineOption videosOption("videos", "Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!");
   QCommandLineOption refreshOption("refresh", "Same as '--cache refresh'.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
@@ -239,7 +240,6 @@ int main(int argc, char *argv[])
   QCommandLineOption skipexistingwheelsOption("skipexistinwheels", "DEPRECATED! See '--flags'. When generating gamelists, skip processing wheels that already exist in the media output folder.");
   QCommandLineOption skipexistingmarqueesOption("skipexistingmarquees", "DEPRECATED! See '--flags'. When generating gamelists, skip processing marquees that already exist in the media output folder.");
   QCommandLineOption skipexistingvideosOption("skipexistingvideos", "DEPRECATED! See '--flags'. When generating gamelists, skip copying videos that already exist in the media output folder.");
-  QCommandLineOption videosOption("videos", "DEPRECATED! See '--flags'. Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!");
   QCommandLineOption symlinkOption("symlink", "DEPRECATED! See '--flags'. Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!");
   QCommandLineOption nobracketsOption("nobrackets", "DEPRECATED! See '--flags'. Disables any [] and () tags in the frontend game titles. Consider using 'nameTemplate' config.ini option instead.");
   QCommandLineOption relativeOption("relative", "DEPRECATED! See '--flags'. Forces all gamelist paths to be relative to rom location.");
@@ -267,6 +267,7 @@ int main(int argc, char *argv[])
   parser.addOption(flagsOption);
   parser.addOption(verbosityOption);
   parser.addOption(cacheOption);
+  parser.addOption(videosOption);
   parser.addOption(refreshOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
@@ -301,7 +302,6 @@ int main(int argc, char *argv[])
   parser.addOption(skippedOption);
   parser.addOption(symlinkOption);
   parser.addOption(unpackOption);
-  parser.addOption(videosOption);
 
   parser.process(app);
 
