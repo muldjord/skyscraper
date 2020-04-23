@@ -1186,7 +1186,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       printf("  \033[1;33mskipexistingmarquees\033[0m: When generating gamelists, skip processing marquees that already exist in the media output folder.\n");
       printf("  \033[1;33mskipexistingscreenshots\033[0m: When generating gamelists, skip processing screenshots that already exist in the media output folder.\n");
       printf("  \033[1;33mskipexistingvideos\033[0m: When generating gamelists, skip copying videos that already exist in the media output folder.\n");
-      printf("  \033[1;33mskipexistinwheels\033[0m: When generating gamelists, skip processing wheels that already exist in the media output folder.\n");
+      printf("  \033[1;33mskipexistingwheels\033[0m: When generating gamelists, skip processing wheels that already exist in the media output folder.\n");
       printf("  \033[1;33mskipped\033[0m: When generating a gamelist, also include games that do not have any cached data.\n");
       printf("  \033[1;33msymlink\033[0m: Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!\n");
       printf("  \033[1;33munattend\033[0m: Skip initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.\n");
