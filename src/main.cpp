@@ -214,7 +214,6 @@ int main(int argc, char *argv[])
   QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext')", "EXTENSION(S)", "");
   QCommandLineOption flagsOption("flags", "Allows setting flags that will impact the run in various ways. See '--flags help' for all available flags and what they do", "FLAG1,FLAG2,...", "");
   QCommandLineOption cacheOption("cache", "This option is the master option for all options related to the resource cache. It must be followed by 'COMMAND[:OPTIONS]'.\nSee '--cache help' for a full description of all functions.", "COMMAND[:OPTIONS]", "");
-  QCommandLineOption videosOption("videos", "Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!");
   QCommandLineOption refreshOption("refresh", "Same as '--cache refresh'.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--nosubdirs' enabled.", "FILENAME", "");
@@ -222,14 +221,10 @@ int main(int argc, char *argv[])
   QCommandLineOption includefilesOption("includefiles", "Tells Skyscraper to only include the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"Super*,*Fighter*\"')", "PATTERN", "");
   QCommandLineOption fromfileOption("fromfile", "Tells Skyscraper to load the list of filenames to work on from a file. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
-  QCommandLineOption pretendOption("pretend", "Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.");
-  QCommandLineOption interactiveOption("interactive", "Always ask user to choose best returned result from the scraping modules.");
   QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=<CHECKSUM>', 'md5=<CHECKSUM>' or 'romnom=<FILENAME>' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line as well, otherwise it will be ignored.", "QUERY", "");
   QCommandLineOption regionOption("region", "Add preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' + others in that order)", "CODE", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "CODE", "en");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
-  QCommandLineOption unattendOption("unattend", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
-  QCommandLineOption unattendskipOption("unattendskip", "Don't ask any initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
   QCommandLineOption skippedOption("skipped", "DEPRECATED! See '--flags'. When generating a gamelist, also include games that do not have any cached data.");
   QCommandLineOption nocoversOption("nocovers", "DEPRECATED! See '--flags'. Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'");
   QCommandLineOption noscreenshotsOption("noscreenshots", "DEPRECATED! See '--flags'. Disable screenshots/snaps from being cached locally. Only do this if you do not plan to use the screenshot artwork in 'artwork.xml'");
@@ -245,11 +240,16 @@ int main(int argc, char *argv[])
   QCommandLineOption relativeOption("relative", "DEPRECATED! See '--flags'. Forces all gamelist paths to be relative to rom location.");
   QCommandLineOption noresizeOption("noresize", "DEPRECATED! See '--flags'. Disable resizing of artwork when saving it to the resource cache. Normally they are resized to save space. Setting this option will save them as is. NOTE! This is NOT related to how Skyscraper renders the artwork when scraping. Check the online 'Artwork' documentation to know more about this.");
   QCommandLineOption nosubdirsOption("nosubdirs", "DEPRECATED! See '--flags'. Do not include input folder subdirectories when scraping.");
+  QCommandLineOption unattendOption("unattend", "DEPRECATED! See '--flags'. Skip initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.");
+  QCommandLineOption unattendskipOption("unattendskip", "DEPRECATED! See '--flags'. Skip initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.");
   QCommandLineOption unpackOption("unpack", "DEPRECATED! See '--flags'. Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.");
   QCommandLineOption forcefilenameOption("forcefilename", "DEPRECATED! See '--flags'. Use filename as game name instead of the returned game title when generating a game list. Consider using 'nameTemplate' config.ini option instead.");
   QCommandLineOption onlymissingOption("onlymissing", "DEPRECATED! See '--flags'. Tells Skyscraper to skip all files which already have any data from any source in the cache.");
   QCommandLineOption nohintsOption("nohints", "DEPRECATED! See '--flags'. Disables the 'DID YOU KNOW:' hints when running Skyscraper.");
-  
+  QCommandLineOption videosOption("videos", "DEPRECATED! See '--flags'. Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!"); 
+  QCommandLineOption pretendOption("pretend", "DEPRECATED! See '--flags'. Only relevant when generating a game list. It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. Use it to check what and how the data will be combined from cached resources.");
+  QCommandLineOption interactiveOption("interactive", "DEPRECATED! See '--flags'. Always ask user to choose best returned result from the scraping modules.");
+ 
   parser.addOption(pOption);
   parser.addOption(sOption);
   parser.addOption(uOption);
@@ -267,7 +267,6 @@ int main(int argc, char *argv[])
   parser.addOption(flagsOption);
   parser.addOption(verbosityOption);
   parser.addOption(cacheOption);
-  parser.addOption(videosOption);
   parser.addOption(refreshOption);
   parser.addOption(langOption);
   parser.addOption(regionOption);
@@ -277,13 +276,10 @@ int main(int argc, char *argv[])
   parser.addOption(excludefilesOption);
   parser.addOption(fromfileOption);
   parser.addOption(maxfailsOption);
-  parser.addOption(pretendOption);
-  parser.addOption(interactiveOption);
   parser.addOption(queryOption);
   parser.addOption(addextOption);
-  parser.addOption(unattendOption);
-  parser.addOption(unattendskipOption);
   parser.addOption(forcefilenameOption);
+  parser.addOption(interactiveOption);
   parser.addOption(nobracketsOption);
   parser.addOption(nocoversOption);
   parser.addOption(nohintsOption);
@@ -293,6 +289,7 @@ int main(int argc, char *argv[])
   parser.addOption(nosubdirsOption);
   parser.addOption(nowheelsOption);
   parser.addOption(onlymissingOption);
+  parser.addOption(pretendOption);
   parser.addOption(relativeOption);
   parser.addOption(skipexistingcoversOption);
   parser.addOption(skipexistingmarqueesOption);
@@ -301,7 +298,10 @@ int main(int argc, char *argv[])
   parser.addOption(skipexistingwheelsOption);
   parser.addOption(skippedOption);
   parser.addOption(symlinkOption);
+  parser.addOption(unattendOption);
+  parser.addOption(unattendskipOption);
   parser.addOption(unpackOption);
+  parser.addOption(videosOption);
 
   parser.process(app);
 
