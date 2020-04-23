@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "PLATFORM", "");
   QCommandLineOption fOption("f", "The frontend you wish to generate a gamelist for. Remember to leave out the '-s' option when using this in order to enable Skyscraper's gamelist generation mode.\n(Currently supports 'emulationstation', 'attractmode' and 'pegasus'. Default is 'emulationstation')", "FRONTEND", "");
   QCommandLineOption eOption("e", "Set extra frontend option. This is required by the 'attractmode' frontend to set the emulator and optionally for the 'pegasus' frontend to set the launch command.\n(Default is none)", "STRING", "");
-  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '~/RetroPie/roms/<PLATFORM>')", "PATH", "");
+  QCommandLineOption iOption("i", "Folder which contains the game/rom files.\n(default is '/home/USER/RetroPie/roms/PLATFORM')", "PATH", "");
   QCommandLineOption gOption("g", "Game list export folder.\n(default depends on frontend)", "PATH", "");
   QCommandLineOption oOption("o", "Game media export folder.\n(default depends on frontend)", "PATH", "");
   QCommandLineOption sOption("s", "The scraping module you wish to gather resources from for the platform set with '-p'.\nLeave the '-s' option out to enable Skyscraper's gamelist generation mode.\n(WEB: 'arcadedb', 'igdb', 'mobygames', 'openretro', 'screenscraper', 'thegamesdb' and 'worldofspectrum', LOCAL: 'esgamelist' and 'import')", "MODULE", "");
@@ -209,8 +209,8 @@ int main(int argc, char *argv[])
   QCommandLineOption lOption("l", "Maximum game description length. Everything longer than this will be truncated.\n(default is 2500)", "0-10000", "");
   QCommandLineOption tOption("t", "Number of scraper threads to use. This might change depending on the scraping module limits.\n(default is 4)", "1-8", "");
   QCommandLineOption cOption("c", "Use this config file to set up Skyscraper.\n(default is '/home/USER/.skyscraper/config.ini')", "FILENAME", "");
-  QCommandLineOption aOption("a", "Use this artwork xml file to set up the artwork compositing.\n(default is '/home/USER/.skyscraper/artwork.xml')", "FILENAME", "");
-  QCommandLineOption dOption("d", "Set custom resource cache folder.\n(default is '/home/USER/.skyscraper/cache/<PLATFORM>')", "FOLDER", "");
+  QCommandLineOption aOption("a", "Specify a non-default artwork.xml file to use when setting up the artwork compositing when in gamelist generation mode.\n(default is '/home/USER/.skyscraper/artwork.xml')", "FILENAME", "");
+  QCommandLineOption dOption("d", "Set custom resource cache folder.\n(default is '/home/USER/.skyscraper/cache/PLATFORM')", "FOLDER", "");
   QCommandLineOption addextOption("addext", "Add this or these file extension(s) to accepted file extensions during a scraping run. (example: '*.zst' or '*.zst *.ext')", "EXTENSION(S)", "");
   QCommandLineOption flagsOption("flags", "Allows setting flags that will impact the run in various ways. See '--flags help' for all available flags and what they do", "FLAG1,FLAG2,...", "");
   QCommandLineOption cacheOption("cache", "This option is the master option for all options related to the resource cache. It must be followed by 'COMMAND[:OPTIONS]'.\nSee '--cache help' for a full description of all functions.", "COMMAND[:OPTIONS]", "");
@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
   QCommandLineOption includefilesOption("includefiles", "Tells Skyscraper to only include the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"Super*,*Fighter*\"')", "PATTERN", "");
   QCommandLineOption fromfileOption("fromfile", "Tells Skyscraper to load the list of filenames to work on from a file. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
-  QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=<CHECKSUM>', 'md5=<CHECKSUM>' or 'romnom=<FILENAME>' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line as well, otherwise it will be ignored.", "QUERY", "");
+  QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=CHECKSUM', 'md5=CHECKSUM' or 'romnom=FILENAME' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line as well, otherwise it will be ignored.", "QUERY", "");
   QCommandLineOption regionOption("region", "Add preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' + others in that order)", "CODE", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "CODE", "en");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
