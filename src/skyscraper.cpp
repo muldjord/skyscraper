@@ -87,7 +87,7 @@ void Skyscraper::run()
 
   printf("\n");
   
-  if(!config.nohints) {
+  if(config.hints) {
     showHint();
   }
 
@@ -652,8 +652,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   copyFile(distro, current);
 
   /* -----
-    Files that will only be overwritten if they don't already exist
-    ----- */
+     Files that will only be overwritten if they don't already exist
+     ----- */
 
   current = "artwork.xml";
   distro = "/usr/local/etc/skyscraper/artwork.xml";
@@ -686,7 +686,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   /* -----
      END updating files from distribution files
-    ----- */
+     ----- */
 
   //migrate(parser.isSet("c")?parser.value("c"):"config.ini");
 
@@ -756,7 +756,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.verbosity = settings.value("verbosity").toInt();
   }
   if(settings.contains("hints")) {
-    config.nohints = !settings.value("hints").toBool();
+    config.hints = settings.value("hints").toBool();
   }
   if(settings.contains("subdirs")) {
     config.subdirs = settings.value("subdirs").toBool();
@@ -1164,6 +1164,83 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     if(config.cacheFolder.isEmpty())
       config.cacheFolder = "cache/" + config.platform;
   }
+  if(parser.isSet("flags")) {
+    if(parser.value("flags") == "help") {
+      printf("Showing '\033[1;33m--flags\033[0m' help\n");
+      printf("Use comma-separated flags (eg. '--flags FLAG1,FLAG2') to enable multiple flags.\nThe following is a list of valid flags and what they do:\n");
+
+      printf("  \033[1;33mforcefilename\033[0m: Use filename as game name instead of the returned game title when generating a game list. Consider using 'nameTemplate' config.ini option instead.\n");
+      printf("  \033[1;33mnobrackets\033[0m: Disables any [] and () tags in the frontend game titles. Consider using 'nameTemplate' config.ini option instead.\n");
+      printf("  \033[1;33mnocovers\033[0m: Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'\n");
+      printf("  \033[1;33mnohints\033[0m: Disables the 'DID YOU KNOW:' hints when running Skyscraper.\n");
+      printf("  \033[1;33mnomarquees\033[0m: Disable marquees from being cached locally. Only do this if you do not plan to use the marquee artwork in 'artwork.xml'\n");
+      printf("  \033[1;33mnoresize\033[0m: Disable resizing of artwork when saving it to the resource cache. Normally they are resized to save space.\n");
+      printf("  \033[1;33mnoscreenshots\033[0m: Disable screenshots/snaps from being cached locally. Only do this if you do not plan to use the screenshot artwork in 'artwork.xml'\n");
+      printf("  \033[1;33mnosubdirs\033[0m: Do not include input folder subdirectories when scraping.\n");
+      printf("  \033[1;33mnowheels\033[0m: Disable wheels from being cached locally. Only do this if you do not plan to use the wheel artwork in 'artwork.xml'\n");
+      printf("  \033[1;33monlymissing\033[0m: Tells Skyscraper to skip all files which already have any data from any source in the cache.\n");
+      printf("  \033[1;33mrelative\033[0m: Forces all gamelist paths to be relative to rom location.\n");
+      printf("  \033[1;33mskipexistingcovers\033[0m: When generating gamelists, skip processing covers that already exist in the media output folder.\n");
+      printf("  \033[1;33mskipexistingmarquees\033[0m: When generating gamelists, skip processing marquees that already exist in the media output folder.\n");
+      printf("  \033[1;33mskipexistingscreenshots\033[0m: When generating gamelists, skip processing screenshots that already exist in the media output folder.\n");
+      printf("  \033[1;33mskipexistingvideos\033[0m: When generating gamelists, skip copying videos that already exist in the media output folder.\n");
+      printf("  \033[1;33mskipexistinwheels\033[0m: When generating gamelists, skip processing wheels that already exist in the media output folder.\n");
+      printf("  \033[1;33mskipped\033[0m: When generating a gamelist, also include games that do not have any cached data.\n");
+      printf("  \033[1;33msymlink\033[0m: Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!\n");
+      printf("  \033[1;33munpack\033[0m: Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.\n");
+      printf("  \033[1;33mvideos\033[0m: Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!\n");
+      printf("\n");
+      exit(0);
+    } else {
+      QList<QString> flags = parser.value("flags").split(",");
+      for(const auto &flag: flags) {
+	if(flag == "forcefilename") {
+	  config.forceFilename = true;
+	} else if(flag == "nobrackets") {
+	  config.brackets = false;
+	} else if(flag == "nocovers") {
+	  config.cacheCovers = false;
+	} else if(flag == "nohints") {
+	  config.hints = false;
+	} else if(flag == "nomarquees") {
+	  config.cacheMarquees = false;
+	} else if(flag == "noresize") {
+	  config.cacheResize = false;
+	} else if(flag == "noscreenshots") {
+	  config.cacheScreenshots = false;
+	} else if(flag == "nosubdirs") {
+	  config.subdirs = false;
+	} else if(flag == "nowheels") {
+	  config.cacheWheels = false;
+	} else if(flag == "onlymissing") {
+	  config.onlyMissing = true;
+	} else if(flag == "relative") {
+	  config.relativePaths = true;
+	} else if(flag == "skipexistingcovers") {
+	  config.skipExistingCovers = true;
+	} else if(flag == "skipexistingmarquees") {
+	  config.skipExistingMarquees = true;
+	} else if(flag == "skipexistingscreenshots") {
+	  config.skipExistingScreenshots = true;
+	} else if(flag == "skipexistingvideos") {
+	  config.skipExistingVideos = true;
+	} else if(flag == "skipexistingwheels") {
+	  config.skipExistingWheels = true;
+	} else if(flag == "skipped") {
+	  config.skipped = true;
+	} else if(flag == "symlink") {
+	  config.symlink = true;
+	} else if(flag == "unpack") {
+	  config.unpack = true;
+	} else if(flag == "videos") {
+	  config.videos = true;
+	} else {
+	  printf("Unknown flag '%s', please check '--flags help' for list of all valid flags. Exiting...\n", flag.toStdString().c_str());
+	  exit(1);
+	}
+      }
+    }
+  }
   if(parser.isSet("videos")) {
     config.videos = true;
   }
@@ -1283,7 +1360,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.lang = parser.value("lang");
   }
   if(parser.isSet("nohints")) {
-    config.nohints = true;
+    config.hints = false;
   }
   if(parser.isSet("verbosity")) {
     config.verbosity = parser.value("verbosity").toInt();
