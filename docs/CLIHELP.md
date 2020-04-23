@@ -170,7 +170,7 @@ From Skyscraper 3.5.0 all command-line options that change the scraping behaviou
 
 To enable multiple flags simply separate them by commas (eg. `--flags FLAG1,FLAG2`).
 
-NOTE! The old options will continue to function for a while, but if you have scripts using the old individual options, please update them to use this new `--flags FLAG1,FLAG2` format. The old options *will* be deprecated at some point in the future. To see which flags will be deprecated, check `--help`.
+NOTE! The old options will continue to function for a while, but if you have scripts using the old individual options, please update them to use this new `--flags FLAG1,FLAG2` format. The old options *will* be deprecated at some point in the future. To see which flags are considered deprecated check `--help`.
 
 ##### forcefilename
 Use filename as game name instead of the returned game title when generating a game list. Consider using 'nameTemplate' config.ini option instead.
