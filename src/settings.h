@@ -75,7 +75,7 @@ struct Settings {
   bool interactive = false;
   bool forceFilename = false;
   bool stats = false;
-  bool nohints = false;
+  bool hints = true;
   int verbosity = 0;
   int maxFails = 42;
   bool skipped = false;
