@@ -210,8 +210,6 @@ When generating a gamelist, also include games that do not have any cached data.
 Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!
 ##### unpack
 Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.
-##### videos
-Enables scraping and caching of videos for the scraping modules that support them. Beware, this takes up a lot of disk space!
 ###### Example(s)
 ```
 Skyscraper -p amiga --flags forcefilename,nosubdirs,skipexistingwheels
