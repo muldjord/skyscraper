@@ -154,6 +154,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Added '--skipexistingmedia' option to allow for faster gamelist generation in cases where some artwork already exists in the gamelist media folder (Thank you to 'jacrify' for suggesting this)
 * Added '--flags' command-line option that collects certain flag-like options into one
 * Added deprecated warnings to all options that are now moved to the '--flags' option
+* Added '*.cue' extension to '3do' platform (Thank you to 'therealdealneil' for the suggestion)
 
 #### Version 3.4.10 (20th April 2020)
 * Re-implemented double-check when saving artwork to cache to avoid 0-byte files on systems with a broken libpng (Thank you to 'jacrify' for letting me know)
