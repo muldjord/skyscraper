@@ -320,7 +320,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append(" ");
   }
   if(platform == "3do") {
-    formats.append("*.iso");
+    formats.append("*.iso *.cue");
   } else if(platform == "3ds") {
     formats.append("*.3ds");
   } else if(platform == "amiga") {
