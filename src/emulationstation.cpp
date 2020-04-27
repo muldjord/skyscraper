@@ -162,11 +162,12 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
     // Preserve certain data from old game list entry, but only for empty data
     preserveFromOld(entry);
 
-    if(config->relativePaths) {
-      entry.path.replace(config->inputFolder, ".");
-    }
     if(config->platform == "daphne") {
       entry.path.replace("daphne/roms/", "daphne/").replace(".zip", ".daphne");
+      entryType = "folder";
+    }
+    if(config->relativePaths) {
+      entry.path.replace(config->inputFolder, ".");
     }
 
     finalOutput.append("  <" + entryType + ">\n");
