@@ -155,6 +155,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Added '--flags' command-line option that collects certain flag-like options into one
 * Added deprecated warnings to all options that are now moved to the '--flags' option
 * Added '*.cue' extension to '3do' platform (Thank you to 'therealdealneil' for the suggestion)
+* Implemented a hack for the 'daphne' platform that will add the game info to the 'game.daphne' folders instead of the 'game.zip' files (Thank you to 'AlCzervik' for pointing this out)
 
 #### Version 3.4.10 (20th April 2020)
 * Re-implemented double-check when saving artwork to cache to avoid 0-byte files on systems with a broken libpng (Thank you to 'jacrify' for letting me know)
