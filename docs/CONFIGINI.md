@@ -112,7 +112,7 @@ This option also support template groups separated by `;` within the template. T
 
 ###### Example(s)
 ```
-nameTemplate="%t [%f%];, %P player(s)"
+nameTemplate="%t [%f];, %P player(s)"
 ```
 Will result in: `1945k III [1945kiii], 2 player(s)`
 
