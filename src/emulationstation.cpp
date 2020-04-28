@@ -150,6 +150,7 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
 	  extensions.replace("*.bin", "");
 	  extensions = extensions.simplified();
 	}
+	// Check is subfolder has more roms than one, in which case we stick with <game>
 	if(QDir(entryAbsolutePath, extensions).count() == 1) {
 	  entryType = "folder";
 	  entry.path = entryAbsolutePath;
