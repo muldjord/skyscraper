@@ -135,7 +135,7 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
     QString entryType = "game";
 
     QFileInfo entryInfo(entry.path);
-    if(entryInfo.isFile()) {
+    if(entryInfo.isFile() && config->platform != "daphne") {
       // Check if game is in subfolder. If so, change entry to <folder> type.
       QString entryAbsolutePath = entryInfo.absolutePath();
       // Check if path is exactly one subfolder beneath root platform folder (has one more '/')
