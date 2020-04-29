@@ -118,7 +118,7 @@ Scripter::Scripter()
   getline(std::cin, videosStr);
 
   std::string forceFilenameStr = "";
-  printf("\033[1;34mDo you wish to use filenames for game name instead of the one provided by the scraping module\033[0m (y/N)? ");
+  printf("\033[1;34mDo you wish to use filename as game name instead of the one provided by the scraping module\033[0m (y/N)? ");
   getline(std::cin, forceFilenameStr);
 
   std::string bracketsStr = "";
@@ -161,15 +161,25 @@ Scripter::Scripter()
     generateStr += " -o " + artworkFolderStr;
   if(frontendStr != "emulationstation") {
     generateStr += " -f " + frontendStr;
-    if((frontendStr == "attractmode" || frontendStr == "pegasus") && extrasStr != "")
+    if((frontendStr == "attractmode" || frontendStr == "pegasus") && extrasStr != "") {
+      if(extrasStr.find(' ') != std::string::npos &&
+	 extrasStr.front() != '\"' &&
+	 extrasStr.back() != '\"') {
+	extrasStr.insert(0, "\"");
+	extrasStr.push_back('\"');
+      }
       generateStr += " -e " + extrasStr;
+    }
   }
 
-  if(minMatchStr != "")
-    baseStr += " -m " + minMatchStr;
+  if(minMatchStr != "") {
+    gatherStr += " -m " + minMatchStr;
+    generateStr += " -m " + minMatchStr;
+  }
   if(refreshStr == "y" || refreshStr == "Y")
     gatherStr += " --cache refresh";
 
+  // !!! Only add flags from here !!!
   gatherStr += " --flags unattend,skipped,";
   generateStr += " --flags unattend,skipped,";
 
@@ -196,7 +206,7 @@ Scripter::Scripter()
   scriptFile.write("#!/bin/bash\n");
   for(const auto &scraper: Platform::getScrapers(QString(platformStr.c_str()))) {
     if(scraper != "cache") {
-      scriptFile.write((baseStr + gatherStr + " -s " + scraper.toStdString() + "\n").c_str());
+      scriptFile.write((baseStr + " -s " + scraper.toStdString() + gatherStr + "\n").c_str());
     } else {
       scriptFile.write((baseStr + generateStr + "\n").c_str());
     }
