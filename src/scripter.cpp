@@ -164,22 +164,34 @@ Scripter::Scripter()
     if((frontendStr == "attractmode" || frontendStr == "pegasus") && extrasStr != "")
       generateStr += " -e " + extrasStr;
   }
+
   if(minMatchStr != "")
     baseStr += " -m " + minMatchStr;
-  if(forceFilenameStr == "y" || forceFilenameStr == "Y")
-    generateStr += " --forcefilename";
   if(refreshStr == "y" || refreshStr == "Y")
     gatherStr += " --cache refresh";
-  if(unpackStr == "y" || unpackStr == "Y")
-    gatherStr += " --unpack";
-  if(bracketsStr == "n")
-    generateStr += " --nobrackets";
-  if(relativeStr == "y" || relativeStr == "Y")
-    generateStr += " --relative";
-  if(videosStr == "y" || videosStr == "Y")
-    baseStr += " --videos";
 
-  baseStr += " --unattend";
+  gatherStr += " --flags unattend,skipped,";
+  generateStr += " --flags unattend,skipped,";
+
+  if(unpackStr == "y" || unpackStr == "Y")
+    gatherStr += "unpack,";
+  if(forceFilenameStr == "y" || forceFilenameStr == "Y")
+    generateStr += "forcefilename,";
+  if(bracketsStr == "n")
+    generateStr += "nobrackets,";
+  if(relativeStr == "y" || relativeStr == "Y")
+    generateStr += "relative,";
+  if(videosStr == "y" || videosStr == "Y") {
+    gatherStr += "videos,";
+    generateStr += "videos,";
+  }
+
+  if(gatherStr.back() == ',') {
+    gatherStr = gatherStr.substr(0, gatherStr.length() - 1);
+  }
+  if(generateStr.back() == ',') {
+    generateStr = generateStr.substr(0, generateStr.length() - 1);
+  }
   
   scriptFile.write("#!/bin/bash\n");
   for(const auto &scraper: Platform::getScrapers(QString(platformStr.c_str()))) {
