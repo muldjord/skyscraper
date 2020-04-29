@@ -151,6 +151,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 
 #### Version 3.5.2 (In progress, unreleased)
 * Hid deprecated options from '--help'. Deprecated options still work just aren't shown
+* Updated 'Simple Mode' to use the new '--flags' options
 
 #### Version 3.5.1 (28th April 2020)
 * Fixed minor bug in 'daphne' when it only has one rom in 'daphne/roms'
