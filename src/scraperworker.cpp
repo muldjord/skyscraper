@@ -136,10 +136,10 @@ void ScraperWorker::run()
       }
       gameEntries.append(cachedGame);
     } else if(config.onlyMissing && cache->hasEntries(cacheId)) {
-      // Skip this file. '--onlymissing' has been set.
+      // Skip this file. '--flags onlymissing' has been set.
       game.found = false;
       game.title = compareTitle;
-      output.append("\033[1;33m---- Skipping game '" + info.completeBaseName() + "' since '--onlymissing' has been set ----\033[0m\n\n");
+      output.append("\033[1;33m---- Skipping game '" + info.completeBaseName() + "' since 'onlymissing' flag has been set ----\033[0m\n\n");
       emit entryReady(game, output, debug);
       if(forceEnd) {
 	break;

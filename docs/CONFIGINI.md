@@ -120,7 +120,7 @@ Will result in: `1945k III [1945kiii], 2 player(s)`
 `[main]`, `[<PLATFORM>]`
 
 #### jpgQuality="95"
-Sets the default jpg quality when saving image resources to the cache. This will be ignored if `--noresize` is set. Default is 95.
+Sets the default jpg quality when saving image resources to the cache. This will be ignored if `--flags noresize` is set. Default is 95.
 
 NOTE! All screenshots and any image resource that uses transparency will always be saved as png images. In those cases this setting will be ignored as png's are lossless.
 
@@ -234,7 +234,7 @@ Sets the desired number of parallel threads to be run when scraping. NOTE! Some 
 `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
 
 #### pretend="false"
-This option is *only* relevant when generating a game list (by leaving out the `-s <MODULE>` command line option). It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It is mostly useful when used as a command line option with `--pretend`. It makes little sense to set it here, but you can if you want to.
+This option is *only* relevant when generating a game list (by leaving out the `-s <MODULE>` command line option). It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It is mostly useful when used as a command line flag with `--flags pretend`. It makes little sense to set it here, but you can if you want to.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
@@ -252,7 +252,7 @@ When generating a game list Skyscraper will check if it already exists and ask i
 `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
 
 #### interactive="false"
-When gathering data from any of the scraping modules many potential entries will be returned. Normally Skyscraper chooses the best entry for you. But should you wish to choose the best entry yourself, you can enable this option. Skyscraper will then list the returned entries and let you choose which one is the best one. It is recommended to use the command line option `--interactive` instead in the (hopefully) rare cases where this mode is necessary.
+When gathering data from any of the scraping modules many potential entries will be returned. Normally Skyscraper chooses the best entry for you. But should you wish to choose the best entry yourself, you can enable this option. Skyscraper will then list the returned entries and let you choose which one is the best one. It is recommended to use the command line flag `--flags interactive` instead in the (hopefully) rare cases where this mode is necessary.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`

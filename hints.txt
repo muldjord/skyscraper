@@ -6,19 +6,19 @@ You can force a refresh of the locally cached data using the '--refresh' option.
 Skyscraper caches all scraped data in the resource cache. This saves bandwidth for the scraping sources as any rescaping will make use of this cache instead of pounding the servers again.
 You can import your own data into the resource cache using the 'import' module. You can import both textual and media data. Read more about this at https://github.com/muldjord/skyscraper/tree/master/import.
 You can prioritize the sources of each resource type by editing the '~/.skyscraper/cache/<PLATFORM>/priorities.xml'. Each resource type has a node with source nodes inside. If you want to prioritize a certain source for a certain resource type, just move it to the top or add it if it's not already there.
-You can turn off these hints using the '--nohints' command line option.
-You can force Skyscraper to never apply any bracket notes (such as '(Europe)' or '[aga]') to the game names by using the '--nobrackets' command line option.
-If you don't like the returned titles of your games, you can either import your own with the '-s import' module or force it to use the filenames with the '--forcefilename' command line option.
+You can turn off these hints using the '--flags nohints' command line flag.
+You can force Skyscraper to never apply any bracket notes (such as '(Europe)' or '[aga]') to the game names by using the '--flags nobrackets' command line flag.
+If you don't like the returned titles of your games, you can either import your own with the '-s import' module or force it to use the filenames with the '--flags forcefilename' command line flag.
 You can scrape a single game by adding it to the command line either with partial or full path. You can also scrape a span of games with the '--startat' and '--endat' command line options.
 With the '--cache show' command line option, you can check the status of the resources that are cached for the platform you are scraping.
 You can use the '--help' command line option to view all available options. Most of these can also be set in the '~/.skyscraper/config.ini'. Check the '~/.skyscraper/config.ini.example' file for all available options.
 You can set custom input/rom, game list and media folders using the '-i', '-g' and '-o' command line options.
 Skyscraper can create game lists for multiple frontends. Check the full list with '--help' and look for the '-f' command line option.
-You can enable Skyscraper's interactive mode with '--interactive'. When this is set Skyscraper will ask the user to choose the best entries when using a search based scraping module.
+You can enable Skyscraper's interactive mode by setting the flag '--flags interactive'. When this is set Skyscraper will ask the user to choose the best entries when using a search based scraping module.
 If you have all of your roms on an external harddrive, you can set the 'inputFolder' option in the '[main]' section of '~/.skyscraper/config.ini'. Then it will always use this location as the base path for all platforms.
-If you've manually compressed your roms (zip or 7z), you can use the '--unpack' option to tell Skyscraper to checksum the roms inside the compressed file instead of the compressed file itself. This is only relevant when scraping with the 'screenscraper' scraping module.
+If you've manually compressed your roms (zip or 7z), you can use the '--flags unpack' flag to tell Skyscraper to checksum the roms inside the compressed file instead of the compressed file itself. This is only relevant when scraping with the 'screenscraper' scraping module.
 You can vacuum the Skyscraper cache. This removes all cached resources that don't match any files in your current romset for the selected platform. You can do this by running "Skyscraper -p <PLATFORM> --cache vacuum".
-If you use videos and want to save a some space, you can use the "--symlink" option to force Skyscraper to link the videos from the cache to the destination instead of copying them. Beware that removing the files from the cache will break the links though.
+If you use videos and want to save some space, you can use the "--flags symlink" flag to force Skyscraper to link the videos from the cache to the destination instead of copying them. Beware that removing the files from the cache will break the links though.
 You can import data from an EmulationStation gamelist.xml file using the "-s esgamelist" scraping module. This way you can use other scrapers to generate a gamelist.xml and then import the data into Skyscraper if you wish.
 If you are having trouble scraping a game with a long name, consider adding an alias for it to the "~/.skyscraper/aliasMap.csv" file. Open the file in an editor to read more on how to this works.
 You can create reports for all files missing certain resources in the cache using the '--cache report:missing=<GROUP or RESOURCE1,RESOURCE2,...> option. Great ways to add missing resources that the online sources are having trouble providing are the '--cache edit' option or the '-s import' module.
