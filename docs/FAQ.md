@@ -45,7 +45,7 @@ userCreds="USER:PASS"
 <details>
   <summary>Expand answer...</summary>
 
-**A:** When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before generating the gamelists with Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting it in the menus.
+**A:** When EmulationStation restarts (eg. when you reboot the system through EmulationStation) it writes its current gameslists back to disk, thereby overwriting any gamelists you just generated with Skyscraper. You need to quit EmulationStation before generating the gamelists with Skyscraper to avoid this. You can quit EmulationStation by pressing F4 on a connected keyboard, or by selecting quit from the menus.
 </details>
 
 #### Q: I installed Skyscraper from the RetroPie optional packages and want to run it from the terminal. But when I type `Skyscraper` it says `Skyscraper: command not found`. Why is that?
@@ -53,6 +53,8 @@ userCreds="USER:PASS"
   <summary>Expand answer...</summary>
 
 **A:** The RetroPie-Setup script installs the Skyscraper executable in a location that is not normally searched by the system when looking for executables. For ease of use you can create a link to a location that is searched by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. You might be asked for your sudo password, for RetroPie default is `raspberry`. If that command was succesful you should now be able to run Skyscraper simply with `Skyscraper` followed by any options you need.
+
+WARNING!!! Do *not* run Skyscraper with `sudo Skyscraper`. `sudo` is *not* needed for running Skyscraper.
 </details>
 
 #### Q: I want to set up different options for different platforms. It's really tiresome setting it all on command-line. Can this be done easier?
@@ -60,4 +62,13 @@ userCreds="USER:PASS"
   <summary>Expand answer...</summary>
 
 **A:** YES! Absolutely. In addition to taking options from the command-line, Skyscraper also reads the `/home/USER/.skyscraper/config.ini` file, which is where you should set everything up. This file allows you to configure things both globally, per-platform, per-frontend and per-scraping module. Read more about the available options and option priorities [here](https://github.com/muldjord/skyscraper/blob/master/docs/CONFIGINI.md)
+</details>
+
+#### Q: When I try to scrape data or generate gamelists I get all sorts of write permission errors and missing configurations. What's going on?
+<details>
+  <summary>Expand answer...</summary>
+
+**A:** You are probably running, or at some point did run, Skyscraper with `sudo Skyscraper` instead of just `Skyscraper`. Doing so will result in all sorts of weird behaviour as Skyscraper was then run as the `root` user instead of the ordinary user. Depending on what command-line parameters you ran Skyscraper with, this will have caused permission issues for your files in `/home/USER/RetroPie/roms` subfolders and might also have caused permission issues with the `/home/USER/.skyscraper` folder. You need to reset those permissions back to be owned by your ordinary user.
+
+Remember, never run anything with `sudo` unless you are specifically told to do so.
 </details>
