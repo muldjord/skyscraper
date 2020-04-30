@@ -275,32 +275,8 @@ int main(int argc, char *argv[])
   videosOption.setFlags(QCommandLineOption::HiddenFromHelp);
   pretendOption.setFlags(QCommandLineOption::HiddenFromHelp);
   interactiveOption.setFlags(QCommandLineOption::HiddenFromHelp);
-#elif QT_VERSION >= 0x050600
-  parser.setHidden(skippedOption);
-  parser.setHidden(nocoversOption);
-  parser.setHidden(noscreenshotsOption);
-  parser.setHidden(nowheelsOption);
-  parser.setHidden(nomarqueesOption);
-  parser.setHidden(skipexistingcoversOption);
-  parser.setHidden(skipexistingscreenshotsOption);
-  parser.setHidden(skipexistingwheelsOption);
-  parser.setHidden(skipexistingmarqueesOption);
-  parser.setHidden(skipexistingvideosOption);
-  parser.setHidden(symlinkOption);
-  parser.setHidden(nobracketsOption);
-  parser.setHidden(relativeOption);
-  parser.setHidden(noresizeOption);
-  parser.setHidden(nosubdirsOption);
-  parser.setHidden(unattendOption);
-  parser.setHidden(unattendskipOption);
-  parser.setHidden(unpackOption);
-  parser.setHidden(forcefilenameOption);
-  parser.setHidden(onlymissingOption);
-  parser.setHidden(nohintsOption);
-  parser.setHidden(videosOption);
-  parser.setHidden(pretendOption);
-  parser.setHidden(interactiveOption);
-#endif  
+#endif
+
   parser.addOption(pOption);
   parser.addOption(sOption);
   parser.addOption(uOption);
