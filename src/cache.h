@@ -107,7 +107,7 @@ public:
   QList<QString> getCacheIdList(const QList<QFileInfo> &fileInfos);
 
   void addToResCounts(const QString source, const QString type);
-  void addResource(const Resource &resource, GameEntry &entry, const QString &cacheAbsolutePath,
+  void addResource(Resource &resource, GameEntry &entry, const QString &cacheAbsolutePath,
 		   const Settings &config);
   void verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &noDelete, QString resType);
   void verifyResources(int &resourcesDeleted);
