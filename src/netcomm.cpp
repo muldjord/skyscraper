@@ -28,7 +28,7 @@
 #include <QUrl>
 #include <QNetworkRequest>
 
-#define MAXSIZE 42000000
+constexpr int MAXSIZE = 42000000;
 
 NetComm::NetComm()
 {
