@@ -33,6 +33,7 @@
 #include <QDomDocument>
 #include <QRegularExpression>
 #include <QBuffer>
+#include <QProcess>
 
 #include "cache.h"
 #include "nametools.h"
@@ -1446,7 +1447,7 @@ void Cache::addResources(GameEntry &entry, const Settings &config)
   }
 }
 
-void Cache::addResource(const Resource &resource, GameEntry &entry,
+void Cache::addResource(Resource &resource, GameEntry &entry,
 			const QString &cacheAbsolutePath, const Settings &config)
 {
   QMutexLocker locker(&cacheMutex);
@@ -1535,6 +1536,27 @@ void Cache::addResource(const Resource &resource, GameEntry &entry,
 	if(f.open(QIODevice::WriteOnly)) {
 	  f.write(entry.videoData);
 	  f.close();
+	  if(!config.videoConvertCmd.isEmpty()) {
+	    QString videoConvertCmd = config.videoConvertCmd;
+	    videoConvertCmd.replace("%f", cacheFile);
+	    if(QProcess::execute(videoConvertCmd) == 0) {
+	      if(!config.videoConvertExtension.isEmpty()) {
+		QString convertedCacheFile = cacheFile;
+		convertedCacheFile.replace(entry.videoFormat, config.videoConvertExtension);
+		if(QFile::exists(convertedCacheFile)) {
+		  resource.value = convertedCacheFile;
+		  if(!QFile::remove(cacheFile)) {
+		    printf("\033[0;31mOriginal video file '%s' could not be removed, please check file permissions.\033[0m\n", cacheFile.toStdString().c_str());
+		  }
+		} else {
+		  printf("\033[0;31mConverted video file '%s' does not exist, please check that your 'videoConvertCmd' works as intended.\033[0m\n", convertedCacheFile.toStdString().c_str());
+		}
+	      }
+	    } else {
+	      printf("\033[0;31mVideo conversion failed for file '%s', please check that your 'videoConvertCmd' works as intended\033[0m\n", cacheFile.toStdString().c_str());
+	      okToAppend = false;
+	    }
+	  }
 	} else {
 	  okToAppend = false;
 	}
