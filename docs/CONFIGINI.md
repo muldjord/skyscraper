@@ -203,6 +203,28 @@ If video scraping is enabled you can set the maximum allowed video file size wit
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<MODULE>]`, `[<SCRAPING MODULE>]`
 
+#### videoConvertCmd="convertvideo.sh %f"
+Some scraping modules deliver videos that use a codec or color format that some frontends don't support. In those cases it can be useful to convert the videos before saving them in the Skyscraper resource cache.
+
+This setting allows you to set a command that will be run after each video has been downloaded from the selected scraping source. Skyscraper itself *does not* do any video conversion, so it is entirely up to you to program a script or supply a command that will take care of the actual conversion.
+
+The `%f` in the command will be replaced with the current filename of the cached video. This is required in order for any conversion command to know what file to convert.
+
+NOTE! Also be aware of the `videoConvertExtension="NEW EXTENSION"` below in case your script changes the file extension of the video during conversion.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
+
+#### videoConvertExtension="mp4"
+This setting is optional and only used if `videoConvertCmd` is also set.
+
+If the script or command that has been set in `videoConvertCmd` changes the extension of the cached video file, it is required to let Skyscraper know about the change. Use this setting to do just that.
+
+For instance, if a scraping module delivers the file `videofile.avi` and your script or command converts this into `videofile.mp4` you should set `videoConvertExtension="mp4"` to let Skyscraper know that the extension has changed. If you neglect to do so Skyscraper will end up with duplicate video files in the cache and the converted video will never be used as Skyscraper hasn't been made aware of it.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
+
 #### symlink="false"
 Enabling this option is only relevant while also setting the `videos="true"` option. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
 
