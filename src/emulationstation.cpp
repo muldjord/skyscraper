@@ -176,9 +176,11 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
     finalOutput.append("    <name>" + StrTools::xmlEscape(entry.title) + "</name>\n");
     if(entry.coverFile.isEmpty()) {
       finalOutput.append("    <cover />\n");
+      finalOutput.append("    <thumbnail />\n");
     } else {
       // The replace here IS supposed to be 'inputFolder' and not 'mediaFolder' because we only want the path to be relative if '-o' hasn't been set. So this will only make it relative if the path is equal to inputFolder which is what we want.
       finalOutput.append("    <cover>" + (config->relativePaths?StrTools::xmlEscape(entry.coverFile).replace(config->inputFolder, "."):StrTools::xmlEscape(entry.coverFile)) + "</cover>\n");
+      finalOutput.append("    <thumbnail>" + (config->relativePaths?StrTools::xmlEscape(entry.coverFile).replace(config->inputFolder, "."):StrTools::xmlEscape(entry.coverFile)) + "</thumbnail>\n");
     }
     if(entry.screenshotFile.isEmpty()) {
       finalOutput.append("    <image />\n");
