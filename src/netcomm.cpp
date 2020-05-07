@@ -46,7 +46,7 @@ void NetComm::request(QString query, QString postData, QString headerKey, QStrin
   if(!headerKey.isEmpty() && !headerValue.isEmpty()) {
     request.setRawHeader(headerKey.toUtf8(), headerValue.toUtf8());
   }
-  
+
   if(postData.isEmpty()) {
     reply = get(request);
   } else {
@@ -61,6 +61,7 @@ void NetComm::replyReady()
 {
   requestTimer.stop();
   data = reply->readAll();
+  error = reply->error();
   contentType = reply->rawHeader("Content-Type");;
   redirUrl = reply->rawHeader("Location");
   reply->deleteLater();
@@ -70,6 +71,50 @@ void NetComm::replyReady()
 QByteArray NetComm::getData()
 {
   return data;
+}
+
+QNetworkReply::NetworkError NetComm::getError()
+{
+  if(error != QNetworkReply::NoError) {
+    switch(error) {
+    case QNetworkReply::RemoteHostClosedError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::RemoteHostClosedError'\033[0m\n");
+      break;
+    case QNetworkReply::TimeoutError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::TimeoutError'\033[0m\n");
+      break;
+    case QNetworkReply::NetworkSessionFailedError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::NetworkSessionFailedError'\033[0m\n");
+      break;
+    case QNetworkReply::ContentNotFoundError:
+      // Don't show an error on these. For some modules I am guessing for urls and
+      // and sometimes they simply don't exist. It's not an error in those cases.
+      //printf("\033[1;31mNetwork error: 'QNetworkReply::ContentNotFoundError'\033[0m\n");
+      break;
+    case QNetworkReply::ContentReSendError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::ContentReSendError'\033[0m\n");
+      break;
+    case QNetworkReply::ContentGoneError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::ContentGoneError'\033[0m\n");
+      break;
+    case QNetworkReply::InternalServerError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::InternalServerError'\033[0m\n");
+      break;
+    case QNetworkReply::UnknownNetworkError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::UnknownNetworkError'\033[0m\n");
+      break;
+    case QNetworkReply::UnknownContentError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::UnknownContentError'\033[0m\n");
+      break;
+    case QNetworkReply::UnknownServerError:
+      printf("\033[1;31mNetwork error: 'QNetworkReply::UnknownServerError'\033[0m\n");
+      break;
+    default:
+      printf("\033[1;31mNetwork error: '%d'\033[0m\n", error);
+      break;
+    }
+  }
+  return error;
 }
 
 QByteArray NetComm::getContentType()

@@ -228,7 +228,8 @@ void TheGamesDb::getCover(GameEntry &game)
   manager.request("https://cdn.thegamesdb.net/images/original/boxart/front/" + game.id + "-1.jpg");
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.coverData = manager.getData();
   }
 }
@@ -238,7 +239,8 @@ void TheGamesDb::getScreenshot(GameEntry &game)
   manager.request("https://cdn.thegamesdb.net/images/original/screenshots/" + game.id + "-1.jpg");
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.screenshotData = manager.getData();
   }
 }
@@ -248,7 +250,8 @@ void TheGamesDb::getWheel(GameEntry &game)
   manager.request("https://cdn.thegamesdb.net/images/original/clearlogo/" + game.id + ".png");
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.wheelData = manager.getData();
   }
 }
@@ -258,7 +261,8 @@ void TheGamesDb::getMarquee(GameEntry &game)
   manager.request("https://cdn.thegamesdb.net/images/original/graphical/" + game.id + "-g.jpg");
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.marqueeData = manager.getData();
   }
 }

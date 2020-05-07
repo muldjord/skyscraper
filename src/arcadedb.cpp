@@ -165,7 +165,8 @@ void ArcadeDB::getCover(GameEntry &game)
   q.exec();
   {
     QImage image;
-    if(image.loadFromData(manager.getData())) {
+    if(manager.getError() == QNetworkReply::NoError &&
+       image.loadFromData(manager.getData())) {
       game.coverData = manager.getData();
       return;
     }
@@ -174,7 +175,8 @@ void ArcadeDB::getCover(GameEntry &game)
   q.exec();
   {
     QImage image;
-    if(image.loadFromData(manager.getData())) {
+    if(manager.getError() == QNetworkReply::NoError &&
+       image.loadFromData(manager.getData())) {
       game.coverData = manager.getData();
       return;
     }
@@ -186,7 +188,8 @@ void ArcadeDB::getScreenshot(GameEntry &game)
   manager.request(jsonObj.value("url_image_ingame").toString());
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.screenshotData = manager.getData();
   }
 }
@@ -196,7 +199,8 @@ void ArcadeDB::getWheel(GameEntry &game)
   manager.request("http://adb.arcadeitalia.net/media/mame.current/decals/" + jsonObj["game_name"].toString() + ".png");
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.wheelData = manager.getData();
   }
 }
@@ -206,7 +210,8 @@ void ArcadeDB::getMarquee(GameEntry &game)
   manager.request(jsonObj.value("url_image_marquee").toString());
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.marqueeData = manager.getData();
   }
 }
@@ -216,7 +221,8 @@ void ArcadeDB::getVideo(GameEntry &game)
   manager.request(jsonObj.value("url_video_shortplay").toString());
   q.exec();
   game.videoData = manager.getData();
-  if(game.videoData.length() > (1024 * 500)) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     game.videoData.length() > 4096) {
     game.videoFormat = "mp4";
   } else {
     game.videoData = "";

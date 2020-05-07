@@ -344,7 +344,8 @@ void MobyGames::getCover(GameEntry &game)
     manager.request(coverUrl);
     q.exec();
     QImage image;
-    if(image.loadFromData(manager.getData())) {
+    if(manager.getError() == QNetworkReply::NoError &&
+       image.loadFromData(manager.getData())) {
       game.coverData = manager.getData();
     }
   }
@@ -376,7 +377,8 @@ void MobyGames::getScreenshot(GameEntry &game)
   manager.request(jsonScreenshots.at(chosen).toObject()["image"].toString().replace("http://", "https://"));
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.screenshotData = manager.getData();
   }
 }

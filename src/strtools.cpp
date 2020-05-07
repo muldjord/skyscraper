@@ -25,6 +25,7 @@
 
 #include <QDate>
 #include <QRegularExpression>
+#include <QCryptographicHash>
 
 #include "strtools.h"
 
@@ -338,4 +339,11 @@ QString StrTools::stripHtmlTags(QString str)
     str = str.remove(str.indexOf("<"), str.indexOf(">") + 1 - str.indexOf("<"));
   }
   return str;
+}
+
+QString StrTools::getMd5Sum(const QByteArray &data)
+{
+  QCryptographicHash md5(QCryptographicHash::Md5);
+  md5.addData(data);
+  return md5.result().toHex();
 }

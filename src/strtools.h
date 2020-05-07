@@ -42,6 +42,7 @@ public:
   static QString getVersionHeader();
   static QString stripBrackets(const QString str);
   static QString stripHtmlTags(QString str);
+  static QString getMd5Sum(const QByteArray &data);
   
 };
 

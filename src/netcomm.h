@@ -39,6 +39,7 @@ public:
   void request(QString query, QString postData = "",
 	       QString headerKey = "", QString headerValue = "");
   QByteArray getData();
+  QNetworkReply::NetworkError getError();
   QByteArray getContentType();
   QByteArray getRedirUrl();
 
@@ -53,6 +54,7 @@ signals:
 private:
   QTimer requestTimer;
   QByteArray data;
+  QNetworkReply::NetworkError error;
   QByteArray contentType;
   QByteArray redirUrl;
   QNetworkReply *reply;

@@ -1421,7 +1421,7 @@ void Cache::addResources(GameEntry &entry, const Settings &config)
     }
     if(entry.videoData != "" && entry.videoFormat != "") {
       resource.type = "video";
-      resource.value = "videos/" + entry.source + "/"  + entry.cacheId + "." + entry.videoFormat;
+      resource.value = "videos/" + entry.source + "/" + entry.cacheId + "." + entry.videoFormat;
       addResource(resource, entry, cacheAbsolutePath, config);
     }
     if(!entry.coverData.isNull() && config.cacheCovers) {
@@ -1538,7 +1538,18 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	  f.close();
 	  if(!config.videoConvertCmd.isEmpty()) {
 	    QString videoConvertCmd = config.videoConvertCmd;
-	    videoConvertCmd.replace("%f", cacheFile);
+	    if(!config.videoConvertExtension.isEmpty()) {
+	      // FIXME!!! Working on video conversion
+	    }
+	    QString tmpFile = cacheFile.left(cacheFile.length() - 4) + ".tmp";
+	    videoConvertCmd.replace("%i", tmpFile);
+	    videoConvertCmd.replace("%o", cacheFile);
+	    if(f.rename(tmpFile)) {
+	      
+	    } else {
+	      printf("\033[0;31mCould not rename cached video file '%s' which is needed for video conversion. Please check permissions.\033[0m\n", cacheFile.toStdString().c_str());
+	    }
+	    //if(QFile::rename something something dark side...
 	    if(QProcess::execute(videoConvertCmd) == 0) {
 	      if(!config.videoConvertExtension.isEmpty()) {
 		QString convertedCacheFile = cacheFile;
@@ -1573,6 +1584,13 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	// Remove old style cache image if it exists
 	if(QFile::exists(cacheFile + ".png")) {
 	  QFile::remove(cacheFile + ".png");
+	}
+      } else if(resource.type == "video") {
+	// Remove old style cache video if it exists
+	if(QFile::exists(cacheFile + ".mp4")) {
+	  QFile::remove(cacheFile + ".mp4");
+	} else if(QFile::exists(cacheFile + ".avi")) {
+	  QFile::remove(cacheFile + ".avi");
 	}
       }
       resources.append(resource);

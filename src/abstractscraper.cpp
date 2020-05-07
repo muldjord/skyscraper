@@ -290,7 +290,8 @@ void AbstractScraper::getCover(GameEntry &game)
   manager.request(coverUrl);
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.coverData = manager.getData();
   }
 }
@@ -315,7 +316,8 @@ void AbstractScraper::getScreenshot(GameEntry &game)
     manager.request(screenshotUrl);
     q.exec();
     QImage image;
-    if(image.loadFromData(manager.getData())) {
+    if(manager.getError() == QNetworkReply::NoError &&
+       image.loadFromData(manager.getData())) {
       game.screenshotData = manager.getData();
     }
   }
@@ -341,7 +343,8 @@ void AbstractScraper::getWheel(GameEntry &game)
   manager.request(wheelUrl);
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.wheelData = manager.getData();
   }
 }
@@ -366,7 +369,8 @@ void AbstractScraper::getMarquee(GameEntry &game)
   manager.request(marqueeUrl);
   q.exec();
   QImage image;
-  if(image.loadFromData(manager.getData())) {
+  if(manager.getError() == QNetworkReply::NoError &&
+     image.loadFromData(manager.getData())) {
     game.marqueeData = manager.getData();
   }
 }
@@ -390,8 +394,10 @@ void AbstractScraper::getVideo(GameEntry &game)
   }
   manager.request(videoUrl);
   q.exec();
-  game.videoData = manager.getData();
-  game.videoFormat = videoUrl.right(3);
+  if(manager.getError() == QNetworkReply::NoError) {
+    game.videoData = manager.getData();
+    game.videoFormat = videoUrl.right(3);
+  }
 }
 
 void AbstractScraper::nomNom(const QString nom, bool including)
