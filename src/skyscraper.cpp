@@ -844,8 +844,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
     config.platform = parser.value("p");
   } else {
-    printf("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms, now exiting...\n");
-    exit(1);
+    if((!parser.isSet("flags") && parser.value("flags") != "help") &&
+       (!parser.isSet("cache") && parser.value("cache") != "help")) {
+      printf("Please set a valid platform with '-p [platform]'\nCheck '--help' for a list of supported platforms.\n");
+      exit(1);
+    }
   }
   if(settings.contains("cacheFolder")) {
     QString cacheFolder = settings.value("cacheFolder").toString();
