@@ -230,7 +230,7 @@ NOTE! It is up to you to make sure that the command you provide in `videoConvert
 
 ###### Example(s)
 ```
-videoConvertExtension="mkv"
+videoConvertExtension="mp4"
 ```
 
 ###### Allowed in sections
