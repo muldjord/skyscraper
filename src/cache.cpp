@@ -1548,7 +1548,7 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	      f.remove();
 	      f.setFileName(convertedCacheFile);
 	      f.rename(convertedCacheFile.replace("tmpfile_", ""));
-	      resource.value = convertedCacheFile;
+	      resource.value = convertedCacheFile.replace(cacheAbsolutePath + "/", "");
 	      printf("Success!\n");
 	    } else {
 	      printf("Failed!\n");
