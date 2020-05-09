@@ -182,10 +182,8 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
     }
     if(entry.screenshotFile.isEmpty()) {
       finalOutput.append("    <image />\n");
-      finalOutput.append("    <thumbnail />\n");
     } else {
       finalOutput.append("    <image>" + (config->relativePaths?StrTools::xmlEscape(entry.screenshotFile).replace(config->inputFolder, "."):StrTools::xmlEscape(entry.screenshotFile)) + "</image>\n");
-      finalOutput.append("    <thumbnail>" + (config->relativePaths?StrTools::xmlEscape(entry.screenshotFile).replace(config->inputFolder, "."):StrTools::xmlEscape(entry.screenshotFile)) + "</thumbnail>\n");
     }
     if(entry.marqueeFile.isEmpty()) {
       finalOutput.append("    <marquee />\n");
