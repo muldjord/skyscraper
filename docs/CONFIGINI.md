@@ -228,11 +228,6 @@ For instance, if a scraping module delivers the file `videofile.avi` and you alw
 
 NOTE! It is up to you to make sure that the command you provide in `videoConvertCommand` actually converts to a video file using the selected extension. For some conversion tools such as `ffmpeg` this is handled simply by setting the extension of the output file. But for other tools you might have to provide additional options to the `videoConvertCommand` above.
 
-###### Example(s)
-```
-videoConvertExtension="mp4"
-```
-
 ###### Allowed in sections
 `[main]`, `[<SCRAPING MODULE>]`
 
