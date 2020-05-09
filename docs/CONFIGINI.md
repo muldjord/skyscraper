@@ -214,7 +214,7 @@ NOTE! Any script you might use will be run from the `/home/USER/.skyscraper` fol
 
 ###### Example(s)
 ```
-videoConvertCommand="ffmpeg -i %i -y -pix_fmt yuv420p -vcodec libx264 %o"
+videoConvertCommand="ffmpeg -i %i -y -pix_fmt yuv420p -c:v libx264 -crf 23 -c:a aac -b:a 64k %o"
 videoConvertCommand="videoconvert.sh %i %o"
 ```
 
