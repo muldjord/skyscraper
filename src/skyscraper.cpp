@@ -780,8 +780,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("videoSizeLimit")) {
     config.videoSizeLimit = settings.value("videoSizeLimit").toInt() * 1000 * 1000;
   }
-  if(settings.contains("videoConvertCmd")) {
-    config.videoConvertCmd = settings.value("videoConvertCmd").toString();
+  if(settings.contains("videoConvertCommand")) {
+    config.videoConvertCommand = settings.value("videoConvertCommand").toString();
   }
   if(settings.contains("videoConvertExtension")) {
     config.videoConvertExtension = settings.value("videoConvertExtension").toString();
@@ -1132,8 +1132,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("videoSizeLimit")) {
     config.videoSizeLimit = settings.value("videoSizeLimit").toInt() * 1000 * 1000;
   }
-  if(settings.contains("videoConvertCmd")) {
-    config.videoConvertCmd = settings.value("videoConvertCmd").toString();
+  if(settings.contains("videoConvertCommand")) {
+    config.videoConvertCommand = settings.value("videoConvertCommand").toString();
   }
   if(settings.contains("videoConvertExtension")) {
     config.videoConvertExtension = settings.value("videoConvertExtension").toString();

@@ -1536,36 +1536,22 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	if(f.open(QIODevice::WriteOnly)) {
 	  f.write(entry.videoData);
 	  f.close();
-	  if(!config.videoConvertCmd.isEmpty()) {
-	    QString videoConvertCmd = config.videoConvertCmd;
-	    if(!config.videoConvertExtension.isEmpty()) {
-	      // FIXME!!! Working on video conversion
-	    }
-	    QString tmpFile = cacheFile.left(cacheFile.length() - 4) + ".tmp";
-	    videoConvertCmd.replace("%i", tmpFile);
-	    videoConvertCmd.replace("%o", cacheFile);
-	    if(f.rename(tmpFile)) {
-	      
+	  if(!config.videoConvertCommand.isEmpty()) {
+	    QString videoConvertCommand = config.videoConvertCommand;
+	    QString convertedCacheFile = (config.videoConvertExtension.isEmpty()?cacheFile:cacheFile.left(cacheFile.lastIndexOf('.')) + config.videoConvertExtension);
+	    convertedCacheFile.insert(convertedCacheFile.lastIndexOf('/') + 1, "tmpfile_");
+	    videoConvertCommand.replace("%i", cacheFile);
+	    videoConvertCommand.replace("%o", convertedCacheFile);
+	    printf("Executing user-defined video conversion on file '%s'... ", cacheFile.toStdString().c_str());
+	    fflush(stdout);
+	    if(QProcess::execute(videoConvertCommand) == 0) {
+	      f.remove();
+	      f.setFileName(convertedCacheFile);
+	      f.rename(convertedCacheFile.replace("tmpfile_", ""));
+	      resource.value = convertedCacheFile;
+	      printf("Success!\n");
 	    } else {
-	      printf("\033[0;31mCould not rename cached video file '%s' which is needed for video conversion. Please check permissions.\033[0m\n", cacheFile.toStdString().c_str());
-	    }
-	    //if(QFile::rename something something dark side...
-	    if(QProcess::execute(videoConvertCmd) == 0) {
-	      if(!config.videoConvertExtension.isEmpty()) {
-		QString convertedCacheFile = cacheFile;
-		convertedCacheFile.replace(entry.videoFormat, config.videoConvertExtension);
-		if(QFile::exists(convertedCacheFile)) {
-		  resource.value = convertedCacheFile;
-		  if(!QFile::remove(cacheFile)) {
-		    printf("\033[0;31mOriginal video file '%s' could not be removed, please check file permissions.\033[0m\n", cacheFile.toStdString().c_str());
-		  }
-		} else {
-		  printf("\033[0;31mConverted video file '%s' does not exist, please check that your 'videoConvertCmd' works as intended.\033[0m\n", convertedCacheFile.toStdString().c_str());
-		}
-	      }
-	    } else {
-	      printf("\033[0;31mVideo conversion failed for file '%s', please check that your 'videoConvertCmd' works as intended\033[0m\n", cacheFile.toStdString().c_str());
-	      okToAppend = false;
+	      printf("Failed!\n");
 	    }
 	  }
 	} else {
@@ -1584,13 +1570,6 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	// Remove old style cache image if it exists
 	if(QFile::exists(cacheFile + ".png")) {
 	  QFile::remove(cacheFile + ".png");
-	}
-      } else if(resource.type == "video") {
-	// Remove old style cache video if it exists
-	if(QFile::exists(cacheFile + ".mp4")) {
-	  QFile::remove(cacheFile + ".mp4");
-	} else if(QFile::exists(cacheFile + ".avi")) {
-	  QFile::remove(cacheFile + ".avi");
 	}
       }
       resources.append(resource);

@@ -43,7 +43,7 @@
 #launch=""
 #videos="false"
 #videoSizeLimit="42"
-#videoConvertCmd="videoconvert.sh %f"
+#videoConvertCommand="videoconvert.sh %i %o"
 #videoConvertExtension="mp4"
 #symlink="false"
 #brackets="true"
@@ -148,6 +148,6 @@
 #cacheMarquees="true"
 #videos="false"
 #videoSizeLimit="42"
-#videoConvertCmd="videoconvert.sh %f"
+#videoConvertCommand="videoconvert.sh %i %o"
 #videoConvertExtension="mp4"
 

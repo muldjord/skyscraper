@@ -95,7 +95,7 @@ struct Settings {
 
   bool videos = false;
   int videoSizeLimit = 42000000;
-  QString videoConvertCmd = "";
+  QString videoConvertCommand = "";
   QString videoConvertExtension = "";
   bool symlink = false;
   bool skipExistingVideos = false;
