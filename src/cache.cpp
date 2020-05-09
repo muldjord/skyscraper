@@ -1546,13 +1546,19 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	    fflush(stdout);
 	    QProcess convertProcess;
 	    convertProcess.start(videoConvertCommand);
+	    // Wait 10 minutes max for conversion to complete
 	    if(convertProcess.waitForFinished(1000 * 60 * 10) &&
-	       convertProcess.exitStatus() == QProcess::NormalExit) { // 10 minutes max
+	       convertProcess.exitStatus() == QProcess::NormalExit &&
+	       QFile::exists(convertedCacheFile)) {
 	      f.remove();
-	      f.setFileName(convertedCacheFile);
-	      f.rename(convertedCacheFile.replace("tmpfile_", ""));
-	      resource.value = convertedCacheFile.replace(cacheAbsolutePath + "/", "");
-	      printf("\033[1;32mSuccess!\033[0m\n");
+	      cacheFile = convertedCacheFile;
+	      cacheFile.replace("tmpfile_", "");
+	      if(QFile::rename(convertedCacheFile, cacheFile)) {
+		resource.value = cacheFile.replace(cacheAbsolutePath + "/", "");
+		printf("\033[1;32mSuccess!\033[0m\n");
+	      } else {
+		printf("\033[1;31mCouldn't rename file '%s' to '%s', please check permissions!\033[0m\n", convertedCacheFile.toStdString().c_str(), cacheFile.toStdString().c_str());
+	      }
 	    } else {
 	      printf("\033[1;31mFailed!\033[0m\n");
 	    }
