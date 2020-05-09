@@ -206,7 +206,7 @@ If video scraping is enabled you can set the maximum allowed video file size wit
 #### videoConvertCommand="convertvideo.sh %i %o"
 Some scraping modules deliver videos that use a codec or color format that some frontends don't support. In those cases it can be useful to convert the videos before saving them in the Skyscraper resource cache.
 
-This setting allows you to set a command that will be run after each video has been downloaded from the selected scraping source. It is entirely up to you to program a script or supply a command that will take care of the actual conversion. See the examples below for inspiration.
+This setting allows you to set a command that will be run on each video after it has been downloaded from the selected scraping module. See the examples below for inspiration.
 
 The `%i` and `%o` will be replaced with the video input and output files as needed by Skyscraper. Don't worry about what these filenames are, just use them to implement them into your command. If the video file extension is changed during the conversion, you also need to set `videoConvertExtension` as described below.
 
