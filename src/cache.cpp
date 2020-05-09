@@ -1546,18 +1546,15 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	    fflush(stdout);
 	    QProcess convertProcess;
 	    convertProcess.start(videoConvertCommand);
-	    if(convertProcess.waitForFinished(1000 * 60 * 10)) { // 10 minutes max
-	      if(convertProcess.exitStatus() == QProcess::NormalExit) {
-		f.remove();
-		f.setFileName(convertedCacheFile);
-		f.rename(convertedCacheFile.replace("tmpfile_", ""));
-		resource.value = convertedCacheFile.replace(cacheAbsolutePath + "/", "");
-		printf("\033[1;32mSuccess!\033[0m\n");
-	      } else {
-		printf("\033[1;31mFailed!\033[0m\n");
-	      }
+	    if(convertProcess.waitForFinished(1000 * 60 * 10) &&
+	       convertProcess.exitStatus() == QProcess::NormalExit) { // 10 minutes max
+	      f.remove();
+	      f.setFileName(convertedCacheFile);
+	      f.rename(convertedCacheFile.replace("tmpfile_", ""));
+	      resource.value = convertedCacheFile.replace(cacheAbsolutePath + "/", "");
+	      printf("\033[1;32mSuccess!\033[0m\n");
 	    } else {
-	      printf("\033[1;31mVideo conversion took more than 10 minutes, aborting...\033[0m\n");
+	      printf("\033[1;31mFailed!\033[0m\n");
 	    }
 	    if(config.verbosity >= 2) {
 	      printf("%s\n", convertProcess.readAllStandardOutput().data());
