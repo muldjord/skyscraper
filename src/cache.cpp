@@ -1538,7 +1538,7 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	  f.close();
 	  if(!config.videoConvertCommand.isEmpty()) {
 	    QString videoConvertCommand = config.videoConvertCommand;
-	    QString convertedCacheFile = (config.videoConvertExtension.isEmpty()?cacheFile:cacheFile.left(cacheFile.lastIndexOf('.')) + config.videoConvertExtension);
+	    QString convertedCacheFile = (config.videoConvertExtension.isEmpty()?cacheFile:cacheFile.left(cacheFile.lastIndexOf('.') + 1) + config.videoConvertExtension);
 	    convertedCacheFile.insert(convertedCacheFile.lastIndexOf('/') + 1, "tmpfile_");
 	    videoConvertCommand.replace("%i", cacheFile);
 	    videoConvertCommand.replace("%o", convertedCacheFile);
