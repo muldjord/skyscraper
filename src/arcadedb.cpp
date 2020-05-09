@@ -161,30 +161,32 @@ void ArcadeDB::getDescription(GameEntry &game)
 
 void ArcadeDB::getCover(GameEntry &game)
 {
-  manager.request(jsonObj.value("url_image_flyer").toString());
-  q.exec();
-  {
-    QImage image;
-    if(manager.getError() == QNetworkReply::NoError &&
-       image.loadFromData(manager.getData())) {
-      game.coverData = manager.getData();
-      return;
-    }
-  }
-  manager.request(jsonObj.value("url_image_title").toString());
-  q.exec();
-  {
-    QImage image;
-    if(manager.getError() == QNetworkReply::NoError &&
-       image.loadFromData(manager.getData())) {
-      game.coverData = manager.getData();
-      return;
+  for(const auto &key: jsonObj.keys()) {
+    if(key == "url_image_flyer" ||
+       key == "url_image_title") {
+      if(jsonObj.value(key).toString().isEmpty()) {
+	continue;
+      }
+      manager.request(jsonObj.value(key).toString());
+      q.exec();
+      {
+	QImage image;
+	if(manager.getError() == QNetworkReply::NoError &&
+	   image.loadFromData(manager.getData())) {
+	  game.coverData = manager.getData();
+	  return;
+	}
+      }
     }
   }
 }
 
 void ArcadeDB::getScreenshot(GameEntry &game)
 {
+  if(!jsonObj.contains("url_image_ingame") ||
+     jsonObj.value("url_image_ingame").toString().isEmpty()) {
+    return;
+  }
   manager.request(jsonObj.value("url_image_ingame").toString());
   q.exec();
   QImage image;
@@ -207,6 +209,10 @@ void ArcadeDB::getWheel(GameEntry &game)
 
 void ArcadeDB::getMarquee(GameEntry &game)
 {
+  if(!jsonObj.contains("url_image_marquee") ||
+     jsonObj.value("url_image_marquee").toString().isEmpty()) {
+    return;
+  }
   manager.request(jsonObj.value("url_image_marquee").toString());
   q.exec();
   QImage image;
@@ -218,6 +224,10 @@ void ArcadeDB::getMarquee(GameEntry &game)
 
 void ArcadeDB::getVideo(GameEntry &game)
 {
+  if(!jsonObj.contains("url_video_shortplay") ||
+     jsonObj.value("url_video_shortplay").toString().isEmpty()) {
+    return;
+  }
   manager.request(jsonObj.value("url_video_shortplay").toString());
   q.exec();
   game.videoData = manager.getData();
