@@ -152,6 +152,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 #### Version 3.5.2 (29th April 2020)
 * Hid deprecated options from '--help'. Deprecated options still work just aren't shown
 * Updated 'Simple Mode' to use the new '--flags' options
+* Removed deprecated '<cover>' node and replaced it with '<thumbnail>' for ES gamelist generation (Thank you to 'yisraeldov' for letting me know)
 * Added simple error handling for media network requests
 * '--flags help' and '--cache help' no longer requires '-p PLATFORM' to be set
 * Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option
