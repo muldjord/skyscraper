@@ -221,7 +221,7 @@ videoConvertCommand="videoconvert.sh %i %o"
 ###### Allowed in sections
 `[main]`, `[<SCRAPING MODULE>]`
 
-#### videoConvertExtension="mkv"
+#### videoConvertExtension="mp4"
 If you want to force an extension for the converted video file created by the `videoConvertCommand` command, you need to set this option. The converted file will then automatically have this extension no matter what the input file extension is.
 
 For instance, if a scraping module delivers the file `videofile.avi` and you always want the converted files to be `mp4` files, you simply set this option to `videoConvertExtension="mp4"`.
