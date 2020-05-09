@@ -208,7 +208,7 @@ Some scraping modules deliver videos that use a codec or color format that some 
 
 This setting allows you to set a command that will be run on each video after it has been downloaded from the selected scraping module. See the examples below for inspiration.
 
-The `%i` and `%o` will be replaced with the video input and output files as needed by Skyscraper. Don't worry about what these filenames are, just use them to implement them into your command. If the video file extension is changed during the conversion, you also need to set `videoConvertExtension` as described below.
+The `%i` and `%o` will be replaced with the video input (original) and output (converted) files as needed by Skyscraper. If you want to force a certain file extension to the converted file, please also set `videoConvertExtension`.
 
 NOTE! Any script you might use will be run from the `/home/USER/.skyscraper` folder, so place them in there.
 
@@ -222,9 +222,16 @@ videoConvertCommand="videoconvert.sh %i %o"
 `[main]`, `[<SCRAPING MODULE>]`
 
 #### videoConvertExtension="mkv"
-This setting is optional and should only be used if `videoConvertCommand` is set and the command you configured converts to a specific file extension. If your command simply uses whatever extension the input file already has, you don't need to set this.
+If you want to force an extension for the converted video file created by the `videoConvertCommand` command, you need to set this option. The converted file will then automatically have this extension no matter what the input file extension is.
 
-For instance, if a scraping module delivers the file `videofile.avi` and your script or command converts this into `videofile.mp4` you should set `videoConvertExtension="mp4"` to let Skyscraper know that the extension has changed during conversion.
+For instance, if a scraping module delivers the file `videofile.avi` and you always want the converted files to be `mp4` files, you simply set this option to `videoConvertExtension="mp4"`.
+
+NOTE! It is up to you to make sure that the command you provide in `videoConvertCommand` actually converts to a video file using the selected extension. For some conversion tools such as `ffmpeg` this is handled simply by setting the extension of the output file. But for other tools you might have to provide additional options to the `videoConvertCommand` above.
+
+###### Example(s)
+```
+videoConvertExtension="mkv"
+```
 
 ###### Allowed in sections
 `[main]`, `[<SCRAPING MODULE>]`
