@@ -203,24 +203,28 @@ If video scraping is enabled you can set the maximum allowed video file size wit
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<MODULE>]`, `[<SCRAPING MODULE>]`
 
-#### videoConvertCmd="convertvideo.sh %f"
+#### videoConvertCommand="convertvideo.sh %i %o"
 Some scraping modules deliver videos that use a codec or color format that some frontends don't support. In those cases it can be useful to convert the videos before saving them in the Skyscraper resource cache.
 
 This setting allows you to set a command that will be run after each video has been downloaded from the selected scraping source. Skyscraper itself *does not* do any video conversion, so it is entirely up to you to program a script or supply a command that will take care of the actual conversion.
 
-The `%f` in the command will be replaced with the current filename of the cached video. This is required in order for any conversion command to know what file to convert.
+The `%i` and `%o` will be replaced with the video input and output files as needed by Skyscraper. Don't worry about what these filenames are, just use them to implement them into your command. If your convert command also changes the file extension of the video file, you also need to set `videoConvertExtension` as described below.
 
-NOTE! Also be aware of the `videoConvertExtension="NEW EXTENSION"` below in case your script changes the file extension of the video during conversion.
+NOTE! Any script you might use will be run from the `/home/USER/.skyscraper` folder, so place them in there.
+
+###### Example(s)
+```
+videoConvertCommand="ffmpeg -i %i -y -pix_fmt yuv420p -strict experimental %o"
+videoConvertCommand="videoconvert.sh %i %o"
+```
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
 
-#### videoConvertExtension="mp4"
-This setting is optional and only used if `videoConvertCmd` is also set.
+#### videoConvertExtension="mkv"
+This setting is optional and should only be used if `videoConvertCommand` is set and the command you configured converts to a specific file extension. If your command simply uses whatever extension the input file already has, you don't need to set this.
 
-If the script or command that has been set in `videoConvertCmd` changes the extension of the cached video file, it is required to let Skyscraper know about the change. Use this setting to do just that.
-
-For instance, if a scraping module delivers the file `videofile.avi` and your script or command converts this into `videofile.mp4` you should set `videoConvertExtension="mp4"` to let Skyscraper know that the extension has changed. If you neglect to do so Skyscraper will end up with duplicate video files in the cache and the converted video will never be used as Skyscraper hasn't been made aware of it.
+For instance, if a scraping module delivers the file `videofile.avi` and your script or command converts this into `videofile.mp4` you should set `videoConvertExtension="mp4"` to let Skyscraper know that the extension has changed during conversion.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
