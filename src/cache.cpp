@@ -1536,52 +1536,22 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	if(f.open(QIODevice::WriteOnly)) {
 	  f.write(entry.videoData);
 	  f.close();
-	  if(!config.videoConvertCommand.isEmpty() &&
-	     config.videoConvertCommand.contains("%i") &&
-	     config.videoConvertCommand.contains("%o")) {
-	    QString videoConvertCommand = config.videoConvertCommand;
-	    QFileInfo cacheFileInfo(cacheFile);
-	    QString tmpCacheFile = cacheFileInfo.absolutePath() + "/tmpfile_" + (config.videoConvertExtension.isEmpty()?cacheFileInfo.fileName():cacheFileInfo.completeBaseName() + "." + config.videoConvertExtension);
-	    videoConvertCommand.replace("%i", cacheFile);
-	    videoConvertCommand.replace("%o", tmpCacheFile);
-	    if(QFile::exists(tmpCacheFile)) {
-	      QFile::remove(tmpCacheFile);
-	    }
-	    if(config.verbosity <= 1) {
+	  if(!config.videoConvertCommand.isEmpty()) {
+	    if(config.verbosity >= 2) {
+	      printf("Converting video:\n");
+	    } else {
 	      printf("Converting video... ");
-	    } else if(config.verbosity == 2) {
-	      printf("Converting video file '%s'... ",
-		     cacheFile.toStdString().c_str());
-	    } else if(config.verbosity >= 3) {
-	      printf("Executing 'videoConvertCommand':\n%s\n", videoConvertCommand.toStdString().c_str());
+	      fflush(stdout);
 	    }
-	    fflush(stdout);
-	    QProcess convertProcess;
-	    convertProcess.start(videoConvertCommand);
-	    // Wait 10 minutes max for conversion to complete
-	    if(convertProcess.waitForFinished(1000 * 60 * 10) &&
-	       convertProcess.exitStatus() == QProcess::NormalExit &&
-	       QFile::exists(tmpCacheFile)) {
-	      f.remove();
-	      cacheFile = tmpCacheFile;
-	      cacheFile.replace("tmpfile_", "");
-	      if(QFile::exists(cacheFile)) {
-		QFile::remove(cacheFile);
-	      }
-	      if(QFile::rename(tmpCacheFile, cacheFile)) {
-		resource.value = cacheFile.replace(cacheAbsolutePath + "/", "");
-		printf("\033[1;32mSuccess!\033[0m\n");
-	      } else {
-		printf("\033[1;31mCouldn't rename file '%s' to '%s', please check permissions!\033[0m\n", tmpCacheFile.toStdString().c_str(), cacheFile.toStdString().c_str());
-		okToAppend = false;
-	      }
+	    if(doVideoConvert(resource,
+			      cacheFile,
+			      cacheAbsolutePath,
+			      config)) {
+	      printf("\033[1;32mSuccess!\033[0m\n");
 	    } else {
 	      printf("\033[1;31mFailed!\033[0m\n");
+	      f.remove();
 	      okToAppend = false;
-	    }
-	    if(config.verbosity >= 3) {
-	      printf("%s\n", convertProcess.readAllStandardOutput().data());
-	      printf("%s\n", convertProcess.readAllStandardError().data());
 	    }
 	  }
 	} else {
@@ -1608,6 +1578,71 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
     }
     
   }
+}
+
+bool Cache::doVideoConvert(Resource &resource,
+			   QString &cacheFile,
+			   const QString &cacheAbsolutePath,
+			   const Settings &config)
+{
+  QString videoConvertCommand = config.videoConvertCommand;
+  if(!videoConvertCommand.contains("%i")) {
+    printf("'videoConvertCommand' is missing the required %%i tag.\n");
+    return false;
+  }
+  if(!videoConvertCommand.contains("%o")) {
+    printf("'videoConvertCommand' is missing the required %%o tag.\n");
+    return false;
+  }
+  QFileInfo cacheFileInfo(cacheFile);
+  QString tmpCacheFile = cacheFileInfo.absolutePath() + "/tmpfile_" + (config.videoConvertExtension.isEmpty()?cacheFileInfo.fileName():cacheFileInfo.completeBaseName() + "." + config.videoConvertExtension);
+  videoConvertCommand.replace("%i", cacheFile);
+  videoConvertCommand.replace("%o", tmpCacheFile);
+  if(QFile::exists(tmpCacheFile)) {
+    if(!QFile::remove(tmpCacheFile)) {
+      printf("'%s' already exists and can't be removed.\n", tmpCacheFile.toStdString().c_str());
+      return false;
+    }
+  }
+  if(config.verbosity >= 2) {
+    printf("%%i: '%s'\n", cacheFile.toStdString().c_str());
+    printf("%%o: '%s'\n", tmpCacheFile.toStdString().c_str());
+  }
+  if(config.verbosity >= 3) {
+    printf("Running command:\n%s\n", videoConvertCommand.toStdString().c_str());
+  }
+  QProcess convertProcess;
+  convertProcess.start(videoConvertCommand);
+  // Wait 10 minutes max for conversion to complete
+  if(convertProcess.waitForFinished(1000 * 60 * 10) &&
+     convertProcess.exitStatus() == QProcess::NormalExit &&
+     QFile::exists(tmpCacheFile)) {
+    if(!QFile::remove(cacheFile)) {
+      printf("Original '%s' file couldn't be removed.\n", cacheFile.toStdString().c_str());
+      return false;
+    }
+    cacheFile = tmpCacheFile;
+    cacheFile.replace("tmpfile_", "");
+    if(QFile::exists(cacheFile)) {
+      if(!QFile::remove(cacheFile)) {
+	printf("'%s' already exists and can't be removed.\n", cacheFile.toStdString().c_str());
+	return false;
+      }
+    }
+    if(QFile::rename(tmpCacheFile, cacheFile)) {
+      resource.value = cacheFile.replace(cacheAbsolutePath + "/", "");
+    } else {
+      printf("Couldn't rename file '%s' to '%s', please check permissions!\n", tmpCacheFile.toStdString().c_str(), cacheFile.toStdString().c_str());
+      return false;
+    }
+  } else {
+    if(config.verbosity >= 3) {
+      printf("%s\n", convertProcess.readAllStandardOutput().data());
+      printf("%s\n", convertProcess.readAllStandardError().data());
+    }
+    return false;
+  }
+  return true;
 }
 
 bool Cache::hasAlpha(const QImage &image)

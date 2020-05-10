@@ -113,6 +113,10 @@ public:
   void verifyResources(int &resourcesDeleted);
   bool fillType(QString &type, QList<Resource> &matchingResources,
 		QString &result, QString &source);
+  bool doVideoConvert(Resource &resource,
+		      QString &cacheFile,
+		      const QString &cacheAbsolutePath,
+		      const Settings &config);
   bool hasAlpha(const QImage &image);
   int resAtLoad = 0;
 };
