@@ -1561,8 +1561,10 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	      f.remove();
 	      cacheFile = convertedCacheFile;
 	      cacheFile.replace("tmpfile_", "");
-	      if((QFile::exists(cacheFile) && QFile::remove(cacheFile)) &&
-		 QFile::rename(convertedCacheFile, cacheFile)) {
+	      if(QFile::exists(cacheFile)) {
+		QFile::remove(cacheFile);
+	      }
+	      if(QFile::rename(convertedCacheFile, cacheFile)) {
 		resource.value = cacheFile.replace(cacheAbsolutePath + "/", "");
 		printf("\033[1;32mSuccess!\033[0m\n");
 	      } else {
