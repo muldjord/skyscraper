@@ -263,9 +263,10 @@ void ScraperWorker::run()
     }
     
     // Add all resources to the cache
+    QString cacheOutput = "";
     if(config.scraper != "cache" && game.found && !fromCache) {
       game.source = config.scraper;
-      cache->addResources(game, config);
+      cache->addResources(game, config, cacheOutput);
     }
 
     // We're done saving the raw data at this point, so feel free to manipulate game resources to better suit game list creation from here on out.
@@ -339,7 +340,9 @@ void ScraperWorker::run()
       output.append("Video:          " + QString((game.videoFormat.isEmpty()?"\033[1;31mNO":"\033[1;32mYES")) + "\033[0m" + QString((game.videoData.size() <= config.videoSizeLimit?"":" (size exceeded, uncached)")) + " (" + game.videoSrc + ")\n");
     }
     output.append("\nDescription: (" + game.descriptionSrc + ")\n'\033[1;32m" + game.description.left(config.maxLength) + "\033[0m'\n");
-
+    if(!cacheOutput.isEmpty()) {
+      output.append("\n\033[1;33mCache output:\033[0m\n" + cacheOutput + "\n");
+    }
     if(!forceEnd) {
       forceEnd = limitReached(output);
     }

@@ -1354,7 +1354,7 @@ QList<Resource> Cache::getResources()
   return resources;
 }
     
-void Cache::addResources(GameEntry &entry, const Settings &config)
+void Cache::addResources(GameEntry &entry, const Settings &config, QString &output)
 {
   QString cacheAbsolutePath = cacheDir.absolutePath();
 
@@ -1372,83 +1372,86 @@ void Cache::addResources(GameEntry &entry, const Settings &config)
     if(entry.title != "") {
       resource.type = "title";
       resource.value = entry.title;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.platform != "") {
       resource.type = "platform";
       resource.value = entry.platform;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.description != "") {
       resource.type = "description";
       resource.value = entry.description;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.publisher != "") {
       resource.type = "publisher";
       resource.value = entry.publisher;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.developer != "") {
       resource.type = "developer";
       resource.value = entry.developer;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.players != "") {
       resource.type = "players";
       resource.value = entry.players;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.ages != "") {
       resource.type = "ages";
       resource.value = entry.ages;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.tags != "") {
       resource.type = "tags";
       resource.value = entry.tags;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.rating != "") {
       resource.type = "rating";
       resource.value = entry.rating;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.releaseDate != "") {
       resource.type = "releasedate";
       resource.value = entry.releaseDate;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(entry.videoData != "" && entry.videoFormat != "") {
       resource.type = "video";
       resource.value = "videos/" + entry.source + "/" + entry.cacheId + "." + entry.videoFormat;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(!entry.coverData.isNull() && config.cacheCovers) {
       resource.type = "cover";
       resource.value = "covers/" + entry.source + "/" + entry.cacheId;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(!entry.screenshotData.isNull() && config.cacheScreenshots) {
       resource.type = "screenshot";
       resource.value = "screenshots/" + entry.source + "/"  + entry.cacheId;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(!entry.wheelData.isNull() && config.cacheWheels) {
       resource.type = "wheel";
       resource.value = "wheels/" + entry.source + "/"  + entry.cacheId;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
     if(!entry.marqueeData.isNull() && config.cacheMarquees) {
       resource.type = "marquee";
       resource.value = "marquees/" + entry.source + "/"  + entry.cacheId;
-      addResource(resource, entry, cacheAbsolutePath, config);
+      addResource(resource, entry, cacheAbsolutePath, config, output);
     }
   }
 }
 
-void Cache::addResource(Resource &resource, GameEntry &entry,
-			const QString &cacheAbsolutePath, const Settings &config)
+void Cache::addResource(Resource &resource,
+			GameEntry &entry,
+			const QString &cacheAbsolutePath,
+			const Settings &config,
+			QString &output)
 {
   QMutexLocker locker(&cacheMutex);
   bool notFound = true;
@@ -1537,19 +1540,15 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	  f.write(entry.videoData);
 	  f.close();
 	  if(!config.videoConvertCommand.isEmpty()) {
-	    if(config.verbosity >= 2) {
-	      printf("Converting video:\n");
-	    } else {
-	      printf("Converting video... ");
-	      fflush(stdout);
-	    }
+	    output.append("Video conversion: ");
 	    if(doVideoConvert(resource,
 			      cacheFile,
 			      cacheAbsolutePath,
-			      config)) {
-	      printf("\033[1;32mSuccess!\033[0m\n");
+			      config,
+			      output)) {
+	      output.append("\033[1;32mSuccess!\033[0m");
 	    } else {
-	      printf("\033[1;31mFailed!\033[0m\n");
+	      output.append("\033[1;31mFailed!\033[0m (set higher '--verbosity N' level for more info)");
 	      f.remove();
 	      okToAppend = false;
 	    }
@@ -1583,15 +1582,19 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 bool Cache::doVideoConvert(Resource &resource,
 			   QString &cacheFile,
 			   const QString &cacheAbsolutePath,
-			   const Settings &config)
+			   const Settings &config,
+			   QString &output)
 {
+  if(config.verbosity >= 2) {
+    output.append("\n");
+  }
   QString videoConvertCommand = config.videoConvertCommand;
   if(!videoConvertCommand.contains("%i")) {
-    printf("'videoConvertCommand' is missing the required %%i tag.\n");
+    output.append("'videoConvertCommand' is missing the required %i tag.\n");
     return false;
   }
   if(!videoConvertCommand.contains("%o")) {
-    printf("'videoConvertCommand' is missing the required %%o tag.\n");
+    output.append("'videoConvertCommand' is missing the required %o tag.\n");
     return false;
   }
   QFileInfo cacheFileInfo(cacheFile);
@@ -1600,16 +1603,16 @@ bool Cache::doVideoConvert(Resource &resource,
   videoConvertCommand.replace("%o", tmpCacheFile);
   if(QFile::exists(tmpCacheFile)) {
     if(!QFile::remove(tmpCacheFile)) {
-      printf("'%s' already exists and can't be removed.\n", tmpCacheFile.toStdString().c_str());
+      output.append("'" + tmpCacheFile + "' already exists and can't be removed.\n");
       return false;
     }
   }
   if(config.verbosity >= 2) {
-    printf("%%i: '%s'\n", cacheFile.toStdString().c_str());
-    printf("%%o: '%s'\n", tmpCacheFile.toStdString().c_str());
+    output.append("%i: '" + cacheFile + "'\n");
+    output.append("%o: '" + tmpCacheFile + "'\n");
   }
   if(config.verbosity >= 3) {
-    printf("Running command:\n%s\n", videoConvertCommand.toStdString().c_str());
+    output.append("Running command: '" + videoConvertCommand + "'\n");
   }
   QProcess convertProcess;
   convertProcess.start(videoConvertCommand);
@@ -1618,27 +1621,27 @@ bool Cache::doVideoConvert(Resource &resource,
      convertProcess.exitStatus() == QProcess::NormalExit &&
      QFile::exists(tmpCacheFile)) {
     if(!QFile::remove(cacheFile)) {
-      printf("Original '%s' file couldn't be removed.\n", cacheFile.toStdString().c_str());
+      output.append("Original '" + cacheFile + "' file couldn't be removed.\n");
       return false;
     }
     cacheFile = tmpCacheFile;
     cacheFile.replace("tmpfile_", "");
     if(QFile::exists(cacheFile)) {
       if(!QFile::remove(cacheFile)) {
-	printf("'%s' already exists and can't be removed.\n", cacheFile.toStdString().c_str());
+	output.append("'" + cacheFile + "' already exists and can't be removed.\n");
 	return false;
       }
     }
     if(QFile::rename(tmpCacheFile, cacheFile)) {
       resource.value = cacheFile.replace(cacheAbsolutePath + "/", "");
     } else {
-      printf("Couldn't rename file '%s' to '%s', please check permissions!\n", tmpCacheFile.toStdString().c_str(), cacheFile.toStdString().c_str());
+      output.append("Couldn't rename file '" + tmpCacheFile + "' to '" + cacheFile + "', please check permissions!\n");
       return false;
     }
   } else {
     if(config.verbosity >= 3) {
-      printf("%s\n", convertProcess.readAllStandardOutput().data());
-      printf("%s\n", convertProcess.readAllStandardError().data());
+      output.append(convertProcess.readAllStandardOutput() + "\n");
+      output.append(convertProcess.readAllStandardError() + "\n");
     }
     return false;
   }

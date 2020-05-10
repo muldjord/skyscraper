@@ -83,7 +83,7 @@ public:
   void readPriorities();
   bool write(const bool onlyQuickId = false);
   void validate();
-  void addResources(GameEntry &entry, const Settings &config);
+  void addResources(GameEntry &entry, const Settings &config, QString &output);
   void fillBlanks(GameEntry &entry, const QString scraper = "");
   bool hasEntries(const QString &cacheId, const QString scraper = "");
   void addQuickId(const QFileInfo &info, const QString &cacheId);
@@ -108,7 +108,7 @@ public:
 
   void addToResCounts(const QString source, const QString type);
   void addResource(Resource &resource, GameEntry &entry, const QString &cacheAbsolutePath,
-		   const Settings &config);
+		   const Settings &config, QString &output);
   void verifyFiles(QDirIterator &dirIt, int &filesDeleted, int &noDelete, QString resType);
   void verifyResources(int &resourcesDeleted);
   bool fillType(QString &type, QList<Resource> &matchingResources,
@@ -116,7 +116,8 @@ public:
   bool doVideoConvert(Resource &resource,
 		      QString &cacheFile,
 		      const QString &cacheAbsolutePath,
-		      const Settings &config);
+		      const Settings &config,
+		      QString &output);
   bool hasAlpha(const QImage &image);
   int resAtLoad = 0;
 };
