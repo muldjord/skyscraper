@@ -210,11 +210,13 @@ This setting allows you to set a command that will be run on each video after it
 
 The `%i` and `%o` will be replaced with the video input (original) and output (converted) files as needed by Skyscraper. If you want to force a certain file extension to the converted file, please also set `videoConvertExtension`.
 
-NOTE! Any script you might use will be run from the `/home/USER/.skyscraper` folder, so place them in there.
+NOTE 1! The first example below makes use of the excellent `ffmpeg` tool. If you want to use this specific example you need to install `ffmpeg` first. On RetroPie and other Debian-derived distros you can install it with `sudo apt install ffmpeg`.
+
+NOTE 2! If you want to use a script for the video conversion and run it directly without path, you need to place it in the `/home/USER/.skyscraper` folder.
 
 ###### Example(s)
 ```
-videoConvertCommand="ffmpeg -i %i -y -pix_fmt yuv420p -t 00:00:10 -c:v libx264 -crf 23 -c:a aac -b:a 64k %o"
+videoConvertCommand="ffmpeg -i %i -y -pix_fmt yuv420p -t 00:00:10 -c:v libx264 -crf 23 -c:a aac -b:a 64k -vf scale=640:480:force_original_aspect_ratio=decrease,pad=640:480:(ow-iw)/2:(oh-ih)/2,setsar=1 %o"
 videoConvertCommand="videoconvert.sh %i %o"
 ```
 
