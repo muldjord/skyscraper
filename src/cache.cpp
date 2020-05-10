@@ -1540,9 +1540,17 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	    QString videoConvertCommand = config.videoConvertCommand;
 	    QString convertedCacheFile = (config.videoConvertExtension.isEmpty()?cacheFile:cacheFile.left(cacheFile.lastIndexOf('.') + 1) + config.videoConvertExtension);
 	    convertedCacheFile.insert(convertedCacheFile.lastIndexOf('/') + 1, "tmpfile_");
+	    if(QFile::exists(convertedCacheFile)) {
+	      QFile::remove(convertedCacheFile);
+	    }
 	    videoConvertCommand.replace("%i", cacheFile);
 	    videoConvertCommand.replace("%o", convertedCacheFile);
-	    printf("Executing user-defined video conversion on file '%s'... ", cacheFile.toStdString().c_str());
+	    if(config.verbosity <= 1) {
+	      printf("Converting video... ");
+	    } else {
+	      printf("Converting video file '%s'... ",
+		     cacheFile.toStdString().c_str());
+	    }
 	    fflush(stdout);
 	    QProcess convertProcess;
 	    convertProcess.start(videoConvertCommand);
@@ -1553,7 +1561,8 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	      f.remove();
 	      cacheFile = convertedCacheFile;
 	      cacheFile.replace("tmpfile_", "");
-	      if(QFile::rename(convertedCacheFile, cacheFile)) {
+	      if((QFile::exists(cacheFile) && QFile::remove(cacheFile)) &&
+		 QFile::rename(convertedCacheFile, cacheFile)) {
 		resource.value = cacheFile.replace(cacheAbsolutePath + "/", "");
 		printf("\033[1;32mSuccess!\033[0m\n");
 	      } else {
