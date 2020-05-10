@@ -148,6 +148,6 @@
 #cacheMarquees="true"
 #videos="false"
 #videoSizeLimit="42"
-#videoConvertCommand="videoconvert.sh %i %o"
+#videoConvertCommand="ffmpeg -i %i -y -pix_fmt yuv420p -t 00:00:10 -c:v libx264 -crf 23 -c:a aac -b:a 64k %o"
 #videoConvertExtension="mp4"
 
