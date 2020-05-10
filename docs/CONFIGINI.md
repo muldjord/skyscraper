@@ -208,7 +208,7 @@ Some scraping modules deliver videos that use a codec or color format that some 
 
 This setting allows you to set a command that will be run on each video after it has been downloaded from the selected scraping module. See the examples below for inspiration.
 
-The `%i` and `%o` will be replaced with the video input (original) and output (converted) files as needed by Skyscraper. If you want to force a certain file extension to the converted file, please also set `videoConvertExtension`.
+The `%i` and `%o` **are required** and will be replaced with the video input (original) and output (converted) filename as needed by Skyscraper. If you want to force a certain file extension for the converted video file, you also need to set `videoConvertExtension`.
 
 NOTE 1! The first example below makes use of the excellent `ffmpeg` tool. If you want to use this specific example you need to install `ffmpeg` first. On RetroPie and other Debian-derived distros you can install it with `sudo apt install ffmpeg`.
 
