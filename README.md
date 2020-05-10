@@ -156,6 +156,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Added simple error handling for media network requests
 * '--flags help' and '--cache help' no longer requires '-p PLATFORM' to be set
 * Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option
+* Changed 'worldofspectrum' to https
 
 #### Version 3.5.1 (28th April 2020)
 * Fixed minor bug in 'daphne' when it only has one rom in 'daphne/roms'
