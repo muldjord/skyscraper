@@ -30,7 +30,7 @@ WorldOfSpectrum::WorldOfSpectrum(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
-  baseUrl = "http://www.worldofspectrum.org";
+  baseUrl = "https://www.worldofspectrum.org";
 
   searchResultPre = "<CENTER><FONT FACE=\"Arial,Helvetica\" COLOR=\"#000000\" SIZE=\"+1\">";
   urlPre.append("Full title");
@@ -77,7 +77,7 @@ void WorldOfSpectrum::getSearchResults(QList<GameEntry> &gameEntries,
 				 QString searchName, QString platform)
 {
   searchName = searchName.replace("the+", "");
-  manager.request("http://www.worldofspectrum.org/infoseek.cgi", "regexp=" + searchName + "&model=spectrum&loadpics=3");
+  manager.request("https://www.worldofspectrum.org/infoseek.cgi", "regexp=" + searchName + "&model=spectrum&loadpics=3");
   q.exec();
   data = manager.getData();
   
