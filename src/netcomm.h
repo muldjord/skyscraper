@@ -39,7 +39,7 @@ public:
   void request(QString query, QString postData = "",
 	       QString headerKey = "", QString headerValue = "");
   QByteArray getData();
-  QNetworkReply::NetworkError getError();
+  QNetworkReply::NetworkError getError(const int &verbosity = 0);
   QByteArray getContentType();
   QByteArray getRedirUrl();
 

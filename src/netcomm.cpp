@@ -73,12 +73,14 @@ QByteArray NetComm::getData()
   return data;
 }
 
-QNetworkReply::NetworkError NetComm::getError()
+QNetworkReply::NetworkError NetComm::getError(const int &verbosity)
 {
-  if(error != QNetworkReply::NoError) {
+  if(error != QNetworkReply::NoError && verbosity >= 1) {
     switch(error) {
     case QNetworkReply::RemoteHostClosedError:
-      printf("\033[1;31mNetwork error: 'QNetworkReply::RemoteHostClosedError'\033[0m\n");
+      // 'screenscraper' will often give this error when it's overloaded.
+      // But since we retry a couple of times, it's rarely a problem.
+      printf("\033[1;31mNetwork error: 'QNetworkReply::RemoteHostClosedError', scraping module service might be overloaded.\033[0m\n");
       break;
     case QNetworkReply::TimeoutError:
       printf("\033[1;31mNetwork error: 'QNetworkReply::TimeoutError'\033[0m\n");
@@ -88,7 +90,7 @@ QNetworkReply::NetworkError NetComm::getError()
       break;
     case QNetworkReply::ContentNotFoundError:
       // Don't show an error on these. For some modules I am guessing for urls and
-      // and sometimes they simply don't exist. It's not an error in those cases.
+      // sometimes they simply don't exist. It's not an error in those cases.
       //printf("\033[1;31mNetwork error: 'QNetworkReply::ContentNotFoundError'\033[0m\n");
       break;
     case QNetworkReply::ContentReSendError:
