@@ -334,7 +334,7 @@ void ScreenScraper::getCover(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getError() == QNetworkReply::NoError &&
+      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
 	 manager.getData().size() >= MINARTSIZE &&
 	 image.loadFromData(manager.getData())) {
 	game.coverData = manager.getData();
@@ -357,7 +357,7 @@ void ScreenScraper::getScreenshot(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getError() == QNetworkReply::NoError &&
+      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
 	 manager.getData().size() >= MINARTSIZE &&
 	 image.loadFromData(manager.getData())) {
 	game.screenshotData = manager.getData();
@@ -380,7 +380,7 @@ void ScreenScraper::getWheel(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getError() == QNetworkReply::NoError &&
+      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
 	 manager.getData().size() >= MINARTSIZE &&
 	 image.loadFromData(manager.getData())) {
 	game.wheelData = manager.getData();
@@ -403,7 +403,7 @@ void ScreenScraper::getMarquee(GameEntry &game)
       manager.request(url);
       q.exec();
       QImage image;
-      if(manager.getError() == QNetworkReply::NoError &&
+      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
 	 manager.getData().size() >= MINARTSIZE &&
 	 image.loadFromData(manager.getData())) {
 	game.marqueeData = manager.getData();
@@ -428,7 +428,7 @@ void ScreenScraper::getVideo(GameEntry &game)
       game.videoData = manager.getData();
       // Make sure received data is actually a video file
       QByteArray contentType = manager.getContentType();
-      if(manager.getError() == QNetworkReply::NoError &&
+      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
 	 contentType.contains("video/") &&
 	 game.videoData.size() > 4096) {
 	game.videoFormat = contentType.mid(contentType.indexOf("/") + 1,
