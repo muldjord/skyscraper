@@ -1536,20 +1536,24 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	if(f.open(QIODevice::WriteOnly)) {
 	  f.write(entry.videoData);
 	  f.close();
-	  if(!config.videoConvertCommand.isEmpty()) {
+	  if(!config.videoConvertCommand.isEmpty() &&
+	     config.videoConvertCommand.contains("%i") &&
+	     config.videoConvertCommand.contains("%o")) {
 	    QString videoConvertCommand = config.videoConvertCommand;
-	    QString convertedCacheFile = (config.videoConvertExtension.isEmpty()?cacheFile:cacheFile.left(cacheFile.lastIndexOf('.') + 1) + config.videoConvertExtension);
-	    convertedCacheFile.insert(convertedCacheFile.lastIndexOf('/') + 1, "tmpfile_");
-	    if(QFile::exists(convertedCacheFile)) {
-	      QFile::remove(convertedCacheFile);
-	    }
+	    QFileInfo cacheFileInfo(cacheFile);
+	    QString tmpCacheFile = cacheFileInfo.absolutePath() + "/tmpfile_" + (config.videoConvertExtension.isEmpty()?cacheFileInfo.fileName():cacheFileInfo.completeBaseName() + "." + config.videoConvertExtension);
 	    videoConvertCommand.replace("%i", cacheFile);
-	    videoConvertCommand.replace("%o", convertedCacheFile);
+	    videoConvertCommand.replace("%o", tmpCacheFile);
+	    if(QFile::exists(tmpCacheFile)) {
+	      QFile::remove(tmpCacheFile);
+	    }
 	    if(config.verbosity <= 1) {
 	      printf("Converting video... ");
-	    } else {
+	    } else if(config.verbosity == 2) {
 	      printf("Converting video file '%s'... ",
 		     cacheFile.toStdString().c_str());
+	    } else if(config.verbosity >= 3) {
+	      printf("Executing 'videoConvertCommand':\n%s\n", videoConvertCommand.toStdString().c_str());
 	    }
 	    fflush(stdout);
 	    QProcess convertProcess;
@@ -1557,23 +1561,25 @@ void Cache::addResource(Resource &resource, GameEntry &entry,
 	    // Wait 10 minutes max for conversion to complete
 	    if(convertProcess.waitForFinished(1000 * 60 * 10) &&
 	       convertProcess.exitStatus() == QProcess::NormalExit &&
-	       QFile::exists(convertedCacheFile)) {
+	       QFile::exists(tmpCacheFile)) {
 	      f.remove();
-	      cacheFile = convertedCacheFile;
+	      cacheFile = tmpCacheFile;
 	      cacheFile.replace("tmpfile_", "");
 	      if(QFile::exists(cacheFile)) {
 		QFile::remove(cacheFile);
 	      }
-	      if(QFile::rename(convertedCacheFile, cacheFile)) {
+	      if(QFile::rename(tmpCacheFile, cacheFile)) {
 		resource.value = cacheFile.replace(cacheAbsolutePath + "/", "");
 		printf("\033[1;32mSuccess!\033[0m\n");
 	      } else {
-		printf("\033[1;31mCouldn't rename file '%s' to '%s', please check permissions!\033[0m\n", convertedCacheFile.toStdString().c_str(), cacheFile.toStdString().c_str());
+		printf("\033[1;31mCouldn't rename file '%s' to '%s', please check permissions!\033[0m\n", tmpCacheFile.toStdString().c_str(), cacheFile.toStdString().c_str());
+		okToAppend = false;
 	      }
 	    } else {
 	      printf("\033[1;31mFailed!\033[0m\n");
+	      okToAppend = false;
 	    }
-	    if(config.verbosity >= 2) {
+	    if(config.verbosity >= 3) {
 	      printf("%s\n", convertProcess.readAllStandardOutput().data());
 	      printf("%s\n", convertProcess.readAllStandardError().data());
 	    }
