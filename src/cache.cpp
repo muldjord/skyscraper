@@ -1645,6 +1645,10 @@ bool Cache::doVideoConvert(Resource &resource,
     }
     return false;
   }
+  if(config.verbosity >= 3) {
+    output.append(convertProcess.readAllStandardOutput() + "\n");
+    output.append(convertProcess.readAllStandardError() + "\n");
+  }
   return true;
 }
 
