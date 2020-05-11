@@ -149,14 +149,16 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 
-#### Version 3.5.2 (29th April 2020)
-* Hid deprecated options from '--help'. Deprecated options still work just aren't shown
-* Updated 'Simple Mode' to use the new '--flags' options
+#### Version 3.5.3 (11th May 2020)
+* MAJOR: Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option. See docs for more details.
 * Removed deprecated '<cover>' node and replaced it with '<thumbnail>' for ES gamelist generation (Thank you to 'yisraeldov' for letting me know)
 * Added simple error handling for media network requests
 * '--flags help' and '--cache help' no longer requires '-p PLATFORM' to be set
-* Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option
-* Changed 'worldofspectrum' to https
+* Changed 'worldofspectrum' scraping module to use https
+
+#### Version 3.5.2 (29th April 2020)
+* Hid deprecated options from '--help'. Deprecated options still work just aren't shown
+* Updated 'Simple Mode' to use the new '--flags' options
 
 #### Version 3.5.1 (28th April 2020)
 * Fixed minor bug in 'daphne' when it only has one rom in 'daphne/roms'
