@@ -778,7 +778,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.videos = settings.value("videos").toBool();
   }
   if(settings.contains("videoSizeLimit")) {
-    config.videoSizeLimit = settings.value("videoSizeLimit").toInt() * 1000 * 1000;
+    config.videoSizeLimit = settings.value("videoSizeLimit").toInt() * 1024 * 1024;
   }
   if(settings.contains("videoConvertCommand")) {
     config.videoConvertCommand = settings.value("videoConvertCommand").toString();
