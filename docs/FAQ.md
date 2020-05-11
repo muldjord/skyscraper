@@ -6,7 +6,7 @@ A quick note before I let you loose on the questions:
 
 And now for the questions (and answers)...
 
-#### Q: I ran Skyscraper and it scraped a lot of artwork and game data, but no gamelist was generated. What's going on?
+#### Q: I ran Skyscraper and it scraped a lot of artwork and game data, but no data is showing up in my gamelists. What's going on?
 <details>
   <summary>Expand answer...</summary>
 
