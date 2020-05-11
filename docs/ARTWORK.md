@@ -29,7 +29,7 @@ An example could look something like this:
 ```
 Which results in a screenshot being exported to look like this:
 
-![Artwork example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/Sonic%20The%20Hedgehog%202.png)
+![Artwork example](resources/Sonic%20The%20Hedgehog%202.png)
 
 ## Xml definitions
 Read on for a full description of the xml format used in `/home/USER/.skyscraper/artwork.xml`. Click the following links to quickly go to a desired section:
@@ -128,7 +128,7 @@ Sets the layer render mode. It can be:
 
 If left out the layer is simply rendered as is on top of the parent layer.
 
-![Mode examples](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/layer_modes.png)
+![Mode examples](resources/layer_modes.png)
 
 #### 'opacity' attribute [from v2.3.3] (Optional)
 Defines the opacity of the layer. 100 is completely visible. 0 is completely transparent.
@@ -159,7 +159,7 @@ The vertical alignment of the layer. It can be:
 The alignment is relative to the parent layer.
 
 ### 'balance' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/balance.png)
+![Effect example](resources/balance.png)
 ```
 <layer>
   <balance red="10" green="20" blue="30"/>
@@ -175,7 +175,7 @@ The green color adjustment. Can be -255 to 255.
 The blue color adjustment. Can be -255 to 255.
 
 ### 'blur' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/blur.png)
+![Effect example](resources/blur.png)
 ```
 <layer>
   <blur softness="5"/>
@@ -187,7 +187,7 @@ Must be nested inside a layer node. Blurs the parent layer.
 Defines the radius of the blur. Higher means blurrier.
 
 ### 'brightness' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/brightness.png)
+![Effect example](resources/brightness.png)
 ```
 <layer>
   <brightness value="10"/>
@@ -199,7 +199,7 @@ Must be nested inside a layer node. Adjusts the brightness of the parent layer.
 The difference value for the adjustment. Can be -255 to 255.
 
 ### 'colorize' effect node [from v2.3.3] (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/colorize.png)
+![Effect example](resources/colorize.png)
 ```
 <layer>
   <colorize hue="180" saturation="-50"/>
@@ -214,7 +214,7 @@ Sets the hue in degrees. Can be 0 to 360.
 Sets the saturation delta value of the colorize effect. Can be -127 to 127.
 
 ### 'contrast' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/contrast.png)
+![Effect example](resources/contrast.png)
 ```
 <layer>
   <contrast value="10"/>
@@ -226,7 +226,7 @@ Must be nested inside a layer node. Adjusts the contrast of the parent layer.
 The difference value for the adjustment. Can be -255 to 255.
 
 ### 'frame' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/frame.png)
+![Effect example](resources/frame.png)
 ```
 <layer>
   <frame file="[custom image resource]" x="0" y="0" width="100" height="100"/>
@@ -249,7 +249,7 @@ Sets the y coordinate of the frame relative to the parent layer. If left out it 
 
 ### 'gamebox' effect node (Optional)
 Left image shows the result with the wheel artwork applied to the side. Right image shows the original cover layer.
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/gamebox.png)
+![Effect example](resources/gamebox.png)
 ```
 <layer resource="cover" height="200">
   <gamebox side="[custom image resource]" rotate="90" sidescaling="both"/>
@@ -266,7 +266,7 @@ Defines the rotation of the side image in degrees.
 Defines how to scale the side / spine image. If left out, it will autoscale depending on the size of the artwork resource. Can be 'width', 'height' or 'both'.
 
 ### 'hue' effect node [from v2.3.3] (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/hue.png)
+![Effect example](resources/hue.png)
 ```
 <layer>
   <hue value="100"/>
@@ -279,7 +279,7 @@ The difference value for the adjustment. Can be 0 to 359.
 
 ### 'mask' effect node (Optional)
 Left image shows the result. Right image shows the mask used. The white part of the mask is transparent.
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/mask.png)
+![Effect example](resources/mask.png)
 ```
 <layer>
   <mask file="[custom image resource]" x="0" y="0" width="100" height="100"/>
@@ -299,7 +299,7 @@ Sets the x coordinate of the mask relative to the parent layer. If left out it w
 Sets the y coordinate of the mask relative to the parent layer. If left out it will be set to 0.
 
 ### 'opacity' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/opacity.png)
+![Effect example](resources/opacity.png)
 ```
 <layer>
   <opacity value="50"/>
@@ -311,7 +311,7 @@ Must be nested inside a layer node. Adjusts the opacity of the parent layer.
 The opacity of the layer. Can be 0-100 where 0 is completely transparent and 100 is opaque.
 
 ### 'rotate' effect node [from v2.3.3] (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/rotate.png)
+![Effect example](resources/rotate.png)
 ```
 <layer>
   <rotate degrees="45" axis="y"/>
@@ -326,7 +326,7 @@ Sets how many degrees the parent layer will be rotated. Can be -360 to 360.
 Sets which axis the parent layer should be rotated around. Can be 'x', 'y' or 'z'. If left out it will be set to 'z'.
 
 ### 'rounded' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/rounded.png)
+![Effect example](resources/rounded.png)
 ```
 <layer>
   <rounded radius="10"/>
@@ -338,7 +338,7 @@ Must be nested inside a layer node. Rounds the corners of the parent layer.
 Defines the radius of the corners in pixels.
 
 ### 'saturation' effect node [from v2.3.3] (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/saturation.png)
+![Effect example](resources/saturation.png)
 ```
 <layer>
   <saturation value="-100"/>
@@ -352,7 +352,7 @@ NOTE! If you want to completely greyscale your layer I highly recommend using th
 The difference value for the adjustment. Can be -255 to 255.
 
 ### 'scanlines' effect node [from v2.9.0] (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/scanlines.png)
+![Effect example](resources/scanlines.png)
 ```
 <layer>
   <scanlines file="scanlines1.png" scale="1.0" opacity="100" mode="overlay"/>
@@ -392,10 +392,10 @@ Sets the overlay compositing mode. It can be:
 
 If left out the overlay is rendered using the `overlay` method.
 
-![Mode examples](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/layer_modes.png)
+![Mode examples](resources/layer_modes.png)
 
 ### 'shadow' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/shadow.png)
+![Effect example](resources/shadow.png)
 ```
 <layer>
   <shadow distance="10" softness="5" opacity="50"/>
@@ -413,7 +413,7 @@ Defines how soft (radius) the shadow will appear. A value of 0 is sharpest.
 Defines the opacity of the shadow. 100 is completely visible. 0 is completely transparent.
 
 ### 'stroke' effect node (Optional)
-![Effect example](https://raw.githubusercontent.com/muldjord/skyscraper/master/artwork_examples/stroke.png)
+![Effect example](resources/stroke.png)
 ```
 <layer>
   <stroke width="5" red="10" green="20" blue="30"/>

@@ -102,7 +102,7 @@ There's a caveat to the module as it has quite strong restrictions for the numbe
 Please use this module sparingly. And only ever use it to scrape those last few roms you can't get any data for using any of the other sources.
 
 #### IGDB
-![IGDB logo](https://raw.githubusercontent.com/muldjord/skyscraper/master/docs/logos/igdb.png)
+![IGDB logo](resources/igdb.png)
 * Shortname: *`igdb`*
 * Type: *Online*
 * Website: *[www.igdb.com](https://www.igdb.com)*
