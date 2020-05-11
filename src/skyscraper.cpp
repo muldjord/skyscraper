@@ -587,8 +587,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   distro = "/usr/local/etc/skyscraper/README.md";
   copyFile(distro, current);
 
-  current = "hints.txt";
-  distro = "/usr/local/etc/skyscraper/hints.txt";
+  current = "hints.xml";
+  distro = "/usr/local/etc/skyscraper/hints.xml";
   copyFile(distro, current);
 
   current = "ARTWORK.md";
@@ -1552,17 +1552,17 @@ void Skyscraper::copyFile(QString &distro, QString &current, bool overwrite)
 
 void Skyscraper::showHint()
 {
-  QFile hintsFile("hints.txt");
-  QList<QString> hints;
-  if(hintsFile.open(QIODevice::ReadOnly)) {
-    while(!hintsFile.atEnd()) {
-      hints.append(QString(hintsFile.readLine()));
-    }
-    hintsFile.close();
-    if(!hints.isEmpty()) {
-      printf("\033[1;33mDID YOU KNOW:\033[0m %s\n", hints.at(qrand() % hints.size()).toStdString().c_str());
-    }
+  QFile hintsFile("hints.xml");
+  QDomDocument hintsXml;
+  if(!hintsFile.open(QIODevice::ReadOnly)) {
+    return;
   }
+  if(!hintsXml.setContent(&hintsFile)) {
+    return;
+  }
+  hintsFile.close();
+  QDomNodeList hintNodes = hintsXml.elementsByTagName("hint");
+  printf("\033[1;33mDID YOU KNOW:\033[0m %s\n\n", hintsXml.elementsByTagName("hint").at(qrand() % hintNodes.length()).toElement().text().toStdString().c_str());
 }
 
 void Skyscraper::doPrescrapeJobs()
