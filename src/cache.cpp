@@ -1525,6 +1525,7 @@ void Cache::addResource(Resource &resource,
 	  f.write(*imageData);
 	  f.close();
 	} else {
+	  output.append("Error writing file: '" + f.fileName() + "' to cache. Please check permissions.");
 	  okToAppend = false;
 	}
       } else {
@@ -1554,9 +1555,11 @@ void Cache::addResource(Resource &resource,
 	    }
 	  }
 	} else {
+	  output.append("Error writing file: '" + f.fileName() + "' to cache. Please check permissions.");
 	  okToAppend = false;
 	}
       } else {
+	output.append("Video exceeds maximum size of " + QString::number(config.videoSizeLimit / 1024 / 1024) + " MB. Adjust this limit with the 'videoSizeLimit' variable in '/home/USER/.skyscraper/config.ini.'");
 	okToAppend = false;
       }
     }
