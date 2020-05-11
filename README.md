@@ -151,6 +151,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 
 #### Version 3.5.4 (In progress, unreleased)
 * Hints file converted to xml (hints.txt -> hints.xml)
+* Moved documentation resources into 'docs' folder
 
 #### Version 3.5.3 (11th May 2020)
 * MAJOR: Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option. See docs for more details.
