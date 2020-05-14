@@ -5,7 +5,7 @@
 # This is an example config file for use with Skyscraper. Use it as a template for creating
 #   your own. If you copy this file to 'config.ini' it will be used per default.
 #   You can always copy config.ini.example to a filename of your choice and make Skyscraper
-#   use it with the '-c' command line option.
+#   use it with the '-c CONFIGFILE' command line option.
 
 # You can have several platform sections in one config file. Further down is an example of
 #   a generic platform setup. Check '--help' for more info on supported platforms.
@@ -150,4 +150,5 @@
 #videoSizeLimit="42"
 #videoConvertCommand="ffmpeg -i %i -y -pix_fmt yuv420p -t 00:00:10 -c:v libx264 -crf 23 -c:a aac -b:a 64k -vf scale=640:480:force_original_aspect_ratio=decrease,pad=640:480:(ow-iw)/2:(oh-ih)/2,setsar=1 %o"
 #videoConvertExtension="mp4"
-
+##The following option is only applicable to 'screenscraper'
+#videoPreferNormalized="true"

@@ -1138,6 +1138,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("videoConvertExtension")) {
     config.videoConvertExtension = settings.value("videoConvertExtension").toString();
   }
+  if(settings.contains("videoPreferNormalized")) {
+    config.videoPreferNormalized = settings.value("videoPreferNormalized").toBool();
+  }
   settings.endGroup();
 
   // Command line configs, overrides main, platform, module and defaults

@@ -418,7 +418,12 @@ void ScreenScraper::getMarquee(GameEntry &game)
 
 void ScreenScraper::getVideo(GameEntry &game)
 {
-  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, QList<QString>({"video-normalized", "video"}));
+  QStringList types;
+  if(config->videoPreferNormalized) {
+    types.append("video-normalized");
+  }
+  types.append("video");
+  QString url = getJsonText(jsonObj["medias"].toArray(), NONE, types);
   if(!url.isEmpty()) {
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {

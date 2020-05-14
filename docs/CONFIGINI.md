@@ -233,6 +233,20 @@ NOTE! It is up to you to make sure that the command you provide in `videoConvert
 ###### Allowed in sections
 `[main]`, `[<SCRAPING MODULE>]`
 
+#### videoPreferNormalized="true"
+This option is *only* applicable when scraping with the `-s screenscraper` module. ScreenScraper offers two versions of some of their videos. A normalized version, which adheres to some defined standard they made, and the originals. If you prefer converting or standardizing the videos yourself (see `videoConvertCommand` above) then you can set this to `false`. If you do so Skyscraper will fetch the original videos from ScreenScraper instead of the normalized ones.
+
+NOTE! Be aware that the original videos often vary a lot in codec, color format and size. So it is recommended to convert them afterwards using the `videoConvertCommand`.
+
+###### Example(s)
+```
+[screenscraper]
+videoPreferNormalized="false"
+```
+
+###### Allowed in sections
+`[screenscraper]`
+
 #### symlink="false"
 Enabling this option is only relevant while also setting the `videos="true"` option. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore.
 
