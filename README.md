@@ -156,7 +156,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 
 #### Version 3.5.3 (11th May 2020)
 * MAJOR: Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option. See docs for more details.
-* Removed deprecated '<cover>' node and replaced it with '<thumbnail>' for ES gamelist generation (Thank you to 'yisraeldov' for letting me know)
+* Removed deprecated `<cover>` node and replaced it with `<thumbnail>` for ES gamelist generation (Thank you to 'yisraeldov' for letting me know)
 * Added simple error handling for media network requests
 * '--flags help' and '--cache help' no longer requires '-p PLATFORM' to be set
 * Changed 'worldofspectrum' scraping module to use https
