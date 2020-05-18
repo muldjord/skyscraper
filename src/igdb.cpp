@@ -54,7 +54,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", config->userCreds);
   q.exec();
   data = manager.getData();
-
+  
   if(data.contains("Limits exceeded")) {
     printf("\033[1;31mYour monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
@@ -91,7 +91,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void Igdb::getGameData(GameEntry &game)
 {
-  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.date,release_dates.region,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", StrTools::unMagic("136;213;169;133;171;147;206;117;211;152;214;221;209;213;157;197;136;158;212;220;171;211;160;215;202;172;216;125;172;174;151;171"));
+  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.date,release_dates.region,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", config->userCreds);
   q.exec();
   data = manager.getData();
 
