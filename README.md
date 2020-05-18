@@ -149,6 +149,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 
+#### Version 3.5.5 (18th May 2020)
+* Fixed bug in 'igdb' module where it still used old hardcoded key (Thank you to 'stlbluesfan' for reporting this)
+
 #### Version 3.5.4 (14th May 2020)
 * Hints file converted to xml (hints.txt -> hints.xml)
 * Moved documentation resources into 'docs' folder
