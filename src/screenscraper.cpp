@@ -718,6 +718,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "15";
   } else if(platform == "neogeo") {
     return "142";
+  } else if(platform == "neogeocd") {
+    return "70";
   } else if(platform == "nes") {
     return "3";
   } else if(platform == "ngp") {

@@ -32,6 +32,7 @@
 * Megadrive / Genesis
 * MSX (MSX, MSX 2, MSX 2+, MSX Laserdisc)
 * NeoGeo
+* NeoGeo CD
 * NeoGeo Pocket
 * NeoGeo Pocket Color
 * Nintendo 64

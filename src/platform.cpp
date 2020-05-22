@@ -84,6 +84,7 @@ QStringList Platform::getPlatforms()
   platforms.append("n64");
   platforms.append("nds");
   platforms.append("neogeo");
+  platforms.append("neogeocd");
   platforms.append("nes");
   platforms.append("ngp");
   platforms.append("ngpc");
@@ -220,6 +221,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "neogeo") {
     scrapers.append("arcadedb");
     scrapers.append("screenscraper");
+  } else if(platform == "neogeocd") {
+    scrapers.append("screenscraper");
   } else if(platform == "nes") {
     scrapers.append("screenscraper");
   } else if(platform == "ngp") {
@@ -330,7 +333,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "apple2") {
     formats.append("*.dsk");
   } else if(platform == "arcade") {
-    formats.append("*.cue *.chd *.iso");
+    formats.append("*.bin *.dat");
   } else if(platform == "arcadia") {
     formats.append("");
   } else if(platform == "astrocde") {
@@ -366,7 +369,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "dreamcast") {
     formats.append("*.cdi *.gdi *.iso *.chd *.cue");
   } else if(platform == "fba") {
-    formats.append("*.cue *.chd *.iso");
+    formats.append("");
   } else if(platform == "fds") {
     formats.append("*.fds *.nes");
   } else if(platform == "gameandwatch") {
@@ -404,6 +407,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "nds") {
     formats.append("*.nds");
   } else if(platform == "neogeo") {
+    formats.append("");
+  } else if(platform == "neogeocd") {
     formats.append("*.cue *.chd *.iso");
   } else if(platform == "nes") {
     formats.append("*.nes *.smc *.sfc *.fig *.swc *.mgd");
@@ -568,6 +573,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "nds") {
     scraper = "cache";
   } else if(platform == "neogeo") {
+    scraper = "cache";
+  } else if(platform == "neogeocd") {
     scraper = "cache";
   } else if(platform == "nes") {
     scraper = "cache";
@@ -1119,6 +1126,15 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("neo geo aes");
     aliases.append("neo geo mvs");
     aliases.append("neo geo cd");
+    aliases.append("neo-geo cd");
+    aliases.append("arcade");
+  } else if(platform == "neogeocd") {
+    aliases.append("neo-geo");
+    aliases.append("neo geo");
+    aliases.append("neo geo aes");
+    aliases.append("neo geo mvs");
+    aliases.append("neo geo cd");
+    aliases.append("neo-geo cd");
     aliases.append("arcade");
   } else if(platform == "nes") {
     aliases.append("nintendo entertainment system (nes)");
