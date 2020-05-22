@@ -313,7 +313,7 @@ You can use any of the following:
 
 Supported resource types are: `title`, `platform`, `description`, `publisher`, `developer`, `ages`, `tags`, `rating`, `releasedate`, `cover`, `screenshot`, `wheel`, `marquee`, `video`.
 
-NOTE! The reports can be fed back into Skyscraper using the `--fromfile REPORTFILE` option, which tells Skyscraper to only work on the files contained in the report. This is useful in combination with, for instance, the `--cache edit` option or the `--cache refresh`/`--refresh` (they are the same) option(s).
+NOTE! The reports can be fed back into Skyscraper using the `--fromfile <REPORTFILE>` option, which tells Skyscraper to only work on the files contained in the report. This is useful in combination with, for instance, the `--cache edit` option or the `--cache refresh`/`--refresh` (they are the same) option(s).
 
 ###### Example(s)
 ```
@@ -379,7 +379,9 @@ This option is deprecated! Please set it using the [`--flags`](#--flags-flag1fla
 This option is deprecated! Please set it using the [`--flags`](#--flags-flag1flag2) option instead. This option will remain functional for the time being, but will eventually be removed completely. Please migrate as soon as possible.
 
 ### --fromfile &lt;FILENAME&gt;
-Using this option is the equivalent to adding a bunch of filenames to work on directly on the commandline. It reads one line at a time from `<FILENAME>` and adds them to the queue of files to work on. This is very useful in conjunction with the `--cache edit` option or `--cache report` option or if you want to regather data just for those files using `-s <SCRAPING MODULE>`.
+Using this option is the equivalent to adding a bunch of filenames to work on directly on the commandline. It reads one line at a time from `<FILENAME>` and adds them to the queue of files to work on. This is very useful in combination with the `--cache edit` option or if you want to refresh data for just those files using `-s <SCRAPING MODULE>`.
+
+NOTE! The `--cache report` option creates files that are directly usable with the `--fromfile` option.
 
 ###### Example(s)
 ```
