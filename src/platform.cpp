@@ -330,7 +330,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "apple2") {
     formats.append("*.dsk");
   } else if(platform == "arcade") {
-    formats.append("");
+    formats.append("*.cue *.chd *.iso");
   } else if(platform == "arcadia") {
     formats.append("");
   } else if(platform == "astrocde") {
@@ -366,7 +366,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "dreamcast") {
     formats.append("*.cdi *.gdi *.iso *.chd *.cue");
   } else if(platform == "fba") {
-    formats.append("");
+    formats.append("*.cue *.chd *.iso");
   } else if(platform == "fds") {
     formats.append("*.fds *.nes");
   } else if(platform == "gameandwatch") {
@@ -404,7 +404,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "nds") {
     formats.append("*.nds");
   } else if(platform == "neogeo") {
-    formats.append("");
+    formats.append("*.cue *.chd *.iso");
   } else if(platform == "nes") {
     formats.append("*.nes *.smc *.sfc *.fig *.swc *.mgd");
   } else if(platform == "ngp") {
