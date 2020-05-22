@@ -176,35 +176,35 @@ To enable multiple flags simply separate them by commas (eg. `--flags FLAG1,FLAG
 NOTE! The old options will continue to function for the time being, but if you have scripts using them, please migrate to this new `--flags FLAG1,FLAG2` format as soon as possible. The old options *will* be removed at some point in the future. To see which flags are considered deprecated check `--help`.
 
 #### forcefilename
-This option forces Skyscraper to use the filename (excluding extension) instead of the cached titles when generating a game list. Consider setting this in [`config.ini`](CONFIGINI.md#forcefilenamefalse) instead.
+This flag forces Skyscraper to use the filename (excluding extension) instead of the cached titles when generating a game list. Consider setting this in [`config.ini`](CONFIGINI.md#forcefilenamefalse) instead.
 
-NOTE! If 'nameTemplate' is set in config.ini this option is ignored.
+NOTE! If 'nameTemplate' is set in config.ini this flag is ignored.
 #### interactive
-When gathering data from any of the scraping modules many potential entries will be returned. Normally Skyscraper chooses the best entry for you. But should you wish to choose the best entry yourself, you can enable this option. Skyscraper will then list the returned entries and let you choose which one is the best one.
+When gathering data from any of the scraping modules many potential entries will be returned. Normally Skyscraper chooses the best entry for you. But should you wish to choose the best entry yourself, you can enable this flag. Skyscraper will then list the returned entries and let you choose which one is the best one.
 #### nobrackets
-Use this option to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the resource cache. Consider setting this in [`config.ini`](CONFIGINI.md#bracketstrue) instead.
+Use this flag to disable any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This flag is only relevant when generating the game list. It makes no difference when gathering data into the resource cache. Consider setting this in [`config.ini`](CONFIGINI.md#bracketstrue) instead.
 
-NOTE! If 'nameTemplate' is set in config.ini this option is ignored.
+NOTE! If 'nameTemplate' is set in config.ini this flag is ignored.
 #### nocovers
-Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachecoverstrue) instead.
+Disables the caching of the resource type `cover` when scraping with any module. If you never use covers in your artwork configuration, this flag can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachecoverstrue) instead.
 #### nohints
 Disables the "Did you know" hints when running Skyscraper. Consider setting this in [`config.ini`](CONFIGINI.md#hintsfalse) instead.
 #### nomarquees
-Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachemarqueestrue) instead.
+Disables the caching of the resource type `marquee` when scraping with any module. If you never use marquees in your artwork configuration, this flag can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachemarqueestrue) instead.
 #### noresize
-By default, to save space, Skyscraper resizes large pieces of artwork before adding them to the resource cache. Adding this option will disable this and save the artwork files exactly as they are retrieved from the scraping module. Consider setting this in [`config.ini`](CONFIGINI.md#cacheresizefalse) instead.
+By default, to save space, Skyscraper resizes large pieces of artwork before adding them to the resource cache. Adding this flag will disable this and save the artwork files exactly as they are retrieved from the scraping module. Consider setting this in [`config.ini`](CONFIGINI.md#cacheresizefalse) instead.
 
 NOTE! This is not related to the artwork compositing that happens when generating a game list. This is *only* related to how Skyscraper handles artwork when adding it to the resource cache while gathering data from the scraping modules.
 #### noscreenshots
-Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachescreenshotstrue) instead.
+Disables the caching of the resource type `screenshot` when scraping with any module. If you never use screenshots in your artwork configuration, this flag can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachescreenshotstrue) instead.
 #### nosubdirs
-By default Skyscraper will include roms located in subfolders. By adding this option Skyscraper will only scrape the roms located directly in the input folder. See `-i <PATH>` above to read more about the rom input folder. Consider setting this in [`config.ini`](CONFIGINI.md#subdirstrue) instead.
+By default Skyscraper will include roms located in subfolders. By adding this flag Skyscraper will only scrape the roms located directly in the input folder. See `-i <PATH>` above to read more about the rom input folder. Consider setting this in [`config.ini`](CONFIGINI.md#subdirstrue) instead.
 #### nowheels
-Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, this option can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachewheelstrue) instead.
+Disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, this flag can save you some space. Consider setting this in [`config.ini`](CONFIGINI.md#cachewheelstrue) instead.
 #### onlymissing
-This option tells Skyscraper to skip all files which already have any piece of data from any source in the cache. This is useful if you just scraped almost all files from a platform succesfully with one source, and then want to only scrape the remaining games with a different source to fill in the holes. Normally Skyscraper will scrape all files again with the second source.
+This flag tells Skyscraper to skip all files which already have any piece of data from any source in the cache. This is useful if you just scraped almost all files from a platform succesfully with one source, and then want to only scrape the remaining games with a different source to fill in the holes. Normally Skyscraper will scrape all files again with the second source.
 #### pretend
-This option is *only* relevant when generating a game list (by leaving out the `-s <MODULE>` option). It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It can be very useful to check exactly what and how the data will be combined from the resource cache.
+This flag is *only* relevant when generating a game list (by leaving out the `-s <MODULE>` option). It disables the game list generator and artwork compositor and only outputs the results of the potential game list generation to the terminal. It can be very useful to check exactly what and how the data will be combined from the resource cache.
 #### relative
 Only relevant when generating an EmulationStation game list (which is the default frontend when the `-f` option is left out). This forces the rom and any media paths (if they are the same as the input folder) inside the game list to be relative to the rom input folder. Consider setting this in [`config.ini`](CONFIGINI.md#relativepathsfalse) instead.
 #### skipexistingcovers
@@ -218,19 +218,19 @@ When generating gamelists, skip copying videos that already exist in the media o
 #### skipexistingwheels
 When generating gamelists, skip processing wheels that already exist in the media output folder.
 #### skipped
-If a rom has no resources attached to it in the cache, it will be left out when generating a game list file. It will still show up in the frontend (at least it does for EmulationStation) but it won't exist in the game list file. You can safely leave out this option unless you need the empty entries for some reason. Consider setting this in [`config.ini`](CONFIGINI.md#skippedfalse) instead.
+If a rom has no resources attached to it in the cache, it will be left out when generating a game list file. It will still show up in the frontend (at least it does for EmulationStation) but it won't exist in the game list file. You can safely leave out this flag unless you need the empty entries for some reason. Consider setting this in [`config.ini`](CONFIGINI.md#skippedfalse) instead.
 #### symlink
 Enabling this flag is currently only relevant while also using the `videos` flag. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore. Consider setting this in [`config.ini`](CONFIGINI.md#symlinkfalse) instead.
 #### unattend
-When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input. Consider setting this in [`config.ini`](CONFIGINI.md#unattendtrue) instead.
+When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this flag Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input. Consider setting this in [`config.ini`](CONFIGINI.md#unattendtrue) instead.
 #### unattendskip
-When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this option Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input. Consider setting this in [`config.ini`](CONFIGINI.md#unattendskipfalse) instead.
+When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this flag Skyscraper will *always* overwrite an existing game list and *always* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input. Consider setting this in [`config.ini`](CONFIGINI.md#unattendskipfalse) instead.
 #### unpack
-Some scraping modules use file checksums to identify the game in their databases. If you've compressed your roms to zip or 7z files yourself, this can pose a problem in getting a good result. You can then try to use this option. Doing so will extract the rom and do the file checksum on the rom itself instead of the compressed file.
+Some scraping modules use file checksums to identify the game in their databases. If you've compressed your roms to zip or 7z files yourself, this can pose a problem in getting a good result. You can then try to use this flag. Doing so will extract the rom and do the file checksum on the rom itself instead of the compressed file.
 
-NOTE! Only use this option if you are having problems getting the roms identified from the compressed files. It slows down the scraping process significantly and should therefore be avoided if possible.
+NOTE! Only use this flag if you are having problems getting the roms identified from the compressed files. It slows down the scraping process significantly and should therefore be avoided if possible.
 #### videos
-By default Skyscraper doesn't scrape and cache video resources because of the significant disk space required to save them. You can enable videos using this option. Consider setting this in [`config.ini`](CONFIGINI.md#videosfalse) instead.
+By default Skyscraper doesn't scrape and cache video resources because of the significant disk space required to save them. You can enable videos using this flag. Consider setting this in [`config.ini`](CONFIGINI.md#videosfalse) instead.
 
 ###### Example(s)
 ```
