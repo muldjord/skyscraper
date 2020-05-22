@@ -143,7 +143,7 @@ If you're looking specifically for ZX Spectrum data, this is the module to use. 
 * API request limit: *None*
 * Thread limit: *None*
 * Platform support: *All*
-* Media support: *`cover`, `screenshot`, `marquee`*
+* Media support: *`screenshot`, `marquee`, `video`*
 * Example use: `Skyscraper -p snes -s esgamelist`
 
 This module allows you to import data from an existing EmulationStation game list into the Skyscraper cache. This is useful if you already have a lot of data and artwork in a gamelist.xml file and you wish to use it with Skyscraper.
