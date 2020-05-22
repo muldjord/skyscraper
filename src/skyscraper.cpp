@@ -502,7 +502,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
       // By clearing the queue here we basically tell Skyscraper to stop and quit nicely
       config.pretend = true;
       queue->clearAll();
-    } else if(QStorageInfo(QDir::current()).bytesFree() < spaceLimit) {
+    } else if(QStorageInfo(QDir(config.cacheFolder)).bytesFree() < spaceLimit) {
       printf("\033[1;31mYou have very little disk space left on the Skyscraper resource cache drive, please free up some space and try again. Now aborting...\033[0m\n\n");
       printf("Note! You can disable this check by setting 'spaceCheck=\"false\"' in the '[main]' section of config.ini.\n\n");
       // By clearing the queue here we basically tell Skyscraper to stop and quit nicely
