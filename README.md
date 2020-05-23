@@ -152,6 +152,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 
 #### Version 3.5.6 (In progress, unreleased)
 * Added 'neogeocd' platform (Thank you to 'igno2k' and 'meveric' for suggesting it)
+* 'screenscraper' module now supports region for screenshots (Thank you to 'cameronhimself' for pointing this out)
+* Low disk space check for cache is now calculated from cache folder location
+* Skyscraper initial output now shows frontend and extras when generating gamelists
 
 #### Version 3.5.5 (18th May 2020)
 * Fixed bug in 'igdb' module where it still used old hardcoded key (Thank you to 'stlbluesfan' for reporting this)
