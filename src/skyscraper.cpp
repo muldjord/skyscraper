@@ -68,8 +68,11 @@ void Skyscraper::run()
 {
   printf("Platform:           '\033[1;32m%s\033[0m'\n", config.platform.toStdString().c_str());
   printf("Scraping module:    '\033[1;32m%s\033[0m'\n", config.scraper.toStdString().c_str());
-  if(!config.frontendExtra.isEmpty()) {
-    printf("Extra:              '\033[1;32m%s\033[0m'\n", config.frontendExtra.toStdString().c_str());
+  if(config.scraper == "cache") {
+    printf("Frontend:           '\033[1;32m%s\033[0m'\n", config.frontend.toStdString().c_str());
+    if(!config.frontendExtra.isEmpty()) {
+      printf("Extra:              '\033[1;32m%s\033[0m'\n", config.frontendExtra.toStdString().c_str());
+    }
   }
   printf("Input folder:       '\033[1;32m%s\033[0m'\n", config.inputFolder.toStdString().c_str());
   printf("Game list folder:   '\033[1;32m%s\033[0m'\n", config.gameListFolder.toStdString().c_str());
