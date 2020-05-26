@@ -75,5 +75,3 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Z-Machine
 * ZX81
 * ZX Spectrum
-
-... More platforms will be added in future releases!
