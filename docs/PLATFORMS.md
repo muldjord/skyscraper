@@ -1,4 +1,7 @@
-### Skyscraper currently supports the following platforms (set with '-p'):
+### What's supported and why
+As Skyscraper was built to be used with RetroPie, the list of supported platforms are largely dictated by their naming scheme and [list of platforms](https://retropie.org.uk/docs/Supported-Systems). Skyscraper will only rarely add platforms that aren't already on that list.
+
+### Skyscraper currently supports the following platforms (set with '-p PLATFORM'):
 * 3do
 * Amiga (OCS, ECS, AGA, CD32, CDTV)
 * Amstrad CPC
