@@ -308,6 +308,13 @@ void Skyscraper::run()
   }
   state = 0;
 
+  if(!config.pretend && config.scraper == "cache" && config.gameListBackup) {
+    QString gameListBackup = gameListFile.fileName() + "-" +
+      QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss");
+    printf("Game list backup saved to '\033[1;33m%s\033[0m'\n", gameListBackup.toStdString().c_str());
+    gameListFile.copy(gameListBackup);
+  }
+
   if(!config.pretend && config.scraper == "cache" &&
      !config.unattend && !config.unattendSkip &&
      gameListFile.exists()) {
@@ -319,8 +326,7 @@ void Skyscraper::run()
       printf("User chose not to overwrite, now exiting...\n");
       exit(0);
     }
-
-    printf("Checking if '\033[1;32m%s\033[0m' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
+    printf("Checking if '\033[1;33m%s\033[0m' is writable?... ", frontend->getGameListFileName().toStdString().c_str());
 
     if(gameListFile.open(QIODevice::Append)) {
       printf("\033[1;32mIt is! :)\033[0m\n");
@@ -695,7 +701,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   QSettings settings(parser.isSet("c")?parser.value("c"):"config.ini", QSettings::IniFormat);
 
-  // Start by setting frontend, since we need it to set default for gamelist and so on
+  // Start by setting frontend, since we need it to set default for game list and so on
   settings.beginGroup("main");
   if(settings.contains("frontend")) {
     config.frontend = settings.value("frontend").toString();
@@ -862,10 +868,19 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.inputFolder = inputFolder + (inputFolder.right(1) == "/"?"":"/") + config.platform;
     inputFolderSet = true;
   }
+  // gamelistFolder kept in addition to gameListFolder for backwards compatibility
   if(settings.contains("gamelistFolder")) {
-    QString gamelistFolder = settings.value("gamelistFolder").toString();
-    config.gameListFolder = gamelistFolder + (gamelistFolder.right(1) == "/"?"":"/") + config.platform;
+    QString gameListFolder = settings.value("gamelistFolder").toString();
+    config.gameListFolder = gameListFolder + (gameListFolder.right(1) == "/"?"":"/") + config.platform;
     gameListFolderSet = true;
+  }
+  if(settings.contains("gameListFolder")) {
+    QString gameListFolder = settings.value("gameListFolder").toString();
+    config.gameListFolder = gameListFolder + (gameListFolder.right(1) == "/"?"":"/") + config.platform;
+    gameListFolderSet = true;
+  }
+  if(settings.contains("gameListBackup")) {
+    config.gameListBackup = settings.value("gameListBackup").toBool();
   }
   if(settings.contains("mediaFolder")) {
     QString mediaFolder = settings.value("mediaFolder").toString();
@@ -895,8 +910,13 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.inputFolder = settings.value("inputFolder").toString();
     inputFolderSet = true;
   }
+  // gamelistFolder kept in addition to gameListFolder for backwards compatibility
   if(settings.contains("gamelistFolder")) {
     config.gameListFolder = settings.value("gamelistFolder").toString();
+    gameListFolderSet = true;
+  }
+  if(settings.contains("gameListFolder")) {
+    config.gameListFolder = settings.value("gameListFolder").toString();
     gameListFolderSet = true;
   }
   if(settings.contains("mediaFolder")) {
@@ -1049,9 +1069,17 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("launch")) {
     config.frontendExtra = settings.value("launch").toString();
   }
+  // gamelistFolder kept in addition to gameListFolder for backwards compatibility
   if(settings.contains("gamelistFolder")) {
     config.gameListFolder = settings.value("gamelistFolder").toString();
     gameListFolderSet = true;
+  }
+  if(settings.contains("gameListFolder")) {
+    config.gameListFolder = settings.value("gameListFolder").toString();
+    gameListFolderSet = true;
+  }
+  if(settings.contains("gameListBackup")) {
+    config.gameListBackup = settings.value("gameListBackup").toBool();
   }
   if(settings.contains("mediaFolder")) {
     config.mediaFolder = settings.value("mediaFolder").toString();
