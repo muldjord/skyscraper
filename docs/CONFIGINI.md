@@ -28,6 +28,7 @@ NOTE! You can set a custom configuration file with the `-c <FILENAME>` command l
 [main]
 inputFolder="/path/to/your/roms"
 cacheFolder="/path/to/your/desired/db/cache/base/folder"
+gameListBackup="true"
 videos="true"
 unattend="true"
 verbosity="1"
@@ -46,7 +47,7 @@ artworkXml="artwork-pegasus.xml"
 maxLength="10000"
 
 [screenscraper]
-userCreds="user:passwd"
+userCreds="USER:PASSWORD"
 
 ```
 
@@ -58,13 +59,19 @@ NOTE! If this is set in the `[main]` section it will automatically add `/<PLATFO
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
 
-#### gamelistFolder="/home/pi/RetroPie/roms"
+#### gameListFolder="/home/pi/RetroPie/roms"
 Sets the game list export folder. By default Skyscraper exports the game list to the same directory as the rom input folder. This enables you to change that to a non-default location.
 
 NOTE! If this is set in the `[main]` section it will automatically add `/<PLATFORM>` to the end of the path. If you want better control consider adding it to a `[<PLATFORM>]` section instead where it will be used as is.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
+
+#### gameListBackup="true"
+When set to true Skyscraper will create a backup of the existing game list each time it is run in game list generation mode (this mode is enabled by leaving out the `-s MODULE` option). The filename and path of the backup will be equal to the existing game list but have a timestamp appended to the name of the format `-ddMMyyyy-hhmmss` (eg. `gamelist.xml-30052020-115900`).
+
+###### Allowed in sections
+`[main]`, `[<FRONTEND>]`
 
 #### mediaFolder="/home/pi/RetroPie/roms"
 Sets the artwork / media output folder. By default Skyscraper outputs the composited artwork files to the game list export folder + `/media`. This allows you to change that to a non-default location.
