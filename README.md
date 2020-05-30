@@ -155,6 +155,8 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * 'screenscraper' module now supports region for screenshots (Thank you to 'cameronhimself' for pointing this out)
 * Low disk space check for cache is now calculated from cache folder location
 * Skyscraper initial output now shows frontend and extras when generating gamelists
+* Changed 'gamelistFolder' config.ini option to 'gameListFolder' but kept old variable name for backwards compatibility
+* Added 'gameListBackup' config.ini option to allow for game list backups being created on each run (Thank you to 'igno2k' for suggesting it)
 
 #### Version 3.5.5 (18th May 2020)
 * Fixed bug in 'igdb' module where it still used old hardcoded key (Thank you to 'stlbluesfan' for reporting this)
