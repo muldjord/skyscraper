@@ -68,7 +68,7 @@ NOTE! If this is set in the `[main]` section it will automatically add `/<PLATFO
 `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
 
 #### gameListBackup="true"
-When set to true Skyscraper will create a backup of the existing game list each time it is run in game list generation mode (this mode is enabled by leaving out the `-s MODULE` option). The filename and path of the backup will be equal to the existing game list but have a timestamp appended to the name of the format `-yyyyMMdd-hhmmss` (eg. `gamelist.xml-30052020-115900`).
+When set to true Skyscraper will create a backup of the existing game list each time it is run in game list generation mode (this mode is enabled by leaving out the `-s MODULE` option). The filename and path of the backup will be equal to the existing game list but have a timestamp appended to the name of the format `-yyyyMMdd-hhmmss` (eg. `gamelist.xml-20200530-115900`).
 
 ###### Allowed in sections
 `[main]`, `[<FRONTEND>]`
