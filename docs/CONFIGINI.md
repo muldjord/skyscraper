@@ -215,7 +215,7 @@ Some scraping modules deliver videos that use a codec or color format that some 
 
 This setting allows you to set a command that will be run on each video after it has been downloaded from the selected scraping module. See the examples below for inspiration.
 
-The `%i` and `%o` **are required** and will be replaced with the internally used video input (original) and output (converted) filenames as needed by Skyscraper. In a case where you create a script that sometimes *doesn't* convert the video, you will need to do `cp %i %o` for that video.
+The `%i` and `%o` **are required** and will be replaced with the internally used video input (original) and output (converted) filenames as needed by Skyscraper. In a case where you create a script that sometimes *doesn't* convert the video, you will need to do `cp %i %o` in the script for that video.
 
 If your command / script always converts to a videofile with a specific extension, you also need to set `videoConvertExtension`.
 
