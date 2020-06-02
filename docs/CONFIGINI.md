@@ -225,7 +225,7 @@ NOTE 2! The first example below makes use of the excellent `ffmpeg` tool. If you
 
 NOTE 3! If you want to use a script for the video conversion and run it directly without path, you need to place it in the `/home/USER/.skyscraper` folder.
 
-NOTE 4! If you create a script that includes checks on the input video and it sometimes decides not to convert them, you should simply let the script copy the video with `cp %i %o`. The `%i` is a temporary file created internally by Skyscraper. And the `%o` file is the file used by the cache. So you need to do this copy in cases where no conversion happens. Otherwise the conversion will fail.
+NOTE 4! If you create a script that includes checks on the input video and it sometimes decides not to convert them, you should simply let the script copy the video with `cp %i %o`. The `%i` is a temporary file created internally by Skyscraper. And the `%o` file is the file used by the cache.
 
 ###### Example(s)
 ```
