@@ -215,7 +215,7 @@ Some scraping modules deliver videos that use a codec or color format that some 
 
 This setting allows you to set a command that will be run on each video after it has been downloaded from the selected scraping module. See the examples below for inspiration.
 
-The `%i` and `%o` **are required** and will be replaced with the internally used video input (original) and output (converted) filenames as needed by Skyscraper. In a case where you create a script that sometimes *doesn't* convert the video, you will need to do `cp %i %o` in the script for that video.
+The `%i` and `%o` **are required** and will be replaced with the internally used video input (original) and output (converted) filenames as needed by Skyscraper.
 
 If your command / script always converts to a videofile with a specific extension, you also need to set `videoConvertExtension`.
 
@@ -224,6 +224,8 @@ NOTE 1! Set `--verbosity 3` to route all output from your command / script to th
 NOTE 2! The first example below makes use of the excellent `ffmpeg` tool. If you want to use this specific example you need to install `ffmpeg` first. On RetroPie and other Debian-derived distros you can install it with `sudo apt install ffmpeg`.
 
 NOTE 3! If you want to use a script for the video conversion and run it directly without path, you need to place it in the `/home/USER/.skyscraper` folder.
+
+NOTE 4! If you create a script that includes checks on the input video and it sometimes decides not to convert them, you should simply let the script copy the video with `cp %i %o`. The `%i` is a temporary file created internally by Skyscraper. And the `%o` file is the file used by the cache. So you need to do this copy in cases where no conversion happens. Otherwise the conversion will fail.
 
 ###### Example(s)
 ```
