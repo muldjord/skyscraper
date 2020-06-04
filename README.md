@@ -154,7 +154,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Added 'neogeocd' platform (Thank you to 'igno2k' and 'meveric' for suggesting it)
 * 'screenscraper' module now supports region for screenshots (Thank you to 'cameronhimself' for pointing this out)
 * Low disk space check for cache is now calculated from cache folder location
-* Skyscraper initial output now shows frontend and extras when generating gamelists
+* Skyscraper initial output now shows frontend and extras when generating game lists
 * Changed 'gamelistFolder' config.ini option to 'gameListFolder' but kept old variable name for backwards compatibility
 * Added 'gameListBackup' config.ini option to allow for game list backups being created on each run (Thank you to 'igno2k' for suggesting it)
 
