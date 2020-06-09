@@ -1,5 +1,5 @@
 # Artwork look and effects
-Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file `/home/USER/.skyscraper/artwork.xml`. Each piece of artwork can be composited from one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
+Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file `/home/USER/.skyscraper/artwork.xml`. Each piece of artwork can be composited from one or more of the other artwork resources and you can even apply several effects to them.
 
 * Each `<output>` node exports a single piece of artwork.
 * If no `<layer>` nodes are nested in an output node, it will simply export the defined type as raw unmanipulated artwork.
