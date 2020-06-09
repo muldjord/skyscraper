@@ -1,11 +1,17 @@
 # Artwork look and effects
 Skyscraper allows you to fully customize how you want the final frontend artwork to appear by editing the file `/home/USER/.skyscraper/artwork.xml`. Each piece of artwork can be composited from one or more of the other artwork resources and you can even apply several effects to them. Read on for a full description on how to do this.
 
-NOTE 1!!! Some users seem to have a habbit of editing the `~/skysource/artwork.xml` file. THIS IS NOT THE CORRECT FILE! Please read the above. :)
+* Each `<output>` node exports a single piece of artwork.
+* If no `<layer>` nodes are nested in an output node, it will simply export the defined type as raw unmanipulated artwork.
+* All layer nodes and their nested effects are rendered / applied top-to-bottom.
 
-NOTE 2! Every time you change the artwork configuration, please remember to regenerate the game list. Your changes won't take effect until you do so. Read more about this [here](https://github.com/muldjord/skyscraper/blob/master/docs/USECASE.md#the-game-list-generation-phase).
+Read on for an example and a complete description of everything the Skyscraper artwork compositor can do, including a more thorough description of the `<output>` and `<layer>` nodes.
 
-Watch a video demonstrating [the features here](https://youtu.be/TIDD8EFSz50)
+NOTE 1!!! Some users seem to have a habbit of editing the `~/skysource/artwork.xml` file. THIS IS NOT THE CORRECT FILE! Please read the first paragraph. :)
+
+NOTE 2! Every time you change the artwork configuration, remember to regenerate the game list. Your changes won't take effect until you do so. Read more about this [here](https://github.com/muldjord/skyscraper/blob/master/docs/USECASE.md#the-game-list-generation-phase).
+
+Watch a video demonstrating the artwork compositing features [here](https://youtu.be/TIDD8EFSz50)
 
 ## Example artwork.xml
 An example could look something like this:
@@ -32,7 +38,7 @@ Which results in a screenshot being exported to look like this:
 ![Artwork example](resources/Sonic%20The%20Hedgehog%202.png)
 
 ## Xml definitions
-Read on for a full description of the xml format used in `/home/USER/.skyscraper/artwork.xml`. Click the following links to quickly go to a desired section:
+Click the following links to quickly go to a desired section:
 
 Nodes: [Xml node](#xml-node-not-optional), [Artwork node](#artwork-node-not-optional), [Output node](#output-nodes-optional), [Layer node](#layer-nodes-optional)
 
