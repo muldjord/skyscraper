@@ -109,6 +109,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
       printf("\033[1;31mWaiting a minute before trying to continue...\033[0m\n\n");
       fflush(stdout);
       std::this_thread::sleep_for(std::chrono::milliseconds(60000));
+      continue;
     }
     
     // Fix faulty JSON that is sometimes received back from ScreenScraper
