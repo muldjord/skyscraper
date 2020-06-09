@@ -265,65 +265,92 @@ QString AttractMode::getGameListFolder()
 
 QString AttractMode::getCoversFolder()
 {
-  return getMediaTypeFolder("flyer");
+  QString type = "flyer";
+  QString mediaTypeFolder = getMediaTypeFolder(type);
+  if(mediaTypeFolder.isEmpty()) {
+    mediaTypeFolder = config->mediaFolder + (config->mediaFolder.right(1) == "/"?"":"/") + type;
+  }
+  return mediaTypeFolder;
 }
 
 QString AttractMode::getScreenshotsFolder()
 {
-  return getMediaTypeFolder("snap");
+  QString type = "snap";
+  QString mediaTypeFolder = getMediaTypeFolder(type);
+  if(mediaTypeFolder.isEmpty()) {
+    mediaTypeFolder = config->mediaFolder + (config->mediaFolder.right(1) == "/"?"":"/") + type;
+  }
+  return mediaTypeFolder;
 }
 
 QString AttractMode::getWheelsFolder()
 {
-  return getMediaTypeFolder("wheel");
+  QString type = "wheel";
+  QString mediaTypeFolder = getMediaTypeFolder(type);
+  if(mediaTypeFolder.isEmpty()) {
+    mediaTypeFolder = config->mediaFolder + (config->mediaFolder.right(1) == "/"?"":"/") + type;
+  }
+  return mediaTypeFolder;
 }
 
 QString AttractMode::getMarqueesFolder()
 {
-  return getMediaTypeFolder("marquee");
+  QString type = "marquee";
+  QString mediaTypeFolder = getMediaTypeFolder(type);
+  if(mediaTypeFolder.isEmpty()) {
+    mediaTypeFolder = config->mediaFolder + (config->mediaFolder.right(1) == "/"?"":"/") + type;
+  }
+  return mediaTypeFolder;
 }
 
 QString AttractMode::getVideosFolder()
 {
-  return getMediaTypeFolder("snap", true);
+  QString type = "video";
+  QString mediaTypeFolder = getMediaTypeFolder(type);
+  if(mediaTypeFolder.isEmpty()) {
+    mediaTypeFolder = getMediaTypeFolder("snap", true);
+  }
+  if(mediaTypeFolder.isEmpty()) {
+    mediaTypeFolder = config->mediaFolder + (config->mediaFolder.right(1) == "/"?"":"/") + type;
+  }
+  return mediaTypeFolder;
 }
 
-QString AttractMode::getMediaTypeFolder(QString type, bool videos)
+QString AttractMode::getMediaTypeFolder(QString type, bool detectVideoPath)
 {
+  QString mediaTypeFolder = "";
   QFile emulatorFile(config->frontendExtra);
-  QString mediaTypeFolder = config->mediaFolder + "/" + type;
   
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
       QByteArray line = emulatorFile.readLine();
+      line = line.simplified();
       line.replace("~", QDir::homePath().toUtf8());
-      QList<QByteArray> snippets = line.simplified().split(' ');
-      if(snippets.length() >= 3) {
-	if(snippets.takeFirst() == "artwork") {
-	  if(snippets.takeFirst() == type) {
-	    line.replace("\"", "");
-	    line.remove(0, 7);
-	    line = line.trimmed(); // Line now begins with the type
-	    line.remove(0, type.length());
-	    line = line.trimmed(); // This leaves us just with the path(s)
-	    QList<QByteArray> paths = line.split(';');
-	    if(paths.count() > 1 && videos) {
-	      for(const auto &path: paths) {
-		if(path.contains("video")) {
-		  mediaTypeFolder = path;
-		  break;
-		}
-	      }
-	    } else {
-	      mediaTypeFolder = paths.first();
+      line.replace("$HOME", QDir::homePath().toUtf8());
+      QList<QByteArray> snippets = line.split(' ');
+      if(snippets.length() >= 3 &&
+	 snippets.takeFirst() == "artwork" &&
+	 snippets.takeFirst() == type) {
+	QList<QByteArray> paths = snippets.takeFirst().split(';');
+	// This is some weird case where the 'snap' artwork line can contain multiple paths
+	// and one of those paths is actually the video path. It was reported in an issue
+	// and this is seemlingly how it should work for those cases where the user does not
+	// use an 'artwork video' line.
+	if(detectVideoPath) {
+	  for(const auto &path: paths) {
+	    if(path.contains("video")) {
+	      mediaTypeFolder = path;
+	      break;
 	    }
 	  }
+	} else {
+	  mediaTypeFolder = paths.first();
 	}
       }
     }
     emulatorFile.close();
   }
-
+  
   return mediaTypeFolder;
 }
 
