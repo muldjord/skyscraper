@@ -150,13 +150,13 @@ int main(int argc, char *argv[])
 
   // Set the working directory to the applications own path
   QDir skyDir(QDir::homePath() + "/.skyscraper");
+  printf("Using '%s' as data-folder\n", skyDir.absolutePath().toStdString().c_str());
   if(!skyDir.exists()) {
     if(!skyDir.mkpath(".")) {
       printf("Couldn't create folder '%s'. Please check permissions, now exiting...\n", skyDir.absolutePath().toStdString().c_str());
       exit(1);
     }
   }
-
   // Create import paths
   skyDir.mkpath("import");
   skyDir.mkpath("import/textual");
