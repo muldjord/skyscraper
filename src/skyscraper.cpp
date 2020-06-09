@@ -1633,14 +1633,14 @@ void Skyscraper::doPrescrapeJobs()
 
   if(config.scraper == "arcadedb" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in ArcadeDB scraping module\033[0m\n\n");
-    config.threads = 1;
+    config.threads = 1; // Don't change! This limit was set by request from ArcadeDB
   } else if(config.scraper == "openretro" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
-    config.threads = 1;
+    config.threads = 1; // Don't change! This limit was set by request from OpenRetro
   } else if(config.scraper == "igdb") {
     printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
     printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
-    config.threads = 1;
+    config.threads = 1; // Don't change! This limit was set by request from IGDB
     if(config.userCreds.isEmpty()) {
       printf("\033[1;31mThe IGDB module requires a free personal API key to work. Get one at https://api.igdb.com and set it either with '-u <KEY>' or by adding the following to '/home/USER/.skyscraper/config.ini':\n[igdb]\nuserCreds=\"<KEY>\"\n\nSkyscraper can't continue, now exiting...\n");
       exit(1);
@@ -1673,13 +1673,13 @@ void Skyscraper::doPrescrapeJobs()
     printf("\n");
   } else if(config.scraper == "mobygames" && config.threads != 1) {
     printf("\033[1;33mForcing 1 thread to accomodate limits in MobyGames scraping module. Also be aware that MobyGames has a request limit of 360 requests per hour for the entire Skyscraper user base. So if someone else is currently using it, it will quit.\033[0m\n\n");
-    config.threads = 1;
-    config.romLimit = 35;
+    config.threads = 1; // Don't change! This limit was set by request from Mobygames
+    config.romLimit = 35; // Don't change! This limit was set by request from Mobygames
   } else if(config.scraper == "screenscraper") {
     if(config.user.isEmpty() || config.password.isEmpty()) {
       if(config.threads > 1) {
 	printf("\033[1;33mForcing 1 threads as this is the anonymous limit in the ScreenScraper scraping module. Sign up for an account at https://www.screenscraper.fr and support them to gain more threads. Then use the credentials with Skyscraper using the '-u user:password' command line option or by setting 'userCreds=\"user:password\"' in '/home/USER/.skyscraper/config.ini'.\033[0m\n\n");
-	config.threads = 1;
+	config.threads = 1; // Don't change! This limit was set by request from ScreenScraper
       }
     } else {
       printf("Fetching limits for user '\033[1;33m%s\033[0m', just a sec...\n", config.user.toStdString().c_str());
@@ -1692,7 +1692,7 @@ void Skyscraper::doPrescrapeJobs()
 	} else {
 	  printf("\033[1;33mReceived invalid / empty ScreenScraper server response, maybe their server is busy / overloaded. Forcing 1 thread...\033[0m\n\n");
 	}
-	config.threads = 1;
+	config.threads = 1; // Don't change! This limit was set by request from ScreenScraper
       } else {
 	int allowedThreads = jsonObj["response"].toObject()["ssuser"].toObject()["maxthreads"].toString().toInt();
 	if(allowedThreads != 0) {

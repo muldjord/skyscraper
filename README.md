@@ -157,6 +157,8 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Skyscraper initial output now shows frontend and extras when generating game lists
 * Changed 'gamelistFolder' config.ini option to 'gameListFolder' but kept old variable name for backwards compatibility
 * Added 'gameListBackup' config.ini option to allow for game list backups being created on each run (Thank you to 'igno2k' for suggesting it)
+* Attract-Mode now recognizes '$HOME' in emulator file
+* Refactored Attract-Mode media folder getters
 
 #### Version 3.5.5 (18th May 2020)
 * Fixed bug in 'igdb' module where it still used old hardcoded key (Thank you to 'stlbluesfan' for reporting this)
