@@ -78,7 +78,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     q.exec();
     data = manager.getData();
     
-    QByteArray headerData = data.left(1024); // Minor optimization with minimal more RAM usage
+    QByteArray headerData = data.left(1024).replace("*", ""); // Minor optimization with minimal more RAM usage
     // Do error checks on headerData. It's more stable than checking the potentially faulty JSON
     if(headerData.isEmpty()) {
       printf("\033[1;33mRetrying request...\033[0m\n\n");
@@ -99,9 +99,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
       return;
     } else if(headerData.contains("API fermé pour les non membres") ||
 	      headerData.contains("API closed for non-registered members") ||
-	      headerData.contains("****T****h****e**** ****m****a****x****i****m****u****m**** ****t****h****r****e****a****d****s**** ****a****l****l****o****w****e****d**** ****t****o**** ****l****e****e****c****h****e****r**** ****u****s****e****r****s**** ****i****s**** ****a****l****r****e****a****d****y**** ****u****s****e****d****")) {
+          headerData.contains("The maximum threads allowed to leecher users is already used") ||
+          headerData.contains("maximum threads per minute reached")) {
       printf("\033[1;31mThe screenscraper service is currently closed or too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to gain more threads. Then use the credentials with Skyscraper using the '-u user:pass' command line option or by setting 'userCreds=\"user:pass\"' in '/home/USER/.skyscraper/config.ini'.\033[0m\n\n");
-      if(retries == RETRIESMAX - 1) {
+	  if(retries == RETRIESMAX - 1) {
 	reqRemaining = 0;
 	return;
       } else {
