@@ -27,6 +27,9 @@
 #include <QProcess>
 #include <QJsonDocument>
 
+#include <chrono>
+#include <thread>
+
 #include "screenscraper.h"
 #include "strtools.h"
 #include "crc32.h"
@@ -102,12 +105,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
           headerData.contains("The maximum threads allowed to leecher users is already used") ||
           headerData.contains("maximum threads per minute reached")) {
       printf("\033[1;31mThe screenscraper service is currently closed or too busy to handle requests from unregistered and inactive users. Sign up for an account at https://www.screenscraper.fr and contribute to gain more threads. Then use the credentials with Skyscraper using the '-u user:pass' command line option or by setting 'userCreds=\"user:pass\"' in '/home/USER/.skyscraper/config.ini'.\033[0m\n\n");
-	  if(retries == RETRIESMAX - 1) {
-	reqRemaining = 0;
-	return;
-      } else {
-	continue;
-      }
+
+      printf("\033[1;31mWaiting a minute before trying to continue...\033[0m\n\n");
+      fflush(stdout);
+      std::this_thread::sleep_for(std::chrono::milliseconds(60000));
     }
     
     // Fix faulty JSON that is sometimes received back from ScreenScraper
