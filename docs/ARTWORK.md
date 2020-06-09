@@ -5,7 +5,7 @@ Skyscraper allows you to fully customize how you want the final frontend artwork
 * If no `<layer>` nodes are nested in an output node, it will simply export the defined type as raw unmanipulated artwork.
 * All layer nodes and their nested effects are rendered / applied top-to-bottom.
 
-Read on for an example and a complete description of everything the Skyscraper artwork compositor can do, including a more thorough description of the `<output>` and `<layer>` nodes.
+Read on for an example `artwork.xml` and a more thorough description of the `<output>`, `<layer>` and the various available effect nodes.
 
 NOTE 1!!! Some users seem to have a habbit of editing the `~/skysource/artwork.xml` file. THIS IS NOT THE CORRECT FILE! Please read the first paragraph. :)
 
