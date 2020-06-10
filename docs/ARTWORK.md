@@ -86,6 +86,8 @@ The resource attribute can be set to one of the following:
 
 For instance, if you wish to export a 'marquee' image but want it to make use of the 'wheel' resource instead, you can set ```<output type="marquee" resource="wheel"/>```. It will then export a 'marquee' but use the raw unmanipulated 'wheel' image when doing so. So if your frontend theme, such as some EmulationStation themes, makes use of the 'marquee' artwork, it will then be using the 'wheel' for it. If this attribute is left out, 'resource' will be set to the same as 'type'.
 
+NOTE! The `screenshot`, `cover`, `wheel` and `marquee` types are hardcoded. It's not currently possible to create custom types.
+
 #### 'mpixels' attribute [from v2.7.8] (Optional)
 Set the desired area size for the image resource in mpixels (eg '0.1'). This can be used as an alternative to setting width or height and is useful in cases where images vary a lot in size. 'width' and 'height' attributes will be ignored if this is set.
 
