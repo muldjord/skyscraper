@@ -46,9 +46,9 @@ void AbstractScraper::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(searchUrlPre + searchName + searchUrlPost);
   q.exec();
   data = manager.getData();
-  
+
   GameEntry game;
-  
+
   while(data.indexOf(searchResultPre) != -1) {
     nomNom(searchResultPre);
 
@@ -416,7 +416,7 @@ bool AbstractScraper::checkNom(const QString nom)
 QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
 {
   QString baseName = info.completeBaseName();
-  
+
   if(config->scraper != "import") {
     if(!config->aliasMap[baseName].isEmpty()) {
       baseName = config->aliasMap[baseName];
@@ -453,7 +453,7 @@ QList<QString> AbstractScraper::getSearchNames(const QFileInfo &info)
     if(noSubtitle.length() > 3)
       searchNames.append(NameTools::getUrlQueryName(noSubtitle));
   }
-  
+
   if(NameTools::hasRomanNumeral(baseName) || NameTools::hasIntegerNumeral(baseName)) {
     if(NameTools::hasRomanNumeral(baseName)) {
       baseName = NameTools::convertToIntegerNumeral(baseName);
@@ -582,7 +582,7 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
       regionPrios.prepend("asi");
     }
   }
-  
+
   QList<QString> searchNames;
   if(config->searchName.isEmpty()) {
     searchNames = getSearchNames(info);

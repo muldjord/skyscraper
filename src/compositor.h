@@ -47,7 +47,7 @@ private:
   void processChildLayers(GameEntry &game, Layer &layer);
   Settings *config;
   Layer outputs;
-  
+
 };
 
 #endif // COMPOSITOR_H

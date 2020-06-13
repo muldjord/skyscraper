@@ -127,7 +127,7 @@ QByteArray StrTools::magic(const QByteArray str)
   }
 
   thingie = thingie.left(thingie.length() - 1);
-  
+
   return thingie; 
 }
 
@@ -164,7 +164,7 @@ QString StrTools::conformPlayers(const QString str)
 
   if(QRegularExpression("^single player").match(str).hasMatch())
     return "1";
-  
+
   if(QRegularExpression("^1 or 2").match(str).hasMatch())
     return "2";
 
@@ -195,7 +195,7 @@ QString StrTools::conformPlayers(const QString str)
 
   if(QRegularExpression("^\\d\\+").match(str).hasMatch())
     return str.mid(0, 1);
-  
+
   return str;
 }
 

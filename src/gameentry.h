@@ -49,7 +49,7 @@ public:
   GameEntry();
   int completeness(bool videoEnabled = false);
   void resetMedia();
-  
+
   QString id = "";
   QString path = "";
   QString title = "";

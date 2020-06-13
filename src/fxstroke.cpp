@@ -75,7 +75,7 @@ QImage FxStroke::applyEffect(const QImage &src, const Layer &layer)
   painter.begin(&buffer1);
   painter.drawImage(layer.width, layer.width, src);
   painter.end();
-  
+
   QImage buffer2(src.width() + layer.width * 2, src.height() + layer.width * 2,
 		 QImage::Format_ARGB32_Premultiplied);
   buffer2.fill(Qt::transparent);
@@ -85,7 +85,7 @@ QImage FxStroke::applyEffect(const QImage &src, const Layer &layer)
 
   int width = buffer1.width();
   int height = buffer1.height();
-  
+
   // Now dilate each pixel 'layer.width' number of times
   for(int a = 0; a < layer.width; ++a) {
     for(int y = 0; y < height; ++y) {

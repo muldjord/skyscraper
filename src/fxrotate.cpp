@@ -35,7 +35,7 @@ FxRotate::FxRotate()
 QImage FxRotate::applyEffect(const QImage &src, const Layer &layer)
 {
   int angle = layer.delta;
-  
+
   QTransform rotate;
   rotate.rotate(angle, layer.axis);
   if(layer.axis == Qt::YAxis) {
@@ -43,7 +43,7 @@ QImage FxRotate::applyEffect(const QImage &src, const Layer &layer)
   } else if(layer.axis == Qt::XAxis) {
     rotate.translate(- src.width() / 2.0, 0);
   }
-  
+
   QImage canvas = src.transformed(rotate, Qt::SmoothTransformation);
  
   return canvas;

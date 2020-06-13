@@ -48,7 +48,7 @@ QImage FxFrame::applyEffect(const QImage &src, const Layer &layer, Settings *con
   } else if(layer.width != -1 && layer.height != -1) {
     frame = frame.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   }
-  
+
   QPainter painter;
   painter.begin(&canvas);
   painter.drawImage(layer.x, layer.y, frame);

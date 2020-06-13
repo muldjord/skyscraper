@@ -52,7 +52,7 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentD
 
   // Randomize timer
   qsrand(QTime::currentTime().msec());
-  
+
   printf("%s", StrTools::getVersionHeader().toStdString().c_str());
 
   config.currentDir = currentDir;
@@ -89,19 +89,19 @@ void Skyscraper::run()
   }
 
   printf("\n");
-  
+
   if(config.hints) {
     showHint();
   }
 
   doPrescrapeJobs();
-  
+
   doneThreads = 0;
   notFound = 0;
   found = 0;
   avgCompleteness = 0;
   avgSearchMatch = 0;
-  
+
   {
     if(config.unpack) {
       QProcess decProc;
@@ -114,7 +114,7 @@ void Skyscraper::run()
       }
     }
   }
-  
+
   if(!config.cacheFolder.isEmpty()) {
     cache = QSharedPointer<Cache>(new Cache(config.cacheFolder));
     if(cache->createFolders(config.scraper)) {
@@ -191,7 +191,7 @@ void Skyscraper::run()
   if(config.scraper == "cache" && !config.pretend)
     checkForFolder(gameListDir);
   config.gameListFolder = gameListDir.absolutePath();
-  
+
   QDir coversDir(config.coversFolder);
   if(config.scraper == "cache" && !config.pretend)
     checkForFolder(coversDir);
@@ -222,7 +222,7 @@ void Skyscraper::run()
   QDir importDir(config.importFolder);
   checkForFolder(importDir, false);
   config.importFolder = importDir.absolutePath();
-  
+
   gameListFileString = gameListDir.absolutePath() + "/" + frontend->getGameListFileName();
 
   QFile gameListFile(gameListFileString);
@@ -371,7 +371,7 @@ void Skyscraper::run()
   }
 
   totalFiles = queue->length();
-  
+
   if(config.romLimit != -1 && totalFiles > config.romLimit) {
     printf("\n\033[1;33mRestriction overrun!\033[0m This scraping module only allows for scraping up to %d roms at a time. You can either supply a few rom filenames on command line, or make use of the '--startat' and / or '--endat' command line options to adhere to this. Please check '--help' for more info.\n\nNow quitting...\n", config.romLimit);
     exit(0);
@@ -483,7 +483,7 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
       gameEntries.append(entry);
     }
   }
-  
+
   printf("\033[1;34m#%d/%d\033[0m, (\033[1;32m%d\033[0m/\033[1;33m%d\033[0m)\n", currentFile, totalFiles, found, notFound);
   int elapsed = timer.elapsed();
   int estTime = (elapsed / currentFile * totalFiles) - elapsed;
@@ -562,7 +562,7 @@ void Skyscraper::checkThreads()
       state = 0;
     }
   }
-  
+
   printf("\033[1;34m---- And here are some neat stats :) ----\033[0m\n");
   printf("Total completion time: \033[1;33m%s\033[0m\n\n", secsToString(timer.elapsed()).toStdString().c_str());
   if(found > 0) {
@@ -623,7 +623,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   current = "mameMap.csv";
   distro = "/usr/local/etc/skyscraper/mameMap.csv";
   copyFile(distro, current);
-  
+
   current = "tgdb_developers.json";
   distro = "/usr/local/etc/skyscraper/tgdb_developers.json";
   copyFile(distro, current);
@@ -721,11 +721,11 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
 
   frontend->setConfig(&config);
-  
+
   bool inputFolderSet = false;
   bool gameListFolderSet = false;
   bool mediaFolderSet = false;
-  
+
   // Main config, overrides defaults
   settings.beginGroup("main");
   if(settings.contains("platform")) {
@@ -1444,7 +1444,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   config.wheelsFolder = frontend->getWheelsFolder();
   config.marqueesFolder = frontend->getMarqueesFolder();
   config.videosFolder = frontend->getVideosFolder();
-  
+
   // Choose default scraper for chosen platform if none has been set yet
   if(config.scraper.isEmpty()) {
     config.scraper = Platform::getDefaultScraper(config.platform);
@@ -1470,7 +1470,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 
   // Grab all requested files from cli, if any
   QList<QString> requestedFiles = parser.positionalArguments();
-  
+
   // Add files from '--fromfile', if any
   if(parser.isSet("fromfile") && QFileInfo::exists(parser.value("fromfile"))) {
     QFile fromFile(parser.value("fromfile"));
@@ -1513,13 +1513,13 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       exit(1);
     }
   }
-  
+
   if(config.startAt != "" || config.endAt != "") {
     config.refresh = true;
     config.unattend = true;
     config.subdirs = false;
   }
-  
+
   // If interactive is set, force 1 thread and always accept the chosen result
   if(config.interactive) {
     if(config.scraper == "cache" ||
@@ -1558,7 +1558,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     printf("Couldn't read artwork xml file '\033[1;32m%s\033[0m'. Please check file and permissions. Now exiting...\n", config.artworkConfig.toStdString().c_str());
     exit(1);
   }
-  
+
   QDir resDir("./resources");
   QDirIterator resDirIt(resDir.absolutePath(),
 			QDir::Files | QDir::NoDotAndDotDot,
@@ -1611,7 +1611,7 @@ void Skyscraper::doPrescrapeJobs()
   NetComm manager;
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-  
+
   if(config.platform == "amiga" &&
      config.scraper != "cache" && config.scraper != "import" && config.scraper != "esgamelist") {
     printf("Fetching 'whdload_db.xml', just a sec...");
@@ -1794,7 +1794,7 @@ void Skyscraper::setRegionPrios()
   if(!config.region.isEmpty()) {
     config.regionPrios.append(config.region);
   }
-  
+
   // Load custom region prioritizations
   if(!config.regionPriosStr.isEmpty()) {
     for(const auto &region: config.regionPriosStr.split(",")) {
@@ -1836,7 +1836,7 @@ void Skyscraper::setLangPrios()
   if(!config.lang.isEmpty()) {
     config.langPrios.append(config.lang);
   }
-  
+
   // Load custom lang prioritizations
   if(!config.langPriosStr.isEmpty()) {
     for(const auto &lang: config.langPriosStr.split(",")) {

@@ -130,21 +130,21 @@ int main(int argc, char *argv[])
 {
 #if defined(Q_OS_LINUX) || defined(Q_OS_MACOS)
   struct sigaction sigIntHandler;
-  
+
   sigIntHandler.sa_handler = sigHandler;
   sigemptyset(&sigIntHandler.sa_mask);
   sigIntHandler.sa_flags = 0;
-  
+
   sigaction(SIGINT, &sigIntHandler, NULL);
 #endif
 
 #if defined(Q_OS_WIN)
   SetConsoleCtrlHandler((PHANDLER_ROUTINE)ConsoleHandler, TRUE);
 #endif
-  
+
   QCoreApplication app(argc, argv);
   app.setApplicationVersion(VERSION);
-  
+
   // Get current dir. If user has specified file(s) on command line we need this.
   QString currentDir = QDir::currentPath();
 

@@ -46,7 +46,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   QImage overlayFront(config->resources["boxfront.png"]);
   overlayFront = overlayFront.scaled(front.width(), front.height(),
 				     Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  
+
   painter.begin(&front);
   painter.drawImage(0, front.height() * borderFactor / 2, src.scaledToHeight(front.height() - front.height() * borderFactor));
   painter.drawImage(0, 0, overlayFront);
@@ -58,7 +58,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   QImage side(overlaySide.width(), overlaySide.height(), QImage::Format_ARGB32_Premultiplied);
 
   fillWithAvg(src, side);
-  
+
   QImage sideImage;
   if(layer.resource == "cover") {
     sideImage = QImage::fromData(game.coverData);
@@ -72,7 +72,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
     sideImage = QImage(config->resources[layer.resource]);
   }
   sideImage = sideImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-  
+
   trans.reset();
   trans.rotate(layer.delta, Qt::ZAxis);
   sideImage = sideImage.transformed(trans, Qt::SmoothTransformation);
@@ -94,13 +94,13 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
       sideImage = sideImage.scaled(side.width(), side.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
   }
-  
+
   painter.begin(&side);
   painter.drawImage(side.width() / 2.0 - sideImage.width() / 2.0,
 		    side.height() / 2.0 - sideImage.height() / 2.0, sideImage);
   painter.drawImage(0, 0, overlaySide);
   painter.end();
-  
+
   // At this point both side and front are done and ready to be rotated in 3D
   trans.reset();
   trans.rotate(-30, Qt::YAxis);
@@ -119,7 +119,7 @@ QImage FxGamebox::applyEffect(const QImage &src, const Layer &layer,
   painter.begin(&gamebox);
   painter.drawImage(0, 0, side);
   painter.drawImage(side.width() - 1, 0, front);
-  
+
   return gamebox;
 }
 
@@ -129,7 +129,7 @@ void FxGamebox::fillWithAvg(const QImage &src, QImage &dst)
   int avgGreen = 0;
   int avgBlue = 0;
   int x = (double)src.width() / 100.0 * 3.0;
-  
+
   if(src.height() > 20 && src.width() > x) {
     double segDelta = (double)src.height() / 200.0;
     double segs = 20.0;
@@ -146,6 +146,6 @@ void FxGamebox::fillWithAvg(const QImage &src, QImage &dst)
     avgGreen /= samples;
     avgBlue /= samples;
   }
-  
+
   dst.fill(QColor(avgRed, avgGreen, avgBlue));
 }

@@ -43,7 +43,7 @@ public:
   static QString stripBrackets(const QString str);
   static QString stripHtmlTags(QString str);
   static QString getMd5Sum(const QByteArray &data);
-  
+
 };
 
 #endif // STRTOOLS_H

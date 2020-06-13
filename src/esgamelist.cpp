@@ -67,7 +67,7 @@ void ESGameList::getSearchResults(QList<GameEntry> &gameEntries,
 void ESGameList::getGameData(GameEntry &game) {
   if(gameNode.isNull())
     return;
-  
+
   game.releaseDate = gameNode.firstChildElement("releasedate").text();
   game.publisher = gameNode.firstChildElement("publisher").text();
   game.developer = gameNode.firstChildElement("developer").text();

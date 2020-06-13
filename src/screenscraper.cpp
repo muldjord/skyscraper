@@ -170,10 +170,10 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
   if(game.title.isNull()) {
     return;
   }
-  
+
   game.url = gameUrl;
   game.platform = jsonObj["systeme"].toObject()["text"].toString();
-  
+
   // Only check if platform is empty, it's always correct when using ScreenScraper
   if(!game.platform.isEmpty())
     gameEntries.append(game);
@@ -272,7 +272,7 @@ void ScreenScraper::getAges(GameEntry &game)
 
   if(!jsonObj["classifications"].isArray())
     return;
-  
+
   QJsonArray jsonAges = jsonObj["classifications"].toArray();
 
   for(const auto &ageBoard: ageBoards) {
@@ -301,9 +301,9 @@ void ScreenScraper::getTags(GameEntry &game)
 {
   if(!jsonObj["genres"].isArray())
     return;
-  
+
   QJsonArray jsonTags = jsonObj["genres"].toArray();
-  
+
   for(int a = 0; a < jsonTags.size(); ++a) {
     QString tag = getJsonText(jsonTags.at(a).toObject()["noms"].toArray(), LANGUE);
     if(!tag.isEmpty()) {

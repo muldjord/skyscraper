@@ -50,7 +50,7 @@ private slots:
 
 signals:
   void dataReady();
-  
+
 private:
   QTimer requestTimer;
   QByteArray data;

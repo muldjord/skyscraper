@@ -44,7 +44,7 @@ public:
   static QStringList getAliases(QString platform);
 
 private:
-  
+
 };
 
 #endif // PLATFORM_H

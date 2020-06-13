@@ -43,7 +43,7 @@ ImportScraper::ImportScraper(Settings *config) : AbstractScraper(config)
   fetchOrder.append(AGES);
   fetchOrder.append(RATING);
   fetchOrder.append(DESCRIPTION);
-  
+
   covers = QDir(config->importFolder + "/covers", "*.*",
 		QDir::Name, QDir::Files | QDir::NoDotAndDotDot).entryInfoList();
   screenshots = QDir(config->importFolder + "/screenshots", "*.*",
@@ -65,7 +65,7 @@ void ImportScraper::getGameData(GameEntry &game)
   game.title = "";
 
   loadData();
-  
+
   QByteArray dataOrig = data;
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {

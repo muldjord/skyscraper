@@ -97,7 +97,7 @@ Scripter::Scripter()
   }
 
   printf("User chose: '\033[1;32m%s\033[0m'\n", platformStr.c_str());
-  
+
   std::string inputFolderStr = "";
   printf("\n");
   printf("\033[1;34mPlease enter full game/rom input folder\033[0m (enter for default): ");
@@ -130,7 +130,7 @@ Scripter::Scripter()
     printf("\033[1;34mDo you wish to force rom relative paths in the exported gamelist.xml file?\033[0m (y/N)? ");
     getline(std::cin, relativeStr);
   }
-  
+
   std::string minMatchStr = "";
   printf("\033[1;34mWhat is the minimum search result percentage match you wish to accept\033[0m (enter for default)? ");
   getline(std::cin, minMatchStr);
@@ -202,7 +202,7 @@ Scripter::Scripter()
   if(generateStr.back() == ',') {
     generateStr = generateStr.substr(0, generateStr.length() - 1);
   }
-  
+
   scriptFile.write("#!/bin/bash\n");
   for(const auto &scraper: Platform::getScrapers(QString(platformStr.c_str()))) {
     if(scraper != "cache") {
@@ -212,7 +212,7 @@ Scripter::Scripter()
     }
   }
   scriptFile.close();
-  
+
   std::string runScriptStr = "";
   printf("\n");
   printf("The script '\033[1;32m/home/USER/.skyscraper/skyscript.sh\033[0m' has been created. \033[1;34mDo you wish to run it now?\033[0m (Y/n)? ");

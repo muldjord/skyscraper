@@ -99,10 +99,10 @@ public:
   QMap<QString, QList<QString> > prioMap;
 
   QMap<QString, ResCounts> resCountsMap;
-  
+
   QList<Resource> resources;
   QMap<QString, QPair<qint64, QString> > quickIds; // filePath, timestamp + cacheId for quick lookup
-  
+
   QList<QFileInfo> getFileInfos(const QString &inputFolder, const QString &filter, const bool subdirs = true);
   QList<QString> getCacheIdList(const QList<QFileInfo> &fileInfos);
 

@@ -194,8 +194,8 @@ void AttractMode::checkReqs()
   if(!config->frontendExtra.contains(".cfg")) {
     config->frontendExtra.append(".cfg");
   }
-  
-  
+
+
   emuInfo.setFile(config->frontendExtra);
   descDir.setPath(QDir::homePath() + "/.attract/scraper/" +
 		  emuInfo.completeBaseName() + "/overview");
@@ -259,7 +259,7 @@ QString AttractMode::getGameListFolder()
   if(QFileInfo::exists(QDir::homePath() + "/.attract/romlists")) {
     return QString(QDir::homePath() + "/.attract/romlists");
   }
-  
+
   return config->inputFolder;
 }
 
@@ -320,7 +320,7 @@ QString AttractMode::getMediaTypeFolder(QString type, bool detectVideoPath)
 {
   QString mediaTypeFolder = "";
   QFile emulatorFile(config->frontendExtra);
-  
+
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
       QByteArray line = emulatorFile.readLine();
@@ -350,7 +350,7 @@ QString AttractMode::getMediaTypeFolder(QString type, bool detectVideoPath)
     }
     emulatorFile.close();
   }
-  
+
   return mediaTypeFolder;
 }
 

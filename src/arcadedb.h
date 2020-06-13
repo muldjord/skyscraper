@@ -56,7 +56,7 @@ private:
 
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
-  
+
 };
 
 #endif // ARCADEDB_H

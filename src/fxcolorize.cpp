@@ -60,6 +60,6 @@ QImage FxColorize::applyEffect(const QImage &src, const Layer &layer)
 	line[x] = qPremultiply(color.rgba());
     }
   }
-  
+
   return canvas;
 }

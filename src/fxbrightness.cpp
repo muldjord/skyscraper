@@ -41,7 +41,7 @@ QImage FxBrightness::applyEffect(const QImage &src, const Layer &layer)
   for(int a = 0; a < 256; ++a) {
     index[a] = truncate(a + brightness);
   }
-  
+
   for(int y = 0; y < canvas.height(); ++y) {
     QRgb* line = (QRgb *)canvas.scanLine(y);
     for(int x = 0; x < canvas.width(); ++x) {
@@ -52,7 +52,7 @@ QImage FxBrightness::applyEffect(const QImage &src, const Layer &layer)
 				   qAlpha(line[x])));
     }
   }
-  
+
   return canvas;
 }
 

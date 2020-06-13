@@ -37,7 +37,7 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
 
   searchUrlPre = "https://openretro.org";
   searchUrlPost = "&unpublished=1";
-  
+
   searchResultPre = "<div style='margin-bottom: 4px;'>";
   urlPre.append("<a href=\"/");
   urlPost = "\" target='_parent'>";
@@ -107,7 +107,7 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
     return;
 
   GameEntry game;
-  
+
   if(searchName.left(6) == "/game/") {
     QByteArray tempData = data;
     nomNom("<td style='width: 180px; color: black;'>game_name</td>");
@@ -158,10 +158,10 @@ void OpenRetro::getGameData(GameEntry &game)
     q.exec();
     data = manager.getData();
   }
-  
+
   // Remove all the variants so we don't choose between their screenshots
   data = data.left(data.indexOf("</table></div><div id='"));
-  
+
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
     case DESCRIPTION:
@@ -320,7 +320,7 @@ QList<QString> OpenRetro::getSearchNames(const QFileInfo &info)
   if(QRegularExpression("[_[]{1}(Aga|AGA)[_\\]]{0,1}").match(baseName).hasMatch()) {
     isAga = true;
   }
-  
+
   if(config->scraper != "import") {
     if(!config->aliasMap[baseName].isEmpty()) {
       baseName = config->aliasMap[baseName];

@@ -44,11 +44,11 @@ QImage FxBlur::applyEffect(const QImage &src, const Layer &layer)
 
   QImage buffer2(buffer1.width(), buffer1.height(), QImage::Format_ARGB32_Premultiplied);
   QRgb *buffer2Bits = (QRgb *)buffer2.bits();
-  
+
   int width = buffer1.width(), height = buffer1.height();
-  
+
   boxBlur(buffer1Bits, buffer2Bits, width, height, softness);
-  
+
   return buffer2;
 }
 

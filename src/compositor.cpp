@@ -58,14 +58,14 @@ Compositor::Compositor(Settings *config)
 bool Compositor::processXml()
 {
   Layer newOutputs;
-  
+
   // Check document for errors before running through it
   QDomDocument doc;
   if(!doc.setContent(config->artworkXml))
      return false;
 
   QXmlStreamReader xml(config->artworkXml);
-  
+
   // Init recursive parsing
   addChildLayers(newOutputs, xml);
 

@@ -59,7 +59,7 @@ private:
   QString ratingTag = "###RATING###";
   QString tagsTag = "###TAGS###";
   QString releaseDateTag = "###RELEASEDATE###";
-  
+
   QList<QFileInfo> textual;
   QList<QFileInfo> covers;
   QList<QFileInfo> screenshots;

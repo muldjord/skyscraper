@@ -62,7 +62,7 @@ WorldOfSpectrum::WorldOfSpectrum(Settings *config) : AbstractScraper(config)
   coverPre.append("<TR><TD>");
   coverPost = "\" TARGET";
   screenshotPost = "\" BORDER";
-  
+
   fetchOrder.append(COVER);
   fetchOrder.append(SCREENSHOT);
   fetchOrder.append(RELEASEDATE);
@@ -80,9 +80,9 @@ void WorldOfSpectrum::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request("https://www.worldofspectrum.org/infoseek.cgi", "regexp=" + searchName + "&model=spectrum&loadpics=3");
   q.exec();
   data = manager.getData();
-  
+
   GameEntry game;
-  
+
   while(data.indexOf(searchResultPre) != -1) {
     nomNom(searchResultPre);
 

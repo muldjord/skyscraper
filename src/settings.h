@@ -91,7 +91,7 @@ struct Settings {
   bool preserveOldGameList = true;
   bool spaceCheck = true;
   QString scummIni = "";
-  
+
   int romLimit = -1;
 
   bool videos = false;
@@ -109,16 +109,16 @@ struct Settings {
   bool skipExistingWheels = false;
   bool cacheMarquees = true;
   bool skipExistingMarquees = false;
-  
+
   QString user = "";
   QString password = "";
   QString lang = "";
   QString region = "";
   QString langPriosStr = "";
   QString regionPriosStr = "";
-  
+
   QString searchName = "";
-  
+
   QMap<QString, QImage> resources;
   QMap<QString, QString> mameMap;
   QMap<QString, QString> aliasMap;

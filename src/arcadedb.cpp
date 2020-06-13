@@ -35,7 +35,7 @@ ArcadeDB::ArcadeDB(Settings *config) : AbstractScraper(config)
   baseUrl = "http://adb.arcadeitalia.net";
 
   searchUrlPre = "http://adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&lang=en&use_parent=1&game_name=";
-  
+
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(TAGS);
@@ -69,7 +69,7 @@ void ArcadeDB::getSearchResults(QList<GameEntry> &gameEntries,
   }
 
   GameEntry game;
-  
+
   game.title = jsonObj.value("title").toString();
   game.platform = platform;
   gameEntries.append(game);

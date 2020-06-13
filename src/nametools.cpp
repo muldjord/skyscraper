@@ -183,7 +183,7 @@ QString NameTools::getUrlQueryName(const QString baseName, const int words, cons
   if(newName == "lemmings+3") {
     newName = "all+new+world+of+lemmings";
   }
-  
+
   if(words != -1) {
     QList<QString> wordList = newName.split(spaceChar);
     if(wordList.size() > words) {
@@ -215,7 +215,7 @@ QString NameTools::convertToRomanNumeral(const QString baseName)
 {
   QRegularExpressionMatch match;
   QString newName = baseName;
-  
+
   match = QRegularExpression(" [0-9]{1,2}([: ]+|$)").match(baseName);
   // Match is either " 2" or " 2: yada yada"
   if(match.hasMatch()) {
@@ -274,7 +274,7 @@ QString NameTools::convertToIntegerNumeral(const QString baseName)
 {
   QRegularExpressionMatch match;
   QString newName = baseName;
-  
+
   match = QRegularExpression(" [IVX]{1,5}([: ]+|$)").match(baseName);
   // Match is either " X" or " X: yada yada"
   if(match.hasMatch()) {
@@ -333,7 +333,7 @@ int NameTools::getNumeral(const QString baseName)
 {
   QRegularExpressionMatch match;
   int numeral = 1;
-  
+
   // Check for roman numerals
   match = QRegularExpression(" [IVX]{1,5}([: ]+|$)").match(baseName);
   if(match.hasMatch()) {
@@ -396,7 +396,7 @@ int NameTools::getNumeral(const QString baseName)
 QString NameTools::getSqrNotes(QString baseName)
 {
   QString sqrNotes = "";
-  
+
   // Get square notes
   while(baseName.contains("[") && baseName.contains("]") &&
 	baseName.indexOf("[") < baseName.indexOf("]")) {
@@ -421,7 +421,7 @@ QString NameTools::getSqrNotes(QString baseName)
     sqrNotes.append("[Demo]");
   // Don't add PAL detection as it will also match with "_Palace" and such
   sqrNotes = sqrNotes.simplified();
-  
+
   return sqrNotes;
 }
 
@@ -439,7 +439,7 @@ QString NameTools::getParNotes(QString baseName)
     baseName.remove(baseName.indexOf("("),
 	       baseName.indexOf(")") - baseName.indexOf("(") + 1);
   }
-  
+
   QRegularExpressionMatch match;
 
   // Add "nDisk" detection

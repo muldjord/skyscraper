@@ -33,11 +33,11 @@ TheGamesDb::TheGamesDb(Settings *config) : AbstractScraper(config)
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
   loadMaps();
-  
+
   baseUrl = "https://api.thegamesdb.net/v1";
 
   searchUrlPre = "https://api.thegamesdb.net/v1/Games/ByGameName?apikey=";
-  
+
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(DESCRIPTION);
   fetchOrder.append(TAGS);
@@ -58,7 +58,7 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(searchUrlPre + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&name="+ searchName);
   q.exec();
   data = manager.getData();
-  
+
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
@@ -67,7 +67,7 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
   reqRemaining = jsonDoc.object()["remaining_monthly_allowance"].toInt();
   if(reqRemaining <= 0)
     printf("\033[1;31mYou've reached TheGamesdDb's request limit for this month.\033[0m\n");
-  
+
   if(jsonDoc.object()["status"].toString() != "Success") {
     return;
   }
@@ -113,7 +113,7 @@ void TheGamesDb::getGameData(GameEntry &game)
     printf("No returned json game document, is 'thegamesdb' down?\n");
     reqRemaining = 0;
   }
-  
+
   jsonObj = jsonDoc.object()["data"].toObject()["games"].toArray().first().toObject();
 
   for(int a = 0; a < fetchOrder.length(); ++a) {

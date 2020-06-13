@@ -48,7 +48,7 @@ QImage FxMask::applyEffect(const QImage &src, const Layer &layer, Settings *conf
   } else if(layer.width != -1 && layer.height != -1) {
     mask = mask.scaled(layer.width, layer.height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   }
-  
+
   QPainter painter;
   painter.begin(&canvas);
   painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);

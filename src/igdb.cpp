@@ -36,7 +36,7 @@ Igdb::Igdb(Settings *config) : AbstractScraper(config)
   baseUrl = "https://api-v3.igdb.com";
 
   searchUrlPre = "https://api-v3.igdb.com";
-  
+
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(RATING);
   fetchOrder.append(PUBLISHER);
@@ -54,7 +54,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", config->userCreds);
   q.exec();
   data = manager.getData();
-  
+
   if(data.contains("Limits exceeded")) {
     printf("\033[1;31mYour monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
     reqRemaining = 0;
@@ -101,7 +101,7 @@ void Igdb::getGameData(GameEntry &game)
   }
 
   jsonObj = jsonDoc.array().first().toObject();
-  
+
   for(int a = 0; a < fetchOrder.length(); ++a) {
     switch(fetchOrder.at(a)) {
     case DESCRIPTION:

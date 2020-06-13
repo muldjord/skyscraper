@@ -50,7 +50,7 @@ public:
   //void setConfig(Settings *config);
 
   int reqRemaining = -1;
-  
+
 protected:
   Settings *config;
 
@@ -80,7 +80,7 @@ protected:
   QList<int> fetchOrder;
 
   QByteArray data;
-  
+
   QString baseUrl;
   QString searchUrlPre;
   QString searchUrlPost;

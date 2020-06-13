@@ -45,17 +45,17 @@ public:
   ~ScraperWorker();
   void run();
   bool forceEnd = false;
-  
+
 signals:
   void allDone();
   void entryReady(GameEntry entry, QString output, QString debug);
-  
+
 private:
   AbstractScraper *scraper;
 
   QSharedPointer<Cache> cache;
   QSharedPointer<Queue> queue;
-  
+
   Settings config;
   QString platformOrig;
   QString threadId;

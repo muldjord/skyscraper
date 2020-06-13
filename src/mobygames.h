@@ -58,10 +58,10 @@ private:
   QString getPlatformId(const QString platform) override;
 
   QString getRegionShort(const QString &region);
-  
+
   QJsonDocument jsonDoc;
   QJsonObject jsonObj;
-  
+
 };
 
 #endif // MOBYGAMES_H

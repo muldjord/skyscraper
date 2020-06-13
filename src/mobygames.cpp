@@ -36,11 +36,11 @@ MobyGames::MobyGames(Settings *config) : AbstractScraper(config)
   limitTimer.setInterval(10000); // 10 second request limit
   limitTimer.setSingleShot(false);
   limitTimer.start();
-  
+
   baseUrl = "https://api.mobygames.com";
 
   searchUrlPre = "https://api.mobygames.com/v1/games";
-  
+
   fetchOrder.append(PUBLISHER);
   fetchOrder.append(DEVELOPER);
   fetchOrder.append(RELEASEDATE);
@@ -339,7 +339,7 @@ void MobyGames::getCover(GameEntry &game)
   }
 
   coverUrl.replace("http://", "https://"); // For some reason the links are http but they are always redirected to https
-  
+
   if(!coverUrl.isEmpty()) {
     manager.request(coverUrl);
     q.exec();
@@ -365,7 +365,7 @@ void MobyGames::getScreenshot(GameEntry &game)
   }
 
   QJsonArray jsonScreenshots = jsonDoc.object()["screenshots"].toArray();
-  
+
   if(jsonScreenshots.count() < 1) {
     return;
   }

@@ -61,7 +61,7 @@ public:
 protected:
   Settings *config;
   QList<GameEntry> oldEntries;
-  
+
 };
 
 #endif // ABSTRACTFRONTEND_H

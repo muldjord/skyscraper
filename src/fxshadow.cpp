@@ -52,7 +52,7 @@ QImage FxShadow::applyEffect(const QImage &src, const Layer &layer)
   painter.begin(&buffer1);
   painter.drawImage(softness, softness, src);
   painter.end();
-  
+
   QRgb *buffer1Bits = (QRgb *)buffer1.bits();
   // Paint everything black but preserve alpha
   for(int a = 0; a < buffer1.width() * buffer1.height(); ++a) {
@@ -61,11 +61,11 @@ QImage FxShadow::applyEffect(const QImage &src, const Layer &layer)
 
   QImage buffer2(buffer1.width(), buffer1.height(), QImage::Format_ARGB32_Premultiplied);
   QRgb *buffer2Bits = (QRgb *)buffer2.bits();
-  
+
   int width = buffer1.width(), height = buffer1.height();
-  
+
   boxBlur(buffer1Bits, buffer2Bits, width, height, softness);
-  
+
   QImage resultImage(src.width() + distance + softness,
 		     src.height() + distance + softness,
 		     QImage::Format_ARGB32_Premultiplied);
@@ -76,7 +76,7 @@ QImage FxShadow::applyEffect(const QImage &src, const Layer &layer)
   painter.setOpacity(1.0);
   painter.drawImage(0, 0, src);
   painter.end();
-  
+
   return resultImage;
 }
 
@@ -90,7 +90,7 @@ QVector<double> FxShadow::getGaussBoxes(double sigma, double n)
   double wu = wl + 2;
   double mIdeal = (12.0 * sigma * sigma - n * wl * wl - 4.0 * n * wl - 3.0 * n) / (-4.0 * wl - 4.0);
   int m = round(mIdeal);
-  
+
   QVector<double> sizes;
   for(int i = 0; i < n; i++) {
     sizes.append(i < m?wl:wu);

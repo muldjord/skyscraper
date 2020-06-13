@@ -46,7 +46,7 @@ private:
   void boxBlur(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius);
   void boxBlurHorizontal(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius);
   void boxBlurTotal(QRgb *buffer1, QRgb *buffer2, int width, int height, int radius);
-  
+
 };
 
 #endif // FXSHADOW_H

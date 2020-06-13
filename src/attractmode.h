@@ -55,7 +55,7 @@ private:
   bool saveDescFile = false;
   QFileInfo emuInfo;
   QDir descDir;
-  
+
   QString getMediaTypeFolder(QString type, bool detectVideoPath = false);
   bool checkEmulatorFile(QString fileName);
 

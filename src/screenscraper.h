@@ -67,11 +67,11 @@ private:
   QString getJsonText(QJsonArray array, int attr, QList<QString> types = QList<QString>());
 
   QString getPlatformId(const QString platform) override;
-  
+
   QString region;
   QString lang;
   QJsonObject jsonObj;
-  
+
 };
 
 #endif // SCREENSCRAPER_H

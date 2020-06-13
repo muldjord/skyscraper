@@ -38,7 +38,7 @@ public:
   QFileInfo takeEntry();
   void clearAll();
   void filterFiles(const QString &patterns, const bool &include = false);
-  
+
 private:
   QMutex queueMutex;
   QList<QString> getRegExpPatterns(QString patterns);

@@ -89,7 +89,7 @@ void ScraperWorker::run()
     printf("Something went wrong when parsing artwork xml from '%s', please check the file for errors. Now exiting...\n", config.artworkConfig.toStdString().c_str());
     exit(1);
   }
-  
+
   while(queue->hasEntry()) {
     // takeEntry() also unlocks the mutex that was locked in hasEntry()
     QFileInfo info = queue->takeEntry();
@@ -425,7 +425,7 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
   }
 
   QList<GameEntry> potentials;
-  
+
   int compareNumeral = NameTools::getNumeral(compareTitle);
   // Start by applying rules we are certain are needed. Add the ones that pass to potentials
   for(auto entry: gameEntries) {
@@ -449,13 +449,13 @@ GameEntry ScraperWorker::getBestEntry(const QList<GameEntry> &gameEntries,
     
     potentials.append(entry);
   }
-  
+
   // If we have no potentials at all, return false
   if(potentials.isEmpty()) {
     game.found = false;
     return game;
   }
-  
+
   int mostSimilar = 0;
   // Run through the potentials and find the best match
   for(int a = 0; a < potentials.length(); ++a) {

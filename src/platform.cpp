@@ -305,7 +305,7 @@ QStringList Platform::getScrapers(QString platform)
 
   // Always add 'cache' as the last one
   scrapers.append("cache");
-  
+
   return scrapers;
 }
 

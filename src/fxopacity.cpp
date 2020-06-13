@@ -43,6 +43,6 @@ QImage FxOpacity::applyEffect(const QImage &src, const Layer &layer)
   painter.setOpacity(opacity / 100.0);
   painter.drawImage(0, 0, src);
   painter.end();
-  
+
   return canvas;
 }

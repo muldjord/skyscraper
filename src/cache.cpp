@@ -68,7 +68,7 @@ bool Cache::createFolders(const QString &scraper)
     QFile::copy("cache/priorities.xml.example",
 		cacheDir.absolutePath() + "/priorities.xml");
   }
-  
+
   return true;
 }
 
@@ -262,7 +262,7 @@ void Cache::editResources(QSharedPointer<Queue> queue,
       return;
     }
   }
-  
+
   int queueLength = queue->length();
   printf("\033[1;33mEntering resource cache editing mode! This mode allows you to edit textual resources for your files. To add media resources use the 'import' scraping module instead.\nNote that you can provide one or more file names on command line to edit resources for just those specific files. You can also use the '--startat' and '--endat' command line options to narrow down the span of the roms you wish to edit. Otherwise Skyscraper will edit ALL files found in the input folder one by one.\033[0m\n\n");
   while(queue->hasEntry()) {
@@ -668,7 +668,7 @@ bool Cache::purgeAll(const bool unattend)
   int dots = 0;
   // Always make dotMod at least 1 or it will give "floating point exception" when modulo
   int dotMod = resources.size() * 0.1 + 1;
-  
+
   QMutableListIterator<Resource> it(resources);
   while(it.hasNext()) {
     if(dots % dotMod == 0) {
@@ -859,7 +859,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
       return;
     }
   }
-  
+
   QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter, subdirs);
   printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), platform.toStdString().c_str());
   printf("Creating file id list for all files, please wait...");
@@ -870,7 +870,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
     printf("Length of cache id list mismatch the number of files, something is wrong! Please report this. Can't continue...\n");
     return;
   }
-  
+
   QString dateTime = QDateTime::currentDateTime().toString("yyyyMMdd");
   for(const auto &resType: resTypeList) {
     QFile reportFile(reportsDir.absolutePath() + "/report-" + platform + "-missing_" + resType + "-" + dateTime + ".txt");
@@ -941,7 +941,7 @@ bool Cache::vacuumResources(const QString inputFolder, const QString filter,
     printf("No cache id's found, something is wrong, cancelling...\n");
     return false;
   }
-  
+
   int vacuumed = 0;
   {
     int dots = 0;
@@ -1239,7 +1239,7 @@ void Cache::validate()
   QDirIterator marqueesDirIt(marqueesDir.absolutePath(),
 			     QDir::Files | QDir::NoDotAndDotDot,
 			     QDirIterator::Subdirectories);
-  
+
   QDirIterator videosDirIt(videosDir.absolutePath(),
 			   QDir::Files | QDir::NoDotAndDotDot,
 			   QDirIterator::Subdirectories);
@@ -1296,7 +1296,7 @@ void Cache::merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFo
   QList<Resource> mergeResources = mergeCache.getResources();
 
   QDir mergeCacheDir(mergeCacheFolder);
-  
+
   int resUpdated = 0;
   int resMerged = 0;
 
@@ -1470,7 +1470,7 @@ void Cache::addResource(Resource &resource,
       break;
     }
   }
-  
+
   if(notFound) {
     bool okToAppend = true;
     QString cacheFile = cacheAbsolutePath + "/" + resource.value;

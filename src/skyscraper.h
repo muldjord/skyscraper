@@ -57,7 +57,7 @@ signals:
 private slots:
   void entryReady(GameEntry entry, QString output, QString debug);
   void checkThreads();
-  
+
 private:
   Settings config;
   void loadConfig(const QCommandLineParser &parser);
@@ -72,7 +72,7 @@ private:
   void setRegionPrios();
   void setLangPrios();
   //void migrate(QString filename);
-  
+
   AbstractFrontend *frontend;
 
   QSharedPointer<Cache> cache;

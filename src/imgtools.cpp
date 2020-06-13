@@ -33,7 +33,7 @@ QImage ImgTools::cropToFit(const QImage &image, bool cropBlack)
   int bottom = image.height();
 
   bool pixelsFound = false;
-  
+
   // Find lefmost edge
   for(int y = 0; y < image.height(); ++y) {
     QRgb *scanline = (QRgb *)image.scanLine(y);

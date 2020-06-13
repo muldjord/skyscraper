@@ -77,7 +77,7 @@ public:
   QPainter::CompositionMode mode = QPainter::CompositionMode_SourceOver;
   Qt::Axis axis = Qt::ZAxis;
   int saturation = 127;
-  
+
   // Setters
   void setMode(const QString &mode);
   void setAxis(const QString &axis);

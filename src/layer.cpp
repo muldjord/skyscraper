@@ -271,7 +271,7 @@ bool Layer::save(QString filename)
 void Layer::colorFromHex(QString color)
 {
   color = color.replace("#", "");
-  
+
   if(color.length() != 6)
     return;
 

@@ -40,7 +40,7 @@ public:
 
 private:
   int truncate(int value);
-  
+
 };
 
 #endif // FXBALANCE_H

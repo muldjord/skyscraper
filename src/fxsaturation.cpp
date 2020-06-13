@@ -37,7 +37,7 @@ QImage FxSaturation::applyEffect(const QImage &src, const Layer &layer)
   QImage canvas = src;
 
   int saturation = layer.delta;
-  
+
   for(int y = 0; y < canvas.height(); ++y) {
     QRgb* line = (QRgb *)canvas.scanLine(y);
     for(int x = 0; x < canvas.width(); ++x) {
@@ -47,7 +47,7 @@ QImage FxSaturation::applyEffect(const QImage &src, const Layer &layer)
       line[x] = qPremultiply(color.rgba());
     }
   }
-  
+
   return canvas;
 }
 

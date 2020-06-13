@@ -35,7 +35,7 @@ class Scripter : public QObject
 public:
   Scripter();
   ~Scripter();
-  
+
 };
 
 #endif // SCRIPTER_H
