@@ -4,7 +4,7 @@ A powerful and versatile yet easy to use game scraper written in C++ for use wit
 All Skyscraper features are [well-documented](https://github.com/muldjord/skyscraper/tree/master/docs) and there's also a [F.A.Q](https://github.com/muldjord/skyscraper/blob/master/docs/FAQ.md). If you still have questions after reading the documentation, please consider asking them on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum). The `Issues` page here on Github is for bug reports and feature requests only. Thanks!
 
 ##### Code contributions
-Even though users mean well and I appreciate the sentiment, I don't accept unsolicited Pull Requests for Skyscraper. Github does not allow disabling them. Unsolicited PR's will be closed. Feel free to fork Skyscraper and fit it to your needs. But don't expect me to accept any kind of contribution if you haven't discussed your ideas with me prior to creating a PR.
+Even though users mean well and I appreciate the sentiment, I don't accept unsolicited Pull Requests for Skyscraper. Github does not allow disabling them. Unsolicited PR's will be closed. Feel free to fork Skyscraper and fit it to your needs. But don't expect me to accept or even comment on any kind of contribution if you haven't discussed your ideas with me prior to creating a PR.
 
 #### Supported platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
