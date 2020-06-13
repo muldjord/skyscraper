@@ -35,7 +35,10 @@ class Pegasus : public AbstractFrontend
 public:
   Pegasus();
   void assembleList(QString &finalOutput, QList<GameEntry> &gameEntries) override;
+  bool skipExisting(QList<GameEntry> &gameEntries, QSharedPointer<Queue> queue) override;
   bool canSkip() override;
+  bool loadOldGameList(const QString &gameListFileString) override;
+  void preserveFromOld(GameEntry &entry) override;
   QString getGameListFileName() override;
   QString getInputFolder() override;
   QString getGameListFolder() override;
@@ -44,6 +47,10 @@ public:
   QString getWheelsFolder() override;
   QString getMarqueesFolder() override;
   QString getVideosFolder() override;
+
+private:
+  QString makeAbsolute(QString filePath, const QString &inputFolder);
+  QString tab = "  ";
 
 };
 
