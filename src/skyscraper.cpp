@@ -1509,7 +1509,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     if(cliFiles.length() == 1) {
       config.searchName = parser.value("query");
     } else {
-      printf("'--query' was set but more than one filename was provided on command line or using the '--fromfile' option. Please provide only a single rom file name you wish to scrape using the query, now quitting...\n");
+      printf("'--query' requires a single rom filename to be added at the end of the command-line. You either forgot to set one, or more than one was provided. Now quitting...\n");
       exit(1);
     }
   }
