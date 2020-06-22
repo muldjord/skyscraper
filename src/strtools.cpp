@@ -300,6 +300,8 @@ QString StrTools::conformReleaseDate(QString str)
     str = QDate::fromString(str, "MMM, yyyy").toString("yyyyMMdd");
   } else if(QRegularExpression("^[a-zA-z]{3} [0-3]{1}\\d{1}, \\d{4}$").match(str).hasMatch()) {
     str = QDate::fromString(str, "MMM dd, yyyy").toString("yyyyMMdd");
+  } else if(QRegularExpression("^[12]{1}[019]{1}[0-9]{2}[0-1]{1}[0-9]{1}[0-3]{1}[0-9]{1}T[0-9]{6}$").match(str).hasMatch()) {
+    str = str.left(8);
   }
   return str;
 }
