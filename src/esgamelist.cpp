@@ -53,7 +53,8 @@ void ESGameList::getSearchResults(QList<GameEntry> &gameEntries,
 
   for(int i = 0; i < games.size(); ++i) {
     // Find <game> where last part of <path> matches file name
-    if(games.item(i).firstChildElement("path").text().endsWith(searchName)) {
+    QFileInfo info(games.item(i).firstChildElement("path").text());
+    if(info.fileName() == searchName) {
       gameNode = games.item(i);
       GameEntry game;
       game.title = gameNode.firstChildElement("name").text();
@@ -76,7 +77,7 @@ void ESGameList::getGameData(GameEntry &game) {
   game.tags = gameNode.firstChildElement("genre").text();
   game.description = gameNode.firstChildElement("desc").text();
   game.marqueeData = loadImageData(gameNode.firstChildElement("marquee").text());
-  game.coverData = loadImageData(gameNode.firstChildElement("cover").text());
+  game.coverData = loadImageData(gameNode.firstChildElement("thumbnail").text());
   game.screenshotData = loadImageData(gameNode.firstChildElement("image").text());
   if(config->videos) {
     loadVideoData(game, gameNode.firstChildElement("video").text());
