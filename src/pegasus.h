@@ -50,7 +50,7 @@ public:
 
 private:
   QString makeAbsolute(QString filePath, const QString &inputFolder);
-  QString tab = "  ";
+  QList<QPair<QString, QString> > headerPairs;
 
 };
 

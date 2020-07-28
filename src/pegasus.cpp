@@ -38,76 +38,82 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
   // Load old game list entries so we can preserve metadata later when assembling new game list
   QFile gameListFile(gameListFileString);
   if(gameListFile.exists() && gameListFile.open(QIODevice::ReadOnly)) {
-    bool inEntry = false;
-    QString *currentField = nullptr;
+    QByteArray line = "";
+    // Parse header value pairs
     while(!gameListFile.atEnd()) {
-      QByteArray line = gameListFile.readLine();
-      if(!inEntry && line.left(5) == "game:") {
-	GameEntry oldEntry;
-	line = line.remove(0, 5).simplified();
-	oldEntry.title = StrTools::stripBrackets(line);
-	oldEntries.append(oldEntry);
-	printf("ADDED NEW ENTRY!\n");
-	inEntry = true;
-	continue;
+      line = gameListFile.readLine();
+      if(line.contains(':')) {
+	QPair<QString, QString> valuePair;
+	valuePair.first = QString::fromUtf8(line.left(line.indexOf(':')).simplified());
+	if(valuePair.first == "game") {
+	  GameEntry oldEntry;
+	  line = line.remove(0, line.indexOf(':') + 1).simplified();
+	  oldEntry.title = StrTools::stripBrackets(line);
+	  oldEntries.append(oldEntry);
+	  break;
+	}
+	valuePair.second = line.remove(0, line.indexOf(':') + 1).simplified();
+	if(!valuePair.first.isEmpty()) {
+	  headerPairs.append(valuePair);
+	}
+      } else if(line.left(1) == " " || line.left(1) == "\t") {
+	headerPairs.last().second.append("\n" + line.simplified());
       }
-      if(line.left(tab.length()) != tab && currentField != nullptr) {
-	currentField->append(tab + QString::fromUtf8(line.remove(0, tab.length())).simplified());
-      }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      if(inEntry) {
-	QString header = line.left(line.indexOf(":"));
-	if(header == "file") {
+    }
+    QString *currentPairValue = nullptr;
+    // Parse games
+    while(!gameListFile.atEnd()) {
+      line = gameListFile.readLine();
+      if(line.contains(':')) {
+	QString header = QString::fromUtf8(line.left(line.indexOf(":")));
+	if(header == "game") {
+	  GameEntry oldEntry;
+	  line = line.remove(0, line.indexOf(':') + 1).simplified();
+	  oldEntry.title = StrTools::stripBrackets(line);
+	  oldEntries.append(oldEntry);
+	} else if(header == "file" || header == "files") {
 	  oldEntries.last().path = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
-	  printf("Loaded path: '%s'\n", oldEntries.last().path.toStdString().c_str());
+	  currentPairValue = &oldEntries.last().path;
 	} else if(header == "developer") {
 	  oldEntries.last().developer = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
-	  printf("Loaded developer: '%s'\n", oldEntries.last().developer.toStdString().c_str());
+	  currentPairValue = &oldEntries.last().developer;
 	} else if(header == "publisher") {
 	  oldEntries.last().publisher = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
+	  currentPairValue = &oldEntries.last().publisher;
 	} else if(header == "release") {
 	  oldEntries.last().releaseDate = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
+	  currentPairValue = &oldEntries.last().releaseDate;
 	} else if(header == "genre") {
 	  oldEntries.last().tags = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
+	  currentPairValue = &oldEntries.last().tags;
 	} else if(header == "players") {
 	  oldEntries.last().players = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
+	  currentPairValue = &oldEntries.last().players;
 	} else if(header == "assets.boxFront") {
 	  oldEntries.last().coverFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified()), config->inputFolder);
+	  currentPairValue = &oldEntries.last().coverFile;
 	} else if(header == "assets.marquee") {
 	  oldEntries.last().marqueeFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified()), config->inputFolder);
+	  currentPairValue = &oldEntries.last().marqueeFile;
 	} else if(header == "assets.wheel") {
 	  oldEntries.last().wheelFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified()), config->inputFolder);
+	  currentPairValue = &oldEntries.last().wheelFile;
 	} else if(header == "assets.video") {
 	  oldEntries.last().videoFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified()), config->inputFolder);
 	  oldEntries.last().videoFormat = "fromgamelist"; // Irrelevant, just set to something
+	  currentPairValue = &oldEntries.last().videoFile;
 	} else if(header == "description") {
 	  oldEntries.last().description = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
-	  do {
-	    line = gameListFile.readLine();
-	    oldEntries.last().description.append(" " + QString::fromUtf8(line.simplified()));
-	  } while(!gameListFile.atEnd() && line.left(tab.length()) == tab);
-	} else if(line.simplified().isEmpty()) {
-	  inEntry = false;
+	  currentPairValue = &oldEntries.last().description;
+	} else {
+	  QPair<QString, QString> pSValuePair;
+	  pSValuePair.first = header;
+	  pSValuePair.second = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).simplified());
+	  oldEntries.last().pSValuePairs.append(pSValuePair);
+	  currentPairValue = &pSValuePair.second;
 	}
+      } else if(currentPairValue != nullptr && (line.left(1) == " " || line.left(1) == "\t")) {
+	currentPairValue->append("\n" + line.simplified());
       }
     }
     gameListFile.close();
@@ -256,29 +262,21 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
     if(!entry.description.isEmpty()) {
       QString remainingDesc = "description: " + entry.description.left(config->maxLength);
       QString finalDesc = "";
-      bool firstLine = true;
-      int maxLineLen = 80;
       while(!remainingDesc.isEmpty()) {
-	QString line = remainingDesc.left(maxLineLen - (firstLine?0:tab.length()));
-	if(line.length() == maxLineLen - (firstLine?0:tab.length())) {
-	  if(line.contains("\n")) {
-	    line = line.left(line.indexOf("\n") + 1);
-	  } else {
-	    int lastSpace = line.lastIndexOf(" ");
-	    if(lastSpace != -1) {
-	      line = line.left(lastSpace + 1);
-	    }
-	  }
+	QString line = "";
+	if(line.contains("\n")) {
+	  line = remainingDesc.remove(0, remainingDesc.indexOf("\n") + 1).trimmed();
+	} else {
+	  line = remainingDesc.trimmed();
+	  remainingDesc = "";
 	}
-	remainingDesc.remove(0, line.length());
-	line = line.trimmed();
 	if(line.isEmpty()) {
 	  line = "  .\n";
 	} else {
-	  line = tab + line + "\n";
+	  line = "  " + line + "\n";
 	}
+	printf("HERE!\n");
 	finalDesc.append(line);
-	firstLine = false;
       }
       finalOutput.append(finalDesc.trimmed() + "\n");
     }
@@ -298,7 +296,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
       finalOutput.append("players: " + entry.players + "\n");
     }
     if(!entry.screenshotFile.isEmpty()) {
-      finalOutput.append("assets.screenshots:\n  " + (config->relativePaths?entry.screenshotFile.replace(config->inputFolder, "."):entry.screenshotFile) + "\n");
+      finalOutput.append("assets.screenshots: " + (config->relativePaths?entry.screenshotFile.replace(config->inputFolder, "."):entry.screenshotFile) + "\n");
     }
     if(!entry.coverFile.isEmpty()) {
       finalOutput.append("assets.boxFront: " + (config->relativePaths?entry.coverFile.replace(config->inputFolder, "."):entry.coverFile) + "\n");

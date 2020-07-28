@@ -122,6 +122,9 @@ public:
   QString aMExtra = "";
   QString aMButtons = "";
 
+  // Pegasus specific metadata for preservation
+  QList<QPair<QString, QString> > pSValuePairs;
+  
 };
 
 #endif // GAMEENTRY_H
