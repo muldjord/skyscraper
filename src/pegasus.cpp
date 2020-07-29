@@ -46,7 +46,7 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
       if(line.contains("#")) {
 	continue;
       }
-      if(line.contains(':')) {
+      if(line.left(1) != " " && line.left(1) != "\t" && line.contains(':')) {
 	QPair<QString, QString> valuePair;
 	valuePair.first = QString::fromUtf8(line.left(line.indexOf(':')).simplified());
 	if(valuePair.first == "game") {
@@ -68,7 +68,7 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
       if(line.contains("#")) {
 	continue;
       }
-      if(line.contains(':')) {
+      if(line.left(1) != " " && line.left(1) != "\t" && line.contains(':')) {
 	QString header = QString::fromUtf8(line.left(line.indexOf(":")));
 	currentPairValue = nullptr;
 	if(header == "game") {
@@ -277,7 +277,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
     if(config->frontendExtra.isEmpty()) {
       finalOutput.append("command: " + fromPreservedHeader("command", "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ " + config->platform + " \"{file.path}\"") + "\n");
     } else {
-      finalOutput.append("command: " + config->frontendExtra + "\n");
+      finalOutput.append("command: " + config->frontendExtra.replace(":","") + "\n");
       removePreservedHeader("command");
     }
     if(!headerPairs.isEmpty()) {
