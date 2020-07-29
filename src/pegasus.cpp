@@ -25,6 +25,7 @@
 
 #include "pegasus.h"
 #include "strtools.h"
+#include "nametools.h"
 
 #include <QDir>
 #include <QDate>
@@ -42,14 +43,14 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
     // Parse header value pairs
     while(!gameListFile.atEnd()) {
       line = gameListFile.readLine();
+      if(line.contains("#")) {
+	continue;
+      }
       if(line.contains(':')) {
 	QPair<QString, QString> valuePair;
 	valuePair.first = QString::fromUtf8(line.left(line.indexOf(':')).simplified());
 	if(valuePair.first == "game") {
-	  GameEntry oldEntry;
-	  line = line.remove(0, line.indexOf(':') + 1).trimmed();
-	  oldEntry.title = StrTools::stripBrackets(line);
-	  oldEntries.append(oldEntry);
+	  gameListFile.seek(gameListFile.pos() - line.length()); // Seek back before first game entry
 	  break;
 	}
 	valuePair.second = line.remove(0, line.indexOf(':') + 1).trimmed();
@@ -64,47 +65,56 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
     // Parse games
     while(!gameListFile.atEnd()) {
       line = gameListFile.readLine();
+      if(line.contains("#")) {
+	continue;
+      }
       if(line.contains(':')) {
 	QString header = QString::fromUtf8(line.left(line.indexOf(":")));
+	currentPairValue = nullptr;
 	if(header == "game") {
 	  GameEntry oldEntry;
 	  line = line.remove(0, line.indexOf(':') + 1).simplified();
-	  oldEntry.title = StrTools::stripBrackets(line);
+	  oldEntry.title = line;
+	  oldEntry.sqrNotes = NameTools::getSqrNotes(oldEntry.title);
+	  oldEntry.parNotes = NameTools::getParNotes(oldEntry.title);
 	  oldEntries.append(oldEntry);
 	} else if(header == "file" || header == "files") {
 	  oldEntries.last().path = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
-	  currentPairValue = &oldEntries.last().path;
+	  currentPairValue = nullptr; // Don't CURRENTLY allow multiline
 	} else if(header == "developer") {
 	  oldEntries.last().developer = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
-	  currentPairValue = &oldEntries.last().developer;
+	  currentPairValue = nullptr; // Don't allow multiline
 	} else if(header == "publisher") {
 	  oldEntries.last().publisher = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
-	  currentPairValue = &oldEntries.last().publisher;
+	  currentPairValue = nullptr; // Don't allow multiline
 	} else if(header == "release") {
-	  oldEntries.last().releaseDate = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
-	  currentPairValue = &oldEntries.last().releaseDate;
+	  oldEntries.last().releaseDate = QDate::fromString(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed()), "yyyy-MM-dd").toString("yyyyMMdd");
+	  currentPairValue = nullptr; // Don't allow multiline
 	} else if(header == "genre") {
 	  oldEntries.last().tags = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
-	  currentPairValue = &oldEntries.last().tags;
+	  currentPairValue = nullptr; // Don't allow multiline
 	} else if(header == "players") {
 	  oldEntries.last().players = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
-	  currentPairValue = &oldEntries.last().players;
+	  currentPairValue = nullptr; // Don't allow multiline
 	} else if(header == "rating") {
 	  oldEntries.last().rating = QString::number(line.right(line.length() - line.indexOf(":") - 1).replace("%", "").toDouble() / 100.0).trimmed();
-	  currentPairValue = &oldEntries.last().players;
-	} else if(header == "assets.boxFront") {
+	  currentPairValue = nullptr; // Don't allow multiline
+	} else if(header.contains("assets.boxFront")) {
 	  oldEntries.last().coverFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed()), config->inputFolder);
-	  currentPairValue = &oldEntries.last().coverFile;
-	} else if(header == "assets.marquee") {
+	  currentPairValue = nullptr; // Don't allow multiline
+	} else if(header.contains("assets.screenshot")) {
+	  oldEntries.last().screenshotFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed()), config->inputFolder);
+	  currentPairValue = nullptr; // Don't allow multiline
+	} else if(header.contains("assets.marquee")) {
 	  oldEntries.last().marqueeFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed()), config->inputFolder);
-	  currentPairValue = &oldEntries.last().marqueeFile;
-	} else if(header == "assets.wheel") {
+	  currentPairValue = nullptr; // Don't allow multiline
+	} else if(header.contains("assets.wheel")) {
 	  oldEntries.last().wheelFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed()), config->inputFolder);
-	  currentPairValue = &oldEntries.last().wheelFile;
-	} else if(header == "assets.video") {
+	  currentPairValue = nullptr; // Don't allow multiline
+	} else if(header.contains("assets.video")) {
 	  oldEntries.last().videoFile = makeAbsolute(QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed()), config->inputFolder);
 	  oldEntries.last().videoFormat = "fromgamelist"; // Irrelevant, just set to something
-	  currentPairValue = &oldEntries.last().videoFile;
+	  currentPairValue = nullptr; // Don't allow multiline
 	} else if(header == "description") {
 	  oldEntries.last().description = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
 	  currentPairValue = &oldEntries.last().description;
@@ -216,6 +226,15 @@ QString Pegasus::fromPreservedHeader(const QString &key, const QString &suggeste
   return suggested;
 }
 
+void Pegasus::removePreservedHeader(const QString &key)
+{
+  for(int a = headerPairs.length() - 1; a >= 0; --a) {
+    if(key == headerPairs.at(a).first) {
+      headerPairs.removeAt(a);
+    }
+  }
+}
+
 QString Pegasus::toPegasusFormat(const QString &key, const QString &value)
 {
   QString pegasusFormat = value;
@@ -259,6 +278,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
       finalOutput.append("command: " + fromPreservedHeader("command", "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ " + config->platform + " \"{file.path}\"") + "\n");
     } else {
       finalOutput.append("command: " + config->frontendExtra + "\n");
+      removePreservedHeader("command");
     }
     if(!headerPairs.isEmpty()) {
       for(const auto &pair: headerPairs) {
