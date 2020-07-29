@@ -43,12 +43,11 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
     // Parse header value pairs
     while(!gameListFile.atEnd()) {
       line = gameListFile.readLine();
-      if(line.contains("#")) {
+      if(line.left(1) == "#") {
 	continue;
-      }
-      if(line.left(1) != " " && line.left(1) != "\t" && line.contains(':')) {
+      } else if(line.left(1) != " " && line.left(1) != "\t" && line.contains(':')) {
 	QPair<QString, QString> valuePair;
-	valuePair.first = QString::fromUtf8(line.left(line.indexOf(':')).simplified());
+	valuePair.first = QString::fromUtf8(line.left(line.indexOf(':')).trimmed());
 	if(valuePair.first == "game") {
 	  gameListFile.seek(gameListFile.pos() - line.length()); // Seek back before first game entry
 	  break;
@@ -58,22 +57,21 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
 	  headerPairs.append(valuePair);
 	}
       } else if(line.left(1) == " " || line.left(1) == "\t") {
-	headerPairs.last().second.append("\n" + line.simplified());
+	headerPairs.last().second.append("\n" + line.trimmed());
       }
     }
     QString *currentPairValue = nullptr;
     // Parse games
     while(!gameListFile.atEnd()) {
       line = gameListFile.readLine();
-      if(line.contains("#")) {
+      if(line.left(1) == "#") {
 	continue;
-      }
-      if(line.left(1) != " " && line.left(1) != "\t" && line.contains(':')) {
+      } else if(line.left(1) != " " && line.left(1) != "\t" && line.contains(':')) {
 	QString header = QString::fromUtf8(line.left(line.indexOf(":")));
 	currentPairValue = nullptr;
 	if(header == "game") {
 	  GameEntry oldEntry;
-	  line = line.remove(0, line.indexOf(':') + 1).simplified();
+	  line = line.remove(0, line.indexOf(':') + 1).trimmed();
 	  oldEntry.title = line;
 	  oldEntry.sqrNotes = NameTools::getSqrNotes(oldEntry.title);
 	  oldEntry.parNotes = NameTools::getParNotes(oldEntry.title);
