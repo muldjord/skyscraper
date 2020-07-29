@@ -72,9 +72,10 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
 	if(header == "game") {
 	  GameEntry oldEntry;
 	  line = line.remove(0, line.indexOf(':') + 1).trimmed();
-	  oldEntry.title = line;
-	  oldEntry.sqrNotes = NameTools::getSqrNotes(oldEntry.title);
-	  oldEntry.parNotes = NameTools::getParNotes(oldEntry.title);
+	  QString title = QString::fromUtf8(line);
+	  oldEntry.sqrNotes = NameTools::getSqrNotes(title);
+	  oldEntry.parNotes = NameTools::getParNotes(title);
+	  oldentry.title = StrTools::stripBrackets(title);
 	  oldEntries.append(oldEntry);
 	} else if(header == "file" || header == "files") {
 	  oldEntries.last().path = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
