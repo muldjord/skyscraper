@@ -162,6 +162,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Added 'gameListBackup' config.ini option to allow for game list backups being created on each run (Thank you to 'igno2k' for suggesting it)
 * Attract-Mode now recognizes '$HOME' in emulator file
 * Refactored Attract-Mode media folder getters
+* Fixed rare faulty matches from 'esgamelist' module in cases where last part of 'path' was a match with filename (Thank you to 'akamming' for reporting this)
 * Exporting for Pegasus frontend now supports preservation of old game list key-value pairs
 
 #### Version 3.5.5 (18th May 2020)
