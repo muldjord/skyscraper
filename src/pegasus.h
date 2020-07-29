@@ -49,7 +49,9 @@ public:
   QString getVideosFolder() override;
 
 private:
-  QString makeAbsolute(QString filePath, const QString &inputFolder);
+  QString makeAbsolute(const QString &filePath, const QString &inputFolder);
+  QString fromPreservedHeader(const QString &key, const QString &suggested);
+  QString toPegasusFormat(const QString &key, const QString &value);
   QList<QPair<QString, QString> > headerPairs;
 
 };
