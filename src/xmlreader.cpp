@@ -27,6 +27,7 @@
 
 #include "xmlreader.h"
 #include "nametools.h"
+#include "strtools.h"
 
 XmlReader::XmlReader()
 {
@@ -72,7 +73,7 @@ void XmlReader::addEntries(const QDomNodeList &nodes, QList<GameEntry> &gameEntr
     QString title = nodes.at(a).firstChildElement("name").text();
     entry.sqrNotes = NameTools::getSqrNotes(title);
     entry.parNotes = NameTools::getParNotes(title);
-    entry.title = title.left(title.indexOf("(")).left(title.indexOf("[")).simplified();
+    entry.title = StrTools::stripBrackets(title);
     entry.coverFile = makeAbsolute(nodes.at(a).firstChildElement("cover").text(), inputFolder);
     entry.screenshotFile = makeAbsolute(nodes.at(a).firstChildElement("image").text(), inputFolder);
     entry.marqueeFile = makeAbsolute(nodes.at(a).firstChildElement("marquee").text(), inputFolder);
