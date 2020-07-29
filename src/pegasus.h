@@ -54,6 +54,7 @@ private:
   void removePreservedHeader(const QString &key);
   QString toPegasusFormat(const QString &key, const QString &value);
   QList<QPair<QString, QString> > headerPairs;
+  QString tab = "  ";
 
 };
 

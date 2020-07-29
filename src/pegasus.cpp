@@ -237,8 +237,8 @@ QString Pegasus::toPegasusFormat(const QString &key, const QString &value)
 {
   QString pegasusFormat = value;
 
-  pegasusFormat.replace("\n\n", "###NEWLINE###   .###NEWLINE###   ");
-  pegasusFormat.replace("\n", "\n   ");
+  pegasusFormat.replace("\n\n", "###NEWLINE###" + tab + ".###NEWLINE###" + tab);
+  pegasusFormat.replace("\n", "\n" + tab);
   pegasusFormat.replace("###NEWLINE###", "\n");
   pegasusFormat.prepend(key + ": ");
   pegasusFormat = pegasusFormat.trimmed();
