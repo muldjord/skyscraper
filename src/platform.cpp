@@ -367,7 +367,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "dragon32") {
     formats.append("*.cas *.wav *.bas *.asc *.dmk *.jvc *.os9 *.dsk *.vdk *.rom *.ccc *.sna");
   } else if(platform == "dreamcast") {
-    formats.append("*.cdi *.gdi *.iso *.chd *.cue");
+    formats.append("*.cdi *.gdi *.iso *.chd *.cue *.m3u");
   } else if(platform == "fba") {
     formats.append("");
   } else if(platform == "fds") {
@@ -383,7 +383,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "gbc") {
     formats.append("*.gbc");
   } else if(platform == "gc") {
-    formats.append("*.iso *.cso *.gcz *.gcm");
+    formats.append("*.iso *.cso *.gcz *.gcm *.m3u");
   } else if(platform == "genesis") {
     formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "intellivision") {
