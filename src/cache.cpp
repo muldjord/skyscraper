@@ -37,6 +37,7 @@
 
 #include "cache.h"
 #include "nametools.h"
+#include "queue.h"
 
 Cache::Cache(const QString &cacheFolder)
 {
@@ -743,7 +744,7 @@ QList<QString> Cache::getCacheIdList(const QList<QFileInfo> &fileInfos)
   return cacheIdList;
 }
 
-void Cache::assembleReport(const QString inputFolder, const QString filter, QString platform, bool subdirs, QString reportStr)
+void Cache::assembleReport(const QString inputFolder, const QString filter, QString platform, const Settings &config, bool subdirs, QString reportStr)
 {
   if(!reportStr.contains("report:missing=")) {
     printf("Don't understand report option, please check '--cache help' for more info.\n");
@@ -860,7 +861,14 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
     }
   }
 
-  QList<QFileInfo> fileInfos = getFileInfos(inputFolder, filter, subdirs);
+  Queue fileInfos;
+  fileInfos.append(getFileInfos(inputFolder, filter, subdirs));
+  if(!config.excludeFiles.isEmpty()) {
+    fileInfos.filterFiles(config.excludeFiles);
+  }
+  if(!config.includeFiles.isEmpty()) {
+    fileInfos.filterFiles(config.includeFiles, true);
+  }
   printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), platform.toStdString().c_str());
   printf("Creating file id list for all files, please wait...");
   QList<QString> cacheIdList = getCacheIdList(fileInfos);
