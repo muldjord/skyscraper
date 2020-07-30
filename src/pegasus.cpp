@@ -71,11 +71,8 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
 	currentPairValue = nullptr;
 	if(header == "game") {
 	  GameEntry oldEntry;
-	  line = line.remove(0, line.indexOf(':') + 1).trimmed();
-	  QString title = QString::fromUtf8(line);
-	  oldEntry.sqrNotes = NameTools::getSqrNotes(title);
-	  oldEntry.parNotes = NameTools::getParNotes(title);
-	  oldEntry.title = StrTools::stripBrackets(title);
+	  // Do NOT get sqr and par notes here. They are not used by skipExisting
+	  oldEntry.title = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());
 	  oldEntries.append(oldEntry);
 	} else if(header == "file" || header == "files") {
 	  oldEntries.last().path = QString::fromUtf8(line.right(line.length() - line.indexOf(":") - 1).trimmed());

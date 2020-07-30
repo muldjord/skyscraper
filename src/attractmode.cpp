@@ -45,10 +45,8 @@ bool AttractMode::loadOldGameList(const QString &gameListFileString)
 	}
 	GameEntry entry;
 	entry.baseName = snippets.at(0);
-	QString title = snippets.at(1);
-	entry.sqrNotes = NameTools::getSqrNotes(title);
-	entry.parNotes = NameTools::getParNotes(title);
-	entry.title = StrTools::stripBrackets(title);
+	// Do NOT get sqr and par notes here. They are not used by skipExisting
+	entry.title = snippets.at(1);
 	//entry.aMEmulator = snippets.at(2);
 	entry.aMCloneOf = snippets.at(3);
 	entry.releaseDate = snippets.at(4) + "0101";
