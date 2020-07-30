@@ -164,6 +164,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Refactored Attract-Mode media folder getters
 * Fixed rare faulty matches from 'esgamelist' module in cases where last part of 'path' was a match with filename (Thank you to 'akamming' for reporting this)
 * Exporting for Pegasus frontend now supports preservation of old game list key-value pairs
+* '--cache report' now also adheres so excludeFiles and includeFiles (Thank you to user 'spilinek' for pointing this out)
 
 #### Version 3.5.5 (18th May 2020)
 * Fixed bug in 'igdb' module where it still used old hardcoded key (Thank you to 'stlbluesfan' for reporting this)
