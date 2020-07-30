@@ -153,7 +153,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
-#### Version 3.5.6 (In progress, unreleased)
+#### Version 3.5.6 (30th July 2020)
 * Added 'neogeocd' platform (Thank you to 'igno2k' and 'meveric' for suggesting it)
 * 'screenscraper' module now supports region for screenshots (Thank you to 'cameronhimself' for pointing this out)
 * Low disk space check for cache is now calculated from cache folder location
@@ -163,7 +163,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Attract-Mode now recognizes '$HOME' in emulator file
 * Refactored Attract-Mode media folder getters
 * Fixed rare faulty matches from 'esgamelist' module in cases where last part of 'path' was a match with filename (Thank you to 'akamming' for reporting this)
-* Exporting for Pegasus frontend now supports preservation of old game list key-value pairs
+* Exporting for Pegasus frontend now supports preservation of old game list key-value pairs (Thank you to user 'HugLifeTiZ' for suggesting this)
 * '--cache report' now also adheres so excludeFiles and includeFiles (Thank you to user 'spilinek' for pointing this out)
 
 #### Version 3.5.5 (18th May 2020)
