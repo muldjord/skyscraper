@@ -744,8 +744,10 @@ QList<QString> Cache::getCacheIdList(const QList<QFileInfo> &fileInfos)
   return cacheIdList;
 }
 
-void Cache::assembleReport(const Settings &config, const QString filter, QString reportStr)
+void Cache::assembleReport(const Settings &config, const QString filter)
 {
+  QString reportStr = config.cacheOptions;
+
   if(!reportStr.contains("report:missing=")) {
     printf("Don't understand report option, please check '--cache help' for more info.\n");
     return;
@@ -916,7 +918,7 @@ void Cache::assembleReport(const Settings &config, const QString filter, QString
       return;
     }
   }
-  printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit --fromfile <FILENAME>\033[0m' or the '\033[1;33m-s import\033[0m' module to add the missing resources. Check '\033[1;33m--help\033[0m' and '\033[1;33m--cache help\033[0m' for more information.\n\n");
+  printf("\033[1;32mAll done!\033[0m\nConsider using the '\033[1;33m--cache edit --fromfile <REPORTFILE>\033[0m' or the '\033[1;33m-s import\033[0m' module to add the missing resources. Check '\033[1;33m--help\033[0m' and '\033[1;33m--cache help\033[0m' for more information.\n\n");
 }
 
 bool Cache::vacuumResources(const QString inputFolder, const QString filter,
