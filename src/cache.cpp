@@ -744,7 +744,7 @@ QList<QString> Cache::getCacheIdList(const QList<QFileInfo> &fileInfos)
   return cacheIdList;
 }
 
-void Cache::assembleReport(const QString inputFolder, const QString filter, QString platform, const Settings &config, bool subdirs, QString reportStr)
+void Cache::assembleReport(const Settings &config, const QString filter, QString reportStr)
 {
   if(!reportStr.contains("report:missing=")) {
     printf("Don't understand report option, please check '--cache help' for more info.\n");
@@ -862,14 +862,14 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
   }
 
   Queue fileInfos;
-  fileInfos.append(getFileInfos(inputFolder, filter, subdirs));
+  fileInfos.append(getFileInfos(config.inputFolder, filter, config.subdirs));
   if(!config.excludeFiles.isEmpty()) {
     fileInfos.filterFiles(config.excludeFiles);
   }
   if(!config.includeFiles.isEmpty()) {
     fileInfos.filterFiles(config.includeFiles, true);
   }
-  printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), platform.toStdString().c_str());
+  printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), config.platform.toStdString().c_str());
   printf("Creating file id list for all files, please wait...");
   QList<QString> cacheIdList = getCacheIdList(fileInfos);
   printf("\n\n");
@@ -881,7 +881,7 @@ void Cache::assembleReport(const QString inputFolder, const QString filter, QStr
 
   QString dateTime = QDateTime::currentDateTime().toString("yyyyMMdd");
   for(const auto &resType: resTypeList) {
-    QFile reportFile(reportsDir.absolutePath() + "/report-" + platform + "-missing_" + resType + "-" + dateTime + ".txt");
+    QFile reportFile(reportsDir.absolutePath() + "/report-" + config.platform + "-missing_" + resType + "-" + dateTime + ".txt");
     printf("Report filename: '\033[1;32m%s\033[0m'\nAssembling report, please wait...", reportFile.fileName().toStdString().c_str());
     if(reportFile.open(QIODevice::WriteOnly)) {
       int missing = 0;

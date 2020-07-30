@@ -78,7 +78,7 @@ public:
   bool purgeResources(QString purgeStr);
   bool vacuumResources(const QString inputFolder, const QString filters,
 		       const int verbosity, const bool unattend = false);
-  void assembleReport(const QString inputFolder, const QString filters, QString platform, const Settings &config, bool subdirs = true, QString reportStr = "");
+  void assembleReport(const Settings &config, const QString filters, QString reportStr = "");
   void showStats(int verbosity);
   void readPriorities();
   bool write(const bool onlyQuickId = false);

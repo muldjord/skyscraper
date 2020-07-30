@@ -151,10 +151,10 @@ void Skyscraper::run()
     exit(0);
   }
   if(config.cacheOptions.contains("report:")) {
-    cache->assembleReport(config.inputFolder, Platform::getFormats(config.platform,
-								   config.extensions,
-								   config.addExtensions),
-			  config.platform, config, config.subdirs, config.cacheOptions);
+    cache->assembleReport(config, Platform::getFormats(config.platform,
+						       config.extensions,
+						       config.addExtensions),
+			  config.cacheOptions);
     exit(0);
   }
   if(config.cacheOptions == "validate") {
