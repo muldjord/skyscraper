@@ -29,6 +29,7 @@
 
 #include <QDir>
 #include <QDate>
+#include <QRegularExpression>
 
 Pegasus::Pegasus()
 {
@@ -234,8 +235,12 @@ void Pegasus::removePreservedHeader(const QString &key)
 QString Pegasus::toPegasusFormat(const QString &key, const QString &value)
 {
   QString pegasusFormat = value;
-
-  pegasusFormat.replace("\n\n", "###NEWLINE###" + tab + ".###NEWLINE###" + tab);
+  
+  QRegularExpressionMatch match;
+  match = QRegularExpression("\\n[\\t ]+\\n").match(pegasusFormat);
+  for(const auto &capture: match.capturedTexts()) {
+    pegasusFormat.replace(capture, "###NEWLINE###" + tab + ".###NEWLINE###" + tab);
+  }
   pegasusFormat.replace("\n", "\n" + tab);
   pegasusFormat.replace("###NEWLINE###", "\n");
   pegasusFormat.prepend(key + ": ");
