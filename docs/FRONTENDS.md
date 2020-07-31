@@ -31,7 +31,11 @@ Skyscraper will preserve the following metadata when re-generating a game list f
 * Default game list location: `/home/pi/USER/RetroPie/roms/PLATFORM`
 * Default game list filename: `metadata.pegasus.txt`
 
-Pegasus is easy and simple to generate a game list for. Simply do `Skyscraper -p <PLATFORM> -f pegasus`.
+Pegasus is easy and simple to generate a game list for. Simply do `Skyscraper -p <PLATFORM> -f pegasus`. If you want to specify a custom launch command (if you are using RetroPie you don't have to, a default one will be used), you can set it on command-line with `-e "<COMMAND>"` or in `config.ini` with:
+```
+[pegasus]
+launch="<COMMAND>"
+```
 
 IMPORTANT! If you are generating game lists for Pegasus, make sure you disable third-party game list data sources, otherwise it won't use your newly generated game lists. Start the Pegasus frontend, press ESC on the keyboard and choose `Settings->Enable/disable data sources` and disable everything in that submenu.
 
