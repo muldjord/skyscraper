@@ -153,6 +153,10 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
+#### Version 3.5.7 (31st July 2020)
+* Now uses regular expressions when converting text to Pegasus format for better compatibility
+* Removed 'extensions' when generating Pegasus game list, as it isn't required
+
 #### Version 3.5.6 (30th July 2020)
 * Added 'neogeocd' platform (Thank you to 'igno2k' and 'meveric' for suggesting it)
 * 'screenscraper' module now supports region for screenshots (Thank you to 'cameronhimself' for pointing this out)
