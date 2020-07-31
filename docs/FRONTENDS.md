@@ -37,9 +37,9 @@ Pegasus is easy and simple to generate a game list for. Simply do `Skyscraper -p
 launch="<COMMAND>"
 ```
 
-IMPORTANT! If you are generating game lists for Pegasus, make sure you disable third-party game list data sources, otherwise it won't use your newly generated game lists. Start the Pegasus frontend, press ESC on the keyboard and choose `Settings->Enable/disable data sources` and disable everything in that submenu.
+NOTE! You need to add the individual platform rom directories to Pegasus (if they are not already defined) before any of them will show up! Add them through the `Settings->Set game directories`. Simply point it to each individual platform sub-directory. For RetroPie you should have a path for each platform (eg. `/home/USER/RetroPie/roms/snes`, `/home/USER/RetroPie/roms/megadrive` etc.).
 
-When those sources are disabled you also need to add the individual platform rom directories to Pegasus (if they are not already defined). Add them through the `Settings->Set game directories`. Simply point it to each individual platform sub-directory. For RetroPie you should have a path for each platform (eg. `/home/USER/RetroPie/roms/snes`, `/home/USER/RetroPie/roms/megadrive` etc.).
+IMPORTANT! If you are generating game lists for Pegasus, it is highly recommended to disable third-party game list data sources! Start the Pegasus frontend, press ESC on the keyboard and choose `Settings->Enable/disable data sources` and disable everything in that submenu.
 
 Then reload the game lists or restart Pegasus, and all of the platforms should show up with media and game information.
 
