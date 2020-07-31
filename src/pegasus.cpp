@@ -237,7 +237,7 @@ QString Pegasus::toPegasusFormat(const QString &key, const QString &value)
   QString pegasusFormat = value;
   
   QRegularExpressionMatch match;
-  match = QRegularExpression("\\n[\\t ]+\\n").match(pegasusFormat);
+  match = QRegularExpression("\\n[\\t ]*\\n").match(pegasusFormat);
   for(const auto &capture: match.capturedTexts()) {
     pegasusFormat.replace(capture, "###NEWLINE###" + tab + ".###NEWLINE###" + tab);
   }
