@@ -181,7 +181,7 @@ If exporting for the `attractmode` frontend, please also take note of the requir
 
 If exporting for the `pegasus` frontend, please also take note of the optional `launch=""` option that allows you to set the launch parameter used by Pegasus.
 
-Check all supported frontends with '--help'
+Check all supported frontends with '--help' and read a more about the details concerning each of them [here](FRONTENDS.md).
 
 ###### Allowed in sections
 `[main]`
