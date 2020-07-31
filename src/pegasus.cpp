@@ -251,6 +251,7 @@ QString Pegasus::toPegasusFormat(const QString &key, const QString &value)
 
 void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
 {
+  /*
   QList<QString> extensionsList;
   for(const auto &entry: gameEntries) {
     QString entryExtension = entry.path.split(".").last();
@@ -270,7 +271,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
     extensions.append(extension + ", ");
   }
   extensions = extensions.left(extensions.length() - 2);
-
+  */
   if(!gameEntries.isEmpty()) {
     finalOutput.append("collection: " + fromPreservedHeader("collection", gameEntries.first().platform) + "\n");
     finalOutput.append("shortname: " + fromPreservedHeader("shortname", config->platform) + "\n");
