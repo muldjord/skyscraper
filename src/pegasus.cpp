@@ -135,7 +135,7 @@ bool Pegasus::loadOldGameList(const QString &gameListFileString)
 QString Pegasus::makeAbsolute(const QString &filePath, const QString &inputFolder)
 {
   QString returnPath = filePath;
-  
+
   if(returnPath.left(1) == ".") {
     returnPath.remove(0, 1);
     returnPath.prepend(inputFolder);
@@ -218,7 +218,7 @@ QString Pegasus::fromPreservedHeader(const QString &key, const QString &suggeste
   if(!preserved.isEmpty()) {
     return preserved;
   }
-  
+
   return suggested;
 }
 
@@ -269,7 +269,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
   if(!gameEntries.isEmpty()) {
     finalOutput.append("collection: " + fromPreservedHeader("collection", gameEntries.first().platform) + "\n");
     finalOutput.append("shortname: " + fromPreservedHeader("shortname", config->platform) + "\n");
-    finalOutput.append("extensions: " + fromPreservedHeader("extensions", extensions) + "\n");
+    // finalOutput.append("extensions: " + fromPreservedHeader("extensions", extensions) + "\n");
     if(config->frontendExtra.isEmpty()) {
       finalOutput.append("command: " + fromPreservedHeader("command", "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ " + config->platform + " \"{file.path}\"") + "\n");
     } else {
@@ -300,7 +300,7 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
     if(config->relativePaths) {
       entry.path.replace(config->inputFolder, ".");
     }
-    
+
     finalOutput.append(toPegasusFormat("game", entry.title) + "\n");
     finalOutput.append(toPegasusFormat("file", entry.path) + "\n");
     // The replace here IS supposed to be 'inputFolder' and not 'mediaFolder' because we only want the path to be relative if '-o' hasn't been set. So this will only make it relative if the path is equal to inputFolder which is what we want.
