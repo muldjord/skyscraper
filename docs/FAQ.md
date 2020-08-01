@@ -38,9 +38,9 @@ userCreds="USER:PASS"
 <details>
   <summary>Expand answer...</summary>
 
-**A:** Whenever you make any gamelist specific changes to Skyscraper's configurations, you need to regenerate the gamelists for your chosen frontend afterwards for the changes to take effect. This can be done simply by running Skyscraper with `Skyscraper -p PLATFORM`. This will regenerate the gamelist for that platform for the default EmulationStation frontend using your new configuration. If you are not using the EmulationStation frontend, you also need to specify the fronts with `-f FRONTEND`.
+**A:** Whenever you make any gamelist specific changes to Skyscraper's configurations, you need to regenerate the gamelists for your chosen frontend afterwards for the changes to take effect. This can be done simply by running Skyscraper with `Skyscraper -p PLATFORM`. This will regenerate the gamelist for that platform for the default EmulationStation frontend using your new configuration.
 
-Read more about the frontends and their requirements [here](FRONTENDS.md).
+If you wish to export for one of the other supported frontends, you need to specify this. Read more about the frontends and their requirements [here](FRONTENDS.md).
 </details>
 
 #### Q: I used Skyscraper to generate EmulationStation gamelists for one or more platforms, but when I restarted the system the gamelist hadn't changed. Why is that?
