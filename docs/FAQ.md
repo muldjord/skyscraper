@@ -72,12 +72,12 @@ WARNING!!! Do *not* run Skyscraper with `sudo Skyscraper`. `sudo` is *not* neede
 
 This is a common problem for new Linux users who are used to working with Windows. In Linux you rarely need Administrator privileges. Running a command with `sudo` in front of it will run it as the root / Administrator user. And any folders or files being generated while that command runs, will then be owned by root. When you run software as the normal user afterwards and it tries to write to those folders or files, it will fail.
 
-You need to reset those permissions back to be owned by your ordinary user. If you are running RetroPie, the following commands will most likely fix your problem (RUN AT YOUR OWN RISK!):
+You need to reset those permissions back to be owned by your ordinary user. If you are running RetroPie, the following commands might fix your problem (RUN AT YOUR OWN RISK!):
 ```
 $ sudo chown -R pi:pi /home/pi/.skyscraper
 $ sudo chown -R pi:pi /home/pi/RetroPie/roms
 ```
-**Remember, never run anything with `sudo` unless you are specifically told to do so (as you are in the above fix).**
+The above commands *should* be run with sudo, as we need root permission to reset the folders and files (hence the warning). But in general, never run anything with `sudo` unless you are specifically told to do so.
 </details>
 
 #### Q: I generated a game list for the Pegasus frontend. When I fire up Pegasus the data is there, but it doesn't look very good. Why is that?
