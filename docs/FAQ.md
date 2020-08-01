@@ -68,9 +68,16 @@ WARNING!!! Do *not* run Skyscraper with `sudo Skyscraper`. `sudo` is *not* neede
 <details>
   <summary>Expand answer...</summary>
 
-**A:** You are probably running, or at some point did run, Skyscraper with `sudo Skyscraper` instead of just `Skyscraper`. Doing so will result in all sorts of weird behaviour as Skyscraper was then run as the `root` user instead of the ordinary user. Depending on what command-line parameters you ran Skyscraper with, this will have caused permission issues for your files in `/home/USER/RetroPie/roms` subfolders and might also have caused permission issues with the `/home/USER/.skyscraper` folder. You need to reset those permissions back to be owned by your ordinary user.
+**A:** You are probably running, or at some point ran, Skyscraper with `sudo Skyscraper` instead of just `Skyscraper`. Doing so will result in all sorts of weird behaviour as Skyscraper was then run as the `root` user instead of the ordinary user. Depending on what command-line parameters you ran Skyscraper with, this will have caused permission issues for your files in `/home/USER/RetroPie/roms` subfolders and might also have caused permission issues with the `/home/USER/.skyscraper` folder.
 
-Remember, never run anything with `sudo` unless you are specifically told to do so.
+This is a common problem for new Linux users who are used to working with Windows. In Linux you rarely need Administrator privileges. Running a command with `sudo` in front of it will run it as the root / Administrator user. And any folders or files being generated while that command runs, will then be owned by root. When you run software as the normal user afterwards and it tries to write to those folders or files, it will fail.
+
+You need to reset those permissions back to be owned by your ordinary user. If you are running RetroPie, the following commands will most likely fix your problem (RUN AT YOUR OWN RISK!):
+```
+$ sudo chown -R pi:pi /home/pi/.skyscraper
+$ sudo chown -R pi:pi /home/pi/RetroPie/roms
+```
+**Remember, never run anything with `sudo` unless you are specifically told to do so (as you are in the above fix).**
 </details>
 
 #### Q: I generated a game list for the Pegasus frontend. When I fire up Pegasus the data is there, but it doesn't look very good. Why is that?
