@@ -72,3 +72,23 @@ WARNING!!! Do *not* run Skyscraper with `sudo Skyscraper`. `sudo` is *not* neede
 
 Remember, never run anything with `sudo` unless you are specifically told to do so.
 </details>
+
+#### Q: I generated a game list for the Pegasus frontend. When I fire up Pegasus the data is there, but it doesn't look very good. Why is that?
+<details>
+  <summary>Expand answer...</summary>
+
+**A:** Skyscraper contains a powerful artwork compositor that can be customize the exported screenshot, boxart etc. any way you like. This is done through the `/home/USER/.skyscraper/artwork.xml` file. The default configuration for this file is made to look good when exporting for the default frontend EmulationStation. When you use a different frontend, you need to customize this file a bit to make it look good. For Pegasus I suggest something like this:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<artwork>
+  <output type="screenshot" width="640"/>
+  <output type="cover" width="640" height="480">
+    <layer resource="cover" height="480" align="center" valign="middle">
+      <gamebox side="wheel" rotate="90"/>
+    </layer>
+  </output>
+  <output type="wheel" height="200"/>
+</artwork>
+```
+Read more about how to set up a custom `artwork.xml` [here](ARTWORK.md).
+</details>
