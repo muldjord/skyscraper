@@ -7,7 +7,7 @@ WARNING! Skyscraper will overwrite your game list (obviously). So if you have sp
 
 NOTE! When generating a game list for any frontend, Skyscraper will try to preserve certain metadata. Check the frontend sections below for more information on what metadata is preserved per frontend.
 
-#### EmulationStation
+#### EmulationStation (default)
 * Default game list location: `/home/pi/USER/RetroPie/roms/PLATFORM`
 * Default game list filename: `gamelist.xml`
 
