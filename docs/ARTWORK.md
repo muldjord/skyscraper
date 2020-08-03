@@ -7,7 +7,7 @@ Skyscraper allows you to fully customize how you want the final frontend artwork
 
 Read on for an example `artwork.xml` and a more thorough description of the `<output>`, `<layer>` and the various available effect nodes.
 
-NOTE 1!!! Some users seem to have a habbit of editing the `~/skysource/artwork.xml` file. THIS IS NOT THE CORRECT FILE! Please read the first paragraph. :)
+NOTE 1!!! Some users seem to have a habbit of editing the `/home/USER/skysource/artwork.xml` file. THIS IS NOT THE CORRECT FILE! Please read the first paragraph. :)
 
 NOTE 2! Every time you change the artwork configuration, remember to regenerate the game list. Your changes won't take effect until you do so. Read more about this [here](https://github.com/muldjord/skyscraper/blob/master/docs/USECASE.md#the-game-list-generation-phase).
 
