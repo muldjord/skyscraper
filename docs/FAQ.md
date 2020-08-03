@@ -101,3 +101,13 @@ The above commands *should* be run with sudo, as we need root permission to rese
 ```
 Read more about how to set up a custom `artwork.xml` [here](ARTWORK.md).
 </details>
+
+#### Q: I've changed my `artwork.xml` configuration and regenerated the game list, but it still looks the same in the frontend. Why is that?
+<details>
+  <summary>Expand answer...</summary>
+
+**A:** Did you perhaps edit `/home/USER/skysource/artwork.xml` instead of `/home/USER/.skyscraper/artwork.xml`? The latter is the one you need to edit.
+
+Read more about how to set up a custom `artwork.xml` [here](ARTWORK.md).
+</details>
+
