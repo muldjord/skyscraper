@@ -322,27 +322,29 @@ QString AttractMode::getMediaTypeFolder(QString type, bool detectVideoPath)
   if(emulatorFile.exists() && emulatorFile.open(QIODevice::ReadOnly)) {
     while(!emulatorFile.atEnd()) {
       QByteArray line = emulatorFile.readLine();
-      line = line.simplified();
+      line = line.trimmed();
       line.replace("~", QDir::homePath().toUtf8());
       line.replace("$HOME", QDir::homePath().toUtf8());
-      QList<QByteArray> snippets = line.split(' ');
-      if(snippets.length() >= 3 &&
-	 snippets.takeFirst() == "artwork" &&
-	 snippets.takeFirst() == type) {
-	QList<QByteArray> paths = snippets.takeFirst().split(';');
-	// This is some weird case where the 'snap' artwork line can contain multiple paths
-	// and one of those paths is actually the video path. It was reported in an issue
-	// and this is seemlingly how it should work for those cases where the user does not
-	// use an 'artwork video' line.
-	if(detectVideoPath) {
-	  for(const auto &path: paths) {
-	    if(path.contains("video")) {
-	      mediaTypeFolder = path;
-	      break;
+      QString lookFor = "artwork";
+      if(line.left(lookFor.length()) == lookFor) {
+	line = line.remove(0, lookFor.length()).trimmed();
+	if(line.left(type.length()) == type) {
+	  line = line.remove(0, type.length()).trimmed();
+	  QList<QByteArray> paths = line.split(';');
+	  // This is some weird case where the 'snap' artwork line can contain multiple paths
+	  // and one of those paths is actually the video path. It was reported in an issue
+	  // and this is seemlingly how it should work for those cases where the user does not
+	  // use an 'artwork video' line.
+	  if(detectVideoPath) {
+	    for(const auto &path: paths) {
+	      if(path.contains("video")) {
+		mediaTypeFolder = path;
+		break;
+	      }
 	    }
+	  } else {
+	    mediaTypeFolder = paths.first();
 	  }
-	} else {
-	  mediaTypeFolder = paths.first();
 	}
       }
     }
