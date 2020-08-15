@@ -154,7 +154,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
 #### Version 3.5.8 (16th August 2020)
-* Now supports spaces in Attract-Mode media paths
+* Now supports spaces in Attract-Mode media paths (Thank you to user 'o0alucard0o' for pointing this out)
 
 #### Version 3.5.7 (31st July 2020)
 * Now uses regular expressions when converting text to Pegasus format for better compatibility
