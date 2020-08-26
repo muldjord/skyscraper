@@ -29,9 +29,9 @@ GameEntry::GameEntry()
 {
 }
 
-int GameEntry::completeness(bool videoEnabled)
+void GameEntry::calculateCompleteness(bool videoEnabled)
 {
-  double completeness = 100.0;
+  completeness = 100.0;
   int noOfTypes = 13;
   if(videoEnabled) {
     noOfTypes += 1;
@@ -82,7 +82,10 @@ int GameEntry::completeness(bool videoEnabled)
   if(videoEnabled && videoFormat.isEmpty()) {
     completeness -= valuePerType;
   }
+}
 
+int GameEntry::getCompleteness() const
+{
   return (int)completeness;
 }
 

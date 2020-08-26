@@ -446,7 +446,7 @@ QString Skyscraper::secsToString(const int &secs)
   return hours + ":" + minutes + ":" + seconds;
 }
 
-void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
+void Skyscraper::entryReady(const GameEntry &entry, const QString &output, const QString &debug)
 {
   QMutexLocker locker(&entryMutex);
 
@@ -458,11 +458,8 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
 
   if(entry.found) {
     found++;
-    avgCompleteness += entry.completeness(config.videos);
+    avgCompleteness += entry.getCompleteness();
     avgSearchMatch += entry.searchMatch;
-    // Remove unnecessary media data to save memory before adding it to final entrylist
-    // At this point data has been saved to disc, so we don't need it anymore.
-    entry.resetMedia();
     gameEntries.append(entry);
   } else {
     notFound++;
@@ -476,9 +473,6 @@ void Skyscraper::entryReady(GameEntry entry, QString output, QString debug)
     }
     skippedFile.close();
     if(config.skipped) {
-      // Remove unnecessary media data to save memory before adding it to final entrylist
-      // At this point data has been saved to disc, so we don't need it anymore.
-      entry.resetMedia();
       gameEntries.append(entry);
     }
   }

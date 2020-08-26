@@ -55,7 +55,7 @@ signals:
   void finished();
 
 private slots:
-  void entryReady(GameEntry entry, QString output, QString debug);
+  void entryReady(const GameEntry &entry, const QString &output, const QString &debug);
   void checkThreads();
 
 private:

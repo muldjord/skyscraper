@@ -47,7 +47,8 @@ class GameEntry
 {
 public:
   GameEntry();
-  int completeness(bool videoEnabled = false);
+  void calculateCompleteness(bool videoEnabled = false);
+  int getCompleteness() const;
   void resetMedia();
 
   QString id = "";
@@ -124,6 +125,9 @@ public:
 
   // Pegasus specific metadata for preservation
   QList<QPair<QString, QString> > pSValuePairs;
+
+private:
+  double completeness = 0;
   
 };
 

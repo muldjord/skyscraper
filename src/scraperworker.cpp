@@ -140,6 +140,7 @@ void ScraperWorker::run()
       game.found = false;
       game.title = compareTitle;
       output.append("\033[1;33m---- Skipping game '" + info.completeBaseName() + "' since 'onlymissing' flag has been set ----\033[0m\n\n");
+      game.resetMedia();
       emit entryReady(game, output, debug);
       if(forceEnd) {
 	break;
@@ -346,6 +347,8 @@ void ScraperWorker::run()
     if(!forceEnd) {
       forceEnd = limitReached(output);
     }
+    game.calculateCompleteness();
+    game.resetMedia();
     emit entryReady(game, output, debug);
     if(forceEnd) {
       break;

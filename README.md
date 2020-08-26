@@ -153,6 +153,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
+#### Version 3.5.9 (In progress, unreleased)
+* Improved memory consumption when handing entries back to main thread
+
 #### Version 3.5.8 (16th August 2020)
 * Now supports spaces in Attract-Mode media paths (Thank you to user 'o0alucard0o' for pointing this out)
 

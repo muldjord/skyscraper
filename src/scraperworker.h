@@ -48,7 +48,7 @@ public:
 
 signals:
   void allDone();
-  void entryReady(GameEntry entry, QString output, QString debug);
+  void entryReady(const GameEntry &entry, const QString &output, const QString &debug);
 
 private:
   AbstractScraper *scraper;
