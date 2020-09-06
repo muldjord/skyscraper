@@ -155,6 +155,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 
 #### Version 3.5.9 (In progress, unreleased)
 * Improved memory consumption when handing entries back to main thread
+* Added '.au3' file extension to id script exception list (Thank you to 'o0alucard0o' for reporting this)
 
 #### Version 3.5.8 (16th August 2020)
 * Now supports spaces in Attract-Mode media paths (Thank you to user 'o0alucard0o' for pointing this out)
