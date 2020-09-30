@@ -152,6 +152,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
+* Update 'igdb' module to use 'oauth2' as described here: https://api-docs.igdb.com/#account-creation
 
 #### Version 3.5.9 (In progress, unreleased)
 * Improved memory consumption when handing entries back to main thread
