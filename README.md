@@ -1,5 +1,5 @@
 # Skyscraper by Lars Muldjord
-A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system (macOS and Windows too, but not officially supported). It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to generate a game list and artwork for the chosen frontend by combining all of the cached resources.
+A powerful and versatile yet easy to use game scraper written in C++ to  use with multiple frontends running on a Linux system (macOS and Windows too, but not officially supported). It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to generate a game list and artwork for the chosen frontend by combining all of the cached resources.
 
 All Skyscraper features are [well-documented](https://github.com/muldjord/skyscraper/tree/master/docs) and there's also a [F.A.Q](https://github.com/muldjord/skyscraper/blob/master/docs/FAQ.md). If you still have questions after reading the documentation, please consider asking them on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum). The `Issues` page here on Github is for bug reports and feature requests only. Thanks!
 
@@ -18,7 +18,7 @@ Skyscraper supports a variety of different scraping sources called *scraping mod
 * Pegasus
 
 ## How to install Skyscraper
-Follow the steps below to install the latest version of Skyscraper. Lines beginning with `$` signifies a command you need run in a terminal on the machine you wish to install it on.
+Follow the steps mentioned below to install the latest version of Skyscraper. Lines beginning with `$` signifies a command you need run in a terminal on the machine you wish to install it on.
 
 NOTE! If you are using the RetroPie distribution, you have the option to install Skyscraper directly from the RetroPie-Setup script (*you need to update the script before installing it!*). Read more about all of that [here](https://retropie.org.uk/docs/Scraper/#lars-muldjords-skyscraper). If not, read on.
 
@@ -29,7 +29,7 @@ Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debi
 $ sudo apt-get update
 $ sudo apt-get install build-essential qt5-default
 ```
-You might be asked for your sudo password. On RetroPie the default password is `raspberry`. To install Qt5 on other Linux distributions, please refer to their documentation.
+You might be asked for your sudo-password. On RetroPie the default password is `raspberry`. To install Qt5 on other Linux distributions, please refer to their documentation.
 
 #### macOS
 Skyscraper works perfectly on macOS as well but is not officially supported as I don't own a Mac. But with the help of HoraceAndTheSpider and abritinthebay here's the commands needed to install the Qt5 and other prerequisites:
