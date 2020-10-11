@@ -100,8 +100,7 @@ The most important ones are probably:
 * `-s <SCRAPING MODULE>`
 * `-u <USER:PASS>` or `-u <KEY>`
 * `--cache refresh`
-* `--videos`
-* `--unattend`
+* `--flags videos`
 
 If you have your roms in a non-default location (default for RetroPie users is `/home/<USER>/RetroPie/roms/<PLATFORM>`) or wish to export the game list or artwork to non-default locations, you will also need these:
 * `-i <PATH>`
