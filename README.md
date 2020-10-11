@@ -92,6 +92,8 @@ For first-time users I recommend reading the short and to-the-point [use case](d
 Skyscraper is a command line tool, and has many, many options for you to fiddle around with. I recommend taking a look at all of them to familiarize yourself with the possibilites:
 ```
 $ Skyscraper --help
+$ Skyscraper --flags help
+$ Skyscraper --cache help
 ```
 This will give you a description of everything Skyscraper can do if you feel adventurous! For a thorough description of all available options, check [here](docs/CLIHELP.md).
 
