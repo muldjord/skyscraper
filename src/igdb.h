@@ -39,6 +39,11 @@ public:
   Igdb(Settings *config);
 
 private:
+  QTimer limitTimer;
+  QEventLoop limiter;
+
+  QList<QPair<QString, QString > > headers;
+  
   void getSearchResults(QList<GameEntry> &gameEntries,
 			QString searchName, QString platform) override;
   void getGameData(GameEntry &game) override;

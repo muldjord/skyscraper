@@ -1631,36 +1631,31 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1; // Don't change! This limit was set by request from OpenRetro
   } else if(config.scraper == "igdb") {
-    printf("\033[1;33mForcing 1 thread when using the IGDB scraping module\033[0m\n\n");
+    printf("\033[1;33mAdjusting to 4 threads to maximize throughput for IGDB's generous 4 open requests allowed at any given time\033[0m\n\n");
     printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
-    config.threads = 1; // Don't change! This limit was set by request from IGDB
+    config.threads = 4; // Don't change! This limit was set by request from IGDB
     if(config.userCreds.isEmpty()) {
       printf("\033[1;31mThe IGDB module requires a free personal API key to work. Get one at https://api.igdb.com and set it either with '-u <KEY>' or by adding the following to '/home/USER/.skyscraper/config.ini':\n[igdb]\nuserCreds=\"<KEY>\"\n\nSkyscraper can't continue, now exiting...\n");
       exit(1);
     }
-    printf("Fetching key status, just a sec...\n");
-    manager.request("https://api-v3.igdb.com/api_status", "", "user-key", config.userCreds);
+    printf("Fetching app status, just a sec...\n");
+    manager.request("https://id.twitch.tv/oauth2/token"
+		    "?client_id=0um4l9mn3qnkro7mk4yq2ay61nr9lk" 
+		    "&client_secret=" + StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233") +
+		    "&grant_type=client_credentials", "");
     q.exec();
-    QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).array().first().toObject();
+    QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
     if(jsonObj.isEmpty()) {
       printf("Received invalid IGDB server response, maybe their server is having issues, please try again later...\n");
       exit(1);
     }
-    if(jsonObj["authorized"].toBool()) {
-      QString plan = jsonObj["plan"].toString();
-      jsonObj = jsonObj["usage_reports"].toObject()["usage_report"].toObject();
-      QString limit = QString::number(jsonObj["max_value"].toInt());
-      QString requests = QString::number(jsonObj["current_value"].toInt());
-      QString resetDate = jsonObj["period_end"].toString();
-      printf("Plan       : %s\n", plan.toStdString().c_str());
-      printf("Requests   : %s / %s\n", requests.toStdString().c_str(), limit.toStdString().c_str());
-      printf("Period ends: %s\n", resetDate.toStdString().c_str());
+    if(jsonObj.contains("access_token") &&
+       jsonObj.contains("expires_in") &&
+       jsonObj.contains("token_type")) {
+      config.igdbToken = jsonObj["access_token"].toString();
+      printf("Token     : %s\n", config.igdbToken.toStdString().c_str());
+      printf("Expires in: %d seconds\n", jsonObj["expires_in"].toInt());
     } else {
-      if(jsonObj["status"].toInt() == 403) {
-	printf("IGDB monthly request limit has been reached, can't continue with this module...\n");
-      } else {
-	printf("IGDB says key is unauthorized, can't continue with this module...\n");
-      }
       exit(1);
     }
     printf("\n");

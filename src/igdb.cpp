@@ -33,9 +33,25 @@ Igdb::Igdb(Settings *config) : AbstractScraper(config)
 {
   connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
 
-  baseUrl = "https://api-v3.igdb.com";
+  QPair<QString, QString> clientIdHeader;
+  clientIdHeader.first = "Client-ID";
+  clientIdHeader.second = "0um4l9mn3qnkro7mk4yq2ay61nr9lk";
 
-  searchUrlPre = "https://api-v3.igdb.com";
+  QPair<QString, QString> tokenHeader;
+  tokenHeader.first = "Authorization";
+  tokenHeader.second = "Bearer " + config->igdbToken;
+
+  headers.append(clientIdHeader);
+  headers.append(tokenHeader);
+  
+  connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);
+  limitTimer.setInterval(1100); // 1.1 second request limit set a bit above 1.0 as requested by the good folks at IGDB. Don't change! It will break the module stability.
+  limitTimer.setSingleShot(false);
+  limitTimer.start();
+
+  baseUrl = "https://api.igdb.com/v4";
+
+  searchUrlPre = "https://api.igdb.com/v4";
 
   fetchOrder.append(RELEASEDATE);
   fetchOrder.append(RATING);
@@ -51,7 +67,8 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
   // Request list of games but don't allow re-releases ("game.version_parent = null")
-  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", "user-key", config->userCreds);
+  limiter.exec();
+  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", headers);
   q.exec();
   data = manager.getData();
 
@@ -91,7 +108,8 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void Igdb::getGameData(GameEntry &game)
 {
-  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.date,release_dates.region,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", "user-key", config->userCreds);
+  limiter.exec();
+  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.date,release_dates.region,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", headers);
   q.exec();
   data = manager.getData();
 

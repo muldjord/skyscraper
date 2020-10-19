@@ -40,6 +40,7 @@ struct Settings {
   QString platform = "";
   QString scraper = "";
   QString userCreds = "";
+  QString igdbToken = "";
   QString inputFolder = "";
   QString gameListFolder = "";
   QString mediaFolder = "";
