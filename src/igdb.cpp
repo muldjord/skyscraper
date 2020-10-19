@@ -73,7 +73,7 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   data = manager.getData();
 
   if(data.contains("Limits exceeded")) {
-    printf("\033[1;31mYour monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
+    printf("\033[1;31mThe request limit has been exceeded. Please lower number of threads with '-t 1' if this problem persists. Can't continue...\033[0m\n");
     reqRemaining = 0;
   }
 

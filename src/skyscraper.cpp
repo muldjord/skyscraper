@@ -1631,32 +1631,46 @@ void Skyscraper::doPrescrapeJobs()
     printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
     config.threads = 1; // Don't change! This limit was set by request from OpenRetro
   } else if(config.scraper == "igdb") {
-    printf("\033[1;33mAdjusting to 4 threads to maximize throughput for IGDB's generous 4 open requests allowed at any given time\033[0m\n\n");
-    printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
-    config.threads = 4; // Don't change! This limit was set by request from IGDB
-    if(config.userCreds.isEmpty()) {
-      printf("\033[1;31mThe IGDB module requires a free personal API key to work. Get one at https://api.igdb.com and set it either with '-u <KEY>' or by adding the following to '/home/USER/.skyscraper/config.ini':\n[igdb]\nuserCreds=\"<KEY>\"\n\nSkyscraper can't continue, now exiting...\n");
-      exit(1);
+    if(config.threads > 4) {
+      printf("\033[1;33mAdjusting to 4 threads for optimal throughput with IGDB's generous API\033[0m\n\n");
+      printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
+      config.threads = 4; // Don't change! This limit was set by request from IGDB
     }
-    printf("Fetching app status, just a sec...\n");
-    manager.request("https://id.twitch.tv/oauth2/token"
-		    "?client_id=0um4l9mn3qnkro7mk4yq2ay61nr9lk" 
-		    "&client_secret=" + StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233") +
-		    "&grant_type=client_credentials", "");
-    q.exec();
-    QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
-    if(jsonObj.isEmpty()) {
-      printf("Received invalid IGDB server response, maybe their server is having issues, please try again later...\n");
-      exit(1);
+    printf("Fetching IGDB auth token status, just a sec...\n");
+    QFile tokenFile("igdbToken.dat");
+    QByteArray tokenData = "none;0";
+    if(tokenFile.exists() && tokenFile.open(QIODevice::ReadOnly)) {
+      tokenData = tokenFile.readAll().trimmed();
+      if(tokenData.split(';').length() != 2) {
+	tokenData = "none;0";
+      }
+      tokenFile.close();
     }
-    if(jsonObj.contains("access_token") &&
-       jsonObj.contains("expires_in") &&
-       jsonObj.contains("token_type")) {
-      config.igdbToken = jsonObj["access_token"].toString();
-      printf("Token     : %s\n", config.igdbToken.toStdString().c_str());
-      printf("Expires in: %d seconds\n", jsonObj["expires_in"].toInt());
+    config.igdbToken = tokenData.split(';').first();
+    qlonglong tokenLife = tokenData.split(';').last().toLongLong() - QDateTime::currentSecsSinceEpoch();
+    if(tokenLife < 345600) { // 4 days, should be plenty for a scraping run
+      manager.request("https://id.twitch.tv/oauth2/token"
+		      "?client_id=0um4l9mn3qnkro7mk4yq2ay61nr9lk" 
+		      "&client_secret=" + StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233") +
+		      "&grant_type=client_credentials", "");
+      q.exec();
+      QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
+      if(jsonObj.contains("access_token") &&
+	 jsonObj.contains("expires_in") &&
+	 jsonObj.contains("token_type")) {
+	printf("Token acquired! Ready to scrape...\n");
+	config.igdbToken = jsonObj["access_token"].toString();
+	tokenLife = QDateTime::currentSecsSinceEpoch() + jsonObj["expires_in"].toInt();
+	if(tokenFile.open(QIODevice::WriteOnly)) {
+	  tokenFile.write(config.igdbToken.toUtf8() + ";" + QByteArray::number(tokenLife));
+	  tokenFile.close();
+	}
+      } else {
+	printf("Received invalid IGDB server response, maybe their server is having issues, please try again later...\n");
+	exit(1);
+      }
     } else {
-      exit(1);
+      printf("Previous token still valid! Ready to scrape...\n");
     }
     printf("\n");
   } else if(config.scraper == "mobygames" && config.threads != 1) {
