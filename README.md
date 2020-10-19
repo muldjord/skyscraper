@@ -154,6 +154,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Implemented a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Update 'igdb' module to use 'oauth2' as described here: https://api-docs.igdb.com/#account-creation
+* Add 'service check' to verify API status of online source before starting scraping run.
 
 #### Version 3.5.9 (In progress, unreleased)
 * Improved memory consumption when handing entries back to main thread
