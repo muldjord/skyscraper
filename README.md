@@ -157,6 +157,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add 'service check' to verify API status of online source before starting scraping run.
 
 #### Version 3.5.9 (In progress, unreleased)
+* MAJOR: Implemented the new IGDB v4 authentication method. IGDB will now work again, and does not require a user key
 * Improved memory consumption when handing entries back to main thread
 * Added '.au3' file extension to id script exception list (Thank you to 'o0alucard0o' for reporting this)
 

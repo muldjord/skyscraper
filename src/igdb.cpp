@@ -72,19 +72,15 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   q.exec();
   data = manager.getData();
 
-  if(data.contains("Limits exceeded")) {
-    printf("\033[1;31mThe request limit has been exceeded. Please lower number of threads with '-t 1' if this problem persists. Can't continue...\033[0m\n");
-    reqRemaining = 0;
-  }
-
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
   }
 
-  if(jsonDoc.array().first().toObject()["status"].toInt() == 403) {
-    printf("\033[1;31mYour monthly limit for the IGDB scraping module has been reached, can't continue...\033[0m\n");
+  if(jsonDoc.object()["message"].toString() == "Too Many Requests") { 
+    printf("\033[1;31mThe requests per second limit has been exceeded. Please lower number of threads with '-t 1' to avoid this. Can't continue...\033[0m\n");
     reqRemaining = 0;
+    return;
   }
 
   QJsonArray jsonGames = jsonDoc.array();
