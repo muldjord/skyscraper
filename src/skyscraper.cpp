@@ -1638,20 +1638,25 @@ void Skyscraper::doPrescrapeJobs()
     }
     printf("Fetching IGDB auth token status, just a sec...\n");
     QFile tokenFile("igdbToken.dat");
-    QByteArray tokenData = "none;0";
+    QByteArray tokenData = "0um4l9mn3qnkro7mk4yq2ay61nr9lk;none;0";
     if(tokenFile.exists() && tokenFile.open(QIODevice::ReadOnly)) {
       tokenData = tokenFile.readAll().trimmed();
-      if(tokenData.split(';').length() != 2) {
-	tokenData = "none;0";
+      if(tokenData.split(';').length() != 3) {
+	tokenData = tokenData.split(';').at(0) + ";none;0";
       }
       tokenFile.close();
     }
-    config.igdbToken = tokenData.split(';').first();
-    qlonglong tokenLife = tokenData.split(';').last().toLongLong() - QDateTime::currentSecsSinceEpoch();
-    if(tokenLife < 345600) { // 4 days, should be plenty for a scraping run
+    config.igdbToken = tokenData.split(';').at(1);
+    qlonglong tokenLife = tokenData.split(';').at(2).toLongLong() - QDateTime::currentSecsSinceEpoch();
+    if((!config.user.isEmpty() && tokenData.split(';').at(0) != config.user) ||
+       tokenLife < 345600) { // 4 days, should be plenty for a scraping run
+      QString blah = StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233");
+      if(!config.password.isEmpty()) {
+	blah = config.password;
+      }
       manager.request("https://id.twitch.tv/oauth2/token"
-		      "?client_id=0um4l9mn3qnkro7mk4yq2ay61nr9lk" 
-		      "&client_secret=" + StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233") +
+		      "?client_id=" + tokenData.split(';').at(0) +
+		      "&client_secret=" + blah +
 		      "&grant_type=client_credentials", "");
       q.exec();
       QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
@@ -1662,11 +1667,11 @@ void Skyscraper::doPrescrapeJobs()
 	config.igdbToken = jsonObj["access_token"].toString();
 	tokenLife = QDateTime::currentSecsSinceEpoch() + jsonObj["expires_in"].toInt();
 	if(tokenFile.open(QIODevice::WriteOnly)) {
-	  tokenFile.write(config.igdbToken.toUtf8() + ";" + QByteArray::number(tokenLife));
+	  tokenFile.write(tokenData.split(';').at(0) + ";" + config.igdbToken.toUtf8() + ";" + QByteArray::number(tokenLife));
 	  tokenFile.close();
 	}
       } else {
-	printf("Received invalid IGDB server response, maybe their server is having issues, please try again later...\n");
+	printf("\033[1;33mReceived invalid IGDB server response. This can be caused by server issues or credential issues. Maybe you entered your credentials incorrectly in the configuration. Read more about that here: 'https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md#igdb'\033[0m\n");
 	exit(1);
       }
     } else {
