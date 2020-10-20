@@ -1650,13 +1650,15 @@ void Skyscraper::doPrescrapeJobs()
     qlonglong tokenLife = tokenData.split(';').at(2).toLongLong() - QDateTime::currentSecsSinceEpoch();
     if((!config.user.isEmpty() && tokenData.split(';').at(0) != config.user) ||
        tokenLife < 345600) { // 4 days, should be plenty for a scraping run
-      QString blah = StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233");
-      if(!config.password.isEmpty()) {
-	blah = config.password;
+      QString first = tokenData.split(';').at(0);
+      QString second = StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233");
+      if(!config.password.isEmpty() && !config.user.isEmpty()) {
+	first = config.user;
+	second = config.password;
       }
       manager.request("https://id.twitch.tv/oauth2/token"
-		      "?client_id=" + tokenData.split(';').at(0) +
-		      "&client_secret=" + blah +
+		      "?client_id=" + first +
+		      "&client_secret=" + second +
 		      "&grant_type=client_credentials", "");
       q.exec();
       QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
