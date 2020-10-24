@@ -1669,8 +1669,8 @@ void Skyscraper::doPrescrapeJobs()
       if(jsonObj.contains("access_token") &&
 	 jsonObj.contains("expires_in") &&
 	 jsonObj.contains("token_type")) {
-	printf("Token acquired, ready to scrape!\n");
 	config.igdbToken = jsonObj["access_token"].toString();
+	printf("Token '%s' acquired, ready to scrape!\n", config.igdbToken.toStdString().c_str());
 	tokenLife = QDateTime::currentSecsSinceEpoch() + jsonObj["expires_in"].toInt();
 	if(tokenFile.open(QIODevice::WriteOnly)) {
 	  tokenFile.write(config.user.toUtf8() + ";" + config.igdbToken.toUtf8() + ";" + QByteArray::number(QDateTime::currentSecsSinceEpoch() + tokenLife));
@@ -1681,7 +1681,7 @@ void Skyscraper::doPrescrapeJobs()
 	exit(1);
       }
     } else {
-      printf("Previous token still valid, ready to scrape!\n");
+      printf("Cached token '%s' still valid, ready to scrape!\n", config.igdbToken.toStdString().c_str());
     }
     printf("\n");
   } else if(config.scraper == "mobygames" && config.threads != 1) {
