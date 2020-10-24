@@ -71,14 +71,14 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
   manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", headers);
   q.exec();
   data = manager.getData();
-
+  
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     return;
   }
 
   if(jsonDoc.object()["message"].toString() == "Too Many Requests") { 
-    printf("\033[1;31mThe IGDB requests per second limit has been exceeded (other Skyscraper users are probably using the IGDB module). Please try again later or consider creating your own personal credentials to avoid this issue. Read more about how at 'https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md#igdb'. Now quitting...\033[0m\n");
+    printf("\033[1;31mThe IGDB requests per second limit has been exceeded, can't continue!\033[0m\n");
     reqRemaining = 0;
     return;
   }
