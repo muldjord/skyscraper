@@ -35,7 +35,7 @@ Igdb::Igdb(Settings *config) : AbstractScraper(config)
 
   QPair<QString, QString> clientIdHeader;
   clientIdHeader.first = "Client-ID";
-  clientIdHeader.second = "0um4l9mn3qnkro7mk4yq2ay61nr9lk";
+  clientIdHeader.second = config->user;
 
   QPair<QString, QString> tokenHeader;
   tokenHeader.first = "Authorization";
