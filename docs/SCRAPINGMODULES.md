@@ -107,7 +107,7 @@ Please use this module sparingly. And only ever use it to scrape those last few 
 * Type: *Online*
 * Website: *[www.igdb.com](https://www.igdb.com)*
 * Type: *File name search based*
-* User credential support: *Yes, free private API client-id and secret-key recommended, read more below*
+* User credential support: *Yes, free private API client-id and secret-key required! Read more below*
 * API request limit: *A maximum of 4 requests per seconds is allowed*
 * Thread limit: *4 (each being limited to 1 request per second)*
 * Platform support: *[List](https://www.igdb.com/platforms)*
@@ -118,21 +118,19 @@ Please use this module sparingly. And only ever use it to scrape those last few 
 
 IGDB is a relatively new database on the market. But absolutely not a bad one at that. It has a couple caveats though, as the database doesn't distinguish between platform versions of the same game when it comes to any artwork resources (they are working to implement this at some point). This makes it less usable in a retro game scraping context as many of the games differ drastically visually between the old platforms. For that reason alone, this module will only provide textual data for your roms for the time being.
 
-It is *highly* recommended to register with the Twitch dev program (IGDB is owned by Twitch) and create a client-id and secret-key pair for use with Skyscraper. If you do not register it will use the integrated Skyscraper client-id and secret-id, which will fail if other Skyscraper users are currently using the module!
-
-The process of getting this free client-id and secret-key pair is quite easy. Just follow the following steps:
+It is *required* register with the Twitch dev program (IGDB is owned by Twitch) and create a client-id and secret-key pair for use with Skyscraper. The process of getting this free client-id and secret-key pair is quite easy. Just follow the following steps:
 * Go [here](https://dev.twitch.tv/login) and sign up for an account
 * [Enable](https://www.twitch.tv/settings/security) two-factor authentication (required)
 * [Register](https://dev.twitch.tv/console/apps/create) an application (call it whatever you like)
 * [Manage](https://dev.twitch.tv/console/apps) the application
-* Add ```http://localhost``` as OAuth redirect URL
+* Add ```http://localhost``` as OAuth redirect URL (I don't know what this is, but this seems to work)
 * Generate a secret-key by clicking ``New secret``
 * Add your client-id and secret-key pair to the Skyscraper config ini (```/home/USER/.skyscraper/config.ini```):
 ```
 [igdb]
 userCreds="CLIENTID:SECRETKEY"
 ```
-Substitute CLIENTID and SECRETKEY with your own details. And that's it, you now have your own personal request limits.
+Substitute CLIENTID and SECRETKEY with your own details. And that's it, you should now be able to use the IGDB module.
 
 #### World of Spectrum
 * Shortname: *`worldofspectrum`*
