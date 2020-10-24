@@ -1625,40 +1625,44 @@ void Skyscraper::doPrescrapeJobs()
   }
 
   if(config.scraper == "arcadedb" && config.threads != 1) {
-    printf("\033[1;33mForcing 1 thread to accomodate limits in ArcadeDB scraping module\033[0m\n\n");
+    printf("\033[1;33mForcing 1 thread to accomodate limits in the ArcadeDB API\033[0m\n\n");
     config.threads = 1; // Don't change! This limit was set by request from ArcadeDB
   } else if(config.scraper == "openretro" && config.threads != 1) {
-    printf("\033[1;33mForcing 1 thread to accomodate limits in OpenRetro scraping module\033[0m\n\n");
+    printf("\033[1;33mForcing 1 thread to accomodate limits in the OpenRetro API\033[0m\n\n");
     config.threads = 1; // Don't change! This limit was set by request from OpenRetro
   } else if(config.scraper == "igdb") {
     if(config.threads > 4) {
-      printf("\033[1;33mAdjusting to 4 threads for optimal throughput with IGDB's generous API\033[0m\n\n");
+      printf("\033[1;33mAdjusting to 4 threads to accomodate limits in the IGDB API\033[0m\n\n");
       printf("\033[1;32mTHIS MODULE IS POWERED BY IGDB.COM\033[0m\n");
       config.threads = 4; // Don't change! This limit was set by request from IGDB
     }
-    printf("Fetching IGDB auth token status, just a sec...\n");
+    if(config.user.isEmpty() || config.password.isEmpty()) {
+      printf("The IGDB scraping module requires free user credentials to work. Read more about that here: 'https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md#igdb'\n");
+      exit(1);
+    }
+    printf("Fetching IGDB authentication token status, just a sec...\n");
     QFile tokenFile("igdbToken.dat");
-    QByteArray tokenData = "0um4l9mn3qnkro7mk4yq2ay61nr9lk;none;0";
+    QByteArray tokenData = "";
     if(tokenFile.exists() && tokenFile.open(QIODevice::ReadOnly)) {
       tokenData = tokenFile.readAll().trimmed();
-      if(tokenData.split(';').length() != 3) {
-	tokenData = tokenData.split(';').at(0) + ";none;0";
-      }
       tokenFile.close();
     }
-    config.igdbToken = tokenData.split(';').at(1);
+    if(tokenData.split(';').length() != 3) {
+      tokenData = "user;token;0";
+    }
+    bool updateToken = false;
+    if(config.user != tokenData.split(';').at(0)) {
+      updateToken = true;
+    }
     qlonglong tokenLife = tokenData.split(';').at(2).toLongLong() - QDateTime::currentSecsSinceEpoch();
-    if((!config.user.isEmpty() && tokenData.split(';').at(0) != config.user) ||
-       tokenLife < 345600) { // 4 days, should be plenty for a scraping run
-      QString first = tokenData.split(';').at(0);
-      QString second = StrTools::unMagic("199;214;240;192;233;150;210;190;225;220;231;176;220;170;202;214;206;211;163;234;171;229;225;228;218;171;212;127;180;233");
-      if(!config.password.isEmpty() && !config.user.isEmpty()) {
-	first = config.user;
-	second = config.password;
-      }
+    if(tokenLife < 60 * 60 * 24 * 2) { // 2 days, should be plenty for a scraping run
+      updateToken = true;
+    }
+    config.igdbToken = tokenData.split(';').at(1);
+    if(updateToken) {
       manager.request("https://id.twitch.tv/oauth2/token"
-		      "?client_id=" + first +
-		      "&client_secret=" + second +
+		      "?client_id=" + config.user +
+		      "&client_secret=" + config.password +
 		      "&grant_type=client_credentials", "");
       q.exec();
       QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
@@ -1669,11 +1673,11 @@ void Skyscraper::doPrescrapeJobs()
 	config.igdbToken = jsonObj["access_token"].toString();
 	tokenLife = QDateTime::currentSecsSinceEpoch() + jsonObj["expires_in"].toInt();
 	if(tokenFile.open(QIODevice::WriteOnly)) {
-	  tokenFile.write(tokenData.split(';').at(0) + ";" + config.igdbToken.toUtf8() + ";" + QByteArray::number(tokenLife));
+	  tokenFile.write(config.user.toUtf8() + ";" + config.igdbToken.toUtf8() + ";" + QByteArray::number(QDateTime::currentSecsSinceEpoch() + tokenLife));
 	  tokenFile.close();
 	}
       } else {
-	printf("\033[1;33mReceived invalid IGDB server response. This can be caused by server issues or credential issues. Maybe you entered your credentials incorrectly in the configuration. Read more about that here: 'https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md#igdb'\033[0m\n");
+	printf("\033[1;33mReceived invalid IGDB server response. This can be caused by server issues or maybe you entered your credentials incorrectly in the Skyscraper configuration. Read more about that here: 'https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md#igdb'\033[0m\n");
 	exit(1);
       }
     } else {
