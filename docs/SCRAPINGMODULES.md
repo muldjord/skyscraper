@@ -123,7 +123,7 @@ It is *required* to register with the Twitch dev program (IGDB is owned by Twitc
 * [Enable](https://www.twitch.tv/settings/security) two-factor authentication (required)
 * [Register](https://dev.twitch.tv/console/apps/create) an application (call it whatever you like)
 * [Manage](https://dev.twitch.tv/console/apps) the application
-* Add ```http://localhost``` as OAuth redirect URL (I don't know what this is, but this seems to work)
+* Add ```http://localhost``` as OAuth redirect URL
 * Generate a secret-key by clicking ``New secret``
 * Add your client-id and secret-key pair to the Skyscraper config ini (```/home/USER/.skyscraper/config.ini```):
 ```
