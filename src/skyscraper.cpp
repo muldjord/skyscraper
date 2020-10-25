@@ -1654,7 +1654,7 @@ void Skyscraper::doPrescrapeJobs()
     if(config.user != tokenData.split(';').at(0)) {
       updateToken = true;
     }
-    qlonglong tokenLife = tokenData.split(';').at(2).toLongLong() - QDateTime::currentSecsSinceEpoch();
+    qlonglong tokenLife = tokenData.split(';').at(2).toLongLong() - (QDateTime::currentMSecsSinceEpoch() / 1000);
     if(tokenLife < 60 * 60 * 24 * 2) { // 2 days, should be plenty for a scraping run
       updateToken = true;
     }
@@ -1671,9 +1671,9 @@ void Skyscraper::doPrescrapeJobs()
 	 jsonObj.contains("token_type")) {
 	config.igdbToken = jsonObj["access_token"].toString();
 	printf("Token '%s' acquired, ready to scrape!\n", config.igdbToken.toStdString().c_str());
-	tokenLife = QDateTime::currentSecsSinceEpoch() + jsonObj["expires_in"].toInt();
+	tokenLife = (QDateTime::currentMSecsSinceEpoch() / 1000) + jsonObj["expires_in"].toInt();
 	if(tokenFile.open(QIODevice::WriteOnly)) {
-	  tokenFile.write(config.user.toUtf8() + ";" + config.igdbToken.toUtf8() + ";" + QByteArray::number(QDateTime::currentSecsSinceEpoch() + tokenLife));
+	  tokenFile.write(config.user.toUtf8() + ";" + config.igdbToken.toUtf8() + ";" + QByteArray::number((QDateTime::currentMSecsSinceEpoch() / 1000) + tokenLife));
 	  tokenFile.close();
 	}
       } else {
