@@ -82,6 +82,9 @@ void ScraperWorker::run()
     scraper = new AbstractScraper(&config);
   }
 
+  if(config.platform == "amigacd32") {
+    config.platform = "amiga";
+  }
   platformOrig = config.platform;
 
   Compositor compositor(&config);
