@@ -156,6 +156,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Update 'igdb' module to use 'oauth2' as described here: https://api-docs.igdb.com/#account-creation
 * Add 'service check' to verify API status of online source before starting scraping run.
 
+#### Version 3.6.1 (27th October 2020)
+* Added 'amigacd32' as a separate platform just because (Thank you to user 'HoraceAndTheSpider' for resetting The Matrix)
+
 #### Version 3.6.0 (25th October 2020)
 * Changed 'SecsSinceEpich' to 'MSecsSinceEpich' to support pre-5.8 Qt versions (Thank you to user 'Hazza4569' for reporting this)
 
