@@ -44,6 +44,7 @@ QStringList Platform::getPlatforms()
   platforms.append("3do");
   platforms.append("3ds");
   platforms.append("amiga");
+  platforms.append("amigacd32");
   platforms.append("amstradcpc");
   platforms.append("apple2");
   platforms.append("arcade");
@@ -133,6 +134,9 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "3ds") {
     scrapers.append("screenscraper");
   } else if(platform == "amiga") {
+    scrapers.append("openretro");
+    scrapers.append("screenscraper");
+  } else if(platform == "amigacd32") {
     scrapers.append("openretro");
     scrapers.append("screenscraper");
   } else if(platform == "amstradcpc") {
@@ -328,6 +332,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.3ds");
   } else if(platform == "amiga") {
     formats.append("*.uae *.adf *.dms *.adz *.rp9 *.lha *.cue *.img *.iso *.hdf");
+  } else if(platform == "amigacd32") {
+    formats.append("*.uae *.adf *.dms *.adz *.rp9 *.lha *.cue *.img *.iso *.hdf");
   } else if(platform == "amstradcpc") {
     formats.append("*.dsk *.cpc");
   } else if(platform == "apple2") {
@@ -493,6 +499,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "3ds") {
     scraper = "cache";
   } else if(platform == "amiga") {
+    scraper = "cache";
+  } else if(platform == "amigacd32") {
     scraper = "cache";
   } else if(platform == "amstradcpc") {
     scraper = "cache";
@@ -664,6 +672,12 @@ QStringList Platform::getAliases(QString platform)
   if(platform == "3ds") {
     aliases.append("nintendo 3ds");
   } else if(platform == "amiga") {
+    aliases.append("amiga (aga)");
+    aliases.append("amiga cdtv");
+    aliases.append("amiga cd32");
+    aliases.append("amiga cd32 (hack)");
+    aliases.append("amiga cd");
+  } else if(platform == "amigacd32") {
     aliases.append("amiga (aga)");
     aliases.append("amiga cdtv");
     aliases.append("amiga cd32");
