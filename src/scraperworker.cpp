@@ -43,13 +43,13 @@
 #include "arcadedb.h"
 #include "esgamelist.h"
 
-ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<Cache> cache,
-			     Settings config, QString threadId)
+ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue,
+			     QSharedPointer<Cache> cache,
+			     QSharedPointer<QNetworkAccessManager> manager,
+			     Settings config,
+			     QString threadId)
+  : config(config), cache(cache), manager(manager), queue(queue), threadId(threadId)
 {
-  this->config = config;
-  this->cache = cache;
-  this->queue = queue;
-  this->threadId = threadId;
 }
 
 ScraperWorker::~ScraperWorker()
@@ -59,27 +59,27 @@ ScraperWorker::~ScraperWorker()
 void ScraperWorker::run()
 {
   if(config.scraper == "openretro") {
-    scraper = new OpenRetro(&config);
+    scraper = new OpenRetro(&config, manager);
   } else if(config.scraper == "thegamesdb") {
-    scraper = new TheGamesDb(&config);
+    scraper = new TheGamesDb(&config, manager);
   } else if(config.scraper == "arcadedb") {
-    scraper = new ArcadeDB(&config);
+    scraper = new ArcadeDB(&config, manager);
   } else if(config.scraper == "screenscraper") {
-    scraper = new ScreenScraper(&config);
+    scraper = new ScreenScraper(&config, manager);
   } else if(config.scraper == "igdb") {
-    scraper = new Igdb(&config);
+    scraper = new Igdb(&config, manager);
   } else if(config.scraper == "mobygames") {
-    scraper = new MobyGames(&config);
+    scraper = new MobyGames(&config, manager);
   } else if(config.scraper == "worldofspectrum") {
-    scraper = new WorldOfSpectrum(&config);
+    scraper = new WorldOfSpectrum(&config, manager);
   } else if(config.scraper == "esgamelist") {
-    scraper = new ESGameList(&config);
+    scraper = new ESGameList(&config, manager);
   } else if(config.scraper == "cache") {
-    scraper = new LocalScraper(&config);
+    scraper = new LocalScraper(&config, manager);
   } else if(config.scraper == "import") {
-    scraper = new ImportScraper(&config);
+    scraper = new ImportScraper(&config, manager);
   } else {
-    scraper = new AbstractScraper(&config);
+    scraper = new AbstractScraper(&config, manager);
   }
 
   if(config.platform == "amigacd32") {

@@ -36,7 +36,7 @@ class Igdb : public AbstractScraper
   Q_OBJECT
 
 public:
-  Igdb(Settings *config);
+  Igdb(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
 
 private:
   QTimer limitTimer;

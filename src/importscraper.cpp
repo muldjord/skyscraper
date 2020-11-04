@@ -27,7 +27,9 @@
 
 #include "importscraper.h"
 
-ImportScraper::ImportScraper(Settings *config) : AbstractScraper(config)
+ImportScraper::ImportScraper(Settings *config,
+			     QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
   fetchOrder.append(TITLE);
   fetchOrder.append(DEVELOPER);

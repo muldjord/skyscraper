@@ -29,10 +29,10 @@
 
 #include <QRegularExpression>
 
-OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
+OpenRetro::OpenRetro(Settings *config,
+		     QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-
   baseUrl = "https://openretro.org";
 
   searchUrlPre = "https://openretro.org";
@@ -91,13 +91,13 @@ OpenRetro::OpenRetro(Settings *config) : AbstractScraper(config)
 void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
 				 QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + searchName + (searchName.left(6) == "/game/"?"":searchUrlPost));
+  netComm->request(searchUrlPre + searchName + (searchName.left(6) == "/game/"?"":searchUrlPost));
   q.exec();
-  while(!manager.getRedirUrl().isEmpty()) {
-    manager.request(manager.getRedirUrl());
+  while(!netComm->getRedirUrl().isEmpty()) {
+    netComm->request(netComm->getRedirUrl());
     q.exec();
   }
-  data = manager.getData();
+  data = netComm->getData();
 
   if(data.isEmpty())
     return;
@@ -154,9 +154,9 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
 void OpenRetro::getGameData(GameEntry &game)
 {
   if(!game.url.isEmpty()) {
-    manager.request(game.url);
+    netComm->request(game.url);
     q.exec();
-    data = manager.getData();
+    data = netComm->getData();
   }
 
   // Remove all the variants so we don't choose between their screenshots
@@ -276,12 +276,12 @@ void OpenRetro::getCover(GameEntry &game)
   if(coverUrl.left(4) != "http") {
     coverUrl.prepend(baseUrl + (coverUrl.left(1) == "/"?"":"/"));
   }
-  manager.request(coverUrl);
+  netComm->request(coverUrl);
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.coverData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.coverData = netComm->getData();
   }
 }
 
@@ -302,12 +302,12 @@ void OpenRetro::getMarquee(GameEntry &game)
   if(marqueeUrl.left(4) != "http") {
     marqueeUrl.prepend(baseUrl + (marqueeUrl.left(1) == "/"?"":"/"));
   }
-  manager.request(marqueeUrl);
+  netComm->request(marqueeUrl);
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.marqueeData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.marqueeData = netComm->getData();
   }
 }
 

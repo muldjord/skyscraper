@@ -33,7 +33,7 @@ class ImportScraper : public AbstractScraper
   Q_OBJECT
 
 public:
-  ImportScraper(Settings *config);
+  ImportScraper(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
   void runPasses(QList<GameEntry> &gameEntries, const QFileInfo &info, QString &, QString &) override;
   void getGameData(GameEntry &game) override;
   QString getCompareTitle(QFileInfo info) override;

@@ -30,12 +30,12 @@
 #include <QNetworkReply>
 #include <QTimer>
 
-class NetComm : public QNetworkAccessManager
+class NetComm : public QObject
 {
   Q_OBJECT
 
 public:
-  NetComm();
+  NetComm(QSharedPointer<QNetworkAccessManager> manager);
   void request(QString query, QString postData = QString(), QList<QPair<QString, QString> > headers = QList<QPair<QString, QString> >());
   QByteArray getData();
   QNetworkReply::NetworkError getError(const int &verbosity = 0);
@@ -51,6 +51,7 @@ signals:
   void dataReady();
 
 private:
+  QSharedPointer<QNetworkAccessManager> manager;
   QTimer requestTimer;
   QByteArray data;
   QNetworkReply::NetworkError error;

@@ -33,7 +33,7 @@ class ESGameList: public AbstractScraper {
 Q_OBJECT
 
 public:
-  ESGameList(Settings *config);
+  ESGameList(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
 
 private:
   QList<QString> getSearchNames(const QFileInfo &info) override;

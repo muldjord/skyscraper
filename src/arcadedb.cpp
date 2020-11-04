@@ -28,10 +28,10 @@
 #include "arcadedb.h"
 #include "strtools.h"
 
-ArcadeDB::ArcadeDB(Settings *config) : AbstractScraper(config)
+ArcadeDB::ArcadeDB(Settings *config,
+		   QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-
   baseUrl = "http://adb.arcadeitalia.net";
 
   searchUrlPre = "http://adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&lang=en&use_parent=1&game_name=";
@@ -51,9 +51,9 @@ ArcadeDB::ArcadeDB(Settings *config) : AbstractScraper(config)
 void ArcadeDB::getSearchResults(QList<GameEntry> &gameEntries,
 				QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + searchName);
+  netComm->request(searchUrlPre + searchName);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   if(data.indexOf("{\"release\":1,\"result\":[]}") != -1) {
     return;
@@ -167,13 +167,13 @@ void ArcadeDB::getCover(GameEntry &game)
       if(jsonObj.value(key).toString().isEmpty()) {
 	continue;
       }
-      manager.request(jsonObj.value(key).toString());
+      netComm->request(jsonObj.value(key).toString());
       q.exec();
       {
 	QImage image;
-	if(manager.getError() == QNetworkReply::NoError &&
-	   image.loadFromData(manager.getData())) {
-	  game.coverData = manager.getData();
+	if(netComm->getError() == QNetworkReply::NoError &&
+	   image.loadFromData(netComm->getData())) {
+	  game.coverData = netComm->getData();
 	  return;
 	}
       }
@@ -187,23 +187,23 @@ void ArcadeDB::getScreenshot(GameEntry &game)
      jsonObj.value("url_image_ingame").toString().isEmpty()) {
     return;
   }
-  manager.request(jsonObj.value("url_image_ingame").toString());
+  netComm->request(jsonObj.value("url_image_ingame").toString());
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.screenshotData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.screenshotData = netComm->getData();
   }
 }
 
 void ArcadeDB::getWheel(GameEntry &game)
 {
-  manager.request("http://adb.arcadeitalia.net/media/mame.current/decals/" + jsonObj["game_name"].toString() + ".png");
+  netComm->request("http://adb.arcadeitalia.net/media/mame.current/decals/" + jsonObj["game_name"].toString() + ".png");
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.wheelData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.wheelData = netComm->getData();
   }
 }
 
@@ -213,12 +213,12 @@ void ArcadeDB::getMarquee(GameEntry &game)
      jsonObj.value("url_image_marquee").toString().isEmpty()) {
     return;
   }
-  manager.request(jsonObj.value("url_image_marquee").toString());
+  netComm->request(jsonObj.value("url_image_marquee").toString());
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.marqueeData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.marqueeData = netComm->getData();
   }
 }
 
@@ -228,10 +228,10 @@ void ArcadeDB::getVideo(GameEntry &game)
      jsonObj.value("url_video_shortplay").toString().isEmpty()) {
     return;
   }
-  manager.request(jsonObj.value("url_video_shortplay").toString());
+  netComm->request(jsonObj.value("url_video_shortplay").toString());
   q.exec();
-  game.videoData = manager.getData();
-  if(manager.getError() == QNetworkReply::NoError &&
+  game.videoData = netComm->getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
      game.videoData.length() > 4096) {
     game.videoFormat = "mp4";
   } else {

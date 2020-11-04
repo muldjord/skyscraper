@@ -34,10 +34,10 @@
 constexpr int RETRIESMAX = 4;
 constexpr int MINARTSIZE = 256;
 
-ScreenScraper::ScreenScraper(Settings *config) : AbstractScraper(config)
+ScreenScraper::ScreenScraper(Settings *config,
+			     QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-
   connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);
   limitTimer.setInterval(1200); // 1.2 second request limit set a bit above 1.0 as requested by the good folks at ScreenScraper. Don't change!
   limitTimer.setSingleShot(false);
@@ -74,9 +74,9 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
   for(int retries = 0; retries < RETRIESMAX; ++retries) {
     limiter.exec();
-    manager.request(gameUrl);
+    netComm->request(gameUrl);
     q.exec();
-    data = manager.getData();
+    data = netComm->getData();
     
     QByteArray headerData = data.left(1024); // Minor optimization with minimal more RAM usage
     // Do error checks on headerData. It's more stable than checking the potentially faulty JSON
@@ -331,13 +331,13 @@ void ScreenScraper::getCover(GameEntry &game)
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
-      manager.request(url);
+      netComm->request(url);
       q.exec();
       QImage image;
-      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
-	 manager.getData().size() >= MINARTSIZE &&
-	 image.loadFromData(manager.getData())) {
-	game.coverData = manager.getData();
+      if(netComm->getError(config->verbosity) == QNetworkReply::NoError &&
+	 netComm->getData().size() >= MINARTSIZE &&
+	 image.loadFromData(netComm->getData())) {
+	game.coverData = netComm->getData();
       } else {
 	moveOn = false;
       }
@@ -354,13 +354,13 @@ void ScreenScraper::getScreenshot(GameEntry &game)
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
-      manager.request(url);
+      netComm->request(url);
       q.exec();
       QImage image;
-      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
-	 manager.getData().size() >= MINARTSIZE &&
-	 image.loadFromData(manager.getData())) {
-	game.screenshotData = manager.getData();
+      if(netComm->getError(config->verbosity) == QNetworkReply::NoError &&
+	 netComm->getData().size() >= MINARTSIZE &&
+	 image.loadFromData(netComm->getData())) {
+	game.screenshotData = netComm->getData();
       } else {
 	moveOn = false;
       }
@@ -377,13 +377,13 @@ void ScreenScraper::getWheel(GameEntry &game)
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
-      manager.request(url);
+      netComm->request(url);
       q.exec();
       QImage image;
-      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
-	 manager.getData().size() >= MINARTSIZE &&
-	 image.loadFromData(manager.getData())) {
-	game.wheelData = manager.getData();
+      if(netComm->getError(config->verbosity) == QNetworkReply::NoError &&
+	 netComm->getData().size() >= MINARTSIZE &&
+	 image.loadFromData(netComm->getData())) {
+	game.wheelData = netComm->getData();
       } else {
 	moveOn = false;
       }
@@ -400,13 +400,13 @@ void ScreenScraper::getMarquee(GameEntry &game)
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
-      manager.request(url);
+      netComm->request(url);
       q.exec();
       QImage image;
-      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
-	 manager.getData().size() >= MINARTSIZE &&
-	 image.loadFromData(manager.getData())) {
-	game.marqueeData = manager.getData();
+      if(netComm->getError(config->verbosity) == QNetworkReply::NoError &&
+	 netComm->getData().size() >= MINARTSIZE &&
+	 image.loadFromData(netComm->getData())) {
+	game.marqueeData = netComm->getData();
       } else {
 	moveOn = false;
       }
@@ -428,12 +428,12 @@ void ScreenScraper::getVideo(GameEntry &game)
     bool moveOn = true;
     for(int retries = 0; retries < RETRIESMAX; ++retries) {
       limiter.exec();
-      manager.request(url);
+      netComm->request(url);
       q.exec();
-      game.videoData = manager.getData();
+      game.videoData = netComm->getData();
       // Make sure received data is actually a video file
-      QByteArray contentType = manager.getContentType();
-      if(manager.getError(config->verbosity) == QNetworkReply::NoError &&
+      QByteArray contentType = netComm->getContentType();
+      if(netComm->getError(config->verbosity) == QNetworkReply::NoError &&
 	 contentType.contains("video/") &&
 	 game.videoData.size() > 4096) {
 	game.videoFormat = contentType.mid(contentType.indexOf("/") + 1,

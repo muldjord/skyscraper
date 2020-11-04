@@ -26,10 +26,10 @@
 #include "worldofspectrum.h"
 #include "strtools.h"
 
-WorldOfSpectrum::WorldOfSpectrum(Settings *config) : AbstractScraper(config)
+WorldOfSpectrum::WorldOfSpectrum(Settings *config,
+				 QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-
   baseUrl = "https://www.worldofspectrum.org";
 
   searchResultPre = "<CENTER><FONT FACE=\"Arial,Helvetica\" COLOR=\"#000000\" SIZE=\"+1\">";
@@ -77,9 +77,9 @@ void WorldOfSpectrum::getSearchResults(QList<GameEntry> &gameEntries,
 				 QString searchName, QString platform)
 {
   searchName = searchName.replace("the+", "");
-  manager.request("https://www.worldofspectrum.org/infoseek.cgi", "regexp=" + searchName + "&model=spectrum&loadpics=3");
+  netComm->request("https://www.worldofspectrum.org/infoseek.cgi", "regexp=" + searchName + "&model=spectrum&loadpics=3");
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   GameEntry game;
 
@@ -135,15 +135,15 @@ void WorldOfSpectrum::getCover(GameEntry &game)
   nomNom("<A HREF=\"");
   QString coverUrl = data.left(data.indexOf(coverPost));
   if(coverUrl.indexOf("http") != -1) {
-    manager.request(coverUrl);
+    netComm->request(coverUrl);
   } else {
-    manager.request(baseUrl + (coverUrl.left(1) == "/"?"":"/") + coverUrl);
+    netComm->request(baseUrl + (coverUrl.left(1) == "/"?"":"/") + coverUrl);
   }
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.coverData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.coverData = netComm->getData();
   }
 }
 
@@ -156,15 +156,15 @@ void WorldOfSpectrum::getScreenshot(GameEntry &game)
   nomNom("<IMG SRC=\"");
   QString screenshotUrl = data.left(data.indexOf(screenshotPost));
   if(screenshotUrl.indexOf("http") != -1) {
-    manager.request(screenshotUrl);
+    netComm->request(screenshotUrl);
   } else {
-    manager.request(baseUrl + (screenshotUrl.left(1) == "/"?"":"/") + screenshotUrl);
+    netComm->request(baseUrl + (screenshotUrl.left(1) == "/"?"":"/") + screenshotUrl);
   }
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.screenshotData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.screenshotData = netComm->getData();
   }
 }
 

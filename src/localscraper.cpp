@@ -25,7 +25,9 @@
 
 #include "localscraper.h"
 
-LocalScraper::LocalScraper(Settings *config) : AbstractScraper(config)
+LocalScraper::LocalScraper(Settings *config,
+			   QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
 }
 

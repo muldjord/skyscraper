@@ -29,10 +29,10 @@
 #include "strtools.h"
 #include "nametools.h"
 
-Igdb::Igdb(Settings *config) : AbstractScraper(config)
+Igdb::Igdb(Settings *config,
+	   QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-
   QPair<QString, QString> clientIdHeader;
   clientIdHeader.first = "Client-ID";
   clientIdHeader.second = config->user;
@@ -68,9 +68,9 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 {
   // Request list of games but don't allow re-releases ("game.version_parent = null")
   limiter.exec();
-  manager.request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", headers);
+  netComm->request(baseUrl + "/search/", "fields game.name,game.platforms.name; search \"" + searchName + "\"; where game != null & game.version_parent = null;", headers);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
   
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
@@ -105,9 +105,9 @@ void Igdb::getSearchResults(QList<GameEntry> &gameEntries,
 void Igdb::getGameData(GameEntry &game)
 {
   limiter.exec();
-  manager.request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.date,release_dates.region,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", headers);
+  netComm->request(baseUrl + "/games/", "fields age_ratings.rating,age_ratings.category,total_rating,cover.url,game_modes.slug,genres.name,screenshots.url,summary,release_dates.date,release_dates.region,release_dates.platform,involved_companies.company.name,involved_companies.developer,involved_companies.publisher; where id = " + game.id.split(";").first() + ";", headers);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {

@@ -36,7 +36,7 @@ class MobyGames : public AbstractScraper
   Q_OBJECT
 
 public:
-  MobyGames(Settings *config);
+  MobyGames(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
 
 private:
   QTimer limitTimer;

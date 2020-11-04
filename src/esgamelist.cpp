@@ -28,7 +28,10 @@
 
 #include <QDir>
 
-ESGameList::ESGameList(Settings *config) : AbstractScraper(config) {
+ESGameList::ESGameList(Settings *config,
+		       QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
+{
   baseUrl = config->inputFolder + (config->inputFolder.right(1) != "/"?"/":"");
   QString gameListXml = baseUrl + "gamelist.xml";
   if(!QFileInfo::exists(gameListXml)) {

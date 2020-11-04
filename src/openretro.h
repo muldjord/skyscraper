@@ -33,7 +33,7 @@ class OpenRetro : public AbstractScraper
   Q_OBJECT
 
 public:
-  OpenRetro(Settings *config);
+  OpenRetro(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
 
 private:
   QList<QString> getSearchNames(const QFileInfo &info) override;

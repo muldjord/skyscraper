@@ -28,10 +28,10 @@
 #include "thegamesdb.h"
 #include "strtools.h"
 
-TheGamesDb::TheGamesDb(Settings *config) : AbstractScraper(config)
+TheGamesDb::TheGamesDb(Settings *config,
+		       QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-
   loadMaps();
 
   baseUrl = "https://api.thegamesdb.net/v1";
@@ -55,9 +55,9 @@ TheGamesDb::TheGamesDb(Settings *config) : AbstractScraper(config)
 void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
 				  QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&name="+ searchName);
+  netComm->request(searchUrlPre + StrTools::unMagic("187;161;217;126;172;149;202;122;163;197;163;219;162;171;203;197;139;151;215;173;122;206;161;162;200;216;217;123;124;215;200;170;171;132;158;155;215;120;149;169;140;164;122;154;178;174;160;172;157;131;210;161;203;137;159;117;205;166;162;139;171;169;210;163") + "&name="+ searchName);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
@@ -98,9 +98,9 @@ void TheGamesDb::getSearchResults(QList<GameEntry> &gameEntries,
 
 void TheGamesDb::getGameData(GameEntry &game)
 {
-  manager.request(game.url);
+  netComm->request(game.url);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
     printf("No returned json data, is 'thegamesdb' down?\n");
@@ -225,45 +225,45 @@ void TheGamesDb::getTags(GameEntry &game)
 
 void TheGamesDb::getCover(GameEntry &game)
 {
-  manager.request("https://cdn.thegamesdb.net/images/original/boxart/front/" + game.id + "-1.jpg");
+  netComm->request("https://cdn.thegamesdb.net/images/original/boxart/front/" + game.id + "-1.jpg");
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.coverData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.coverData = netComm->getData();
   }
 }
 
 void TheGamesDb::getScreenshot(GameEntry &game)
 {
-  manager.request("https://cdn.thegamesdb.net/images/original/screenshots/" + game.id + "-1.jpg");
+  netComm->request("https://cdn.thegamesdb.net/images/original/screenshots/" + game.id + "-1.jpg");
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.screenshotData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.screenshotData = netComm->getData();
   }
 }
 
 void TheGamesDb::getWheel(GameEntry &game)
 {
-  manager.request("https://cdn.thegamesdb.net/images/original/clearlogo/" + game.id + ".png");
+  netComm->request("https://cdn.thegamesdb.net/images/original/clearlogo/" + game.id + ".png");
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.wheelData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.wheelData = netComm->getData();
   }
 }
 
 void TheGamesDb::getMarquee(GameEntry &game)
 {
-  manager.request("https://cdn.thegamesdb.net/images/original/graphical/" + game.id + "-g.jpg");
+  netComm->request("https://cdn.thegamesdb.net/images/original/graphical/" + game.id + "-g.jpg");
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.marqueeData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.marqueeData = netComm->getData();
   }
 }
 

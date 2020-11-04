@@ -31,21 +31,25 @@
 #include <QRegularExpression>
 #include <QDomDocument>
 
-AbstractScraper::AbstractScraper(Settings *config)
+AbstractScraper::AbstractScraper(Settings *config,
+				 QSharedPointer<QNetworkAccessManager> manager)
+  : config(config)
 {
-  this->config = config;
+  netComm = new NetComm(manager);
+  connect(netComm, &NetComm::dataReady, &q, &QEventLoop::quit);
 }
 
 AbstractScraper::~AbstractScraper()
 {
+  delete netComm;
 }
 
 void AbstractScraper::getSearchResults(QList<GameEntry> &gameEntries,
 				       QString searchName, QString platform)
 {
-  manager.request(searchUrlPre + searchName + searchUrlPost);
+  netComm->request(searchUrlPre + searchName + searchUrlPost);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   GameEntry game;
 
@@ -78,9 +82,9 @@ void AbstractScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
 void AbstractScraper::getGameData(GameEntry &game)
 {
-  manager.request(game.url);
+  netComm->request(game.url);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
   //printf("URL IS: '%s'\n", game.url.toStdString().c_str());
   //printf("DATA IS:\n'%s'\n", data.data());
 
@@ -287,12 +291,12 @@ void AbstractScraper::getCover(GameEntry &game)
   if(coverUrl.left(4) != "http") {
     coverUrl.prepend(baseUrl + (coverUrl.left(1) == "/"?"":"/"));
   }
-  manager.request(coverUrl);
+  netComm->request(coverUrl);
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.coverData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.coverData = netComm->getData();
   }
 }
 
@@ -313,12 +317,12 @@ void AbstractScraper::getScreenshot(GameEntry &game)
     if(screenshotUrl.left(4) != "http") {
       screenshotUrl.prepend(baseUrl + (screenshotUrl.left(1) == "/"?"":"/"));
     }
-    manager.request(screenshotUrl);
+    netComm->request(screenshotUrl);
     q.exec();
     QImage image;
-    if(manager.getError() == QNetworkReply::NoError &&
-       image.loadFromData(manager.getData())) {
-      game.screenshotData = manager.getData();
+    if(netComm->getError() == QNetworkReply::NoError &&
+       image.loadFromData(netComm->getData())) {
+      game.screenshotData = netComm->getData();
     }
   }
 }
@@ -340,12 +344,12 @@ void AbstractScraper::getWheel(GameEntry &game)
   if(wheelUrl.left(4) != "http") {
     wheelUrl.prepend(baseUrl + (wheelUrl.left(1) == "/"?"":"/"));
   }
-  manager.request(wheelUrl);
+  netComm->request(wheelUrl);
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.wheelData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.wheelData = netComm->getData();
   }
 }
 
@@ -366,12 +370,12 @@ void AbstractScraper::getMarquee(GameEntry &game)
   if(marqueeUrl.left(4) != "http") {
     marqueeUrl.prepend(baseUrl + (marqueeUrl.left(1) == "/"?"":"/"));
   }
-  manager.request(marqueeUrl);
+  netComm->request(marqueeUrl);
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.marqueeData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.marqueeData = netComm->getData();
   }
 }
 
@@ -392,10 +396,10 @@ void AbstractScraper::getVideo(GameEntry &game)
   if(videoUrl.left(4) != "http") {
     videoUrl.prepend(baseUrl + (videoUrl.left(1) == "/"?"":"/"));
   }
-  manager.request(videoUrl);
+  netComm->request(videoUrl);
   q.exec();
-  if(manager.getError() == QNetworkReply::NoError) {
-    game.videoData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError) {
+    game.videoData = netComm->getData();
     game.videoFormat = videoUrl.right(3);
   }
 }

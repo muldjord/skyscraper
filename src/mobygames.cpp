@@ -28,10 +28,10 @@
 #include "mobygames.h"
 #include "strtools.h"
 
-MobyGames::MobyGames(Settings *config) : AbstractScraper(config)
+MobyGames::MobyGames(Settings *config,
+		     QSharedPointer<QNetworkAccessManager> manager)
+  : AbstractScraper(config, manager)
 {
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
-
   connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);
   limitTimer.setInterval(10000); // 10 second request limit
   limitTimer.setSingleShot(false);
@@ -60,9 +60,9 @@ void MobyGames::getSearchResults(QList<GameEntry> &gameEntries,
 
   printf("Waiting as advised by MobyGames api restrictions...\n");
   limiter.exec();
-  manager.request(searchUrlPre + "?api_key=" + StrTools::unMagic("175;229;170;189;188;202;211;117;164;165;185;209;164;234;180;155;199;209;224;231;193;190;173;175") + "&title=" + searchName + (platformId == "na"?"":"&platform=" + platformId));
+  netComm->request(searchUrlPre + "?api_key=" + StrTools::unMagic("175;229;170;189;188;202;211;117;164;165;185;209;164;234;180;155;199;209;224;231;193;190;173;175") + "&title=" + searchName + (platformId == "na"?"":"&platform=" + platformId));
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
@@ -103,9 +103,9 @@ void MobyGames::getGameData(GameEntry &game)
 {
   printf("Waiting to get game data...\n");
   limiter.exec();
-  manager.request(game.url);
+  netComm->request(game.url);
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
@@ -290,9 +290,9 @@ void MobyGames::getCover(GameEntry &game)
 {
   printf("Waiting to get cover data...\n");
   limiter.exec();
-  manager.request(game.url.left(game.url.indexOf("?api_key=")) + "/covers" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
+  netComm->request(game.url.left(game.url.indexOf("?api_key=")) + "/covers" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
@@ -341,12 +341,12 @@ void MobyGames::getCover(GameEntry &game)
   coverUrl.replace("http://", "https://"); // For some reason the links are http but they are always redirected to https
 
   if(!coverUrl.isEmpty()) {
-    manager.request(coverUrl);
+    netComm->request(coverUrl);
     q.exec();
     QImage image;
-    if(manager.getError() == QNetworkReply::NoError &&
-       image.loadFromData(manager.getData())) {
-      game.coverData = manager.getData();
+    if(netComm->getError() == QNetworkReply::NoError &&
+       image.loadFromData(netComm->getData())) {
+      game.coverData = netComm->getData();
     }
   }
 }
@@ -355,9 +355,9 @@ void MobyGames::getScreenshot(GameEntry &game)
 {
   printf("Waiting to get screenshot data...\n");
   limiter.exec();
-  manager.request(game.url.left(game.url.indexOf("?api_key=")) + "/screenshots" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
+  netComm->request(game.url.left(game.url.indexOf("?api_key=")) + "/screenshots" + game.url.mid(game.url.indexOf("?api_key="), game.url.length() - game.url.indexOf("?api_key=")));
   q.exec();
-  data = manager.getData();
+  data = netComm->getData();
 
   jsonDoc = QJsonDocument::fromJson(data);
   if(jsonDoc.isEmpty()) {
@@ -374,12 +374,12 @@ void MobyGames::getScreenshot(GameEntry &game)
     // First 2 are almost always not ingame, so skip those if we have 3 or more
     chosen = (qrand() % jsonScreenshots.count() - 3) + 3;
   }
-  manager.request(jsonScreenshots.at(chosen).toObject()["image"].toString().replace("http://", "https://"));
+  netComm->request(jsonScreenshots.at(chosen).toObject()["image"].toString().replace("http://", "https://"));
   q.exec();
   QImage image;
-  if(manager.getError() == QNetworkReply::NoError &&
-     image.loadFromData(manager.getData())) {
-    game.screenshotData = manager.getData();
+  if(netComm->getError() == QNetworkReply::NoError &&
+     image.loadFromData(netComm->getData())) {
+    game.screenshotData = netComm->getData();
   }
 }
 

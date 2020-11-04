@@ -50,6 +50,8 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentD
 {
   qRegisterMetaType<GameEntry>("GameEntry");
 
+  manager = QSharedPointer<QNetworkAccessManager>(new QNetworkAccessManager());
+
   // Randomize timer
   qsrand(QTime::currentTime().msec());
 
@@ -388,7 +390,7 @@ void Skyscraper::run()
   QList<QThread*> threadList;
   for(int curThread = 1; curThread <= config.threads; ++curThread) {
     QThread *thread = new QThread;
-    ScraperWorker *worker = new ScraperWorker(queue, cache, config, QString::number(curThread));
+    ScraperWorker *worker = new ScraperWorker(queue, cache, manager, config, QString::number(curThread));
     worker->moveToThread(thread);
     connect(thread, &QThread::started, worker, &ScraperWorker::run);
     connect(worker, &ScraperWorker::entryReady, this, &Skyscraper::entryReady);
@@ -1601,16 +1603,16 @@ void Skyscraper::doPrescrapeJobs()
   setRegionPrios();
   setLangPrios();
 
-  NetComm manager;
+  NetComm netComm(manager);
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
-  connect(&manager, &NetComm::dataReady, &q, &QEventLoop::quit);
+  connect(&netComm, &NetComm::dataReady, &q, &QEventLoop::quit);
 
   if(config.platform == "amiga" &&
      config.scraper != "cache" && config.scraper != "import" && config.scraper != "esgamelist") {
     printf("Fetching 'whdload_db.xml', just a sec...");
-    manager.request("https://raw.githubusercontent.com/HoraceAndTheSpider/Amiberry-XML-Builder/master/whdload_db.xml");
+    netComm.request("https://raw.githubusercontent.com/HoraceAndTheSpider/Amiberry-XML-Builder/master/whdload_db.xml");
     q.exec();
-    QByteArray data = manager.getData();
+    QByteArray data = netComm.getData();
     QDomDocument tempDoc;
     QFile whdLoadFile("whdload_db.xml");
     if(data.size() > 1000000 &&
@@ -1660,12 +1662,12 @@ void Skyscraper::doPrescrapeJobs()
     }
     config.igdbToken = tokenData.split(';').at(1);
     if(updateToken) {
-      manager.request("https://id.twitch.tv/oauth2/token"
+      netComm.request("https://id.twitch.tv/oauth2/token"
 		      "?client_id=" + config.user +
 		      "&client_secret=" + config.password +
 		      "&grant_type=client_credentials", "");
       q.exec();
-      QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
+      QJsonObject jsonObj = QJsonDocument::fromJson(netComm.getData()).object();
       if(jsonObj.contains("access_token") &&
 	 jsonObj.contains("expires_in") &&
 	 jsonObj.contains("token_type")) {
@@ -1696,11 +1698,11 @@ void Skyscraper::doPrescrapeJobs()
       }
     } else {
       printf("Fetching limits for user '\033[1;33m%s\033[0m', just a sec...\n", config.user.toStdString().c_str());
-      manager.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=json&ssid=" + config.user + "&sspassword=" + config.password);
+      netComm.request("https://www.screenscraper.fr/api2/ssuserInfos.php?devid=muldjord&devpassword=" + StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156") + "&softname=skyscraper" VERSION "&output=json&ssid=" + config.user + "&sspassword=" + config.password);
       q.exec();
-      QJsonObject jsonObj = QJsonDocument::fromJson(manager.getData()).object();
+      QJsonObject jsonObj = QJsonDocument::fromJson(netComm.getData()).object();
       if(jsonObj.isEmpty()) {
-	if(manager.getData().contains("Erreur de login")) {
+	if(netComm.getData().contains("Erreur de login")) {
 	  printf("\033[0;31mScreenScraper login error! Please verify that you've entered your credentials correctly in '/home/USER/.skyscraper/config.ini'. It needs to look EXACTLY like this, but with your USER and PASS:\033[0m\n\033[1;33m[screenscraper]\nuserCreds=\"USER:PASS\"\033[0m\033[0;31m\nContinuing with unregistered user, forcing 1 thread...\033[0m\n\n");
 	} else {
 	  printf("\033[1;33mReceived invalid / empty ScreenScraper server response, maybe their server is busy / overloaded. Forcing 1 thread...\033[0m\n\n");

@@ -33,7 +33,7 @@ class WorldOfSpectrum : public AbstractScraper
   Q_OBJECT
 
 public:
-  WorldOfSpectrum(Settings *config);
+  WorldOfSpectrum(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,

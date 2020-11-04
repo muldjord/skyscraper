@@ -30,6 +30,7 @@
 #include <QFile>
 #include <QTime>
 #include <QCommandLineParser>
+#include <QNetworkAccessManager>
 
 #include "netcomm.h"
 #include "scraperworker.h"
@@ -46,6 +47,7 @@ public:
   Skyscraper(const QCommandLineParser &parser, const QString &currentDir);
   ~Skyscraper();
   QSharedPointer<Queue> queue;
+  QSharedPointer<QNetworkAccessManager> manager;
   int state = 0;
 
 public slots:

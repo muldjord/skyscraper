@@ -40,8 +40,11 @@ class ScraperWorker : public QObject
   Q_OBJECT
 
 public:
-  ScraperWorker(QSharedPointer<Queue> queue, QSharedPointer<Cache> cache,
-		Settings config, QString threadId);
+  ScraperWorker(QSharedPointer<Queue> queue,
+		QSharedPointer<Cache> cache,
+		QSharedPointer<QNetworkAccessManager> manager,
+		Settings config,
+		QString threadId);
   ~ScraperWorker();
   void run();
   bool forceEnd = false;
@@ -53,10 +56,12 @@ signals:
 private:
   AbstractScraper *scraper;
 
+  Settings config;
+
   QSharedPointer<Cache> cache;
+  QSharedPointer<QNetworkAccessManager> manager;
   QSharedPointer<Queue> queue;
 
-  Settings config;
   QString platformOrig;
   QString threadId;
 

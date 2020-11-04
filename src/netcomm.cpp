@@ -30,7 +30,8 @@
 
 constexpr int MAXSIZE = 100*1024*1024;
 
-NetComm::NetComm()
+NetComm::NetComm(QSharedPointer<QNetworkAccessManager> manager)
+  : manager(manager)
 {
   requestTimer.setSingleShot(true);
   requestTimer.setInterval(60000);
@@ -51,9 +52,9 @@ void NetComm::request(QString query, QString postData, QList<QPair<QString, QStr
   }
 
   if(postData.isNull()) {
-    reply = get(request);
+    reply = manager->get(request);
   } else {
-    reply = post(request, postData.toUtf8());
+    reply = manager->post(request, postData.toUtf8());
   }
   connect(reply, &QNetworkReply::finished, this, &NetComm::replyReady);
   connect(reply, &QNetworkReply::downloadProgress, this, &NetComm::dataDownloaded);

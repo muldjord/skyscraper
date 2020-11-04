@@ -40,7 +40,8 @@ class AbstractScraper : public QObject
   Q_OBJECT
 
 public:
-  AbstractScraper(Settings *config);
+  AbstractScraper(Settings *config,
+		  QSharedPointer<QNetworkAccessManager> manager);
   virtual ~AbstractScraper();
   virtual void getGameData(GameEntry &game);
   virtual QList<QString> getSearchNames(const QFileInfo &info);
@@ -124,7 +125,7 @@ protected:
   // This is used when file names have a region in them. The original regionPrios is in Settings
   QList<QString> regionPrios;
 
-  NetComm manager;
+  NetComm *netComm;
   QEventLoop q; // Event loop for use when waiting for data from NetComm.
 
 };
