@@ -28,6 +28,7 @@ include(./VERSION)
 DEFINES+=VERSION=\\\"$$VERSION\\\"
 
 HEADERS += src/skyscraper.h \
+           src/netmanager.h \
            src/netcomm.h \
            src/xmlreader.h \
            src/settings.h \
@@ -77,6 +78,7 @@ HEADERS += src/skyscraper.h \
 
 SOURCES += src/main.cpp \
            src/skyscraper.cpp \
+           src/netmanager.cpp \
            src/netcomm.cpp \
            src/xmlreader.cpp \
            src/compositor.cpp \

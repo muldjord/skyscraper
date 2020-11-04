@@ -29,7 +29,7 @@
 #include <QDir>
 
 ESGameList::ESGameList(Settings *config,
-		       QSharedPointer<QNetworkAccessManager> manager)
+		       QSharedPointer<NetManager> manager)
   : AbstractScraper(config, manager)
 {
   baseUrl = config->inputFolder + (config->inputFolder.right(1) != "/"?"/":"");

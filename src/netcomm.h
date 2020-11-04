@@ -26,7 +26,8 @@
 #ifndef NETCOMM_H
 #define NETCOMM_H
 
-#include <QNetworkAccessManager>
+#include "netmanager.h"
+
 #include <QNetworkReply>
 #include <QTimer>
 
@@ -35,7 +36,7 @@ class NetComm : public QObject
   Q_OBJECT
 
 public:
-  NetComm(QSharedPointer<QNetworkAccessManager> manager);
+  NetComm(QSharedPointer<NetManager> manager);
   void request(QString query, QString postData = QString(), QList<QPair<QString, QString> > headers = QList<QPair<QString, QString> >());
   QByteArray getData();
   QNetworkReply::NetworkError getError(const int &verbosity = 0);
@@ -51,7 +52,7 @@ signals:
   void dataReady();
 
 private:
-  QSharedPointer<QNetworkAccessManager> manager;
+  QSharedPointer<NetManager> manager;
   QTimer requestTimer;
   QByteArray data;
   QNetworkReply::NetworkError error;

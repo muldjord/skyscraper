@@ -32,7 +32,7 @@
 #include <QDomDocument>
 
 AbstractScraper::AbstractScraper(Settings *config,
-				 QSharedPointer<QNetworkAccessManager> manager)
+				 QSharedPointer<NetManager> manager)
   : config(config)
 {
   netComm = new NetComm(manager);

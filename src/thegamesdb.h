@@ -36,7 +36,7 @@ class TheGamesDb : public AbstractScraper
   Q_OBJECT
 
 public:
-  TheGamesDb(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
+  TheGamesDb(Settings *config, QSharedPointer<NetManager> manager);
 
 private:
   void getSearchResults(QList<GameEntry> &gameEntries,

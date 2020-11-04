@@ -50,7 +50,7 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentD
 {
   qRegisterMetaType<GameEntry>("GameEntry");
 
-  manager = QSharedPointer<QNetworkAccessManager>(new QNetworkAccessManager());
+  manager = QSharedPointer<NetManager>(new NetManager());
 
   // Randomize timer
   qsrand(QTime::currentTime().msec());

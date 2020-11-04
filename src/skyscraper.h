@@ -26,18 +26,18 @@
 #ifndef SKYSCRAPER_H
 #define SKYSCRAPER_H
 
-#include <QObject>
-#include <QFile>
-#include <QTime>
-#include <QCommandLineParser>
-#include <QNetworkAccessManager>
-
 #include "netcomm.h"
+#include "netmanager.h"
 #include "scraperworker.h"
 #include "cache.h"
 #include "abstractfrontend.h"
 #include "settings.h"
 #include "platform.h"
+
+#include <QObject>
+#include <QFile>
+#include <QTime>
+#include <QCommandLineParser>
 
 class Skyscraper : public QObject
 {
@@ -47,7 +47,7 @@ public:
   Skyscraper(const QCommandLineParser &parser, const QString &currentDir);
   ~Skyscraper();
   QSharedPointer<Queue> queue;
-  QSharedPointer<QNetworkAccessManager> manager;
+  QSharedPointer<NetManager> manager;
   int state = 0;
 
 public slots:

@@ -26,14 +26,15 @@
 #ifndef SCRAPERWORKER_H
 #define SCRAPERWORKER_H
 
-#include <QImage>
-#include <QDir>
-#include <QThread>
-
 #include "abstractscraper.h"
 #include "settings.h"
 #include "cache.h"
 #include "queue.h"
+#include "netmanager.h"
+
+#include <QImage>
+#include <QDir>
+#include <QThread>
 
 class ScraperWorker : public QObject
 {
@@ -42,7 +43,7 @@ class ScraperWorker : public QObject
 public:
   ScraperWorker(QSharedPointer<Queue> queue,
 		QSharedPointer<Cache> cache,
-		QSharedPointer<QNetworkAccessManager> manager,
+		QSharedPointer<NetManager> manager,
 		Settings config,
 		QString threadId);
   ~ScraperWorker();
@@ -59,7 +60,7 @@ private:
   Settings config;
 
   QSharedPointer<Cache> cache;
-  QSharedPointer<QNetworkAccessManager> manager;
+  QSharedPointer<NetManager> manager;
   QSharedPointer<Queue> queue;
 
   QString platformOrig;

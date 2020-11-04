@@ -1,7 +1,7 @@
 /***************************************************************************
- *            openretro.h
+ *            netmanager.h
  *
- *  Wed Jun 18 12:00:00 CEST 2017
+ *  Wed Jun 7 12:00:00 CEST 2017
  *  Copyright 2017 Lars Muldjord
  *  muldjordlars@gmail.com
  ****************************************************************************/
@@ -23,27 +23,23 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#ifndef OPENRETRO_H
-#define OPENRETRO_H
+#ifndef NETMANAGER_H
+#define NETMANAGER_H
 
-#include "abstractscraper.h"
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QMutex>
 
-class OpenRetro : public AbstractScraper
+class NetManager : public QNetworkAccessManager
 {
   Q_OBJECT
 
 public:
-  OpenRetro(Settings *config, QSharedPointer<NetManager> manager);
+  NetManager();
+  QNetworkReply *getRequest(const QNetworkRequest &request);
+  QNetworkReply *postRequest(const QNetworkRequest &request, const QByteArray &data);
 
 private:
-  QList<QString> getSearchNames(const QFileInfo &info) override;
-  void getSearchResults(QList<GameEntry> &gameEntries, QString searchName,
-			QString platform) override;
-  void getGameData(GameEntry &game) override;
-  void getDescription(GameEntry &game) override;
-  void getTags(GameEntry &game) override;
-  void getCover(GameEntry &game) override;
-  void getMarquee(GameEntry &game) override;
+  QMutex requestMutex;
 };
-
-#endif // OPENRETRO_H
+#endif // NETMANAGER_H

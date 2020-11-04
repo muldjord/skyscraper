@@ -29,7 +29,7 @@
 #include "strtools.h"
 
 ArcadeDB::ArcadeDB(Settings *config,
-		   QSharedPointer<QNetworkAccessManager> manager)
+		   QSharedPointer<NetManager> manager)
   : AbstractScraper(config, manager)
 {
   baseUrl = "http://adb.arcadeitalia.net";

@@ -45,7 +45,7 @@
 
 ScraperWorker::ScraperWorker(QSharedPointer<Queue> queue,
 			     QSharedPointer<Cache> cache,
-			     QSharedPointer<QNetworkAccessManager> manager,
+			     QSharedPointer<NetManager> manager,
 			     Settings config,
 			     QString threadId)
   : config(config), cache(cache), manager(manager), queue(queue), threadId(threadId)

@@ -35,7 +35,7 @@ constexpr int RETRIESMAX = 4;
 constexpr int MINARTSIZE = 256;
 
 ScreenScraper::ScreenScraper(Settings *config,
-			     QSharedPointer<QNetworkAccessManager> manager)
+			     QSharedPointer<NetManager> manager)
   : AbstractScraper(config, manager)
 {
   connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);

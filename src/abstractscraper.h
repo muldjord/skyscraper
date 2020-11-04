@@ -26,14 +26,15 @@
 #ifndef ABSTRACTSCRAPER_H
 #define ABSTRACTSCRAPER_H
 
+#include "netcomm.h"
+#include "netmanager.h"
+#include "gameentry.h"
+#include "settings.h"
+
 #include <QImage>
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QSettings>
-
-#include "netcomm.h"
-#include "gameentry.h"
-#include "settings.h"
 
 class AbstractScraper : public QObject
 {
@@ -41,7 +42,7 @@ class AbstractScraper : public QObject
 
 public:
   AbstractScraper(Settings *config,
-		  QSharedPointer<QNetworkAccessManager> manager);
+		  QSharedPointer<NetManager> manager);
   virtual ~AbstractScraper();
   virtual void getGameData(GameEntry &game);
   virtual QList<QString> getSearchNames(const QFileInfo &info);

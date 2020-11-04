@@ -29,7 +29,7 @@
 #include "strtools.h"
 
 MobyGames::MobyGames(Settings *config,
-		     QSharedPointer<QNetworkAccessManager> manager)
+		     QSharedPointer<NetManager> manager)
   : AbstractScraper(config, manager)
 {
   connect(&limitTimer, &QTimer::timeout, &limiter, &QEventLoop::quit);

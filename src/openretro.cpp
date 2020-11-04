@@ -30,7 +30,7 @@
 #include <QRegularExpression>
 
 OpenRetro::OpenRetro(Settings *config,
-		     QSharedPointer<QNetworkAccessManager> manager)
+		     QSharedPointer<NetManager> manager)
   : AbstractScraper(config, manager)
 {
   baseUrl = "https://openretro.org";

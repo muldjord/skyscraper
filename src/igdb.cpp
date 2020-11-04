@@ -30,7 +30,7 @@
 #include "nametools.h"
 
 Igdb::Igdb(Settings *config,
-	   QSharedPointer<QNetworkAccessManager> manager)
+	   QSharedPointer<NetManager> manager)
   : AbstractScraper(config, manager)
 {
   QPair<QString, QString> clientIdHeader;

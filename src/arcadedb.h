@@ -36,7 +36,7 @@ class ArcadeDB : public AbstractScraper
   Q_OBJECT
 
 public:
-  ArcadeDB(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
+  ArcadeDB(Settings *config, QSharedPointer<NetManager> manager);
 
 private:
   QList<QString> getSearchNames(const QFileInfo &info) override;

@@ -41,7 +41,7 @@ class ScreenScraper : public AbstractScraper
   Q_OBJECT
 
 public:
-  ScreenScraper(Settings *config, QSharedPointer<QNetworkAccessManager> manager);
+  ScreenScraper(Settings *config, QSharedPointer<NetManager> manager);
 
 private:
   QTimer limitTimer;
