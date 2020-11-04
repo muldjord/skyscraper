@@ -151,10 +151,12 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
-* Implemented a less ridig filename match for the 'import' module to allow for close match filenames
+* Implement a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
-* Update 'igdb' module to use 'oauth2' as described here: https://api-docs.igdb.com/#account-creation
 * Add 'service check' to verify API status of online source before starting scraping run.
+
+#### Version 3.6.5 (In development, unreleased)
+* Now uses one shared networking instance, instead of one per thread
 
 #### Version 3.6.1 (27th October 2020)
 * Added 'amigacd32' as a separate platform just because (Thank you to user 'HoraceAndTheSpider' for resetting The Matrix)
