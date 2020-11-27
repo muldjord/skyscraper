@@ -165,7 +165,7 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
 
     if(config->platform == "daphne") {
       entry.path.replace("daphne/roms/", "daphne/").replace(".zip", ".daphne");
-      entryType = "folder";
+      entryType = "game";
     }
     if(config->relativePaths) {
       entry.path.replace(config->inputFolder, ".");
