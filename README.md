@@ -158,6 +158,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 #### Version 3.6.5 (In development, unreleased)
 * Now uses one shared networking instance, instead of one per thread
 * 'daphne' platform entries now added as '<game>' entries instead of '<folder>' entries (Thank you to user 'clyde' for helping figure this out)
+* Added 'nocropblack' cli flag and 'cropBlack="BOOL"' config.ini option that allows user to disable cropping of black borders around screenshots when compositing the final gamelist artwork (Thank you to user 'WindyWinston' for suggesting this)
 
 #### Version 3.6.1 (27th October 2020)
 * Added 'amigacd32' as a separate platform just because (Thank you to user 'HoraceAndTheSpider' for resetting The Matrix)
