@@ -146,6 +146,12 @@ Enables/disables the caching of the resource type `screenshot` when scraping wit
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
 
+#### cropBlack="true"
+Enables/disables cropping away the black borders around the screenshot resources when compositing the final frontend gamelist artwork.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
+
 #### cacheWheels="true"
 Enables/disables the caching of the resource type `wheel` when scraping with any module. If you never use wheels in your artwork configuration, setting this to `"false"` can save you some space.
 
