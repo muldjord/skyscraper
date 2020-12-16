@@ -106,11 +106,12 @@ struct Settings {
   bool skipExistingCovers = false;
   bool cacheScreenshots = true;
   bool skipExistingScreenshots= false;
+  bool cropBlack = true; // If true, will crop away black borders around screenshots
   bool cacheWheels = true;
   bool skipExistingWheels = false;
   bool cacheMarquees = true;
   bool skipExistingMarquees = false;
-
+  
   QString user = "";
   QString password = "";
   QString lang = "";

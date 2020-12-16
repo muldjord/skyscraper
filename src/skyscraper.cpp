@@ -835,6 +835,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("cacheScreenshots")) {
     config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
   }
+  if(settings.contains("cropBlack")) {
+    config.cropBlack = settings.value("cropBlack").toBool();
+  }
   if(settings.contains("cacheWheels")) {
     config.cacheWheels = settings.value("cacheWheels").toBool();
   }
@@ -932,6 +935,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("cacheScreenshots")) {
     config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
+  }
+  if(settings.contains("cropBlack")) {
+    config.cropBlack = settings.value("cropBlack").toBool();
   }
   if(settings.contains("cacheWheels")) {
     config.cacheWheels = settings.value("cacheWheels").toBool();
@@ -1113,6 +1119,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("maxLength")) {
     config.maxLength = settings.value("maxLength").toInt();
   }
+  if(settings.contains("cropBlack")) {
+    config.cropBlack = settings.value("cropBlack").toBool();
+  }
   settings.endGroup();
 
   // Scraping module specific configs, overrides main, platform and defaults
@@ -1217,6 +1226,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       printf("  \033[1;33minteractive\033[0m: Always ask user to choose best returned result from the scraping modules.\n");
       printf("  \033[1;33mnobrackets\033[0m: Disables any [] and () tags in the frontend game titles. Consider using 'nameTemplate' config.ini option instead.\n");
       printf("  \033[1;33mnocovers\033[0m: Disable covers/boxart from being cached locally. Only do this if you do not plan to use the cover artwork in 'artwork.xml'\n");
+      printf("  \033[1;33mnocropblack\033[0m: Disables cropping away black borders around screenshot resources when compositing the final gamelist artwork.\n");
       printf("  \033[1;33mnohints\033[0m: Disables the 'DID YOU KNOW:' hints when running Skyscraper.\n");
       printf("  \033[1;33mnomarquees\033[0m: Disable marquees from being cached locally. Only do this if you do not plan to use the marquee artwork in 'artwork.xml'\n");
       printf("  \033[1;33mnoresize\033[0m: Disable resizing of artwork when saving it to the resource cache. Normally they are resized to save space.\n");
@@ -1250,6 +1260,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 	  config.brackets = false;
 	} else if(flag == "nocovers") {
 	  config.cacheCovers = false;
+	} else if(flag == "nocropblack") {
+	  config.cropBlack = false;
 	} else if(flag == "nohints") {
 	  config.hints = false;
 	} else if(flag == "nomarquees") {

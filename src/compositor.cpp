@@ -390,10 +390,11 @@ void Compositor::processChildLayers(GameEntry &game, Layer &layer)
       
       thisLayer.premultiply();
       if(thisLayer.resource == "screenshot") {
-	// Crop away transparency and black borders around screenshots
-	thisLayer.setCanvas(ImgTools::cropToFit(thisLayer.canvas, true));
+	// Crop away transparency and, if configured, black borders around screenshots
+	thisLayer.setCanvas(ImgTools::cropToFit(thisLayer.canvas, config->cropBlack));
       } else {
-	// Crop away transparency around all other types
+	// Crop away transparency around all other types. Never crop black on these as many
+	// have black outlines that are very much needed
 	thisLayer.setCanvas(ImgTools::cropToFit(thisLayer.canvas));
       }
       thisLayer.scale();
