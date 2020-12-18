@@ -155,7 +155,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Add 'service check' to verify API status of online source before starting scraping run.
 
-#### Version 3.6.5 (In development, unreleased)
+#### Version 3.6.5 (18th December 2020)
 * Now uses one shared networking instance, instead of one per thread
 * 'daphne' platform entries now added as '<game>' entries instead of '<folder>' entries (Thank you to user 'clyde' for helping figure this out)
 * Added 'nocropblack' cli flag and 'cropBlack="BOOL"' config.ini option that allows user to disable cropping of black borders around screenshots when compositing the final gamelist artwork (Thank you to user 'WindyWinston' for suggesting this)
