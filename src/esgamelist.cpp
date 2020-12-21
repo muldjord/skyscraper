@@ -32,7 +32,7 @@ ESGameList::ESGameList(Settings *config,
 		       QSharedPointer<NetManager> manager)
   : AbstractScraper(config, manager)
 {
-  baseUrl = config->inputFolder + (config->inputFolder.right(1) != "/"?"/":"");
+  baseUrl = config->gameListFolder + (config->gameListFolder.right(1) != "/"?"/":"");
   QString gameListXml = baseUrl + "gamelist.xml";
   if(!QFileInfo::exists(gameListXml)) {
     baseUrl = "import/" + config->platform + "/";
