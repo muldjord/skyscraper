@@ -155,6 +155,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Add 'service check' to verify API status of online source before starting scraping run.
 
+#### Version 3.6.6 (21st December 2020)
+* The 'esgamelist' module now looks for the 'gamelist.xml' file in the path set with '-g' instead of the path set with '-i' (Thank you to user 'c0d3h4x0r' for reporting this and helping me debug it)
+
 #### Version 3.6.5 (18th December 2020)
 * Now uses one shared networking instance, instead of one per thread
 * 'daphne' platform entries now added as '<game>' entries instead of '<folder>' entries (Thank you to user 'clyde' for helping figure this out)
