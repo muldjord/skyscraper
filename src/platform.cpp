@@ -389,7 +389,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "gbc") {
     formats.append("*.gbc");
   } else if(platform == "gc") {
-    formats.append("*.iso *.cso *.gcz *.gcm *.m3u");
+    formats.append("*.iso *.cso *.gcz *.gcm *.m3u *.rvz");
   } else if(platform == "genesis") {
     formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "intellivision") {
@@ -469,7 +469,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "virtualboy") {
     formats.append("*.vb");
   } else if(platform == "wii") {
-    formats.append("*.iso *.cso *.gcz *.wbfs");
+    formats.append("*.iso *.cso *.gcz *.wbfs *.rvz");
   } else if(platform == "wiiu") {
     formats.append("*.iso *.cso *.gcz *.wbfs *.wud *.wux *.rpx *.app");
   } else if(platform == "wonderswan") {
