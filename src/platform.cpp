@@ -327,7 +327,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append(" ");
   }
   if(platform == "3do") {
-    formats.append("*.iso *.cue");
+    formats.append("*.iso *.cue *.chd");
   } else if(platform == "3ds") {
     formats.append("*.3ds");
   } else if(platform == "amiga") {
