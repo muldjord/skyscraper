@@ -157,6 +157,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 
 #### Version 3.6.7 (In progress, unreleased)
 * Added '*.rvz' extension for 'wii' and 'gc' platforms (Thank you to user 'tcamargo' for reporting this)
+* Added '*.chd' extension for '3do' platform (Thank you to user 'Roudaku' for reporting this)
 
 #### Version 3.6.6 (21st December 2020)
 * The 'esgamelist' module now looks for the 'gamelist.xml' file in the path set with '-g' instead of the path set with '-i' (Thank you to user 'c0d3h4x0r' for reporting this and helping me debug it)
