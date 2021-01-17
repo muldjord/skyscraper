@@ -89,6 +89,7 @@ QStringList Platform::getPlatforms()
   platforms.append("nes");
   platforms.append("ngp");
   platforms.append("ngpc");
+  platforms.append("openbor");
   platforms.append("oric");
   platforms.append("pc");
   platforms.append("pc88");
@@ -232,6 +233,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "ngp") {
     scrapers.append("screenscraper");
   } else if(platform == "ngpc") {
+    scrapers.append("screenscraper");
+  } else if(platform == "openbor") {
     scrapers.append("screenscraper");
   } else if(platform == "oric") {
     scrapers.append("screenscraper");
@@ -422,6 +425,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append(" *.ngp");
   } else if(platform == "ngpc") {
     formats.append(" *.ngc");
+  } else if(platform == "openbor") {
+    formats.append(" *.pak");
   } else if(platform == "oric") {
     formats.append(" *.dsk *.tap");
   } else if(platform == "pc") {
@@ -589,6 +594,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "ngp") {
     scraper = "cache";
   } else if(platform == "ngpc") {
+    scraper = "cache";
+  } else if(platform == "openbor") {
     scraper = "cache";
   } else if(platform == "oric") {
     scraper = "cache";
