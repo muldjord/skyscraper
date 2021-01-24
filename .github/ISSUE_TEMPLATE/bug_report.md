@@ -9,7 +9,7 @@ This is for BUG / ERROR reports only! Are you sure what you are experiencing is 
 
 Also, please read the documentation (https://github.com/muldjord/skyscraper/tree/master/docs) thoroughtly. Every feature and option is documented down to the last detail.
 
-If you've encountered a bug, please TAKE YOUR TIME to describe it well using the following template. Lackluster reports will be deleted without response. A define a proper descrition as several lines of text with well-described examples and proper documentation on how to re-produce the problem. Thanks! :)
+If you've encountered a bug, please TAKE YOUR TIME to describe it well using the following template. Lackluster reports will be deleted without response. I would expect it to be several lines of text long with well-described examples and proper documentation on how to re-produce the problem. Thanks! :)
 
 Please remove the text down to this point before proceeding.
 
