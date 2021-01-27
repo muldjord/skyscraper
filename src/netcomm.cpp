@@ -34,7 +34,7 @@ NetComm::NetComm(QSharedPointer<NetManager> manager)
   : manager(manager)
 {
   requestTimer.setSingleShot(true);
-  requestTimer.setInterval(60000);
+  requestTimer.setInterval(30000);
   connect(&requestTimer, &QTimer::timeout, this, &NetComm::requestTimeout);
 }
 
@@ -143,6 +143,6 @@ void NetComm::dataDownloaded(qint64 bytesReceived, qint64)
 
 void NetComm::requestTimeout()
 { 
-  printf("\033[1;33mRequest timed out, server is probably busy / overloaded...\033[0m\n");
+  printf("\033[1;33mRequest timed out, server might be busy / overloaded...\033[0m\n");
   reply->abort();
 }
