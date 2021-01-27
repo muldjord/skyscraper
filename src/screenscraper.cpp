@@ -321,8 +321,7 @@ void ScreenScraper::getCover(GameEntry &game)
      config->platform == "fba" ||
      config->platform == "mame-advmame" ||
      config->platform == "mame-libretro" ||
-     config->platform == "mame-mame4all" ||
-     config->platform == "neogeo") {
+     config->platform == "mame-mame4all") {
     url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"flyer"}));
   } else {
     url = getJsonText(jsonObj["medias"].toArray(), REGION, QList<QString>({"box-2D"}));
