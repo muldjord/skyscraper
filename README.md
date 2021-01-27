@@ -155,10 +155,11 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Add 'service check' to verify API status of online source before starting scraping run.
 
-#### Version 3.6.7 (In progress, unreleased)
+#### Version 3.6.7 (27th January 2021)
 * Added '*.rvz' extension for 'wii' and 'gc' platforms (Thank you to user 'tcamargo' for reporting this)
 * Added '*.chd' extension for '3do' platform (Thank you to user 'Roudaku' for reporting this)
 * Added 'openbor' platform. Exists in RetroPie as experimental platform (as requested by user 'hahnmt')
+* 'neogeo' platform now uses 'box-2D' as cover instead of 'flyer' when scraping with the ScreenScraper module (Thank you to user 'retro81' for suggesting this)
 
 #### Version 3.6.6 (21st December 2020)
 * The 'esgamelist' module now looks for the 'gamelist.xml' file in the path set with '-g' instead of the path set with '-i' (Thank you to user 'c0d3h4x0r' for reporting this and helping me debug it)
