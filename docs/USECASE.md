@@ -29,7 +29,7 @@ By having gathered data from both sources (`screenscraper` *and* `thegamesdb`) t
 ```
 $ Skyscraper -p snes
 ```
-Running that command will generate a game list for the chosen frontend (default is EmulationStation). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing. If you use a non-default frontend, you can configure this in Skyscraper's configuration as described [here](CONFIGINI.md#frontendemulationstation). Or you can set it on command-line as described [here](CLIHELP.md#-f-frontend)
+Running that command will generate a game list for the chosen frontend (default is EmulationStation). It combines all of the cached data into the most complete results. This phase also includes the artwork compositing. If you use a non-default frontend, you can configure this in Skyscraper's configuration as described [here](CONFIGINI.md#frontendemulationstation). Or you can set it on command-line as described [here](CLIHELP.md#-f-frontend).
 
 The source priority for each resource is defined per-platform and can be changed at any time. Read more about that [here](CACHE.md#resource-and-scraping-module-priorities).
 
