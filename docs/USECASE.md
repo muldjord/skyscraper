@@ -34,9 +34,11 @@ Running that command will generate a game list for the chosen frontend (default 
 The source priority for each resource is defined per-platform and can be changed at any time. Read more about that [here](CACHE.md#resource-and-scraping-module-priorities).
 
 ### So what then?
-You're done! The game list has been generated and you can relaunch your frontend to enjoy the game data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *game list generation* phase. Always gather first, then generate the game list afterwards. *Always!*
+You're done! The game list has been generated and you can relaunch your frontend to enjoy the game data and artwork. Or you can move on and scrape data for another platform. Just remember to distinguish between the *gathering* phase and the *game list generation* phase. Always gather first, then generate the game list afterwards.
 
-NOTE! You can always regenerate a game list if you changed the artwork configuration or gathered new data for any of your roms. Simply rerun the above command again and the game list will be regenerated with your new settings using all of the previously cached data.
+Note 1! You can always re-generate a game list if you changed the artwork configuration or gathered new data for any of your roms. Simply rerun the `Skyscraper -p <PLATFORM>` command again, and the game list will be re-generated with your new settings using all of the previously cached data.
+
+Note 2! If you re-gather data for a platform, it will skip games that already have data in the resource cache to save bandwidth for the online sources. To force a refresh of the data directly from the source, you need to set the `--cache refresh` option.
 
 ### But what about...
 Yes, yes, yes. This is just the basics. You can customize the artwork completely to your liking. You can prioritize the different cached resources any way you like. You can scrape single games in order to gather information for just that one game. You can enable video scraping. You can import your own data into the cache. You can edit the cached data. You can clean your cache. You can create aliases for games that are difficult to scrape. You can change your preferred region and language for the modules that support it. You can set up keys or user id's and password for the scraping modules that take advantage of this. There's *a lot* you can do if you want to.
