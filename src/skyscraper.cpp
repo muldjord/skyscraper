@@ -826,6 +826,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("jpgQuality")) {
     config.jpgQuality = settings.value("jpgQuality").toInt();
   }
+  if(settings.contains("cacheRefresh")) {
+    config.refresh = settings.value("cacheRefresh").toBool();
+  }
   if(settings.contains("cacheResize")) {
     config.cacheResize = settings.value("cacheResize").toBool();
   }
@@ -1145,6 +1148,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("jpgQuality")) {
     config.jpgQuality = settings.value("jpgQuality").toInt();
+  }
+  if(settings.contains("cacheRefresh")) {
+    config.refresh = settings.value("cacheRefresh").toBool();
   }
   if(settings.contains("cacheResize")) {
     config.cacheResize = settings.value("cacheResize").toBool();
