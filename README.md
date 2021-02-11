@@ -155,6 +155,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Add 'service check' to verify API status of online source before starting scraping run.
 
+#### Version 3.6.8 (In progress, unreleased)
+* Added 'cacheRefresh' config.ini option and added it to default config.ini for 'esgamelist' module (Thank you to user 'penx' for suggesting this)
+
 #### Version 3.6.7 (27th January 2021)
 * Added '*.rvz' extension for 'wii' and 'gc' platforms (Thank you to user 'tcamargo' for reporting this)
 * Added '*.chd' extension for '3do' platform (Thank you to user 'Roudaku' for reporting this)
