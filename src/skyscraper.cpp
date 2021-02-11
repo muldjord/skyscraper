@@ -576,117 +576,43 @@ void Skyscraper::checkThreads()
 
 void Skyscraper::loadConfig(const QCommandLineParser &parser)
 {
-  QString current;
-  QString distro;
-
   /* -----
      Files that should ALWAYS be updated from distributed default files
      ----- */
 
-  current = "config.ini.example";
-  distro = "/usr/local/etc/skyscraper/config.ini.example";
-  copyFile(distro, current);
-
-  current = "README.md";
-  distro = "/usr/local/etc/skyscraper/README.md";
-  copyFile(distro, current);
-
-  current = "hints.xml";
-  distro = "/usr/local/etc/skyscraper/hints.xml";
-  copyFile(distro, current);
-
-  current = "ARTWORK.md";
-  distro = "/usr/local/etc/skyscraper/ARTWORK.md";
-  copyFile(distro, current);
-
-  current = "artwork.xml.example1";
-  distro = "/usr/local/etc/skyscraper/artwork.xml.example1";
-  copyFile(distro, current);
-
-  current = "artwork.xml.example2";
-  distro = "/usr/local/etc/skyscraper/artwork.xml.example2";
-  copyFile(distro, current);
-
-  current = "artwork.xml.example3";
-  distro = "/usr/local/etc/skyscraper/artwork.xml.example3";
-  copyFile(distro, current);
-
-  current = "artwork.xml.example4";
-  distro = "/usr/local/etc/skyscraper/artwork.xml.example4";
-  copyFile(distro, current);
-
-  current = "mameMap.csv";
-  distro = "/usr/local/etc/skyscraper/mameMap.csv";
-  copyFile(distro, current);
-
-  current = "tgdb_developers.json";
-  distro = "/usr/local/etc/skyscraper/tgdb_developers.json";
-  copyFile(distro, current);
-
-  current = "tgdb_publishers.json";
-  distro = "/usr/local/etc/skyscraper/tgdb_publishers.json";
-  copyFile(distro, current);
-
-  current = "resources/boxfront.png";
-  distro = "/usr/local/etc/skyscraper/resources/boxfront.png";
-  copyFile(distro, current);
-
-  current = "resources/boxside.png";
-  distro = "/usr/local/etc/skyscraper/resources/boxside.png";
-  copyFile(distro, current);
-
-  current = "cache/README.md";
-  distro = "/usr/local/etc/skyscraper/docs/CACHE.md";
-  copyFile(distro, current);
-
-  current = "cache/priorities.xml.example";
-  distro = "/usr/local/etc/skyscraper/cache/priorities.xml.example";
-  copyFile(distro, current);
-
-  current = "import/README.md";
-  distro = "/usr/local/etc/skyscraper/import/IMPORT.md";
-  copyFile(distro, current);
-
-  current = "import/definitions.dat.example1";
-  distro = "/usr/local/etc/skyscraper/import/definitions.dat.example1";
-  copyFile(distro, current);
-
-  current = "import/definitions.dat.example2";
-  distro = "/usr/local/etc/skyscraper/import/definitions.dat.example2";
-  copyFile(distro, current);
+  copyFile("/usr/local/etc/skyscraper/config.ini.example", "config.ini.example");
+  copyFile("/usr/local/etc/skyscraper/README.md", "README.md");
+  copyFile("/usr/local/etc/skyscraper/hints.xml", "hints.xml");
+  copyFile("/usr/local/etc/skyscraper/ARTWORK.md", "ARTWORK.md");
+  copyFile("/usr/local/etc/skyscraper/artwork.xml.example1", "artwork.xml.example1");
+  copyFile("/usr/local/etc/skyscraper/artwork.xml.example2", "artwork.xml.example2");
+  copyFile("/usr/local/etc/skyscraper/artwork.xml.example3", "artwork.xml.example3");
+  copyFile("/usr/local/etc/skyscraper/artwork.xml.example4", "artwork.xml.example4");
+  copyFile("/usr/local/etc/skyscraper/mameMap.csv", "mameMap.csv");
+  copyFile("/usr/local/etc/skyscraper/tgdb_developers.json", "tgdb_developers.json");
+  copyFile("/usr/local/etc/skyscraper/tgdb_publishers.json", "tgdb_publishers.json");
+  copyFile("/usr/local/etc/skyscraper/resources/boxfront.png", "resources/boxfront.png");
+  copyFile("/usr/local/etc/skyscraper/resources/boxside.png", "resources/boxside.png");
+  copyFile("/usr/local/etc/skyscraper/docs/CACHE.md", "cache/README.md");
+  copyFile("/usr/local/etc/skyscraper/cache/priorities.xml.example", "cache/priorities.xml.example");
+  copyFile("/usr/local/etc/skyscraper/import/IMPORT.md", "import/README.md");
+  copyFile("/usr/local/etc/skyscraper/import/definitions.dat.example1", "import/definitions.dat.example1");
+  copyFile("/usr/local/etc/skyscraper/import/definitions.dat.example2", "import/definitions.dat.example2");
 
   /* -----
      Files that will only be overwritten if they don't already exist
      ----- */
 
-  current = "artwork.xml";
-  distro = "/usr/local/etc/skyscraper/artwork.xml";
-  copyFile(distro, current, false); // False means it won't overwrite if it exists
-
-  current = "aliasMap.csv";
-  distro = "/usr/local/etc/skyscraper/aliasMap.csv";
-  copyFile(distro, current, false);
-
-  current = "resources/maskexample.png";
-  distro = "/usr/local/etc/skyscraper/resources/maskexample.png";
-  copyFile(distro, current, false);
-
-  current = "resources/frameexample.png";
-  distro = "/usr/local/etc/skyscraper/resources/frameexample.png";
-  copyFile(distro, current, false);
-
-  current = "resources/scanlines1.png";
-  distro = "/usr/local/etc/skyscraper/resources/scanlines1.png";
-  copyFile(distro, current, false);
-
-  current = "resources/scanlines2.png";
-  distro = "/usr/local/etc/skyscraper/resources/scanlines2.png";
-  copyFile(distro, current, false);
-
+  // Make sure we have a default config.ini file based on the config.ini.example file
+  copyFile("/usr/local/etc/skyscraper/config.ini.example", "config.ini", false);
+  copyFile("/usr/local/etc/skyscraper/artwork.xml", "artwork.xml", false); // False means it won't overwrite if it exists
+  copyFile("/usr/local/etc/skyscraper/aliasMap.csv", "aliasMap.csv", false);
+  copyFile("/usr/local/etc/skyscraper/resources/maskexample.png", "resources/maskexample.png", false);
+  copyFile("/usr/local/etc/skyscraper/resources/frameexample.png", "resources/frameexample.png", false);
+  copyFile("/usr/local/etc/skyscraper/resources/scanlines1.png", "resources/scanlines1.png", false);
+  copyFile("/usr/local/etc/skyscraper/resources/scanlines2.png", "resources/scanlines2.png", false);
   // Copy one of the example definitions.dat files if none exists
-  current = "import/definitions.dat";
-  distro = "/usr/local/etc/skyscraper/import/definitions.dat.example2";
-  copyFile(distro, current, false);
+  copyFile("/usr/local/etc/skyscraper/import/definitions.dat.example2", "import/definitions.dat", false);
 
   /* -----
      END updating files from distribution files
@@ -1583,7 +1509,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
 }
 
-void Skyscraper::copyFile(QString &distro, QString &current, bool overwrite)
+void Skyscraper::copyFile(const QString &distro, const QString &current, bool overwrite)
 {
   if(QFileInfo::exists(distro)) {
     if(QFileInfo::exists(current)) {
