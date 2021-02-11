@@ -101,6 +101,16 @@ To read about artwork compositing go [here](ARTWORK.md) instead.
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<SCRAPING MODULE>]`
 
+#### cacheRefresh="false"
+Skyscraper has a resource cache which works just like the browser cache in Firefox. If you scrape and gather resources for a platform with the same scraping module twice, it will grab the data from the cache instead of hammering the online servers again. This has the advantage in the case where you scrape a rom set twice, only the roms that weren't recognized the first time around will be fetched from the online servers. Everything else will be loaded from the cache.
+
+You can force all data to be refetched from the servers by setting this option to `cacheRefresh="true"`, effectively updating the cached data with new data from the source.
+
+NOTE! *Only* set this option to true if you know data has changed for several roms at the source. Otherwise you are hammering the servers for no reason.
+
+###### Allowed in sections
+`[main]`, `[<SCRAPING MODULE>]`
+
 #### nameTemplate="%t"
 By default Skyscraper uses just the title as the game name when generating gamelists for any frontend. You can change this to suit your personal preference by setting this option. It works by replacing certain tokens in the name template with the corresponding data. The valid tokens are:
 
