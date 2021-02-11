@@ -154,3 +154,9 @@
 #videoConvertExtension="mp4"
 ##The following option is only applicable to 'screenscraper'
 #videoPreferNormalized="true"
+
+[esgamelist]
+cacheRefresh="true"
+
+[import]
+cacheRefresh="true"
