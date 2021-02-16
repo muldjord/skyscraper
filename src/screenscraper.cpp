@@ -117,15 +117,17 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
     // Check if we got a valid JSON document back
     if(jsonObj.isEmpty()) {
-      printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json\033[0m\n");
+      printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json. Their servers are probably down. Please try again later or use a different scraping module with '-s MODULE'. Check 'Skyscraper --help' for more information.\033[0m\n");
       data.replace(StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156"), "****");
       data.replace(config->password, "****");
       QFile jsonErrorFile("./screenscraper_error.json");
       if(jsonErrorFile.open(QIODevice::WriteOnly)) {
-	jsonErrorFile.write(data);
+	if(data.length() > 64) {
+	  jsonErrorFile.write(data);
+	  printf("The erroneous answer was written to '/home/USER/.skyscraper/screenscraper_error.json'. If this file contains game data, please consider filing a bug report at 'https://github.com/muldjord/skyscraper/issues' and attach that file.\n");
+	}
 	jsonErrorFile.close();
       }
-      printf("The erroneous answer was written to '/home/USER/.skyscraper/screenscraper_error.json'. Please create a bug report at 'https://github.com/muldjord/skyscraper/issues' and attach that file.\n");
       break; // DON'T try again! If we don't get a valid JSON document, something is very wrong with the API
     }
 
