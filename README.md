@@ -157,6 +157,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 
 #### Version 3.6.8 (In progress, unreleased)
 * Added 'cacheRefresh' config.ini option and added it to default config.ini for 'esgamelist' module (Thank you to user 'penx' for suggesting this)
+* 'ScreenScraper APIv2 returned invalid / empty Json' message now no longer includes message to attach the error json file unless it's more than 64 bytes long
 
 #### Version 3.6.7 (27th January 2021)
 * Added '*.rvz' extension for 'wii' and 'gc' platforms (Thank you to user 'tcamargo' for reporting this)
