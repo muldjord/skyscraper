@@ -1786,6 +1786,7 @@ void Skyscraper::setRegionPrios()
     config.regionPrios.append("ru");
     config.regionPrios.append("se");
     config.regionPrios.append("tw");
+    config.regionPrios.append("ca");
   }
 }
 
