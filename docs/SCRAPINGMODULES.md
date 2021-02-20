@@ -27,6 +27,8 @@ It has the best support for the `wheel` and `marquee` artwork types of any of th
 
 I strongly recommend supporting them by contributing data to the database, or by supporting them with a bit of money. This can also give you more threads to scrape with.
 
+Note! *Exact* file name matching does not work well for the `arcade` derived platforms in cases where a data checksum doesn't match. The reason being that `arcade` and other arcade-like platforms are made up of several subplatforms. Each of those subplatforms have a high chance of containing the same file name entry. In those cases ScreenScraper can't determine a unique game and will return an empty result.
+
 #### TheGamesDb (TGDB)
 * Shortname: *`thegamesdb`*
 * Type: *Online*
