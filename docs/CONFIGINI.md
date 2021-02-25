@@ -3,7 +3,7 @@ Look below to find a thorough description of all options and sections available 
 
 Please take note that almost all of these options are set at a useful default (and can therefore be left out) and should only be set if your use case requires it.
 
-NOTE 1! Some users seem to have a habbit of editing the `/home/USER/skysource/config.ini` file. THIS IS NOT THE CORRECT FILE! Please read the above. :)
+NOTE 1! Some users seem to have a habit of editing the `/home/USER/skysource/config.ini` file. THIS IS NOT THE CORRECT FILE! Please read the above. :)
 
 NOTE 2! If you've installed Skyscraper through the RetroPie-Setup script, it is recommended to create a symbolic link to the executable. Do this by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. This will allow you to just type `Skyscraper` when running it from command line.
 
