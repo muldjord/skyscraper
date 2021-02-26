@@ -363,19 +363,19 @@ Sets the desired language when gathering data into the resource cache. This opti
 `[main]`, `[<PLATFORM>]`
 
 #### region="wor"
-Sets the desired region when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md).
-
-###### Allowed in sections
-`[main]`, `[<PLATFORM>]`
-
-#### langPrios="en,de,es"
-Completely overrides the internal language priority list inside of Skyscraper. This list is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
+Adds the specified region to the top of the existing default internal region priority list. Read more about regions [here](REGIONS.md). Only one region is supported with this configuration. To overwrite the internal default region priority list entirely check [here](CONFIGINI.md#regionprioseuusssukworjp).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
 
 #### regionPrios="eu,us,ss,uk,wor,jp"
-Completely overrides the internal region priority list inside of Skyscraper. This list is only relevant for certain scraping modules. Get the details [here](REGIONS.md).
+Completely overwrites the internal region priority list inside of Skyscraper. This will also overwrite (and thereby ignore) the potentially file name auto-detected region (so use with caution!). Read more about regions [here](REGIONS.md). Multiple regions can be configured here separated by commas.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`
+
+#### langPrios="en,de,es"
+Completely overwrites the internal language priority list inside of Skyscraper. This list is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
