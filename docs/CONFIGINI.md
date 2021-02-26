@@ -368,11 +368,33 @@ Adds the specified region to the top of the existing default internal region pri
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
 
+###### Example(s)
+```
+[main]
+region="de"
+```
+or
+```
+[snes]
+region="de"
+```
+
 #### regionPrios="eu,us,ss,uk,wor,jp"
 Completely overwrites the internal region priority list inside of Skyscraper. This will also overwrite (and thereby ignore) the potentially file name auto-detected region (so use with caution!). Read more about regions [here](REGIONS.md). Multiple regions can be configured here separated by commas.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
+
+###### Example(s)
+```
+[main]
+regionPrios="de,us,jp"
+```
+or
+```
+[megadrive]
+regionPrios="de,us,jp"
+```
 
 #### langPrios="en,de,es"
 Completely overwrites the internal language priority list inside of Skyscraper. This list is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
