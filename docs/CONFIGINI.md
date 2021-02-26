@@ -359,7 +359,7 @@ Not all scraping modules support all platforms. This means that you can potentia
 #### region="wor"
 Adds the specified region to the top of the existing default internal region priority list. Only one region is supported with this configuration. To overwrite the internal default region priority list entirely check [here](CONFIGINI.md#regionprioseuusssukworjp).
 
-Note! Read more about how regions are handled in general [here](REGIONS.md).
+NOTE! Read more about how regions are handled in general [here](REGIONS.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
@@ -378,7 +378,7 @@ region="de"
 #### regionPrios="eu,us,ss,uk,wor,jp"
 Completely overwrites the internal region priority list inside of Skyscraper. This will also overwrite (and thereby ignore) the potential file name auto-detected region (so use with caution!). Multiple regions can be configured here separated by commas.
 
-Note! Read more about how regions are handled in general [here](REGIONS.md).
+NOTE! Read more about how regions are handled in general [here](REGIONS.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
@@ -397,7 +397,7 @@ regionPrios="de,us,jp"
 #### lang="en"
 Adds the specified language to the top of the existing default internal language priority list. Only one language is supported with this configuration.
 
-Note! Read more about how languages are handles in general [here](LANGUAGES.md).
+NOTE! Read more about how languages are handles in general [here](LANGUAGES.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
@@ -416,7 +416,7 @@ lang="it"
 #### langPrios="en,de,es"
 Completely overwrites the internal language priority list inside of Skyscraper. Multiple languages can be configured here separated by commas.
 
-Note! Read more about how languages are handles in general [here](LANGUAGES.md).
+NOTE! Read more about how languages are handles in general [here](LANGUAGES.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
