@@ -515,7 +515,7 @@ Skyscraper -p snes -s screenscraper --lang es
 ```
 
 ### --region &lt;CODE&gt;
-Sets the desired region when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](REGIONS.md). Consider setting this in [`config.ini`](CONFIGINI.md#regionwor) instead.
+Adds the specified region to the top of the existing default internal region priority list. Read more about regions [here](REGIONS.md). Only one region is supported with this configuration. For a permanent setup you should consider setting this in [`config.ini`](CONFIGINI.md#regionwor) instead.
 
 ###### Example(s)
 ```
