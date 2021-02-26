@@ -1757,7 +1757,7 @@ void Skyscraper::setRegionPrios()
   // Load custom region prioritizations
   if(!config.regionPriosStr.isEmpty()) {
     for(const auto &region: config.regionPriosStr.split(",")) {
-      config.regionPrios.append(region);
+      config.regionPrios.append(region.trimmed());
     }
   } else {
     config.regionPrios.append("eu");
@@ -1800,10 +1800,13 @@ void Skyscraper::setLangPrios()
   // Load custom lang prioritizations
   if(!config.langPriosStr.isEmpty()) {
     for(const auto &lang: config.langPriosStr.split(",")) {
-      config.langPrios.append(lang);
+      config.langPrios.append(lang.trimmed());
     }
   } else {
     config.langPrios.append("en");
+    config.langPrios.append("de");
+    config.langPrios.append("fr");
+    config.langPrios.append("es");
   }
 }
 
