@@ -356,12 +356,6 @@ Not all scraping modules support all platforms. This means that you can potentia
 ###### Allowed in sections
 `[main]`
 
-#### lang="en"
-Sets the desired language when gathering data into the resource cache. This option is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
-
-###### Allowed in sections
-`[main]`, `[<PLATFORM>]`
-
 #### region="wor"
 Adds the specified region to the top of the existing default internal region priority list. Only one region is supported with this configuration. To overwrite the internal default region priority list entirely check [here](CONFIGINI.md#regionprioseuusssukworjp).
 
@@ -400,11 +394,43 @@ or
 regionPrios="de,us,jp"
 ```
 
-#### langPrios="en,de,es"
-Completely overwrites the internal language priority list inside of Skyscraper. This list is only relevant for certain scraping modules. Get the details [here](LANGUAGES.md).
+#### lang="en"
+Adds the specified language to the top of the existing default internal language priority list. Only one language is supported with this configuration.
+
+Note! Read more about how languages are handles in general [here](LANGUAGES.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
+
+###### Example(s)
+```
+[main]
+lang="it"
+```
+or
+```
+[snes]
+lang="it"
+```
+
+#### langPrios="en,de,es"
+Completely overwrites the internal language priority list inside of Skyscraper. Multiple languages can be configured here separated by commas.
+
+Note! Read more about how languages are handles in general [here](LANGUAGES.md).
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`
+
+###### Example(s)
+```
+[main]
+langPrios="it,en"
+```
+or
+```
+[megadrive]
+langPrios="it,en"
+```
 
 #### artworkXml="artwork.xml"
 Sets a non-default xml file to use when setting up the artwork compositing. By default Skyscraper uses the file `/home/USER/.skyscraper/artwork.xml`. Read more about the artwork.xml format and customization options [here](ARTWORK.md).
