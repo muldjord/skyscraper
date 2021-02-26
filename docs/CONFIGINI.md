@@ -363,7 +363,9 @@ Sets the desired language when gathering data into the resource cache. This opti
 `[main]`, `[<PLATFORM>]`
 
 #### region="wor"
-Adds the specified region to the top of the existing default internal region priority list. Read more about regions [here](REGIONS.md). Only one region is supported with this configuration. To overwrite the internal default region priority list entirely check [here](CONFIGINI.md#regionprioseuusssukworjp).
+Adds the specified region to the top of the existing default internal region priority list. Only one region is supported with this configuration. To overwrite the internal default region priority list entirely check [here](CONFIGINI.md#regionprioseuusssukworjp).
+
+Note! Read more about how regions are handled in general [here](REGIONS.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
@@ -380,7 +382,9 @@ region="de"
 ```
 
 #### regionPrios="eu,us,ss,uk,wor,jp"
-Completely overwrites the internal region priority list inside of Skyscraper. This will also overwrite (and thereby ignore) the potentially file name auto-detected region (so use with caution!). Read more about regions [here](REGIONS.md). Multiple regions can be configured here separated by commas.
+Completely overwrites the internal region priority list inside of Skyscraper. This will also overwrite (and thereby ignore) the potential file name auto-detected region (so use with caution!). Multiple regions can be configured here separated by commas.
+
+Note! Read more about how regions are handled in general [here](REGIONS.md).
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
