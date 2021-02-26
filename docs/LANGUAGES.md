@@ -32,7 +32,7 @@ When configuring languages be sure to use the short-names as shown (eg. 'no' for
 
 ### Default language prioritization
 Skyscraper's default internal language priority list is as follows. Topmost language has highest priority and so forth.
-* Auto-detected language or language set with `--lang LANGUAGE` or `language="LANGUAGE"`
+* Auto-detected language or language set with `--lang LANGUAGE` or `lang="LANGUAGE"`
 * en
 * de
 * fr
