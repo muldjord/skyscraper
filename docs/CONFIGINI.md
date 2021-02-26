@@ -5,8 +5,6 @@ Please take note that almost all of these options are set at a useful default (a
 
 NOTE 1! Some users seem to have a habit of editing the `/home/USER/skysource/config.ini` file. THIS IS NOT THE CORRECT FILE! Please read the above. :)
 
-NOTE 2! If you've installed Skyscraper through the RetroPie-Setup script, it is recommended to create a symbolic link to the executable. Do this by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. This will allow you to just type `Skyscraper` when running it from command line.
-
 Options can be set on three levels; either `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]` or `[<MODULE>]`.
 
 Settings in the `[main]` section will always be set regardless of selected platform, frontend and module.
