@@ -374,7 +374,7 @@ region="de"
 ```
 
 #### regionPrios="eu,us,ss,uk,wor,jp"
-Completely overwrites the internal region priority list inside of Skyscraper. This will also overwrite (and thereby ignore) the potential file name auto-detected region (so use with caution!). Multiple regions can be configured here separated by commas.
+Completely overwrites the internal region priority list inside of Skyscraper. Multiple regions can be configured here separated by commas.
 
 NOTE! Read more about how regions are handled in general [here](REGIONS.md).
 
