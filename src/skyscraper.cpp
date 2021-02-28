@@ -111,7 +111,7 @@ void Skyscraper::run()
       decProc.start("which 7z");
       decProc.waitForFinished(10000);
       if(!decProc.readAllStandardOutput().contains("7z")) {
-	printf("Couldn't find '7z' command. 7z is required by the '--flags unpack' flag. On Debian derivatives such as RetroPie you can install it with 'sudo apt-get install p7zip-full'.\n\nNow quitting...\n");
+	printf("Couldn't find '7z' command. 7z is required by the '--flags unpack' flag. On Debian derivatives such as RetroPie you can install it with 'sudo apt install p7zip-full'.\n\nNow quitting...\n");
 	exit(1);
       }
     }
