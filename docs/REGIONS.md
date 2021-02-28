@@ -77,7 +77,8 @@ So if your files are named like `Game Name (Europe).zip`, there's no need to con
 
 ### Default region prioritization
 Skyscraper's default internal region priority list is as follows. Topmost region has highest priority and so forth.
-* Auto-detected region or region set with `--region REGION` or `region="REGION"`
+* Auto-detected region
+* Region set with `--region REGION` or `region="REGION"`
 * eu
 * us
 * ss
