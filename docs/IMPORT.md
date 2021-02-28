@@ -105,4 +105,4 @@ For `###PLAYERS###`, `###RATING###`, `###AGES###`, and `###RELEASEDATE###` a cer
 * `MMM dd, yyyy` (MMM is Jan, Feb and so on...)
 
 ## How to actually USE the data
-When you've imported all of your data into the resource cache, you can make use of it by enabling Skyscrapers *game list generation* mode simply by leaving out the `-s` command line option entirely. The game list generator will then make use of your imported data. If you don't know what the resource cache is, read more about it [here](CACHE.md).
+When you've imported all of your data into the resource cache, you can make use of it by enabling Skyscrapers *game list generation* mode simply by leaving out the `-s` command line option (eg. `Skyscraper -p PLATFORM`). The game list generator will then make use of your imported data. If you don't know what the resource cache is, read more about it [here](CACHE.md).
