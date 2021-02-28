@@ -515,7 +515,11 @@ Skyscraper -p snes -s screenscraper --lang es
 ```
 
 ### --region &lt;CODE&gt;
-Adds the specified region to the top of the existing default internal region priority list. Read more about regions [here](REGIONS.md). Only one region is supported with this configuration. For a permanent setup you should consider setting this in [`config.ini`](CONFIGINI.md#regionwor) instead.
+Adds the specified region to the top of the existing default internal region priority list. Only one region is supported with this configuration. For a permanent setup you should consider setting this in [`config.ini`](CONFIGINI.md#regionwor) instead.
+
+NOTE 1! Read more about how regions are handled in general [here](REGIONS.md).
+
+NOTE 2! Any file name auto-detected region will still have top priority, even when this config is used.
 
 ###### Example(s)
 ```
