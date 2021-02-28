@@ -357,7 +357,9 @@ Not all scraping modules support all platforms. This means that you can potentia
 #### region="wor"
 Adds the specified region to the top of the existing default internal region priority list. Only one region is supported with this configuration. To overwrite the internal default region priority list entirely check [here](CONFIGINI.md#regionprioseuusssukworjp).
 
-NOTE! Read more about how regions are handled in general [here](REGIONS.md).
+NOTE 1! Read more about how regions are handled in general [here](REGIONS.md).
+
+NOTE 2! Any file name auto-detected region will still have top priority, even when this config is used.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
@@ -376,7 +378,9 @@ region="de"
 #### regionPrios="eu,us,ss,uk,wor,jp"
 Completely overwrites the internal region priority list inside of Skyscraper. Multiple regions can be configured here separated by commas.
 
-NOTE! Read more about how regions are handled in general [here](REGIONS.md).
+NOTE 1! Read more about how regions are handled in general [here](REGIONS.md).
+
+NOTE 2! Any file name auto-detected region will still have top priority, even when this config is used.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
