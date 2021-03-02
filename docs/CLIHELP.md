@@ -519,7 +519,7 @@ Adds the specified region to the top of the existing default internal region pri
 
 NOTE 1! Read more about how regions are handled in general [here](REGIONS.md).
 
-NOTE 2! Any file name auto-detected region will still have top priority, even when this config is used.
+NOTE 2: Setting this will overwrite any region [auto-detected](REGIONS.md#region-auto-detection) from the file name.
 
 ###### Example(s)
 ```
