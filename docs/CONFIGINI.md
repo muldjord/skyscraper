@@ -380,6 +380,8 @@ Completely overwrites the internal region priority list inside of Skyscraper. Mu
 
 NOTE 1! Read more about how regions are handled in general [here](REGIONS.md).
 
+NOTE 2: Any region [auto-detected](REGIONS.md#region-auto-detection) from the file name will still be added to the top of this list.
+
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
 
