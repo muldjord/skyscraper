@@ -52,7 +52,7 @@ Import file: `/home/USER/.skyscraper/import/textual/<EXACT ROM BASE NAME>.xml`
 </game>
 
 ```
-Make sure any line matches *exactly* with the line in the recipe including white-space characters such as spaces and tabs! Otherwise Skyscraper won't recognize it.
+Make sure any line matches *exactly* with the line in the recipe **including white-space characters such as newlines charater, spaces and tabs!** Otherwise Skyscraper won't recognize it.
 
 #### Example 2
 Definitions file: `/home/USER/.skyscraper/import/definitions.dat`
