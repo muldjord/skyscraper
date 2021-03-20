@@ -765,6 +765,7 @@ void Cache::assembleReport(const Settings &config, const QString filter)
       resTypeList.append("description");
       resTypeList.append("publisher");
       resTypeList.append("developer");
+      resTypeList.append("players");
       resTypeList.append("ages");
       resTypeList.append("tags");
       resTypeList.append("rating");
@@ -780,6 +781,7 @@ void Cache::assembleReport(const Settings &config, const QString filter)
       resTypeList.append("description");
       resTypeList.append("publisher");
       resTypeList.append("developer");
+      resTypeList.append("players");
       resTypeList.append("ages");
       resTypeList.append("tags");
       resTypeList.append("rating");
@@ -806,6 +808,7 @@ void Cache::assembleReport(const Settings &config, const QString filter)
        resType != "publisher" &&
        resType != "developer" &&
        resType != "ages" &&
+       resType != "players" &&
        resType != "tags" &&
        resType != "rating" &&
        resType != "releasedate" &&
@@ -830,6 +833,7 @@ void Cache::assembleReport(const Settings &config, const QString filter)
       printf("  \033[1;32mdescription\033[0m\n");
       printf("  \033[1;32mpublisher\033[0m\n");
       printf("  \033[1;32mdeveloper\033[0m\n");
+      printf("  \033[1;32mplayers\033[0m\n");
       printf("  \033[1;32mages\033[0m\n");
       printf("  \033[1;32mtags\033[0m\n");
       printf("  \033[1;32mrating\033[0m\n");
