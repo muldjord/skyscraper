@@ -24,4 +24,5 @@
   <hint>You can import data from an EmulationStation gamelist.xml file using the "-s esgamelist" scraping module. This way you can use other scrapers to generate a gamelist.xml and then import the data into Skyscraper if you wish.</hint>
   <hint>If you are having trouble scraping a game with a long name, consider adding an alias for it to the "/home/USER/.skyscraper/aliasMap.csv" file. Open the file in an editor to read more on how to this works.</hint>
   <hint>You can create reports for all files missing certain resources in the cache using the '--cache report:missing=&lt;GROUP or RESOURCE1,RESOURCE2,...&gt; option. Great ways to add missing resources that the online sources are having trouble providing are the '--cache edit' option or the '-s import' module.</hint>
+  <hint>Using the '--flags theinfront' flag you can force Skyscraper to always move 'The' to the front of the game titles, regardless of how it was returned from the scraping sources.</hint>
 </hints>
