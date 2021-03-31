@@ -726,6 +726,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("symlink")) {
     config.symlink = settings.value("symlink").toBool();
   }
+  if(settings.contains("theInFront")) {
+    config.theInFront = settings.value("theInFront").toBool();
+  }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();
   }
@@ -931,6 +934,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("symlink")) {
     config.symlink = settings.value("symlink").toBool();
   }
+  if(settings.contains("theInFront")) {
+    config.theInFront = settings.value("theInFront").toBool();
+  }
   if(settings.contains("startAt")) {
     config.startAt = settings.value("startAt").toString();
   }
@@ -1033,6 +1039,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("symlink")) {
     config.symlink = settings.value("symlink").toBool();
+  }
+  if(settings.contains("theInFront")) {
+    config.theInFront = settings.value("theInFront").toBool();
   }
   if(settings.contains("startAt")) {
     config.startAt = settings.value("startAt").toString();
@@ -1188,6 +1197,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       printf("  \033[1;33mskipexistingwheels\033[0m: When generating gamelists, skip processing wheels that already exist in the media output folder.\n");
       printf("  \033[1;33mskipped\033[0m: When generating a gamelist, also include games that do not have any cached data.\n");
       printf("  \033[1;33msymlink\033[0m: Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!\n");
+      printf("  \033[1;33mtheinfront\033[0m: Forces Skyscraper to always try and move 'The' to the beginning of the game title when generating gamelists. By default 'The' will be moved to the end of the game titles.\n");
       printf("  \033[1;33munattend\033[0m: Skip initial questions when scraping. It will then always overwrite existing gamelist and not skip existing entries.\n");
       printf("  \033[1;33munattendskip\033[0m: Skip initial questions when scraping. It will then always overwrite existing gamelist and always skip existing entries.\n");
       printf("  \033[1;33munpack\033[0m: Unpacks and checksums the file inside 7z or zip files instead of the compressed file itself. Be aware that this option requires '7z' to be installed on the system to work. Only relevant for 'screenscraper' scraping module.\n");
@@ -1239,6 +1249,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 	  config.skipped = true;
 	} else if(flag == "symlink") {
 	  config.symlink = true;
+	} else if(flag == "theinfront") {
+	  config.theInFront = true;
 	} else if(flag == "unattend") {
 	  config.unattend = true;
 	} else if(flag == "unattendskip") {
