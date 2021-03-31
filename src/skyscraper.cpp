@@ -58,9 +58,7 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentD
   manager = QSharedPointer<NetManager>(new NetManager());
 
   // Randomize timer
-#if QT_VERSION >= 0x050a00
-  QRandomGenerator::global()->seed(QTime::currentTime().msec());
-#else
+#if QT_VERSION < 0x050a00
   qsrand(QTime::currentTime().msec());
 #endif
 
