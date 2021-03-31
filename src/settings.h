@@ -88,6 +88,7 @@ struct Settings {
   QString extensions = "";
   QString addExtensions = "";
   bool unpack = false;
+  bool theInFront = false;
   bool gameListBackup = false;
   bool preserveOldGameList = true;
   bool spaceCheck = true;
