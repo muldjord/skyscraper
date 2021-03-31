@@ -280,6 +280,14 @@ Enabling this option is only relevant while also setting the `videos="true"` opt
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
 
+#### theInFront="false"
+Game titles are returned from the scraping sources sometimes as 'The Game' and other times as 'Game, The'. Enabling this option will force Skyscraper to always try and move 'The' to the front of the titles. If it is not enabled, Skyscraper will always try and move it to the end of the title, regardless of how it was originally returned by the scraping sources.
+
+NOTE! When generating gamelists Skyscraper will still sort the games as if the game titles didn't have 'The' at the beginning.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
+
 #### brackets="true"
 Disable this option to remove any bracket notes when generating the game list. It will disable notes such as `(Europe)` and `[AGA]` completely. This option is only relevant when generating the game list. It makes no difference when gathering data into the resource cache.
 
