@@ -97,7 +97,7 @@ void WorldOfSpectrum::getSearchResults(QList<GameEntry> &gameEntries,
       nomNom(nom);
     }
     game.title = data.left(data.indexOf(titlePost.toUtf8()));
-    if(game.title.indexOf(", The") != -1) {
+    if(game.title.contains(", The")) {
       game.title = game.title.replace(", The", "").prepend("The ");
     }
 
