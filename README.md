@@ -163,6 +163,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Added 'players' resource to '--cache report:missing' CLI option (Thank you to user 'peligwe' for reporting this)
 * Added 'theInFront' config.ini option and 'theinfront' CLI flag (Thank you to user 'sleve_mcdichael' for suggesting this)
 * 'unattend' and 'unattendSkip' can now be used in a scraping module section in config.ini (Thank you to user 'sleve_mcdichael' for reporting this)
+* Added Qt version pre-processor checks for deprecated Qt methods to avoid compilation warning on newer Qt installations
 
 #### Version 3.6.7 (27th January 2021)
 * Added '*.rvz' extension for 'wii' and 'gc' platforms (Thank you to user 'tcamargo' for reporting this)
