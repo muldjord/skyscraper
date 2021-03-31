@@ -223,6 +223,10 @@ When generating gamelists, skip processing wheels that already exist in the medi
 If a rom has no resources attached to it in the cache, it will be left out when generating a game list file. It will still show up in the frontend (at least it does for EmulationStation) but it won't exist in the game list file. You can safely leave out this flag unless you need the empty entries for some reason. Consider setting this in [`config.ini`](CONFIGINI.md#skippedfalse) instead.
 #### symlink
 Enabling this flag is currently only relevant while also using the `videos` flag. It basically means that Skyscraper will create a link to the cached videos instead of copying them when generating the game list media files. This will save a lot of space, but has the caveat that if you somehow remove the videos from the cache, the links will be broken and the videos then won't show anymore. Consider setting this in [`config.ini`](CONFIGINI.md#symlinkfalse) instead.
+#### theinfront
+Game titles are returned from the scraping sources sometimes as 'The Game' and other times as 'Game, The'. Enabling this flag will force Skyscraper to always try and move 'The' to the front of the titles. If it is not enabled, Skyscraper will always try and move it to the end of the title, regardless of how it was originally returned by the scraping sources.
+
+NOTE! When generating gamelists Skyscraper will still sort the games as if the game titles didn't have 'The' at the beginning.
 #### unattend
 When generating a game list Skyscraper will check if it already exists and ask if you want to overwrite it. And it will also ask if you wish to skip existing game list entries. By using this flag Skyscraper will *always* overwrite an existing game list and *never* skip existing entries. This is useful when scripting Skyscraper to avoid the need for user input. Consider setting this in [`config.ini`](CONFIGINI.md#unattendtrue) instead.
 #### unattendskip
