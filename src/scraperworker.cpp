@@ -25,6 +25,7 @@
 
 #include <iostream>
 #include <QTimer>
+#include <QRegularExpression>
 
 #include "scraperworker.h"
 #include "strtools.h"
@@ -278,10 +279,17 @@ void ScraperWorker::run()
     // Strip any brackets from the title as they will be readded when assembling gamelist
     game.title = StrTools::stripBrackets(game.title);
 
-    // Move 'The' to end of title for better sorting
-    // This looks like crap for some titles such as 'Simpsons: Bart vs. Blah, The' but I'll leave it in for the time being
-    if(game.title.toLower().left(4) == "the ") {
-      game.title = game.title.remove(0, 4).simplified().append(", The");
+    // Move 'The' or ', The' depending on the config. This does not affect game list sorting. 'The ' is always removed before sorting.
+    if(config.theInFront) {
+      QRegularExpression theMatch(", [Tt]{1}he");
+      if(theMatch.match(game.title).hasMatch()) {
+	game.title.replace(theMatch.match(game.title).captured(0), "");
+	game.title.prepend("The ");
+      }
+    } else {
+      if(game.title.toLower().left(4) == "the ") {
+	game.title = game.title.remove(0, 4).simplified().append(", The");
+      }
     }
 
     // Don't unescape title since we already did that in getBestEntry()
