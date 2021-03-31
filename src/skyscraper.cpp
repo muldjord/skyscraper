@@ -1072,6 +1072,12 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("interactive")) {
     config.interactive = settings.value("interactive").toBool();
   }
+  if(settings.contains("unattend")) {
+    config.unattend = settings.value("unattend").toBool();
+  }
+  if(settings.contains("unattendSkip")) {
+    config.unattendSkip = settings.value("unattendSkip").toBool();
+  }
   if(settings.contains("jpgQuality")) {
     config.jpgQuality = settings.value("jpgQuality").toInt();
   }
