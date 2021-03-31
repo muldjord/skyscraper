@@ -35,8 +35,13 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+
 #if QT_VERSION >= 0x050400
 #include <QStorageInfo>
+#endif
+
+#if QT_VERSION >= 0x050a00
+#include <QRandomGenerator>
 #endif
 
 #include "skyscraper.h"
@@ -53,7 +58,11 @@ Skyscraper::Skyscraper(const QCommandLineParser &parser, const QString &currentD
   manager = QSharedPointer<NetManager>(new NetManager());
 
   // Randomize timer
+#if QT_VERSION >= 0x050a00
+  QRandomGenerator::global()->seed(QTime::currentTime().msec());
+#else
   qsrand(QTime::currentTime().msec());
+#endif
 
   printf("%s", StrTools::getVersionHeader().toStdString().c_str());
 
@@ -108,7 +117,7 @@ void Skyscraper::run()
     if(config.unpack) {
       QProcess decProc;
       decProc.setReadChannel(QProcess::StandardOutput);
-      decProc.start("which 7z");
+      decProc.start("which 7z", QStringList({}));
       decProc.waitForFinished(10000);
       if(!decProc.readAllStandardOutput().contains("7z")) {
 	printf("Couldn't find '7z' command. 7z is required by the '--flags unpack' flag. On Debian derivatives such as RetroPie you can install it with 'sudo apt install p7zip-full'.\n\nNow quitting...\n");
@@ -1541,7 +1550,11 @@ void Skyscraper::showHint()
   }
   hintsFile.close();
   QDomNodeList hintNodes = hintsXml.elementsByTagName("hint");
+#if QT_VERSION >= 0x050a00
+  printf("\033[1;33mDID YOU KNOW:\033[0m %s\n\n", hintsXml.elementsByTagName("hint").at(QRandomGenerator::global()->generate() % hintNodes.length()).toElement().text().toStdString().c_str());
+#else
   printf("\033[1;33mDID YOU KNOW:\033[0m %s\n\n", hintsXml.elementsByTagName("hint").at(qrand() % hintNodes.length()).toElement().text().toStdString().c_str());
+#endif
 }
 
 void Skyscraper::doPrescrapeJobs()

@@ -122,27 +122,27 @@ void OpenRetro::getSearchResults(QList<GameEntry> &gameEntries,
     if(!game.title.isEmpty())
       gameEntries.append(game);
   } else {
-    while(data.indexOf(searchResultPre) != -1) {
+    while(data.indexOf(searchResultPre.toUtf8()) != -1) {
       nomNom(searchResultPre);
       
       // Digest until url
       for(const auto &nom: urlPre) {
 	nomNom(nom);
       }
-      game.url = baseUrl + "/" + data.left(data.indexOf(urlPost)) + "/edit";
+      game.url = baseUrl + "/" + data.left(data.indexOf(urlPost.toUtf8())) + "/edit";
       
       // Digest until title
       for(const auto &nom: titlePre) {
 	nomNom(nom);
       }
       // Remove AGA, we already add this automatically in StrTools::addSqrBrackets
-      game.title = data.left(data.indexOf(titlePost)).replace("[AGA]", "").simplified();
+      game.title = data.left(data.indexOf(titlePost.toUtf8())).replace("[AGA]", "").simplified();
       
       // Digest until platform
       for(const auto &nom: platformPre) {
 	nomNom(nom);
       }
-      game.platform = data.left(data.indexOf(platformPost)).replace("&nbsp;", " ");
+      game.platform = data.left(data.indexOf(platformPost.toUtf8())).replace("&nbsp;", " ");
       
       if(platformMatch(game.platform, platform)) {
 	gameEntries.append(game);
@@ -215,11 +215,11 @@ void OpenRetro::getDescription(GameEntry &game)
   }
   QByteArray tempData = data;
 
-  if(data.indexOf(descriptionPre.at(0)) != -1) {
+  if(data.indexOf(descriptionPre.at(0).toUtf8()) != -1) {
     // If description
     nomNom(descriptionPre.at(0));
     nomNom(descriptionPre.at(1));
-  } else if(data.indexOf(descriptionPre.at(2)) != -1) {
+  } else if(data.indexOf(descriptionPre.at(2).toUtf8()) != -1) {
     // If __long_description
     nomNom(descriptionPre.at(2));
     nomNom(descriptionPre.at(3));
@@ -227,7 +227,7 @@ void OpenRetro::getDescription(GameEntry &game)
     return;
   }
 
-  game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
+  game.description = data.left(data.indexOf(descriptionPost.toUtf8())).replace("&lt;", "<").replace("&gt;", ">");
   // Revert data back to pre-description
   data = tempData;
 
@@ -247,7 +247,7 @@ void OpenRetro::getTags(GameEntry &game)
   }
   QString tags = "";
   QString tagBegin = "<a href=\"/browse/";
-  while(data.indexOf(tagBegin) != -1) {
+  while(data.indexOf(tagBegin.toUtf8()) != -1) {
     nomNom(tagBegin);
     nomNom("\">");
     tags.append(data.left(data.indexOf("</a>")) + ", ");
@@ -272,7 +272,7 @@ void OpenRetro::getCover(GameEntry &game)
   for(const auto &nom: coverPre) {
     nomNom(nom);
   }
-  QString coverUrl = data.left(data.indexOf(coverPost)).replace("&amp;", "&") + "?s=512";
+  QString coverUrl = data.left(data.indexOf(coverPost.toUtf8())).replace("&amp;", "&") + "?s=512";
   if(coverUrl.left(4) != "http") {
     coverUrl.prepend(baseUrl + (coverUrl.left(1) == "/"?"":"/"));
   }
@@ -298,7 +298,7 @@ void OpenRetro::getMarquee(GameEntry &game)
   for(const auto &nom: marqueePre) {
     nomNom(nom);
   }
-  QString marqueeUrl = data.left(data.indexOf(marqueePost)).replace("&amp;", "&") + "?s=512";
+  QString marqueeUrl = data.left(data.indexOf(marqueePost.toUtf8())).replace("&amp;", "&") + "?s=512";
   if(marqueeUrl.left(4) != "http") {
     marqueeUrl.prepend(baseUrl + (marqueeUrl.left(1) == "/"?"":"/"));
   }

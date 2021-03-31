@@ -36,7 +36,8 @@
 
 #include <QObject>
 #include <QFile>
-#include <QTime>
+#include <QElapsedTimer>
+
 #include <QCommandLineParser>
 
 class Skyscraper : public QObject
@@ -83,7 +84,7 @@ private:
   QList<QString> cliFiles;
   QMutex entryMutex;
   QMutex checkThreadMutex;
-  QTime timer;
+  QElapsedTimer timer;
   QString gameListFileString;
   QString skippedFileString;
   int doneThreads;

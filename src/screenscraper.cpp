@@ -119,7 +119,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     if(jsonObj.isEmpty()) {
       printf("\033[1;31mScreenScraper APIv2 returned invalid / empty Json. Their servers are probably down. Please try again later or use a different scraping module with '-s MODULE'. Check 'Skyscraper --help' for more information.\033[0m\n");
       data.replace(StrTools::unMagic("204;198;236;130;203;181;203;126;191;167;200;198;192;228;169;156"), "****");
-      data.replace(config->password, "****");
+      data.replace(config->password.toUtf8(), "****");
       QFile jsonErrorFile("./screenscraper_error.json");
       if(jsonErrorFile.open(QIODevice::WriteOnly)) {
 	if(data.length() > 64) {
@@ -467,7 +467,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 	QProcess decProc;
 	decProc.setReadChannel(QProcess::StandardOutput);
 
-	decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"");
+	decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"", QStringList({}));
 	if(decProc.waitForFinished(30000)) {
 	  if(decProc.exitStatus() != QProcess::NormalExit) {
 	    printf("Getting file list from compressed file failed, falling back...\n");
@@ -486,7 +486,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 	QProcess decProc;
 	decProc.setReadChannel(QProcess::StandardOutput);
 
-	decProc.start("7z x -so \"" + info.absoluteFilePath() + "\"");
+	decProc.start("7z x -so \"" + info.absoluteFilePath() + "\"", QStringList({}));
 	if(decProc.waitForFinished(30000)) {
 	  if(decProc.exitStatus() == QProcess::NormalExit) {
 	    QByteArray allData = decProc.readAllStandardOutput();

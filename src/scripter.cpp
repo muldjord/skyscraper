@@ -219,7 +219,7 @@ Scripter::Scripter()
   getline(std::cin, runScriptStr);
   if(runScriptStr == "y" || runScriptStr == "Y" || runScriptStr == "") {
     printf("\nRunning script...\n");
-    QProcess::execute("sh " + QDir::homePath() + "/.skyscraper/skyscript.sh");
+    QProcess::execute("sh " + QDir::homePath() + "/.skyscraper/skyscript.sh", QStringList({}));
   } else {
     printf("\nUser chose not to run script, now exiting...\n");
     exit(0);

@@ -23,10 +23,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
  */
 
-#include <QJsonArray>
-
 #include "mobygames.h"
 #include "strtools.h"
+
+#include <QJsonArray>
+
+#if QT_VERSION >= 0x050a00
+#include <QRandomGenerator>
+#endif
 
 MobyGames::MobyGames(Settings *config,
 		     QSharedPointer<NetManager> manager)
@@ -372,7 +376,11 @@ void MobyGames::getScreenshot(GameEntry &game)
   int chosen = 1;
   if(jsonScreenshots.count() >= 3) {
     // First 2 are almost always not ingame, so skip those if we have 3 or more
+#if QT_VERSION >= 0x050a00
+    chosen = (QRandomGenerator::global()->generate() % jsonScreenshots.count() - 3) + 3;
+#else
     chosen = (qrand() % jsonScreenshots.count() - 3) + 3;
+#endif
   }
   netComm->request(jsonScreenshots.at(chosen).toObject()["image"].toString().replace("http://", "https://"));
   q.exec();

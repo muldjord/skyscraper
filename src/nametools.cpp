@@ -467,7 +467,11 @@ QString NameTools::getParNotes(QString baseName)
 
 QString NameTools::getUniqueNotes(const QString &notes, QChar delim)
 {
+#if QT_VERSION >= 0x050e00
+  QList<QString> notesList = notes.split(delim, Qt::SkipEmptyParts);
+#else
   QList<QString> notesList = notes.split(delim, QString::SkipEmptyParts);
+#endif
   QList<QString> uniqueList;
   for(const auto &note: notesList) {
     bool found = false;

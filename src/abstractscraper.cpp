@@ -53,26 +53,26 @@ void AbstractScraper::getSearchResults(QList<GameEntry> &gameEntries,
 
   GameEntry game;
 
-  while(data.indexOf(searchResultPre) != -1) {
+  while(data.indexOf(searchResultPre.toUtf8()) != -1) {
     nomNom(searchResultPre);
 
     // Digest until url
     for(const auto &nom: urlPre) {
       nomNom(nom);
     }
-    game.url = baseUrl + "/" + data.left(data.indexOf(urlPost));
+    game.url = baseUrl + "/" + data.left(data.indexOf(urlPost.toUtf8()));
 
     // Digest until title
     for(const auto &nom: titlePre) {
       nomNom(nom);
     }
-    game.title = data.left(data.indexOf(titlePost));
+    game.title = data.left(data.indexOf(titlePost.toUtf8()));
 
     // Digest until platform
     for(const auto &nom: platformPre) {
       nomNom(nom);
     }
-    game.platform = data.left(data.indexOf(platformPost));
+    game.platform = data.left(data.indexOf(platformPost.toUtf8()));
 
     if(platformMatch(game.platform, platform)) {
       gameEntries.append(game);
@@ -151,7 +151,7 @@ void AbstractScraper::getDescription(GameEntry &game)
     nomNom(nom);
   }
 
-  game.description = data.left(data.indexOf(descriptionPost)).replace("&lt;", "<").replace("&gt;", ">");
+  game.description = data.left(data.indexOf(descriptionPost.toUtf8())).replace("&lt;", "<").replace("&gt;", ">");
   game.description = game.description.replace("\\n", "\n");
 
   // Remove all html tags within description
@@ -168,7 +168,7 @@ void AbstractScraper::getDeveloper(GameEntry &game)
   for(const auto &nom: developerPre) {
     nomNom(nom);
   }
-  game.developer = data.left(data.indexOf(developerPost));
+  game.developer = data.left(data.indexOf(developerPost.toUtf8()));
 }
 
 void AbstractScraper::getPublisher(GameEntry &game)
@@ -184,7 +184,7 @@ void AbstractScraper::getPublisher(GameEntry &game)
   for(const auto &nom: publisherPre) {
     nomNom(nom);
   }
-  game.publisher = data.left(data.indexOf(publisherPost));
+  game.publisher = data.left(data.indexOf(publisherPost.toUtf8()));
 }
 
 void AbstractScraper::getPlayers(GameEntry &game)
@@ -200,7 +200,7 @@ void AbstractScraper::getPlayers(GameEntry &game)
   for(const auto &nom: playersPre) {
     nomNom(nom);
   }
-  game.players = data.left(data.indexOf(playersPost));
+  game.players = data.left(data.indexOf(playersPost.toUtf8()));
 }
 
 void AbstractScraper::getAges(GameEntry &game)
@@ -216,7 +216,7 @@ void AbstractScraper::getAges(GameEntry &game)
   for(const auto &nom: agesPre) {
     nomNom(nom);
   }
-  game.ages = data.left(data.indexOf(agesPost));
+  game.ages = data.left(data.indexOf(agesPost.toUtf8()));
 }
 
 void AbstractScraper::getTags(GameEntry &game)
@@ -232,7 +232,7 @@ void AbstractScraper::getTags(GameEntry &game)
   for(const auto &nom: tagsPre) {
     nomNom(nom);
   }
-  game.tags = data.left(data.indexOf(tagsPost));
+  game.tags = data.left(data.indexOf(tagsPost.toUtf8()));
 }
 
 void AbstractScraper::getRating(GameEntry &game)
@@ -248,7 +248,7 @@ void AbstractScraper::getRating(GameEntry &game)
   for(const auto &nom: ratingPre) {
     nomNom(nom);
   }
-  game.rating = data.left(data.indexOf(ratingPost));
+  game.rating = data.left(data.indexOf(ratingPost.toUtf8()));
   bool toDoubleOk = false;
   double rating = game.rating.toDouble(&toDoubleOk);
   if(toDoubleOk) {
@@ -271,7 +271,7 @@ void AbstractScraper::getReleaseDate(GameEntry &game)
   for(const auto &nom: releaseDatePre) {
     nomNom(nom);
   }
-  game.releaseDate = data.left(data.indexOf(releaseDatePost)).simplified();
+  game.releaseDate = data.left(data.indexOf(releaseDatePost.toUtf8())).simplified();
 }
 
 void AbstractScraper::getCover(GameEntry &game)
@@ -287,7 +287,7 @@ void AbstractScraper::getCover(GameEntry &game)
   for(const auto &nom: coverPre) {
     nomNom(nom);
   }
-  QString coverUrl = data.left(data.indexOf(coverPost)).replace("&amp;", "&");
+  QString coverUrl = data.left(data.indexOf(coverPost.toUtf8())).replace("&amp;", "&");
   if(coverUrl.left(4) != "http") {
     coverUrl.prepend(baseUrl + (coverUrl.left(1) == "/"?"":"/"));
   }
@@ -313,7 +313,7 @@ void AbstractScraper::getScreenshot(GameEntry &game)
 	nomNom(nom);
       }
     }
-    QString screenshotUrl = data.left(data.indexOf(screenshotPost)).replace("&amp;", "&");
+    QString screenshotUrl = data.left(data.indexOf(screenshotPost.toUtf8())).replace("&amp;", "&");
     if(screenshotUrl.left(4) != "http") {
       screenshotUrl.prepend(baseUrl + (screenshotUrl.left(1) == "/"?"":"/"));
     }
@@ -340,7 +340,7 @@ void AbstractScraper::getWheel(GameEntry &game)
   for(const auto &nom: wheelPre) {
     nomNom(nom);
   }
-  QString wheelUrl = data.left(data.indexOf(wheelPost)).replace("&amp;", "&");
+  QString wheelUrl = data.left(data.indexOf(wheelPost.toUtf8())).replace("&amp;", "&");
   if(wheelUrl.left(4) != "http") {
     wheelUrl.prepend(baseUrl + (wheelUrl.left(1) == "/"?"":"/"));
   }
@@ -366,7 +366,7 @@ void AbstractScraper::getMarquee(GameEntry &game)
   for(const auto &nom: marqueePre) {
     nomNom(nom);
   }
-  QString marqueeUrl = data.left(data.indexOf(marqueePost)).replace("&amp;", "&");
+  QString marqueeUrl = data.left(data.indexOf(marqueePost.toUtf8())).replace("&amp;", "&");
   if(marqueeUrl.left(4) != "http") {
     marqueeUrl.prepend(baseUrl + (marqueeUrl.left(1) == "/"?"":"/"));
   }
@@ -392,7 +392,7 @@ void AbstractScraper::getVideo(GameEntry &game)
   for(const auto &nom: videoPre) {
     nomNom(nom);
   }
-  QString videoUrl = data.left(data.indexOf(videoPost)).replace("&amp;", "&");
+  QString videoUrl = data.left(data.indexOf(videoPost.toUtf8())).replace("&amp;", "&");
   if(videoUrl.left(4) != "http") {
     videoUrl.prepend(baseUrl + (videoUrl.left(1) == "/"?"":"/"));
   }
@@ -406,12 +406,12 @@ void AbstractScraper::getVideo(GameEntry &game)
 
 void AbstractScraper::nomNom(const QString nom, bool including)
 {
-  data.remove(0, data.indexOf(nom) + (including?nom.length():0));
+  data.remove(0, data.indexOf(nom.toUtf8()) + (including?nom.length():0));
 }
 
 bool AbstractScraper::checkNom(const QString nom)
 {
-  if(data.indexOf(nom) != -1) {
+  if(data.indexOf(nom.toUtf8()) != -1) {
     return true;
   }
   return false;

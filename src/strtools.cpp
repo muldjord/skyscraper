@@ -123,7 +123,7 @@ QByteArray StrTools::magic(const QByteArray str)
 
   QByteArray thingie;
   for(int a = 0; a < str.length(); ++a) {
-    thingie.append(QString::number(strChars[a] += magicChars[a]) + ";");
+    thingie.append(QString::number(strChars[a] += magicChars[a]).toUtf8() + ";");
   }
 
   thingie = thingie.left(thingie.length() - 1);
@@ -148,7 +148,7 @@ QByteArray StrTools::unMagic(const QByteArray str)
   }
   QByteArray thingie;
   for(int a = 0; a < length; ++a) {
-    thingie.append(QChar(strChars[a] -= magicChars[a]));
+    thingie.append(QString(QChar(strChars[a] -= magicChars[a])).toUtf8());
   }
 
   return thingie; 
@@ -309,7 +309,11 @@ QString StrTools::conformReleaseDate(QString str)
 QString StrTools::conformTags(const QString str)
 {
   QString tags = "";
+#if QT_VERSION >= 0x050e00
+  QList<QString> tagList = str.split(',', Qt::SkipEmptyParts);
+#else
   QList<QString> tagList = str.split(',', QString::SkipEmptyParts);
+#endif
   for(auto &tag: tagList) {
     tag = tag.simplified();
     tag = tag.left(1).toUpper() + tag.mid(1, tag.length() - 1);

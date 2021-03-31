@@ -1632,7 +1632,7 @@ bool Cache::doVideoConvert(Resource &resource,
     output.append("Running command: '" + videoConvertCommand + "'\n");
   }
   QProcess convertProcess;
-  convertProcess.start(videoConvertCommand);
+  convertProcess.start(videoConvertCommand, QStringList({}));
   // Wait 10 minutes max for conversion to complete
   if(convertProcess.waitForFinished(1000 * 60 * 10) &&
      convertProcess.exitStatus() == QProcess::NormalExit &&

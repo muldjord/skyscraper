@@ -83,20 +83,20 @@ void WorldOfSpectrum::getSearchResults(QList<GameEntry> &gameEntries,
 
   GameEntry game;
 
-  while(data.indexOf(searchResultPre) != -1) {
+  while(data.indexOf(searchResultPre.toUtf8()) != -1) {
     nomNom(searchResultPre);
 
     // Digest until url
     for(const auto &nom: urlPre) {
       nomNom(nom);
     }
-    game.url = baseUrl + data.left(data.indexOf(urlPost)) + "&loadpics=3&allowadult=on";
+    game.url = baseUrl + data.left(data.indexOf(urlPost.toUtf8())) + "&loadpics=3&allowadult=on";
 
     // Digest until title
     for(const auto &nom: titlePre) {
       nomNom(nom);
     }
-    game.title = data.left(data.indexOf(titlePost));
+    game.title = data.left(data.indexOf(titlePost.toUtf8()));
     if(game.title.indexOf(", The") != -1) {
       game.title = game.title.replace(", The", "").prepend("The ");
     }
@@ -119,7 +119,7 @@ void WorldOfSpectrum::getDescription(GameEntry &game)
   for(const auto &nom: descriptionPre) {
     nomNom(nom);
   }
-  game.description = data.left(data.indexOf(descriptionPost));
+  game.description = data.left(data.indexOf(descriptionPost.toUtf8()));
   // Remove all html tags within description
   game.description = StrTools::stripHtmlTags(game.description);
 }
@@ -133,7 +133,7 @@ void WorldOfSpectrum::getCover(GameEntry &game)
     return;
   }
   nomNom("<A HREF=\"");
-  QString coverUrl = data.left(data.indexOf(coverPost));
+  QString coverUrl = data.left(data.indexOf(coverPost.toUtf8()));
   if(coverUrl.indexOf("http") != -1) {
     netComm->request(coverUrl);
   } else {
@@ -154,7 +154,7 @@ void WorldOfSpectrum::getScreenshot(GameEntry &game)
   }
   nomNom("<IMG SRC=\"/pub/sinclair/screens/in-game", false);
   nomNom("<IMG SRC=\"");
-  QString screenshotUrl = data.left(data.indexOf(screenshotPost));
+  QString screenshotUrl = data.left(data.indexOf(screenshotPost.toUtf8()));
   if(screenshotUrl.indexOf("http") != -1) {
     netComm->request(screenshotUrl);
   } else {
@@ -178,7 +178,7 @@ void WorldOfSpectrum::getReleaseDate(GameEntry &game)
   for(const auto &nom: releaseDatePre) {
     nomNom(nom);
   }
-  game.releaseDate = data.left(data.indexOf(releaseDatePost));
+  game.releaseDate = data.left(data.indexOf(releaseDatePost.toUtf8()));
   bool isInt = true;
   game.releaseDate.toInt(&isInt);
   if(!isInt) {
