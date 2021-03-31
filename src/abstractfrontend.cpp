@@ -49,7 +49,16 @@ void AbstractFrontend::sortEntries(QList<GameEntry> &gameEntries)
 	    fflush(stdout);
 	  }
 	  dots++;
-	  return a.title.toLower() < b.title.toLower();
+	  QString firstTitle = a.title.toLower();
+	  QString secondTitle = b.title.toLower();
+	  if(firstTitle.left(4) == "the ") {
+	    firstTitle.remove(0, 4);
+	  }
+	  if(secondTitle.left(4) == "the ") {
+	    secondTitle.remove(0, 4);
+	  }
+
+	  return firstTitle < secondTitle;
 	});
   printf(" \033[1;32mDone!\033[0m\n");
 }
