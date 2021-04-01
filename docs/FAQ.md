@@ -86,7 +86,7 @@ The above commands *should* be run with sudo, as we need root permission to rese
 <details>
   <summary>Expand answer...</summary>
 
-**A:** Skyscraper contains a powerful artwork compositor that can be customize the exported screenshot, boxart etc. any way you like. This is done through the `/home/USER/.skyscraper/artwork.xml` file. The default configuration for this file is made to look good when exporting for the default frontend EmulationStation. When you use a different frontend, you need to customize this file a bit to make it look good. For Pegasus I suggest something like this:
+**A:** Skyscraper contains a powerful artwork compositor that can customize the exported screenshot, boxart etc. any way you like. This is done through the `/home/USER/.skyscraper/artwork.xml` file. The default configuration for this file is made to look good when exporting for the default frontend EmulationStation. When you use a different frontend, you need to customize this file a bit to make it look good. For Pegasus I suggest something like this:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <artwork>
