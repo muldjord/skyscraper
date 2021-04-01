@@ -54,9 +54,9 @@ If you wish to export for one of the other supported frontends, you need to spec
 <details>
   <summary>Expand answer...</summary>
 
-**A:** The RetroPie-Setup script installs the Skyscraper executable in a location that is not normally searched by the system when looking for executables. For ease of use you can create a link to a location that is searched by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. You might be asked for your sudo password, for RetroPie default is `raspberry`. If that command was succesful you should now be able to run Skyscraper simply with `Skyscraper` followed by any options you need.
+**A:** The RetroPie-Setup script installs the Skyscraper executable in a non-default location that is not searched by the OS. You can fix this by creating a symbolic link to the executable in a location that the OS is aware of by running `sudo ln -s /opt/retropie/supplementary/skyscraper/Skyscraper /usr/local/bin/Skyscraper`. You might be asked for your sudo password, for RetroPie default is `raspberry`. If that command was succesful you should now be able to run Skyscraper simply with `Skyscraper` followed by any options you need.
 
-WARNING!!! Do *not* run Skyscraper with `sudo Skyscraper`. `sudo` is *not* needed for running Skyscraper.
+WARNING!!! Some people tend to run Skyscraper with `sudo Skyscraper ...`. Do *not* do this! `sudo` is *not* needed for running Skyscraper and will mess up your file permissions.
 </details>
 
 #### Q: I want to set up different options for different platforms. It's really tiresome setting it all on command-line. Can this be done easier?
