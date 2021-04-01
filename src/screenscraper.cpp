@@ -466,8 +466,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
       {
 	QProcess decProc;
 	decProc.setReadChannel(QProcess::StandardOutput);
-
-	decProc.start("7z l -so \"" + info.absoluteFilePath() + "\"", QStringList({}));
+	decProc.start("7z", QStringList({"l", "-so", info.absoluteFilePath()}));
 	if(decProc.waitForFinished(30000)) {
 	  if(decProc.exitStatus() != QProcess::NormalExit) {
 	    printf("Getting file list from compressed file failed, falling back...\n");
@@ -486,7 +485,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
 	QProcess decProc;
 	decProc.setReadChannel(QProcess::StandardOutput);
 
-	decProc.start("7z x -so \"" + info.absoluteFilePath() + "\"", QStringList({}));
+	decProc.start("7z", QStringList({"x", "-so", info.absoluteFilePath()}));
 	if(decProc.waitForFinished(30000)) {
 	  if(decProc.exitStatus() == QProcess::NormalExit) {
 	    QByteArray allData = decProc.readAllStandardOutput();
