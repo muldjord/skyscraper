@@ -155,6 +155,11 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Add 'service check' to verify API status of online source before starting scraping run.
 
+#### Version 3.6.10 (12th April 2021)
+* Added 'naomi' as platform
+* Added 'msx2' as platform
+* Added 'atomiswave' as platform
+
 #### Version 3.6.9 (1st April 2021)
 * Probably fixed `--flags unpack` which broke with 3.6.8 due to deprecated Qt function calls
 * Probably fixed video conversion which broke with 3.6.8 due to deprecated Qt function calls
