@@ -662,6 +662,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "28";
   } else if(platform == "atarist") {
     return "42";
+  } else if(platform == "atomiswave") {
+    return "75";
   } else if(platform == "c16") {
     return "na";
   } else if(platform == "c64") {
@@ -712,8 +714,12 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "1";
   } else if(platform == "msx") {
     return "113";
+  } else if(platform == "msx2") {
+    return "113";
   } else if(platform == "n64") {
     return "14";
+  } else if(platform == "naomi") {
+    return "75";
   } else if(platform == "nds") {
     return "15";
   } else if(platform == "neogeo") {

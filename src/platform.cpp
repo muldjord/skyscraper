@@ -57,6 +57,7 @@ QStringList Platform::getPlatforms()
   platforms.append("atarijaguar");
   platforms.append("atarilynx");
   platforms.append("atarist");
+  platforms.append("atomiswave");
   platforms.append("c16");
   platforms.append("c64");
   platforms.append("c128");
@@ -82,7 +83,9 @@ QStringList Platform::getPlatforms()
   platforms.append("megacd");
   platforms.append("megadrive");
   platforms.append("msx");
+  platforms.append("msx2");
   platforms.append("n64");
+  platforms.append("naomi");
   platforms.append("nds");
   platforms.append("neogeo");
   platforms.append("neogeocd");
@@ -165,6 +168,8 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   } else if(platform == "atarist") {
     scrapers.append("screenscraper");
+  } else if(platform == "atomiswave") {
+    scrapers.append("screenscraper");
   } else if(platform == "c16") {
     scrapers.append("screenscraper");
   } else if(platform == "c64") {
@@ -219,7 +224,11 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   } else if(platform == "msx") {
     scrapers.append("screenscraper");
+  } else if(platform == "msx2") {
+    scrapers.append("screenscraper");
   } else if(platform == "n64") {
+    scrapers.append("screenscraper");
+  } else if(platform == "naomi") {
     scrapers.append("screenscraper");
   } else if(platform == "nds") {
     scrapers.append("screenscraper");
@@ -361,6 +370,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.lnx");
   } else if(platform == "atarist") {
     formats.append("*.st *.stx *.img *.rom *.raw *.ipf *.ctr");
+  } else if(platform == "atomiswave") {
+    formats.append("*.bin *.dat");
   } else if(platform == "c16") {
     formats.append("*.crt *.d64 *.prg *.tap *.t64 *.g64 *.x64 *.vsf");
   } else if(platform == "c64") {
@@ -411,8 +422,12 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.smd *.bin *.gen *.md *.sg");
   } else if(platform == "msx") {
     formats.append("*.rom *.mx1 *.mx2 *.col *.dsk");
+  } else if(platform == "msx2") {
+    formats.append("*.rom *.mx1 *.mx2 *.col *.dsk");
   } else if(platform == "n64") {
     formats.append("*.z64 *.n64 *.v64");
+  } else if(platform == "naomi") {
+    formats.append("*.bin *.dat");
   } else if(platform == "nds") {
     formats.append("*.nds");
   } else if(platform == "neogeo") {
@@ -531,6 +546,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "cache";
   } else if(platform == "atarist") {
     scraper = "cache";
+  } else if(platform == "atomiswave") {
+    scraper = "cache";
   } else if(platform == "c16") {
     scraper = "cache";
   } else if(platform == "c64") {
@@ -581,7 +598,11 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "cache";
   } else if(platform == "msx") {
     scraper = "cache";
+  } else if(platform == "msx2") {
+    scraper = "cache";
   } else if(platform == "n64") {
+    scraper = "cache";
+  } else if(platform == "naomi") {
     scraper = "cache";
   } else if(platform == "nds") {
     scraper = "cache";
@@ -787,6 +808,61 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "atarist") {
     aliases.append("atari st");
     aliases.append("atari st/ste");
+  } else if(platform == "atomiswave") {
+    aliases.append("model 2");
+    aliases.append("model 3");
+    aliases.append("naomi");
+    aliases.append("sega st-v");
+    aliases.append("mame");
+    aliases.append("type x");
+    aliases.append("sega classics");
+    aliases.append("irem classics");
+    aliases.append("seta");
+    aliases.append("midway classics");
+    aliases.append("capcom classics");
+    aliases.append("eighting / raizing");
+    aliases.append("tecmo");
+    aliases.append("snk classics");
+    aliases.append("namco classics");
+    aliases.append("namco system 22");
+    aliases.append("taito classics");
+    aliases.append("konami classics");
+    aliases.append("jaleco");
+    aliases.append("atari classics");
+    aliases.append("nintendo classics");
+    aliases.append("data east classics");
+    aliases.append("nmk");
+    aliases.append("sammy classics");
+    aliases.append("exidy");
+    aliases.append("acclaim");
+    aliases.append("psikyo");
+    aliases.append("non jeu");
+    aliases.append("technos");
+    aliases.append("american laser games");
+    aliases.append("dynax");
+    aliases.append("kaneko");
+    aliases.append("video system co.");
+    aliases.append("igs");
+    aliases.append("comad");
+    aliases.append("amcoe");
+    aliases.append("century electronics");
+    aliases.append("nichibutsu");
+    aliases.append("visco");
+    aliases.append("alpha denshi co.");
+    aliases.append("coleco");
+    aliases.append("playchoice");
+    aliases.append("atlus");
+    aliases.append("banpresto");
+    aliases.append("semicom");
+    aliases.append("universal");
+    aliases.append("mitchell");
+    aliases.append("seibu kaihatsu");
+    aliases.append("toaplan");
+    aliases.append("cinematronics");
+    aliases.append("incredible technologies");
+    aliases.append("gaelco");
+    aliases.append("mega-tech");
+    aliases.append("mega-play");
   } else if(platform == "c16") {
     aliases.append("plus/4");
     aliases.append("commodore plus/4");
@@ -1137,8 +1213,79 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("msx2");
     aliases.append("msx2+");
     aliases.append("msx r turbo");
+  } else if(platform == "msx2") {
+    aliases.append("msx");
+    aliases.append("msx2");
+    aliases.append("msx2+");
+    aliases.append("msx r turbo");
   } else if(platform == "n64") {
     aliases.append("nintendo 64");
+  } else if(platform == "naomi") {
+    aliases.append("neo geo");
+    aliases.append("neo-geo");
+    aliases.append("neo geo cd");
+    aliases.append("neo-geo cd");
+    aliases.append("neo-geo mvs");
+    aliases.append("capcom play system");
+    aliases.append("capcom play system 2");
+    aliases.append("capcom play system 3");
+    aliases.append("another arcade emulator");
+    aliases.append("cave");
+    aliases.append("daphne");
+    aliases.append("atomiswave");
+    aliases.append("model 2");
+    aliases.append("model 3");
+    aliases.append("sega st-v");
+    aliases.append("mame");
+    aliases.append("type x");
+    aliases.append("sega classics");
+    aliases.append("irem classics");
+    aliases.append("seta");
+    aliases.append("midway classics");
+    aliases.append("capcom classics");
+    aliases.append("eighting / raizing");
+    aliases.append("tecmo");
+    aliases.append("snk classics");
+    aliases.append("namco classics");
+    aliases.append("namco system 22");
+    aliases.append("taito classics");
+    aliases.append("konami classics");
+    aliases.append("jaleco");
+    aliases.append("atari classics");
+    aliases.append("nintendo classics");
+    aliases.append("data east classics");
+    aliases.append("nmk");
+    aliases.append("sammy classics");
+    aliases.append("exidy");
+    aliases.append("acclaim");
+    aliases.append("psikyo");
+    aliases.append("non jeu");
+    aliases.append("technos");
+    aliases.append("american laser games");
+    aliases.append("dynax");
+    aliases.append("kaneko");
+    aliases.append("video system co.");
+    aliases.append("igs");
+    aliases.append("comad");
+    aliases.append("amcoe");
+    aliases.append("century electronics");
+    aliases.append("nichibutsu");
+    aliases.append("visco");
+    aliases.append("alpha denshi co.");
+    aliases.append("coleco");
+    aliases.append("playchoice");
+    aliases.append("atlus");
+    aliases.append("banpresto");
+    aliases.append("semicom");
+    aliases.append("universal");
+    aliases.append("mitchell");
+    aliases.append("seibu kaihatsu");
+    aliases.append("toaplan");
+    aliases.append("cinematronics");
+    aliases.append("incredible technologies");
+    aliases.append("gaelco");
+    aliases.append("mega-tech");
+    aliases.append("mega-play");
   } else if(platform == "nds") {
     aliases.append("nintendo ds");
   } else if(platform == "neogeo") {

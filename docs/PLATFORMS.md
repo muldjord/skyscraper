@@ -15,6 +15,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Atari Jaguar
 * Atari Lynx
 * Atari ST
+* AtomisWave
 * Coco (Tandy Colour Computer)
 * ColecoVision
 * Commodore 16/64/128
@@ -34,6 +35,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Mame
 * Megadrive / Genesis
 * MSX (MSX, MSX 2, MSX 2+, MSX Laserdisc)
+* Naomi
 * NeoGeo
 * NeoGeo CD
 * NeoGeo Pocket
