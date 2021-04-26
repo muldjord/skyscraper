@@ -1436,13 +1436,19 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   QList<QString> requestedFiles = parser.positionalArguments();
 
   // Add files from '--fromfile', if any
-  if(parser.isSet("fromfile") && QFileInfo::exists(parser.value("fromfile"))) {
-    QFile fromFile(parser.value("fromfile"));
-    if(fromFile.open(QIODevice::ReadOnly)) {
-      while(!fromFile.atEnd()) {
-	requestedFiles.append(QString(fromFile.readLine().simplified()));
+  if(parser.isSet("fromfile")) {
+    QFileInfo fromFileInfo(parser.value("fromfile"));
+    if(fromFileInfo.exists()) {
+      QFile fromFile(fromFileInfo.absoluteFilePath());
+      if(fromFile.open(QIODevice::ReadOnly)) {
+	while(!fromFile.atEnd()) {
+	  requestedFiles.append(QString(fromFile.readLine().simplified()));
+	}
+	fromFile.close();
       }
-      fromFile.close();
+    } else {
+      printf("Report file: '\033[1;32m%s\033[0m' does not exist.\n\nPlease verify the filename and try again...\n", fromFileInfo.absoluteFilePath().toStdString().c_str());
+      exit(1);
     }
   }
 
@@ -1463,7 +1469,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.refresh = true;
       config.unattend = true;
     } else {
-      printf("Filename: '%s' requested either on command line or with '--fromfile' not found!\n\nPlease verify the filename and try again...\n", requestedFile.toStdString().c_str());
+      printf("Filename: '\033[1;32m%s\033[0m' requested either on command line or with '--fromfile' not found!\n\nPlease verify the filename and try again...\n", requestedFile.toStdString().c_str());
       exit(1);
     }
   }
