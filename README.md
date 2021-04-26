@@ -155,6 +155,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Add 'service check' to verify API status of online source before starting scraping run.
 
+#### Version 3.6.11 (In progress, unreleased)
+* '--fromfile' now accepts both relative and absolute path to filename (Thank you to user 'sleve_mcdichael' for reporting this)
+
 #### Version 3.6.10 (12th April 2021)
 * Added 'naomi' as platform
 * Added 'msx2' as platform
