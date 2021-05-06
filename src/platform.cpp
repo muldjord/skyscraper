@@ -55,12 +55,14 @@ QStringList Platform::getPlatforms()
   platforms.append("atari5200");
   platforms.append("atari7800");
   platforms.append("atarijaguar");
+  platforms.append("atarijaguarcd");
   platforms.append("atarilynx");
   platforms.append("atarist");
   platforms.append("atomiswave");
   platforms.append("c16");
   platforms.append("c64");
   platforms.append("c128");
+  platforms.append("channelf");
   platforms.append("coco");
   platforms.append("coleco");
   platforms.append("daphne");
@@ -99,6 +101,7 @@ QStringList Platform::getPlatforms()
   platforms.append("pc98");
   platforms.append("pcfx");
   platforms.append("pcengine");
+  platforms.append("pcenginecd");
   platforms.append("pokemini");
   platforms.append("ports");
   platforms.append("ps2");
@@ -164,6 +167,8 @@ QStringList Platform::getScrapers(QString platform)
     scrapers.append("screenscraper");
   } else if(platform == "atarijaguar") {
     scrapers.append("screenscraper");
+  } else if(platform == "atarijaguarcd") {
+    scrapers.append("screenscraper");
   } else if(platform == "atarilynx") {
     scrapers.append("screenscraper");
   } else if(platform == "atarist") {
@@ -175,6 +180,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "c64") {
     scrapers.append("screenscraper");
   } else if(platform == "c128") {
+    scrapers.append("screenscraper");
+  } else if(platform == "channelf") {
     scrapers.append("screenscraper");
   } else if(platform == "coco") {
     scrapers.append("screenscraper");
@@ -256,6 +263,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "pcfx") {
     scrapers.append("screenscraper");
   } else if(platform == "pcengine") {
+    scrapers.append("screenscraper");
+  } else if(platform == "pcenginecd") {
     scrapers.append("screenscraper");
   } else if(platform == "pokemini") {
     scrapers.append("screenscraper");
@@ -366,6 +375,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.a78 *.bin");
   } else if(platform == "atarijaguar") {
     formats.append("*.j64 *.jag");
+  } else if(platform == "atarijaguarcd") {
+    formats.append("*.j64 *.jag *.cue *.chd");
   } else if(platform == "atarilynx") {
     formats.append("*.lnx");
   } else if(platform == "atarist") {
@@ -378,6 +389,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.crt *.d64 *.prg *.tap *.t64 *.g64 *.x64 *.vsf");
   } else if(platform == "c128") {
     formats.append("*.crt *.d64 *.prg *.tap *.t64 *.g64 *.x64 *.vsf");
+  } else if(platform == "channelf") {
+    formats.append("*.bin *.rom");
   } else if(platform == "coco") {
     formats.append("*.cas *.wav *.bas *.asc *.dmk *.jvc *.os9 *.dsk *.vdk *.rom *.ccc *.sna");
   } else if(platform == "coleco") {
@@ -453,6 +466,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "pcfx") {
     formats.append("*.img *.iso *.ccd *.cue");
   } else if(platform == "pcengine") {
+    formats.append("*.pce *.chd *.cue");
+  } else if(platform == "pcenginecd") {
     formats.append("*.pce *.chd *.cue");
   } else if(platform == "pokemini") {
     formats.append("*.min");
@@ -542,6 +557,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "cache";
   } else if(platform == "atarijaguar") {
     scraper = "cache";
+  } else if(platform == "atarijaguarcd") {
+    scraper = "cache";
   } else if(platform == "atarilynx") {
     scraper = "cache";
   } else if(platform == "atarist") {
@@ -553,6 +570,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "c64") {
     scraper = "cache";
   } else if(platform == "c128") {
+    scraper = "cache";
+  } else if(platform == "channelf") {
     scraper = "cache";
   } else if(platform == "coco") {
     scraper = "cache";
@@ -629,6 +648,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "pcfx") {
     scraper = "cache";
   } else if(platform == "pcengine") {
+    scraper = "cache";
+  } else if(platform == "pcenginecd") {
     scraper = "cache";
   } else if(platform == "pokemini") {
     scraper = "cache";
@@ -802,6 +823,11 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "atarijaguar") {
     aliases.append("atari jaguar");
     aliases.append("jaguar");
+  } else if(platform == "atarijaguarcd") {
+    aliases.append("atari jaguar");
+    aliases.append("jaguar");
+    aliases.append("atari jaguar cd");
+    aliases.append("jaguar cd");
   } else if(platform == "atarilynx") {
     aliases.append("atari lynx");
     aliases.append("lynx");
@@ -880,6 +906,9 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("amiga cd32 (hack)");
   } else if(platform == "cdtv") {
     aliases.append("amiga cdtv");
+  } else if(platform == "channelf") {
+    aliases.append("fairchild channel f");
+    aliases.append("channel f");
   } else if(platform == "coco") {
     aliases.append("trs-80 color computer");
     aliases.append("trs-80 coco");
@@ -1333,6 +1362,15 @@ QStringList Platform::getAliases(QString platform)
   } else if(platform == "pcfx") {
     aliases.append("pc-fx");
   } else if(platform == "pcengine") {
+    aliases.append("turbografx 16");
+    aliases.append("turbografx cd");
+    aliases.append("turbografx-16");
+    aliases.append("turbografx-16/pc engine");
+    aliases.append("turbografx-16/pc engine cd");
+    aliases.append("pc engine");
+    aliases.append("pc engine cd-rom");
+    aliases.append("pc engine supergrafx");
+  } else if(platform == "pcenginecd") {
     aliases.append("turbografx 16");
     aliases.append("turbografx cd");
     aliases.append("turbografx-16");

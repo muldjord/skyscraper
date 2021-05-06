@@ -31,6 +31,8 @@ $ sudo apt install build-essential qt5-default
 ```
 You might be asked for your sudo password. On RetroPie the default password is `raspberry`. To install Qt5 on other Linux distributions, please refer to their documentation.
 
+NOTE! Ubuntu 21.04 hasn't added the `qt5-default` metapackage yet. For this version you will have to do `sudo apt install build-essential qtbase5-dev qt5-qmake qtbase5-dev-tools` which installs the same as the above command.
+
 #### macOS
 Skyscraper works perfectly on macOS as well but is not officially supported as I don't own a Mac. But with the help of HoraceAndTheSpider and abritinthebay here's the commands needed to install the Qt5 and other prerequisites:
 ```
@@ -42,7 +44,9 @@ $ brew link qt5 --force
 ```
 If that went well, proceed to the default installation instructions below. It should work and give you a working installation of Skyscraper.
 
-NOTE! User 'davidmgrantham' reports that the `--with-default-names` above might be deprecated for some macOS installations. If you remove it, you also need to download the `update_skyscraper.sh` and edit the `tar` commands to be `gtar` before running it.
+NOTE 1! User 'davidmgrantham' reports that the `--with-default-names` above might be deprecated for some macOS installations. If you remove it, you also need to download the `update_skyscraper.sh` and edit the `tar` commands to be `gtar` before running it.
+
+NOTE 2! User 'trvrplk' reports numerous issues on MacOS 11.2+. Check [here](https://github.com/muldjord/skyscraper/issues/301) for potential fixes.
 
 ### Download, compile and install
 When you've installed the prerequisites as described above, you can install Skyscraper by typing in the following commands:
@@ -155,8 +159,9 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 * Add 'service check' to verify API status of online source before starting scraping run.
 
-#### Version 3.6.11 (In progress, unreleased)
+#### Version 3.6.11 (6th May 2021)
 * '--fromfile' now accepts both relative and absolute path to filename (Thank you to user 'sleve_mcdichael' for reporting this)
+* Added platforms 'atarijaguarcd', 'pcenginecd' and 'channelf' (Thank you to user 'XenuIsWatching' for providing info)
 
 #### Version 3.6.10 (12th April 2021)
 * Added 'naomi' as platform

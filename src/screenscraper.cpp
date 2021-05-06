@@ -658,6 +658,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "41";
   } else if(platform == "atarijaguar") {
     return "27";
+  } else if(platform == "atarijaguarcd") {
+    return "171";
   } else if(platform == "atarilynx") {
     return "28";
   } else if(platform == "atarist") {
@@ -670,6 +672,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "66";
   } else if(platform == "c128") {
     return "na";
+  } else if(platform == "channelf") {
+    return "80";
   } else if(platform == "coco") {
     return "144";
   } else if(platform == "coleco") {
@@ -746,6 +750,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "72";
   } else if(platform == "pcengine") {
     return "31";
+  } else if(platform == "pcenginecd") {
+    return "114";
   } else if(platform == "pokemini") {
     return "211";
   } else if(platform == "ports") {

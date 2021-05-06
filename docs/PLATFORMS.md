@@ -13,6 +13,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Atari5200
 * Atari7800
 * Atari Jaguar
+* Atari Jaguar CD
 * Atari Lynx
 * Atari ST
 * AtomisWave
@@ -24,6 +25,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Dragon 32/64
 * Dreamcast
 * Emerson Arcadia 2001
+* Fairchild Channel F
 * Famicom Disk System
 * FB Neo (formerly FB Alpha)
 * Game Boy
@@ -48,6 +50,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * PC-8800
 * PC-9800
 * PC-Engine / TurboGrafx-16
+* PC-Engine CD / TurboGrafx-16 CD
 * PC-FX
 * Playstation
 * Playstation 2
