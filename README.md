@@ -134,17 +134,6 @@ To read more about any of the features described above, please check out all of 
 ### Artwork look and effects
 Check the full artwork documentation [here](docs/ARTWORK.md)
 
-### Simple mode
-Skyscraper also includes a *Simple mode* invoked simply by running Skyscraper with no command-line options like so:
-```
-$ Skyscraper
-```
-I do not recommend using this mode anymore as I consider it to be deprecated after Skyscraper was officially added to the RetroPie-Setup script.
-
-In simple mode Skyscraper will ask you a bunch of questions, create a script based on your answers and finally run the script which scrapes the chosen platform using those options. This can be useful for first-time users, since it gives a bit of an overview of many of the things you can configure Skyscraper to do. If you're curious you can check out the generated script afterwards. It's located at `/home/USER/.skyscraper/skyscript.sh`.
-
-NOTE: If you choose to use this mode, please be aware that many of the scraping modules have limits and user requirements that need to be considered when scraping any number of files. You should familiarize yourself [with these](docs/SCRAPINGMODULES.md) before using Skyscraper in general.
-
 ## Release notes
 
 #### Version x.x.x (Features under consideration, all unimplemented)
