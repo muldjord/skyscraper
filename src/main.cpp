@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
     dashesString += "-";
   }
 
-  parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files for the chosen platform (set with '-p'). It allows you to gather and cache media and game information for the files using various scraping modules (set with '-s'). It then lets you generate game lists for the supported frontends by combining all previously cached resources ('game list generation mode' is initiated by simply leaving out the '-s' option). While doing so it also composites game art for all files by following the recipe at '/home/USER/.skyscraper/artwork.xml'.\n\nIn addition to the command line options Skyscraper also provides a lot of customizable options for configuration, artwork, game name aliases, resource priorities and much more. Please check the full documentation at 'https://github.com/muldjord/skyscraper/docs' for a detailed explanation of all features.\n\nRemember that most of the following options can also be set in the '/home/USER/.skyscraper/config.ini' file. All cli options and config.ini options are thoroughly documented in the above link.");
+  parser.setApplicationDescription(StrTools::getVersionHeader() + "Skyscraper looks for compatible game files for the chosen platform (set with '-p'). It allows you to gather and cache media and game information for the files using various scraping modules (set with '-s'). It then lets you generate game lists for the supported frontends by combining all previously cached resources ('game list generation mode' is initiated by simply leaving out the '-s' option). While doing so it also composites game art for all files by following the recipe at '/home/USER/.skyscraper/artwork.xml'.\n\nIn addition to the command line options Skyscraper also provides a lot of customizable options for configuration, artwork, game name aliases, resource priorities and much more. Please check the full documentation at 'https://github.com/muldjord/skyscraper/docs' for a detailed explanation of all features.\n\nRemember that most of the following options can also be set in the '/home/USER/.skyscraper/config.ini' file. All cli options and config.ini options are thoroughly documented at the above link.");
   parser.addHelpOption();
   parser.addVersionOption();
   QCommandLineOption pOption("p", "The platform you wish to scrape.\n(Currently supports " + platforms + ".)", "PLATFORM", "");
@@ -225,57 +225,6 @@ int main(int argc, char *argv[])
   QCommandLineOption regionOption("region", "Add preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' + others in that order)", "CODE", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "CODE", "en");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
-  QCommandLineOption skippedOption("skipped", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption nocoversOption("nocovers", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption noscreenshotsOption("noscreenshots", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption nowheelsOption("nowheels", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption nomarqueesOption("nomarquees", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption skipexistingcoversOption("skipexistingcovers", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption skipexistingscreenshotsOption("skipexistingscreenshots", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption skipexistingwheelsOption("skipexistingwheels", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption skipexistingmarqueesOption("skipexistingmarquees", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption skipexistingvideosOption("skipexistingvideos", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption symlinkOption("symlink", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption nobracketsOption("nobrackets", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption relativeOption("relative", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption noresizeOption("noresize", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption nosubdirsOption("nosubdirs", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption unattendOption("unattend", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption unattendskipOption("unattendskip", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption unpackOption("unpack", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption forcefilenameOption("forcefilename", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption onlymissingOption("onlymissing", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption nohintsOption("nohints", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption videosOption("videos", "\033[1;33mDeprecated!\033[0m Please see '--flags'."); 
-  QCommandLineOption pretendOption("pretend", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-  QCommandLineOption interactiveOption("interactive", "\033[1;33mDeprecated!\033[0m Please see '--flags'.");
-
-#if QT_VERSION >= 0x050800
-  skippedOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  nocoversOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  noscreenshotsOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  nowheelsOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  nomarqueesOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  skipexistingcoversOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  skipexistingscreenshotsOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  skipexistingwheelsOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  skipexistingmarqueesOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  skipexistingvideosOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  symlinkOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  nobracketsOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  relativeOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  noresizeOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  nosubdirsOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  unattendOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  unattendskipOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  unpackOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  forcefilenameOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  onlymissingOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  nohintsOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  videosOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  pretendOption.setFlags(QCommandLineOption::HiddenFromHelp);
-  interactiveOption.setFlags(QCommandLineOption::HiddenFromHelp);
-#endif
 
   parser.addOption(pOption);
   parser.addOption(sOption);
@@ -305,33 +254,18 @@ int main(int argc, char *argv[])
   parser.addOption(fromfileOption);
   parser.addOption(maxfailsOption);
   parser.addOption(addextOption);
-  parser.addOption(forcefilenameOption);
-  parser.addOption(interactiveOption);
-  parser.addOption(nobracketsOption);
-  parser.addOption(nocoversOption);
-  parser.addOption(nohintsOption);
-  parser.addOption(nomarqueesOption);
-  parser.addOption(noresizeOption);
-  parser.addOption(noscreenshotsOption);
-  parser.addOption(nosubdirsOption);
-  parser.addOption(nowheelsOption);
-  parser.addOption(onlymissingOption);
-  parser.addOption(pretendOption);
-  parser.addOption(relativeOption);
-  parser.addOption(skipexistingcoversOption);
-  parser.addOption(skipexistingmarqueesOption);
-  parser.addOption(skipexistingscreenshotsOption);
-  parser.addOption(skipexistingvideosOption);
-  parser.addOption(skipexistingwheelsOption);
-  parser.addOption(skippedOption);
-  parser.addOption(symlinkOption);
-  parser.addOption(unattendOption);
-  parser.addOption(unattendskipOption);
-  parser.addOption(unpackOption);
-  parser.addOption(videosOption);
 
   parser.process(app);
 
+  if(argc <= 1 || parser.isSet("help") || parser.isSet("h")) {
+    parser.showHelp();
+  } else {
+    x = new Skyscraper(parser, currentDir);
+    QObject::connect(x, &Skyscraper::finished, &app, &QCoreApplication::quit);
+    QTimer::singleShot(0, x, SLOT(run()));
+  }
+  return app.exec();
+  /*
   if(argc > 1) {
     if(parser.isSet("help") || parser.isSet("h")) {
       parser.showHelp();
@@ -345,4 +279,5 @@ int main(int argc, char *argv[])
     Scripter scripter;
     return 0;
   }
+  */
 }
