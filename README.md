@@ -157,7 +157,10 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
 * Implement a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
-* Add 'service check' to verify API status of online source before starting scraping run.
+
+#### Version 3.6.12 (15th May 2021)
+* Removed 'Simple Mode' as it was broken and deprecated. Use RetroPie script instead
+* Removed A LOT of deprecated (and hidden) CLI options
 
 #### Version 3.6.11 (6th May 2021)
 * '--fromfile' now accepts both relative and absolute path to filename (Thank you to user 'sleve_mcdichael' for reporting this)
@@ -236,7 +239,7 @@ NOTE: If you choose to use this mode, please be aware that many of the scraping 
 * Added 'videoPreferNormalized' config.ini option for use with the 'screenscraper' module
 
 #### Version 3.5.3 (11th May 2020)
-* MAJOR: Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option. See docs for more details.
+* MAJOR: Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option. See docs for more details
 * Removed deprecated `<cover>` node and replaced it with `<thumbnail>` for ES gamelist generation (Thank you to 'yisraeldov' for letting me know)
 * Added simple error handling for media network requests
 * '--flags help' and '--cache help' no longer requires '-p PLATFORM' to be set
