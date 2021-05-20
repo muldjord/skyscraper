@@ -1401,7 +1401,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.gameListFolder = frontend->getGameListFolder();
   }
   if(!mediaFolderSet) {
-    config.mediaFolder = config.gameListFolder + "/media";
+    config.mediaFolder = config.gameListFolder + "/.media";
   }
   config.coversFolder = frontend->getCoversFolder();
   config.screenshotsFolder = frontend->getScreenshotsFolder();
