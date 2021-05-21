@@ -148,7 +148,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
 #### Version 3.6.13 (Under development, unreleased)
-* Default media folder is now '.media' instead of 'media' to avoid ES parsing through unnecessarily. ES avoids hidden folder with '.' in front of them (Thank you to user 'XenuIsWatching' for suggesting this)
+* Added 'mediaFolderHidden' EmulationStation specific config option that will set the media folder to 'PLATFORM/.media' when set to true. This can speed up EmulationStation initial loading when using slow storage such as a network file system (Thank you to user 'XenuIsWatching' for suggesting this)
 
 #### Version 3.6.12 (15th May 2021)
 * Removed 'Simple Mode' as it was broken and deprecated. Use RetroPie script instead
