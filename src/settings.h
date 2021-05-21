@@ -44,6 +44,7 @@ struct Settings {
   QString inputFolder = "";
   QString gameListFolder = "";
   QString mediaFolder = "";
+  bool mediaFolderHidden = false; // Only relevant for EmulationStation
   QString screenshotsFolder = "";
   QString coversFolder = "";
   QString wheelsFolder = "";

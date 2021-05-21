@@ -1028,6 +1028,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.mediaFolder = settings.value("mediaFolder").toString();
     mediaFolderSet = true;
   }
+  if(settings.contains("mediaFolderHidden") && config.frontend == "emulationstation") {
+    config.mediaFolderHidden = settings.value("mediaFolderHidden").toBool();
+  }
   if(settings.contains("skipped")) {
     config.skipped = settings.value("skipped").toBool();
   }
@@ -1401,7 +1404,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.gameListFolder = frontend->getGameListFolder();
   }
   if(!mediaFolderSet) {
-    config.mediaFolder = config.gameListFolder + "/.media";
+    config.mediaFolder = config.gameListFolder + "/" + (config.mediaFolderHidden?".":"") + "media";
   }
   config.coversFolder = frontend->getCoversFolder();
   config.screenshotsFolder = frontend->getScreenshotsFolder();
@@ -1844,53 +1847,6 @@ void Skyscraper::setLangPrios()
     config.langPrios.append("es");
   }
 }
-
-/*
-void Skyscraper::migrate(QString filename)
-{
-  if(!QFileInfo::exists(filename) || QFileInfo::exists(filename + ".old"))
-    return;
-
-  QByteArray data;
-  QFile settings(filename);
-  if(settings.open(QIODevice::ReadOnly)) {
-    data = settings.readAll();
-    settings.close();
-  }
-  QFile oldSettings(filename + ".old");
-  if(oldSettings.open(QIODevice::WriteOnly)) {
-    printf("Migrating old config.ini to new v3.0.0 format. Old config saved to '%s'\n\n", oldSettings.fileName().toStdString().c_str());
-    oldSettings.write(data);
-    oldSettings.close();
-  }
-  data.replace("dbFolder=", "cacheFolder="); 
-  data.replace("allowExtension=", "addExtensions="); 
-  data.replace("startat=", "startAt="); 
-  data.replace("endat=", "endAt="); 
-  data.replace("noHints=\"true\"", "hints=\"false\"");
-  data.replace("noHints=\"false\"", "hints=\"true\"");
-  data.replace("noHints=true", "hints=false");
-  data.replace("noHints=false", "hints=true");
-  data.replace("noBrackets=\"true\"", "brackets=\"false\"");
-  data.replace("noBrackets=\"false\"", "brackets=\"true\"");
-  data.replace("noBrackets=true", "brackets=false");
-  data.replace("noBrackets=false", "brackets=true");
-  data.replace("noResize=\"true\"", "resize=\"false\"");
-  data.replace("noResize=\"false\"", "resize=\"true\"");
-  data.replace("noResize=true", "resize=false");
-  data.replace("noResize=false", "resize=true");
-  data.replace("\n[cache]\n", ""); 
-  data.replace("\n[localDb]\n", ""); 
-  data.replace("covers=", "cacheCovers="); 
-  data.replace("screenshots=", "cacheScreenshots="); 
-  data.replace("wheels=", "cacheWheels="); 
-  data.replace("marquees=", "cacheMarquees="); 
-  if(settings.open(QIODevice::WriteOnly)) {
-    settings.write(data);
-    settings.close();
-  }
-}
-*/
 
 // --- Console colors ---
 // Black        0;30     Dark Gray     1;30
