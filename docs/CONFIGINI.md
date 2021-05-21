@@ -81,6 +81,16 @@ NOTE! If this is set in the `[main]` section it will automatically add `/<PLATFO
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
 
+#### mediaFolderHidden="false"
+By default Skyscraper uses the `PLATFORM/media` folder when generating EmulationStation media. Setting this option will change that to `PLATFORM/.media`. Notice the `.` which hides the folder, which can speed up the initial EmulationStation loading sequence when using slow storage such as network file systems.
+
+NOTE 1! This option is ignored if you set the media folder manually.
+
+NOTE 2! Remember to remove your old `PLATFORM/media` folders if you enable this option.
+
+###### Allowed in sections
+`[emulationstation]`
+
 #### cacheFolder="/home/pi/.skyscraper/cache"
 Sets a non-default location for the storing and loading of cached game resources. This is what is referred to in the docs as the *resource cache*. By default this folder is set to `/home/USER/.skyscraper/cache/<PLATFORM>`. Don't change this unless you have a good reason to (for instance if you want your cache to reside on a USB drive).
 
