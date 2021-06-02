@@ -147,7 +147,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
-#### Version 3.6.13 (Under development, unreleased)
+#### Version 3.6.13 (2nd June 2021)
 * Added 'mediaFolderHidden' EmulationStation specific config option that will set the media folder to 'PLATFORM/.media' when set to true. This can speed up EmulationStation initial loading when using slow storage such as a network file system (Thank you to user 'XenuIsWatching' for suggesting this)
 
 #### Version 3.6.12 (15th May 2021)
@@ -196,61 +196,6 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.6.0 (25th October 2020)
 * Changed 'SecsSinceEpich' to 'MSecsSinceEpich' to support pre-5.8 Qt versions (Thank you to user 'Hazza4569' for reporting this)
-
-#### Version 3.5.9 (24th October 2020)
-* Implemented the new IGDB v4 authentication method. IGDB will now work again, and requires free credentials. Read more about that [here](https://github.com/muldjord/skyscraper/blob/master/docs/SCRAPINGMODULES.md#igdb)
-* Improved memory consumption when handing entries back to main thread
-* Added '.au3' file extension to id script exception list (Thank you to 'o0alucard0o' for reporting this)
-
-#### Version 3.5.8 (16th August 2020)
-* Now supports spaces in Attract-Mode media paths (Thank you to user 'o0alucard0o' for pointing this out)
-
-#### Version 3.5.7 (31st July 2020)
-* Now uses regular expressions when converting text to Pegasus format for better compatibility
-* Removed 'extensions' when generating Pegasus game list, as it isn't required
-
-#### Version 3.5.6 (30th July 2020)
-* Added 'neogeocd' platform (Thank you to 'igno2k' and 'meveric' for suggesting it)
-* 'screenscraper' module now supports region for screenshots (Thank you to 'cameronhimself' for pointing this out)
-* Low disk space check for cache is now calculated from cache folder location
-* Skyscraper initial output now shows frontend and extras when generating game lists
-* Changed 'gamelistFolder' config.ini option to 'gameListFolder' but kept old variable name for backwards compatibility
-* Added 'gameListBackup' config.ini option to allow for game list backups being created on each run (Thank you to 'igno2k' for suggesting it)
-* Attract-Mode now recognizes '$HOME' in emulator file
-* Refactored Attract-Mode media folder getters
-* Fixed rare faulty matches from 'esgamelist' module in cases where last part of 'path' was a match with filename (Thank you to 'akamming' for reporting this)
-* Exporting for Pegasus frontend now supports preservation of old game list key-value pairs (Thank you to user 'HugLifeTiZ' for suggesting this)
-* '--cache report' now also adheres so excludeFiles and includeFiles (Thank you to user 'spilinek' for pointing this out)
-
-#### Version 3.5.5 (18th May 2020)
-* Fixed bug in 'igdb' module where it still used old hardcoded key (Thank you to 'stlbluesfan' for reporting this)
-
-#### Version 3.5.4 (14th May 2020)
-* Hints file converted to xml (hints.txt -> hints.xml)
-* Moved documentation resources into 'docs' folder
-* Added 'videoPreferNormalized' config.ini option for use with the 'screenscraper' module
-
-#### Version 3.5.3 (11th May 2020)
-* MAJOR: Added video conversion support through config.ini option 'videoConvertCommand="COMMAND %i %o"' option. See docs for more details
-* Removed deprecated `<cover>` node and replaced it with `<thumbnail>` for ES gamelist generation (Thank you to 'yisraeldov' for letting me know)
-* Added simple error handling for media network requests
-* '--flags help' and '--cache help' no longer requires '-p PLATFORM' to be set
-* Changed 'worldofspectrum' scraping module to use https
-
-#### Version 3.5.2 (29th April 2020)
-* Hid deprecated options from '--help'. Deprecated options still work just aren't shown
-* Updated 'Simple Mode' to use the new '--flags' options
-
-#### Version 3.5.1 (28th April 2020)
-* Fixed minor bug in 'daphne' when it only has one rom in 'daphne/roms'
-
-#### Version 3.5.0 (27th April 2020)
-* For 'screenscraper', 'thegamesdb', 'mobygames' and 'arcadedb' Skyscraper will now no longer fetch the artworks if user has requested it to remain uncached (Thank you to user 'herbymachine' for the request)
-* Added '--skipexistingmedia' option to allow for faster gamelist generation in cases where some artwork already exists in the gamelist media folder (Thank you to 'jacrify' for suggesting this)
-* Added '--flags' command-line option that collects certain flag-like options into one
-* Added deprecated warnings to all options that are now moved to the '--flags' option
-* Added '*.cue' extension to '3do' platform (Thank you to 'therealdealneil' for the suggestion)
-* Implemented a hack for the 'daphne' platform that will add the game info to the 'game.daphne' folders instead of the 'game.zip' files (Thank you to 'AlCzervik' for pointing this out)
 
 #### Older releases
 Release notes for older releases can be found [here](OLDERRELEASES.md).
