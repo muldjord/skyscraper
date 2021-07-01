@@ -11,7 +11,7 @@ NOTE 1!!! Some users seem to have a habbit of editing the `/home/USER/skysource/
 
 NOTE 2! Every time you change the artwork configuration, remember to regenerate the game list. Your changes won't take effect until you do so. Read more about this [here](https://github.com/muldjord/skyscraper/blob/master/docs/USECASE.md#the-game-list-generation-phase).
 
-Watch a video demonstrating the artwork compositing features [here](https://youtu.be/TIDD8EFSz50)
+Watch a video demonstrating the artwork compositing features [here](https://youtu.be/TIDD8EFSz50). Note that the video is quite old and only demonstrates a fraction of the possibilities you have with the Skyscraper compositor. It's all thoroughly documented below.
 
 ## Example artwork.xml
 An example could look something like this:
