@@ -453,4 +453,4 @@ The file megadrive_logo.png will then be loaded from the '`/home/USER/.skyscrape
 ```
 This will look for the file at '`/home/USER/.skyscraper/resources/platform_logos/megadrive_logo.png`'.
 
-Word of warning: All custom image resources are loaded into memory when Skyscraper starts. So please keep your resources to a minimum - otherwise it might exceed the total memory on the Pi which will cause Skyscraper to get killed by the kernel.
+Word of warning: All custom image resources are loaded into memory when Skyscraper starts to avoid repeatedly reading them from disc / SD card. So please keep your resources to a minimum - otherwise it might exceed the total memory on the Pi which will cause Skyscraper to get killed by the kernel.
