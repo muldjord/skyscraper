@@ -1350,6 +1350,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("pc win3.xx");
     aliases.append("dos");
     aliases.append("windows");
+    aliases.append("windows 3.x");
     aliases.append("windows apps");
     aliases.append("pc (microsoft windows)");
     aliases.append("steamos");
