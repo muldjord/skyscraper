@@ -149,6 +149,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 
 #### Version 3.6.15 (In progress, unreleased)
 * Added 'chd' extension to 'atomiswave' platform (Thank you to user 'smeegoan' for reporting this)
+* Fixed bug that caused 'T000000' to be added multiple times when skipping entries in ES gamelists (Thank you to user 'sleve_mcdichael' for reporting this)
 
 #### Version 3.6.14 (5th August 2021)
 * Added 'windows 3.x' as alias to Mobygames scraping module (Thank you to user 'ecto' for reporting this)
