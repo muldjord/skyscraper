@@ -382,7 +382,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "atarist") {
     formats.append("*.st *.stx *.img *.rom *.raw *.ipf *.ctr");
   } else if(platform == "atomiswave") {
-    formats.append("*.bin *.dat");
+    formats.append("*.bin *.dat *.chd");
   } else if(platform == "c16") {
     formats.append("*.crt *.d64 *.prg *.tap *.t64 *.g64 *.x64 *.vsf");
   } else if(platform == "c64") {

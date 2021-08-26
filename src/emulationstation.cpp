@@ -29,6 +29,7 @@
 #include "platform.h"
 
 #include <QDir>
+#include <QRegularExpression>
 
 EmulationStation::EmulationStation()
 {
@@ -208,7 +209,8 @@ void EmulationStation::assembleList(QString &finalOutput, QList<GameEntry> &game
     if(entry.releaseDate.isEmpty()) {
       finalOutput.append("    <releasedate />\n");
     } else {
-      finalOutput.append("    <releasedate>" + StrTools::xmlEscape(entry.releaseDate) + "T000000</releasedate>\n");
+      entry.releaseDate.replace("T000000", "");
+      finalOutput.append("    <releasedate>" + StrTools::xmlEscape(entry.releaseDate + (QRegularExpression("T[0-9]{6}$").match(entry.releaseDate).hasMatch()?"":"T000000")) + "</releasedate>\n");
     }
     if(entry.developer.isEmpty()) {
       finalOutput.append("    <developer />\n");
