@@ -72,7 +72,8 @@
 ;spaceCheck="true"
 ;scummIni="/full/path/to/scummvm.ini"
 
-;[<PLATFORM, eg 'amiga'>]
+;; The following is an example of configs that only affect the 'snes' platform.
+;[snes]
 ;inputFolder="/home/pi/RetroPie/roms/amiga"
 ;excludeFiles="*[BIOS]*"
 ;includeFiles="Super*"
@@ -116,7 +117,8 @@
 ;addExtensions="*.zst *.rom"
 ;subdirs="true"
 
-;[<FRONTEND, eg 'pegasus'>]
+;; The following is an example of configs that only affect the 'pegasus' frontend.
+;[pegasus>]
 ;excludeFiles="*[BIOS]*"
 ;includeFiles="Super*"
 ;artworkXml="artwork.xml"
@@ -137,7 +139,8 @@
 ;verbosity="1"
 ;maxLength="10000"
 
-;[<SCRAPING MODULE, eg 'screenscraper'>]
+;; The following is an example of configs that only affect the 'screenscraper' scraping module.
+;[screenscraper]
 ;userCreds="user:password"
 ;threads="1"
 ;minMatch="0"
