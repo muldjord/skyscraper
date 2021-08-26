@@ -22,8 +22,6 @@
 ; Also remember to uncomment or create the sections they belong to such as '[snes]'.
 
 [main]
-;;Setting input, gamelist or media folder here, will automatically append '/[platform]' to path.
-;;If you need better control, use the same variables under a [<platform>] section instead.
 ;inputFolder="/home/pi/RetroPie/roms"
 ;excludeFiles="*[BIOS]*"
 ;includeFiles="Super*"
@@ -72,7 +70,7 @@
 ;spaceCheck="true"
 ;scummIni="/full/path/to/scummvm.ini"
 
-;; The following is an example of configs that only affect the 'snes' platform.
+; The following is an example of configs that only affect the 'snes' platform.
 ;[snes]
 ;inputFolder="/home/pi/RetroPie/roms/amiga"
 ;excludeFiles="*[BIOS]*"
@@ -117,7 +115,7 @@
 ;addExtensions="*.zst *.rom"
 ;subdirs="true"
 
-;; The following is an example of configs that only affect the 'pegasus' frontend.
+; The following is an example of configs that only affect the 'pegasus' frontend.
 ;[pegasus>]
 ;excludeFiles="*[BIOS]*"
 ;includeFiles="Super*"
@@ -139,7 +137,7 @@
 ;verbosity="1"
 ;maxLength="10000"
 
-;; The following is an example of configs that only affect the 'screenscraper' scraping module.
+; The following is an example of configs that only affect the 'screenscraper' scraping module.
 ;[screenscraper]
 ;userCreds="user:password"
 ;threads="1"
