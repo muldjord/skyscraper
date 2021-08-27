@@ -116,7 +116,7 @@
 ;subdirs="true"
 
 ; The following is an example of configs that only affect the 'pegasus' frontend.
-;[pegasus>]
+;[pegasus]
 ;excludeFiles="*[BIOS]*"
 ;includeFiles="Super*"
 ;artworkXml="artwork.xml"
