@@ -69,6 +69,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Steam (through Moonlight streaming)
 * Super Nintendo
 * TI-99/4A
+* Thomson MO/TO
 * TRS-80
 * Vectrex
 * Videopac (Oddysey 2)

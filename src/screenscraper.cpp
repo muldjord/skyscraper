@@ -716,6 +716,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "20";
   } else if(platform == "megadrive") {
     return "1";
+  } else if(platform == "moto") {
+    return "141";
   } else if(platform == "msx") {
     return "113";
   } else if(platform == "msx2") {

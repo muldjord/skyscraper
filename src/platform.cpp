@@ -84,6 +84,7 @@ QStringList Platform::getPlatforms()
   platforms.append("mastersystem");
   platforms.append("megacd");
   platforms.append("megadrive");
+  platforms.append("moto");
   platforms.append("msx");
   platforms.append("msx2");
   platforms.append("n64");
@@ -228,6 +229,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "megacd") {
     scrapers.append("screenscraper");
   } else if(platform == "megadrive") {
+    scrapers.append("screenscraper");
+  } else if(platform == "moto") {
     scrapers.append("screenscraper");
   } else if(platform == "msx") {
     scrapers.append("screenscraper");
@@ -433,6 +436,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.cue *.iso *.chd");
   } else if(platform == "megadrive") {
     formats.append("*.smd *.bin *.gen *.md *.sg");
+  } else if(platform == "moto") {
+    formats.append("*.fd *.sap *.k7 *.m5 *.m7 *.rom");
   } else if(platform == "msx") {
     formats.append("*.rom *.mx1 *.mx2 *.col *.dsk");
   } else if(platform == "msx2") {
@@ -606,6 +611,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "megacd") {
     scraper = "cache";
   } else if(platform == "megadrive") {
+    scraper = "cache";
+  } else if(platform == "moto") {
     scraper = "cache";
   } else if(platform == "mame-advmame") {
     scraper = "cache";
@@ -1238,6 +1245,13 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("sega mega drive");
     aliases.append("sega mega drive/genesis");
     aliases.append("mega drive");
+  } else if(platform == "moto") {
+    aliases.append("thomson");
+    aliases.append("thomson mo");
+    aliases.append("thomson to");
+    aliases.append("thomson mo5");
+    aliases.append("thomson mo/to");
+    aliases.append("thomson to7,thomson mo5");
   } else if(platform == "msx") {
     aliases.append("msx2");
     aliases.append("msx2+");
