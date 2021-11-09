@@ -147,7 +147,7 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
-#### Version 3.6.16 (In progress, unreleased)
+#### Version 3.6.16 (9th November 2021)
 * Added platform 'moto' (Thank you to user 'Yserra' for suggesting it)
 
 #### Version 3.6.15 (25th August 2021)
