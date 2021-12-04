@@ -27,11 +27,11 @@ NOTE! If you are using the RetroPie distribution, you have the option to install
 Skyscraper needs Qt5.3 or later to compile. For a Retropie, Ubuntu or other Debian derived distro, you can install Qt5 using the following commands:
 ```
 $ sudo apt update
-$ sudo apt install build-essential qtbase5-dev
+$ sudo apt install build-essential qt5-default
 ```
 You might be asked for your sudo password. On RetroPie the default password is `raspberry`. To install Qt5 on other Linux distributions, please refer to their documentation.
 
-NOTE! Ubuntu 21.04 hasn't added the `qt5-default` metapackage yet. For this version you will have to do `sudo apt install build-essential qtbase5-dev qt5-qmake qtbase5-dev-tools` which installs the same as the above command.
+NOTE! From Ubuntu 21.04 and forward the `qt5-default` metapackage no longer exists. For this version you will have to do `sudo apt install build-essential qtbase5-dev qt5-qmake qtbase5-dev-tools` which installs the same as the above command.
 
 #### macOS
 Skyscraper works perfectly on macOS as well but is not officially supported as I don't own a Mac. But with the help of HoraceAndTheSpider and abritinthebay here's the commands needed to install the Qt5 and other prerequisites:
