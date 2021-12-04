@@ -31,7 +31,7 @@ $ sudo apt install build-essential qt5-default
 ```
 You might be asked for your sudo password. On RetroPie the default password is `raspberry`. To install Qt5 on other Linux distributions, please refer to their documentation.
 
-NOTE! From Ubuntu 21.04 and forward the `qt5-default` metapackage no longer exists. For this version you will have to do `sudo apt install build-essential qtbase5-dev qt5-qmake qtbase5-dev-tools` which installs the same as the above command.
+NOTE! From Ubuntu 21.04 and forward the `qt5-default` metapackage no longer exists. You will instead have to do `sudo apt install build-essential qtbase5-dev qt5-qmake qtbase5-dev-tools` which installs the same as the above command.
 
 #### macOS
 Skyscraper works perfectly on macOS as well but is not officially supported as I don't own a Mac. But with the help of HoraceAndTheSpider and abritinthebay here's the commands needed to install the Qt5 and other prerequisites:
