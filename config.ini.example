@@ -23,8 +23,10 @@
 
 [main]
 ;inputFolder="/home/pi/RetroPie/roms"
-;excludeFiles="*[BIOS]*"
-;includeFiles="Super*"
+;excludePattern="*[BIOS]*"
+;includePattern="Super*"
+;excludeFrom="/home/pi/.skyscraper/excludes.txt"
+;includeFrom="/home/pi/.skyscraper/includes.txt"
 ;gameListFolder="/home/pi/RetroPie/roms"
 ;gameListBackup="false"
 ;mediaFolder="/home/pi/RetroPie/roms"
@@ -73,8 +75,10 @@
 ; The following is an example of configs that only affect the 'snes' platform.
 ;[snes]
 ;inputFolder="/home/pi/RetroPie/roms/amiga"
-;excludeFiles="*[BIOS]*"
-;includeFiles="Super*"
+;excludePattern="*[BIOS]*"
+;includePattern="Super*"
+;excludeFrom="/home/pi/.skyscraper/excludes/snes/excludes.txt"
+;includeFrom="/home/pi/.skyscraper/includes/snes/includes.txt"
 ;gameListFolder="/home/pi/RetroPie/roms/amiga"
 ;mediaFolder="/home/pi/RetroPie/roms/amiga/media"
 ;cacheFolder="/home/pi/.skyscraper/cache/amiga"
@@ -117,8 +121,8 @@
 
 ; The following is an example of configs that only affect the 'pegasus' frontend.
 ;[pegasus]
-;excludeFiles="*[BIOS]*"
-;includeFiles="Super*"
+;excludePattern="*[BIOS]*"
+;includePattern="Super*"
 ;artworkXml="artwork.xml"
 ;emulator=""
 ;launch=""
