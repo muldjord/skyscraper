@@ -217,14 +217,24 @@ int main(int argc, char *argv[])
   QCommandLineOption refreshOption("refresh", "Same as '--cache refresh'.");
   QCommandLineOption startatOption("startat", "Tells Skyscraper which file to start at. Forces '--refresh' and '--flags nosubdirs' enabled.", "FILENAME", "");
   QCommandLineOption endatOption("endat", "Tells Skyscraper which file to end at. Forces '--refresh' and '--flags nosubdirs' enabled.", "FILENAME", "");
-  QCommandLineOption excludefilesOption("excludefiles", "Tells Skyscraper to always exclude the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"*[BIOS]*,*proto*\"')", "PATTERN", "");
-  QCommandLineOption includefilesOption("includefiles", "Tells Skyscraper to only include the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"Super*,*Fighter*\"')", "PATTERN", "");
-  QCommandLineOption fromfileOption("fromfile", "Tells Skyscraper to load the list of filenames to work on from a file. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
+  QCommandLineOption includefilesOption("includefiles", "(DEPRECATED, please use '--includepattern' instead) Tells Skyscraper to only include the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"Super*,*Fighter*\"')", "PATTERN", "");
+  QCommandLineOption includepatternOption("includepattern", "Tells Skyscraper to only include the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"Super*,*Fighter*\"')", "PATTERN", "");
+  QCommandLineOption excludefilesOption("excludefiles", "(DEPRECATED, please use '--excludepattern' instead) Tells Skyscraper to always exclude the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"*[BIOS]*,*proto*\"')", "PATTERN", "");
+  QCommandLineOption excludepatternOption("excludepattern", "Tells Skyscraper to always exclude the files matching the provided asterisk pattern(s). Remember to double-quote the pattern to avoid weird behaviour. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\\,'. (Pattern example: '\"*[BIOS]*,*proto*\"')", "PATTERN", "");
+  QCommandLineOption fromfileOption("fromfile", "(DEPRECATED, please use '--includefrom' instead) Tells Skyscraper to load the list of filenames to work on from a file. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
+  QCommandLineOption includefromOption("includefrom", "Tells Skyscraper to only include the files listed in FILENAME. One filename per line. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
+  QCommandLineOption excludefromOption("excludefrom", "Tells Skyscraper to exclude all files listed in FILENAME. One filename per line. This file can be generated with the '--cache report:missing' option or made manually.", "FILENAME", "");
   QCommandLineOption maxfailsOption("maxfails", "Sets the allowed number of initial 'Not found' results before rage-quitting. (Default is 42)", "1-200", "");
   QCommandLineOption queryOption("query", "Allows you to set a custom search query (eg. 'rick+dangerous' for name based modules or 'sha1=CHECKSUM', 'md5=CHECKSUM' or 'romnom=FILENAME' for the 'screenscraper' module). Requires the single rom filename you wish to override for to be passed on command line as well, otherwise it will be ignored.", "QUERY", "");
   QCommandLineOption regionOption("region", "Add preferred game region for scraping modules that support it.\n(Default prioritization is 'eu', 'us', 'wor' and 'jp' + others in that order)", "CODE", "eu");
   QCommandLineOption langOption("lang", "Set preferred result language for scraping modules that support it.\n(Default 'en')", "CODE", "en");
   QCommandLineOption verbosityOption("verbosity", "Print more info while scraping\n(Default is 0.)", "0-3", "0");
+
+#if QT_VERSION >= 0x050800
+  includefilesOption.setFlags(QCommandLineOption::HiddenFromHelp);
+  excludefilesOption.setFlags(QCommandLineOption::HiddenFromHelp);
+  fromfileOption.setFlags(QCommandLineOption::HiddenFromHelp);
+#endif
 
   parser.addOption(pOption);
   parser.addOption(sOption);
@@ -250,8 +260,12 @@ int main(int argc, char *argv[])
   parser.addOption(startatOption);
   parser.addOption(endatOption);
   parser.addOption(includefilesOption);
+  parser.addOption(includepatternOption);
   parser.addOption(excludefilesOption);
+  parser.addOption(excludepatternOption);
   parser.addOption(fromfileOption);
+  parser.addOption(includefromOption);
+  parser.addOption(excludefromOption);
   parser.addOption(maxfailsOption);
   parser.addOption(addextOption);
 
