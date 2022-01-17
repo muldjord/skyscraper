@@ -1508,8 +1508,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   QList<QString> requestedFiles = parser.positionalArguments();
 
   // Add files from '--includefrom', if any
-  if(parser.isSet("includefrom")) {
-    QFileInfo includeFromInfo(parser.value("includefrom"));
+  if(!config.includeFrom.isEmpty()) {
+    QFileInfo includeFromInfo(config.includeFrom);
     if(includeFromInfo.exists()) {
       QFile includeFrom(includeFromInfo.absoluteFilePath());
       if(includeFrom.open(QIODevice::ReadOnly)) {
