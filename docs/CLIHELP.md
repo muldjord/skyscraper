@@ -458,7 +458,7 @@ Skyscraper -p amiga --excludepattern "*AGA*,Super*"
 Skyscraper -p amiga --excludepattern "*AGA*,Super*,*\, The"
 ```
 
-#### includefrom &lt;FILENAME&gt;
+#### --includefrom &lt;FILENAME&gt;
 Tells Skyscraper to only include the files listed in FILENAME. One filename per line (with FULL path, eg. '/home/pi/RetroPie/roms/snes/subdir/somefile.zip').
 
 This file can be generated with the '--cache report:missing' option or made manually.
@@ -470,7 +470,7 @@ NOTE! You might also want to check out the 'includepattern' option.
 Skyscraper -p snes -s screenscraper --includefrom "/home/pi/.skyscraper/includes.txt"
 ```
 
-#### excludefrom &lt;FILENAME&gt;
+#### --excludefrom &lt;FILENAME&gt;
 Tells Skyscraper to exclude the files listed in FILENAME. One filename per line (with FULL path, eg. '/home/pi/RetroPie/roms/snes/subdir/somefile.zip').
 
 This file can be generated with the '--cache report:missing' option or made manually.
