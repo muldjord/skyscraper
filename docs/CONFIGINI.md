@@ -547,7 +547,9 @@ Tells Skyscraper to exclude the files listed in FILENAME. One filename per line 
 
 This file can be generated with the '--cache report:missing' option or made manually.
 
-NOTE! You might also want to check out the 'excludePattern' option.
+NOTE 1! You might also want to check out the 'excludePattern' option.
+
+NOTE 2! If you create a file named '.skyscraperignore' within any subfolder of the input dir, all files from that directory will be ignored by Skyscraper.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`
