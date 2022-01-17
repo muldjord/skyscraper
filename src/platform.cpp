@@ -68,6 +68,7 @@ QStringList Platform::getPlatforms()
   platforms.append("daphne");
   platforms.append("dragon32");
   platforms.append("dreamcast");
+  platforms.append("easyrpg");
   platforms.append("fba");
   platforms.append("fds");
   platforms.append("gameandwatch");
@@ -193,6 +194,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "dragon32") {
     scrapers.append("screenscraper");
   } else if(platform == "dreamcast") {
+    scrapers.append("screenscraper");
+  } else if(platform == "easyrpg") {
     scrapers.append("screenscraper");
   } else if(platform == "fba") {
     scrapers.append("arcadedb");
@@ -404,6 +407,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.cas *.wav *.bas *.asc *.dmk *.jvc *.os9 *.dsk *.vdk *.rom *.ccc *.sna");
   } else if(platform == "dreamcast") {
     formats.append("*.cdi *.gdi *.iso *.chd *.cue *.m3u");
+  } else if(platform == "easyrpg") {
+    formats.append("*.ini");
   } else if(platform == "fba") {
     formats.append("");
   } else if(platform == "fds") {
@@ -587,6 +592,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "dragon32") {
     scraper = "cache";
   } else if(platform == "dreamcast") {
+    scraper = "cache";
+  } else if(platform == "easyrpg") {
     scraper = "cache";
   } else if(platform == "fba") {
     scraper = "cache";

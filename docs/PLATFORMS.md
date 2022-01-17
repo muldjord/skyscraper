@@ -24,6 +24,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Daphne
 * Dragon 32/64
 * Dreamcast
+* EasyRPG (RPG Maker 2000/2003 games)
 * Emerson Arcadia 2001
 * Fairchild Channel F
 * Famicom Disk System

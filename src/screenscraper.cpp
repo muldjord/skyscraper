@@ -684,6 +684,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "91";
   } else if(platform == "dreamcast") {
     return "23";
+  } else if(platform == "easyrpg") {
+    return "231";
   } else if(platform == "fba") {
     return "75";
   } else if(platform == "fds") {
