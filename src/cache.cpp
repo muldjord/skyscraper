@@ -869,11 +869,11 @@ void Cache::assembleReport(const Settings &config, const QString filter)
 
   Queue fileInfos;
   fileInfos.append(getFileInfos(config.inputFolder, filter, config.subdirs));
-  if(!config.excludeFiles.isEmpty()) {
-    fileInfos.filterFiles(config.excludeFiles);
+  if(!config.excludePattern.isEmpty()) {
+    fileInfos.filterFiles(config.excludePattern);
   }
-  if(!config.includeFiles.isEmpty()) {
-    fileInfos.filterFiles(config.includeFiles, true);
+  if(!config.includePattern.isEmpty()) {
+    fileInfos.filterFiles(config.includePattern, true);
   }
   printf("%d compatible files found for the '%s' platform!\n", fileInfos.length(), config.platform.toStdString().c_str());
   printf("Creating file id list for all files, please wait...");
