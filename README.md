@@ -147,6 +147,13 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a less ridig filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
+#### Version 3.7.0 (In progress, unreleased)
+* Moved '--fromfile' option to '--includefrom'. '--fromfile' still works, but is considered deprecated
+* Moved '--includefiles' option to '--includepattern'. '--includefiles' still works, but is considered deprecated
+* Moved '--excludefiles' option to '--excludepattern'. '--excludefiles' still works, but is considered deprecated
+* Added '--excludefrom' option similar to '--includefrom' only the opposite
+* Skyscraper will now ignore any subfolder within the input folder where a files called '.skyscraperignore' is found
+
 #### Version 3.6.16 (9th November 2021)
 * Added platform 'moto' (Thank you to user 'Yserra' for suggesting it)
 
