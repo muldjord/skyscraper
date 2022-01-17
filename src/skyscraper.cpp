@@ -238,6 +238,9 @@ void Skyscraper::run()
   // Create shared queue with files to process
   queue = QSharedPointer<Queue>(new Queue());
   QList<QFileInfo> infoList = inputDir.entryInfoList();
+  if(QFileInfo::exists(config.inputFolder + "/.skyscraperignore")) {
+    infoList.clear();
+  }
   if(!config.startAt.isEmpty() && !infoList.isEmpty()) {
     QFileInfo startAt(config.startAt);
     if(!startAt.exists()) {
