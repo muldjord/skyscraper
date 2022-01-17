@@ -448,7 +448,7 @@ NOTE 1! You might also want to check out the file extension options.
 
 NOTE 2! You might also want to check out the '--excludefrom' option.
 
-NOTE 3! If you create a file named '.skyscraperignore' within any subfolder of the input dir, all files from that directory will be ignored by Skyscraper.
+NOTE 3! If you create a file named `.skyscraperignore` within any subfolder of the input dir, all files from that directory will be ignored by Skyscraper.
 
 ###### Example(s)
 ```
