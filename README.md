@@ -144,15 +144,16 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add the option of scraping custom platforms by configuring them in the config with an alias to an already existing platform. Example: scrape 'pcenginecd' could be scraped as 'pcengine' in case you have those files in a 'roms/pcenginecd' folder instead of the pcengine folder. Check here: https://github.com/muldjord/skyscraper/issues/136
 * Create a testmode for the artwork compositor that let's you quickly render an example to see if you got everything set up right in the artwork xml
 * Allow 'region' to be a list similar to 'regionPrios'. When using 'region' it should simply keep the default priority list and add those from 'region' to the top. 'regionPrios' should still overwrite it entirely. Naming change probably a good idea, for instance rename 'region' to 'regionsPrefer' or something. 'regionPrios' should probably also be changed to 'regionsOverride'. (Thank you to 'corezon' for suggesting this).
-* Implement a less ridig filename match for the 'import' module to allow for close match filenames
+* Implement a less rigid filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
-#### Version 3.7.0 (In progress, unreleased)
+#### Version 3.7.0 (17th January 2022)
 * Moved '--fromfile' option to '--includefrom'. '--fromfile' still works, but is considered deprecated
 * Moved '--includefiles' option to '--includepattern'. '--includefiles' still works, but is considered deprecated
 * Moved '--excludefiles' option to '--excludepattern'. '--excludefiles' still works, but is considered deprecated
-* Added '--excludefrom' option similar to '--includefrom' only the opposite
-* Skyscraper will now ignore any subfolder within the input folder where a files called '.skyscraperignore' is found
+* Added '--excludefrom' option similar to '--includefrom' only the opposite (Thank you to user 'TomFury' for suggesting this)
+* Skyscraper will now ignore any subfolders within the input folder where a file called '.skyscraperignore' is found (Thank you to user 'sromeroi' for suggesting this)
+* Added platform 'easyrpg', only usable using the 'screenscraper' scraping module (Thank you to user 'zerojay' for suggesting this)
 
 #### Version 3.6.16 (9th November 2021)
 * Added platform 'moto' (Thank you to user 'Yserra' for suggesting it)
