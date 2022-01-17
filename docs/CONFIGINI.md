@@ -510,21 +510,47 @@ NOTE! Please consider using the command line option `--endat <FILENAME>` instead
 ###### Allowed in sections
 `[<PLATFORM>]`, `[<FRONTEND>]`
 
-#### excludeFiles="&lt;PATTERN 1,PATTERN 2&gt;"
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The pattern is a simple asterisk type pattern. In cases where you need to match for a comma you need to escape it as `\,`.
-
-NOTE! You might also want to check out the file extension options.
-
-###### Allowed in sections
-`[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
-
-#### includeFiles="&lt;PATTERN1,PATTERN2&gt;"
+#### includePattern="&lt;PATTERN1,PATTERN2&gt;"
 Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The pattern is a simple asterisk type pattern. In cases where you need to match for a comma you need to escape it as `\,`.
 
-NOTE! You might also want to check out the file extension options.
+NOTE 1! You might also want to check out the file extension options.
+
+NOTE 2! You might also want to check out the 'includeFrom' option.
 
 ###### Allowed in sections
 `[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
+
+#### excludePattern="&lt;PATTERN 1,PATTERN 2&gt;"
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The pattern is a simple asterisk type pattern. In cases where you need to match for a comma you need to escape it as `\,`.
+
+NOTE 1! You might also want to check out the file extension options.
+
+NOTE 2! You might also want to check out the 'excludeFrom' option.
+
+NOTE 3! If you create a file named '.skyscraperignore' within any subfolder of the input dir, all files from that directory will be ignored by Skyscraper.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`, `[<FRONTEND>]`
+
+#### includeFrom="&lt;FILENAME&gt;"
+Tells Skyscraper to only include the files listed in FILENAME. One filename per line (with FULL path, eg. '/home/pi/RetroPie/roms/snes/subdir/somefile.zip').
+
+This file can be generated with the '--cache report:missing' option or made manually.
+
+NOTE! You might also want to check out the 'includePattern' option.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`
+
+#### excludeFrom="&lt;FILENAME&gt;"
+Tells Skyscraper to exclude the files listed in FILENAME. One filename per line (with FULL path, eg. '/home/pi/RetroPie/roms/snes/subdir/somefile.zip').
+
+This file can be generated with the '--cache report:missing' option or made manually.
+
+NOTE! You might also want to check out the 'excludePattern' option.
+
+###### Allowed in sections
+`[main]`, `[<PLATFORM>]`
 
 #### userCreds="&lt;CREDENTIALS or KEY&gt;"
 Some scraping modules require a `key` or `user:password` to work. You can create a `[<SCRAPING MODULE>]` section and add a `userCreds="user:pass"` or `userCreds="key"` line beneath it. Doing this will always use these credentials when scraping from the module in question. Check the scraping module overview to see the specific requirements for each module [here](SCRAPINGMODULES.md).

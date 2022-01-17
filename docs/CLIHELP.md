@@ -424,22 +424,7 @@ Skyscraper -p snes --cache edit --endat "rom name.zip"
 Skyscraper -p snes -s thegamesdb --endat "partial/path/to/rom name.zip"
 ```
 
-### --excludefiles &lt;PATTERN1, PATTERN 2&gt;
-Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The pattern is a simple asterisk type pattern. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\,' (see last example).
-
-IMPORTANT! Remember to double-quote the pattern as seen in the examples to avoid odd behaviour.
-
-NOTE! You might also want to check out the file extension options.
-
-###### Example(s)
-```
-Skyscraper -p snes -s screenscraper --excludefiles "*[BIOS]*"
-Skyscraper -p amiga --excludefiles "AGA*"
-Skyscraper -p amiga --excludefiles "*AGA*,Super*"
-Skyscraper -p amiga --excludefiles "*AGA*,Super*,*\, The"
-```
-
-### --includefiles &lt;PATTERN 1,PATTERN 2&gt;
+### --includepattern &lt;PATTERN 1,PATTERN 2&gt;
 Per platform Skyscraper have default file extensions that it will accept. This option allows you to only include certain files within that scope. The pattern is a simple asterisk type pattern. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\,' (see last example).
 
 IMPORTANT! Remember to double-quote the pattern as seen in the examples to avoid odd behaviour.
@@ -448,10 +433,53 @@ NOTE! You might also want to check out the file extension options.
 
 ###### Example(s)
 ```
-Skyscraper -p snes -s screenscraper --includefiles "Super*"
-Skyscraper -p amiga --includefiles "*AGA*"
-Skyscraper -p amiga --includefiles "*AGA*,Super*"
-Skyscraper -p amiga --includefiles "*AGA*,Super*,*\, The"
+Skyscraper -p snes -s screenscraper --includepattern "Super*"
+Skyscraper -p amiga --includepattern "*AGA*"
+Skyscraper -p amiga --includepattern "*AGA*,Super*"
+Skyscraper -p amiga --includepattern "*AGA*,Super*,*\, The"
+```
+
+### --excludepattern &lt;PATTERN 1, PATTERN 2&gt;
+Per platform Skyscraper have default file extensions that it will accept. This option allows you to exclude certain files within that scope. The pattern is a simple asterisk type pattern. You can add several patterns by separating them with ','. In cases where you need to match for a comma you need to escape it as '\,' (see last example).
+
+IMPORTANT! Remember to double-quote the pattern as seen in the examples to avoid odd behaviour.
+
+NOTE 1! You might also want to check out the file extension options.
+
+NOTE 2! You might also want to check out the '--excludefrom' option.
+
+NOTE 3! If you create a file named '.skyscraperignore' within any subfolder of the input dir, all files from that directory will be ignored by Skyscraper.
+
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --excludepattern "*[BIOS]*"
+Skyscraper -p amiga --excludepattern "AGA*"
+Skyscraper -p amiga --excludepattern "*AGA*,Super*"
+Skyscraper -p amiga --excludepattern "*AGA*,Super*,*\, The"
+```
+
+#### includefrom &lt;FILENAME&gt;
+Tells Skyscraper to only include the files listed in FILENAME. One filename per line (with FULL path, eg. '/home/pi/RetroPie/roms/snes/subdir/somefile.zip').
+
+This file can be generated with the '--cache report:missing' option or made manually.
+
+NOTE! You might also want to check out the 'includepattern' option.
+
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --includefrom "/home/pi/.skyscraper/includes.txt"
+```
+
+#### excludefrom &lt;FILENAME&gt;
+Tells Skyscraper to exclude the files listed in FILENAME. One filename per line (with FULL path, eg. '/home/pi/RetroPie/roms/snes/subdir/somefile.zip').
+
+This file can be generated with the '--cache report:missing' option or made manually.
+
+NOTE! You might also want to check out the 'excludepattern' option.
+
+###### Example(s)
+```
+Skyscraper -p snes -s screenscraper --excludefrom "/home/pi/.skyscraper/excludes.txt"
 ```
 
 ### --maxfails &lt;1-200&gt;
