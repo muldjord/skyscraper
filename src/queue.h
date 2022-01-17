@@ -38,6 +38,7 @@ public:
   QFileInfo takeEntry();
   void clearAll();
   void filterFiles(const QString &patterns, const bool &include = false);
+  void removeFiles(const QList<QString> &files);
 
 private:
   QMutex queueMutex;

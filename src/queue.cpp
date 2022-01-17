@@ -79,6 +79,22 @@ void Queue::filterFiles(const QString &patterns, const bool &include)
   queueMutex.unlock();
 }
 
+void Queue::removeFiles(const QList<QString> &files)
+{
+  queueMutex.lock();
+  QMutableListIterator<QFileInfo> it(*this);
+  while(it.hasNext()) {
+    QFileInfo info = it.next();
+    for(const auto &file: files) {
+      if(info.absoluteFilePath() == file) {
+	it.remove();
+	break;
+      }
+    }
+  }
+  queueMutex.unlock();
+}
+
 QList<QString> Queue::getRegExpPatterns(QString patterns)
 {
   patterns.replace("\\,", "###COMMA###");
