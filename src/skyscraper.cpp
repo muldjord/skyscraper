@@ -273,6 +273,9 @@ void Skyscraper::run()
 		       QDirIterator::Subdirectories);
     while(dirIt.hasNext()) {
       QString subdir = dirIt.next();
+      if(QFileInfo::exists(subdir + "/.skyscraperignore")) {
+	continue;
+      }
       inputDir.setPath(subdir);
       queue->append(inputDir.entryInfoList());
       if(config.verbosity > 0) {
@@ -282,11 +285,11 @@ void Skyscraper::run()
     if(config.verbosity > 0)
       printf("\n");
   }
-  if(!config.excludeFiles.isEmpty()) {
-    queue->filterFiles(config.excludeFiles);
+  if(!config.excludePattern.isEmpty()) {
+    queue->filterFiles(config.excludePattern);
   }
-  if(!config.includeFiles.isEmpty()) {
-    queue->filterFiles(config.includeFiles, true);
+  if(!config.includePattern.isEmpty()) {
+    queue->filterFiles(config.includePattern, true);
   }
 
   if(!cliFiles.isEmpty()) {
@@ -294,7 +297,28 @@ void Skyscraper::run()
     for(const auto &cliFile: cliFiles) {
       queue->append(QFileInfo(cliFile));
     }
-  } 
+  }
+
+  // Remove files from excludeFrom, if any
+  if(!config.excludeFrom.isEmpty()) {
+    QFileInfo excludeFromInfo(config.excludeFrom);
+    if(excludeFromInfo.exists()) {
+      QFile excludeFrom(excludeFromInfo.absoluteFilePath());
+      if(excludeFrom.open(QIODevice::ReadOnly)) {
+	QList<QString> excludes;
+	while(!excludeFrom.atEnd()) {
+	  excludes.append(QString(excludeFrom.readLine().simplified()));
+	}
+	excludeFrom.close();
+	if(!excludes.isEmpty()) {
+	  queue->removeFiles(excludes);
+	}
+      }
+    } else {
+      printf("File: '\033[1;32m%s\033[0m' does not exist.\n\nPlease verify the filename and try again...\n", excludeFromInfo.absoluteFilePath().toStdString().c_str());
+      exit(1);
+    }
+  }
 
   state = 2; // Clear queue on ctrl+c
   if(config.cacheOptions.left(4) == "edit") {
@@ -753,11 +777,23 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
-  if(settings.contains("excludeFiles")) {
-    config.excludeFiles = settings.value("excludeFiles").toString();
+  if(settings.contains("includeFiles")) { // This option is DEPRECATDE, use includePattern
+    config.includePattern = settings.value("includeFiles").toString();
   }
-  if(settings.contains("includeFiles")) {
-    config.includeFiles = settings.value("includeFiles").toString();
+  if(settings.contains("includePattern")) {
+    config.includePattern = settings.value("includePattern").toString();
+  }
+  if(settings.contains("excludeFiles")) { // This option is DEPRECATED, use excludePattern
+    config.excludePattern = settings.value("excludeFiles").toString();
+  }
+  if(settings.contains("excludePattern")) {
+    config.excludePattern = settings.value("excludePattern").toString();
+  }
+  if(settings.contains("includeFrom")) {
+    config.includeFrom = settings.value("includeFrom").toString();
+  }
+  if(settings.contains("excludeFrom")) {
+    config.excludeFrom = settings.value("excludeFrom").toString();
   }
   if(settings.contains("jpgQuality")) {
     config.jpgQuality = settings.value("jpgQuality").toInt();
@@ -970,11 +1006,23 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
-  if(settings.contains("excludeFiles")) {
-    config.excludeFiles = settings.value("excludeFiles").toString();
+  if(settings.contains("includeFiles")) { // This option is DEPRECATDE, use includePattern
+    config.includePattern = settings.value("includeFiles").toString();
   }
-  if(settings.contains("includeFiles")) {
-    config.includeFiles = settings.value("includeFiles").toString();
+  if(settings.contains("includePattern")) {
+    config.includePattern = settings.value("includePattern").toString();
+  }
+  if(settings.contains("excludeFiles")) { // This option is DEPRECATED, use excludePattern
+    config.excludePattern = settings.value("excludeFiles").toString();
+  }
+  if(settings.contains("excludePattern")) {
+    config.excludePattern = settings.value("excludePattern").toString();
+  }
+  if(settings.contains("includeFrom")) {
+    config.includeFrom = settings.value("includeFrom").toString();
+  }
+  if(settings.contains("excludeFrom")) {
+    config.excludeFrom = settings.value("excludeFrom").toString();
   }
   if(settings.contains("nameTemplate")) {
     config.nameTemplate = settings.value("nameTemplate").toString();
@@ -1000,11 +1048,17 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("artworkXml")) {
     config.artworkConfig = settings.value("artworkXml").toString();
   }
-  if(settings.contains("excludeFiles")) {
-    config.excludeFiles = settings.value("excludeFiles").toString();
+  if(settings.contains("includeFiles")) { // This option is DEPRECATDE, use includePattern
+    config.includePattern = settings.value("includeFiles").toString();
   }
-  if(settings.contains("includeFiles")) {
-    config.includeFiles = settings.value("includeFiles").toString();
+  if(settings.contains("includePattern")) {
+    config.includePattern = settings.value("includePattern").toString();
+  }
+  if(settings.contains("excludeFiles")) { // This option is DEPRECATED, use excludePattern
+    config.excludePattern = settings.value("excludeFiles").toString();
+  }
+  if(settings.contains("excludePattern")) {
+    config.excludePattern = settings.value("excludePattern").toString();
   }
   if(settings.contains("emulator")) {
     config.frontendExtra = settings.value("emulator").toString();
@@ -1325,8 +1379,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       printf("Showing '\033[1;33m--cache\033[0m' help\n");
       printf("  \033[1;33m--cache show\033[0m: Prints a status of all cached resources for the selected platform.\n");
       printf("  \033[1;33m--cache validate\033[0m: Checks the consistency of the cache for the selected platform.\n");
-      printf("  \033[1;33m--cache edit\033[0m: Let's you edit resources for the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--fromfile' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
-      printf("  \033[1;33m--cache edit:new=<TYPE>\033[0m: Let's you batch add resources of <TYPE> to the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--fromfile' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
+      printf("  \033[1;33m--cache edit\033[0m: Let's you edit resources for the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--includefrom' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
+      printf("  \033[1;33m--cache edit:new=<TYPE>\033[0m: Let's you batch add resources of <TYPE> to the selected platform for all files or a range of files. Add a filename on command line to edit cached resources for just that one file, use '--includefrom' to edit files created with the '--cache report' option or use '--startat' and '--endat' to edit a range of roms.\n");
       printf("  \033[1;33m--cache vacuum\033[0m: Compares your romset to any cached resource and removes the resources that you no longer have roms for.\n");
       printf("  \033[1;33m--cache report:missing=<OPTION>\033[0m: Generates reports with all files that are missing the specified resources. Check '--cache report:missing=help' for more info.\n");
       printf("  \033[1;33m--cache merge:<PATH>\033[0m: Merges two resource caches together. It will merge the resource cache specified by <PATH> into the local resource cache by default. To merge into a non-default destination cache folder set it with '-d <PATH>'. Both should point to folders with the 'db.xml' inside.\n");
@@ -1355,11 +1409,23 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(parser.isSet("endat")) {
     config.endAt = parser.value("endat");
   }
-  if(parser.isSet("excludefiles")) {
-    config.excludeFiles = parser.value("excludefiles");
+  if(parser.isSet("includefiles")) { // This option is DEPRECATDE, use includepattern
+    config.includePattern = parser.value("includefiles");
   }
-  if(parser.isSet("includefiles")) {
-    config.includeFiles = parser.value("includefiles");
+  if(parser.isSet("includepattern")) {
+    config.includePattern = parser.value("includepattern");
+  }
+  if(parser.isSet("excludefiles")) {  // This option is DEPRECATED, use excludepattern
+    config.excludePattern = parser.value("excludefiles");
+  }
+  if(parser.isSet("excludepattern")) {
+    config.excludePattern = parser.value("excludepattern");
+  }
+  if(parser.isSet("includefrom")) {
+    config.includeFrom = parser.value("includefrom");
+  }
+  if(parser.isSet("excludefrom")) {
+    config.excludeFrom = parser.value("excludefrom");
   }
   if(parser.isSet("maxfails") &&
      parser.value("maxfails").toInt() >= 1 &&
@@ -1438,19 +1504,19 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   // Grab all requested files from cli, if any
   QList<QString> requestedFiles = parser.positionalArguments();
 
-  // Add files from '--fromfile', if any
-  if(parser.isSet("fromfile")) {
-    QFileInfo fromFileInfo(parser.value("fromfile"));
-    if(fromFileInfo.exists()) {
-      QFile fromFile(fromFileInfo.absoluteFilePath());
-      if(fromFile.open(QIODevice::ReadOnly)) {
-	while(!fromFile.atEnd()) {
-	  requestedFiles.append(QString(fromFile.readLine().simplified()));
+  // Add files from '--includefrom', if any
+  if(parser.isSet("includefrom")) {
+    QFileInfo includeFromInfo(parser.value("includefrom"));
+    if(includeFromInfo.exists()) {
+      QFile includeFrom(includeFromInfo.absoluteFilePath());
+      if(includeFrom.open(QIODevice::ReadOnly)) {
+	while(!includeFrom.atEnd()) {
+	  requestedFiles.append(QString(includeFrom.readLine().simplified()));
 	}
-	fromFile.close();
+	includeFrom.close();
       }
     } else {
-      printf("Report file: '\033[1;32m%s\033[0m' does not exist.\n\nPlease verify the filename and try again...\n", fromFileInfo.absoluteFilePath().toStdString().c_str());
+      printf("File: '\033[1;32m%s\033[0m' does not exist.\n\nPlease verify the filename and try again...\n", includeFromInfo.absoluteFilePath().toStdString().c_str());
       exit(1);
     }
   }
@@ -1472,7 +1538,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       config.refresh = true;
       config.unattend = true;
     } else {
-      printf("Filename: '\033[1;32m%s\033[0m' requested either on command line or with '--fromfile' not found!\n\nPlease verify the filename and try again...\n", requestedFile.toStdString().c_str());
+      printf("Filename: '\033[1;32m%s\033[0m' requested either on command line or with '--includefrom' not found!\n\nPlease verify the filename and try again...\n", requestedFile.toStdString().c_str());
       exit(1);
     }
   }
