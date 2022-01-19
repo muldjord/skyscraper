@@ -147,6 +147,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a less rigid filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
+#### Version 3.7.1 (19th January 2022)
+* Skyscraper will now ignore an entire tree of subfolders where a file called '.skyscraperignoretree' is found (Thank you to user 'sromeroi' for suggesting this)
+
 #### Version 3.7.0 (17th January 2022)
 * Moved '--fromfile' option to '--includefrom'. '--fromfile' still works, but is considered deprecated
 * Moved '--includefiles' option to '--includepattern'. '--includefiles' still works, but is considered deprecated
