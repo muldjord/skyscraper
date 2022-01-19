@@ -274,8 +274,19 @@ void Skyscraper::run()
     QDirIterator dirIt(config.inputFolder,
 		       QDir::Dirs | QDir::NoDotAndDotDot,
 		       QDirIterator::Subdirectories);
+    QString exclude = "";
     while(dirIt.hasNext()) {
       QString subdir = dirIt.next();
+      if(QFileInfo::exists(subdir + "/.skyscraperignoretree")) {
+	exclude = subdir;
+      }
+      if(!exclude.isEmpty() &&
+	 (subdir == exclude ||
+	  (subdir.left(exclude.length()) == exclude && subdir.mid(exclude.length(), 1) == "/"))) {
+	continue;
+      } else {
+	exclude.clear();
+      }
       if(QFileInfo::exists(subdir + "/.skyscraperignore")) {
 	continue;
       }
