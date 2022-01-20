@@ -238,7 +238,7 @@ void Skyscraper::run()
   // Create shared queue with files to process
   queue = QSharedPointer<Queue>(new Queue());
   QList<QFileInfo> infoList = inputDir.entryInfoList();
-  if(QFileInfo::exists(config.inputFolder + "/.skyscraperignore")) {
+  if(config.scraper != "cache" && QFileInfo::exists(config.inputFolder + "/.skyscraperignore")) {
     infoList.clear();
   }
   if(!config.startAt.isEmpty() && !infoList.isEmpty()) {
@@ -277,7 +277,7 @@ void Skyscraper::run()
     QString exclude = "";
     while(dirIt.hasNext()) {
       QString subdir = dirIt.next();
-      if(QFileInfo::exists(subdir + "/.skyscraperignoretree")) {
+      if(config.scraper != "cache" && QFileInfo::exists(subdir + "/.skyscraperignoretree")) {
 	exclude = subdir;
       }
       if(!exclude.isEmpty() &&
@@ -287,7 +287,7 @@ void Skyscraper::run()
       } else {
 	exclude.clear();
       }
-      if(QFileInfo::exists(subdir + "/.skyscraperignore")) {
+      if(config.scraper != "cache" && QFileInfo::exists(subdir + "/.skyscraperignore")) {
 	continue;
       }
       inputDir.setPath(subdir);
