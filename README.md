@@ -147,8 +147,11 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a less rigid filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
+#### Version 3.7.3 (23rd January 2022)
+* Added 'switch' platform (Thank you to user 'Redemp' for providing info)
+
 #### Version 3.7.2 (20th January 2022)
-* Skyscraper now only ignores files when using the '.skyscraperignore[tree]' files when scraping for new data. They will NOT be ignored when generating game lists
+* Skyscraper now only ignore files when using the '.skyscraperignore[tree]' files when scraping for new data. They will NOT be ignored when generating game lists
 
 #### Version 3.7.1 (19th January 2022)
 * Skyscraper will now ignore an entire tree of subfolders where a file called '.skyscraperignoretree' is found (Thank you to user 'sromeroi' for suggesting this)
