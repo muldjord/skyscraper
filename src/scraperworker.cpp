@@ -190,6 +190,7 @@ void ScraperWorker::run()
     // Fill it with additional needed data
     game.path = info.absoluteFilePath();
     game.baseName = info.completeBaseName();
+    game.absoluteFilePath = info.absoluteFilePath();
     game.cacheId = cacheId;
 
     // Sort out brackets here prior to not found checks, in case user has 'skipped="true"' set
