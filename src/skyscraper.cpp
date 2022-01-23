@@ -316,6 +316,9 @@ void Skyscraper::run()
   // Remove files from excludeFrom, if any
   if(!config.excludeFrom.isEmpty()) {
     QFileInfo excludeFromInfo(config.excludeFrom);
+    if(!excludeFromInfo.exists()) {
+      excludeFromInfo.setFile(config.currentDir + "/" + config.excludeFrom);
+    }
     if(excludeFromInfo.exists()) {
       QFile excludeFrom(excludeFromInfo.absoluteFilePath());
       if(excludeFrom.open(QIODevice::ReadOnly)) {
@@ -387,10 +390,7 @@ void Skyscraper::run()
     printf("Pretend set! Not changing any files, just showing output.\n\n");
   }
 
-  QFile skippedFile(skippedFileString);
-  skippedFile.open(QIODevice::WriteOnly);
-  skippedFile.write("--- The following is a list of skipped games ---\n");
-  skippedFile.close();
+  QFile::remove(skippedFileString);
 
   if(gameListFile.exists()) {
     printf("Trying to parse and load existing game list metadata... ");
@@ -512,12 +512,7 @@ void Skyscraper::entryReady(const GameEntry &entry, const QString &output, const
     notFound++;
     QFile skippedFile(skippedFileString);
     skippedFile.open(QIODevice::Append);
-    skippedFile.write("'" + entry.baseName.toUtf8() + "'");
-    if(entry.searchMatch == 0) {
-      skippedFile.write(", No returned matches\n");
-    } else {
-      skippedFile.write(", Closest match was '" + entry.title.toUtf8() + "' at " + QByteArray::number(entry.searchMatch) + "%\n");
-    }
+    skippedFile.write(entry.absoluteFilePath.toUtf8() + "\n");
     skippedFile.close();
     if(config.skipped) {
       gameEntries.append(entry);
@@ -1521,6 +1516,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   // Add files from '--includefrom', if any
   if(!config.includeFrom.isEmpty()) {
     QFileInfo includeFromInfo(config.includeFrom);
+    if(!includeFromInfo.exists()) {
+      includeFromInfo.setFile(config.currentDir + "/" + config.includeFrom);
+    }
     if(includeFromInfo.exists()) {
       QFile includeFrom(includeFromInfo.absoluteFilePath());
       if(includeFrom.open(QIODevice::ReadOnly)) {
