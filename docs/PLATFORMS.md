@@ -46,6 +46,7 @@ As Skyscraper was built to be used with RetroPie, the list of supported platform
 * Nintendo 64
 * Nintendo DS
 * Nintendo Entertainment System
+* Nintendo Switch
 * Oric (Oric-1, Oric Atmos)
 * PC
 * PC-8800

@@ -116,6 +116,7 @@ QStringList Platform::getPlatforms()
   platforms.append("sg-1000");
   platforms.append("snes");
   platforms.append("steam");
+  platforms.append("switch");
   platforms.append("ti99");
   platforms.append("trs-80");
   platforms.append("vectrex");
@@ -298,6 +299,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "snes") {
     scrapers.append("screenscraper");
   } else if(platform == "steam") {
+    scrapers.append("screenscraper");
+  } else if(platform == "switch") {
     scrapers.append("screenscraper");
   } else if(platform == "ti99") {
     scrapers.append("screenscraper");
@@ -501,6 +504,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.bin *.sg");
   } else if(platform == "snes") {
     formats.append("*.smc *.sfc *.fig *.swc *.mgd *.bin");
+  } else if(platform == "switch") {
+    formats.append("*.xci *.nsp");
   } else if(platform == "ti99") {
     formats.append("*.ctg");
   } else if(platform == "trs-80") {
@@ -688,6 +693,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "snes") {
     scraper = "cache";
   } else if(platform == "steam") {
+    scraper = "cache";
+  } else if(platform == "switch") {
     scraper = "cache";
   } else if(platform == "ti99") {
     scraper = "cache";
@@ -1464,6 +1471,8 @@ QStringList Platform::getAliases(QString platform)
     // Adding these consoles because 'thegamesdb' often only return these instead of PC versions
     aliases.append("microsoft xbox one");
     aliases.append("sony playstation 4");
+  } else if(platform == "switch") {
+    aliases.append("nintendo switch");
   } else if(platform == "ti99") {
     aliases.append("ti-99/4a");
     aliases.append("texas instruments ti-99");
