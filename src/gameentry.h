@@ -98,6 +98,7 @@ public:
   QString parNotes = "";
   QString videoFormat = "";
   QString baseName = "";
+  QString absoluteFilePath = "";
   bool found = true;
 
   QByteArray miscData = "";
