@@ -147,6 +147,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a less rigid filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
+#### Version 3.7.5 (31st January 2022)
+* Now allows ':' in Pegasus command
+
 #### Version 3.7.4 (23rd January 2022)
 * '--includefrom' and '--excludefrom' now works with relative paths (Thank you to use 'sleve_mcdichael' for reporting this
 * Skipped file entries now conforms to same format as report files to allow using them with '--excludefrom' and '--includefrom' (Thank you to user 'TomFury' for suggesting this)
