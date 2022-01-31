@@ -279,7 +279,8 @@ void Pegasus::assembleList(QString &finalOutput, QList<GameEntry> &gameEntries)
     if(config->frontendExtra.isEmpty()) {
       finalOutput.append("command: " + fromPreservedHeader("command", "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ " + config->platform + " \"{file.path}\"") + "\n");
     } else {
-      finalOutput.append("command: " + config->frontendExtra.replace(":","") + "\n");
+      //finalOutput.append("command: " + config->frontendExtra.replace(":","") + "\n");
+      finalOutput.append("command: " + config->frontendExtra + "\n");
       removePreservedHeader("command");
     }
     if(!headerPairs.isEmpty()) {
