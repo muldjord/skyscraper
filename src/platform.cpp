@@ -493,7 +493,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "psx") {
     formats.append("*.cue *.cbn *.img *.iso *.m3u *.mdf *.pbp *.toc *.z *.znx *.chd");
   } else if(platform == "saturn") {
-    formats.append("*.cue *.iso *.mdf *.chd");
+    formats.append("*.cue *.iso *.mdf *.chd *.m3u");
   } else if(platform == "scummvm") {
     formats.append("*.svm *.scummvm");
   } else if(platform == "sega32x") {
