@@ -756,6 +756,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "31";
   } else if(platform == "pcenginecd") {
     return "114";
+  } else if(platform == "pico8") {
+    return "234";
   } else if(platform == "pokemini") {
     return "211";
   } else if(platform == "ports") {
