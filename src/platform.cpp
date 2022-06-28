@@ -504,7 +504,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "sega32x") {
     formats.append("*.32x *.bin *.md *.smd");
   } else if(platform == "segacd") {
-    formats.append("*.cue *.iso *.chd");
+    formats.append("*.cue *.iso *.chd *.m3u");
   } else if(platform == "sg-1000") {
     formats.append("*.bin *.sg");
   } else if(platform == "snes") {

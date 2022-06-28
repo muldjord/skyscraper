@@ -147,6 +147,9 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Implement a less rigid filename match for the 'import' module to allow for close match filenames
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
+#### Version 3.7.7 (28th June 2022)
+* Added '*.m3u' to 'segacd' platform (Thank you to user 'bmn001' for suggesting it)
+
 #### Version 3.7.6 (12th June 2022)
 * Added 'pico8' platform (Thank you to user 'zerojay' for suggesting it)
 
