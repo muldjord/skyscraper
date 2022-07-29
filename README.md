@@ -6,6 +6,8 @@ All Skyscraper features are [well-documented](https://github.com/muldjord/skyscr
 ##### Code contributions
 Pull Requests are not currently accepted. Due to wanting to pursue other projects after having worked on Skyscraper for 3 years, I am currently only fixing scraper-breaking bugs in Skyscraper. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
 
+You can try sending pull requests instead to [detain/skyscraper](https://github.com/detain/skyscraper)
+
 #### Supported platforms (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
