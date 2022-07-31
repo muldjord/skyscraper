@@ -15,7 +15,7 @@ Skyscraper supports a variety of different scraping sources called *scraping mod
 * Pegasus
 
 ##### Code contributions
-Pull Requests are not currently accepted. Due to wanting to pursue other projects after having worked on Skyscraper for 3 years, I am currently only fixing scraper-breaking bugs in Skyscraper. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
+Pull Requests are not currently accepted, **but I am still fixing scraper-breaking bugs when they are reported**. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
 
 ###### Forks
 While Skyscraper is in excellent working condition, supports all major platforms and media types served by the majority of the gaming related API's, user 'detain' is working to expand platform support and media support beyond what I personally am interested in including in Skyscraper. But if you are part of the niche that requires these expansions, feel free to check out the fork [here](https://github.com/detain/skyscraper).
