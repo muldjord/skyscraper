@@ -14,11 +14,8 @@ Skyscraper supports a variety of different scraping sources called *scraping mod
 * AttractMode
 * Pegasus
 
-##### Code contributions
-Pull Requests are not currently accepted, **but I am still fixing scraper-breaking bugs when they are reported**. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
-
-###### Forks
-While Skyscraper is in excellent working condition, supports all major platforms and media types served by the majority of the gaming related API's, user 'detain' is working to expand platform support and media support beyond what I personally am interested in including in Skyscraper. But if you are part of the niche that requires these expansions, feel free to check out the fork [here](https://github.com/detain/skyscraper).
+##### Code contributions and forks
+Pull Requests are not currently accepted as I am focusing on other projects. If you are looking for a more community driven fork, that seeks to expand the current feature set beyond what I've implemented here, you should check out [this fork](https://github.com/detain/skyscraper).
 
 ## How to install Skyscraper
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with `$` signifies a command you need run in a terminal on the machine you wish to install it on.
