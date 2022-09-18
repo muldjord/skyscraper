@@ -2,7 +2,7 @@
 {
     LATEST_URL='https://api.github.com/repos/muldjord/skyscraper/releases/latest'
     LATEST=`wget -q -O - $LATEST_URL | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
-    VERSION_FILE='VERSION.txt'
+    VERSION_FILE='VERSION'
 
     handle_error () {
         local EXITCODE=$?
@@ -51,16 +51,6 @@
       fi
       $command || handle_error "unpack"
       rm ${LATEST}.tar.gz
-
-      # when updating old builds, rename the old 'VERSION' file
-      if [ -f VERSION ]
-      then
-          if [ -f "$VERSION_FILE" ]
-          then
-              rm -f "$VERSION_FILE"
-          fi
-          mv VERSION "$VERSION_FILE"
-      fi
     }
 
     clean_out_old_build () {
@@ -80,7 +70,27 @@
 
     build_skyscraper () {
       echo "--- Building Skyscraper v.$LATEST ---"
-      make -j$(nproc) || handle_error "build"
+
+      # On macOS if the version file is in the same location as the source,
+      # it will be treated as a source file and fail the build. Rename the
+      # file and then rename it back, regardless of build status.
+      if [[ running_mac_os ]]
+      then
+        mv "$VERSION_FILE" "${VERSION_FILE}.bak"
+      fi
+
+      make -j$(nproc)
+      result=$?
+
+      if [[ running_mac_os ]]
+      then
+        mv "${VERSION_FILE}.bak" "$VERSION_FILE" 
+      fi
+
+      if [[ ! $result -eq 0 ]]
+      then
+        handle_error "build"
+      fi
     }
 
     install_latest () {
