@@ -118,6 +118,7 @@ QStringList Platform::getPlatforms()
   platforms.append("snes");
   platforms.append("steam");
   platforms.append("switch");
+  platforms.append("tg16");
   platforms.append("ti99");
   platforms.append("trs-80");
   platforms.append("vectrex");
@@ -304,6 +305,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "steam") {
     scrapers.append("screenscraper");
   } else if(platform == "switch") {
+    scrapers.append("screenscraper");
+  } else if(platform == "tg16") {
     scrapers.append("screenscraper");
   } else if(platform == "ti99") {
     scrapers.append("screenscraper");
@@ -511,6 +514,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.smc *.sfc *.fig *.swc *.mgd *.bin");
   } else if(platform == "switch") {
     formats.append("*.xci *.nsp");
+  } else if(platform == "tg16") {
+    formats.append("*.pce *.chd *.cue");
   } else if(platform == "ti99") {
     formats.append("*.ctg");
   } else if(platform == "trs-80") {
@@ -702,6 +707,8 @@ QString Platform::getDefaultScraper(QString platform)
   } else if(platform == "steam") {
     scraper = "cache";
   } else if(platform == "switch") {
+    scraper = "cache";
+  } else if(platform == "tg16") {
     scraper = "cache";
   } else if(platform == "ti99") {
     scraper = "cache";
@@ -1483,6 +1490,15 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("sony playstation 4");
   } else if(platform == "switch") {
     aliases.append("nintendo switch");
+  } else if(platform == "tg16") {
+    aliases.append("turbografx 16");
+    aliases.append("turbografx cd");
+    aliases.append("turbografx-16");
+    aliases.append("turbografx-16/pc engine");
+    aliases.append("turbografx-16/pc engine cd");
+    aliases.append("pc engine");
+    aliases.append("pc engine cd-rom");
+    aliases.append("pc engine supergrafx");
   } else if(platform == "ti99") {
     aliases.append("ti-99/4a");
     aliases.append("texas instruments ti-99");

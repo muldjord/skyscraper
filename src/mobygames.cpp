@@ -525,6 +525,8 @@ QString MobyGames::getPlatformId(const QString platform)
     return "114";
   } else if(platform == "snes") {
     return "15";
+  } else if(platform == "tg16") {
+    return "na";
   } else if(platform == "ti99") {
     return "47";
   } else if(platform == "trs-80") {
