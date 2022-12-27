@@ -502,7 +502,9 @@ QString NameTools::getCacheId(const QFileInfo &info)
      info.suffix() == "scummvm" || info.suffix() == "mds" ||
      info.suffix() == "zip" || info.suffix() == "7z" ||
      info.suffix() == "gdi" || info.suffix() == "ml" ||
-     info.suffix() == "bat" || info.suffix() == "au3") {
+     info.suffix() == "bat" || info.suffix() == "au3" ||
+     info.suffix() == "po" || info.suffix() == "dsk" ||
+     info.suffix() == "nib") {
     cacheIdFromData = false;
   }
   // If file is larger than 50 MBs, use filename checksum for cache id for optimization reasons
