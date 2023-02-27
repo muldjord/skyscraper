@@ -163,6 +163,7 @@
 
 [esgamelist]
 cacheRefresh="true"
+cacheScreenshots="false"
 
 [import]
 cacheRefresh="true"
