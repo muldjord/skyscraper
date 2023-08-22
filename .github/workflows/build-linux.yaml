@@ -1,0 +1,46 @@
+name: Build Docker images
+
+on:
+  # Allow manual runs.
+  workflow_dispatch:
+  push:
+    tags:
+      - "*"
+
+env:
+  PLATFORMS: linux/arm/v7,linux/arm64/v8,linux/amd64
+
+jobs:
+  build:
+    name: Build Skyscraper
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      # QEMU and BuildX are required for multi-architecture support
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Skyscraper
+        uses: docker/build-push-action@v4
+        with:
+          platforms: ${{ env.PLATFORMS }}
+          push: false
+          outputs: type=local,dest=./build/
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Skyscraper
+          path: ./build/*
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            build/*
