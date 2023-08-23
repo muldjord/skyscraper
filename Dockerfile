@@ -5,4 +5,4 @@ RUN apt update \
     && cd skyscraper && qmake && make
 
 FROM scratch as export
-COPY --from=build /skyscraper/Skyscraper /
+COPY --from=build /skyscraper/Skyscraper /skyscraper/artwork.xml /
