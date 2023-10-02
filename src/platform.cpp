@@ -526,7 +526,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "wii") {
     formats.append("*.iso *.cso *.gcz *.wbfs *.rvz");
   } else if(platform == "wiiu") {
-    formats.append("*.iso *.cso *.gcz *.wbfs *.wud *.wux *.rpx *.app");
+    formats.append("*.iso *.cso *.gcz *.wbfs *.wua *.wud *.wux *.rpx *.app");
   } else if(platform == "wonderswan") {
     formats.append("*.ws");
   } else if(platform == "wonderswancolor") {
