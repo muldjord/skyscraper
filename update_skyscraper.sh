@@ -1,6 +1,8 @@
 #!/bin/bash
 {
-    LATEST=`wget -q -O - "https://api.github.com/repos/muldjord/skyscraper/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
+    LATEST="$(wget -q -O - "https://api.github.com/repos/muldjord/skyscraper/releases/latest")"
+    LATEST=${LATEST##*tag_name\":\"} # strip everything before the version tag
+    LATEST=${LATEST%%\"*} # strip everything after the version tag
 
     if [ ! -f VERSION ]
     then
