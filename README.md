@@ -15,7 +15,7 @@ Skyscraper supports a variety of different scraping sources called *scraping mod
 * Pegasus
 
 ## Code contributions and forks
-Pull Requests are not currently accepted as I am [focusing](https://github.com/muldjord/occurity) [on](https://github.com/muldjord/lithomaker) [other](https://github.com/muldjord/leddy) [projects](https://github.com/muldjord/boobox). If you are looking for a more community driven fork that seeks to expand the current feature set beyond what I've implemented here, you should check out [this fork](https://github.com/Gemba/skyscraper).
+Please note that this repository is no longer maintained and as a consequence the API's for some of the scraping sources might be outdated resulting in unwanted behavior! Pull Requests are not accepted as I am busy working on other projects. If you are looking for a more active and community driven fork you should check out [this fork](https://github.com/Gemba/skyscraper).
 
 ## How to install Skyscraper
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with `$` signifies a command you need run in a terminal on the machine you wish to install it on.
