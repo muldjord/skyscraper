@@ -484,7 +484,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "pcengine") {
     formats.append("*.pce *.chd *.cue");
   } else if(platform == "pcenginecd") {
-    formats.append("*.pce *.chd *.cue");
+    formats.append("*.pce *.chd *.ccd *.cue");
   } else if(platform == "pico8") {
     formats.append("*.png *.p8");
   } else if(platform == "pokemini") {
